@@ -13,7 +13,7 @@
 #include <coreutils/var.h>
 
 #include <audioplayer/audioplayer.h>
-#include <musicplayer/plugins/plugins.h>
+#include <musicplayer/src/plugins/plugins.h>
 
 #include <psf/PSFFile.h>
 

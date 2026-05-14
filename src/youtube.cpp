@@ -1,7 +1,7 @@
 #include <coreutils/log.h>
 #include <coreutils/utils.h>
 #include <memory>
-#include <musicplayer/chipplugin.h>
+#include <musicplayer/src/chipplugin.h>
 #include <string>
 
 #include "../sol2/sol.hpp"

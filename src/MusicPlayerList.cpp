@@ -6,7 +6,7 @@
 #include <unordered_map>
 
 #include <coreutils/environment.h>
-#include <musicplayer/chipplayer.h>
+#include <musicplayer/src/chipplayer.h>
 
 using namespace utils;
 

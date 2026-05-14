@@ -1,6 +1,6 @@
 #pragma once
 
-#include <musicplayer/chipplugin.h>
+#include <musicplayer/src/chipplugin.h>
 
 namespace chipmachine {
 

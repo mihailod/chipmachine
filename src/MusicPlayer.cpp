@@ -6,11 +6,13 @@
 #include <audioplayer/audioplayer.h>
 #include <coreutils/format.h>
 #include <coreutils/utils.h>
-#include <musicplayer/plugins/plugins.h>
+#include <musicplayer/src/plugins/plugins.h>
 #include <psf/PSFFile.h>
 
 #include <algorithm>
 #include <set>
+
+#include <variant>
 
 namespace chipmachine {
 
@@ -46,10 +48,9 @@ void MusicPlayer::update()
     static std::vector<int16_t> temp_buf(fifo.size());
 
     if (!paused && player) {
-
-        sub_title = player->getMeta("sub_title");
-        length = player->getMetaInt("length");
-        message = player->getMeta("message");
+        sub_title = std::get<std::string>(player->meta("sub_title"));
+        length = std::get<unsigned int>(player->meta("length"));
+        message = std::get<std::string>(player->meta("message"));
         silent_frames = check_silence ? fifo.getSilence() : 0;
 
         while (true) {
@@ -206,8 +207,8 @@ bool MusicPlayer::playFile(const std::string& fileName)
 void MusicPlayer::updatePlayingInfo()
 {
     SongInfo info;
-    auto game = player->getMeta("game");
-    info.title = player->getMeta("title");
+    auto game = std::get<std::string>(player->meta("game"));
+    info.title = std::get<std::string>(player->meta("title"));
     if (!game.empty()) {
         if (!info.title.empty()) {
             info.title = utils::format("%s (%s)", game, info.title);
@@ -215,15 +216,32 @@ void MusicPlayer::updatePlayingInfo()
             info.title = game;
     }
 
-    info.composer = player->getMeta("composer");
-    info.format = player->getMeta("format");
-    info.numtunes = player->getMetaInt("songs");
-    info.starttune = player->getMetaInt("startSong");
+    info.composer = std::get<std::string>(player->meta("composer"));
+    std::get<std::string>(player->meta("format"));
+    info.numtunes = std::get<unsigned int>(player->meta("songs"));
+
+
+    auto meta_variant = player->meta("startSong");
+    int startTune = 0; // Default to 0
+
+    if (auto* pInt = std::get_if<unsigned int>(&meta_variant)) {
+        startTune = static_cast<int>(*pInt);
+    } else if (auto* pDouble = std::get_if<double>(&meta_variant)) {
+        startTune = static_cast<int>(*pDouble);
+    } else if (auto* pString = std::get_if<std::string>(&meta_variant)) {
+        try {
+            startTune = std::stoi(*pString);
+        } catch (...) {
+            startTune = 0;
+        }
+    }
+    info.starttune = startTune;
+
     if (info.starttune == -1) info.starttune = 0;
 
-    length = player->getMetaInt("length");
-    message = player->getMeta("message");
-    sub_title = player->getMeta("sub_title");
+    length = std::get<unsigned int>(player->meta("length"));
+    message = std::get<std::string>(player->meta("message"));
+    sub_title = std::get<std::string>(player->meta("sub_title"));
     playing_info = info;
 }
 
@@ -243,7 +261,7 @@ std::string MusicPlayer::getMeta(const std::string& what)
     } else if (what == "sub_title") {
         return sub_title;
     }
-    if (player) return player->getMeta(what);
+    if (player) return std::get<std::string>(player->meta(what));
     return "";
 }
 

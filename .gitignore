@@ -17,3 +17,4 @@ index.dat
 *.sublime-*
 .tags*
 android/
+**/.DS_Store

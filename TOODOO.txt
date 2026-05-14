@@ -1,0 +1,5 @@
+- Bello font (scroll) garbled -- try different font?
+- no vice/uade/ffmpg -- enable one by one and try to compile them
+- test not working -- some issue with rnd (thus ninja ../chipmachine)
+- many many warnings -- sort by priority and fix
+- occasional crash (and on exit) -- debug  why

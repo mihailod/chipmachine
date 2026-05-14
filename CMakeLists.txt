@@ -22,7 +22,7 @@ include(${AP1_ROOT}/cmake/Utils.cmake)
 
 if(APPLE)
     #set(CMAKE_OSX_SYSROOT "/Users/jonasminnberg/MacOSX10.10.sdk")
-    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.11")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
 endif()
 
 if(RASPBERRYPI)
@@ -144,7 +144,7 @@ set(MUSICPLAYER_PLUGINS
     stsoundplugin
     adplugin
     mp3plugin
-    viceplugin
+    #viceplugin
     hivelyplugin
     rsnplugin
     ayflyplugin
@@ -152,13 +152,13 @@ set(MUSICPLAYER_PLUGINS
     s98plugin
     aoplugin
     gsfplugin
-    uadeplugin
+    #uadeplugin
     tedplugin
-    ffmpegplugin
+    # ffmpegplugin
     v2plugin
 )
-add_subdirectory(${MUSICPLAYER}/plugins plugins)
-add_subdirectory(${MUSICPLAYER}/psf psf)
+add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
+add_subdirectory(${MUSICPLAYER}/src/psf psf)
 
 include_directories(${AP1_ROOT}/mods/grappix ${MUSICPLAYER}/plugins)
 
@@ -172,6 +172,9 @@ endif()
 
 
 add_library(musicplayer INTERFACE)
+
+add_library(plugin_register STATIC src/plugin_register.cpp)
+
 target_link_libraries(musicplayer INTERFACE psf plugin_register)
 target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)
 
