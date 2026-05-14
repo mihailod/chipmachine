@@ -67,7 +67,7 @@ $ pacman -S mingw32/mingw-w64-i686-cmake msys/git mingw32/mingw-w64-i686-gcc min
 	# mkdir build ; cd build
 	# cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_PREFIX_PATH="/opt/homebrew" -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_CXX_FLAGS="-w" -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 -DCMAKE_APPLE_SILICON_PROCESSOR=arm64 -DFREETYPE_INCLUDE_DIR_ft2build=/opt/homebrew/include -DFREETYPE_INCLUDE_DIR_ft2build=/opt/homebrew/include/freetype2 -DFREETYPE_LIBRARY=/opt/homebrew/lib/libfreetype.dylib -DZLIB_LIBRARY="-lz" -DCMAKE_DISABLE_FIND_PACKAGE_Freetype=OFF
 	# sed -i '' 's/-lZLIB/-lz/g' build.ninja
-	# ninja ../chipmachine
+	# ninja chipmachine
 
 ## Using the application
 
