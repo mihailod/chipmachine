@@ -30,7 +30,7 @@ $ sudo apt-get install cmake git g++ zlib1g-dev libao-dev libgl1-mesa-dev libaso
 
 ### Mac OSX
 
-* Make sure you have Homebrew installed
+* Make sure you have Homebrew installed (Apple Silicon homebrew is in /opt/homebrew/ , make sure you are not using Intel legacy /usr/local tools)
 * Download, build and install _libmpg123_ (http://sourceforge.net/projects/mpg123/files/)
 
 ```
