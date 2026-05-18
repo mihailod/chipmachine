@@ -1,6 +1,8 @@
 chipmachine
 ===========
 
+**NOTE: THIS IS HIGHLY EXPERIMENTAL / ALPHA WORK IN PROGRESS port of this program for Apple Silicon. Some plugins are disabled (vice, uade, ffmpg) and the app works but produces tons of compilation warnings and it crashes occasionally as well. ONLY BUILDING ON APPLE SILICON MAC HAS BEEN TESTED. INSTALL AT YOUR OWN RISK.**
+
 ![Screenshot](screen.png)
 
 See the demo (turn the sound on!):
