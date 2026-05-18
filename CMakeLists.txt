@@ -151,6 +151,7 @@ set(MUSICPLAYER_PLUGINS
     s98plugin
     aoplugin
     gsfplugin
+    #viceplugin
     #uadeplugin
     tedplugin
     # ffmpegplugin
