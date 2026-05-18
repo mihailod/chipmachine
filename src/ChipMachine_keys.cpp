@@ -40,10 +40,10 @@ void ChipMachine::addKey(uint32_t key, statemachine::Condition const& cond,
             if (key & ALT) name += "alt+";
             if (key & CTRL) name += "ctrl+";
             key &= 0xffff;
-            if (key < 0x100)
+            if (key >= keycodes::UP && key <= keycodes::F12)
+                name += utils::toLower(key_names[key - keycodes::UP]);
+            else if (key < 0x80)
                 name.append(1, tolower(key));
-            else if (key <= keycodes::F12)
-                name += utils::toLower(key_names[key - 0x100]);
             if (onSearch) name += " [search]";
             if (onMain) name += " [main]";
             it->shortcut = name;

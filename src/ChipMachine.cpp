@@ -240,11 +240,8 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
                     }
                     c = markColor;
                 }
-                static int cmdPos = -1;
-                if (cmdPos == -1)
-                    cmdPos =
-                        listFont.get_width("012345678901234567890123456789",
-                                           resultFieldTemplate.scale);
+                // Calculate a fixed, reliable offset based on the list width
+                int cmdPos = rec.w * 0.6;
                 grappix::screen.text(listFont, cmd->name, rec.x, rec.y, c,
                                      resultFieldTemplate.scale);
                 grappix::screen.text(listFont, cmd->shortcut, rec.x + cmdPos,

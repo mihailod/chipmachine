@@ -153,8 +153,8 @@ private:
     void updateNextField();
     void updateLists()
     {
-
-        int y = resultFieldTemplate.pos.y + 5;
+        // Increase the top padding so the first line's ascenders are not clipped
+        int y = resultFieldTemplate.pos.y + (15 * resultFieldTemplate.scale);
 
         songList.setArea(grappix::Rectangle(topLeft.x, y,
                                             grappix::screen.width() - topLeft.x,
