@@ -3,6 +3,8 @@ chipmachine
 
 **NOTE: THIS IS HIGHLY EXPERIMENTAL / ALPHA WORK IN PROGRESS port of this program for Apple Silicon. Some plugins are disabled (vice, uade, ffmpg) and the app works but produces tons of compilation warnings and it crashes occasionally as well. ONLY BUILDING ON APPLE SILICON MAC HAS BEEN TESTED. INSTALL AT YOUR OWN RISK.**
 
+**NOTE2: I AM USING GOOGLE GEMINI CLI AI TO HELP ME WITH THIS INTEL -> ARM PORT. IT IS PARTIALLY AN EXPERIMENT IN HOW AI WILL PERFORM AT THIS COMPLEX TASK.**
+
 ![Screenshot](screen.png)
 
 See the demo (turn the sound on!):
