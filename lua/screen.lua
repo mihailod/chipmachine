@@ -10,23 +10,12 @@ end
 
 GSCALE = SCREEN_HEIGHT / 576.0
 
--- print('HD',SCREEN_WIDTH,SCREEN_HEIGHT,HD)
-
-X0 = 80
-Y0 = 54
-X1 = 636
-Y1 = 520
-
-
-if not TV then
 X0 = 10
-Y0 = 60
+Y0 = 40
 X1 = SCREEN_WIDTH-10
 Y1 = SCREEN_HEIGHT-10
-end
 
 background = 0x808080
---SCREEN_HEIGHT / 576
 
 if true then
  TEXT_COLOR = 0xffe0e080
@@ -86,39 +75,37 @@ y = Settings.scroll[1] - 80 * GSCALE
 NSCALE = SCREEN_PPI / 240.0;
 if(NSCALE < 0.5) then NSCALE = 0.5 end
 
--- Settings.next_title = { x, y, scale, TEXT_COLOR }
--- Settings.next_composer = { x, y+26*scale, scale*0.6, TEXT_COLOR }
--- Settings.next_format = { x, y+44*scale, scale*0.3, TEXT_COLOR }
 m = 15
 Settings.next_field = { X1 - m, y-(28 * NSCALE), NSCALE, 0xff444477 }
 
-scale = 1.2 * GSCALE
-Settings.next_title = { X1 - m, y, scale, TEXT_COLOR }
-Settings.next_composer = { X1 - m, y+26*scale, scale*0.6, TEXT_COLOR }
-Settings.next_format = { X1 - m, y+44*scale, scale*0.3, TEXT_COLOR }
+scale2 = 1.2 * GSCALE
+Settings.next_title = { X1 - m, y, scale2, TEXT_COLOR }
+Settings.next_composer = { X1 - m, y+26*scale2, scale2*0.6, TEXT_COLOR }
+Settings.next_format = { X1 - m, y+44*scale2, scale2*0.3, TEXT_COLOR }
 
 y = Settings.scroll[1] - 70 * GSCALE
 
-scale = 80.0
-Settings.exit_title = { -3200, Y0, scale, 0 }
-Settings.exit_composer = { -3200, Y0+25*scale, scale*0.6, 0 }
-Settings.exit_format = { -3200, Y0+45*scale, scale*0.3, 0 }
+scale3 = 80.0
+Settings.exit_title = { -3200, Y0, scale3, 0 }
+Settings.exit_composer = { -3200, Y0+25*scale3, scale3*0.6, 0 }
+Settings.exit_format = { -3200, Y0+45*scale3, scale3*0.3, 0 }
 
 x = SCREEN_WIDTH+10
 y = 340
-scale = 1.0
-Settings.enter_title = { x, y, scale, TEXT_COLOR }
-Settings.enter_composer = { x, y+25*scale, scale*0.6, TEXT_COLOR }
-Settings.enter_format = { x, y+45*scale, scale*0.3, TEXT_COLOR }
+scale4 = 1.0
+Settings.enter_title = { x, y, scale4, TEXT_COLOR }
+Settings.enter_composer = { x, y+25*scale4, scale4*0.6, TEXT_COLOR }
+Settings.enter_format = { x, y+45*scale4, scale4*0.3, TEXT_COLOR }
+
 -- 220
-LSCALE = SCREEN_PPI / 160.0;
+LSCALE = GSCALE * 0.85;
 if(LSCALE < 0.75) then LSCALE = 0.75 end
-LINE_HEIGHT = 1.2
+LINE_HEIGHT = 1.5
 TEXT_HEIGHT = 24 * LSCALE
 
 Settings.search_field = { X0, Y0, LSCALE, SEARCH_COLOR }
 Settings.top_status = { X0, Y0, LSCALE, FORMAT_COLOR }
---
+
 Settings.result_field = { X0, Y0+TEXT_HEIGHT, LSCALE, RESULT_COLOR }
 Settings.result_lines = (Y1-Y0)/(TEXT_HEIGHT*LINE_HEIGHT)
 
@@ -126,5 +113,3 @@ Settings.toast_field = { 0, SCREEN_HEIGHT/2 - GSCALE * 20, GSCALE * 2.0, 0x00000
 
 Settings.font = "data/Neutra.otf"
 Settings.list_font = "data/Neutra.otf"
-------
--- print("Lua parsing done")
