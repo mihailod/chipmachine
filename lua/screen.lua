@@ -46,9 +46,9 @@ end
 Settings.top_left = { X0, Y0 }
 Settings.down_right = { X1, Y1 }
 
-Settings.main_title = { X0, TITLE_Y0, scale, TEXT_COLOR }
-Settings.main_composer = { X0, TITLE_Y0+25*scale, scale*0.6, TEXT_COLOR }
-Settings.main_format = { X0, TITLE_Y0+42*scale, scale*0.25, TEXT_COLOR }
+Settings.main_title = { X0, Y0 + 8 * scale, scale, TEXT_COLOR }
+Settings.main_composer = { X0, Y0 + 33 * scale, scale * 0.6, TEXT_COLOR }
+Settings.main_format = { X0, Y0 + 50 * scale, scale * 0.25, TEXT_COLOR }
 
 
 SY = Settings.main_format[2] + 32 * GSCALE
