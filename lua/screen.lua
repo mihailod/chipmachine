@@ -68,7 +68,7 @@ Settings.xinfo_field = { X0 - 4, SY + 35 * GSCALE, GSCALE * 0.75, 0xffffffff }
 Settings.favicon = { X0 + 330 * GSCALE, SY - GSCALE*25, 8*8 * GSCALE, 8*6 * GSCALE }
 
 EQ_SLOTS = 24
-SPECW = SCREEN_WIDTH / (EQ_SLOTS*2)
+SPECW = SCREEN_WIDTH / EQ_SLOTS
 SPECH = SPECW * 3.5
 
 if TV then
