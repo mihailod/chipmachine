@@ -51,12 +51,14 @@ public:
 		if(xpos < -scrollLen)
 			xpos = target.width() + 100;
 
+		// Calculate dynamic scale factor based on target resolution
+		float dynScale = (target.height() / 576.0f) * 3.0f;
+
 		scr.clear(0x00000000);
-		// Render text centered vertically at 150px baseline in a 300px buffer
-		scr.text(font, scrollText, xpos-=scrollspeed, 150, 0xffffffff, 3.0); 
+		// Render text using dynamic scale factor
+		scr.text(font, scrollText, xpos-=scrollspeed, 150, 0xffffffff, dynScale); 
 		program.use();
 		static float uvs[] = { 0,0,1,0,0,1,1,1 };
-		// Draw at scrolly - 150 to ensure the text is centered on the intended scrolly position
 		target.draw(scr, 0.0F, scrolly - 150, target.width(), 300, uvs, program);
 	}
 
