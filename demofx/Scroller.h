@@ -11,8 +11,7 @@ namespace demofx {
 
 class Scroller : public Effect {
 public:
-	explicit Scroller(grappix::RenderTarget &target) : target(target), scr(grappix::screen.width()+10, 256) {
-		//font = grappix::Font("data/ObelixPro.ttf", 24, 512 | grappix::Font::DISTANCE_MAP);
+	explicit Scroller(grappix::RenderTarget &target) : target(target), scr(grappix::screen.width()+10, 1080) {
 		program = grappix::get_program(grappix::TEXTURED_PROGRAM).clone();
 
 		grappix::Resources::getInstance().load<std::string>((Environment::getCacheDir() / "sine_shader.glsl").string(),
@@ -32,17 +31,18 @@ public:
 
 	void resize(int w, int h) override {
 		if(w > 8 && h > 8)
-			scr = grappix::Texture(w+10, 256);
+			scr = grappix::Texture(w+10, 1080);
 	}
 	void set(const std::string &what, const std::string &val, float seconds = 0.0) override {
 		if(what == "font") {
-			font = grappix::Font(val, 120, 512 | grappix::Font::DISTANCE_MAP);
+			// Increased atlas size to 1024 to fit wide characters like 'W' and 'Y'
+			font = grappix::Font(val, 120, 1024 | grappix::Font::DISTANCE_MAP);
 			font.set_program(fprogram);
 		} else {
 			scrollText = val;
 			LOGD("SCROLL: %s", scrollText);
 			xpos = target.width() + 100;
-			scrollLen = font.get_width(val, 1.0);
+			scrollLen = font.get_width(val, 3.0);
 		}
 	}
 
@@ -53,11 +53,11 @@ public:
 			xpos = target.width() + 100;
 
 		scr.clear(0x00000000);
-		// Render text at 1:1 scale with font size 120
-		scr.text(font, scrollText, xpos-=scrollspeed, 60, 0xffffffff, 1.0); 
+		// Baseline 180 and 3.0 scale for large, fully visible text
+		scr.text(font, scrollText, xpos-=scrollspeed, 180, 0xffffffff, 3.0); 
 		program.use();
 		static float uvs[] = { 0,0,1,0,0,1,1,1 };
-		target.draw(scr, 0.0F, scrolly, scr.width(), scr.height(), uvs, program);
+		target.draw(scr, 0.0F, scrolly, target.width(), target.height(), uvs, program);
 	}
 
 	float alpha = 1.0;
@@ -83,14 +83,13 @@ private:
 		#endif
 		uniform sampler2D sTexture;
 
-		const vec4 color0 = vec4(1.0, 0.9, 0.2, 1.0); // Bright Yellow/Orange
-		const vec4 color1 = vec4(0.5, 0.2, 1.0, 1.0); // Purple/Blue
+		const vec4 color0 = vec4(1.0, 0.9, 0.2, 1.0);
+		const vec4 color1 = vec4(0.5, 0.2, 1.0, 1.0);
 
 		varying vec2 UV;
 
 		void main() {
-			// Center the gradient more on the text (which is around y=0.2 to 0.7 in the 256px texture)
-			float grad = smoothstep(0.1, 0.8, UV.y);
+			float grad = smoothstep(0.1, 0.3, UV.y);
 			vec4 rgb = mix(color0, color1, grad);
 			vec4 color = texture2D(sTexture, UV);
 			gl_FragColor = rgb * color;
@@ -111,8 +110,7 @@ private:
 
 		void main() {
 			float dist = texture2D(sTexture, UV).a;
-			// Use a more conservative smoothing since we are now rendering at 1:1
-			float smoothing = 0.05; 
+			float smoothing = 0.03; 
 			float alpha = smoothstep(glyph_center - smoothing, glyph_center + smoothing, dist);
 			gl_FragColor = vec4(color.rgb, color.a * alpha);
 		}
