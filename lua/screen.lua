@@ -20,7 +20,7 @@ Y1 = 520
 
 if not TV then
 X0 = 10
-Y0 = 10
+Y0 = 35
 X1 = SCREEN_WIDTH-10
 Y1 = SCREEN_HEIGHT-10
 end
