@@ -129,6 +129,19 @@ void MusicBars::render(const utils::vec2i& spectrumPos,
                        const std::vector<uint8_t>& eq)
 {
 
+    // Check if there is any audio data to render
+    bool hasAudio = false;
+    for (uint8_t val : eq) {
+        if (val > 0) {
+            hasAudio = true;
+            break;
+        }
+    }
+
+    if (!hasAudio) {
+        return; // Don't draw the baseline if there's no sound
+    }
+
 #ifdef PIXEL_EQ
     static std::vector<float> fSlots(25);
     for (int i = 0; i < 24; i++) {
@@ -150,9 +163,16 @@ void MusicBars::render(const utils::vec2i& spectrumPos,
     for (auto i : count_to(eq.size())) {
         int h = (spectrumHeight * eq[i] / (256 * interval));
         h *= interval - 1;
-        screen.rectangle(spectrumPos.x + (spectrumWidth)*i,
-                         spectrumPos.y - spectrumHeight, spectrumWidth,
-                         spectrumHeight - h, 0xff000000);
+        if (h > 0) {
+            screen.rectangle(spectrumPos.x + (spectrumWidth)*i,
+                             spectrumPos.y - spectrumHeight, spectrumWidth,
+                             spectrumHeight - h + 10, 0xff000000);
+        } else {
+            // Draw a slightly taller black rectangle to mask the entire slot and gaps
+            screen.rectangle(spectrumPos.x + (spectrumWidth)*i,
+                             spectrumPos.y - spectrumHeight, spectrumWidth,
+                             spectrumHeight + 10, 0xff000000);
+        }
     }
 #endif
 }

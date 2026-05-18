@@ -794,6 +794,9 @@ void ChipMachine::render(uint32_t delta)
         // volPos.y, 10.0, 0xff8888ff);
     }
 
+    if (playerState == MusicPlayerList::Stopped || playerState == MusicPlayerList::Error) {
+        std::fill(eq.begin(), eq.end(), 0);
+    }
     musicBars.render(spectrumPos, spectrumColor, eq);
 
     if (starsOn) starEffect.render(delta);

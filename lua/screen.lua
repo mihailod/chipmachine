@@ -10,10 +10,16 @@ end
 
 GSCALE = SCREEN_HEIGHT / 576.0
 
-X0 = 10
-Y0 = 40
-X1 = SCREEN_WIDTH-10
-Y1 = SCREEN_HEIGHT-10
+-- Make margins fully proportional to window scale
+scale = 3.0 * GSCALE
+X0 = 15 * GSCALE
+-- Search field baseline (small font, near top)
+Y0 = 35 * GSCALE
+-- Main title baseline (large font, pushed down by its ascender)
+TITLE_Y0 = 35 + (25 * scale)
+
+X1 = SCREEN_WIDTH - X0
+Y1 = SCREEN_HEIGHT - 10
 
 background = 0x808080
 
@@ -40,11 +46,9 @@ end
 Settings.top_left = { X0, Y0 }
 Settings.down_right = { X1, Y1 }
 
-
-scale = 3.0 * GSCALE
-Settings.main_title = { X0, Y0, scale, TEXT_COLOR }
-Settings.main_composer = { X0, Y0+25*scale, scale*0.6, TEXT_COLOR }
-Settings.main_format = { X0, Y0+42*scale, scale*0.25, TEXT_COLOR }
+Settings.main_title = { X0, TITLE_Y0, scale, TEXT_COLOR }
+Settings.main_composer = { X0, TITLE_Y0+25*scale, scale*0.6, TEXT_COLOR }
+Settings.main_format = { X0, TITLE_Y0+42*scale, scale*0.25, TEXT_COLOR }
 
 
 SY = Settings.main_format[2] + 32 * GSCALE
@@ -65,7 +69,8 @@ if TV then
   Settings.spectrum = { X0-40, Y1+40, 28, 80.0, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 else
   Settings.scroll = { Y1 - GSCALE * 100, GSCALE * 2.0, 4, "data/Bello.otf" }
-  Settings.spectrum = { X0, Y1, SPECW, SPECH, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
+  -- Anchor spectrum firmly to the bottom of the window
+  Settings.spectrum = { X0, SCREEN_HEIGHT - 10, SPECW, SPECH, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 end
 
 x = SCREEN_WIDTH - 300 * GSCALE
