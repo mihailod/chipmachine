@@ -68,7 +68,7 @@ if TV then
   Settings.scroll = { Y1 - 100, GSCALE * 2.0, 4, "data/Bello.otf" }
   Settings.spectrum = { X0-40, Y1+40, 28, 80.0, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 else
-  Settings.scroll = { Y1 - GSCALE * 100, GSCALE * 2.0, 4, "data/Bello.otf" }
+  Settings.scroll = { Y1 - GSCALE * 150, GSCALE * 2.0, 4, "data/Bello.otf" }
   -- Anchor spectrum firmly to the bottom of the window
   Settings.spectrum = { X0, SCREEN_HEIGHT - 10, SPECW, SPECH, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 end
