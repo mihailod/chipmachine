@@ -11,7 +11,7 @@ namespace demofx {
 
 class Scroller : public Effect {
 public:
-	explicit Scroller(grappix::RenderTarget &target) : target(target), scr(grappix::screen.width()+10, 1080) {
+	explicit Scroller(grappix::RenderTarget &target) : target(target), scr(grappix::screen.width()+10, 300) {
 		program = grappix::get_program(grappix::TEXTURED_PROGRAM).clone();
 
 		grappix::Resources::getInstance().load<std::string>((Environment::getCacheDir() / "sine_shader.glsl").string(),
@@ -31,11 +31,10 @@ public:
 
 	void resize(int w, int h) override {
 		if(w > 8 && h > 8)
-			scr = grappix::Texture(w+10, 1080);
+			scr = grappix::Texture(w+10, 300);
 	}
 	void set(const std::string &what, const std::string &val, float seconds = 0.0) override {
 		if(what == "font") {
-			// Increased atlas size to 1024 to fit wide characters like 'W' and 'Y'
 			font = grappix::Font(val, 120, 1024 | grappix::Font::DISTANCE_MAP);
 			font.set_program(fprogram);
 		} else {
@@ -53,11 +52,12 @@ public:
 			xpos = target.width() + 100;
 
 		scr.clear(0x00000000);
-		// Baseline 180 and 3.0 scale for large, fully visible text
-		scr.text(font, scrollText, xpos-=scrollspeed, 180, 0xffffffff, 3.0); 
+		// Render text centered vertically at 150px baseline in a 300px buffer
+		scr.text(font, scrollText, xpos-=scrollspeed, 150, 0xffffffff, 3.0); 
 		program.use();
 		static float uvs[] = { 0,0,1,0,0,1,1,1 };
-		target.draw(scr, 0.0F, scrolly, target.width(), target.height(), uvs, program);
+		// Draw at scrolly - 150 to ensure the text is centered on the intended scrolly position
+		target.draw(scr, 0.0F, scrolly - 150, target.width(), 300, uvs, program);
 	}
 
 	float alpha = 1.0;
@@ -83,13 +83,14 @@ private:
 		#endif
 		uniform sampler2D sTexture;
 
-		const vec4 color0 = vec4(1.0, 0.9, 0.2, 1.0);
-		const vec4 color1 = vec4(0.5, 0.2, 1.0, 1.0);
+		const vec4 color0 = vec4(1.0, 0.9, 0.2, 1.0); // Yellow/Orange
+		const vec4 color1 = vec4(0.5, 0.2, 1.0, 1.0); // Purple/Blue
 
 		varying vec2 UV;
 
 		void main() {
-			float grad = smoothstep(0.1, 0.3, UV.y);
+			// Center the gradient on the text (UV.y around 0.5)
+			float grad = smoothstep(0.3, 0.7, UV.y);
 			vec4 rgb = mix(color0, color1, grad);
 			vec4 color = texture2D(sTexture, UV);
 			gl_FragColor = rgb * color;
