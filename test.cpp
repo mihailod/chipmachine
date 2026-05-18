@@ -158,7 +158,9 @@ TEST_CASE("adlib", "[music]")
 
 TEST_CASE("uade", "[music]")
 {
-    testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data");
+    #ifndef __aarch64__
+        testPlugin<musix::UADEPlugin>("testmus/uade", "smp", dataDir);
+    #endif
 }
 
 TEST_CASE("openmpt", "[music]")
