@@ -73,6 +73,9 @@ public:
 
     void setArea(const grappix::Rectangle& r) { rec = r; }
 
+    int getTextureWidth() const { return texture ? texture->width() : 0; }
+    int getTextureHeight() const { return texture ? texture->height() : 0; }
+
     grappix::Color color{ 0xffffffff };
     grappix::Rectangle rec;
 
@@ -151,6 +154,7 @@ private:
     void updateKeys();
     void updateFavorite();
     void updateNextField();
+    void updateScreenshotArea();
     void updateLists()
     {
         // Increase the top padding so the first line's ascenders are not clipped

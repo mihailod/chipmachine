@@ -328,8 +328,9 @@ void ChipMachine::layoutScreen()
         });
 
     starEffect.resize(screen.width(), screen.height());
-    scrollEffect.resize(screen.width(), 45 * scrollEffect.scrollsize);
+    scrollEffect.resize(screen.width(), 300);
     musicBars.setup(spectrumWidth, spectrumHeight);
+    updateScreenshotArea();
 
     searchField.setFont(font);
     commandField.pos = searchField.pos;
@@ -369,6 +370,30 @@ void ChipMachine::updateFavorite()
     // favIcon.visible(isFavorite);
 }
 
+void ChipMachine::updateScreenshotArea()
+{
+    int bm_w = screenShotIcon.getTextureWidth();
+    int bm_h = screenShotIcon.getTextureHeight();
+    if (bm_w == 0 || bm_h == 0) return;
+
+    // Available space: upper right quarter
+    auto w = screen.width() * 0.45;
+    auto h = screen.height() * 0.45;
+
+    float d = (float)h / bm_h;
+    float d2 = (float)w / bm_w;
+    if (d2 < d) d = d2;
+
+    float final_w = bm_w * d;
+    float final_h = bm_h * d;
+
+    // Align top with UI elements, margin on the right
+    float x = screen.width() - final_w - (screen.width() * 0.05);
+    float y = topLeft.y;
+
+    screenShotIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
+}
+
 void ChipMachine::nextScreenshot()
 {
     setShotAt = utils::getms();
@@ -388,19 +413,7 @@ void ChipMachine::nextScreenshot()
             auto& bm = screenshots[currentShot].bm;
             LOGD("BITMAP IS %dx%d", bm.width(), bm.height());
             screenShotIcon.setBitmap(bm, true);
-
-            auto x = xinfoField.pos.x;
-            auto y = xinfoField.pos.y + xinfoField.getHeight() + 10;
-
-            // Available space
-            auto h = scrollEffect.scrolly - y;
-            auto w = screen.width() / 2;
-
-            float d = (float)h / bm.height();
-            float d2 = (float)w / bm.width();
-            if (d2 < d) d = d2;
-            screenShotIcon.setArea(
-                grappix::Rectangle(x, y, bm.width() * d, bm.height() * d));
+            updateScreenshotArea();
             Tween::make()
                 .to(screenShotIcon.color, Color(0xffffffff))
                 .seconds(1.0);
