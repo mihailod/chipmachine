@@ -242,7 +242,11 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
                 }
                 // Calculate a fixed, reliable offset based on the list width
                 int cmdPos = rec.w * 0.6;
-                grappix::screen.text(listFont, cmd->name, rec.x, rec.y, c,
+                std::string displayName = cmd->name;
+                for (char& ch : displayName) {
+                    if (ch == '_') ch = ' ';
+                }
+                grappix::screen.text(listFont, displayName, rec.x, rec.y, c,
                                      resultFieldTemplate.scale);
                 grappix::screen.text(listFont, cmd->shortcut, rec.x + cmdPos,
                                      rec.y, 0xffffffff,
