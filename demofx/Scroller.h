@@ -11,7 +11,7 @@ namespace demofx {
 
 class Scroller : public Effect {
 public:
-	explicit Scroller(grappix::RenderTarget &target) : target(target), scr(grappix::screen.width()+10, 180/4) {
+	explicit Scroller(grappix::RenderTarget &target) : target(target), scr(grappix::screen.width()+10, 256) {
 		//font = grappix::Font("data/ObelixPro.ttf", 24, 512 | grappix::Font::DISTANCE_MAP);
 		program = grappix::get_program(grappix::TEXTURED_PROGRAM).clone();
 
@@ -27,22 +27,22 @@ public:
 
 		fprogram = grappix::get_program(grappix::FONT_PROGRAM_DF).clone();
 		fprogram.setFragmentSource(fontShaderF);
-		//font.set_program(fprogram);
+		font.set_program(fprogram);
 	}
 
 	void resize(int w, int h) override {
 		if(w > 8 && h > 8)
-			scr = grappix::Texture(w+10, h);
+			scr = grappix::Texture(w+10, 256);
 	}
 	void set(const std::string &what, const std::string &val, float seconds = 0.0) override {
 		if(what == "font") {
-			font = grappix::Font(val, 24, 512 | grappix::Font::DISTANCE_MAP);
-			//font.set_program(fprogram);
+			font = grappix::Font(val, 120, 512 | grappix::Font::DISTANCE_MAP);
+			font.set_program(fprogram);
 		} else {
 			scrollText = val;
 			LOGD("SCROLL: %s", scrollText);
 			xpos = target.width() + 100;
-			scrollLen = font.get_width(val, scrollsize);
+			scrollLen = font.get_width(val, 1.0);
 		}
 	}
 
@@ -53,7 +53,8 @@ public:
 			xpos = target.width() + 100;
 
 		scr.clear(0x00000000);
-		scr.text(font, scrollText, xpos-=scrollspeed, 10, 0xffffff | ((int)(alpha*255) << 24), scrollsize);
+		// Render text at 1:1 scale with font size 120
+		scr.text(font, scrollText, xpos-=scrollspeed, 60, 0xffffffff, 1.0); 
 		program.use();
 		static float uvs[] = { 0,0,1,0,0,1,1,1 };
 		target.draw(scr, 0.0F, scrolly, scr.width(), scr.height(), uvs, program);
@@ -77,68 +78,44 @@ private:
 
 
 	const std::string sineShaderF = R"(
+		#ifdef GL_ES
+			precision highp float;
+		#endif
 		uniform sampler2D sTexture;
 
-		const vec4 color0 = vec4(0.7, 1.0, 0.5, 1.0);
-		const vec4 color1 = vec4(0.2, 0.0, 1.0, 1.0);
+		const vec4 color0 = vec4(1.0, 0.9, 0.2, 1.0); // Bright Yellow/Orange
+		const vec4 color1 = vec4(0.5, 0.2, 1.0, 1.0); // Purple/Blue
 
 		varying vec2 UV;
 
 		void main() {
-
-			vec4 rgb = mix(color0, color1, UV.y);
-			// MODIFY UV HERE
+			// Center the gradient more on the text (which is around y=0.2 to 0.7 in the 256px texture)
+			float grad = smoothstep(0.1, 0.8, UV.y);
+			vec4 rgb = mix(color0, color1, grad);
 			vec4 color = texture2D(sTexture, UV);
-			// MODIFY COLOR HERE
 			gl_FragColor = rgb * color;
 		}
 	)";
 
 
 	const std::string fontShaderF = R"(
-		uniform vec4 vColor;
-		uniform vec4 vScale;
+		#ifdef GL_ES
+			precision highp float;
+		#endif
+		uniform vec4 color;
+		uniform float vScale;
 		uniform sampler2D sTexture;
-		//uniform float smoothing;
 		varying vec2 UV;
 
-		vec3 glyph_color    = vec3(0.0,1.0,0.0);
-		const float glyph_center   = 0.50;
-		vec3 outline_color  = vec3(0.0,0.0,1.0);
-		const float outline_center = 0.58;
-		vec3 glow_color     = vec3(1.0, 1.0, 0.0);
-		const float glow_center    = 1.0;
+		const float glyph_center = 0.50;
 
 		void main() {
 			float dist = texture2D(sTexture, UV).a;
-	#ifdef GL_ES
-			float smoothing = 1.0 / (vScale.x * 16.0);
-			float alpha = smoothstep(glyph_center-smoothing, glyph_center+smoothing, dist);
-	#else
-			float width = fwidth(dist);
-			float alpha = smoothstep(glyph_center-width, glyph_center+width, dist);
-			//float alpha = dist;
-	#endif
-
-			//gl_FragColor = vec4(1.0, 0.0, 0.0, alpha);
-			//vec3 rgb = mix(vec3(0,0,0), vec3(1.0,0.0,0.0), dist);
-			//gl_FragColor = vec4(rgb, 1.0);//floor(dist + 0.500));
-
-			gl_FragColor = vec4(vColor.rgb, vColor.a * alpha);
-
-			//gl_FragColor = vec4(1.0, 0.0, 0.0, floor(dist + 0.500));
-			//gl_FragColor += vec4(0.0, 1.0, 0.0, floor(dist + 0.533));
-
-			//float mu = smoothstep(outline_center-width, outline_center+width, dist);
-			//vec3 rgb = mix(outline_color, glyph_color, mu);
-			//gl_FragColor = vec4(rgb, max(alpha,mu));
-
-			//vec3 rgb = mix(glow_color, vec3(1.0,1.0,1.0), alpha);
-			//float mu = smoothstep(glyph_center, glow_center, sqrt(dist));
-			//gl_FragColor = vec4(rgb, mu);//max(alpha,mu));
-
+			// Use a more conservative smoothing since we are now rendering at 1:1
+			float smoothing = 0.05; 
+			float alpha = smoothstep(glyph_center - smoothing, glyph_center + smoothing, dist);
+			gl_FragColor = vec4(color.rgb, color.a * alpha);
 		}
-
 	)";
 
 
