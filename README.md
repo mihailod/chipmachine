@@ -2,7 +2,7 @@ chipmachine
 ===========
 
 ![Screenshot](screen.png)
-![Demo Video](video.mp4)
+https://github.com/user-attachments/assets/66982f37-8245-4e18-9716-09f6d2f2bc3a
 
 [![ZenHub] (https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)] (https://zenhub.io)
 
