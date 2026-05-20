@@ -1,3 +1,1 @@
 - uade/ffmpg -- enable one by one and try to compile them
-- many many compile warnings -- sort by priority and fix
-- crash on exit -- debug  why
