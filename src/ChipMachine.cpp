@@ -57,12 +57,14 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
     int f = std::stol(parts[3]) & 0xff;
 
     if (f == PLAYLIST || f == PRODUCT) {
-        if (parts[1] == "")
+        //if (parts[1] == "")
+	if (parts[1] == nullptr || parts[1][0] == '\0')
             text = utils::format("<%s>", parts[0]);
         else
             text = utils::format("<%s / %s>", parts[0], parts[1]);
     } else {
-        if (parts[1] == "")
+        //if (parts[1] == "")
+	if (parts[1] == nullptr || parts[1][0] == '\0')
             text = parts[0];
         else
             text = utils::format("%s / %s", parts[0], parts[1]);
