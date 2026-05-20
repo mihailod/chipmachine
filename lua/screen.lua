@@ -14,7 +14,7 @@ GSCALE = SCREEN_HEIGHT / 576.0
 scale = 3.0 * GSCALE
 X0 = 15 * GSCALE
 -- Search field baseline (small font, near top)
-Y0 = 35 * GSCALE
+Y0 = 50 * GSCALE
 -- Main title baseline (large font, pushed down by its ascender)
 TITLE_Y0 = 35 + (25 * scale)
 
