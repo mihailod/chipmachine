@@ -223,24 +223,24 @@ bool MusicPlayer::playFile(const std::string& fileName)
 
 void MusicPlayer::updatePlayingInfo()
 {
-    printf("MusicPlayer: updatePlayingInfo started\n"); fflush(stdout);
+    //printf("MusicPlayer: updatePlayingInfo started\n"); fflush(stdout);
     SongInfo info;
 
     // Safely get string meta
     info.title = std::get<std::string>(player->meta("title"));
-    printf("MusicPlayer: Got title '%s'\n", info.title.c_str()); fflush(stdout);
+    //printf("MusicPlayer: Got title '%s'\n", info.title.c_str()); fflush(stdout);
 
     info.composer = std::get<std::string>(player->meta("composer"));
-    printf("MusicPlayer: Got composer '%s'\n", info.composer.c_str()); fflush(stdout);
+    //printf("MusicPlayer: Got composer '%s'\n", info.composer.c_str()); fflush(stdout);
 
     // Safely get 'songs' (numtunes)
     auto songs_meta = player->meta("songs");
     if (auto* pVal = std::get_if<uint32_t>(&songs_meta)) {
         info.numtunes = *pVal;
-        printf("MusicPlayer: Got songs (uint32_t) %u\n", info.numtunes); fflush(stdout);
+        //printf("MusicPlayer: Got songs (uint32_t) %u\n", info.numtunes); fflush(stdout);
     } else {
         info.numtunes = 0;
-        printf("MusicPlayer: 'songs' not found or not a uint32_t\n"); fflush(stdout);
+        //printf("MusicPlayer: 'songs' not found or not a uint32_t\n"); fflush(stdout);
     }
 
     // Safely get 'startSong'
@@ -248,9 +248,9 @@ void MusicPlayer::updatePlayingInfo()
     int startTune = 0; // Default to 0
     if (auto* pInt = std::get_if<uint32_t>(&startSong_meta)) {
         startTune = static_cast<int>(*pInt);
-        printf("MusicPlayer: Got startSong (uint32_t) %d\n", startTune); fflush(stdout);
+        //printf("MusicPlayer: Got startSong (uint32_t) %d\n", startTune); fflush(stdout);
     } else {
-         printf("MusicPlayer: 'startSong' not found or not a uint32_t\n"); fflush(stdout);
+         //printf("MusicPlayer: 'startSong' not found or not a uint32_t\n"); fflush(stdout);
     }
     info.starttune = startTune;
 
@@ -261,24 +261,24 @@ void MusicPlayer::updatePlayingInfo()
     if (auto* pVal = std::get_if<uint32_t>(&length_meta)) {
         length = *pVal;
         auto length_val = length.load();
-    printf("MusicPlayer: Got length (uint32_t) %u\n", length_val); fflush(stdout);
+    //printf("MusicPlayer: Got length (uint32_t) %u\n", length_val); fflush(stdout);
     } else if (auto* pVal = std::get_if<double>(&length_meta)) {
         length = static_cast<uint32_t>(*pVal);
-        printf("MusicPlayer: Got length (double) %f\n", *pVal); fflush(stdout);
+        //printf("MusicPlayer: Got length (double) %f\n", *pVal); fflush(stdout);
     }
     else {
         length = 0;
-        printf("MusicPlayer: 'length' not found or not a number\n"); fflush(stdout);
+        //printf("MusicPlayer: 'length' not found or not a number\n"); fflush(stdout);
     }
 
     message = std::get<std::string>(player->meta("message"));
-    printf("MusicPlayer: Got message '%s'\n", message.c_str()); fflush(stdout);
+    //printf("MusicPlayer: Got message '%s'\n", message.c_str()); fflush(stdout);
 
     sub_title = std::get<std::string>(player->meta("sub_title"));
-    printf("MusicPlayer: Got sub_title '%s'\n", sub_title.c_str()); fflush(stdout);
+    //printf("MusicPlayer: Got sub_title '%s'\n", sub_title.c_str()); fflush(stdout);
 
     playing_info = info;
-    printf("MusicPlayer: updatePlayingInfo finished\n"); fflush(stdout);
+    //printf("MusicPlayer: updatePlayingInfo finished\n"); fflush(stdout);
 }
 
 void MusicPlayer::pause(bool do_pause)
