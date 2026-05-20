@@ -25,6 +25,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <atomic>
 
 namespace chipmachine {
 
@@ -157,7 +158,6 @@ private:
     void updateScreenshotArea();
     void updateLists()
     {
-        // Increase the top padding so the first line's ascenders are not clipped
         int y = resultFieldTemplate.pos.y + (15 * resultFieldTemplate.scale);
 
         songList.setArea(grappix::Rectangle(topLeft.x, y,
@@ -222,7 +222,6 @@ private:
 
     std::unique_ptr<TelnetInterface> telnet;
 
-    // Aera of screen used for UI (defaults are for TV with overscan)
     utils::vec2i topLeft = { 80, 54 };
     utils::vec2i downRight = { 636, 520 };
 
@@ -244,8 +243,6 @@ private:
     demofx::StarField starEffect;
     demofx::Scroller scrollEffect;
 
-    // OVERLAY AND ITS RENDERABLES
-
     RenderSet overlay;
     TextField toastField;
 
@@ -254,7 +251,6 @@ private:
     Icon volumeIcon;
     Icon screenShotIcon;
 
-    // MAINSCREEN AND ITS RENDERABLES
     RenderSet mainScreen;
 
     SongInfoField currentInfoField;
@@ -267,9 +263,7 @@ private:
     TextField songField;
     TextField nextField;
     TextField xinfoField;
-    // TextField playlistField;
 
-    // SEARCHSCREEN AND ITS RENDERABLES
     RenderSet searchScreen;
 
     LineEdit searchField;
@@ -279,13 +273,9 @@ private:
 
     TextField resultFieldTemplate;
 
-    // COMMANDSCREEN AND ITS RENDERABLES
-
     RenderSet commandScreen;
     LineEdit commandField;
     grappix::VerticalList commandList;
-
-    //
 
     std::string currentNextPath;
     SongInfo currentInfo;
@@ -375,5 +365,8 @@ private:
     std::vector<NamedBitmap> screenshots;
     uint64_t setShotAt = 0;
     std::string currentScreenshot;
+
+    // The defensive thread barrier for application destruction
+    std::atomic<bool> isShuttingDown{false};
 };
 } // namespace chipmachine

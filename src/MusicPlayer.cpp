@@ -36,9 +36,16 @@ MusicPlayer::MusicPlayer(AudioPlayer& ap)
         if (fifo.filled() >= size) {
             fifo.get(ptr, size);
             play_pos += size / 2;
-            if (audio_callback) audio_callback(ptr, size);
-        } else
+            
+            // CRITICAL LIFETIME GUARD:
+            // Ensure both the local target handle and the target callback are valid 
+            // before transferring data to the visualization/FFT layer.
+            if (!dont_play && audio_callback) {
+                audio_callback(ptr, size);
+            }
+        } else {
             memset(ptr, 0, size * 2);
+        }
     });
 }
 
@@ -83,6 +90,13 @@ void MusicPlayer::update()
 
 MusicPlayer::~MusicPlayer()
 {
+    // 1. Immediately overwrite the active audio hardware callback with a dummy loop.
+    // This detaches the background thread from this dying MusicPlayer context instantly.
+    audio_player.play([](int16_t* ptr, int size) {
+        memset(ptr, 0, size * 2);
+    });
+
+    // 2. Kill the streaming thread pool
     stream_fifo->quit();
 }
 
