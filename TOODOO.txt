@@ -1,4 +1,3 @@
 - uade/ffmpg -- enable one by one and try to compile them
-- vice working but only playing 1st song -- fix
-- many many warnings -- sort by priority and fix
-- occasional crash (and on exit) -- debug  why
+- many many compile warnings -- sort by priority and fix
+- crash on exit -- debug  why
