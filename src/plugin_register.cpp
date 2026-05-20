@@ -22,6 +22,7 @@ extern "C" {
     void tedplugin_register();     // Commodore Plus/4
     void usfplugin_register();     // Nintendo 64
     void v2plugin_register();      // Farbrausch V2
+    void vicepluginbridge_register();
 }
 
 void register_plugins() {
@@ -44,4 +45,5 @@ void register_plugins() {
     tedplugin_register();
     usfplugin_register();
     v2plugin_register();
+    vicepluginbridge_register();
 }
