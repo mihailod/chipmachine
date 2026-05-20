@@ -1,6 +1,23 @@
 cmake_minimum_required(VERSION 3.12.0)
 project(chipmachine)
 
+if(APPLE)
+
+    # Force CMake to look inside the default Apple Silicon Homebrew prefix
+    list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew")
+    list(APPEND CMAKE_FRAMEWORK_PATH "/opt/homebrew/Frameworks")
+
+    # Automatically default to native host architecture (ARM64 on M1/M2/M3/M4)
+    if(NOT CMAKE_OSX_ARCHITECTURES)
+        set(CMAKE_OSX_ARCHITECTURES "${CMAKE_HOST_SYSTEM_PROCESSOR}")
+    endif()
+    
+    # Set reasonable deployment target programmatically 
+    if(NOT CMAKE_OSX_DEPLOYMENT_TARGET)
+        set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
+    endif()
+endif()
+
 set(ZLIB_LIBRARIES z CACHE INTERNAL "" FORCE)
 
 set(CMAKE_CXX_STANDARD 17)
