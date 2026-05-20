@@ -1,35 +1,36 @@
-cmake_minimum_required(VERSION 3.12.0)
+cmake_minimum_required(VERSION 3.15)
 project(chipmachine)
 
+# ---------------------------------------------------------------------------
+# macOS & Architecture Initialization (Must run BEFORE target definitions)
+# ---------------------------------------------------------------------------
 if(APPLE)
-
     # Force CMake to look inside the default Apple Silicon Homebrew prefix
     list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew")
     list(APPEND CMAKE_FRAMEWORK_PATH "/opt/homebrew/Frameworks")
 
-    # Automatically default to native host architecture (ARM64 on M1/M2/M3/M4)
+    # Automatically default to native host architecture (ARM64 on Apple Silicon)
     if(NOT CMAKE_OSX_ARCHITECTURES)
-        set(CMAKE_OSX_ARCHITECTURES "${CMAKE_HOST_SYSTEM_PROCESSOR}")
+        set(CMAKE_OSX_ARCHITECTURES "arm64")
     endif()
     
-    # Set reasonable deployment target programmatically 
-    if(NOT CMAKE_OSX_DEPLOYMENT_TARGET)
-        set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
-    endif()
+    # Set deployment target strictly to 26.0
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "26.0" CACHE STRING "macOS Deployment Target" FORCE)
 endif()
 
+# Global overrides
 set(ZLIB_LIBRARIES z CACHE INTERNAL "" FORCE)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
+# Compiler Cache
 find_program(CCACHE_PROGRAM ccache)
 if(CCACHE_PROGRAM)
   set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_PROGRAM}")
 endif()
 
-
+# Subproject Paths
 set(AP1_ROOT ../apone CACHE PATH "Where apone is checked out")
 set(MUSICPLAYER ../musicplayer CACHE PATH "Where musicplayer is checked out")
 get_filename_component(VICE_ROOT "${CMAKE_SOURCE_DIR}/../vice310" ABSOLUTE)
@@ -37,22 +38,32 @@ set(VICE_ROOT ${VICE_ROOT} CACHE PATH "Where vice is checked out")
 
 include(${AP1_ROOT}/cmake/Utils.cmake)
 
-
-if(APPLE)
-    #set(CMAKE_OSX_SYSROOT "/Users/jonasminnberg/MacOSX10.10.sdk")
-    set(CMAKE_OSX_ARCHITECTURES "arm64")
-set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
-endif()
-
+# Platform specific flag adjustments
 if(RASPBERRYPI)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=armv6 -mfpu=vfp -mfloat-abi=hard")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=armv6 -mfpu=vfp -mfloat-abi=hard")
 endif()
 
-# GCC/Clang common warnings
+# ---------------------------------------------------------------------------
+# Unified Warning Profiles & AppleClang Tweaks
+# ---------------------------------------------------------------------------
 set(GCC_CLANG_WARNINGS -Wall -Wextra -Wnon-virtual-dtor -pedantic)
 
-# GCC specific warnings
+# Silences the massive wall of legacy warnings from unrar, lua, and vice
+if(APPLE OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    list(APPEND GCC_CLANG_WARNINGS -Wno-deprecated-declarations -Wno-string-compare -Wno-pointer-sign)
+endif()
+
+# Unified AppleClang Target Optimizations and Linker Rules
+if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+    # Prevents the generation of over-aligned __DATA,__common sections entirely
+    string(APPEND CMAKE_CXX_FLAGS " -fno-common")
+    string(APPEND CMAKE_C_FLAGS " -fno-common")
+
+    # Silence duplicate static library link warnings safely (Verified working)
+    add_link_options("-Wl,-no_warn_duplicate_libraries")
+endif()
+
 set(GCC_WARNINGS
     -Wduplicated-branches
     -Wduplicated-cond
@@ -61,7 +72,6 @@ set(GCC_WARNINGS
     -Wcast-align
     -Wno-missing-field-initializers)
 
-# MSVC warnings
 set(MSVC_WARNINGS /W4)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -75,8 +85,7 @@ endif()
 add_library(Warnings INTERFACE)
 target_compile_options(Warnings INTERFACE ${WARNINGS})
 
-if(WINDOWS)
-else()
+if(NOT WINDOWS)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -funsigned-char")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -funsigned-char")
 
@@ -91,11 +100,13 @@ if(SAN)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=${SAN}")
 endif()
 
-add_subdirectory(external/lua)
-add_subdirectory(external/sol2)
+# ---------------------------------------------------------------------------
+# Subdirectories & Dependency Layout
+# ---------------------------------------------------------------------------
+add_subdirectory(external/lua SYSTEM)
+add_subdirectory(external/sol2 SYSTEM)
 
-
-# Main app files
+# Source groups
 set(MAIN_FILES
     src/MusicDatabase.cpp
     src/GZPlugin.cpp
@@ -109,7 +120,6 @@ set(MAIN_FILES
     src/textmode.cpp
 )
 
-# GL GUI files
 set(GUI_FILES
     src/ChipMachine.cpp
     src/MusicBars.cpp
@@ -119,7 +129,6 @@ set(GUI_FILES
     src/textmode.cpp
 )
 
-# Add include files
 set(SOURCE_FILES ${SOURCE_FILES} src/version.h src/TextField.h src/TextListView.h src/CueSheet.h
     src/Dialog.h src/LineEdit.h src/Icons.h src/SongInfo.h src/SongInfoField.h src/ChipInterface.h)
 
@@ -128,54 +137,21 @@ file(GLOB LUA_FILES lua/*.lua)
 file(GLOB DOC_FILES *.md)
 file(GLOB SCRIPT_FILES scripts/*)
 
-add_custom_target(chipmachine.data_files SOURCES ${DATA_FILES} )
+add_custom_target(chipmachine.data_files SOURCES ${DATA_FILES})
 add_custom_target(chipmachine.lua_files SOURCES ${LUA_FILES})
-add_custom_target(chipmachine.doc_files SOURCES ${DOC_FILES} )
-add_custom_target(chipmachine.script_files SOURCES ${SCRIPT_FILES} )
+add_custom_target(chipmachine.doc_files SOURCES ${DOC_FILES})
+add_custom_target(chipmachine.script_files SOURCES ${SCRIPT_FILES})
 
-set(CORE_MODULES
-    coreutils
-    audioplayer
-    archive
-    webutils
-    sqlite3
-    xml
-    bbsutils
-    crypto
-)
-
-set(GUI_MODULES
-    grappix
-    fft
-)
-
+set(CORE_MODULES coreutils audioplayer archive webutils sqlite3 xml bbsutils crypto)
+set(GUI_MODULES grappix fft)
 set(APONE_MODULES ${GUI_MODULES} ${CORE_MODULES})
+
 add_subdirectory(${AP1_ROOT}/mods ap1mods)
 
 set(MUSICPLAYER_PLUGINS
-    openmptplugin
-    htplugin
-    heplugin
-    ndsplugin
-    gmeplugin
-    sc68plugin
-    usfplugin
-    stsoundplugin
-    adplugin
-    mp3plugin
-    #viceplugin
-    hivelyplugin
-    rsnplugin
-    ayflyplugin
-    mdxplugin
-    s98plugin
-    aoplugin
-    gsfplugin
-    #viceplugin
-    #uadeplugin
-    tedplugin
-    # ffmpegplugin
-    v2plugin
+    openmptplugin htplugin heplugin ndsplugin gmeplugin sc68plugin
+    usfplugin stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
+    ayflyplugin mdxplugin s98plugin aoplugin gsfplugin tedplugin v2plugin
 )
 add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
 add_subdirectory(${MUSICPLAYER}/src/psf psf)
@@ -183,21 +159,32 @@ add_subdirectory(${MUSICPLAYER}/src/psf psf)
 include_directories(${AP1_ROOT}/mods/grappix ${MUSICPLAYER}/plugins)
 
 if(WIN32)
-    set(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} -mwindows)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
 endif()
 
 if(SAN)
-    set(CMAKE_EXE_LINKER_FLAGS ${CMAKE_EXE_LINKER_FLAGS} -fsanitize=${SAN})
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=${SAN}")
 endif()
 
-
 add_library(musicplayer INTERFACE)
-
 add_library(plugin_register STATIC src/plugin_register.cpp)
-
 target_link_libraries(musicplayer INTERFACE psf plugin_register)
 target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)
 
+# macOS Core Frameworks Definition
+if(APPLE)
+    set(APPLE_FRAMEWORKS 
+        "-framework CoreFoundation" 
+        "-framework IOKit" 
+        "-framework Cocoa" 
+        "-framework AudioToolbox" 
+        "-framework AudioUnit"
+    )
+endif()
+
+# ---------------------------------------------------------------------------
+# Targets Execution definitions
+# ---------------------------------------------------------------------------
 if(APPLE)
     add_executable(chipmachine MACOSX_BUNDLE ${MAIN_FILES} ${GUI_FILES} src/main.cpp)
     add_custom_command(TARGET chipmachine POST_BUILD
@@ -206,26 +193,63 @@ else()
     add_executable(chipmachine ${MAIN_FILES} ${GUI_FILES} src/main.cpp)
 endif()
 
-if(APPLE)
-    target_link_libraries(chipmachine PRIVATE musicplayer plugin_register
-                          ${CORE_MODULES} ${GUI_MODULES} ${MUSICPLAYER_PLUGINS} vicepluginbridge pthread sol z "-framework CoreFoundation" "-framework IOKit" "-framework Cocoa" "-framework AudioToolbox" "-framework AudioUnit")
-else()
-    target_link_libraries(chipmachine PRIVATE musicplayer plugin_register
-                          ${CORE_MODULES} ${GUI_MODULES} ${MUSICPLAYER_PLUGINS} vicepluginbridge pthread sol z)
-endif()
-
+target_link_libraries(chipmachine PRIVATE 
+    musicplayer 
+    plugin_register
+    ${CORE_MODULES} 
+    ${GUI_MODULES} 
+    ${MUSICPLAYER_PLUGINS} 
+    vicepluginbridge 
+    sol 
+    ${APPLE_FRAMEWORKS}
+)
 target_compile_definitions(chipmachine PRIVATE -DAPP_NAME=chipmachine)
 
 if(NOT WIN32)
     add_executable(cm ${MAIN_FILES} src/textmode.cpp src/main.cpp)
     target_compile_definitions(cm PUBLIC TEXTMODE_ONLY)
-    if(APPLE)
-        target_link_libraries(cm musicplayer ${CORE_MODULES} ${MUSICPLAYER_PLUGINS} vicepluginbridge sol z "-framework CoreFoundation" "-framework IOKit" "-framework Cocoa" "-framework AudioToolbox" "-framework AudioUnit")
-    else()
-        target_link_libraries(cm musicplayer ${CORE_MODULES} ${MUSICPLAYER_PLUGINS} vicepluginbridge sol z)
-    endif()
+    target_link_libraries(cm PRIVATE
+        musicplayer 
+        ${CORE_MODULES} 
+        ${MUSICPLAYER_PLUGINS} 
+        vicepluginbridge 
+        sol 
+        ${APPLE_FRAMEWORKS}
+    )
 endif()
 
+add_executable(mksonglist mksonglist/mksonglist.cpp src/SongFileIdentifier.cpp)
+target_link_libraries(mksonglist PRIVATE coreutils archive sc68plugin mp3plugin)
+
+add_executable(cmtest testmain.cpp test.cpp ${MAIN_FILES})
+target_link_libraries(cmtest PRIVATE 
+    plugin_register 
+    ${CORE_MODULES} 
+    ${MUSICPLAYER_PLUGINS} 
+    vicepluginbridge 
+    musicplayer 
+    sol 
+    ${APPLE_FRAMEWORKS}
+)
+target_include_directories(cmtest PRIVATE ${APONE}/mods)
+target_compile_definitions(cmtest PRIVATE -DTESTING)
+
+# --- EXTERNAL STUFF COMPILER WARNING SUPPRESSION ---
+if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
+    # Batch process all legacy submodules to completely force target-specific silent compilation
+    set(SILENT_TARGETS
+        vicepluginbridge ndsplugin gsfplugin usfplugin heplugin adplugin
+        aoplugin v2plugin unrar coreutils lua crypto tedplugin gmeplugin
+        openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin
+    )
+    foreach(target_item ${SILENT_TARGETS})
+        if(TARGET ${target_item})
+            target_compile_options(${target_item} PRIVATE -w)
+        endif()
+    endforeach()
+endif()
+
+# Bundle setup
 if(APPLE)
     set(APPS ${CMAKE_CURRENT_BINARY_DIR}/Chipmachine.app)
     set(DIRS "")
@@ -241,20 +265,3 @@ if(APPLE)
        file(COPY \"\${CMAKE_SOURCE_DIR}/bin/youtube-dl\" DESTINATION Chipmachine.app/Contents/Resources/bin/)
        " COMPONENT Runtime)
 endif()
-
-add_executable(mksonglist mksonglist/mksonglist.cpp src/SongFileIdentifier.cpp)
-target_link_libraries(mksonglist coreutils archive sc68plugin mp3plugin)
-
-add_executable(cmtest testmain.cpp test.cpp ${MAIN_FILES})
-if(APPLE)
-    target_link_libraries(cmtest PRIVATE plugin_register ${CORE_MODULES} ${MUSICPLAYER_PLUGINS} vicepluginbridge musicplayer z pthread sol "-framework CoreFoundation" "-framework IOKit" "-framework Cocoa" "-framework AudioToolbox" "-framework AudioUnit")
-else()
-    target_link_libraries(cmtest PRIVATE plugin_register ${CORE_MODULES} ${MUSICPLAYER_PLUGINS} vicepluginbridge musicplayer z pthread sol)
-endif()
-target_include_directories(cmtest PRIVATE ${APONE}/mods)
-target_compile_definitions(cmtest PRIVATE -DTESTING)
-
-#${TEXTMODE_FILES} add_executable(ditest ${PLUGIN_EXTRA_FILES} testmain.cpp ditest.cpp ${APP_FILES} ${SOURCE_FILES})
-# target_link_libraries(ditest ${APONE_MODULES} ${MUSICPLAYER_PLUGINS} pthread sol)
-# target_include_directories(ditest PRIVATE ${APONE}/mods)
-# target_compile_definitions(ditest PRIVATE -DTESTING)
