@@ -5,16 +5,16 @@ project(chipmachine)
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
 # ---------------------------------------------------------------------------
 if(APPLE)
-    # Force CMake to look inside the default Apple Silicon Homebrew prefix
     list(APPEND CMAKE_PREFIX_PATH "/opt/homebrew")
     list(APPEND CMAKE_FRAMEWORK_PATH "/opt/homebrew/Frameworks")
 
-    # Automatically default to native host architecture (ARM64 on Apple Silicon)
+    include_directories(/opt/homebrew/include)
+    link_directories(/opt/homebrew/lib)
+
     if(NOT CMAKE_OSX_ARCHITECTURES)
         set(CMAKE_OSX_ARCHITECTURES "arm64")
     endif()
     
-    # Set deployment target strictly to 26.0
     set(CMAKE_OSX_DEPLOYMENT_TARGET "26.0" CACHE STRING "macOS Deployment Target" FORCE)
 endif()
 
@@ -49,18 +49,13 @@ endif()
 # ---------------------------------------------------------------------------
 set(GCC_CLANG_WARNINGS -Wall -Wextra -Wnon-virtual-dtor -pedantic)
 
-# Silences the massive wall of legacy warnings from unrar, lua, and vice
 if(APPLE OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     list(APPEND GCC_CLANG_WARNINGS -Wno-deprecated-declarations -Wno-string-compare -Wno-pointer-sign)
 endif()
 
-# Unified AppleClang Target Optimizations and Linker Rules
 if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-    # Prevents the generation of over-aligned __DATA,__common sections entirely
     string(APPEND CMAKE_CXX_FLAGS " -fno-common")
     string(APPEND CMAKE_C_FLAGS " -fno-common")
-
-    # Silence duplicate static library link warnings safely (Verified working)
     add_link_options("-Wl,-no_warn_duplicate_libraries")
 endif()
 
@@ -101,12 +96,53 @@ if(SAN)
 endif()
 
 # ---------------------------------------------------------------------------
-# Subdirectories & Dependency Layout
+# Subdirectories & Dependency Layout (Processed early)
 # ---------------------------------------------------------------------------
 add_subdirectory(external/lua SYSTEM)
 add_subdirectory(external/sol2 SYSTEM)
 
-# Source groups
+set(CORE_MODULES coreutils audioplayer archive webutils sqlite3 xml bbsutils crypto)
+set(GUI_MODULES grappix fft)
+set(APONE_MODULES ${GUI_MODULES} ${CORE_MODULES})
+
+add_subdirectory(${AP1_ROOT}/mods ap1mods)
+
+# Define core plugin array
+set(MUSICPLAYER_PLUGINS
+    openmptplugin htplugin heplugin ndsplugin gmeplugin sc68plugin
+    usfplugin stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
+    ayflyplugin mdxplugin s98plugin aoplugin gsfplugin tedplugin v2plugin
+    ffmpegplugin
+)
+add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
+add_subdirectory(${MUSICPLAYER}/src/psf psf)
+
+include_directories(${AP1_ROOT}/mods/grappix ${MUSICPLAYER}/plugins)
+
+if(WIN32)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
+endif()
+
+if(SAN)
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=${SAN}")
+endif()
+
+add_library(musicplayer INTERFACE)
+add_library(plugin_register STATIC src/plugin_register.cpp)
+target_link_libraries(musicplayer INTERFACE psf plugin_register)
+target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)
+
+if(APPLE)
+    set(APPLE_FRAMEWORKS 
+        "-framework CoreFoundation" 
+        "-framework IOKit" 
+        "-framework Cocoa" 
+        "-framework AudioToolbox" 
+        "-framework AudioUnit"
+    )
+endif()
+
+# Source file layout declarations
 set(MAIN_FILES
     src/MusicDatabase.cpp
     src/GZPlugin.cpp
@@ -142,49 +178,10 @@ add_custom_target(chipmachine.lua_files SOURCES ${LUA_FILES})
 add_custom_target(chipmachine.doc_files SOURCES ${DOC_FILES})
 add_custom_target(chipmachine.script_files SOURCES ${SCRIPT_FILES})
 
-set(CORE_MODULES coreutils audioplayer archive webutils sqlite3 xml bbsutils crypto)
-set(GUI_MODULES grappix fft)
-set(APONE_MODULES ${GUI_MODULES} ${CORE_MODULES})
-
-add_subdirectory(${AP1_ROOT}/mods ap1mods)
-
-set(MUSICPLAYER_PLUGINS
-    openmptplugin htplugin heplugin ndsplugin gmeplugin sc68plugin
-    usfplugin stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
-    ayflyplugin mdxplugin s98plugin aoplugin gsfplugin tedplugin v2plugin
-)
-add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
-add_subdirectory(${MUSICPLAYER}/src/psf psf)
-
-include_directories(${AP1_ROOT}/mods/grappix ${MUSICPLAYER}/plugins)
-
-if(WIN32)
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
-endif()
-
-if(SAN)
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=${SAN}")
-endif()
-
-add_library(musicplayer INTERFACE)
-add_library(plugin_register STATIC src/plugin_register.cpp)
-target_link_libraries(musicplayer INTERFACE psf plugin_register)
-target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)
-
-# macOS Core Frameworks Definition
-if(APPLE)
-    set(APPLE_FRAMEWORKS 
-        "-framework CoreFoundation" 
-        "-framework IOKit" 
-        "-framework Cocoa" 
-        "-framework AudioToolbox" 
-        "-framework AudioUnit"
-    )
-endif()
-
 # ---------------------------------------------------------------------------
-# Targets Execution definitions
+# Targets Execution definitions (Direct file-level dependency tracking)
 # ---------------------------------------------------------------------------
+
 if(APPLE)
     add_executable(chipmachine MACOSX_BUNDLE ${MAIN_FILES} ${GUI_FILES} src/main.cpp)
     add_custom_command(TARGET chipmachine POST_BUILD
@@ -202,6 +199,10 @@ target_link_libraries(chipmachine PRIVATE
     vicepluginbridge 
     sol 
     ${APPLE_FRAMEWORKS}
+    avcodec
+    avformat
+    avutil
+    swresample
 )
 target_compile_definitions(chipmachine PRIVATE -DAPP_NAME=chipmachine)
 
@@ -215,6 +216,10 @@ if(NOT WIN32)
         vicepluginbridge 
         sol 
         ${APPLE_FRAMEWORKS}
+        avcodec
+        avformat
+        avutil
+        swresample
     )
 endif()
 
@@ -230,17 +235,20 @@ target_link_libraries(cmtest PRIVATE
     musicplayer 
     sol 
     ${APPLE_FRAMEWORKS}
+    avcodec
+    avformat
+    avutil
+    swresample
 )
 target_include_directories(cmtest PRIVATE ${APONE}/mods)
 target_compile_definitions(cmtest PRIVATE -DTESTING)
 
 # --- EXTERNAL STUFF COMPILER WARNING SUPPRESSION ---
 if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-    # Batch process all legacy submodules to completely force target-specific silent compilation
     set(SILENT_TARGETS
         vicepluginbridge ndsplugin gsfplugin usfplugin heplugin adplugin
         aoplugin v2plugin unrar coreutils lua crypto tedplugin gmeplugin
-        openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin
+        openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin ffmpegplugin
     )
     foreach(target_item ${SILENT_TARGETS})
         if(TARGET ${target_item})
@@ -249,7 +257,6 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     endforeach()
 endif()
 
-# adplug test fix
 target_compile_options(adplugin PRIVATE -fsigned-char)
 
 # Bundle setup

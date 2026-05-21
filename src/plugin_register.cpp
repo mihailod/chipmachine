@@ -23,6 +23,7 @@ extern "C" {
     void usfplugin_register();     // Nintendo 64
     void v2plugin_register();      // Farbrausch V2
     void vicepluginbridge_register();
+    void ffmpegplugin_register();
 }
 
 void register_plugins() {
@@ -46,4 +47,5 @@ void register_plugins() {
     usfplugin_register();
     v2plugin_register();
     vicepluginbridge_register();
+    ffmpegplugin_register();
 }
