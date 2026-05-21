@@ -24,6 +24,7 @@ extern "C" {
     void v2plugin_register();      // Farbrausch V2
     void vicepluginbridge_register();
     void ffmpegplugin_register();
+    void uadeplugin_register();
 }
 
 void register_plugins() {
@@ -48,4 +49,5 @@ void register_plugins() {
     v2plugin_register();
     vicepluginbridge_register();
     ffmpegplugin_register();
+    uadeplugin_register();
 }
