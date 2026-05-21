@@ -249,6 +249,9 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     endforeach()
 endif()
 
+# adplug test fix
+target_compile_options(adplugin PRIVATE -fsigned-char)
+
 # Bundle setup
 if(APPLE)
     set(APPS ${CMAKE_CURRENT_BINARY_DIR}/Chipmachine.app)

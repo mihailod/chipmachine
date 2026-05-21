@@ -1,1 +1,2 @@
 - uade/ffmpg -- enable one by one and try to compile them
+- all cmtests should pass
