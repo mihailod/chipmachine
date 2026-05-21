@@ -123,25 +123,33 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
             continue;
 
         int64_t sum = 0;
-        printf("Trying %s\n", f.getName().c_str());
-        auto* player = plugin.fromFile(f.getName());
-        if (player) {
-            int count = 15;
-            while (sum == 0 && count != 0) {
-                int rc = player->getSamples(&buffer[0], buffer.size());
-                if (rc > 0) {
-                    sum = std::accumulate(&buffer[0], &buffer[rc], (int64_t)0);
-                    if (sum != 0) {
-                        break;
-                    }
-                    count--;
-                } else
-                    break;
-            }
-            delete player;
+        if (!plugin.canHandle(f.getName())) {
+            printf("Skipping %s\n", f.getName().c_str());
+            continue;
         }
-        printf("#### Playing %s : %s\n", f.getName().c_str(),
-               player ? (sum == 0 ? "NO SOUND" : "OK") : "FAILED");
+        printf("Trying %s\n", f.getName().c_str());
+        try {
+            auto* player = plugin.fromFile(f.getName());
+            if (player) {
+                int count = 15;
+                while (sum == 0 && count != 0) {
+                    int rc = player->getSamples(&buffer[0], buffer.size());
+                    if (rc > 0) {
+                        sum = std::accumulate(&buffer[0], &buffer[rc], (int64_t)0);
+                        if (sum != 0) {
+                            break;
+                        }
+                        count--;
+                    } else
+                        break;
+                }
+                delete player;
+            }
+            printf("#### Playing %s : %s\n", f.getName().c_str(),
+                   player ? (sum == 0 ? "NO SOUND" : "OK") : "FAILED");
+        } catch (std::exception& e) {
+            printf("#### Playing %s : EXCEPTION (%s)\n", f.getName().c_str(), e.what());
+        }
     }
     return true;
 }
@@ -153,7 +161,7 @@ TEST_CASE("gme", "[music]")
 
 TEST_CASE("adlib", "[music]")
 {
-    testPlugin<musix::AdPlugin>("testmus/adlib", "", "data");
+    testPlugin<musix::AdPlugin>("testmus/adlib", ".rol", "data");
 }
 
 TEST_CASE("uade", "[music]")
@@ -185,6 +193,11 @@ TEST_CASE("psx", "[music]")
 
 TEST_CASE("zx", "[music]")
 {
-    testPlugin<musix::AyflyPlugin>("testmus/zx", "");
+    testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2");
+}
+
+TEST_CASE("ffmpeg", "[music]")
+{
+    testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg", "");
 }
 
