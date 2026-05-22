@@ -1,7 +1,7 @@
 ChipMachineAS
 =============
 
-**Port of Chipmachine for Apple Silicon.**
+**Port of ChipMachine (see the fork info) for Apple Silicon.**
 
 **ONLY BUILDING ON APPLE SILICON (ARM / M CHIPS) HAS BEEN TESTED -- INSTALL AT YOUR OWN RISK.**
 
