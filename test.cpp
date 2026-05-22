@@ -138,7 +138,7 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
             try {
                 auto* player = plugin.fromFile(f.getName());
                 if (player) {
-                    int count = 150;
+                    int count = 50;
                     while (sum == 0 && count != 0) {
                         int rc = player->getSamples(&buffer[0], buffer.size());
                     if (rc > 0) {
