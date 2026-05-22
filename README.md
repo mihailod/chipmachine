@@ -1,9 +1,11 @@
 chipmachine
 ===========
 
-**Port of Chipmachine for Apple Silicon. ONLY BUILDING ON APPLE SILICON MAC HAS BEEN TESTED. INSTALL AT YOUR OWN RISK.**
+**Port of Chipmachine for Apple Silicon.**
 
-**BUILD SCIPTS (FOR NOW) EXPLICITLY TARGET ONLY THE VERY LATEST MAC OS (26 / TAHOE) AND HAVE NOT BEEN TESTED ON OLDER VERSIONS.**
+**ONLY BUILDING ON APPLE SILICON (ARM / M CHIPS) HAS BEEN TESTED -- INSTALL AT YOUR OWN RISK.**
+
+**BUILD SCRIPTS (FOR NOW) EXPLICITLY TARGET ONLY THE VERY LATEST MAC OS (26 / TAHOE) AND HAVE NOT BEEN TESTED ON OLDER VERSIONS.**
 
 **I AM USING GOOGLE GEMINI TO HELP ME WITH THIS INTEL -> ARM PORT. SO IT IS ALSO AN EXPERIMENT IN HOW AI PERFORMS AT THIS TASK.**
 
@@ -18,15 +20,15 @@ See the demo (turn the sound on!):
 
 *A demoscene/retro Jukebox/spotify-like  music player*
 
+* **Intructions are dead simple:**
 * **Type anything to incrementally search in entire database**
-![ONE](http://85.24.142.250/chipmachine/cs1.png)
-
 * **Hit enter to play directly**
-![TWO](http://85.24.142.250/chipmachine/cs2.png)
+* **TAB key = help screen**
+* **(You can also read the scroll text for more info)**
 
 ## Binaries
 
-Binaries for macOS are available under *Releases*
+Binaries for macOS 26 / Tahoe (for now) are available under *Releases*
 
 https://github.com/sasq64/chipmachine/releases
 
@@ -46,7 +48,7 @@ To authorize and run the application on your Mac, follow these steps:
 
 *Note: You only need to perform this authorization once. Subsequent launches will boot instantly.*
 
-## Prerequisites
+## Prerequisites for development (not tested yet on another clean machine)
 
 * Make sure you have Homebrew installed (Apple Silicon homebrew is in /opt/homebrew/ , make sure you are not using Intel legacy /usr/local tools)
 * Download, build and install _libmpg123_ (http://sourceforge.net/projects/mpg123/files/)
