@@ -138,15 +138,20 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
             try {
                 auto* player = plugin.fromFile(f.getName());
                 if (player) {
-                    int count = 15;
+                    int count = 150;
                     while (sum == 0 && count != 0) {
                         int rc = player->getSamples(&buffer[0], buffer.size());
-                        if (rc > 0) {
-                            sum = std::accumulate(&buffer[0], &buffer[rc], (int64_t)0);
-                            if (sum != 0) {
+                    if (rc > 0) {
+                        for (int i = 0; i < rc; ++i) {
+                            if (buffer[i] != 0) {
+                                sum = 1;
                                 break;
                             }
-                            count--;
+                        }
+                        if (sum != 0) {
+                            break;
+                        }
+                        count--;
                         } else
                             break;
                     }
