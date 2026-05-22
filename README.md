@@ -3,7 +3,7 @@ chipmachine
 
 **NOTE: THIS IS HIGHLY EXPERIMENTAL / ALPHA WORK IN PROGRESS port of this program for Apple Silicon. Some plugins are disabled (uade, ffmpg) and the app works but has some bugs and produces tons of compilation warnings and it crashes occasionally as well. ONLY BUILDING ON APPLE SILICON MAC HAS BEEN TESTED. INSTALL AT YOUR OWN RISK.**
 
-**NOTE2:FOR NOW MY BUILD SCIPTS TARGET THE VERY LATEST MAC OS (26 / TAHOE) IN ORDER TO SILENCE MANY ANNOYING LINKER WARNINGS. I AM NOT SURE WHAT THE IMPLICATIONS OF THIS ARE AND IF IT WILL BREAK ON OLDER VERSIONS OF MAC OS.
+**NOTE2:FOR NOW MY BUILD SCIPTS TARGET THE VERY LATEST MAC OS (26 / TAHOE) IN ORDER TO SILENCE MANY ANNOYING LINKER WARNINGS. I AM NOT SURE WHAT THE IMPLICATIONS OF THIS ARE AND IF IT WILL BREAK ON OLDER VERSIONS OF MAC OS.**
 
 **NOTE3: I AM USING GOOGLE GEMINI CLI AI TO HELP ME WITH THIS INTEL -> ARM PORT. IT IS PARTIALLY AN EXPERIMENT IN HOW AI WILL PERFORM AT THIS COMPLEX TASK.**
 
@@ -26,49 +26,31 @@ See the demo (turn the sound on!):
 
 ## Binaries
 
-Binaries for Mac OSX and Windows are available under *Releases*
+Binaries for macOS are available under *Releases*
 
 https://github.com/sasq64/chipmachine/releases
 
+### Running the Apple Silicon Build (Gatekeeper Authorization)
+
+Because this standalone Apple Silicon build is distributed with an ad-hoc code signature, macOS Gatekeeper will block it upon download. This is standard behavior for open-source binaries compiled outside the Mac App Store.
+
+To authorize and run the application on your Mac, follow these steps:
+
+1. Double-click `ChipMachineAS.app`. macOS will display a prompt stating the app cannot be opened because the developer cannot be verified. Click **Done** or **Cancel**.
+2. Open your Mac's **System Settings**.
+3. Navigate to **Privacy & Security** in the left sidebar and scroll down to the **Security** section.
+4. Look for the notification stating: `“chipmachine” was blocked from use because it is not from an identified developer.`
+5. Click the **Open Anyway** button.
+6. Authenticate using your Mac's administrator password or Touch ID.
+7. Return to the app and double-click it to launch. One final confirmation prompt will appear—click **Open**.
+
+*Note: You only need to perform this authorization once. Subsequent launches will boot instantly.*
+
 ## Prerequisites
-
-### Linux/Debian
-
-```
-$ sudo apt-get install cmake git g++ zlib1g-dev libao-dev libgl1-mesa-dev libasound2-dev libglfw3-dev libcurl4-gnutls-dev libglew-dev libmpg123-dev ninja-build liblua6.3-dev libfftw3-dev
-```
-* NOTE: glfw3 does not exist in Trusty, but you can find deb packages for it (or you can build it yourself).
-
-### Mac OSX
 
 * Make sure you have Homebrew installed (Apple Silicon homebrew is in /opt/homebrew/ , make sure you are not using Intel legacy /usr/local tools)
 * Download, build and install _libmpg123_ (http://sourceforge.net/projects/mpg123/files/)
-
-```
-$ brew install git cmake ninja freetype glew glfw3 lua fftw
-```
-
-### Windows
-
-* Install MSYS2 and launch mingw32 shell (and not the mingw64 shell)
-* Make sure you are updated; `pacman -Suy`
-
-```
-$ pacman -S mingw32/mingw-w64-i686-cmake msys/git mingw32/mingw-w64-i686-gcc mingw32/mingw-w64-i686-ninja mingw32/mingw-w64-i686-python2 mingw32/mingw-w64-i686-glew mingw32/mingw-w64-i686-glfw mingw32/mingw-w64-i686-freetype mingw32/mingw-w64-i686-mpg123 mingw32/mingw-w64-i686-fftw mingw32/mingw-w64-i686-lua
-```
-
-### Raspberry PI
-
-* Very similar to Debian above
-
-## Building
-
-	# git clone https://github.com/sasq64/chipmachine.git
-	# git clone https://github.com/sasq64/apone.git
-	# git clone https://github.com/sasq64/musicplayer.git
-	# mkdir build ; cd build
-	# cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
-	# ninja
+* brew install git cmake ninja freetype glew glfw3 lua fftw
 
 ## Building for Apple Silicon (ALPHA/WIP, see TOODOO.txt)
 
@@ -139,7 +121,7 @@ Retro PC Game Music Streaming Radio - http://gyusyabu.ddo.jp/
 
 ### OpenMPT
 
-Support for Amiga and PC tracker formats
+Support for Amiga tracker formats
 
 * ProTracker, ScreamTracker III, FastTracker II, Impulse Tracker, OpenMPT, ScreamTracker II, NoiseTracker, Soundtracker, Mod's Grave, UltraTracker, Composer 669 / UNIS 669, MultiTracker, OctaMed, Farandole Composer, DigiTracker, Extreme's Tracker, Velvet Studio, DSIK Format, DSMI, ASYLUM, Oktalyzer, X-Tracker, PolyTracker, Epic Megagames, MASI, MadTracker 2, DigiBooster Pro, DigiBooster, Imago Orpheus, Galaxy Sound System
 
@@ -175,7 +157,7 @@ Support for Atari ST music (older formats)
 
 ### ADplug
 
-Support for PC soundcard music
+Support for retro audio format hardware simulation
 
 * AdLib Tracker 2 by subz3ro, 
 Westwood ADL File Format, 
@@ -241,7 +223,7 @@ Support for the Sharp X68000 Music Macro Language
 
 ### S98
 
-Support for NEC PC98 Music
+Support for retro hardware Music
 
 ### AudioOverload
 
@@ -263,7 +245,7 @@ Support for Plus/4 music
 
 ### FFMPeg
 
-Support for (Youtube) streaming audio
+Support for streaming audio
 
 * AAC
 * Ogg/Vorbis

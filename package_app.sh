@@ -1,7 +1,7 @@
 #!/bin/zsh
 set -e
 
-# Establish paths relative to this script's physical location
+# Establish precise absolute paths independent of execution context
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CHIPMACHINE_DIR="${SCRIPT_DIR}"
 WORKSPACE_ROOT="$(cd "${CHIPMACHINE_DIR}/.." && pwd)"
@@ -10,14 +10,18 @@ APP_NAME="ChipMachineAS.app"
 TARGET_DIR="${WORKSPACE_ROOT}/${APP_NAME}"
 ICON_PATH="${CHIPMACHINE_DIR}/icon.png"
 
+# Target payload directories
+MAC_OS_DIR="${TARGET_DIR}/Contents/MacOS"
+RESOURCES_DIR="${TARGET_DIR}/Contents/Resources"
+
 echo "=== Starting Apple Silicon App Bundle Packaging ==="
 echo "Workspace Root: ${WORKSPACE_ROOT}"
 echo "Target App Bundle: ${TARGET_DIR}"
 
 # 1. Clean previous packaging attempts and set up pristine directories
 rm -rf "${TARGET_DIR}"
-mkdir -p "${TARGET_DIR}/Contents/MacOS"
-mkdir -p "${TARGET_DIR}/Contents/Resources"
+mkdir -p "${MAC_OS_DIR}"
+mkdir -p "${RESOURCES_DIR}"
 
 # 2. Copy compiled binary as the primary bundle entry point
 if [ ! -f "${BUILD_DIR}/chipmachine" ]; then
@@ -25,8 +29,8 @@ if [ ! -f "${BUILD_DIR}/chipmachine" ]; then
     exit 1
 fi
 echo "-> Copying executable binary..."
-cp "${BUILD_DIR}/chipmachine" "${TARGET_DIR}/Contents/MacOS/chipmachine"
-chmod +x "${TARGET_DIR}/Contents/MacOS/chipmachine"
+cp "${BUILD_DIR}/chipmachine" "${MAC_OS_DIR}/chipmachine"
+chmod +x "${MAC_OS_DIR}/chipmachine"
 
 # 3. Create Info.plist (Enforces the display name 'ChipMachineAS')
 echo "-> Creating Info.plist..."
@@ -60,7 +64,7 @@ EOF
 # 4. Copy the asset and Lua payloads from the chipmachine source tree
 echo "-> Packaging runtime assets into bundle..."
 if [ -d "${CHIPMACHINE_DIR}/data" ]; then
-    cp -R "${CHIPMACHINE_DIR}/data" "${TARGET_DIR}/Contents/Resources/"
+    cp -R "${CHIPMACHINE_DIR}/data" "${RESOURCES_DIR}/"
 else
     echo "ERROR: Data folder not found at ${CHIPMACHINE_DIR}/data"
     exit 1
@@ -68,76 +72,80 @@ fi
 
 if [ -d "${CHIPMACHINE_DIR}/lua" ]; then
     echo "-> Packaging Lua subsystem files into bundle..."
-    cp -R "${CHIPMACHINE_DIR}/lua" "${TARGET_DIR}/Contents/Resources/"
+    cp -R "${CHIPMACHINE_DIR}/lua" "${RESOURCES_DIR}/"
 else
     echo "WARNING: Lua folder not found at ${CHIPMACHINE_DIR}/lua. Scripting features may fail."
 fi
 
 # 5. Fix Native ARM64 Dynamic Library Linkages Deeply
 echo "-> Resolving recursive dynamic library paths..."
-cd "${TARGET_DIR}/Contents/MacOS"
 
-# Use an associative array to track processed libraries natively in Zsh
+# Global associative array for dependency state tracking
 typeset -A PROCESSED_LIBS
 
 discover_and_patch() {
-    local TARGET_FILE="$1"
+    local TARGET_FILE_PATH="$1"
     
-    # Read otool output line by line safely using a while loop
-    otool -L "$TARGET_FILE" | grep -E '/opt/homebrew/|/usr/local/' | awk '{print $1}' | while read -r LIB; do
+    # Process line-by-line while cleanly splitting out whitespaces and the trailing metadata parentheses
+    otool -L "$TARGET_FILE_PATH" | grep -E '/opt/homebrew/|/usr/local/' | awk '{print $1}' | while read -r RAW_LIB; do
+        # Robustly strip any hidden tabs, trailing carriage returns, or spaces
+        local LIB=$(echo "$RAW_LIB" | tr -d '[:space:]')
         [ -z "$LIB" ] && continue
+        
         local LIB_BASE=$(basename "$LIB")
+        local DEST_LIB_PATH="${MAC_OS_DIR}/${LIB_BASE}"
         
         if [ -z "${PROCESSED_LIBS[$LIB_BASE]}" ]; then
-            echo "   Isolating dependency: $LIB_BASE (Required by $(basename "$TARGET_FILE"))"
+            echo "   Isolating dependency: $LIB_BASE (Required by $(basename "$TARGET_FILE_PATH"))"
             
-            if [ ! -f "$LIB_BASE" ]; then
-                cp "$LIB" "."
-                chmod +w "$LIB_BASE"
+            if [ ! -f "$DEST_LIB_PATH" ]; then
+                cp "$LIB" "$DEST_LIB_PATH"
+                chmod +w "$DEST_LIB_PATH"
             fi
             
+            # Register globally
             PROCESSED_LIBS[$LIB_BASE]=1
             
-            # Recurse down to capture nested dependencies inside the copied library
-            discover_and_patch "$LIB_BASE"
+            # Safe depth-first recursion
+            discover_and_patch "$DEST_LIB_PATH"
         fi
         
-        # Redirect the reference to point inside the bundle relatively
-        install_name_tool -change "$LIB" "@executable_path/$LIB_BASE" "$TARGET_FILE"
+        # Rewrite absolute dependency paths to relative bundle references explicitly
+        echo "   [Patching Executable Linkage] inside $(basename "$TARGET_FILE_PATH"): changing $LIB -> @executable_path/$LIB_BASE"
+        install_name_tool -change "$LIB" "@executable_path/$LIB_BASE" "$TARGET_FILE_PATH"
     done
     
-    if [[ "$TARGET_FILE" == *.dylib ]]; then
-        install_name_tool -id "@executable_path/$TARGET_FILE" "$TARGET_FILE"
+    if [[ "$TARGET_FILE_PATH" == *.dylib ]]; then
+        install_name_tool -id "@executable_path/$(basename "$TARGET_FILE_PATH")" "$TARGET_FILE_PATH"
     fi
 }
 
-# Run deep dependency sweep starting from your main binary entry point
-discover_and_patch "chipmachine"
+# Run dependency injection pass using absolute file location
+discover_and_patch "${MAC_OS_DIR}/chipmachine"
 
 # 6. Build the Icons
-cd "${CHIPMACHINE_DIR}"
 if [ -f "${ICON_PATH}" ]; then
     echo "-> Compiling application icon from local icon.png..."
-    mkdir -p temp.iconset
-    sips -z 16 16     "${ICON_PATH}" --out temp.iconset/icon_16x16.png
-    sips -z 32 32     "${ICON_PATH}" --out temp.iconset/icon_16x16@2x.png
-    sips -z 32 32     "${ICON_PATH}" --out temp.iconset/icon_32x32.png
-    sips -z 64 64     "${ICON_PATH}" --out temp.iconset/icon_32x32@2x.png
-    sips -z 128 128   "${ICON_PATH}" --out temp.iconset/icon_128x128.png
-    sips -z 256 256   "${ICON_PATH}" --out temp.iconset/icon_128x128@2x.png
-    sips -z 256 256   "${ICON_PATH}" --out temp.iconset/icon_256x256.png
-    sips -z 512 512   "${ICON_PATH}" --out temp.iconset/icon_256x256@2x.png
-    sips -z 512 512   "${ICON_PATH}" --out temp.iconset/icon_512x512.png
-    sips -z 1024 1024 "${ICON_PATH}" --out temp.iconset/icon_512x512@2x.png
-    iconutil -c icns temp.iconset -o "${TARGET_DIR}/Contents/Resources/AppIcon.icns"
-    rm -rf temp.iconset
+    mkdir -p "${CHIPMACHINE_DIR}/temp.iconset"
+    sips -z 16 16     "${ICON_PATH}" --out "${CHIPMACHINE_DIR}/temp.iconset/icon_16x16.png"
+    sips -z 32 32     "${ICON_PATH}" --out "${CHIPMACHINE_DIR}/temp.iconset/icon_16x16@2x.png"
+    sips -z 32 32     "${ICON_PATH}" --out "${CHIPMACHINE_DIR}/temp.iconset/icon_32x32.png"
+    sips -z 64 64     "${ICON_PATH}" --out "${CHIPMACHINE_DIR}/temp.iconset/icon_32x32@2x.png"
+    sips -z 128 128   "${ICON_PATH}" --out "${CHIPMACHINE_DIR}/temp.iconset/icon_128x128.png"
+    sips -z 256 256   "${ICON_PATH}" --out "${CHIPMACHINE_DIR}/temp.iconset/icon_128x128@2x.png"
+    sips -z 256 256   "${ICON_PATH}" --out "${CHIPMACHINE_DIR}/temp.iconset/icon_256x256.png"
+    sips -z 512 512   "${ICON_PATH}" --out "${CHIPMACHINE_DIR}/temp.iconset/icon_256x256@2x.png"
+    sips -z 512 512   "${ICON_PATH}" --out "${CHIPMACHINE_DIR}/temp.iconset/icon_512x512.png"
+    sips -z 1024 1024 "${ICON_PATH}" --out "${CHIPMACHINE_DIR}/temp.iconset/icon_512x512@2x.png"
+    iconutil -c icns "${CHIPMACHINE_DIR}/temp.iconset" -o "${RESOURCES_DIR}/AppIcon.icns"
+    rm -rf "${CHIPMACHINE_DIR}/temp.iconset"
 fi
 
 # 7. Apply ad-hoc code signatures
 echo "-> Applying ad-hoc code signatures..."
 if command -v codesign &> /dev/null; then
-    find "${TARGET_DIR}/Contents/MacOS" -name "*.dylib" -exec codesign -f -s - {} \;
-    codesign -f -s - "${TARGET_DIR}/Contents/MacOS/chipmachine"
+    find "${MAC_OS_DIR}" -name "*.dylib" -exec codesign -f -s - {} \;
+    codesign -f -s - "${MAC_OS_DIR}/chipmachine"
     codesign -f -s - "${TARGET_DIR}"
     echo "-> Code signing complete."
 fi
