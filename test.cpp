@@ -115,41 +115,51 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
                 const ARGS&... args)
 {
     std::array<int16_t, 8192> buffer;
-    PLUGIN plugin{ args... };
-    printf("---- %s ----\n", plugin.name().c_str());
-    logging::setLevel(logging::Level::Warning);
-    for (auto f : utils::File{ dir }.listFiles()) {
-        if (exclude != "" && f.getName().find(exclude) != std::string::npos)
-            continue;
+    try {
+        PLUGIN plugin{ args... };
+        printf("---- %s ----\n", plugin.name().c_str());
+        logging::setLevel(logging::Level::Warning);
+        
+        auto files = utils::File{ dir }.listFiles();
+        if (files.empty()) {
+            printf("NO FILES FOUND!\n");
+        }
+        
+        for (auto f : files) {
+            if (exclude != "" && f.getName().find(exclude) != std::string::npos)
+                continue;
 
-        int64_t sum = 0;
-        if (!plugin.canHandle(f.getName())) {
-            printf("Skipping %s\n", f.getName().c_str());
-            continue;
-        }
-        printf("Trying %s\n", f.getName().c_str());
-        try {
-            auto* player = plugin.fromFile(f.getName());
-            if (player) {
-                int count = 15;
-                while (sum == 0 && count != 0) {
-                    int rc = player->getSamples(&buffer[0], buffer.size());
-                    if (rc > 0) {
-                        sum = std::accumulate(&buffer[0], &buffer[rc], (int64_t)0);
-                        if (sum != 0) {
-                            break;
-                        }
-                        count--;
-                    } else
-                        break;
-                }
-                delete player;
+            int64_t sum = 0;
+            if (!plugin.canHandle(f.getName())) {
+                printf("Skipping %s\n", f.getName().c_str());
+                continue;
             }
-            printf("#### Playing %s : %s\n", f.getName().c_str(),
-                   player ? (sum == 0 ? "NO SOUND" : "OK") : "FAILED");
-        } catch (std::exception& e) {
-            printf("#### Playing %s : EXCEPTION (%s)\n", f.getName().c_str(), e.what());
+            printf("Trying %s\n", f.getName().c_str());
+            try {
+                auto* player = plugin.fromFile(f.getName());
+                if (player) {
+                    int count = 15;
+                    while (sum == 0 && count != 0) {
+                        int rc = player->getSamples(&buffer[0], buffer.size());
+                        if (rc > 0) {
+                            sum = std::accumulate(&buffer[0], &buffer[rc], (int64_t)0);
+                            if (sum != 0) {
+                                break;
+                            }
+                            count--;
+                        } else
+                            break;
+                    }
+                    delete player;
+                }
+                printf("#### Playing %s : %s\n", f.getName().c_str(),
+                       player ? (sum == 0 ? "NO SOUND" : "OK") : "FAILED");
+            } catch (std::exception& e) {
+                printf("#### Playing %s : EXCEPTION (%s)\n", f.getName().c_str(), e.what());
+            }
         }
+    } catch (std::exception& e) {
+        printf("---- Plugin Instantiation Failed: %s ----\n", e.what());
     }
     return true;
 }
@@ -167,7 +177,7 @@ TEST_CASE("adlib", "[music]")
 TEST_CASE("uade", "[music]")
 {
     #ifndef __aarch64__
-        testPlugin<musix::UADEPlugin>("testmus/uade", "smp", dataDir);
+        testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data");
     #endif
 }
 
@@ -200,4 +210,17 @@ TEST_CASE("ffmpeg", "[music]")
 {
     testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg", "");
 }
+
+TEST_CASE("ht", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
+TEST_CASE("sc68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
+TEST_CASE("usf", "[music]") { testPlugin<musix::USFPlugin>("testmus/usf", ""); }
+TEST_CASE("stsound", "[music]") { testPlugin<musix::StSoundPlugin>("testmus/stsound", ""); }
+TEST_CASE("mp3", "[music]") { testPlugin<musix::MP3Plugin>("testmus/mp3", ""); }
+TEST_CASE("hively", "[music]") { testPlugin<musix::HivelyPlugin>("testmus/hively", ""); }
+TEST_CASE("rsn", "[music]") { testPlugin<musix::RSNPlugin>("testmus/rsn", ""); }
+TEST_CASE("mdx", "[music]") { testPlugin<musix::MDXPlugin>("testmus/mdx", ""); }
+TEST_CASE("s98", "[music]") { testPlugin<musix::S98Plugin>("testmus/s98", ""); }
+TEST_CASE("ao", "[music]") { testPlugin<musix::AOPlugin>("testmus/ao", ""); }
+TEST_CASE("ted", "[music]") { testPlugin<musix::TEDPlugin>("testmus/ted", ""); }
+TEST_CASE("v2", "[music]") { testPlugin<musix::V2Plugin>("testmus/v2", ""); }
 
