@@ -34,6 +34,8 @@ https://github.com/sasq64/chipmachine/releases
 
 ### Running the Apple Silicon Build (Gatekeeper Authorization)
 
+TESTED ON: TAHOE, SONOMA
+
 Because this standalone Apple Silicon build is distributed with an ad-hoc code signature, macOS Gatekeeper will block it upon download. This is standard behavior for open-source binaries compiled outside the Mac App Store.
 
 To authorize and run the application on your Mac, follow these steps:
@@ -50,6 +52,7 @@ To authorize and run the application on your Mac, follow these steps:
 
 ## Prerequisites for development (not tested yet on another clean machine)
 
+* TESTED ON MAC OS 26 (TAHOE) ONLY AND NOT TESTED YET ON A CLEAN MACHINE
 * Make sure you have Homebrew installed (Apple Silicon homebrew is in /opt/homebrew/ , make sure you are not using Intel legacy /usr/local tools)
 * Download, build and install _libmpg123_ (http://sourceforge.net/projects/mpg123/files/)
 * brew install git cmake ninja freetype glew glfw3 lua fftw
