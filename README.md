@@ -1,5 +1,5 @@
-chipmachine
-===========
+ChipMachineAS
+=============
 
 **Port of Chipmachine for Apple Silicon.**
 
