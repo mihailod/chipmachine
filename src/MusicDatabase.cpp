@@ -719,9 +719,9 @@ SongInfo& MusicDatabase::lookup(SongInfo& song)
         tie(song.path, song.title, song.game, song.composer, song.format, coll,
             song.metadata[SongInfo::INFO]) = q.get_tuple();
         song.path = coll + "::" + song.path;
-        LOGD("LOOKUP '%s' became '%s'", path, song.path);
+        //LOGD("LOOKUP '%s' became '%s'", path, song.path);
     } else {
-        LOGD("TODO: Check products");
+        //LOGD("TODO: Check products");
     }
 
     return song;
@@ -791,7 +791,7 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
 
     lookup(s);
     auto parts = split(s.path, "::");
-    LOGD(s.path);
+    //LOGD(s.path);
     if (parts.size() < 2) return "";
     std::string collection = parts[0];
     std::string shot;

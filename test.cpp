@@ -87,11 +87,11 @@ TEST_CASE("musicplayerlist", "")
     mpl->wait();
     auto state = mpl->getState();
     auto info = mpl->getInfo();
-    LOGI("%s %s %d", info.title, info.path, state);
+    //LOGI("%s %s %d", info.title, info.path, state);
     ap.seek(150);
     mpl->wait();
     info = mpl->getInfo();
-    LOGI("%s %s %d", info.title, info.path, state);
+    //LOGI("%s %s %d", info.title, info.path, state);
 }
 
 TEST_CASE("musicplayer", "")

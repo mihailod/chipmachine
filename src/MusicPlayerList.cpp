@@ -55,7 +55,7 @@ void MusicPlayerList::addSong(const SongInfo& si, bool shuffle)
         if (shuffle) {
             playList.insertAt(rand() % (playList.size() + 1), si);
         } else {
-            LOGD("PUSH %s/%s (%s)", si.title, si.composer, si.path);
+            //LOGD("PUSH %s/%s (%s)", si.title, si.composer, si.path);
             playList.push_back(si);
         }
     });
@@ -91,7 +91,7 @@ void MusicPlayerList::seek(int song, int seconds)
 {
     onThisThread([=] {
         if (!multiSongs.empty()) {
-            LOGD("CHANGED MULTI");
+            //LOGD("CHANGED MULTI");
             state = Playmulti;
             multiSongNo = song;
             return;
@@ -163,7 +163,7 @@ bool MusicPlayerList::handlePlaylist(const std::string& fileName)
 
     musicDatabase.lookup(playList.front());
     if (playList.front().path == "") {
-        LOGD("Could not lookup '%s'", playList.front().path);
+        //LOGD("Could not lookup '%s'", playList.front().path);
         errors.emplace_back("Bad song in playlist");
         SET_STATE(Error);
         return false;
@@ -219,7 +219,7 @@ bool MusicPlayerList::playFile(utils::path fileName)
     if (mp.playFile(fileName.string())) {
         if (currentInfo.starttune >= 0) mp.seek(currentInfo.starttune);
         changedSong = false;
-        LOGD("CHANGED MULTI:%s", changedMulti ? "YES" : "NO");
+        //LOGD("CHANGED MULTI:%s", changedMulti ? "YES" : "NO");
         if (!changedMulti) {
             updateInfo();
             SET_STATE(Playstarted);
@@ -284,12 +284,12 @@ void MusicPlayerList::update()
                 else
                     SET_STATE(Waiting);
             } else if ((length > 0 && pos > length) && pos > 7) {
-                LOGD("STATE: Song length exceeded");
+                //LOGD("STATE: Song length exceeded");
                 mp.fadeOut(3.0);
                 SET_STATE(Fading);
             } else if (detectSilence && mp.getSilence() > 44100 * 6 &&
                        pos > 7) {
-                LOGD("STATE: Silence detected");
+                //LOGD("STATE: Silence detected");
                 mp.fadeOut(0.5);
                 SET_STATE(Fading);
             }
@@ -298,7 +298,7 @@ void MusicPlayerList::update()
 
     if (state == Fading) {
         if (mp.getFadeVolume() <= 0.01) {
-            LOGD("STATE: Music ended");
+            //LOGD("STATE: Music ended");
             if (playList.size() == 0)
                 SET_STATE(Stopped);
             else
@@ -325,8 +325,8 @@ void MusicPlayerList::update()
         }
 
         // pos = 0;
-        LOGD("Next song from queue : %s (%d)", currentInfo.path,
-             currentInfo.starttune);
+        //LOGD("Next song from queue : %s (%d)", currentInfo.path,
+             //currentInfo.starttune);
         multiSongs.clear();
         playCurrent();
     }
@@ -362,7 +362,7 @@ void MusicPlayerList::playCurrent()
     songFiles.clear();
     // screenshot = "";
 
-    LOGD("PLAY PATH:%s", currentInfo.path);
+    //LOGD("PLAY PATH:%s", currentInfo.path);
     std::string prefix, path;
     auto parts = split(currentInfo.path, "::", 2);
     if (parts.size() == 2) {
@@ -389,7 +389,7 @@ void MusicPlayerList::playCurrent()
             playList.psongs.push_back(song);
         }
         if (playList.psongs.empty()) {
-            LOGD("No songs in product");
+            //LOGD("No songs in product");
             errors.emplace_back("No songs in product");
             SET_STATE(Error);
             return;
@@ -398,7 +398,7 @@ void MusicPlayerList::playCurrent()
         // Check that the first song is working
         musicDatabase.lookup(playList.psongs.front());
         if (playList.psongs.front().path == "") {
-            LOGD("Could not lookup '%s'", playList.psongs.front().path);
+            //LOGD("Could not lookup '%s'", playList.psongs.front().path);
             errors.emplace_back("Bad song in product");
             SET_STATE(Error);
             return;
@@ -449,7 +449,7 @@ void MusicPlayerList::playCurrent()
     cancelStreaming();
 
     if (utils::exists(currentInfo.path)) {
-        LOGD("PLAYING LOCAL FILE %s", currentInfo.path);
+        //LOGD("PLAYING LOCAL FILE %s", currentInfo.path);
         songFiles = { File(currentInfo.path) };
         loadedFile = currentInfo.path;
         files = 0;
@@ -486,7 +486,7 @@ void MusicPlayerList::playCurrent()
 
         if (mp.streamFile("dummy.mp3")) {
             SET_STATE(Playstarted);
-            LOGD("Stream start");
+            //LOGD("Stream start");
             std::string name = currentInfo.path;
             remoteLoader.stream(
                 currentInfo.path,
@@ -515,7 +515,7 @@ void MusicPlayerList::playCurrent()
         songFiles.push_back(f0);
         loadedFile = f0.getName();
         // auto ext = toLower(path_extension(loadedFile));
-        LOGD("Loaded file '%s'", loadedFile);
+        //LOGD("Loaded file '%s'", loadedFile);
         auto parentDir = File(path_directory(loadedFile));
         auto fileList = mp.getSecondaryFiles(f0);
         for (const auto& s : fileList) {

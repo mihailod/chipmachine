@@ -151,7 +151,7 @@ bool MusicPlayer::streamFile(const std::string& fileName)
     check_silence = true;
     for (auto& plugin : musix::ChipPlugin::getPlugins()) {
         if (plugin->canHandle(name)) {
-            LOGD("Playing with %s\n", plugin->name());
+            //LOGD("Playing with %s\n", plugin->name());
             auto newPlayer = std::shared_ptr<musix::ChipPlayer>(
                 plugin->fromStream(stream_fifo));
             if (newPlayer) player = newPlayer;
@@ -193,7 +193,7 @@ bool MusicPlayer::playFile(const std::string& fileName)
             for (const auto& s : *a) {
                 a->extract(s);
                 name = "_files/" + s;
-                LOGD("Extracted %s", name);
+                //LOGD("Extracted %s", name);
                 break;
             }
         } catch (utils::archive_exception& ae) {
@@ -347,10 +347,10 @@ MusicPlayer::fromFile(const std::string& file_name)
     auto name = file_name;
     utils::makeLower(name);
     check_silence = true;
-    LOGD("Finding plugin for '%s' (%s)", file_name, name);
+    //LOGD("Finding plugin for '%s' (%s)", file_name, name);
     for (auto& plugin : musix::ChipPlugin::getPlugins()) {
         if (plugin->canHandle(name)) {
-            LOGD("Playing with %s\n", plugin->name());
+            //LOGD("Playing with %s\n", plugin->name());
             auto player =
                 std::shared_ptr<musix::ChipPlayer>(plugin->fromFile(file_name));
             if (!player) continue;
