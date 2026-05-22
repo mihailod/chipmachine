@@ -1,7 +1,5 @@
 crashes:
 ========
-house jack build ping pong --- bad variant access
-unita cracktro #5 / dr dysmal mp3: libc++abi: terminating due to uncaught exception of type std::bad_variant_access: bad_variant_access
 
 could not play song:
 ===================

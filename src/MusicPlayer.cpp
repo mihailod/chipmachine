@@ -291,13 +291,32 @@ void MusicPlayer::pause(bool do_pause)
 }
 
 std::string MusicPlayer::getMeta(const std::string& what)
-{
+{       
     if (what == "message") {
         return message;
     } else if (what == "sub_title") {
         return sub_title;
     }
-    if (player) return std::get<std::string>(player->meta(what));
+
+    if (player) {
+        auto val = player->meta(what);
+
+        // Case 1: Variant actually holds a string
+        if (auto str_ptr = std::get_if<std::string>(&val)) {
+            return *str_ptr;
+        }
+        
+        // Case 2: Variant holds a double (e.g., length)
+        if (auto dbl_ptr = std::get_if<double>(&val)) {
+            return std::to_string(*dbl_ptr);
+        }
+
+        // Case 3: Variant holds an unsigned int (e.g., bitrate, channels)
+        if (auto uint_ptr = std::get_if<unsigned int>(&val)) {
+            return std::to_string(*uint_ptr);
+        }
+    }
+
     return "";
 }
 
