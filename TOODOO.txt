@@ -1,2 +1,13 @@
-- uade/ffmpg -- enable one by one and try to compile them
-- all cmtests should pass
+crashes:
+========
+house jack build ping pong --- bad variant access
+unita cracktro #5 / dr dysmal mp3: libc++abi: terminating due to uncaught exception of type std::bad_variant_access: bad_variant_access
+
+could not play song:
+===================
+violet: hybris/noodle YM2149 -- no plugin? ymst format, should be treated with ym plugin?
+
+console errors:
+===============
+centrale de huit --youtube error/
+sundance da: amiga aga /cpc youtube ffmpeg? --console error
