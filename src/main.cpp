@@ -121,7 +121,7 @@ int main(int argc, char* argv[])
     utils::path exeDir = Environment::getExeDir();
     std::string currentPath = getenv("PATH");
     std::string newPath =
-        binDir.string() + ":" + exeDir.string() + ":" + currentPath;
+        exeDir.string() + ":" + binDir.string() + ":" + currentPath;
     setenv("PATH", newPath.c_str(), 1);
     printf("NEW PATH SET TO: %s\n", newPath.c_str());
     fflush(stdout);

@@ -54,16 +54,13 @@ fi
 
 if [ -d "${CHIPMACHINE_DIR}/bin" ]; then
     echo "-> Packaging helper binaries into bundle..."
-    # 1. Put binary ffmpeg in MacOS so it shares the library pathing
+    # Put all binaries in MacOS so they share the library pathing and codesigning context
     cp -L "${CHIPMACHINE_DIR}/bin/ffmpeg" "${MAC_OS_DIR}/"
-    
-    # 2. Put scripts/links in Resources/bin to avoid codesign issues in MacOS/
-    mkdir -p "${RESOURCES_DIR}/bin"
-    cp -L "${CHIPMACHINE_DIR}/bin/yt-dlp" "${RESOURCES_DIR}/bin/"
-    cp -L "${CHIPMACHINE_DIR}/bin/youtube-dl" "${RESOURCES_DIR}/bin/"
+    cp -L "${CHIPMACHINE_DIR}/bin/yt-dlp" "${MAC_OS_DIR}/"
+    cp -P "${CHIPMACHINE_DIR}/bin/youtube-dl" "${MAC_OS_DIR}/"
     
     chmod +x "${MAC_OS_DIR}/ffmpeg"
-    chmod +x "${RESOURCES_DIR}/bin/"*
+    chmod +x "${MAC_OS_DIR}/yt-dlp"
 else
     echo "WARNING: bin folder not found at ${CHIPMACHINE_DIR}/bin. YouTube playback will fail."
 fi
@@ -117,8 +114,11 @@ discover_and_patch() {
 }
 
 # Run dependency injection pass for Mach-O binaries in the MacOS folder
-discover_and_patch "${MAC_OS_DIR}/chipmachine"
-discover_and_patch "${MAC_OS_DIR}/ffmpeg"
+for EXE in "${MAC_OS_DIR}/"*; do
+    if [ -x "$EXE" ] && [ ! -L "$EXE" ]; then
+        discover_and_patch "$EXE"
+    fi
+done
 
 # 6. Build the Icons
 if [ -f "${ICON_PATH}" ]; then
