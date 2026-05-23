@@ -18,6 +18,10 @@ public:
     {
         LOGD("Youtube plugin %s", fileName);
         std::string x = lua["on_parse_youtube"](fileName);
+        if (x.empty()) {
+            LOGE("Failed to extract YouTube stream URL for %s", fileName.c_str());
+            return nullptr;
+        }
         LOGD("LUA reports %s", x);
         auto player = plugin->fromFile(x);
         LOGD("OK");

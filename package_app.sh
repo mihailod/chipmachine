@@ -34,32 +34,7 @@ chmod +x "${MAC_OS_DIR}/chipmachine"
 
 # 3. Create Info.plist (Enforces the display name 'ChipMachineAS')
 echo "-> Creating Info.plist..."
-cat <<EOF > "${TARGET_DIR}/Contents/Info.plist"
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>CFBundleExecutable</key>
-    <string>chipmachine</string>
-    <key>CFBundleIconFile</key>
-    <string>AppIcon.icns</string>
-    <key>CFBundleIdentifier</key>
-    <string>org.mihailod.chipmachineas</string>
-    <key>CFBundleName</key>
-    <string>ChipMachineAS</string>
-    <key>CFBundleDisplayName</key>
-    <string>ChipMachineAS</string>
-    <key>CFBundlePackageType</key>
-    <string>APPL</string>
-    <key>CFBundleShortVersionString</key>
-    <string>1.0.0</string>
-    <key>LSMinimumSystemVersion</key>
-    <string>11.0</string>
-    <key>NSHighResolutionCapable</key>
-    <true/>
-</dict>
-</plist>
-EOF
+printf '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n    <key>CFBundleExecutable</key>\n    <string>chipmachine</string>\n    <key>CFBundleIconFile</key>\n    <string>AppIcon.icns</string>\n    <key>CFBundleIdentifier</key>\n    <string>org.mihailod.chipmachineas</string>\n    <key>CFBundleName</key>\n    <string>ChipMachineAS</string>\n    <key>CFBundleDisplayName</key>\n    <string>ChipMachineAS</string>\n    <key>CFBundlePackageType</key>\n    <string>APPL</string>\n    <key>CFBundleShortVersionString</key>\n    <string>1.0.0</string>\n    <key>LSMinimumSystemVersion</key>\n    <string>11.0</string>\n    <key>NSHighResolutionCapable</key>\n    <true/>\n</dict>\n</plist>\n' > "${TARGET_DIR}/Contents/Info.plist"
 
 # 4. Copy the asset and Lua payloads from the chipmachine source tree
 echo "-> Packaging runtime assets into bundle..."
@@ -77,6 +52,22 @@ else
     echo "WARNING: Lua folder not found at ${CHIPMACHINE_DIR}/lua. Scripting features may fail."
 fi
 
+if [ -d "${CHIPMACHINE_DIR}/bin" ]; then
+    echo "-> Packaging helper binaries into bundle..."
+    # 1. Put binary ffmpeg in MacOS so it shares the library pathing
+    cp -L "${CHIPMACHINE_DIR}/bin/ffmpeg" "${MAC_OS_DIR}/"
+    
+    # 2. Put scripts/links in Resources/bin to avoid codesign issues in MacOS/
+    mkdir -p "${RESOURCES_DIR}/bin"
+    cp -L "${CHIPMACHINE_DIR}/bin/yt-dlp" "${RESOURCES_DIR}/bin/"
+    cp -L "${CHIPMACHINE_DIR}/bin/youtube-dl" "${RESOURCES_DIR}/bin/"
+    
+    chmod +x "${MAC_OS_DIR}/ffmpeg"
+    chmod +x "${RESOURCES_DIR}/bin/"*
+else
+    echo "WARNING: bin folder not found at ${CHIPMACHINE_DIR}/bin. YouTube playback will fail."
+fi
+
 # 5. Fix Native ARM64 Dynamic Library Linkages Deeply
 echo "-> Resolving recursive dynamic library paths..."
 
@@ -86,6 +77,11 @@ typeset -A PROCESSED_LIBS
 discover_and_patch() {
     local TARGET_FILE_PATH="$1"
     
+    # Check if the file is a Mach-O binary before attempting to patch it
+    if ! file "$TARGET_FILE_PATH" | grep -q "Mach-O"; then
+        return 0
+    fi
+
     # Process line-by-line while cleanly splitting out whitespaces and the trailing metadata parentheses
     otool -L "$TARGET_FILE_PATH" | grep -E '/opt/homebrew/|/usr/local/' | awk '{print $1}' | while read -r RAW_LIB; do
         # Robustly strip any hidden tabs, trailing carriage returns, or spaces
@@ -120,8 +116,9 @@ discover_and_patch() {
     fi
 }
 
-# Run dependency injection pass using absolute file location
+# Run dependency injection pass for Mach-O binaries in the MacOS folder
 discover_and_patch "${MAC_OS_DIR}/chipmachine"
+discover_and_patch "${MAC_OS_DIR}/ffmpeg"
 
 # 6. Build the Icons
 if [ -f "${ICON_PATH}" ]; then
@@ -144,8 +141,12 @@ fi
 # 7. Apply ad-hoc code signatures
 echo "-> Applying ad-hoc code signatures..."
 if command -v codesign &> /dev/null; then
-    find "${MAC_OS_DIR}" -name "*.dylib" -exec codesign -f -s - {} \;
-    codesign -f -s - "${MAC_OS_DIR}/chipmachine"
+    # Sign all dylibs and binaries in the MacOS folder
+    for f in "${MAC_OS_DIR}/"*; do
+        if [ -f "$f" ]; then
+            codesign -f -s - "$f"
+        fi
+    done
     codesign -f -s - "${TARGET_DIR}"
     echo "-> Code signing complete."
 fi

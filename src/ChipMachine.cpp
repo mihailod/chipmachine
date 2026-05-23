@@ -87,33 +87,15 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
 }
 
 ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
-                         MusicPlayerList& mpl, MusicDatabase& mdb)
-    : workDir(wd), remoteLoader(rl), player(mpl), musicDatabase(mdb),
+                         MusicPlayerList& mpl, MusicDatabase& mdb,
+                         sol::state& _lua)
+    : workDir(wd), remoteLoader(rl), player(mpl), musicDatabase(mdb), lua(_lua),
       currentScreen(MAIN_SCREEN), eq(SpectrumAnalyzer::eq_slots),
       starEffect(screen), scrollEffect(screen)
 {
     isShuttingDown = false; // Safe initialization state
 
     screen.setTitle("Chipmachine " VERSION_STR);
-    lua.open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
-#ifdef _WIN32
-    lua["WINDOWS"] = true;
-#else
-    lua["WINDOWS"] = false;
-#endif
-
-    utils::path binDir = (workDir / "bin");
-    lua.set_function("cm_execute",
-                     [binDir](std::string const& cmd) -> std::string {
-                         auto cmdPath = utils::path(cmd);
-                         if (!cmdPath.is_absolute()) cmdPath = binDir / cmdPath;
-                         std::string output = utils::execPipe(cmdPath.string());
-                         return output;
-                     });
-
-    lua.script_file((workDir / "lua" / "init.lua").string());
-
-    initYoutube(lua);
 
     auto ff = workDir / "data" / "Bello.otf";
     scrollEffect.set("font", ff.string());

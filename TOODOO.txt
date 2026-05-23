@@ -7,11 +7,8 @@ violet: hybris/noodle YM2149 -- no plugin? ymst format, should be treated with y
 
 console errors:
 ===============
-centrale de huit --youtube error/
-sundance da: amiga aga /cpc youtube ffmpeg? --console error
 
 other:
 =====
 - maybe use IDE instead of command line?
 - test build process on a different machine (brew dependencies)
-- test release on a different machine

@@ -14,6 +14,10 @@
 
 #include <audioplayer/audioplayer.h>
 #include <musicplayer/src/plugins/plugins.h>
+#include <musicplayer/src/chipplugin.h>
+#include "../sol2/sol.hpp"
+
+void initYoutube(sol::state&);
 
 #include <psf/PSFFile.h>
 
@@ -112,11 +116,40 @@ int main(int argc, char* argv[])
     }
 
     auto work_dir = data_dir->parent_path();
+
+    utils::path binDir = (work_dir / "bin");
+    utils::path exeDir = Environment::getExeDir();
+    std::string currentPath = getenv("PATH");
+    std::string newPath =
+        binDir.string() + ":" + exeDir.string() + ":" + currentPath;
+    setenv("PATH", newPath.c_str(), 1);
+    printf("NEW PATH SET TO: %s\n", newPath.c_str());
+    fflush(stdout);
+
     musix::ChipPlugin::createPlugins(work_dir / "data");
+
+    auto lua = std::make_shared<sol::state>();
+    lua->open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
+    lua->set_function("print", [](sol::variadic_args va) {
+        std::string s;
+        for (auto const& arg : va) {
+            if (!s.empty()) s += "\t";
+            s += arg.as<std::string>();
+        }
+        LOGD("[LUA] %s", s.c_str());
+    });
+    lua->set_function("cm_execute",
+                     [](std::string const& cmd) -> std::string {
+                         return utils::execPipe(cmd);
+                     });
+    lua->script_file((work_dir / "lua" / "init.lua").string());
+    initYoutube(*lua);
+
     AudioPlayer audio_player{ 44100 };
     const auto injector =
         di::make_injector(di::bind<AudioPlayer>.to(audio_player),
-                          di::bind<utils::path>.to(work_dir));
+                          di::bind<utils::path>.to(work_dir),
+                          di::bind<sol::state>.to(lua));
     LOGD("WorkDir:%s", work_dir);
 
     if (!options.songs.empty()) {

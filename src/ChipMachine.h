@@ -95,7 +95,7 @@ public:
                        bool hilight);
 
     ChipMachine(utils::path const& workDir, RemoteLoader& rl,
-                MusicPlayerList& mpl, MusicDatabase& mdb);
+                MusicPlayerList& mpl, MusicDatabase& mdb, sol::state& lua);
     ~ChipMachine();
 
     void initLua();
@@ -238,7 +238,7 @@ private:
     uint32_t bgcolor = 0;
     bool starsOn = true;
 
-    sol::state lua;
+    sol::state& lua;
 
     demofx::StarField starEffect;
     demofx::Scroller scrollEffect;
