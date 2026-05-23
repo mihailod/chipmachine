@@ -28,6 +28,8 @@ See the demo (turn the sound on!):
 
 Binaries for macOS 26 / Tahoe (for now) are available under *Releases*
 
+**NOTE I understand that Tahoe is a tough requirement for some however I have no means to test on older Mac OS. If you care about older Mac OS that much feel free to fix yourself and I will approve pull requests (assuming you can properly test it)**
+
 https://github.com/mihailod/chipmachine/releases
 
 ### Running the Apple Silicon Build (Gatekeeper Authorization)
