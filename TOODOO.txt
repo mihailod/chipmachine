@@ -11,6 +11,5 @@ console errors:
 
 other:
 =====
-- fix yt playback python delay on clean machines
 - use IDE for development instead of command line?
 - test build process on a different machine
