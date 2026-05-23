@@ -68,7 +68,6 @@ To authorize and run the application on your Mac, follow these steps:
 
 * Running the app from the build folder: ./chipmachine
 * Packaging the app: chipmachine/package_ap.sh
-* Compressing the app for release: zip -r -y ChipMachineAS-macOS26-ARM64.zip ChipMachineAS.app
 
 ## Using the application
 
