@@ -66,6 +66,9 @@ To authorize and run the application on your Mac, follow these steps:
 	# cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 	# ninja
 
+* Running the app from the build folder: ./chipmachine
+* Packaging the app: chipmachine/package_ap.sh
+
 ## Using the application
 
 * Type words separated by spaces for incremental search
