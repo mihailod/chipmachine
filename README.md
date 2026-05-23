@@ -54,8 +54,7 @@ To authorize and run the application on your Mac, follow these steps:
 
 * TESTED ON MAC OS 26 (TAHOE) ONLY AND NOT TESTED YET ON A CLEAN MACHINE
 * Make sure you have Homebrew installed (Apple Silicon homebrew is in /opt/homebrew/ , make sure you are not using Intel legacy /usr/local tools)
-* Download, build and install _libmpg123_ (http://sourceforge.net/projects/mpg123/files/)
-* brew install git cmake ninja freetype glew glfw3 lua fftw
+* brew install git cmake ninja freetype glew glfw3 lua fftw mpg123
 
 ## Building for Apple Silicon (ALPHA/WIP, see TOODOO.txt)
 
