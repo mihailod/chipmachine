@@ -34,7 +34,7 @@ https://github.com/mihailod/chipmachine/releases
 
 ### Running the Apple Silicon Build (Gatekeeper Authorization)
 
-TESTED ON: TAHOE, SONOMA
+TESTED ON TAHOE ONLY
 
 Because this standalone Apple Silicon build is distributed with an ad-hoc code signature, macOS Gatekeeper will block it upon download. This is standard behavior for open-source binaries compiled outside the Mac App Store.
 
