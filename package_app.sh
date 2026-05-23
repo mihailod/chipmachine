@@ -118,11 +118,17 @@ discover_and_patch() {
     fi
 }
 
-# Run dependency injection pass for Mach-O binaries in the MacOS folder
+# Run dependency injection pass for primary Mach-O binaries in the MacOS folder
 for EXE in "${MAC_OS_DIR}/"*; do
     if [ -x "$EXE" ] && [ ! -L "$EXE" ]; then
         discover_and_patch "$EXE"
     fi
+done
+
+# NEW: Run deep dependency pass explicitly on any Python binary modules/extension libraries inside data directory
+echo "-> Patching compiled Python native extensions inside bundle..."
+find "${RESOURCES_DIR}/data/python_runtime" -type f \( -name "*.so" -o -name "*.dylib" -o -name "*.bundle" \) | while read -r PYTHON_EXT; do
+    discover_and_patch "$PYTHON_EXT"
 done
 
 # 6. Build the Icons
@@ -146,14 +152,36 @@ fi
 # 7. Apply ad-hoc code signatures
 echo "-> Applying ad-hoc code signatures..."
 if command -v codesign &> /dev/null; then
-    # Sign all dylibs and binaries in the MacOS folder
+    # Target and sign Python binary extensions first (deepest level)
+    find "${RESOURCES_DIR}/data/python_runtime" -type f \( -name "*.so" -o -name "*.dylib" -o -name "*.bundle" \) | while read -r py_ext; do
+        codesign -f -s - "$py_ext"
+    done
+
+    # Sign all dylibs and binaries in the MacOS folder next
     for f in "${MAC_OS_DIR}/"*; do
-        if [ -f "$f" ]; then
+        if [ -f "$f" ] && [ ! -L "$f" ]; then
             codesign -f -s - "$f"
         fi
     done
+    
+    # Sign main bundle last
     codesign -f -s - "${TARGET_DIR}"
     echo "-> Code signing complete."
 fi
 
 echo "=== Success: ${APP_NAME} generated cleanly in workspace root! ==="
+echo "=== Making the final distribution package...==="
+
+# Change context into the workspace directory so zip handles local filenames exclusively
+cd "${WORKSPACE_ROOT}"
+zip -r -y ./ChipMachineAS.zip ./${APP_NAME}
+cd "${CHIPMACHINE_DIR}"
+
+echo "=== Done!==="
+echo "*** Ready to release with this manual command (replace XXX): "
+cat << 'EOF'
+gh release create vX.X.X-as ../ChipMachineAS.zip \
+  --title "ChipMachineAS vX.X.X" \
+  --notes "Apple Silicon maintenance release vX.X.X. <short release description>" \
+  --repo "mihailod/chipmachine"
+EOF

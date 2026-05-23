@@ -1,20 +1,36 @@
+# Development Tools & Temporary Backups
+*~
+*.sublime-*
+.tags*
+*.kdev4
+
+# Platform Specific Artifacts (macOS/Android)
+**/.DS_Store
+android/
+
+# C++ Build Artefacts & Binaries
 *.a
+*.o
 *.c.o
 obj/
 generated/
 builds/
-*~
 _cache/
 _files/
-*.dfield
-*.kdev4
-*.db
 chipmachine
 play
-debian-pkg/
+build/
+
+# Application Core Files & Configurations
+*.dfield
+*.db
 sc68.cfg
 index.dat
-*.sublime-*
-.tags*
-android/
-**/.DS_Store
+debian-pkg/
+
+# Python Runtime & Execution Caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+data/python_runtime/

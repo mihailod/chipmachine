@@ -17,6 +17,9 @@
 #include <musicplayer/src/chipplugin.h>
 #include "../sol2/sol.hpp"
 
+// Python C-API Header for native execution
+#include <Python.h>
+
 void initYoutube(sol::state&);
 
 #include <psf/PSFFile.h>
@@ -123,14 +126,14 @@ int main(int argc, char* argv[])
     std::string newPath =
         exeDir.string() + ":" + binDir.string() + ":" + currentPath;
     setenv("PATH", newPath.c_str(), 1);
-    printf("NEW PATH SET TO: %s\n", newPath.c_str());
-    fflush(stdout);
+    //printf("NEW PATH SET TO: %s\n", newPath.c_str());
+    //fflush(stdout);
 
     utils::path certPath = (work_dir / "cert.pem");
     if (utils::exists(certPath)) {
         setenv("SSL_CERT_FILE", certPath.string().c_str(), 0); // Don't overwrite if set
-        printf("SSL_CERT_FILE SET TO: %s\n", certPath.string().c_str());
-        fflush(stdout);
+        //printf("SSL_CERT_FILE SET TO: %s\n", certPath.string().c_str());
+        //fflush(stdout);
     }
 
     musix::ChipPlugin::createPlugins(work_dir / "data");
@@ -145,10 +148,109 @@ int main(int argc, char* argv[])
         }
         LOGD("[LUA] %s", s.c_str());
     });
+    
     lua->set_function("cm_execute",
-                     [](std::string const& cmd) -> std::string {
-                         return utils::execPipe(cmd);
-                     });
+                      [](std::string const& cmd) -> std::string {
+                          return utils::execPipe(cmd);
+                      });
+
+    // Native in-memory embedded Python runtime bridge - Portable & Bundle Safe
+    lua->set_function("cm_python_extract", [work_dir](std::string const& url) -> std::string {
+        utils::path runtime_base = work_dir / "data" / "python_runtime";
+        std::string py_home_path = runtime_base.string();
+        std::string script_dir = (work_dir / "data").string();
+        std::string site_packages_dir = (runtime_base / "site-packages").string();
+
+        if (!Py_IsInitialized()) {
+            std::wstring w_py_home(py_home_path.begin(), py_home_path.end());
+            
+            // Reconstruct absolute internal standard library locations dynamically relative to target workspace bundle
+            std::string full_python_path = 
+                (runtime_base / "lib" / "python3.14").string() + ":" +
+                (runtime_base / "lib" / "python3.14" / "lib-dynload").string();
+            std::wstring w_py_path(full_python_path.begin(), full_python_path.end());
+
+            PyConfig config;
+            PyConfig_InitIsolatedConfig(&config);
+
+            // Maintain strict hermetic isolation inside bundles to bypass host machine environmental pollutions
+            config.isolated = 1; 
+            config.use_environment = 0;
+
+            PyStatus status = PyConfig_SetString(&config, &config.home, w_py_home.c_str());
+            if (PyStatus_Exception(status)) { PyConfig_Clear(&config); return ""; }
+
+            status = PyConfig_SetString(&config, &config.pythonpath_env, w_py_path.c_str());
+            if (PyStatus_Exception(status)) { PyConfig_Clear(&config); return ""; }
+
+            status = Py_InitializeFromConfig(&config);
+            PyConfig_Clear(&config);
+            if (PyStatus_Exception(status)) {
+                fprintf(stderr, "[CRITICAL] Fatal: Embedded Python subsystem failed to boot. Standard library missing from runtime home layout.\n");
+                fflush(stderr);
+                return "";
+            }
+
+            // Explicitly force injection of both the script directory and third-party site-packages to sys.path
+            std::string python_injection_cmd = 
+                "import sys\n"
+                "if '" + script_dir + "' not in sys.path: sys.path.append('" + script_dir + "')\n"
+                "if '" + site_packages_dir + "' not in sys.path: sys.path.append('" + site_packages_dir + "')\n";
+            PyRun_SimpleString(python_injection_cmd.c_str());
+        }
+
+        // FORCE A FRESH RELOAD VIA PYTHON EXECUTION TO PREVENT CACHE CORRUPTION ON SUBSEQUENT PLAYS
+        std::string reload_cmd = 
+            "import importlib\n"
+            "import extractor\n"
+            "importlib.reload(extractor)\n";
+        PyRun_SimpleString(reload_cmd.c_str());
+
+        PyObject* pName = PyUnicode_DecodeFSDefault("extractor");
+        if (PyErr_Occurred()) { PyErr_Print(); return ""; }
+
+        PyObject* pModule = PyImport_Import(pName);
+        Py_DECREF(pName);
+
+        if (!pModule) {
+            if (PyErr_Occurred()) { PyErr_Print(); }
+            return "";
+        }
+
+        PyObject* pFunc = PyObject_GetAttrString(pModule, "get_audio_url");
+        if (!pFunc || !PyCallable_Check(pFunc)) {
+            if (PyErr_Occurred()) { PyErr_Print(); }
+            Py_XDECREF(pFunc);
+            Py_DECREF(pModule);
+            return "";
+        }
+
+        PyObject* pUrlStr = PyUnicode_FromString(url.c_str());
+        if (!pUrlStr) {
+            if (PyErr_Occurred()) { PyErr_Print(); }
+            Py_DECREF(pFunc);
+            Py_DECREF(pModule);
+            return "";
+        }
+
+        PyObject* pArgs = PyTuple_Pack(1, pUrlStr);
+        PyObject* pValue = PyObject_CallObject(pFunc, pArgs);
+        Py_DECREF(pArgs);
+        Py_DECREF(pUrlStr);
+        Py_DECREF(pFunc);
+        Py_DECREF(pModule);
+
+        std::string stream_url = "";
+        if (pValue != nullptr) {
+            stream_url = PyUnicode_AsUTF8(pValue);
+            Py_DECREF(pValue);
+        } else {
+            if (PyErr_Occurred()) { PyErr_Print(); }
+        }
+
+        return stream_url;
+    });
+
     lua->script_file((work_dir / "lua" / "init.lua").string());
     initYoutube(*lua);
 

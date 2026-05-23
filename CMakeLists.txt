@@ -1,4 +1,16 @@
 cmake_minimum_required(VERSION 3.15)
+
+# Auto-detect macOS deployment target from host OS (can be overridden with -D)
+if(APPLE AND NOT CMAKE_OSX_DEPLOYMENT_TARGET)
+    execute_process(COMMAND sw_vers -productVersion
+        OUTPUT_VARIABLE _MACOS_VERSION
+        OUTPUT_STRIP_TRAILING_WHITESPACE)
+    string(REGEX MATCH "^[0-9]+\\.[0-9]+" _MACOS_MAJOR_MINOR "${_MACOS_VERSION}")
+    if(_MACOS_MAJOR_MINOR)
+        set(CMAKE_OSX_DEPLOYMENT_TARGET "${_MACOS_MAJOR_MINOR}" CACHE STRING "macOS Deployment Target")
+    endif()
+endif()
+
 project(chipmachine)
 
 # ---------------------------------------------------------------------------
@@ -15,7 +27,7 @@ if(APPLE)
         set(CMAKE_OSX_ARCHITECTURES "arm64")
     endif()
     
-    set(CMAKE_OSX_DEPLOYMENT_TARGET "26.0" CACHE STRING "macOS Deployment Target" FORCE)
+#    set(CMAKE_OSX_DEPLOYMENT_TARGET "26.0" CACHE STRING "macOS Deployment Target" FORCE)
 endif()
 
 # Global overrides
@@ -179,6 +191,12 @@ add_custom_target(chipmachine.doc_files SOURCES ${DOC_FILES})
 add_custom_target(chipmachine.script_files SOURCES ${SCRIPT_FILES})
 
 # ---------------------------------------------------------------------------
+# Python Native Environment Discovery
+# ---------------------------------------------------------------------------
+find_package(Python3 COMPONENTS Development REQUIRED)
+include_directories(${Python3_INCLUDE_DIRS})
+
+# ---------------------------------------------------------------------------
 # Targets Execution definitions (Direct file-level dependency tracking)
 # ---------------------------------------------------------------------------
 
@@ -203,6 +221,7 @@ target_link_libraries(chipmachine PRIVATE
     avformat
     avutil
     swresample
+    ${Python3_LIBRARIES}
 )
 target_compile_definitions(chipmachine PRIVATE -DAPP_NAME=chipmachine)
 
@@ -220,6 +239,7 @@ if(NOT WIN32)
         avformat
         avutil
         swresample
+        ${Python3_LIBRARIES}
     )
 endif()
 
@@ -239,6 +259,7 @@ target_link_libraries(cmtest PRIVATE
     avformat
     avutil
     swresample
+    ${Python3_LIBRARIES}
 )
 target_include_directories(cmtest PRIVATE ${APONE}/mods)
 target_compile_definitions(cmtest PRIVATE -DTESTING)
@@ -270,8 +291,7 @@ if(APPLE)
        file(COPY \"\${CMAKE_SOURCE_DIR}/note.png\" DESTINATION Chipmachine.app/Contents/)
        file(COPY \"\${CMAKE_SOURCE_DIR}/Info.plist\" DESTINATION Chipmachine.app/Contents/)
        include(BundleUtilities)
-       fixup_bundle(\"\${APPS}\"   \"\"   \"\${DIRS}\")
+       fixup_bundle(\"\${APPS}\"   \"\"   \"\$\\\{DIRS\}\")
        file(COPY \"\${CMAKE_SOURCE_DIR}/bin/ffmpeg\" DESTINATION Chipmachine.app/Contents/Resources/bin/)
-       file(COPY \"\${CMAKE_SOURCE_DIR}/bin/youtube-dl\" DESTINATION Chipmachine.app/Contents/Resources/bin/)
        " COMPONENT Runtime)
 endif()

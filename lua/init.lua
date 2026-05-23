@@ -1,72 +1,47 @@
-
 -- Given the link to a youtube URL, return an URL to an audio stream
 function on_parse_youtube (url)
-	print("--- YouTube Extraction Started ---")
+	print("--- YouTube Native Extraction Started ---")
 	print("URL: " .. url)
 	
-	local path = cm_execute("echo $PATH")
-	print("Environment PATH: " .. (path or "NIL"))
-
-	local ffmpeg_check = cm_execute("ffmpeg -version")
-	if ffmpeg_check and ffmpeg_check ~= "" then
-		print("FFmpeg check: OK (" .. ffmpeg_check:sub(1, 30) .. "...)")
-	else
-		print("FFmpeg check: FAILED")
-	end
-
-	local extractors = {
-		'/opt/homebrew/bin/yt-dlp',
-		'/usr/local/bin/yt-dlp',
-		'yt-dlp',
-		'youtube-dl'
-	}
-
-	local result = nil
-	for _, ext in ipairs(extractors) do
-		local cmd = string.format('%s --skip-download -g "%s"', ext, url)
-		print("Attempting extraction with: " .. ext)
-		result = cm_execute(cmd)
-		if result and result ~= "" then
-			if not result:find("HTTP Error") and not result:find("ERROR") then
-				print("Extraction SUCCESS with: " .. ext)
-				break
-			else
-				print("Extraction FAILED (Error in output) with: " .. ext)
-				result = nil
-			end
-		else
-			print("Extraction FAILED (Empty/Nil output) with: " .. ext)
-		end
-	end
+	-- Invoke our high-speed, in-memory embedded Python interpreter
+	local result = cm_python_extract(url)
 
 	url = ''
-	if result then
+	if result and result ~= "" and not result:find("ERROR") then
+		print("Extraction SUCCESS via Embedded Python Engine")
+		
+		-- Parse the result lines if yt-dlp happens to dump multiple formats
 		for l in result:gmatch("[^\r\n]+") do
-			if string.find(l, 'mime=audio',1 , true) then
+			if string.find(l, 'mime=audio', 1, true) then
 				url = l
 				break
 			end
-			if string.find(l, 'audio',1 , true) then
+			if string.find(l, 'audio', 1, true) then
 				url = l
 			end
 		end
+		
+		-- Fallback: If it's a single raw URL without tags, use it directly
+		if url == '' then
+			url = result
+		end
+	else
+		print("Extraction FAILED: " .. (result or "Empty/Nil response from engine"))
 	end
 	
 	if url ~= "" then
 		print("Final Stream URL found: " .. url:sub(1, 50) .. "...")
 	else
-		print("Final Result: FAILED to find audio stream")
+		print("Final Result: FAILED to resolve target audio stream")
 	end
 	print("--- YouTube Extraction Finished ---")
 	return url
-	
 end
 
 -- Called when screen needs layout
 function on_layout (width, height, ppi)
 	-- print("LUA LAYOUT");
 end
-
 
 function on_select_plugin (filename, plugins)
 	if string.find(filename, '.mod', 1, true) then
@@ -78,4 +53,3 @@ function on_select_plugin (filename, plugins)
 	end
 	return nil
 end
-

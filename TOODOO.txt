@@ -1,5 +1,6 @@
 crashes:
 ========
+- elf-forest libc++abi: terminating due to uncaught exception of type fmt::FormatError: unknown format code 'd' for string
 
 could not play song:
 ===================
