@@ -28,7 +28,7 @@ See the demo (turn the sound on!):
 
 Binaries for macOS 26 / Tahoe (for now) are available under *Releases*
 
-https://github.com/sasq64/chipmachine/releases
+https://github.com/mihailod/chipmachine/releases
 
 ### Running the Apple Silicon Build (Gatekeeper Authorization)
 
