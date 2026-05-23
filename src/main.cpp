@@ -126,6 +126,13 @@ int main(int argc, char* argv[])
     printf("NEW PATH SET TO: %s\n", newPath.c_str());
     fflush(stdout);
 
+    utils::path certPath = (work_dir / "cert.pem");
+    if (utils::exists(certPath)) {
+        setenv("SSL_CERT_FILE", certPath.string().c_str(), 0); // Don't overwrite if set
+        printf("SSL_CERT_FILE SET TO: %s\n", certPath.string().c_str());
+        fflush(stdout);
+    }
+
     musix::ChipPlugin::createPlugins(work_dir / "data");
 
     auto lua = std::make_shared<sol::state>();

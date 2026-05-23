@@ -10,5 +10,6 @@ console errors:
 
 other:
 =====
-- maybe use IDE instead of command line?
-- test build process on a different machine (brew dependencies)
+- fix yt playback python delay on clean machines
+- use IDE for development instead of command line?
+- test build process on a different machine

@@ -15,6 +15,8 @@ function on_parse_youtube (url)
 	end
 
 	local extractors = {
+		'/opt/homebrew/bin/yt-dlp',
+		'/usr/local/bin/yt-dlp',
 		'yt-dlp',
 		'youtube-dl'
 	}

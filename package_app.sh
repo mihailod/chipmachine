@@ -52,6 +52,11 @@ else
     echo "WARNING: Lua folder not found at ${CHIPMACHINE_DIR}/lua. Scripting features may fail."
 fi
 
+if [ -f "/opt/homebrew/etc/openssl@3/cert.pem" ]; then
+    echo "-> Packaging OpenSSL certificates for standalone HTTPS..."
+    cp -L "/opt/homebrew/etc/openssl@3/cert.pem" "${RESOURCES_DIR}/"
+fi
+
 if [ -d "${CHIPMACHINE_DIR}/bin" ]; then
     echo "-> Packaging helper binaries into bundle..."
     # Put all binaries in MacOS so they share the library pathing and codesigning context
