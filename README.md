@@ -1,7 +1,9 @@
-ChipMachineAS <div align="right">
+ChipMachineAS
+
+<div align="right">
   <img src="https://img.shields.io/github/downloads/mihailod/chipmachine/total?label=Total%20Downloads" alt="Total Downloads">
 </div>
-=============
+
 
 **Port of ChipMachine (see the fork info) for Apple Silicon.**
 
