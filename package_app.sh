@@ -14,9 +14,27 @@ ICON_PATH="${CHIPMACHINE_DIR}/icon.png"
 MAC_OS_DIR="${TARGET_DIR}/Contents/MacOS"
 RESOURCES_DIR="${TARGET_DIR}/Contents/Resources"
 
+# -----------------------------------------------------------------
+# NEW: Dynamically parse the version string from src/version.h
+# -----------------------------------------------------------------
+VERSION_H_PATH="${CHIPMACHINE_DIR}/src/version.h"
+if [ ! -f "$VERSION_H_PATH" ]; then
+    echo "CRITICAL ERROR: Version header not found at $VERSION_H_PATH!"
+    exit 1
+fi
+
+# Extract the version inside the quotes from #define VERSION_STR "X.Y.Z"
+VERSION_STR=$(sed -n 's/#define VERSION_STR "\(.*\)"/\1/p' "$VERSION_H_PATH" | tr -d '[:space:]')
+
+if [ -z "$VERSION_STR" ]; then
+    echo "CRITICAL ERROR: Failed to extract VERSION_STR from $VERSION_H_PATH!"
+    exit 1
+fi
+
 echo "=== Starting Apple Silicon App Bundle Packaging ==="
 echo "Workspace Root: ${WORKSPACE_ROOT}"
 echo "Target App Bundle: ${TARGET_DIR}"
+echo "Detected Version: ${VERSION_STR}"
 
 # 1. Clean previous packaging attempts and set up pristine directories
 rm -rf "${TARGET_DIR}"
@@ -32,9 +50,9 @@ echo "-> Copying executable binary..."
 cp "${BUILD_DIR}/chipmachine" "${MAC_OS_DIR}/chipmachine"
 chmod +x "${MAC_OS_DIR}/chipmachine"
 
-# 3. Create Info.plist (Enforces the display name 'ChipMachineAS')
+# 3. Create Info.plist (Dynamically uses the parsed $VERSION_STR)
 echo "-> Creating Info.plist..."
-printf '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n    <key>CFBundleExecutable</key>\n    <string>chipmachine</string>\n    <key>CFBundleIconFile</key>\n    <string>AppIcon.icns</string>\n    <key>CFBundleIdentifier</key>\n    <string>org.mihailod.chipmachineas</string>\n    <key>CFBundleName</key>\n    <string>ChipMachineAS</string>\n    <key>CFBundleDisplayName</key>\n    <string>ChipMachineAS</string>\n    <key>CFBundlePackageType</key>\n    <string>APPL</string>\n    <key>CFBundleShortVersionString</key>\n    <string>1.0.2</string>\n    <key>LSMinimumSystemVersion</key>\n    <string>11.0</string>\n    <key>NSHighResolutionCapable</key>\n    <true/>\n</dict>\n</plist>\n' > "${TARGET_DIR}/Contents/Info.plist"
+printf '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n    <key>CFBundleExecutable</key>\n    <string>chipmachine</string>\n    <key>CFBundleIconFile</key>\n    <string>AppIcon.icns</string>\n    <key>CFBundleIdentifier</key>\n    <string>org.mihailod.chipmachineas</string>\n    <key>CFBundleName</key>\n    <string>ChipMachineAS</string>\n    <key>CFBundleDisplayName</key>\n    <string>ChipMachineAS</string>\n    <key>CFBundlePackageType</key>\n    <string>APPL</string>\n    <key>CFBundleShortVersionString</key>\n    <string>%s</string>\n    <key>LSMinimumSystemVersion</key>\n    <string>11.0</string>\n    <key>NSHighResolutionCapable</key>\n    <true/>\n</dict>\n</plist>\n' "${VERSION_STR}" > "${TARGET_DIR}/Contents/Info.plist"
 
 # 4. Copy the asset and Lua payloads from the chipmachine source tree
 echo "-> Packaging runtime assets into bundle..."
@@ -94,7 +112,7 @@ discover_and_patch() {
         local DEST_LIB_PATH="${MAC_OS_DIR}/${LIB_BASE}"
         
         if [ -z "${PROCESSED_LIBS[$LIB_BASE]}" ]; then
-            echo "   Isolating dependency: $LIB_BASE (Required by $(basename "$TARGET_FILE_PATH"))"
+            echo "    Isolating dependency: $LIB_BASE (Required by $(basename "$TARGET_FILE_PATH"))"
             
             if [ ! -f "$DEST_LIB_PATH" ]; then
                 cp "$LIB" "$DEST_LIB_PATH"
@@ -109,7 +127,7 @@ discover_and_patch() {
         fi
         
         # Rewrite absolute dependency paths to relative bundle references explicitly
-        echo "   [Patching Executable Linkage] inside $(basename "$TARGET_FILE_PATH"): changing $LIB -> @executable_path/$LIB_BASE"
+        echo "    [Patching Executable Linkage] inside $(basename "$TARGET_FILE_PATH"): changing $LIB -> @executable_path/$LIB_BASE"
         install_name_tool -change "$LIB" "@executable_path/$LIB_BASE" "$TARGET_FILE_PATH"
     done
     
@@ -125,7 +143,7 @@ for EXE in "${MAC_OS_DIR}/"*; do
     fi
 done
 
-# NEW: Run deep dependency pass explicitly on any Python binary modules/extension libraries inside data directory
+# Run deep dependency pass explicitly on any Python binary modules/extension libraries inside data directory
 echo "-> Patching compiled Python native extensions inside bundle..."
 find "${RESOURCES_DIR}/data/python_runtime" -type f \( -name "*.so" -o -name "*.dylib" -o -name "*.bundle" \) | while read -r PYTHON_EXT; do
     discover_and_patch "$PYTHON_EXT"
@@ -178,10 +196,10 @@ zip -r -y ./ChipMachineAS.zip ./${APP_NAME}
 cd "${CHIPMACHINE_DIR}"
 
 echo "=== Done!==="
-echo "*** Ready to release with this manual command (replace XXX): "
-cat << 'EOF'
-gh release create vX.X.X-as ../ChipMachineAS.zip \
-  --title "ChipMachineAS vX.X.X" \
-  --notes "Apple Silicon maintenance release vX.X.X. <short release description>" \
+echo "*** Ready to release with this manual command: "
+cat << EOF
+gh release create v${VERSION_STR}-as ../ChipMachineAS.zip \\
+  --title "ChipMachineAS v${VERSION_STR}" \\
+  --notes "Apple Silicon maintenance release v${VERSION_STR}. <short release description>" \\
   --repo "mihailod/chipmachine"
 EOF
