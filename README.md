@@ -47,18 +47,19 @@ Because this standalone app is distributed with an ad-hoc code signature, macOS 
 
 To authorize and run the application on your Mac, follow these steps:
 
-1. Double-click `ChipMachineAS.app`.
-2. macOS will display a prompt stating the app cannot be opened because the developer cannot be verified.
-3. Click **Done** or **Cancel**.
-4. Open your Mac's **System Settings**.
-5. Navigate to **Privacy & Security** in the left sidebar
-6. Scroll down to the **Security** section.
-7. Look for the notification stating: `“ChipMachineAS” was blocked from use because it is not from an identified developer.`
-8. Click the **Open Anyway** button.
-9. Authenticate using your Mac's admin password or Touch ID.
-10. Double-click `ChipMachineAS.app` again.
-11. The final confirmation prompt will appear.
-12. Click **Open**.
+1. Download the latest release and unzip it in the Applications folder
+2. Double-click `ChipMachineAS.app`.
+3. macOS will display a prompt stating the app cannot be opened because the developer cannot be verified.
+4. Click **Done** or **Cancel**.
+5. Open your Mac's **System Settings**.
+6. Navigate to **Privacy & Security** in the left sidebar
+7. Scroll down to the **Security** section.
+8. Look for the notification stating: `“ChipMachineAS” was blocked from use because it is not from an identified developer.`
+9. Click the **Open Anyway** button.
+10. Authenticate using your Mac's admin password or Touch ID.
+11. Double-click `ChipMachineAS.app` again.
+12. The final confirmation prompt will appear.
+13. Click **Open**.
 
 *Note: You only need to perform this authorization once. Subsequent launches will boot instantly.*
 
