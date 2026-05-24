@@ -1,13 +1,31 @@
 crashes:
 ========
+* (also on intel!) lightforce jochen (last 5th song): File not found 7CJ5AJ4@J5JCE??7CH5AH4@H2>H4HAC??5AF4@F2>F0<F2F@A????pyzsh: trace trap  ./chipmachine
+* amegas encore (crashes on arm, "couldnt play" on intel)
+
+no songs in product
+===================
+* deflektor trilogy
 
 could not play song:
 ===================
+* (missing on intel) barbarian sen
+
+could not load file
+===================
+* (also on intel!) star trek tactical
+* (missing on intel?) croatia binary (last 2nd song)
 
 console errors:
 ===============
 
 other:
-=====
+======
+- better About popup
+- dicrepancy of intel and arm databases, see missing above -- why?
+- add unit tests for EVERY supported extension (not just every plugin)
+- auto check/download/install? for new version on startup
+- what does this mean <> eg <deflektor trilogy>, those seem to be missing on intel (?)
+- check if commands are in sync with help screen, for example pause is F5 not F6 etc...
 - use IDE for development instead of command line?
 - test build process on a different machine
