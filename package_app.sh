@@ -15,7 +15,17 @@ MAC_OS_DIR="${TARGET_DIR}/Contents/MacOS"
 RESOURCES_DIR="${TARGET_DIR}/Contents/Resources"
 
 # -----------------------------------------------------------------
-# NEW: Dynamically parse the version string from src/version.h
+# Parse Arguments
+# -----------------------------------------------------------------
+RELEASE_IT=false
+for arg in "$@"; do
+    if [[ "$arg" == "--releaseit" ]]; then
+        RELEASE_IT=true
+    fi
+done
+
+# -----------------------------------------------------------------
+# Dynamically parse the version string from src/version.h
 # -----------------------------------------------------------------
 VERSION_H_PATH="${CHIPMACHINE_DIR}/src/version.h"
 if [ ! -f "$VERSION_H_PATH" ]; then
@@ -35,6 +45,11 @@ echo "=== Starting Apple Silicon App Bundle Packaging ==="
 echo "Workspace Root: ${WORKSPACE_ROOT}"
 echo "Target App Bundle: ${TARGET_DIR}"
 echo "Detected Version: ${VERSION_STR}"
+if $RELEASE_IT; then
+    echo "Release Mode: Enabled (--releaseit Flag Detected)"
+else
+    echo "Release Mode: Disabled (Dry Run/Local Build Only)"
+fi
 
 # 1. Clean previous packaging attempts and set up pristine directories
 rm -rf "${TARGET_DIR}"
@@ -196,10 +211,43 @@ zip -r -y ./ChipMachineAS.zip ./${APP_NAME}
 cd "${CHIPMACHINE_DIR}"
 
 echo "=== Done!==="
-echo "*** Ready to release with this manual command: "
-cat << EOF
-gh release create v${VERSION_STR}-as ../ChipMachineAS.zip \\
-  --title "ChipMachineAS v${VERSION_STR}" \\
-  --notes "Apple Silicon maintenance release v${VERSION_STR}. <short release description>" \\
-  --repo "mihailod/chipmachine"
-EOF
+echo "*** Planned template command details:"
+echo "------------------------------------------------------------"
+echo "gh release create v${VERSION_STR}-as ../ChipMachineAS.zip \\"
+echo "  --title \"ChipMachineAS v${VERSION_STR}\" \\"
+echo "  --notes \"Apple Silicon maintenance release v${VERSION_STR}. <short note text to be provided>\" \\"
+echo "  --repo \"mihailod/chipmachine\""
+echo "------------------------------------------------------------"
+
+# -----------------------------------------------------------------
+# Conditional Interactive Release Verification Block
+# -----------------------------------------------------------------
+if $RELEASE_IT; then
+    # Check if gh CLI is missing before attempting interaction
+    if ! command -v gh &> /dev/null; then
+        echo "ERROR: 'gh' command line tool not found in PATH. Skipping automated execution."
+        exit 1
+    fi
+
+    # Prompt user on standard error channel to preserve any output streaming architectures
+    printf "Provide release notes and confirm the official release upload to GitHub per command above [Y/N] ? " >&2
+    read -r RESPONSE
+
+    if [[ "$RESPONSE" == "y" || "$RESPONSE" == "Y" ]]; then
+        # Capture the specific note payload requested
+        printf "Release short note (CTRL+C to abort): " >&2
+        read -r SHORT_NOTE
+        
+        # Build pristine string appending note with precise spacing constraints
+        RELEASE_NOTES="Apple Silicon maintenance release v${VERSION_STR}. ${SHORT_NOTE}"
+
+        echo "-> Initiating deployment via GitHub CLI..."
+        gh release create "v${VERSION_STR}-as" "${WORKSPACE_ROOT}/ChipMachineAS.zip" \
+          --title "ChipMachineAS v${VERSION_STR}" \
+          --notes "${RELEASE_NOTES}" \
+          --repo "mihailod/chipmachine"
+        echo "=== Deployment Successfully Completed ==="
+    else
+        echo "-> Deployment aborted by user request."
+    fi
+fi
