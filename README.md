@@ -25,42 +25,49 @@ See the demo (turn the sound on!):
 *A demoscene/retro Jukebox/spotify-like  music player*
 
 * **Intructions are dead simple:**
-* **Type anything to incrementally search in entire database**
-* **Hit enter to play directly**
+* **Start typing to incrementally search aggregated database**
+* **UP/DOWN keys = select a song from search results**
+* **ENTER key = play**
 * **TAB key = help screen**
-* **(You can also read the scroll text for more info)**
+* **(Read the scrolling text for more info)**
 
 ## Binaries
 
-Binaries for macOS 26 / Tahoe (for now) are available under *Releases*
+Binaries for macOS (only tested on Tahoe for now) are available under *Releases*
 
-**NOTE I understand that Tahoe is a tough requirement for some however I have no means to test on older macOS. If you care about older macOS that much feel free to fix yourself and I will approve pull requests (assuming you can properly test it)**
+**NOTE I understand that Tahoe is a tough requirement for some however I have no means to test on older macOS. If you care about older macOS that much feel free to fix yourself (if something is not working) and I will approve pull requests (assuming you can properly test it)**
 
 https://github.com/mihailod/chipmachine/releases
 
-### Running the Apple Silicon Build (Gatekeeper Authorization)
+### Running on Mac (Gatekeeper Authorization)
 
 TESTED ON TAHOE ONLY
 
-Because this standalone Apple Silicon build is distributed with an ad-hoc code signature, macOS Gatekeeper will block it upon download. This is standard behavior for open-source binaries compiled outside the Mac App Store.
+Because this standalone app is distributed with an ad-hoc code signature, macOS Gatekeeper will block it. This is standard behavior for open-source binaries distributed outside the official Mac App Store ecosystem.
 
 To authorize and run the application on your Mac, follow these steps:
 
-1. Double-click `ChipMachineAS.app`. macOS will display a prompt stating the app cannot be opened because the developer cannot be verified. Click **Done** or **Cancel**.
-2. Open your Mac's **System Settings**.
-3. Navigate to **Privacy & Security** in the left sidebar and scroll down to the **Security** section.
-4. Look for the notification stating: `“chipmachine” was blocked from use because it is not from an identified developer.`
-5. Click the **Open Anyway** button.
-6. Authenticate using your Mac's administrator password or Touch ID.
-7. Return to the app and double-click it to launch. One final confirmation prompt will appear—click **Open**.
+1. Double-click `ChipMachineAS.app`.
+2. macOS will display a prompt stating the app cannot be opened because the developer cannot be verified.
+3. Click **Done** or **Cancel**.
+4. Open your Mac's **System Settings**.
+5. Navigate to **Privacy & Security** in the left sidebar
+6. Scroll down to the **Security** section.
+7. Look for the notification stating: `“ChipMachineAS” was blocked from use because it is not from an identified developer.`
+8. Click the **Open Anyway** button.
+9. Authenticate using your Mac's admin password or Touch ID.
+10. Double-click `ChipMachineAS.app` again.
+11. The final confirmation prompt will appear.
+12. Click **Open**.
 
 *Note: You only need to perform this authorization once. Subsequent launches will boot instantly.*
 
-## Prerequisites for development (not tested yet on another clean machine)
+## Prerequisites for development
 
 * TESTED ON macOS 26 (TAHOE) ONLY AND NOT TESTED YET ON A CLEAN MACHINE
-* Make sure you have Homebrew installed (Apple Silicon homebrew is in /opt/homebrew/ , make sure you are not using Intel legacy /usr/local tools)
+* Make sure you have Homebrew installed (Apple Silicon homebrew in /opt/homebrew/ , make sure you are not using Intel legacy /usr/local tools)
 * brew install git cmake ninja freetype glew glfw3 lua fftw mpg123
+* (if some packages are reported missing later install then via brew and let me know -- I missed them in the line above)
 
 ## Building for Apple Silicon (ALPHA/WIP, see TOODOO.txt)
 
