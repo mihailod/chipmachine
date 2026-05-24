@@ -78,6 +78,12 @@ else
     exit 1
 fi
 
+# Inside Section 4 of package_app.sh:
+if [ -f "${CHIPMACHINE_DIR}/Credits.rtf" ]; then
+    echo "-> Packaging Credits into bundle..."
+    cp "${CHIPMACHINE_DIR}/Credits.rtf" "${RESOURCES_DIR}/"
+fi
+
 if [ -d "${CHIPMACHINE_DIR}/lua" ]; then
     echo "-> Packaging Lua subsystem files into bundle..."
     cp -R "${CHIPMACHINE_DIR}/lua" "${RESOURCES_DIR}/"

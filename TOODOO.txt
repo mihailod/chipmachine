@@ -21,7 +21,6 @@ console errors:
 
 other:
 ======
-- better About popup
 - dicrepancy of intel and arm databases, see missing above -- why?
 - add unit tests for EVERY supported extension (not just every plugin)
 - auto check/download/install? for new version on startup
