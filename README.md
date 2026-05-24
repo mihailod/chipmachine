@@ -1,4 +1,4 @@
-ChipMachineAS
+ChipMachineAS ![Downloads](https://img.shields.io/github/downloads/mihailod/chipmachine/total?label=Total%20Downloads)
 =============
 
 **Port of ChipMachine (see the fork info) for Apple Silicon.**
@@ -274,7 +274,3 @@ Support for streaming audio
 ## V2
 
 Support for Farbrauisch V2 Synthesizer System modules
-
----
-
-![Downloads](https://img.shields.io/github/downloads/mihailod/chipmachine/total?label=Total%20Downloads)
