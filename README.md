@@ -274,3 +274,7 @@ Support for streaming audio
 ## V2
 
 Support for Farbrauisch V2 Synthesizer System modules
+
+---
+
+![Downloads](https://img.shields.io/github/downloads/mihailod/chipmachine/total?label=Total%20Downloads)
