@@ -11,7 +11,7 @@ ChipMachineAS
 
 **ONLY BUILDING ON APPLE SILICON (ARM / M CHIPS) HAS BEEN TESTED -- INSTALL AT YOUR OWN RISK.**
 
-**BUILD SCRIPTS (FOR NOW) EXPLICITLY TARGET ONLY THE VERY LATEST MAC OS (26 / TAHOE) AND HAVE NOT BEEN TESTED ON OLDER VERSIONS.**
+**BUILD SCRIPTS (FOR NOW) EXPLICITLY TARGET ONLY THE VERY LATEST macOS (26 / TAHOE) AND HAVE NOT BEEN TESTED ON OLDER VERSIONS.**
 
 **I AM USING GOOGLE GEMINI TO HELP ME WITH THIS INTEL -> ARM PORT. SO IT IS ALSO AN EXPERIMENT IN HOW AI PERFORMS AT THIS TASK.**
 
@@ -34,7 +34,7 @@ See the demo (turn the sound on!):
 
 Binaries for macOS 26 / Tahoe (for now) are available under *Releases*
 
-**NOTE I understand that Tahoe is a tough requirement for some however I have no means to test on older Mac OS. If you care about older Mac OS that much feel free to fix yourself and I will approve pull requests (assuming you can properly test it)**
+**NOTE I understand that Tahoe is a tough requirement for some however I have no means to test on older macOS. If you care about older macOS that much feel free to fix yourself and I will approve pull requests (assuming you can properly test it)**
 
 https://github.com/mihailod/chipmachine/releases
 
@@ -58,7 +58,7 @@ To authorize and run the application on your Mac, follow these steps:
 
 ## Prerequisites for development (not tested yet on another clean machine)
 
-* TESTED ON MAC OS 26 (TAHOE) ONLY AND NOT TESTED YET ON A CLEAN MACHINE
+* TESTED ON macOS 26 (TAHOE) ONLY AND NOT TESTED YET ON A CLEAN MACHINE
 * Make sure you have Homebrew installed (Apple Silicon homebrew is in /opt/homebrew/ , make sure you are not using Intel legacy /usr/local tools)
 * brew install git cmake ninja freetype glew glfw3 lua fftw mpg123
 
@@ -266,4 +266,3 @@ Support for streaming audio
 ## V2
 
 Support for Farbrauisch V2 Synthesizer System modules
-
