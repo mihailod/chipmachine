@@ -64,7 +64,7 @@ public:
 
 	float alpha = 1.0;
 
-	int scrollspeed = 16;
+	int scrollspeed = 4;
 	int scrolly = 0;
 	float scrollsize = 4.0;
 

@@ -23,6 +23,8 @@ Y1 = SCREEN_HEIGHT - 10
 
 background = 0x808080
 
+SCROLL_SPEED = 3
+
 if true then
  TEXT_COLOR = 0xffe0e080
  DIGITS_COLOR = 0xff70b050
@@ -65,10 +67,10 @@ SPECW = SCREEN_WIDTH / EQ_SLOTS
 SPECH = SPECW * 3.5
 
 if TV then
-  Settings.scroll = { Y1 - 100, GSCALE * 2.0, 4, "data/Bello.otf" }
+  Settings.scroll = { Y1 - 100, GSCALE * 2.0, SCROLL_SPEED, "data/Bello.otf" }
   Settings.spectrum = { X0-40, Y1+40, 28, 80.0, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 else
-  Settings.scroll = { Y1 - GSCALE * 150, GSCALE * 2.0, 4, "data/Bello.otf" }
+  Settings.scroll = { Y1 - GSCALE * 150, GSCALE * 2.0, SCROLL_SPEED, "data/Bello.otf" }
   -- Anchor spectrum firmly to the bottom of the window
   Settings.spectrum = { X0, SCREEN_HEIGHT - 10, SPECW, SPECH, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 end

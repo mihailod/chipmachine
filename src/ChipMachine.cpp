@@ -95,7 +95,7 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
 {
     isShuttingDown = false; // Safe initialization state
 
-    screen.setTitle("Chipmachine " VERSION_STR);
+    screen.setTitle(PROGRAM_NAME " " VERSION_STR);
 
     auto ff = workDir / "data" / "Bello.otf";
     scrollEffect.set("font", ff.string());
@@ -239,11 +239,11 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
 
     scrollText = "INITIAL_TEXT";
     scrollEffect.set("scrolltext",
-                     "Chipmachine " VERSION_STR
-                     " -- Just type to search -- UP/DOWN to select "
-                     "-- ENTER to play -- Press TAB to show all commands ---");
+      " . . . . . . " PROGRAM_NAME " " VERSION_STR
+      " . . . Just type to search . . . UP/DOWN to select"
+      " . . . ENTER to play . . . TAB to see all commands . . . . .    ");
     starEffect.fadeIn();
-}
+    }
 
 ChipMachine::~ChipMachine()
 {
@@ -460,7 +460,7 @@ void ChipMachine::update()
         timeField.add = 0;
         currentInfo = player.getInfo();
         dbInfo = player.getDBInfo();
-        screen.setTitle(utils::format("%s / %s (Chipmachine " VERSION_STR ")",
+        screen.setTitle(utils::format("%s / %s (" PROGRAM_NAME " " VERSION_STR ")",
                                       currentInfo.title, currentInfo.composer));
         std::string m;
         if (currentInfo.metadata[SongInfo::INFO] != "") {

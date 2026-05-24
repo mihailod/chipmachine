@@ -9,5 +9,6 @@ console errors:
 
 other:
 =====
+- automate versioning when releasing (script and metadata pull from version.h)
 - use IDE for development instead of command line?
 - test build process on a different machine

@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
 #endif
     } options;
 
-    static CLI::App opts{ "Chipmachine " VERSION_STR };
+    static CLI::App opts{ PROGRAM_NAME " " VERSION_STR };
 
 #ifndef TEXTMODE_ONLY
     opts.add_option("--width", options.w, "Width of window");
@@ -346,7 +346,7 @@ int main(int argc, char* argv[])
         return 0;
     }
 #ifndef TEXTMODE_ONLY
-    grappix::screen.setTitle("Chipmachine " VERSION_STR);
+    grappix::screen.setTitle(PROGRAM_NAME " " VERSION_STR);
     if (options.full_screen)
         grappix::screen.open(true);
     else
