@@ -3,7 +3,6 @@ crashes:
 
 could not play song:
 ===================
-violet: hybris/noodle YM2149 -- no plugin? ymst format, should be treated with ym plugin?
 
 console errors:
 ===============
