@@ -8,7 +8,7 @@ WORKSPACE_ROOT="$(cd "${CHIPMACHINE_DIR}/.." && pwd)"
 BUILD_DIR="${WORKSPACE_ROOT}/build"
 APP_NAME="ChipMachineAS.app"
 TARGET_DIR="${WORKSPACE_ROOT}/${APP_NAME}"
-ICON_PATH="${CHIPMACHINE_DIR}/icon.png"
+ICON_PATH="${CHIPMACHINE_DIR}/data/misc/icon.png"
 
 # Target payload directories
 MAC_OS_DIR="${TARGET_DIR}/Contents/MacOS"
