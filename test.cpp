@@ -18,6 +18,8 @@ namespace di = boost::di;
 #include <array>
 #include <numeric>
 #include <string>
+#include <unordered_map>
+#include <set>
 
 TEST_CASE("modutils", "[machine]")
 {
@@ -226,4 +228,71 @@ TEST_CASE("s98", "[music]") { testPlugin<musix::S98Plugin>("testmus/s98", ""); }
 TEST_CASE("ao", "[music]") { testPlugin<musix::AOPlugin>("testmus/ao", ""); }
 TEST_CASE("ted", "[music]") { testPlugin<musix::TEDPlugin>("testmus/ted", ""); }
 TEST_CASE("v2", "[music]") { testPlugin<musix::V2Plugin>("testmus/v2", ""); }
+
+TEST_CASE("coverage", "[music]")
+{
+    musix::ChipPlugin::createPlugins("data");
+    auto& plugins = musix::ChipPlugin::getPlugins();
+    
+    std::vector<std::string> allMissing;
+    
+    // Map of plugin name to its test directory
+    std::unordered_map<std::string, std::string> pluginDirs = {
+        {"gme", "testmus/gme/working"},
+        {"adlib", "testmus/adlib"},
+        {"uade", "testmus/uade"},
+        {"OpenMPT", "testmus/openmpt"},
+        {"gsf", "testmus/gsf"},
+        {"nds", "testmus/nds"},
+        {"psx", "testmus/psx"},
+        {"zx", "testmus/zx"},
+        {"ffmpeg", "testmus/ffmpeg"},
+        {"HTPlugin", "testmus/ht"},
+        {"SC68", "testmus/sc68"},
+        {"USFPlugin", "testmus/usf"},
+        {"StSound", "testmus/stsound"},
+        {"libmpg123", "testmus/mp3"},
+        {"HivelyPlugin", "testmus/hively"},
+        {"RSNPlugin", "testmus/rsn"},
+        {"MDX", "testmus/mdx"},
+        {"S98", "testmus/s98"},
+        {"Audio Overload", "testmus/ao"},
+        {"Tedplay", "testmus/ted"},
+        {"V2Plugin", "testmus/v2"}
+    };
+
+    for (auto const& plugin : plugins) {
+        std::string name = plugin->name();
+        auto exts = plugin->getSupportedExtensions();
+        if (exts.empty()) continue;
+
+        std::string dir = "";
+        if (pluginDirs.count(name)) {
+            dir = pluginDirs[name];
+        } else {
+            dir = "testmus/" + utils::toLower(name);
+        }
+
+        auto files = utils::File{ dir }.listFiles();
+        std::set<std::string> existingExts;
+        for (auto const& f : files) {
+            existingExts.insert(utils::path_extension(f.getName()));
+        }
+
+        for (auto const& ext : exts) {
+            if (existingExts.count(ext) == 0) {
+                printf("SKIPPED TESTING OF EXTENSION %s -- PLEASE ADD FILE TO FOLDER %s\n", ext.c_str(), dir.c_str());
+                allMissing.push_back(name + ":" + ext + " (Target Folder: " + dir + ")");
+            }
+        }
+    }
+
+    if (!allMissing.empty()) {
+        printf("\n--- MISSING EXTENSIONS GAP REPORT ---\n");
+        for (auto const& m : allMissing) {
+            printf("  %s\n", m.c_str());
+        }
+        printf("--------------------------------------\n");
+    }
+}
 
