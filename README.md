@@ -22,7 +22,7 @@ ChipMachineAS
 ![Screenshot](data/misc/screen.png)
 
 See the demo (turn the sound on!):
-<video src="data/misc/video.mp4" width="100%" controls></video>
+![Demo Video](data/misc/video.mp4)
 
 ## Intro
 
