@@ -21,9 +21,6 @@ ChipMachineAS
 
 ![Screenshot](data/misc/screen.png)
 
-See the demo (turn the sound on!):
-![Demo Video](data/misc/video.mp4)
-
 ## Intro
 
 *A demoscene/retro Jukebox/spotify-like  music player*
