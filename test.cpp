@@ -251,16 +251,16 @@ TEST_CASE("coverage", "[music]")
 
         for (auto const& ext : exts) {
             if (existingExts.count(ext) == 0) {
-                printf("SKIPPED TESTING OF EXTENSION %s -- PLEASE ADD FILE TO FOLDER %s\n", ext.c_str(), dir.c_str());
+                printf(".%s testing skipped, add file to folder %s\n", ext.c_str(), dir.c_str());
                 allMissing.push_back(name + ":" + ext + " (Target Folder: " + dir + ")");
             }
         }
     }
 
     if (!allMissing.empty()) {
-        printf("\n--- MISSING EXTENSIONS GAP REPORT ---\n");
+        //printf("\n--- MISSING EXTENSIONS REPORT ---\n");
         for (auto const& m : allMissing) {
-            printf("  %s\n", m.c_str());
+            //printf("  %s\n", m.c_str());
         }
         printf("--------------------------------------\n");
         printf("TOTAL MISSING EXTENSIONS SKIPPED: %zu\n", allMissing.size());
