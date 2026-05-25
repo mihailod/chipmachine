@@ -38,6 +38,8 @@ namespace di = boost::di;
 
 #include "version.h"
 
+extern "C" void InitializeUpdateVerificationSubsystem();
+
 namespace chipmachine {
 void runConsole(std::shared_ptr<bbs::Console> console, ChipInterface& ci);
 }
@@ -96,6 +98,8 @@ int main(int argc, char* argv[])
     opts.add_option("files", options.songs, "Songs to play");
 
     CLI11_PARSE(opts, argc, argv)
+
+    InitializeUpdateVerificationSubsystem();
 
     auto search_path = makeSearchPath(
         {

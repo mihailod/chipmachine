@@ -1,0 +1,28 @@
+There is a debug override mechanism that allows simulating a newer version without actually having to publish a new release on GitHub.
+
+  How to Test the Update Check
+
+   1. Build the application as usual.
+   2. Create a trigger file in the same directory as the compiled binary (typically inside your build/ folder).
+   3. Put a higher version number (e.g., 9.9.9) into that file.
+
+  Step-by-Step Terminal Commands:
+
+   1 # 1. Navigate to your build directory
+   2 cd /Users/mihailod/Documents/chipmachine-as/build
+   3
+   4 # 2. Create the override file with a "future" version number
+   5 echo "9.9.9" > DEBUG_UPDATE_VERSION
+   6
+   7 # 3. Run the application
+   8 ./chipmachine
+
+  What to expect:
+  When you launch the app, the update subsystem will find the DEBUG_UPDATE_VERSION file. It will skip the network call to GitHub and immediately trigger the "Software Update Available" modal.
+
+   * Alert Content: It will show that you are running your current version (e.g., 1.0.2) and that 9.9.9 is available.
+   * Action: If you click "View on GitHub", it will open your project's GitHub releases page in your browser.
+
+  Once you are done testing:
+  Simply delete the file to return to normal behavior:
+   1 rm build/DEBUG_UPDATE_VERSION

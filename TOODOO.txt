@@ -23,7 +23,6 @@ other:
 ======
 - dicrepancy of intel and arm databases, see missing above -- why?
 - add unit tests for EVERY supported extension (not just every plugin)
-- auto check/download/install? for new version on startup
 - what does this mean <> eg <deflektor trilogy>, those seem to be missing on intel (?)
 - check if commands are in sync with help screen, for example pause is F5 not F6 etc...
 - use IDE for development instead of command line?

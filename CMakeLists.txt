@@ -151,6 +151,8 @@ if(APPLE)
         "-framework Cocoa" 
         "-framework AudioToolbox" 
         "-framework AudioUnit"
+	"-framework Foundation"
+	"-framework AppKit"
     )
 endif()
 
@@ -166,6 +168,7 @@ set(MAIN_FILES
     src/state_machine.cpp
     src/youtube.cpp
     src/textmode.cpp
+    src/CheckForUpdate.mm
 )
 
 set(GUI_FILES
