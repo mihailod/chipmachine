@@ -1,6 +1,5 @@
 crashes:
 ========
-* (also on intel!) lightforce jochen (last 5th song): File not found 7CJ5AJ4@J5JCE??7CH5AH4@H2>H4HAC??5AF4@F2>F0<F2F@A????pyzsh: trace trap  ./chipmachine
 * amegas encore (crashes on arm, "couldnt play" on intel)
 
 no songs in product
@@ -10,6 +9,7 @@ no songs in product
 could not play song:
 ===================
 * (missing on intel) barbarian sen
+* (intel crash, fixed on arm) lightforce jochen (last one) File not found 7CJ5AJ4@J5JCE??7CH5AH4@H2>H4HAC??5AF4@F2>F0<F2F@A????[0uade warning: Song ended prematurely due to error: score died -- Gemini says corrupted file
 
 could not load file
 ===================
