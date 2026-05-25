@@ -7,7 +7,7 @@ ChipMachineAS
 
 **Port of ChipMachine (see the fork info) for Apple Silicon.**
 
-![Annoying Popup](argh.jpg)
+![Annoying Popup](data/misc/argh.jpg)
 
 > ChipMachine is my favorite Mac retro chiptune player and I have been using it forever. However, when opening it on my Mac after a recent macOS update, I saw this annoying popup. It caused anger in me, and I channeled that anger into this project.
 

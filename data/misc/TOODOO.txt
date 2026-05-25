@@ -16,6 +16,10 @@ could not load file
 * (also on intel!) star trek tactical
 * (missing on intel?) croatia binary (last 2nd song)
 
+silent playback
+===============
+* (also on intel) elfforest 
+
 console errors:
 ===============
 
