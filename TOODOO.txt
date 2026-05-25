@@ -27,3 +27,6 @@ other:
 - check if commands are in sync with help screen, for example pause is F5 not F6 etc...
 - use IDE for development instead of command line?
 - test build process on a different machine
+- plays silently in cm: testmus/heplugin/Goldrunner.psf
+- error in cm: testmus/uade/Bubble_Bobble.dwold uade warning: maxsubsong = -1, and exits
+- cm cannot quit playing testmus/uade/Bomb_Jack.fred (also cust)
