@@ -143,17 +143,17 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
                     int count = 50;
                     while (sum == 0 && count != 0) {
                         int rc = player->getSamples(&buffer[0], buffer.size());
-                    if (rc > 0) {
-                        for (int i = 0; i < rc; ++i) {
-                            if (buffer[i] != 0) {
-                                sum = 1;
+                        if (rc > 0) {
+                            for (int i = 0; i < rc; ++i) {
+                                if (buffer[i] != 0) {
+                                    sum = 1;
+                                    break;
+                                }
+                            }
+                            if (sum != 0) {
                                 break;
                             }
-                        }
-                        if (sum != 0) {
-                            break;
-                        }
-                        count--;
+                            count--;
                         } else
                             break;
                     }
@@ -171,51 +171,15 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
     return true;
 }
 
-TEST_CASE("gme", "[music]")
-{
-    testPlugin<musix::GMEPlugin>("testmus/gme/working", "");
-}
-
-TEST_CASE("adlib", "[music]")
-{
-    testPlugin<musix::AdPlugin>("testmus/adlib", ".rol", "data");
-}
-
-TEST_CASE("uade", "[music]")
-{
-    testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data");
-}
-
-TEST_CASE("openmpt", "[music]")
-{
-    testPlugin<musix::OpenMPTPlugin>("testmus/openmpt", "");
-}
-
-TEST_CASE("gsf", "[music]")
-{
-    testPlugin<musix::GSFPlugin>("testmus/gsf", "lib");
-}
-
-TEST_CASE("nds", "[music]")
-{
-    testPlugin<musix::NDSPlugin>("testmus/nds", "lib");
-}
-
-TEST_CASE("psx", "[music]")
-{
-    testPlugin<musix::HEPlugin>("testmus/psx", "lib", "data/hebios.bin");
-}
-
-TEST_CASE("zx", "[music]")
-{
-    testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2");
-}
-
-TEST_CASE("ffmpeg", "[music]")
-{
-    testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg", "");
-}
-
+TEST_CASE("gme", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme/working", ""); }
+TEST_CASE("adlib", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", ".rol", "data"); }
+TEST_CASE("uade", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
+TEST_CASE("openmpt", "[music]") { testPlugin<musix::OpenMPTPlugin>("testmus/openmpt", ""); }
+TEST_CASE("gsf", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib"); }
+TEST_CASE("nds", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib"); }
+TEST_CASE("psx", "[music]") { testPlugin<musix::HEPlugin>("testmus/psx", "lib", "data/hebios.bin"); }
+TEST_CASE("zx", "[music]") { testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2"); }
+TEST_CASE("ffmpeg", "[music]") { testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg", ""); }
 TEST_CASE("ht", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
 TEST_CASE("sc68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
 TEST_CASE("usf", "[music]") { testPlugin<musix::USFPlugin>("testmus/usf", ""); }
@@ -235,8 +199,8 @@ TEST_CASE("coverage", "[music]")
     auto& plugins = musix::ChipPlugin::getPlugins();
     
     std::vector<std::string> allMissing;
+    std::set<std::string> missingFolders;
     
-    // Map of plugin name to its test directory
     std::unordered_map<std::string, std::string> pluginDirs = {
         {"gme", "testmus/gme/working"},
         {"adlib", "testmus/adlib"},
@@ -273,10 +237,16 @@ TEST_CASE("coverage", "[music]")
             dir = "testmus/" + utils::toLower(name);
         }
 
-        auto files = utils::File{ dir }.listFiles();
+        utils::File folderCheck{ dir };
         std::set<std::string> existingExts;
-        for (auto const& f : files) {
-            existingExts.insert(utils::path_extension(f.getName()));
+
+        if (!folderCheck.exists()) {
+            missingFolders.insert(dir);
+        } else {
+            auto files = folderCheck.listFiles();
+            for (auto const& f : files) {
+                existingExts.insert(utils::path_extension(f.getName()));
+            }
         }
 
         for (auto const& ext : exts) {
@@ -293,6 +263,20 @@ TEST_CASE("coverage", "[music]")
             printf("  %s\n", m.c_str());
         }
         printf("--------------------------------------\n");
+        printf("TOTAL MISSING EXTENSIONS SKIPPED: %zu\n", allMissing.size());
+        printf("--------------------------------------\n");
+    } else {
+        printf("\n--- COVERAGE METRIC: 100%% COMPLIANT (0 MISSING EXTENSIONS) ---\n");
+    }
+
+    if (!missingFolders.empty()) {
+        printf("\n--- MISSING TARGET DIRECTORIES DETECTED ---\n");
+        printf("Execute the following terminal script to construct the environment:\n\n");
+        printf("```bash\n");
+        for (auto const& folder : missingFolders) {
+            printf("mkdir -p \"%s\"\n", folder.c_str());
+        }
+        printf("```\n");
+        printf("-------------------------------------------\n");
     }
 }
-

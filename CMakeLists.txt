@@ -26,8 +26,6 @@ if(APPLE)
     if(NOT CMAKE_OSX_ARCHITECTURES)
         set(CMAKE_OSX_ARCHITECTURES "arm64")
     endif()
-    
-#    set(CMAKE_OSX_DEPLOYMENT_TARGET "26.0" CACHE STRING "macOS Deployment Target" FORCE)
 endif()
 
 # Global overrides
@@ -35,6 +33,11 @@ set(ZLIB_LIBRARIES z CACHE INTERNAL "" FORCE)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
+
+# FORCE GLOBAL SILENCING OF INTERFACE OVERRIDE WARNINGS (FIXES RSNPLUGIN LEAK)
+if(APPLE OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    add_compile_options(-Wno-inconsistent-missing-override)
+endif()
 
 # Compiler Cache
 find_program(CCACHE_PROGRAM ccache)
@@ -62,7 +65,7 @@ endif()
 set(GCC_CLANG_WARNINGS -Wall -Wextra -Wnon-virtual-dtor -pedantic)
 
 if(APPLE OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    list(APPEND GCC_CLANG_WARNINGS -Wno-deprecated-declarations -Wno-string-compare -Wno-pointer-sign)
+    list(APPEND GCC_CLANG_WARNINGS -Wno-deprecated-declarations -Wno-string-compare -Wno-pointer-sign -Wno-inconsistent-missing-override)
 endif()
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
@@ -151,8 +154,8 @@ if(APPLE)
         "-framework Cocoa" 
         "-framework AudioToolbox" 
         "-framework AudioUnit"
-	"-framework Foundation"
-	"-framework AppKit"
+        "-framework Foundation"
+        "-framework AppKit"
     )
 endif()
 
@@ -272,7 +275,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     set(SILENT_TARGETS
         vicepluginbridge ndsplugin gsfplugin usfplugin heplugin adplugin
         aoplugin v2plugin unrar coreutils lua crypto tedplugin gmeplugin
-        openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin ffmpegplugin uadeplugin
+        openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin ffmpegplugin uadeplugin rsnplugin
     )
     foreach(target_item ${SILENT_TARGETS})
         if(TARGET ${target_item})
