@@ -79,9 +79,9 @@ else
 fi
 
 # Inside Section 4 of package_app.sh:
-if [ -f "${CHIPMACHINE_DIR}/Credits.rtf" ]; then
+if [ -f "${CHIPMACHINE_DIR}/data/misc/Credits.rtf" ]; then
     echo "-> Packaging Credits into bundle..."
-    cp "${CHIPMACHINE_DIR}/Credits.rtf" "${RESOURCES_DIR}/"
+    cp "${CHIPMACHINE_DIR}/data/misc/Credits.rtf" "${RESOURCES_DIR}/"
 fi
 
 if [ -d "${CHIPMACHINE_DIR}/lua" ]; then
