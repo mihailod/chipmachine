@@ -19,10 +19,10 @@ ChipMachineAS
 
 **I AM USING GOOGLE GEMINI TO HELP ME WITH THIS INTEL -> ARM PORT. SO IT IS ALSO AN EXPERIMENT IN HOW AI PERFORMS AT THIS TASK.**
 
-![Screenshot](https://raw.githubusercontent.com/mihailod/chipmachine/master/screen.png)
+![Screenshot](data/misc/screen.png)
 
 See the demo (turn the sound on!):
-<video src="https://github.com/user-attachments/assets/66982f37-8245-4e18-9716-09f6d2f2bc3a" width="100%" autoplay loop playsinline></video>
+<video src="data/misc/video.mp4" width="100%" controls></video>
 
 ## Intro
 
