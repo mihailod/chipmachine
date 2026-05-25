@@ -1,6 +1,5 @@
 crashes:
 ========
-* amegas encore (crashes on arm, "couldnt play" on intel)
 
 no songs in product
 ===================

@@ -369,12 +369,24 @@ MusicPlayer::fromFile(const std::string& file_name)
     //LOGD("Finding plugin for '%s' (%s)", file_name, name);
     for (auto& plugin : musix::ChipPlugin::getPlugins()) {
         if (plugin->canHandle(name)) {
-            //LOGD("Playing with %s\n", plugin->name());
-            auto player =
-                std::shared_ptr<musix::ChipPlayer>(plugin->fromFile(file_name));
-            if (!player) continue;
-            check_silence = plugin->checkSilence();
-            return player;
+            try {
+                //LOGD("Playing with %s\n", plugin->name());
+                auto player =
+                    std::shared_ptr<musix::ChipPlayer>(plugin->fromFile(file_name));
+                if (!player) continue;
+                check_silence = plugin->checkSilence();
+                return player;
+            }
+            catch (const std::exception& e) {
+                fprintf(stderr, "MusicPlayer: Plugin '%s' failed to load '%s'. Error: %s\n", 
+                        plugin->name().c_str(), file_name.c_str(), e.what());
+                continue; 
+            }
+            catch (...) {
+                fprintf(stderr, "MusicPlayer: Plugin '%s' encountered an unknown exception parsing '%s'.\n", 
+                        plugin->name().c_str(), file_name.c_str());
+                continue;
+            }
         }
     }
     return nullptr;
