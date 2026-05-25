@@ -3,7 +3,7 @@ crashes:
 
 no songs in product
 ===================
-* deflektor trilogy
+* deflektor trilogy (the <> issue below)
 
 could not play song:
 ===================
@@ -25,11 +25,15 @@ console errors:
 other:
 ======
 - dicrepancy of intel and arm databases, see missing above -- why?
-- add unit tests for EVERY supported extension (not just every plugin)
+- add a test file for EVERY supported extension
 - what does this mean <> eg <deflektor trilogy>, those seem to be missing on intel (?)
 - check if commands are in sync with help screen, for example pause is F5 not F6 etc...
-- use IDE for development instead of command line?
-- test build process on a different machine
 - plays silently in cm: testmus/heplugin/Goldrunner.psf
 - error in cm: testmus/uade/Bubble_Bobble.dwold uade warning: maxsubsong = -1, and exits
 - cm cannot quit playing testmus/uade/Bomb_Jack.fred (also cust)
+
+product/process
+===============
+- research/find better free AI than gemini
+- test build process on a different clean machine
+- use some IDE (with integrated AI?) for devlopment?
