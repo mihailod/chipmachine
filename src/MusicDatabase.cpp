@@ -991,13 +991,26 @@ template <typename T> static void readVector(std::vector<T>& v, apone::File& f)
 {
     auto sz = f.read<uint32_t>();
     v.resize(sz);
-    f.read((uint8_t*)&v[0], v.size() * sizeof(T));
+    for (uint32_t i = 0; i < sz; i++) {
+        if constexpr (std::is_enum_v<T>) {
+            v[i] = static_cast<T>(f.read<uint32_t>());
+        } else {
+            v[i] = f.read<T>();
+        }
+    }
 }
 
 template <typename T> static void writeVector(std::vector<T>& v, apone::File& f)
 {
-    f.write<uint32_t>(v.size());
-    f.write((uint8_t*)&v[0], v.size() * sizeof(T));
+    auto sz = static_cast<uint32_t>(v.size());
+    f.write<uint32_t>(sz);
+    for (uint32_t i = 0; i < sz; i++) {
+        if constexpr (std::is_enum_v<T>) {
+            f.write<uint32_t>(static_cast<uint32_t>(v[i]));
+        } else {
+            f.write<T>(v[i]);
+        }
+    }
 }
 
 void MusicDatabase::readIndex(apone::File&& f)
@@ -1122,7 +1135,9 @@ void MusicDatabase::generateIndex()
     productStartIndex = titleIndex.size();
 
     auto prodQuery = db.query<std::string, std::string, std::string, int>(
-        "SELECT title, type, creator, collection FROM product");
+        "SELECT product.title, type, creator, collection FROM product, "
+        "prod2song WHERE prodid = product.ROWID GROUP BY prodid HAVING "
+        "count(*) > 1");
     while (count < 1000000) {
         count++;
         if (!prodQuery.step()) break;

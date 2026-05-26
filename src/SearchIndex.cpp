@@ -316,14 +316,15 @@ void SearchIndex::initTrans()
     transInited = true;
 
     for (int i = 0; i < 256; i++) {
-        if (i >= 0xa1)
-            to7bit[i] = translit[i - 0xa1];
-        else if (i >= 0x80)
-            to7bit[i] = '?';
+        unsigned char c = (unsigned char)i;
+        if (c >= 0xa1)
+            to7bit[c] = (unsigned char)translit[c - 0xa1];
+        else if (c >= 0x80)
+            to7bit[c] = '?';
         else
-            to7bit[i] = i;
-        to7bitlow[i] = tolower(to7bit[i]);
-        if (to7bitlow[i] == '-' || to7bitlow[i] == '\'') to7bitlow[i] = 0;
+            to7bit[c] = c;
+        to7bitlow[c] = (unsigned char)tolower((unsigned char)to7bit[c]);
+        if (to7bitlow[c] == '-' || to7bitlow[c] == '\'') to7bitlow[c] = 0;
     }
 }
 
@@ -336,12 +337,14 @@ std::string& SearchIndex::simplify(std::string& s)
     unsigned char* p = (unsigned char*)&s[0];
     unsigned char* conv = &to7bitlow[0];
     while (*p) {
-        if (!(*p = conv[*p])) {
+        unsigned char c = *p;
+        if (!(c = conv[c])) {
             int i = p - (unsigned char*)&s[0];
             s.erase(i, 1);
-            p = (unsigned char*)&s[0];
+        } else {
+            *p = c;
+            p++;
         }
-        p++;
     }
     return s;
 }
@@ -432,14 +435,17 @@ void SearchIndex::dump(apone::File& f)
 {
 
     for (int i = 0; i < 65536; i++) {
-        auto sz = stringMap[i].size();
+        auto sz = static_cast<uint32_t>(stringMap[i].size());
         f.write<uint32_t>(sz);
-        if (sz > 0) f.write((uint8_t*)&stringMap[i][0], sz * sizeof(uint32_t));
+        for (uint32_t j = 0; j < sz; j++) {
+            f.write<uint32_t>(stringMap[i][j]);
+        }
     }
-    f.write<uint32_t>(strings.size());
+    f.write<uint32_t>(static_cast<uint32_t>(strings.size()));
     for (int i = 0; i < (int)strings.size(); i++) {
-        f.write<uint8_t>(strings[i].length());
-        f.write(strings[i].c_str(), strings[i].length());
+        auto len = static_cast<uint8_t>(strings[i].length());
+        f.write<uint8_t>(len);
+        f.write(strings[i].c_str(), len);
     }
 }
 
@@ -453,7 +459,9 @@ void SearchIndex::load(apone::File& f)
     for (int i = 0; i < 65536; i++) {
         auto sz = f.read<uint32_t>();
         stringMap[i].resize(sz);
-        if (sz > 0) f.read((uint8_t*)&stringMap[i][0], sz * sizeof(uint32_t));
+        for (uint32_t j = 0; j < sz; j++) {
+            stringMap[i][j] = f.read<uint32_t>();
+        }
     }
     uint8_t temp[256];
     auto sz = f.read<uint32_t>();
@@ -483,11 +491,10 @@ int SearchIndex::add(const std::string& str, bool stringonly)
     }
 
     for (char c : str) {
-        if (c == '-' || c == '\'') continue;
+        unsigned char uc = to7bitlow[(unsigned char)c];
+        if (uc == 0) continue;
 
-        c = to7bitlow[c & 0xff];
-
-        if (!isalnum(c)) {
+        if (!isalnum(uc)) {
             if (!wordAdded) {
                 uint16_t code = tlcode(tl.c_str());
                 // LOGV("Adding '%s'", tl);
@@ -501,7 +508,7 @@ int SearchIndex::add(const std::string& str, bool stringonly)
             continue;
         }
         wordAdded = false;
-        tl.push_back(c);
+        tl.push_back((char)uc);
 
         if (tl.size() == 3) {
             uint16_t code = tlcode(tl.c_str());
