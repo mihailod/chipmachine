@@ -259,12 +259,6 @@ void ChipMachine::setupCommands()
         if (currentDialog) currentDialog->remove();
         currentDialog = nullptr;
     });
-
-    cmd("test_dialog", [=] {
-        currentDialog = std::make_shared<Dialog>(grappix::screenptr, font,
-                                                 "Type something:");
-        overlay.add(currentDialog);
-    });
 }
 
 } // namespace chipmachine
