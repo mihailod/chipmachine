@@ -25,8 +25,8 @@ public:
         // Shifted bounds.y upward by 50.0f to move the rectangle further up
         bounds.y = ((target->height() - bounds.h) / 2.0f) - 50.0f;
         
-        textField.pos = { bounds.x + 20.0f, bounds.y + 20.0f };
-        lineEdit.pos  = { bounds.x + 20.0f, bounds.y + 70.0f };
+        textField.pos = { bounds.x + 20.0f, bounds.y + 40.0f };
+        lineEdit.pos  = { bounds.x + 20.0f, bounds.y + 95.0f };
     }
 
     void on_ok(std::function<void(const std::string&)> cb)
