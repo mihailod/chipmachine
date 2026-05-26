@@ -6,8 +6,6 @@ no songs in product
 
 could not play song:
 ===================
-* (missing on intel) barbarian sen: ERROR: [youtube] Lwr1AXx-K5k: Video unavailable
-[youtube.cpp:22] Failed to extract YouTube stream URL for https://www.youtube.com/watch?v=Lwr1AXx-K5k
 * (intel crash, fixed on arm) lightforce jochen (last one) File not found 7CJ5AJ4@J5JCE??7CH5AH4@H2>H4HAC??5AF4@F2>F0<F2F@A????[0uade warning: Song ended prematurely due to error: score died -- Gemini says corrupted file
 
 could not load file
