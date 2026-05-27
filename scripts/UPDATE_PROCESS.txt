@@ -28,7 +28,14 @@ TODO:
     3976 chipmachine/data/rko.txt
     1519 chipmachine/data/rsn.txt
     1265 chipmachine/data/amiremix.txt
-     544 chipmachine/data/hvtc.txt
+
+
+     544 chipmachine/data/hvtc.txt -- DONE 544 -> 1038
+TED collection: https://plus4world.powweb.com/feat/tedsound/hvtc_20250908.zip
+download and unzip then run:
+python3 update_hvtc.py ~/Downloads/hvtc hvtc.txt
+and replace the existing file
+
      413 chipmachine/data/nsfe.txt
      314 chipmachine/data/scenesat.txt
      104 chipmachine/data/syntax.txt

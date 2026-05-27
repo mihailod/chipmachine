@@ -7,6 +7,7 @@ print in debug and about how many total songs are indexed
 
 crashes:
 ========
+NO TED Music is found nor playing at all?! Creating 'HVTC' database -- where are these files pulled from? maybe ted repo url changed...
 
 could not play song:
 ===================
