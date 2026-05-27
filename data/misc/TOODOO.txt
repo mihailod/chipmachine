@@ -1,9 +1,6 @@
 crashes:
 ========
 
-no songs in product
-===================
-
 could not play song:
 ===================
 * (intel crash, fixed on arm) lightforce jochen (last one) File not found 7CJ5AJ4@J5JCE??7CH5AH4@H2>H4HAC??5AF4@F2>F0<F2F@A????[0uade warning: Song ended prematurely due to error: score died -- Gemini says corrupted file
@@ -15,13 +12,14 @@ could not load file
 silent playback
 ===============
 * (also on intel) elfforest 
+* (file not displayed on intel) delta patrol, youtube
 
 console errors:
 ===============
 
 other:
 ======
-- test dialog overlaps with its title
+- some tests are duplicated it seems? adplug same as adlib? gme and game music engine? ayfly zx and zx
 - add a test file for EVERY supported extension
 - plays silently in cm: testmus/heplugin/Goldrunner.psf
 - error in cm: testmus/uade/Bubble_Bobble.dwold uade warning: maxsubsong = -1, and exits

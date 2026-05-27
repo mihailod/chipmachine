@@ -171,27 +171,51 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
     return true;
 }
 
-TEST_CASE("gme", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme/working", ""); }
-TEST_CASE("adlib", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", ".rol", "data"); }
-TEST_CASE("uade", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
-TEST_CASE("openmpt", "[music]") { testPlugin<musix::OpenMPTPlugin>("testmus/openmpt", ""); }
-TEST_CASE("gsf", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib"); }
-TEST_CASE("nds", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib"); }
-TEST_CASE("psx", "[music]") { testPlugin<musix::HEPlugin>("testmus/psx", "lib", "data/hebios.bin"); }
-TEST_CASE("zx", "[music]") { testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2"); }
-TEST_CASE("ffmpeg", "[music]") { testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg", ""); }
-TEST_CASE("ht", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
-TEST_CASE("sc68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
-TEST_CASE("usf", "[music]") { testPlugin<musix::USFPlugin>("testmus/usf", ""); }
-TEST_CASE("stsound", "[music]") { testPlugin<musix::StSoundPlugin>("testmus/stsound", ""); }
-TEST_CASE("mp3", "[music]") { testPlugin<musix::MP3Plugin>("testmus/mp3", ""); }
-TEST_CASE("hively", "[music]") { testPlugin<musix::HivelyPlugin>("testmus/hively", ""); }
-TEST_CASE("rsn", "[music]") { testPlugin<musix::RSNPlugin>("testmus/rsn", ""); }
-TEST_CASE("mdx", "[music]") { testPlugin<musix::MDXPlugin>("testmus/mdx", ""); }
-TEST_CASE("s98", "[music]") { testPlugin<musix::S98Plugin>("testmus/s98", ""); }
-TEST_CASE("ao", "[music]") { testPlugin<musix::AOPlugin>("testmus/ao", ""); }
-TEST_CASE("ted", "[music]") { testPlugin<musix::TEDPlugin>("testmus/ted", ""); }
-TEST_CASE("v2", "[music]") { testPlugin<musix::V2Plugin>("testmus/v2", ""); }
+TEST_CASE("GME", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme/working", ""); }
+TEST_CASE("AdPlug", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", ".rol", "data"); }
+TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
+TEST_CASE("OpenMPT", "[music]") { testPlugin<musix::OpenMPTPlugin>("testmus/openmpt", ""); }
+TEST_CASE("GSF", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib"); }
+TEST_CASE("NDS", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib"); }
+TEST_CASE("HE", "[music]") { testPlugin<musix::HEPlugin>("testmus/psx", "lib", "data/hebios.bin"); }
+TEST_CASE("Ayfly", "[music]") { testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2"); }
+TEST_CASE("FFMPEG", "[music]") { testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg", ""); }
+TEST_CASE("HT", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
+TEST_CASE("SC68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
+TEST_CASE("USF", "[music]") { testPlugin<musix::USFPlugin>("testmus/usf", ""); }
+TEST_CASE("StSound", "[music]") { testPlugin<musix::StSoundPlugin>("testmus/stsound", ""); }
+TEST_CASE("MP3", "[music]") { testPlugin<musix::MP3Plugin>("testmus/mp3", ""); }
+TEST_CASE("Hively", "[music]") { testPlugin<musix::HivelyPlugin>("testmus/hively", ""); }
+TEST_CASE("RSN", "[music]") { testPlugin<musix::RSNPlugin>("testmus/rsn", ""); }
+TEST_CASE("MDX", "[music]") { testPlugin<musix::MDXPlugin>("testmus/mdx", ""); }
+TEST_CASE("S98", "[music]") { testPlugin<musix::S98Plugin>("testmus/s98", ""); }
+TEST_CASE("AO", "[music]") { testPlugin<musix::AOPlugin>("testmus/ao", ""); }
+TEST_CASE("Ted", "[music]") { testPlugin<musix::TEDPlugin>("testmus/ted", ""); }
+TEST_CASE("V2", "[music]") { testPlugin<musix::V2Plugin>("testmus/v2", ""); }
+
+TEST_CASE("priority_map", "")
+{
+    musix::ChipPlugin::createPlugins("data");
+    auto& plugins = musix::ChipPlugin::getPlugins();
+
+    std::map<std::string, std::vector<std::string>> extMap;
+    for (auto const& plugin : plugins) {
+        auto exts = plugin->getSupportedExtensions();
+        for (auto const& ext : exts) {
+            extMap[ext].push_back(plugin->name() + " (P:" + std::to_string(plugin->priority()) + ")");
+        }
+    }
+
+    printf("\n--- EXTENSION PRIORITY MAP ---\n");
+    for (auto const& [ext, handlers] : extMap) {
+        printf(".%-8s : ", ext.c_str());
+        for (size_t i = 0; i < handlers.size(); ++i) {
+            printf("%s%s", handlers[i].c_str(), (i == handlers.size() - 1) ? "" : " -> ");
+        }
+        printf("\n");
+    }
+    printf("------------------------------\n");
+}
 
 TEST_CASE("coverage", "[music]")
 {
@@ -200,16 +224,15 @@ TEST_CASE("coverage", "[music]")
     
     std::vector<std::string> allMissing;
     std::set<std::string> missingFolders;
-    
     std::unordered_map<std::string, std::string> pluginDirs = {
-        {"gme", "testmus/gme/working"},
-        {"adlib", "testmus/adlib"},
-        {"uade", "testmus/uade"},
+        {"Game Music Engine", "testmus/gme/working"},
+        {"AdPlug", "testmus/adlib"},
+        {"UADE", "testmus/uade"},
         {"OpenMPT", "testmus/openmpt"},
-        {"gsf", "testmus/gsf"},
-        {"nds", "testmus/nds"},
-        {"psx", "testmus/psx"},
-        {"zx", "testmus/zx"},
+        {"Gameboy Advance", "testmus/gsf"},
+        {"NDSPlugin", "testmus/nds"},
+        {"HEPlugin", "testmus/psx"},
+        {"Ayfly ZX", "testmus/zx"},
         {"ffmpeg", "testmus/ffmpeg"},
         {"HTPlugin", "testmus/ht"},
         {"SC68", "testmus/sc68"},
@@ -279,4 +302,6 @@ TEST_CASE("coverage", "[music]")
         printf("```\n");
         printf("-------------------------------------------\n");
     }
+
+    printf("\n>>> Hint: run cmtest priority_map to see the plugin handling priority map for each extension\n\n");
 }
