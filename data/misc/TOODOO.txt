@@ -1,32 +1,9 @@
 data
 ====
-update databases to the latest:
-
-Creating 'Playlists' database
-Creating 'HVSC' database
-Creating 'Gamebase64' database
-Creating 'CSDb' database
-Creating 'Modland' database
-Creating 'Amp' database
-Creating 'Bitworld' database
-Creating 'HVTC' database
-Creating 'snesmusic.org' database
-Creating 'sndh' database
-Creating 'asma' database
-Creating 'remix.kwed.org' database
-Creating 'amigaremix' database
-Creating 'scenesat' database
-Creating 'Bitjam' database
-Creating 'Demovibes' database
-Creating 'Amigavibes' database
-Creating 'Radio' database
-Creating 'Bitar till Kaffet' database
-Creating 'Bitar till Kaffet' database
-Creating 'This Week in Chiptune' database
-Creating 'Gamewave Podcast' database
-Creating 'Syntax Error' database
-Creating 'C64 Take-away' database
-DONE Creating 'Pouet/Youtube' database
+update databases to the latest
+Creating 'Bitar till Kaffet' database -- processed twice, why?
+print Creating in debug for each database from which file it was made and how big it is
+print in debug and about how many total songs are indexed
 
 crashes:
 ========

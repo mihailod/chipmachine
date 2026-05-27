@@ -1,0 +1,68 @@
+
+
+  452109 chipmachine/data/allmods.txt -- DONE 452,109 -> 513,992
+Download and unzip https://ftp.modland.com/allmods.zip
+
+
+  102721 chipmachine/data/Songlengths.txt
+TODO
+
+   87075 chipmachine/data/STIL.txt
+TODO
+
+   51360 chipmachine/data/hvsc.txt -- DONE [#84] 51,360 -> 61,123
+Download hvsc from https://hvsc.c64.org to ~/Downloads, run:
+python3 update_hvsc.py ~/Downloads/C64Music hvsc.txt
+and copy the file
+
+   32601 chipmachine/data/pouet.txt -- DONE 14,910 -> 32,601
+Run update_pouet.py and copy the resulting file
+
+
+TODO:
+
+   15607 chipmachine/data/bitworld.txt
+    8640 chipmachine/data/amp.txt
+    5281 chipmachine/data/asma.txt
+    4683 chipmachine/data/sndh.txt
+    3976 chipmachine/data/rko.txt
+    1519 chipmachine/data/rsn.txt
+    1265 chipmachine/data/amiremix.txt
+     544 chipmachine/data/hvtc.txt
+     413 chipmachine/data/nsfe.txt
+     314 chipmachine/data/scenesat.txt
+     104 chipmachine/data/syntax.txt
+      40 chipmachine/data/amigavibes.txt
+      19 chipmachine/data/bitar.txt
+      13 chipmachine/data/demovibes.txt
+      12 chipmachine/data/radio.txt
+
+
+Creating 'Playlists' database
+Creating 'HVSC' database
+Creating 'Gamebase64' database
+Creating 'CSDb' database
+Creating 'Modland' database
+Creating 'Amp' database
+Creating 'Bitworld' database
+Creating 'HVTC' database
+Creating 'snesmusic.org' database
+Creating 'sndh' database
+Creating 'asma' database
+Creating 'remix.kwed.org' database
+Creating 'amigaremix' database
+Creating 'scenesat' database
+Creating 'Bitjam' database
+Creating 'Demovibes' database
+Creating 'Amigavibes' database
+Creating 'Radio' database
+Creating 'Bitar till Kaffet' database
+Creating 'Bitar till Kaffet' database
+Creating 'This Week in Chiptune' database
+Creating 'Gamewave Podcast' database
+Creating 'Syntax Error' database
+Creating 'C64 Take-away' database
+Creating 'Pouet/Youtube' database
+
+
+
