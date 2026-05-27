@@ -19,10 +19,7 @@ console errors:
 
 other:
 ======
-- some tests are duplicated it seems? adplug same as adlib? gme and game music engine? ayfly zx and zx
 - add a test file for EVERY supported extension
-- plays silently in cm: testmus/heplugin/Goldrunner.psf
-- error in cm: testmus/uade/Bubble_Bobble.dwold uade warning: maxsubsong = -1, and exits
 
 product/process
 ===============
