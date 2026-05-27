@@ -1,10 +1,7 @@
-
-
   452109 chipmachine/data/allmods.txt -- DONE 452,109 -> 513,992
 Download and unzip https://ftp.modland.com/allmods.zip
 
-
-  102721 chipmachine/data/Songlengths.txt
+  102721 chipmachine/data/Songlengths.txt -- DONE
 this is obsolete, used by VicePlugin and renamed to OLDVICESonglengths.txt
 the vicepluginbridge gets these lengths automatically from the sid files
 this MD5 file however is used by the code and was missing (harmless but no data was available):
@@ -13,7 +10,6 @@ After your change: STIL.cpp can now successfully open and digest the database.
 however this was never used:
 ./musicplayer/src/stil/STIL.cpp says:
     //readLengths();
-
 
    87075 chipmachine/data/STIL.txt -- DONE 87,075 -> 108,101
 SID Tune Information List
@@ -29,12 +25,23 @@ and copy the file
    32601 chipmachine/data/pouet.txt -- DONE 14,910 -> 32,601
 Run update_pouet.py and copy the resulting file
 
+   15607 chipmachine/data/bitworld.txt -- NOTHING TO DO (?)
+created by scripts/ami.d which is heavily outdated
+"This file is a local data export from the historical BitWorld Amiga Demoscene Database (which was closely integrated with platforms like Kestra Amiga Demo Database and Exotica). It functions as a complete catalog linking historical Amiga disk tracker modules (.mod) to the specific underground demoscene productions, intros, and music disks they originally debuted in."
+"The historic Amiga scene modules from the late 80s and 90s (Protracker, Soundtracker, and Future Composer files) are static and frozen in time. Your current bitworld.txt snapshot accurately indexes those classic demoscene years, which represents the core of the Amiga music library you'd want to browse or play anyway. No further cleanup or updates are required for this file."
 
-TODO:
+    8640 chipmachine/data/amp.txt -- NOTHING TO DO
+"Because amp.txt is strictly an output file written dynamically by your ami.d compilation routine, it can only be updated by running the full ami.d scraper.
+As established previously, running ami.d today will fail."
+"Leave amp.txt exactly as it is. It represents a perfectly preserved, self-contained snapshot of the classic tracking modules used across classic Amiga demoscene history. Chipmachine will read your existing data records flawlessly without any external assistance."
 
-   15607 chipmachine/data/bitworld.txt
-    8640 chipmachine/data/amp.txt
-    5281 chipmachine/data/asma.txt
+
+    5281 chipmachine/data/asma.txt -- DONE 5281 -> 6335
+This file is a local data snapshot index for the Atari SAP Music Archive (ASMA).
+download and unzip from https://asma.atari.org
+python3 update_asma.py ~/Downloads/asma asma.txt
+and put it in the proper place (chipmachines/data/asma.txt)
+
     4683 chipmachine/data/sndh.txt
     3976 chipmachine/data/rko.txt
     1519 chipmachine/data/rsn.txt
