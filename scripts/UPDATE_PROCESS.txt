@@ -5,10 +5,21 @@ Download and unzip https://ftp.modland.com/allmods.zip
 
 
   102721 chipmachine/data/Songlengths.txt
-TODO
+this is obsolete, used by VicePlugin and renamed to OLDVICESonglengths.txt
+the vicepluginbridge gets these lengths automatically from the sid files
+this MD5 file however is used by the code and was missing (harmless but no data was available):
+ curl -L -o chipmachine/data/Songlengths.md5 https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/Songlengths.md5
+After your change: STIL.cpp can now successfully open and digest the database.
+however this was never used:
+./musicplayer/src/stil/STIL.cpp says:
+    //readLengths();
 
-   87075 chipmachine/data/STIL.txt
-TODO
+
+   87075 chipmachine/data/STIL.txt -- DONE 87,075 -> 108,101
+SID Tune Information List
+used by sid plugin
+curl -L -o STIL.txt https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/STIL.txt
+and put is in chipmachine/data
 
    51360 chipmachine/data/hvsc.txt -- DONE [#84] 51,360 -> 61,123
 Download hvsc from https://hvsc.c64.org to ~/Downloads, run:
