@@ -35,14 +35,20 @@ created by scripts/ami.d which is heavily outdated
 As established previously, running ami.d today will fail."
 "Leave amp.txt exactly as it is. It represents a perfectly preserved, self-contained snapshot of the classic tracking modules used across classic Amiga demoscene history. Chipmachine will read your existing data records flawlessly without any external assistance."
 
-
     5281 chipmachine/data/asma.txt -- DONE 5281 -> 6335
 This file is a local data snapshot index for the Atari SAP Music Archive (ASMA).
 download and unzip from https://asma.atari.org
 python3 update_asma.py ~/Downloads/asma asma.txt
 and put it in the proper place (chipmachines/data/asma.txt)
 
-    4683 chipmachine/data/sndh.txt
+    4683 chipmachine/data/sndh.txt -- DONE 4683 -> 5897
+This file is the indexing database for SNDH, the standard chiptune format for the Atari ST (specifically targets the Yamaha YM2149 sound chip). Just like asma.txt is the text index for the Atari 8-bit SAP music archive, sndh.txt 
+download the latest (atm January 1, 2026) and unzip from here:
+https://sndh.atari.org/download.php
+python3 update_sndh.py ~/Downloads/sndh_lf sndh.txt
+you know the drill by now :)
+
+
     3976 chipmachine/data/rko.txt
     1519 chipmachine/data/rsn.txt
     1265 chipmachine/data/amiremix.txt
