@@ -30,7 +30,7 @@ created by scripts/ami.d which is heavily outdated
 "This file is a local data export from the historical BitWorld Amiga Demoscene Database (which was closely integrated with platforms like Kestra Amiga Demo Database and Exotica). It functions as a complete catalog linking historical Amiga disk tracker modules (.mod) to the specific underground demoscene productions, intros, and music disks they originally debuted in."
 "The historic Amiga scene modules from the late 80s and 90s (Protracker, Soundtracker, and Future Composer files) are static and frozen in time. Your current bitworld.txt snapshot accurately indexes those classic demoscene years, which represents the core of the Amiga music library you'd want to browse or play anyway. No further cleanup or updates are required for this file."
 
-    8640 chipmachine/data/amp.txt -- NOTHING TO DO
+    8640 chipmachine/data/amp.txt -- NOTHING TO DO (?)
 "Because amp.txt is strictly an output file written dynamically by your ami.d compilation routine, it can only be updated by running the full ami.d scraper.
 As established previously, running ami.d today will fail."
 "Leave amp.txt exactly as it is. It represents a perfectly preserved, self-contained snapshot of the classic tracking modules used across classic Amiga demoscene history. Chipmachine will read your existing data records flawlessly without any external assistance."
@@ -48,9 +48,9 @@ https://sndh.atari.org/download.php
 python3 update_sndh.py ~/Downloads/sndh_lf sndh.txt
 you know the drill by now :)
 
-    3976 chipmachine/data/rko.txt
+    3976 chipmachine/data/rko.txt 3976 -> 5217
 This file, rko.txt, is the index database for Remix.Kwed.Org (RKO), which is the primary internet archive for Commodore 64 MP3 remix tracks based on original SID chip music tunes.
---- harder - ask agy
+scripts/update_rko.py (by agy)
 
     1519 chipmachine/data/rsn.txt
 metadata index for the Super Nintendo (SNES) music
@@ -59,6 +59,7 @@ metadata index for the Super Nintendo (SNES) music
     1265 chipmachine/data/amiremix.txt -- DONE 1,265 -> 1,711
 Metadata index file to search and stream Amiga track remixes from amigaremix.com
 python3 chipmachine/scripts/update_amiremix.py chipmachine/data/amiremix.txt
+(by agy)
 
      544 chipmachine/data/hvtc.txt -- DONE 544 -> 1038
 TED collection: https://plus4world.powweb.com/feat/tedsound/hvtc_20250908.zip
