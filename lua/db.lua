@@ -4,7 +4,10 @@
 -- local_dir : If exists, will be checked first for files before downloading.
 -- If song_list or or source can not be found, database will not be added
 
-VERSION = 23;
+-- the intel chipmachine stopped at 23 (November 2017)
+-- after 8+ years, May 2026 24 is a major update
+-- to almost all databases bringing ~25% songs
+VERSION = 24;
 
 DB = {
 {

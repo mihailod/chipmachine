@@ -1268,13 +1268,22 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
     totalSongs = 0;
     dbVersion = lua["VERSION"];
 
-    LOGD("DBVERSION %d INDEXVERSION %d", dbVersion, indexVersion);
-    if (dbVersion != indexVersion) {
+    int sqliteVersion = 0;
+    try {
+        auto q = db.query<int>("PRAGMA user_version");
+        if (q.step()) {
+            sqliteVersion = q.get();
+        }
+    } catch (...) {}
+
+    LOGD("DBVERSION %d INDEXVERSION %d SQLITEVERSION %d", dbVersion, indexVersion, sqliteVersion);
+    if (dbVersion != indexVersion || dbVersion != sqliteVersion) {
         db.exec("DROP TABLE IF EXISTS collection");
         db.exec("DROP TABLE IF EXISTS song");
         db.exec("DROP TABLE IF EXISTS product");
         db.exec("DROP TABLE IF EXISTS prod2song");
         createTables();
+        db.exec(utils::format("PRAGMA user_version = %d", dbVersion));
         reindexNeeded = true;
     }
 

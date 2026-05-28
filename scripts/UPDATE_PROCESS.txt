@@ -1,3 +1,8 @@
+  873009 chipmachine/data/csdb.xml
+see https://csdb.dk
+
+
+
   452109 chipmachine/data/allmods.txt -- DONE 452,109 -> 513,992
 Download and unzip https://ftp.modland.com/allmods.zip
 
@@ -24,6 +29,11 @@ and copy the file
 
    32601 chipmachine/data/pouet.txt -- DONE 14,910 -> 32,601
 Run update_pouet.py and copy the resulting file
+
+
+   25701 chipmachine/data/Games.csv
+
+
 
    15607 chipmachine/data/bitworld.txt -- NOTHING TO DO (?)
 created by scripts/ami.d which is heavily outdated
@@ -52,6 +62,10 @@ you know the drill by now :)
 This file, rko.txt, is the index database for Remix.Kwed.Org (RKO), which is the primary internet archive for Commodore 64 MP3 remix tracks based on original SID chip music tunes.
 scripts/update_rko.py (by agy)
 
+    2974 chipmachine/data/bitar.xml
+
+    1922 chipmachine/data/c64takeaway.xml
+
     1519 chipmachine/data/rsn.txt
 metadata index for the Super Nintendo (SNES) music
 -- harder - ask agy
@@ -76,31 +90,64 @@ and replace the existing file
       12 chipmachine/data/radio.txt
 
 
-Creating 'Playlists' database
-Creating 'HVSC' database
-Creating 'Gamebase64' database
-Creating 'CSDb' database
-Creating 'Modland' database
-Creating 'Amp' database
-Creating 'Bitworld' database
-Creating 'HVTC' database
-Creating 'snesmusic.org' database
-Creating 'sndh' database
-Creating 'asma' database
-Creating 'remix.kwed.org' database
-Creating 'amigaremix' database
-Creating 'scenesat' database
-Creating 'Bitjam' database
-Creating 'Demovibes' database
-Creating 'Amigavibes' database
-Creating 'Radio' database
-Creating 'Bitar till Kaffet' database
-Creating 'Bitar till Kaffet' database
-Creating 'This Week in Chiptune' database
-Creating 'Gamewave Podcast' database
-Creating 'Syntax Error' database
-Creating 'C64 Take-away' database
-Creating 'Pouet/Youtube' database
+ Here is the exact mapping of files used during the database building process and those that are not.
+  ──────
+  ### 1. Files USED to Build the Database (Defined in  lua/db.lua )
+
+   Data File                               | Associated Database Collection (ID)     | Parser Method Used
+  -----------------------------------------|-----------------------------------------|-----------------------------------------
+  X hvsc.txt                               | HVSC ( hvsc )                           |  parseStandard 
+    Games.csv                              | Gamebase64 ( gb64 )                     |  parseGamebase 
+    csdb.xml                               | CSDb ( csdb )                           |  parseCsdb 
+  X allmods.txt                            | Modland ( modland )                     |  parseModland 
+  ? amp.txt                                | Amp ( amp )                             |  parseAmp 
+  ? bitworld.txt                           | Bitworld ( bitworld )                   |  parseBitworld 
+  X hvtc.txt                               | HVTC ( hvtc )                           |  parseStandard 
+    rsn.txt                                | snesmusic.org ( rsn )                   |  parseStandard 
+  X sndh.txt                               | sndh ( sndh )                           |  parseStandard 
+  X asma.txt                               | asma ( asma )                           |  parseStandard 
+  X rko.txt                                | remix.kwed.org ( rko )                  |  parseStandard 
+  X amiremix.txt                           | amigaremix ( amigaremix )               |  parseStandard 
+    scenesat.txt                           | scenesat ( scenesat )                   |  parseStandard 
+    demovibes.txt                          | Demovibes ( demovibes )                 |  parseStandard 
+    amigavibes.txt                         | Amigavibes ( amigavibes )               |  parseStandard 
+    radio.txt                              | Radio ( radio )                         |  parseStandard 
+    bitar.xml                              | Bitar till Kaffet (Live) ( bitar )      |  parseRss  (via  type = "podcast" )
+    bitar.txt                              | Bitar till Kaffet (Archive) ( bitar2 )  |  parseStandard 
+    syntax.txt                             | Syntax Error ( syntax )                 |  parseStandard 
+    c64takeaway.xml                        | C64 Take-away ( takeaway )              |  parseRss  (via  type = "podcast" )
+  X pouet.txt                              | Pouet/Youtube ( pouet )                 |  parseStandard 
+    playlists  (Dir)                       | Playlists ( pl )                        | Directory scanner ( listRecursive() )
+  ──────
+  ### 2. Files NOT USED to Build the Database
+
+  These files exist in the  data/  directory but are never loaded or processed during the music database creation ( music.db  &
+  index.dat  generation):
+
+  #### Commented-Out Collections:
+
+  •  nsfe.txt : This is a NES Sound Format Extended index file. The  NSFE  database collection is commented out at lines 208-
+  215 of db.lua.
+
+  #### Plugin & Engine-Specific Files (Used at Playback Time, not DB Build Time):
+
+X •  Songlengths.md5 : Utilized directly by the SID player engine to dynamically check HVSC song durations on demand during
+  playback (via MD5 hashing), completely bypassed by the database parser.
+X •  STIL.txt : The SID Tune Information List contains textual background information and comments for C64 tracks, queried by
+  the player interface when a SID file is loaded.
+- •  adplug.db : An internal binary database used solely by the  AdPlug  player plugin to handle OPL2/OPL3 (AdLib) metadata.
+- •  hebios.bin : Emulation BIOS file utilized exclusively by the HEBIOS console sound emulator.
+- •  sc68  /  sc68.cfg : The emulator engine configuration file and resources for SC68 (Atari ST) playback.
+
+  #### Obsolete & System Files:
+
+  •  OLDVICESonglengths.txt : Obsolete text file containing C64 track lengths for the old VICE emulators (scheduled for removal,
+  completely ignored by database indexing).
+  •  Bello.otf  /  Neutra.otf : System typography font files used to render the graphical UI.
+  •  extractor.py : Python script used to fetch or process indexes, not loaded by C++ database builder.
+  •  __pycache__  /  python_runtime  /  misc  /  c64  /  uade : Utility directories that house scripts, compilers, emulators,
+  and assets.
+
 
 
 
