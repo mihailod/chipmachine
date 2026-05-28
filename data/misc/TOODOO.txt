@@ -1,13 +1,9 @@
 data
 ====
 update databases to the latest -- mostly done
-Creating 'Bitar till Kaffet' database -- processed twice, why?
-print Creating in debug for each database from which file it was made and how many records it has
-print in debug and about how many total songs are indexed
 
 crashes:
 ========
-NO TED Music is found nor playing at all?! Creating 'HVTC' database -- where are these files pulled from? maybe ted repo url changed...
 
 could not play song:
 ===================
