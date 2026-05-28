@@ -64,7 +64,7 @@ DB = {
 {
 	name = "HVTC",
 	id =  "hvtc",
-	source = "http://plus4world.powweb.com/feat/tedsound/player/",
+	source = "http://plus4world.powweb.com/feat/tedsound/hvtc/",
 	song_list = "data/hvtc.txt",
 	local_dir = "/opt/Music/hvtc",
 	color = 0xfffff
