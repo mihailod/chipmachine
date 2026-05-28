@@ -24,8 +24,6 @@ console errors:
 
 other:
 ======
-- annoying bell when running cmtest
-- remove obsolete vice from tests
 - remove obsolete vice completely 
 - add a test file for EVERY supported extension
 
