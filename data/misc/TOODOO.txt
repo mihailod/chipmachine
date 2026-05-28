@@ -1,8 +1,8 @@
 data
 ====
-update databases to the latest
+update databases to the latest -- mostly done
 Creating 'Bitar till Kaffet' database -- processed twice, why?
-print Creating in debug for each database from which file it was made and how big it is
+print Creating in debug for each database from which file it was made and how many records it has
 print in debug and about how many total songs are indexed
 
 crashes:
@@ -21,12 +21,14 @@ silent playback
 ===============
 * (also on intel) elfforest 
 * (file not displayed on intel) delta patrol, youtube
+* Bitar till Kaffet stuff (mp3 podcasts?)
 
 console errors:
 ===============
 
 other:
 ======
+- annoying bell when running cmtest
 - remove obsolete vice from tests
 - remove obsolete vice completely 
 - add a test file for EVERY supported extension

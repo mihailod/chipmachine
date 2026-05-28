@@ -65,6 +65,7 @@ int main(int argc, char* argv[])
         bool full_screen = false;
         bool telnet_server = false;
         bool only_headless = false;
+        bool force_db = false;
         std::string play_what;
 #ifdef TEXTMODE_ONLY
         bool text_mode = true;
@@ -88,6 +89,7 @@ int main(int argc, char* argv[])
                            },
                            "Debug output");
 
+    opts.add_flag("--db", options.force_db, "Force database rebuild");
     opts.add_option("-T,--telnet", options.telnet_server,
                     "Start telnet server");
     opts.add_option("-p,--port", options.port, "Port for telnet server", true);
@@ -264,6 +266,11 @@ int main(int argc, char* argv[])
                           di::bind<utils::path>.to(work_dir),
                           di::bind<sol::state>.to(lua));
     LOGD("WorkDir:%s", work_dir);
+
+    auto& music_db = injector.create<chipmachine::MusicDatabase&>();
+    if (options.force_db) {
+        music_db.forceRebuild();
+    }
 
     if (!options.songs.empty()) {
         int pos = 0;

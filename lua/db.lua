@@ -160,7 +160,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "Bitar till Kaffet",
+	name = "Bitar till Kaffet (Live)",
 	id = "bitar",
 	type = "podcast",
 	source = "",
@@ -169,7 +169,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "Bitar till Kaffet",
+	name = "Bitar till Kaffet (Archive)",
 	id =  "bitar2",
 	source = "http://www.bitartillkaffet.se/media/",
 	song_list = "data/bitar.txt",

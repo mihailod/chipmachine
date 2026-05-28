@@ -463,7 +463,7 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
         if (!local_dir.is_absolute()) local_dir = workDir / local_dir;
     }
 
-    print_fmt("Creating '%s' database\n", name);
+    uint32_t localCount = 0;
 
     if (source == "") source = screen_source;
 
@@ -526,6 +526,8 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 .bind(prod.title, prod.creator, prod.type, prod.screenshots,
                       collection_id)
                 .step();
+            localCount++;
+            totalSongs++;
             auto prodrow = db.last_rowid();
             for (std::string path : prod.songs) {
                 // TODO: Move to CORRECTIONS.LUA or something
@@ -569,6 +571,8 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                               ? song.metadata[SongInfo::INFO].c_str()
                               : nullptr)
                     .step();
+                localCount++;
+                totalSongs++;
                 auto last = db.last_rowid();
                 if (collection_id == 6) LOGD("Inserting '%s'", song.path);
                 auto hash = MD5::hash(utils::toLower(song.path));
@@ -594,6 +598,9 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                               songInfo.format, name, collection_id,
                               (char*)nullptr)
                         .step();
+                    localCount++;
+                    totalSongs++;
+
                     if (writeListFile)
                         listFile.writeln(join("\t", songInfo.title,
                                               songInfo.game, songInfo.composer,
@@ -605,6 +612,12 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
 
     listFile.close();
     db.exec("COMMIT");
+
+    std::string usedFile = song_list;
+    if (usedFile.empty()) usedFile = vars["local_dir"];
+
+    print_fmt("Creating '%s' DB, source: %s, songs count: %d\n", name,
+              usedFile, localCount);
 }
 
 void MusicDatabase::setFilter(std::string const& collection, int type)
@@ -1229,6 +1242,10 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
         if (marker == 0xFEDC) indexVersion = fi.read<uint16_t>();
     }
 
+    if (rebuildForced) {
+        indexVersion = -1;
+    }
+
     sol::state lua;
     lua.open_libraries(sol::lib::base, sol::lib::package);
 
@@ -1248,7 +1265,9 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
         lua.script_file(f->string());
     }
 
+    totalSongs = 0;
     dbVersion = lua["VERSION"];
+
     LOGD("DBVERSION %d INDEXVERSION %d", dbVersion, indexVersion);
     if (dbVersion != indexVersion) {
         db.exec("DROP TABLE IF EXISTS collection");
@@ -1269,6 +1288,11 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
             end
         end
     )");
+
+    if (totalSongs > 0) {
+        print_fmt("Total songs count: %d\n", totalSongs);
+    }
+
     generateIndex();
     return true;
 }

@@ -121,6 +121,8 @@ public:
     bool initFromLua(utils::path const& workDir);
     void initFromLuaAsync(utils::path const& workDir);
 
+    void forceRebuild() { rebuildForced = true; }
+
     int search(std::string const& query, std::vector<int>& result,
                unsigned int searchLimit) override;
     // Lookup internal string for index
@@ -296,6 +298,8 @@ private:
     mutable std::mutex dbMutex;
     sqlite3db::Database db;
     bool reindexNeeded;
+    bool rebuildForced = false;
+    uint32_t totalSongs = 0;
 
     uint16_t dbVersion{};
     uint16_t indexVersion{};

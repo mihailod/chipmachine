@@ -48,9 +48,15 @@ https://sndh.atari.org/download.php
 python3 update_sndh.py ~/Downloads/sndh_lf sndh.txt
 you know the drill by now :)
 
-
     3976 chipmachine/data/rko.txt
+This file, rko.txt, is the index database for Remix.Kwed.Org (RKO), which is the primary internet archive for Commodore 64 MP3 remix tracks based on original SID chip music tunes.
+--- FAILED
+
     1519 chipmachine/data/rsn.txt
+metadata index for the Super Nintendo (SNES) music
+-- failed...
+
+
     1265 chipmachine/data/amiremix.txt
 
 
