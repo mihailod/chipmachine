@@ -4,6 +4,7 @@ update databases to the latest -- mostly done
 
 crashes:
 ========
+honorabili -- crashes when quit while playing mp3
 
 could not play song:
 ===================
