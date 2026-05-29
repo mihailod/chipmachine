@@ -33,7 +33,7 @@ namespace chipmachine {
 
 class ChipMachine;
 
-class MusicPlayerList
+class MusicPlayerList : public std::enable_shared_from_this<MusicPlayerList>
 {
 public:
     enum State
@@ -50,13 +50,9 @@ public:
         Playmulti
     };
 
-    MusicPlayerList(MusicDatabase& mdb, RemoteLoader& rl, AudioPlayer& ap);
+    MusicPlayerList(MusicDatabase& mdb, RemoteLoader& rl, std::shared_ptr<AudioPlayer> ap);
 
-    ~MusicPlayerList()
-    {
-        quitThread = true;
-        playerThread.join();
-    }
+    ~MusicPlayerList();
 
     void addSong(const SongInfo& si, bool shuffle = false);
     void playSong(const SongInfo& si);
@@ -273,3 +269,4 @@ private:
 };
 
 } // namespace chipmachine
+

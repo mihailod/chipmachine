@@ -16,18 +16,18 @@
 
 namespace chipmachine {
 
-MusicPlayer::MusicPlayer(AudioPlayer& ap)
+MusicPlayer::MusicPlayer(std::shared_ptr<AudioPlayer> ap)
     : fifo(32786 * 4),
       stream_fifo(std::make_shared<utils::Fifo<uint8_t>>(32768 * 8)),
-      audio_player(ap)
+      audio_player(std::move(ap))
 {
-    audio_player.set_volume(80);
+    audio_player->set_volume(80);
     volume = 0.8;
 
     musix::ChipPlugin::addPlugin(
         std::make_shared<GZPlugin>(musix::ChipPlugin::getPlugins()), true);
 
-    audio_player.play([this](int16_t* ptr, int size) mutable {
+    audio_player->play([this](int16_t* ptr, int size) mutable {
         if (dont_play) {
             memset(ptr, 0, size * 2);
             return;
@@ -63,7 +63,7 @@ void MusicPlayer::update()
             message = *s;
         silent_frames = check_silence ? fifo.getSilence() : 0;
 
-        while (true) {
+        while (!fifo.isQuitting()) {
 
             int space_left = fifo.left();
 
@@ -90,14 +90,20 @@ void MusicPlayer::update()
 
 MusicPlayer::~MusicPlayer()
 {
-    // 1. Immediately overwrite the active audio hardware callback with a dummy loop.
-    // This detaches the background thread from this dying MusicPlayer context instantly.
-    audio_player.play([](int16_t* ptr, int size) {
-        memset(ptr, 0, size * 2);
-    });
+    // 1. Null out the callback under the mutex so fill_audio() becomes a no-op.
+    //    This is safe to call before pausing — fill_audio checks callback != null.
+    audio_player->play(nullptr);
 
-    // 2. Kill the streaming thread pool
+    // 2. Pause the AudioQueue synchronously. After this returns, the audio thread
+    //    is guaranteed not to be inside fill_audio(), so no FIFO access can race
+    //    with the quit()/destructor below. Without this, AudioQueueDispose (called
+    //    when audio_player destructs) would block waiting for fill_audio to finish,
+    //    which in turn would be stuck waiting on fifo.m — deadlock.
+    audio_player->pause();
+
+    // 3. Quit both FIFOs to unblock any pending put() calls.
     stream_fifo->quit();
+    fifo.quit();
 }
 
 void MusicPlayer::seek(int song, int seconds)
@@ -125,6 +131,12 @@ void MusicPlayer::fadeOut(float secs)
 {
     fade_length = secs * 44100;
     fadeout_pos = play_pos + fade_length;
+}
+
+void MusicPlayer::quit()
+{
+    stream_fifo->quit();
+    fifo.quit();
 }
 
 void MusicPlayer::putStream(const uint8_t* ptr, int size)
@@ -284,9 +296,9 @@ void MusicPlayer::updatePlayingInfo()
 void MusicPlayer::pause(bool do_pause)
 {
     if (do_pause)
-        audio_player.pause();
+        audio_player->pause();
     else
-        audio_player.resume();
+        audio_player->resume();
     paused = do_pause;
 }
 
@@ -323,7 +335,7 @@ std::string MusicPlayer::getMeta(const std::string& what)
 void MusicPlayer::setVolume(float v)
 {
     volume = utils::clamp(v);
-    audio_player.set_volume(volume * 100);
+    audio_player->set_volume(volume * 100);
 }
 
 float MusicPlayer::getVolume() const
@@ -393,3 +405,4 @@ MusicPlayer::fromFile(const std::string& file_name)
 }
 
 } // namespace chipmachine
+

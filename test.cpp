@@ -78,7 +78,7 @@ struct AudioPlayerNull : public AudioPlayer
 TEST_CASE("musicplayerlist", "")
 {
     logging::setLevel(logging::Level::Debug);
-    AudioPlayerNull ap{};
+    auto ap = std::make_shared<AudioPlayerNull>();
     const auto injector = di::make_injector(di::bind<utils::path>.to("."),
                                             di::bind<AudioPlayer>.to(ap));
     musix::ChipPlugin::createPlugins("data");
@@ -90,7 +90,7 @@ TEST_CASE("musicplayerlist", "")
     auto state = mpl->getState();
     auto info = mpl->getInfo();
     //LOGI("%s %s %d", info.title, info.path, state);
-    ap.seek(150);
+    ap->seek(150);
     mpl->wait();
     info = mpl->getInfo();
     //LOGI("%s %s %d", info.title, info.path, state);
@@ -98,7 +98,7 @@ TEST_CASE("musicplayerlist", "")
 
 TEST_CASE("musicplayer", "")
 {
-    AudioPlayerNull ap{};
+    auto ap = std::make_shared<AudioPlayerNull>();
     const auto injector = di::make_injector(di::bind<utils::path>.to("."),
                                             di::bind<AudioPlayer>.to(ap));
     musix::ChipPlugin::createPlugins("data");
@@ -107,7 +107,7 @@ TEST_CASE("musicplayer", "")
     REQUIRE(ok);
     mp.update();
     std::vector<int16_t> data(8192);
-    ap.get(data);
+    ap->get(data);
     auto sum = std::accumulate(data.begin(), data.end(), (int64_t)0);
     REQUIRE(sum != 0);
 }

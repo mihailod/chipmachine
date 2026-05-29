@@ -20,7 +20,7 @@ namespace chipmachine {
 class MusicPlayer
 {
 public:
-    explicit MusicPlayer(AudioPlayer& ap);
+    explicit MusicPlayer(std::shared_ptr<AudioPlayer> ap);
     MusicPlayer(MusicPlayer const& other) = delete;
     ~MusicPlayer();
     bool playFile(const std::string& fileName);
@@ -35,6 +35,7 @@ public:
 
     void putStream(const uint8_t* ptr, int size);
     void clearStreamFifo() { stream_fifo->clear(); }
+    std::shared_ptr<utils::Fifo<uint8_t>> getStreamFifo() { return stream_fifo; }
 
     void setParameter(const std::string& what, int v);
 
@@ -65,6 +66,7 @@ public:
     void fadeOut(float secs);
     [[nodiscard]] float getFadeVolume() const { return fifo.getVolume(); }
 
+    void quit();
     void update();
 
     void setAudioCallback(const std::function<void(int16_t*, int)>& cb)
@@ -101,6 +103,6 @@ private:
 
     std::shared_ptr<utils::Fifo<uint8_t>> stream_fifo;
 
-    AudioPlayer& audio_player;
+    std::shared_ptr<AudioPlayer> audio_player;
 };
 } // namespace chipmachine

@@ -16,6 +16,7 @@
 #include <array>
 #include <memory>
 #include <string>
+#include <mutex>
 
 using apone::File;
 
@@ -219,7 +220,9 @@ bool parseSnes(SongInfo& info)
 bool parseMp3(SongInfo& info)
 {
 #ifdef WITH_MPG123
-    int err = mpg123_init();
+    static std::once_flag init_flag;
+    std::call_once(init_flag, []() { mpg123_init(); });
+    int err = MPG123_OK;
     mpg123_handle* mp3 = mpg123_new(NULL, &err);
 
     if (mpg123_open(mp3, info.path.c_str()) != MPG123_OK) return false;
@@ -246,7 +249,6 @@ bool parseMp3(SongInfo& info)
         mpg123_close(mp3);
         mpg123_delete(mp3);
     }
-    mpg123_exit();
     return true;
 #else
     (void)info;

@@ -12,9 +12,20 @@ using namespace utils;
 
 namespace chipmachine {
 
+MusicPlayerList::~MusicPlayerList()
+{
+    // Cancel streaming first so the curl write callback stops feeding
+    // stream_fifo before we signal it to quit.
+    cancelStreaming();
+    mp.quit();
+    quitThread = true;
+    if (playerThread.joinable())
+        playerThread.join();
+}
+
 MusicPlayerList::MusicPlayerList(MusicDatabase& mdb, RemoteLoader& rl,
-                                 AudioPlayer& ap)
-    : mp(ap), remoteLoader(rl), musicDatabase(mdb)
+                                 std::shared_ptr<AudioPlayer> ap)
+    : mp(std::move(ap)), remoteLoader(rl), musicDatabase(mdb)
 {
     playerThread = std::thread([=] {
         while (!quitThread) {
@@ -488,16 +499,23 @@ void MusicPlayerList::playCurrent()
             SET_STATE(Playstarted);
             //LOGD("Stream start");
             std::string name = currentInfo.path;
+            auto sfifo = mp.getStreamFifo();
+            auto self = shared_from_this();
             remoteLoader.stream(
                 currentInfo.path,
-                [=](int what, const uint8_t* ptr, int n) -> bool {
+                [self, sfifo](int what, const uint8_t* ptr, int n) -> bool {
+                    if (sfifo->isQuitting()) return false;
                     if (what == RemoteLoader::PARAMETER) {
-                        mp.setParameter((char*)ptr, n);
-                    } else {
+                        self->mp.setParameter((char*)ptr, n);
+                    } else if (what == RemoteLoader::DATA) {
                         // LOGD("Writing to %s", name);
-                        mp.putStream(ptr, n);
+                        sfifo->put(ptr, n);
+                    } else if (what == RemoteLoader::END) {
+                        sfifo->put(nullptr, 0);
                     }
-                    return true;
+                    // Return false if fifo was quit mid-put so the curl write
+                    // callback aborts the transfer and curl_multi_perform returns.
+                    return !sfifo->isQuitting();
                 });
         }
         return;
@@ -542,3 +560,4 @@ void MusicPlayerList::playCurrent()
 }
 
 } // namespace chipmachine
+

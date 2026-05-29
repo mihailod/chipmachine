@@ -260,11 +260,15 @@ int main(int argc, char* argv[])
     lua->script_file((work_dir / "lua" / "init.lua").string());
     initYoutube(*lua);
 
-    AudioPlayer audio_player{ 44100 };
-    const auto injector =
+    auto audio_player = std::make_shared<AudioPlayer>(44100);
+    auto injector =
         di::make_injector(di::bind<AudioPlayer>.to(audio_player),
+                          di::bind<chipmachine::MusicDatabase>.in(di::singleton),
+                          di::bind<chipmachine::MusicPlayerList>.in(di::singleton),
+                          di::bind<RemoteLoader>.in(di::singleton),
                           di::bind<utils::path>.to(work_dir),
                           di::bind<sol::state>.to(lua));
+
     LOGD("WorkDir:%s", work_dir);
 
     auto& music_db = injector.create<chipmachine::MusicDatabase&>();
@@ -382,3 +386,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+
