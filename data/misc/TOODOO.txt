@@ -1,10 +1,12 @@
 data
 ====
-update databases to the latest -- mostly done
+*update databases to the latest -- mostly done
+* Creating 'Gamebase64' DB, source: data/Games.csv, songs count: 7604
+  however:    30001 chipmachine/data/Games.csv --- why the discrepancy?
 
 crashes:
 ========
-honorabili -- crashes when quit while playing mp3
+hired guns slumming -- example... crashes when quit while playing any mp3
 
 could not play song:
 ===================
@@ -33,3 +35,4 @@ product/process
 - research/find better free AI than gemini
 - test build process on a different clean machine
 - use some IDE (with integrated AI?) for development?
+- once 1.1 is out: email the author, post on linkedin retro groups

@@ -1,5 +1,7 @@
   873009 chipmachine/data/csdb.xml
 see https://csdb.dk
+TODO agy started on this and created scripts/update_csdb.py
+need to wrap up
 
 
 
@@ -30,8 +32,15 @@ and copy the file
    32601 chipmachine/data/pouet.txt -- DONE 14,910 -> 32,601
 Run update_pouet.py and copy the resulting file
 
-
-   25701 chipmachine/data/Games.csv
+   25701 chipmachine/data/Games.csv -- DONE 25,701 -> 43,709
+This file is the Games table exported from the GameBase64 (GB64) database — specifically from GBC_VXX.mdb, a Microsoft Access .mdb file that is the canonical database for the GameBase64 project at gb64.com.
+There's a SQLite version at http://www.twinbirds.com/gamebase64browser/GBC_v19.sqlitedb.gz. SQLite works natively on macOS with no extra tools, and Python has built-in sqlite3. 
+python3 chipmachine/scripts/update_Games_csv.py chipmachine/data/Games.csv
+And for the future — when V20 ships, the script just needs one URL change at the top:
+pythonSQLITE_GZ_URL = "http://www.twinbirds.com/gamebase64browser/GBC_v20.sqlitedb.gz"
+then we need to run this cleanup:
+sripts/update_Games_csv_post_cleanup.py
+and use the cleaned file
 
 
 
@@ -97,7 +106,7 @@ and replace the existing file
    Data File                               | Associated Database Collection (ID)     | Parser Method Used
   -----------------------------------------|-----------------------------------------|-----------------------------------------
   X hvsc.txt                               | HVSC ( hvsc )                           |  parseStandard 
-    Games.csv                              | Gamebase64 ( gb64 )                     |  parseGamebase 
+  X Games.csv                              | Gamebase64 ( gb64 )                     |  parseGamebase 
     csdb.xml                               | CSDb ( csdb )                           |  parseCsdb 
   X allmods.txt                            | Modland ( modland )                     |  parseModland 
   ? amp.txt                                | Amp ( amp )                             |  parseAmp 
@@ -147,6 +156,58 @@ X •  STIL.txt : The SID Tune Information List contains textual background info
   •  extractor.py : Python script used to fetch or process indexes, not loaded by C++ database builder.
   •  __pycache__  /  python_runtime  /  misc  /  c64  /  uade : Utility directories that house scripts, compilers, emulators,
   and assets.
+
+
+
+
+Here are five explicit examples of brand-new SID files that were added in recent HVSC updates. These files exist at the bottom of your newly generated hvsc.txt database but are completely absent from your original chipmachine/data/hvsc.txt baseline.
+You can use these paths to verify that chipmachine's player engine can locate, parse, and play the new tracks from your local disk.
+
+File 1: MUSICIANS/B/Bayliss_Richard/Zzapped_in_the_Butt-Deluxe.sid
+Title: Zzapped in the Butt - Deluxe
+Author: Richard Bayliss
+
+File 2: MUSICIANS/F/Fade/Zzap_Live_2023_Invitation.sid
+Title: Zzap! Live 2023 Invitation
+Author: Sean McKenzie (Fade)
+
+File 3: MUSICIANS/M/MCH/ZX_Clive_Tribute_2SID.sid
+Title: ZX Clive Tribute
+Author: mch
+
+File 4: MUSICIANS/C/Comer/Zwei_Bereten_Preview.sid
+Title: Zwei Bereten Preview
+Author: Pawel Kulikowski (Comer)
+
+File 5: MUSICIANS/V/Vincenzo/Zwei_Euro_Zwanzig_Cent.sid
+Title: Zwei Euro Zwanzig Cent
+Author: László Vincze (Vincenzo)
+
+
+Games.csv:
+
+New entries in V19 not in old file: 4357
+
+   26851  Slavia
+   26852  Slavia II Deluxe
+   26832  Laser X1-9
+   26833  Galaxy 09
+   26834  Silicom Tunnel
+   26835  Heroes & Cowards
+   26836  Heroes & Cowards
+   26837  Cerca la Barca
+   26838  Gri Grillo
+   26840  Test della Personalità Sessuale
+   26841  Erotic Slot Machine
+   26842  Sexy Puzzle
+   26843  Test Partner Ideale
+   26844  Hack Driver
+   26845  Bonkey Kong
+   26846  DOG
+   26847  Lumberjack
+   26848  Goblin
+   26849  Zombie Massacre
+   26850  Carrier-Bourne Fighter Simulation
 
 
 
