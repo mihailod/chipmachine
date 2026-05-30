@@ -162,22 +162,23 @@ DB = {
 	song_list = "data/radio.txt",
 	color = 0xfffff
 },
-{
-	name = "Bitar till Kaffet (Live)",
-	id = "bitar",
-	type = "podcast",
-	source = "",
-	song_list = "data/bitar.xml",
-	remote_list = "http://www.bitartillkaffet.se/?feed=podcast",
-	color = 0xfffff
-},
-{
-	name = "Bitar till Kaffet (Archive)",
-	id =  "bitar2",
-	source = "http://www.bitartillkaffet.se/media/",
-	song_list = "data/bitar.txt",
-	color = 0xfffff
-},
+-- May 2026: Bitar site is dead -- removing these databases
+--{
+--	name = "Bitar till Kaffet (Live)",
+--	id = "bitar",
+--	type = "podcast",
+--	source = "",
+--	song_list = "data/bitar.xml",
+--	remote_list = "http://www.bitartillkaffet.se/?feed=podcast",
+--	color = 0xfffff
+--},
+--{
+--	name = "Bitar till Kaffet (Archive)",
+--	id =  "bitar2",
+--	source = "http://www.bitartillkaffet.se/media/",
+--	song_list = "data/bitar.txt",
+--	color = 0xfffff
+--},
 {
 	name = "This Week in Chiptune",
 	id = "weekchip",
