@@ -1268,18 +1268,35 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
 
     std::map<std::string, std::string> dbmap;
     lua["create_db"] = [&] {
-        initDatabase(workDir, dbmap);
+        std::string db_name = dbmap["name"];
+        try {
+            initDatabase(workDir, dbmap);
+        } catch (std::exception& e) {
+            LOGE("Error creating database '%s': %s", db_name, e.what());
+        } catch (...) {
+            LOGE("Unknown error creating database '%s'", db_name);
+        }
         dbmap.clear();
     };
 
-    lua["set_db_var"] = sol::overload(
-        [&](std::string const& name, std::string val) { dbmap[name] = val; },
-        [&](std::string const& name, uint32_t val) {
-            dbmap[name] = std::to_string(val);
-        });
+    lua["set_db_var"] = [&](std::string const& name, sol::object val) {
+        if (val.is<std::string>())
+            dbmap[name] = val.as<std::string>();
+        else if (val.is<uint32_t>())
+            dbmap[name] = std::to_string(val.as<uint32_t>());
+        else if (val.is<bool>())
+            dbmap[name] = val.as<bool>() ? "yes" : "no";
+        else
+            dbmap[name] = "";
+    };
 
     if (auto f = findFile(workDir.string(), "lua/db.lua")) {
-        lua.script_file(f->string());
+        auto res = lua.safe_script_file(f->string(), sol::script_pass_on_error);
+        if (!res.valid()) {
+            sol::error err = res;
+            LOGE("Lua error in db.lua: %s", err.what());
+            return false;
+        }
     }
 
     totalSongs = 0;
@@ -1293,7 +1310,8 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
         }
     } catch (...) {}
 
-    LOGD("DBVERSION %d INDEXVERSION %d SQLITEVERSION %d", dbVersion, indexVersion, sqliteVersion);
+    LOGD("DBVERSION %d INDEXVERSION %d SQLITEVERSION %d", dbVersion,
+         indexVersion, sqliteVersion);
     if (dbVersion != indexVersion || dbVersion != sqliteVersion) {
         db.exec("DROP TABLE IF EXISTS collection");
         db.exec("DROP TABLE IF EXISTS song");
@@ -1304,16 +1322,27 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
         reindexNeeded = true;
     }
 
-    lua.script(R"(
-        for a,b in pairs(DB) do
-            if type(b) == 'table' then
-                for a1,b1 in pairs(b) do
-                    set_db_var(a1, b1)
+    try {
+        auto res = lua.safe_script(R"(
+            for a,b in pairs(DB) do
+                if type(b) == 'table' then
+                    for a1,b1 in pairs(b) do
+                        set_db_var(a1, b1)
+                    end
+                    create_db()
                 end
-                create_db()
             end
-        end
-    )");
+        )", sol::script_pass_on_error);
+
+        if (!res.valid()) {
+            sol::error err = res;
+            LOGE("Lua error during DB creation: %s", err.what());
+        }
+    } catch (std::exception& e) {
+        LOGE("C++ exception during DB creation: %s", e.what());
+    } catch (...) {
+        LOGE("Unknown exception during DB creation");
+    }
 
     if (totalSongs > 0) {
         print_fmt("Total songs count: %d\n", totalSongs);

@@ -33,10 +33,12 @@ HVSC is indexed first — every SID path gets hashed and stored in pathMap
 When CSDb is parsed, for each SID path in <Sids>:
 So CSDb only enriches songs already in HVSC — it can't add new songs. If a SID path in CSDb doesn't exist in HVSC, it's logged and ignored. If it does exist, the CSDb entry provides the screenshot and groups the song under a named product (demo, diskmag, etc.).
 
-
+**********************************************
 
   452109 chipmachine/data/allmods.txt -- DONE 452,109 -> 513,992
 Download and unzip https://ftp.modland.com/allmods.zip
+
+**********************************************
 
   102721 chipmachine/data/Songlengths.txt -- DONE
 this is obsolete, used by VicePlugin and renamed to OLDVICESonglengths.txt
@@ -48,19 +50,27 @@ however this was never used:
 ./musicplayer/src/stil/STIL.cpp says:
     //readLengths();
 
+**********************************************
+
    87075 chipmachine/data/STIL.txt -- DONE 87,075 -> 108,101
 SID Tune Information List
 used by sid plugin
 curl -L -o STIL.txt https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/STIL.txt
 and put is in chipmachine/data
 
+**********************************************
+
    51360 chipmachine/data/hvsc.txt -- DONE [#84] 51,360 -> 61,123
 Download hvsc from https://hvsc.c64.org to ~/Downloads, run:
 python3 update_hvsc.py ~/Downloads/C64Music hvsc.txt
 and copy the file
 
+**********************************************
+
    32601 chipmachine/data/pouet.txt -- DONE 14,910 -> 32,601
 Run update_pouet.py and copy the resulting file
+
+**********************************************
 
    25701 chipmachine/data/Games.csv -- DONE 25,701 -> 43,709
 This file is the Games table exported from the GameBase64 (GB64) database — specifically from GBC_VXX.mdb, a Microsoft Access .mdb file that is the canonical database for the GameBase64 project at gb64.com.
@@ -72,21 +82,29 @@ then we need to run this cleanup:
 sripts/update_Games_csv_post_cleanup.py
 and use the cleaned file
 
+**********************************************
+
    15607 chipmachine/data/bitworld.txt -- NOTHING TO DO (?)
 created by scripts/ami.d which is heavily outdated
 "This file is a local data export from the historical BitWorld Amiga Demoscene Database (which was closely integrated with platforms like Kestra Amiga Demo Database and Exotica). It functions as a complete catalog linking historical Amiga disk tracker modules (.mod) to the specific underground demoscene productions, intros, and music disks they originally debuted in."
 "The historic Amiga scene modules from the late 80s and 90s (Protracker, Soundtracker, and Future Composer files) are static and frozen in time. Your current bitworld.txt snapshot accurately indexes those classic demoscene years, which represents the core of the Amiga music library you'd want to browse or play anyway. No further cleanup or updates are required for this file."
+
+**********************************************
 
     8640 chipmachine/data/amp.txt -- NOTHING TO DO (?)
 "Because amp.txt is strictly an output file written dynamically by your ami.d compilation routine, it can only be updated by running the full ami.d scraper.
 As established previously, running ami.d today will fail."
 "Leave amp.txt exactly as it is. It represents a perfectly preserved, self-contained snapshot of the classic tracking modules used across classic Amiga demoscene history. Chipmachine will read your existing data records flawlessly without any external assistance."
 
+**********************************************
+
     5281 chipmachine/data/asma.txt -- DONE 5281 -> 6335
 This file is a local data snapshot index for the Atari SAP Music Archive (ASMA).
 download and unzip from https://asma.atari.org
 python3 update_asma.py ~/Downloads/asma asma.txt
 and put it in the proper place (chipmachines/data/asma.txt)
+
+**********************************************
 
     4683 chipmachine/data/sndh.txt -- DONE 4683 -> 5897
 This file is the indexing database for SNDH, the standard chiptune format for the Atari ST (specifically targets the Yamaha YM2149 sound chip). Just like asma.txt is the text index for the Atari 8-bit SAP music archive, sndh.txt 
@@ -95,20 +113,22 @@ https://sndh.atari.org/download.php
 python3 update_sndh.py ~/Downloads/sndh_lf sndh.txt
 you know the drill by now :)
 
+**********************************************
+
     3976 chipmachine/data/rko.txt DONE 3976 -> 5217
 This file, rko.txt, is the index database for Remix.Kwed.Org (RKO), which is the primary internet archive for Commodore 64 MP3 remix tracks based on original SID chip music tunes.
 scripts/update_rko.py (by agy)
 
+**********************************************
+
     2974 chipmachine/data/bitar.xml -- podcasts... DEAD, REMOVED
       19 chipmachine/data/bitar.txt -- podcasts... DEAD, REMOVED
 
-
-
+**********************************************
 
     1922 chipmachine/data/c64takeaway.xml --------- TODO TODO
 
-
-
+**********************************************
 
     1519 chipmachine/data/rsn.txt -- DONE (count decreased by 2 -- this db is historically stable)
 metadata index for the Super Nintendo (SNES) music from snesmusic.org 
@@ -117,10 +137,14 @@ python3 chipmachine/scripts/update_rsn.py [--limit 20] --output rsn_sample.txt
 python3 chipmachine/scripts/update_rsn.py --output rsn_all.txt
 takes about 1 hour
 
+**********************************************
+
     1265 chipmachine/data/amiremix.txt -- DONE 1,265 -> 1,711
 Metadata index file to search and stream Amiga track remixes from amigaremix.com
 python3 chipmachine/scripts/update_amiremix.py chipmachine/data/amiremix.txt
 (by agy)
+
+**********************************************
 
      544 chipmachine/data/hvtc.txt -- DONE 544 -> 1038
 TED collection: https://plus4world.powweb.com/feat/tedsound/hvtc_20250908.zip
@@ -128,20 +152,61 @@ download and unzip then run:
 python3 update_hvtc.py ~/Downloads/hvtc hvtc.txt
 and replace the existing file
 
+**********************************************
 
-     413 chipmachine/data/nsfe.txt
+     413 chipmachine/data/nsfe.txt -- DONE 413 -> 1228
 NES Sound Format Extended index file. The NSFE database is commented out at lines 208-215 of db.lua.
 https://forums.nesdev.org/viewtopic.php?t=21128
 Direct Archive Download (11.2 MB .rar): This archive contains Famicompo "Chapter One," Famicompo mini Volumes 1 through 10, and the Classical sections, pre-timed and organized with the exact filename syntax (like T_Original_...) visible in your nsfe.txt.
-cm WILL play .nsfe files so why this was disabled?
 I downloaded the archive and decompressed it here:
 ~/Downloads/FamicompoNSFE
-Create a file with 1 song and see if it can be parsed, put in db, and played from UI -- end to end POC.
-then create the database from the download
-maybe there is no lookup on web? if so i can even deliver the whole db with music with the app (only 11MB rar / 55MB uncompressed, maybe there is way to pull from the rar file)
+this script scripts/update_nsfe.py -- NEVER TESTED, was run by Gemini cli inside its session, i told him to give me the script for further reference. "Here is the Python script I used to automate the NSFE migration, metadata extraction, and index generation. It handles binary APEv2 tag parsing, recursive file discovery, and collision-safe flattening."
 
+THIS IS THE ONLY DATABASE WHERE ASSETS ARE PART OF THE APP (FOLDER chipmachine/music/Console)
+42MB uncompressed, 18MB compressed (app delivery overhead). Oh well.
 
+Gemini summary:
 
+ I have successfully enabled NSFE database ingestion and migrated the expanded audio library.
+
+  1. Analysis and Discovery
+   * Metadata Source: I analyzed the binary .nsfe.tag files and confirmed they follow the APEv2 tagging standard. This
+     allowed me to programmatically extract clean Title and Artist/Composer strings for every track.
+   * Existing Database: The original database in chipmachine/data/nsfe.txt contained 413 entries. The new source pool in
+     NSFE/ contained 1,224 additional tracks.
+
+  2. Asset Migration and Indexing
+  I developed and executed a migration pipeline that performed the following actions:
+   * Recursive Pairing: Scanned the multi-level NSFE/ directory to pair .nsfe payloads with their binary .tag companions.
+   * Binary Parsing: Extracted track metadata directly from the APEv2 tags.
+   * Collision-Safe Flattening: Copied all .nsfe files into chipmachine/music/Console/. If filenames conflicted (e.g.,
+     same filename in different source subfolders), I appended the parent folder name as a prefix to ensure uniqueness
+     and prevent asset loss.
+   * Index Generation: Regenerated chipmachine/data/nsfe.txt in the exact 5-column tab-delimited format required by the
+     database engine:
+      [EMPTY] [Title] [Artist] [EMPTY] [Flattened_Filename].nsfe
+
+  3. Database Integration
+  I updated chipmachine/lua/db.lua to re-enable and correctly map the format:
+   * Uncommented the NSFE database block.
+   * Local Directory: Mapped to music/Console.
+   * Song Template: Configured as "no title composer no path" to match the tab-delimited schema.
+   * Format: Explicitly set to NSFE for proper plugin routing.
+
+  4. Verification and Results
+   * Ingestion Success: Performed a full database rebuild. The NSFE collection now contains 1,637 tracks (an increase of
+     1,224).
+   * Playback Test: Verified that newly migrated tracks can be queried and played. For example, I successfully tested the
+     playback of "Castle" from MysticQuest (one of the newly added files):
+   1     ./build/cm "Castle"
+   2     # Result: Playing: "Castle" from MysticQuest (Audio initialized successfully)
+
+  The NSFE database is now fully populated, the assets are consolidated, and the system is ready for use. All temporary
+  migration scripts and logs have been cleaned up.
+
+Test song: Orange Painting (only 1 and only here)
+
+**********************************************
 
      314 chipmachine/data/scenesat.txt
      104 chipmachine/data/syntax.txt
@@ -149,6 +214,8 @@ maybe there is no lookup on web? if so i can even deliver the whole db with musi
       13 chipmachine/data/demovibes.txt
       12 chipmachine/data/radio.txt
 
+**********************************************
+**********************************************
 
  Here is the exact mapping of files used during the database building process and those that are not.
   ──────
@@ -168,7 +235,7 @@ maybe there is no lookup on web? if so i can even deliver the whole db with musi
   X asma.txt         | asma ( asma )                          | parseStandard 
   X rko.txt          | remix.kwed.org ( rko )                 | parseStandard 
   X amiremix.txt     | amigaremix ( amigaremix )              | parseStandard 
-  ? nsfe.txt         | N/A ( commented out )                  | N/A (commented out)
+  X nsfe.txt         | N/A ( commented out )                  | N/A (commented out)
     scenesat.txt     | scenesat ( scenesat )                  | parseStandard 
     demovibes.txt    | Demovibes ( demovibes )                | parseStandard 
     amigavibes.txt   | Amigavibes ( amigavibes )              | parseStandard 
@@ -189,6 +256,7 @@ maybe there is no lookup on web? if so i can even deliver the whole db with musi
 
   • nsfe.txt : This is a NES Sound Format Extended index file.
   The NSFE database collection is commented out at lines 208-215 of db.lua.
+  THIS WAS FIXED AND ENABLED!
 
   #### Plugin & Engine-Specific Files (Used at Playback Time, not DB Build Time):
 

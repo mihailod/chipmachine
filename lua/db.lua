@@ -132,15 +132,19 @@ DB = {
 	local_dir = "/opt/Music/scenesat",
 	color = 0xfffff
 },
-{
-	name = "Bitjam",
-	id =  "bitjam",
-	type = "podcast",
-	source = "http://malus.exotica.org.uk/pub/",
-	remote_list = "http://www.bitfellas.org/podcast/podcast.xml",
-	color = 0xfffff,
-	screenshot = "http://www.bitfellas.org/e107_plugins/radio/images/bj_newlogo.jpg"
-},
+
+
+-- this is dead
+--{
+--	name = "Bitjam",
+--	id =  "bitjam",
+--	type = "podcast",
+--	source = "http://malus.exotica.org.uk/pub/",
+--	remote_list = "http://www.bitfellas.org/podcast/podcast.xml",
+--	color = 0xfffff,
+--	screenshot = "http://www.bitfellas.org/e107_plugins/radio/images/bj_newlogo.jpg"
+--},
+
 {
 	name = "Demovibes",
 	id =  "demovibes",
@@ -188,14 +192,17 @@ DB = {
 	song_list = "http://thisweekinchiptune.libsyn.com/rss",
 	color = 0xfffff
 },
-{
-	name = "Gamewave Podcast",
-	id = "gamewave",
-	type = "podcast",
-	source = "",
-	song_list = "http://gamewave.yays.co/rss.xml",
-	color = 0xfffff
-},
+
+-- this is dead
+--{
+--	name = "Gamewave Podcast",
+--	id = "gamewave",
+--	type = "podcast",
+--	source = "",
+--	song_list = "http://gamewave.yays.co/rss.xml",
+--	color = 0xfffff
+--},
+
 {
 	name = "Syntax Error",
 	id =  "syntax",
@@ -214,6 +221,18 @@ DB = {
 -- 	local_dir = "/opt/M/nsfe",
 -- 	color = 0xfffff
 -- },
+
+         {
+           name = "NSFE",
+           id = "nsfe",
+           source = "",
+           song_list = "data/nsfe.txt",
+           local_dir = "music/Console",
+           song_template = "no title composer no path",
+           format = "NSFE",
+           color = 0xfffff
+       },
+
 {
 	name = "C64 Take-away",
 	id = "takeaway",

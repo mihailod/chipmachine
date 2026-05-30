@@ -1,13 +1,17 @@
+show-stopper
+============
+nsfe: must look into other folder when deployed (all nsfe music must go into app package)
+
 data
 ====
-* investigate uncommenting nsfe.txt files -- will they play?
+* investigate uncommenting nsfe.txt files -- cm WILL play .nsfe files so why this was disabled and can we enable it? 
+
 *update databases to the latest -- mostly done
-new csdb parsing issue -- claude session 2
-* run csdb script from 1 to 174978 and join that file with the 174978+ one
-  (compare for fun with the old one)?
+* (OPTIONAL -- will take 14 hours) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 
 crashes:
 ========
+- refactor/simplify the quit situation around mp3 playback, one hang observed
 
 could not play song:
 ===================
