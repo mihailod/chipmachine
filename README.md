@@ -68,7 +68,7 @@ To authorize and run the application on your Mac, follow these steps:
 
 * TESTED ON macOS 26 (TAHOE) ONLY AND NOT TESTED YET ON A CLEAN MACHINE
 * Make sure you have Homebrew installed (Apple Silicon homebrew in /opt/homebrew/ , make sure you are not using Intel legacy /usr/local tools)
-* brew install git cmake ninja freetype glew glfw3 lua fftw mpg123
+* brew install git cmake ninja freetype glew glfw3 lua fftw mpg123 python ffmpeg
 * (if some packages are reported missing later install then via brew and let me know -- I missed them in the line above)
 
 ## Building for Apple Silicon (ALPHA/WIP, see TOODOO.txt)
