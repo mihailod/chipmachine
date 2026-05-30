@@ -1,1519 +1,1513 @@
-	3x3 Eyes: Juuma Houkan	Music Worx	Super Nintendo	33ejh.rsn
-	3x3 Eyes: Seima Kourinden	Kennosuke Suemura	Super Nintendo	33esk.rsn
 	3 Ninjas Kick Back	Richard Joseph	Super Nintendo	3nkb.rsn
-	4-Nin Shougi	POW Sound Team	Super Nintendo	4ns.rsn
-	The 7th Saga	Norihiko Yamanuki	Super Nintendo	7sg.rsn
-	U.N. Squadron	Mari Yamaguchi	Super Nintendo	a88.rsn
-	Andre Agassi Tennis	Mark Miller	Super Nintendo	aat.rsn
-	American Battle Dome	Tsukuda Sound Team	Super Nintendo	abd.rsn
-	The Adventures of Batman and Robin	Jun Funahashi, Masanari Iwata, M	Super Nintendo	abr.rsn
-	Akazukin Cha Cha	Kazuya Suyama	Super Nintendo	acc.rsn
+	3x3 Eyes: Jyuma Houkan	Music Worx	Super Nintendo	33ejh.rsn
+	3x3 Eyes: Seima Kourinden	Kennosuke Suemura	Super Nintendo	33esk.rsn
+	4-nin Shougi		Super Nintendo	4ns.rsn
+	46 Okunen Monogatari: Haruka Naru Eden he...	Koichi Sugiyama	Super Nintendo	evo.rsn
+	7th Saga, The	Norihiko Yamanuki	Super Nintendo	7sg.rsn
+	90 Minutes: European Prime Goal	Eriko Imura	Super Nintendo	jlpg3.rsn
+	A Bug's Life	Mark Ortiz	Super Nintendo	bug.rsn
+	A Ressha de Ikou 3 Super Version		Super Nintendo	ari3.rsn
+	A.S.P.: Air Strike Patrol	Jun Enoki	Super Nintendo	asp.rsn
+	AAAHH!!! Real Monsters	Greg Turner	Super Nintendo	arm.rsn
+	ABC Monday Night Football	Seiichi Hamada, Emi Shimizu, N	Super Nintendo	amnf.rsn
 	Accelebrid	Haruhiko Kuroiwa	Super Nintendo	accb.rsn
-	Christmas Demo	The Doctor	Super Nintendo	acd.rsn
-	Ace o Nerae!	Motoi Sakuraba, Shinji Tamura	Super Nintendo	ace.rsn
+	Ace wo Nerae!	Motoi Sakuraba, Shinji Tamura	Super Nintendo	ace.rsn
 	ACME Animation Factory	Nick Stroud, Steve Collett	Super Nintendo	acme.rsn
 	Acrobat Mission	Tomo Yamashita, Akihiko Mori	Super Nintendo	acrm.rsn
 	Action Pachio	Seline	Super Nintendo	actp.rsn
-	Actraiser	Yuzo Koshiro	Super Nintendo	actr.rsn
-	Actraiser 2	Yuzo Koshiro	Super Nintendo	actr2.rsn
-	The Addams Family	Jonathan Dunn	Super Nintendo	adf.rsn
-	Aoki Densetsu Shoot!	Kennosuke Suemura	Super Nintendo	ads.rsn
+	ActRaiser	Yuzo Koshiro	Super Nintendo	actr.rsn
+	ActRaiser 2	Yuzo Koshiro	Super Nintendo	actr2.rsn
+	AD&D: Eye of the Beholder		Super Nintendo	eotb.rsn
+	Addams Family Values	Keith Tinman	Super Nintendo	afv.rsn
+	Addams Family, The	Jonathan Dunn	Super Nintendo	adf.rsn
+	Addams Family, The: Pugsley's Scavenger Hunt	Jonathan Dunn	Super Nintendo	afam2.rsn
+	Adventures of Batman & Robin, The	Jun Funahashi, Masanari Iwata,	Super Nintendo	abr.rsn
+	Adventures of Dr. Franken, The	Tee the Darknight, Unyque Arti	Super Nintendo	drf.rsn
+	Adventures of Kid Kleets, The	Matt Furniss	Super Nintendo	sokid.rsn
+	Adventures of Rocky and Bullwinkle and Friends, The	Mark Van Hecke	Super Nintendo	arbf.rsn
+	Adventures of Yogi Bear	George Villiers	Super Nintendo	yogi.rsn
+	Aero Fighters	Naoki Sakamura, M. Yamana	Super Nintendo	sw.rsn
 	Aero the Acro-Bat	Fox Productions	Super Nintendo	aero.rsn
 	Aero the Acro-Bat 2	Fox Productions	Super Nintendo	aero2.rsn
-	Pugsley's Scavenger Hunt	Jonathan Dunn	Super Nintendo	afam2.rsn
-	Addams Family Values	Keith Tinman	Super Nintendo	afv.rsn
-	American Gladiators	Barry Leitch	Super Nintendo	ag.rsn
-	Aging Cassette	Nintendo Sound Team	Super Nintendo	aging.rsn
-	Uchuu Race Astro Go Go	Yusuke Takahama	Super Nintendo	agogo.rsn
-	Astrohawk: May 2003 Version	Paul Lay	Super Nintendo	ahawk.rsn
+	Aerobiz		Super Nintendo	airm.rsn
+	Aerobiz Supersonic		Super Nintendo	airm2.rsn
+	Aging Cassette		Super Nintendo	aging.rsn
+	Aguri Suzuki F-1 Super Driving	Katsuhiro Hayashi	Super Nintendo	asf1.rsn
 	Air Cavalry	Christopher Barker	Super Nintendo	airc.rsn
-	Air Management: Ozora ni Kakeru	Koei sound team	Super Nintendo	airm.rsn
-	Air Management 2: Koukuu Ou wo Mezase	Koei sound team	Super Nintendo	airm2.rsn
-	Alien 3	Steve Collett	Super Nintendo	al3.rsn
-	Aladdin	Sato, Yuko, Setsuo	Super Nintendo	ala.rsn
+	Akazukin Cha Cha	Kazuya Suyama	Super Nintendo	acc.rsn
+	Akumajou Dracula	Masanori Adachi, Taro Kudou	Super Nintendo	scv4.rsn
+	Akumajou Dracula XX	Tomoya Tomita, Masanari Iwata,	Super Nintendo	dx.rsn
+	Al Unser Jr's Road to the Top	Paul Wilkinson, Mark Baril	Super Nintendo	aurt.rsn
+	Aladdin	Yuki Iwai, Yuko Takehara, Sets	Super Nintendo	ala.rsn
+	Albert Odyssey	Naoki Kodaka	Super Nintendo	alod.rsn
+	Albert Odyssey 2: Jashin no Taidou	Naoki Kodaka	Super Nintendo	alod2.rsn
 	Alcahest	Jun Ishikawa	Super Nintendo	alca.rsn
 	Alfred Chicken	Mark Knight	Super Nintendo	alch.rsn
-	Ardy Lightfoot	Katsuhiro Hatano, Akiko Hashimoto	Super Nintendo	alft.rsn
-	Alice's Paint Adventure	Takahisa Hirano, Takeshi Miura	Super Nintendo	alice.rsn
-	Albert Odyssey	Naoki Kodaka	Super Nintendo	alod.rsn
-	Albert Odyssey 2	Naoki Kodaka	Super Nintendo	alod2.rsn
-	Archer MacLean's Dropzone	Neil Baldwin, Mike Clarke	Super Nintendo	amdz.rsn
-	ABC Monday Night Football	Atomic Hanada, Emi Shimizu, N'Gja Miura, Chongue	Super Nintendo	amnf.rsn
-	Arabian Nights	Ichiro Nemoto, Daisuke Tamura, Takashi Horiguchi	Super Nintendo	an.rsn
-	Animaniacs	Tomoya Tomita	Super Nintendo	ani.rsn
+	Alice no Paint Adventure	Takahisa Hirano, Takeshi Miura	Super Nintendo	alice.rsn
+	Alien vs. Predator	Tenpei Sato, Hisayoshi Ogura	Super Nintendo	avsp.rsn
+	AlienÂ³	Steve Collett	Super Nintendo	al3.rsn
+	All-American Championship Football	Audio Cyber Factory	Super Nintendo	sicfb.rsn
+	American Battle Dome		Super Nintendo	abd.rsn
+	American Gladiators	Barry Leitch	Super Nintendo	ag.rsn
+	American Tail, An: Fievel Goes West	Takeshi Sato, Takeshi Tsumaki,	Super Nintendo	atfgw.rsn
+	Ancient Magic: Bazoo! Mahou Sekai	Cube	Super Nintendo	bms.rsn
+	Andre Agassi Tennis	Mark Miller	Super Nintendo	aat.rsn
+	Animal Buranden: Brutal	Doug Brandon, Neil Baldwin	Super Nintendo	brtl.rsn
 	Animaniacs	Rudolf Stember	Super Nintendo	anigb.rsn
-	Apocalypse II	Mike Clarke	Super Nintendo	apii.rsn
-	Armor Police Metal Jack	Mr. Com, Sawa, Koyama	Super Nintendo	apmj.rsn
-	Appleseed	Kenji Yamazaki	Super Nintendo	apple.rsn
-	Super Aquatic Games	Richard Joseph	Super Nintendo	aqua.rsn
-	Araiguma Rascal	iroyuki Suzuki, Jun Enoki	Super Nintendo	ar.rsn
-	The Adventures of Rocky and Bullwinkle and Friends	Mark Van Hecke	Super Nintendo	arbf.rsn
+	Animaniacs	Tomoya Tomita	Super Nintendo	ani.rsn
+	Aoki Densetsu Shoot!	Kennosuke Suemura	Super Nintendo	ads.rsn
+	Apocalypse II	Mike Clark	Super Nintendo	apii.rsn
+	Appleseed: Prometheus no Shintaku	Kenji Yamazaki	Super Nintendo	apple.rsn
+	Aqutallion	Tukushi Sasaki	Super Nintendo	sots.rsn
+	Arabian Nights: Sabaku no Seirei Ou	Ichiro Nemoto, Daisuke Tamura,	Super Nintendo	an.rsn
+	Araiguma Rascal	Hiroyuki Suzuki, Jun Enoki	Super Nintendo	ar.rsn
+	Arcana	Jun Ishikawa, Hirokazu Ando	Super Nintendo	card.rsn
+	Archer MacLean's Dropzone	Neil Baldwin, Mike Clark	Super Nintendo	amdz.rsn
 	Arcus Spirits	Motoi Sakuraba	Super Nintendo	arc.rsn
+	Ardy Lightfoot	Katsuhiro Hatano, Akiko Hashim	Super Nintendo	alft.rsn
+	Area 88	Toshio Kajino, Mari Yamaguchi,	Super Nintendo	a88.rsn
 	Aretha	Tsuyoshi Tanaka	Super Nintendo	are.rsn
-	Aretha 2	Chackey, Futoshi Shimodaira, Kazuyasu Hiroe	Super Nintendo	are2.rsn
-	A Ressha de Ikou 3	Pack in Video Sound Team	Super Nintendo	ari3.rsn
-	AAAHH!!! Real Monsters	Greg Turner	Super Nintendo	arm.rsn
+	Aretha 2: Ariel no Fushigi na Bouken	Chackey, Futoshi Shimodaira, H	Super Nintendo	are2.rsn
+	Arkanoid: Doh It Again	Seiji Momoi, Katsuhisa Ishikaw	Super Nintendo	doh.rsn
+	Armor Police Metal Jack	Mr. Com, Sawa, Koyama	Super Nintendo	apmj.rsn
+	Art of Fighting	Seisuke Itoh	Super Nintendo	rnk.rsn
 	Aryol	Kyohei Sada	Super Nintendo	aryol.rsn
-	Aguri Suzuki F-1 Super Driving	Katsuhiro Hayashi	Super Nintendo	asf1.rsn
-	A.S.P. Air Strike Patrol	Jun Enoki	Super Nintendo	asp.rsn
-	Asahi Shinbun Rensai	Varie Sound Team	Super Nintendo	asr.rsn
+	Asahi Shinbun Rensai Katou Hifumi Kudan Shogi Shingiryuu		Super Nintendo	asr.rsn
+	Asameshimae Nyanko	Toyakazu Nagaishi, Eiji Hirasa	Super Nintendo	nnk.rsn
+	Ashita no Joe		Super Nintendo	astj.rsn
+	Assault Suits Valken	Masanao Akahori	Super Nintendo	cn.rsn
 	Asterix	Frederic Mentzen	Super Nintendo	ast.rsn
 	Asterix & Obelix	Alberto Jose Gonzalez	Super Nintendo	ast2.rsn
-	Ashita no Joe	Wave Corp. Sound Team	Super Nintendo	astj.rsn
-	An American Tail: Fievel Goes West	Takeshi Sato, Takeshi Tsumaki, M	Super Nintendo	atfgw.rsn
-	Al Unser Jr's Road to the Top	Paul Wilkinson, Marc Baril	Super Nintendo	aurt.rsn
-	Alien vs. Predator	Sato Tenpei, Mr. Ogura	Super Nintendo	avsp.rsn
+	Astrohawk: May 2003 Version	Paul Lay	Super Nintendo	ahawk.rsn
 	Axelay	Taro Kudou, M. C. Ada	Super Nintendo	axe.rsn
-	Ballz 3D	Bitmasters	Super Nintendo	ballz.rsn
-	Bass Master Classic	Phil Crescenzo	Super Nintendo	basc.rsn
-	Bass Master Classic Pro Edition	Phil Crescenzo	Super Nintendo	bascp.rsn
-	Bastard!!	Naked Trump	Super Nintendo	bast.rsn
-	Beauty and the Beast	Nick Stroud, Howard Ashman, Alan Menkin	Super Nintendo	batb.rsn
-	Bazooka Blitzkrieg	Ucku-Jin	Super Nintendo	bazb.rsn
-	Bing Bing! Bingo	Kazuya Suyama	Super Nintendo	bbb.rsn
-	Bomberman B-Daman	Kenyuu Nukita	Super Nintendo	bbd.rsn
-	Ball Bullet Gun	Dota Ando, Yoshiyuki Ishii	Super Nintendo	bbg.rsn
-	Beavis and Butt-Head	Eric Swanson, Greg Turner	Super Nintendo	bbh.rsn
-	Bebe's Kids	Paul Wilkinson	Super Nintendo	bbk.rsn
-	Bugs Bunny: Rabbit Rampage	Jim Hedges	Super Nintendo	bbr.rsn
-	Bubsy in Claws Encounters of the Furred Kind	Matt Berardo	Super Nintendo	bbs.rsn
-	Bubsy 2	Chip Harris	Super Nintendo	bbs2.rsn
-	Bouncing Ball Trainer	The Doctor	Super Nintendo	bbt.rsn
-	Battle Clash	Yuka Tsujiyoko	Super Nintendo	bc.rsn
-	Battle Cars	David Whittaker	Super Nintendo	bcar.rsn
-	Battle Cross	Imagineer Sound Team	Super Nintendo	bcr.rsn
-	BS Bdash	Akito Nakatsuka	Super Nintendo	bdash.rsn
-	Battle Dodgeball 2	Kennosuke Suemura	Super Nintendo	bdb2.rsn
-	Brandish	Mieko Ishikawa, Atsushi Shirakawa	Super Nintendo	bdh.rsn
-	Brandish 2	Mieko Ishikawa, Atsushi Shirakawa, Hirofumi Matsuoka, Masaru Nakajima, Naoki Kaneda, Takahiro Tsunashima	Super Nintendo	bdh2.rsn
-	Battle Dodgeball	Norihiko Togashi	Super Nintendo	bdodg.rsn
-	Bishin Densetsu Zoku	Osamu Kido, Takeshi Sakamoto	Super Nintendo	bdz.rsn
-	Beach Volleyball	Kazuo Sawa, Naoki Goto	Super Nintendo	bevb.rsn
-	Batman Forever	Geoff & Tim Follin, Andy Brock	Super Nintendo	bf.rsn
-	Shigesato Itoi's Bass Fishing No. 1	Tadashi Ikegami	Super Nintendo	bfn1.rsn
-	Benkei Gaiden	Masashi Kageyama	Super Nintendo	bg.rsn
-	Brett Hull Hockey	Paul Wilkinson	Super Nintendo	bhh.rsn
-	Brett Hull Hockey '95	Paul Wilkinson	Super Nintendo	bhh95.rsn
-	Bio Metal	Yoshio Nagashima	Super Nintendo	bio.rsn
-	Bioworm	Mitsuru Kamiyama	Super Nintendo	biow.rsn
-	Battle Jockey	Hiroshi Ebihara, Kennosuke Suemura	Super Nintendo	bj.rsn
-	Bakutou Dodgers	Takane Okubo	Super Nintendo	bkdc.rsn
-	Block Kuzushi	Mikiko Suzuki	Super Nintendo	bkz.rsn
-	Bahamut Lagoon	Noriko Matsueda	Super Nintendo	bl.rsn
-	Bill Laimbeer's Combat Basketball	Hudson Soft Sound Team	Super Nintendo	blcb.rsn
-	The Blues Brothers	Rob Stevens, Dimitri Yerasimos	Super Nintendo	blues.rsn
-	Blazeon	Tsukasa Masuko	Super Nintendo	blzn.rsn
-	Battle Master	J.S.P.	Super Nintendo	bm.rsn
-	Biker Mice From Mars	Keroppi Inoue, Nobuyuki Akena	Super Nintendo	bmfm.rsn
-	Bokujou Monogatari	CHACKey	Super Nintendo	bmg.rsn
-	Bazoe! Mahou Sekai	Cube Co. Ltd	Super Nintendo	bms.rsn
-	Bonkers	Norihiko Togashi	Super Nintendo	bnkr.rsn
-	Bounty Sword	Kohei Tanaka, Akihiko Mori	Super Nintendo	bnts.rsn
 	B.O.B.	Michael Bartlow	Super Nintendo	bob.rsn
-	Bobby's World	Fred Porter	Super Nintendo	bobby.rsn
-	Breath of Fire	Yasuaki Fujita, Yoko Shimomura, Minae Fujii, Mari Yamaguchi	Super Nintendo	bof.rsn
-	Breath of Fire 2	Yuko Takehara	Super Nintendo	bof2.rsn
-	Super Bonk	Masaaki Nishizawa, Keiji Ueki, Kennosuke Suemura	Super Nintendo	bonk.rsn
-	Boogerman	Roy Wilkins	Super Nintendo	boog.rsn
-	Best of the Best: Championship Karate	Michel Winogradoff, Vincent Bail	Super Nintendo	botb.rsn
-	Batman Returns	Jun Funahashi, Harumi Ueko, Kazuhiko Uehara	Super Nintendo	br.rsn
-	Battle Racers	Year Hayashi	Super Nintendo	brace.rsn
-	Brainies	Rob Stevens, Denis, Eric Caen	Super Nintendo	brain.rsn
-	Brawl Brothers	Atsuyoshi Isemura, Hajime Uchida	Super Nintendo	brawl.rsn
-	Barbarossa	SystemSoft Sound Team	Super Nintendo	brbr.rsn
-	BreakThru!	Paul Mogg, J. White, Andy Edlen	Super Nintendo	breakt.rsn
-	Batman: Revenge of the Joker	David Whittaker	Super Nintendo	brj.rsn
-	Brain Lord	Masanao Akahori	Super Nintendo	brld.rsn
-	Brass Numbers	Junta	Super Nintendo	brnr.rsn
-	Bronkie	John Bartelt	Super Nintendo	bronk.rsn
-	Brutal: Paws of Fury	Doug Brandon, Neil Baldwin	Super Nintendo	brtl.rsn
-	Bram Stoker's Dracula	Probe	Super Nintendo	bsd.rsn
-	BS Dragon Quest	Koichi Sugiyama	Super Nintendo	bsdq.rsn
-	Beethoven's 2nd	Fred Porter	Super Nintendo	bsec.rsn
-	Bushi Seiryuden	Junichi Masuda	Super Nintendo	bshs.rsn
-	Baseball Simulator 1.000	Culture Brain Sound Team	Super Nintendo	bsim.rsn
-	Barkley: Shut Up and Jam!	Dominic Messenger, Rick Rhodes	Super Nintendo	bsj.rsn
-	Barbie Super Model	Danny Toft	Super Nintendo	bsm.rsn
-	Bishoujo Senshi Sailormoon R	akanori Arisawa	Super Nintendo	bsmr.rsn
-	BS Nichibutsu Mahjong	Nichibutsu Sound Team	Super Nintendo	bsnm.rsn
-	Bishoujo Senshi Sailormoon	akanori Arisawa	Super Nintendo	bssm.rsn
-	BS Saterawalker 2	Akito Nataksuka, Yuichi Ozaki, Naoto Ishida	Super Nintendo	bssw2.rsn
-	Big Sky Trooper	Greg Turner	Super Nintendo	bst.rsn
-	Battle Submarine	Masahiro Kusunoki	Super Nintendo	bsub.rsn
-	Satellaview BS-X	Nintendo Sound Team	Super Nintendo	bsx.rsn
-	BS Zelda	Koji Kondo, Akito Nakatsuka, Yuichi Ozaki	Super Nintendo	bsz.rsn
-	Battletoads in Battlemaniacs	Dave Wise	Super Nintendo	btbm.rsn
-	Battle Blaze	Masaya Matsuura, Shizuyoshi Okamura, Masaki Kase, Masahiro Koyama, Kazuo Sawa	Super Nintendo	btbz.rsn
-	Battletoads & Double Dragon	Dave Wise	Super Nintendo	btdd.rsn
-	Battle Tycoon	Tadashi Sawashita, Shinji Kawashima	Super Nintendo	btfh.rsn
-	Battle Grand Prix	Yusuke Takahama, Nobuyuki Shioda	Super Nintendo	btgp.rsn
-	Battle Mobile	Hiroki Kamata	Super Nintendo	btmb.rsn
-	Battle Pinball	Ryuichi Nitta	Super Nintendo	btpb.rsn
 	Baby T-Rex	Marshall Parker	Super Nintendo	btrex.rsn
-	Battle Soccer	Hiroshi Nishizawa, Yoko Watanabe	Super Nintendo	btsc.rsn
+	Bahamut Lagoon	Noriko Matsueda	Super Nintendo	bl.rsn
+	Bakutou Dodgers: Bumps-shima wa Oosawagi	Takane Okubo	Super Nintendo	bkdc.rsn
+	Ball Bullet Gun	Dota Ando, Yoshiyuki Ishii	Super Nintendo	bbg.rsn
+	Ballz 3D		Super Nintendo	ballz.rsn
+	Barbarossa		Super Nintendo	brbr.rsn
+	Barbie Super Model	Danny Toft	Super Nintendo	bsm.rsn
+	Barbie Vacation Adventure	Paul Tonge	Super Nintendo	bva.rsn
+	Barkley's Power Dunk	Dominic Messenger, Rick Rhodes	Super Nintendo	bsj.rsn
+	Bass Masters Classic	Phil Crescenzo	Super Nintendo	basc.rsn
+	Bass Masters Classic: Pro Edition	Phil Crescenzo	Super Nintendo	bascp.rsn
+	Bassin's Black Bass with Hank Parker	Michiya Hirasawa, Tukushi Sasa	Super Nintendo	sbb2.rsn
+	Bastard!!: Ankoku no Hakaishin	Naked Trump	Super Nintendo	bast.rsn
+	Batman Forever	Geoff Follin, Tim Follin, Andy	Super Nintendo	bf.rsn
+	Batman Returns	Jun Funahashi, Harumi Ueko, Ka	Super Nintendo	br.rsn
+	Batman: Revenge of the Joker	David Whittaker	Super Nintendo	brj.rsn
+	Battle Blaze	Masaya Matsuura, Shizuyoshi Ok	Super Nintendo	btbz.rsn
+	Battle Cars	David Whittaker	Super Nintendo	bcar.rsn
+	Battle Clash	Yuka Tsujiyoko	Super Nintendo	bc.rsn
+	Battle Cross		Super Nintendo	bcr.rsn
+	Battle Dodgeball II	Kennosuke Suemura	Super Nintendo	bdb2.rsn
+	Battle Dodgeball: Toukyuu Daigekitotsu	Norihiko Togashi	Super Nintendo	bdodg.rsn
+	Battle Grand Prix	Yusuke Takahama, Nobuyuki Shio	Super Nintendo	btgp.rsn
+	Battle Jockey	Hiroshi Ebihara, Kennosuke Sue	Super Nintendo	bj.rsn
+	Battle Master: Kyuukyoku no Senshitachi	J.S.P.	Super Nintendo	bm.rsn
+	Battle Pinball	Ryuichi Nitta	Super Nintendo	btpb.rsn
+	Battle Racers	Year Hayashi	Super Nintendo	brace.rsn
 	Battle Soccer 2	Yoko Watanabe, Daisuke Tamura	Super Nintendo	btsc2.rsn
-	A Bug's Life	Mark Ortiz	Super Nintendo	bug.rsn
-	Burai	Show-Ya	Super Nintendo	burai.rsn
-	SNES Burn-in Test Cart	Akito Nakatsuka	Super Nintendo	burn.rsn
-	BS Busters Digital Magazine	Akito Nakatsuka	Super Nintendo	bust.rsn
-	Barbie Vacation Adventure	Software Creations Sound Team	Super Nintendo	bva.rsn
-	Bulls vs. Blazers	Rob Hubbard	Super Nintendo	bvb.rsn
-	Bill Walsh College Football	Brian Schmidt	Super Nintendo	bwcf.rsn
-	Bishoujo Wrestlinger's History	Masako Yoshinosono	Super Nintendo	bwh.rsn
-	Brunswick World Tournament of Champions	Mark Ortiz	Super Nintendo	bwtc.rsn
+	Battle Soccer: Field no Hasha	Hiroshi Nishizawa, Yoko Watana	Super Nintendo	btsc.rsn
+	Battle Submarine	Masahiro Kusunoki	Super Nintendo	bsub.rsn
+	Battle Tycoon: Flash Hiders SFX	Tadashi Sawashita, Shinji Kawa	Super Nintendo	btfh.rsn
 	Battle Zeque Den	Kenichi Yaguchi	Super Nintendo	bzd.rsn
-	Carrier Aces	Christopher Barker	Super Nintendo	cace.rsn
-	Cute Angela: Great Journey	Paul Lay, Evil Teen Ninjas	Super Nintendo	cagj.rsn
+	Battletech	Marshall Parker	Super Nintendo	mcwr.rsn
+	Battletech 3050	Brian Schmidt	Super Nintendo	mcwr3.rsn
+	Battletoads & Double Dragon: The Ultimate Team	David Wise	Super Nintendo	btdd.rsn
+	Battletoads in Battlemaniacs	David Wise	Super Nintendo	btbm.rsn
+	Bazooka Blitzkrieg	Ucku-Jin	Super Nintendo	bazb.rsn
+	Bdash 2 Gatsu Gou	Akito Nakatsuka	Super Nintendo	bdash.rsn
+	Beauty and the Beast	Nick Stroud, Howard Ashman, Al	Super Nintendo	batb.rsn
+	Beavis and Butthead	Eric Swanson, Greg Turner	Super Nintendo	bbh.rsn
+	Bebe's Kids	Paul Wilkinson	Super Nintendo	bbk.rsn
+	Beethoven's 2nd	Fred Porter	Super Nintendo	bsec.rsn
+	Benkei Gaiden: Suna no Shou	Masashi Kageyama	Super Nintendo	bg.rsn
+	Best of the Best: Championship Karate	Michel Winogradoff, Vincent Ba	Super Nintendo	botb.rsn
+	Big Sky Trooper	Greg Turner	Super Nintendo	bst.rsn
+	Biker Mice From Mars	Keroppi Inoue, Nobuyuki Akena	Super Nintendo	bmfm.rsn
+	Bill Laimbeer's Combat Basketball		Super Nintendo	blcb.rsn
+	Bill Walsh College Football	Brian Schmidt	Super Nintendo	bwcf.rsn
+	Bing Bing! Bingo	Kazuya Suyama	Super Nintendo	bbb.rsn
+	Bio Metal	Yoshio Nagashima, Ali Lexa, Jo	Super Nintendo	bio.rsn
+	Bioworm	Mitsuru Kamiyama	Super Nintendo	biow.rsn
+	Bishin Densetsu Zoku: The Legend of Zoku	Osamu Kido, Takeshi Sakamoto	Super Nintendo	bdz.rsn
+	Bishoujo Janshi Suchie-Pai	Megu chan, ISE	Super Nintendo	sp.rsn
+	Bishoujo Senshi Sailor Moon	Takanori Arisawa	Super Nintendo	bssm.rsn
+	Bishoujo Senshi Sailor Moon R	Takanori Arisawa	Super Nintendo	bsmr.rsn
+	Bishoujo Senshi Sailor Moon S: Juugai Rantou!? Shuyaku Soudatsusen	Takanori Arisawa	Super Nintendo	smsjr.rsn
+	Bishoujo Senshi Sailor Moon S: Kondo wa Puzzle de Oshioki yo!	Harumi Fujita	Super Nintendo	smspo.rsn
+	Bishoujo Senshi Sailor Moon S: Kurukkurin	Kazuo Sawa	Super Nintendo	smsk.rsn
+	Bishoujo Senshi Sailor Moon Super S: Fuwa Fuwa Panic		Super Nintendo	smffp.rsn
+	Bishoujo Senshi Sailor Moon Super S: Zenin Sanka!! Shuyaku Soudatsusen	Seisuke Itoh, Hiroo Ikeda, Kat	Super Nintendo	shuso.rsn
+	Bishoujo Senshi Sailor Moon: Another Story	Takanori Arisawa	Super Nintendo	smoon.rsn
+	Bishoujo Wrestler Retsuden: Blizzard Yuki Rannyuu	Masako Yoshinosono	Super Nintendo	bwh.rsn
+	Blazeon	Tsukasa Masuko	Super Nintendo	blzn.rsn
+	Blazing Skies	George Alistair Sanger, Joe Mc	Super Nintendo	w2ah.rsn
+	Block Kuzushi	Mikiko Suzuki	Super Nintendo	bkz.rsn
+	Bobby's World	Fred Porter	Super Nintendo	bobby.rsn
+	Bokujou Monogatari	Chackey	Super Nintendo	bmg.rsn
+	Bomberman B-Daman	Kenyuu Nukita	Super Nintendo	bbd.rsn
+	Bombuzal	Hiroyuki Masuno	Super Nintendo	kbly.rsn
+	Bonkers	Norihiko Togashi	Super Nintendo	bnkr.rsn
+	Boogerman: A Pick and Flick Adventure	Roy Wilkins	Super Nintendo	boog.rsn
+	Bouncing Ball Trainer	The Doctor	Super Nintendo	bbt.rsn
+	Bounty Sword	Kohei Tanaka, Akihiko Mori	Super Nintendo	bnts.rsn
+	Boxing Legends of the Ring	Mark Ganus, Dean Morrell	Super Nintendo	ring.rsn
+	Brain Lord	Masanao Akahori	Super Nintendo	brld.rsn
+	Brainies	Rob Stevens, Denis, Eric Caen	Super Nintendo	brain.rsn
+	Bram Stoker's Dracula	Probe	Super Nintendo	bsd.rsn
+	Brandish	Mieko Ishikawa, Atsushi Shirak	Super Nintendo	bdh.rsn
+	Brandish 2: Expert	Mieko Ishikawa, Atsushi Shirak	Super Nintendo	bdh2.rsn
+	Brawl Brothers	Atsuyoshi Isemura, Hajime Uchi	Super Nintendo	brawl.rsn
+	BreakThru!	Paul Mogg, J. White, Andy Edle	Super Nintendo	breakt.rsn
+	Breath of Fire	Yasuaki Fujita, Mari Yamaguchi	Super Nintendo	bof.rsn
+	Breath of Fire 2	Yuko Takehara	Super Nintendo	bof2.rsn
+	Brett Hull Hockey	Paul Wilkinson	Super Nintendo	bhh.rsn
+	Brett Hull Hockey 95	Paul Wilkinson	Super Nintendo	bhh95.rsn
+	Broadcast SatellaView-X		Super Nintendo	bsx.rsn
+	Bronkie the Bronchiasaurus	John Bartelt	Super Nintendo	bronk.rsn
+	Brunswick World: Tournament of Champions	Mark Ortiz	Super Nintendo	bwtc.rsn
+	BS Nichibutsu Mahjong		Super Nintendo	bsnm.rsn
+	Bubsy II	Chip Harris	Super Nintendo	bbs2.rsn
+	Bubsy in Claws Encounters of the Furred Kind	Matt Berardo	Super Nintendo	bbs.rsn
+	Bugs Bunny in Rabbit Rampage	Jim Hedges	Super Nintendo	bbr.rsn
+	Bulls vs. Blazers and the NBA Playoffs	Rob Hubbard	Super Nintendo	bvb.rsn
+	Burai: Hachigyoku no Yuushi Densetsu	Show-Ya	Super Nintendo	burai.rsn
+	Bushi Seiryuden: Futari no Yuusha	Junichi Masuda	Super Nintendo	bshs.rsn
+	Bust-A-Move	Kazuko Umino	Super Nintendo	pubo.rsn
+	Busters: Digital Magazine 4-12-98	Akito Nakatsuka	Super Nintendo	bust.rsn
 	Cacoma Knight	Takahiro Wakuta	Super Nintendo	cakn.rsn
-	Captain Novolin	Kingsley Thurber, Mark Ganus	Super Nintendo	cano.rsn
-	Captain America and the Avengers	Eric Swanson	Super Nintendo	capam.rsn
-	Captain Commando	Masaki Izutani	Super Nintendo	captc.rsn
-	Gekisou Sentai Car Rangers	Hiroyuki Iwatsuki, Haruo Ohashi	Super Nintendo	car.rsn
-	Cardmaster	Jun Ishikawa, Hirokazu Ando	Super Nintendo	card.rsn
-	Casper (Japanese)	Iku Mizutani, Kinuyo Yamashita	Super Nintendo	cas.rsn
-	Casper (American)	Mark Van Hecke	Super Nintendo	casp.rsn
-	Crystal Beans	Yoshio Tsuru, Jun Takema, Tsukasa "Macco" Masuko, Bang Heads	Super Nintendo	cb.rsn
-	Cyborg 009	EC sound team	Super Nintendo	cb9.rsn
-	CB Chara Wars	Fumitaka Anzai, Michel Kamijima, Tsukushi Sasaki	Super Nintendo	cbcw.rsn
-	Combatribes	Kazunaka Yamane	Super Nintendo	cbtr.rsn
-	Chester Cheetah: Too Cool to Fool	Kaneko Sound Team	Super Nintendo	cctcf.rsn
+	Cal Ripken Jr. Baseball	Brian Howarth	Super Nintendo	crjb.rsn
+	Cameltry	Pinch Punch (YO & KN)	Super Nintendo	cml.rsn
+	Cannon Fodder	Jon Hare, Allister Morten Brim	Super Nintendo	cf.rsn
 	Cannondale Cup	Paul Wilkinson	Super Nintendo	ccup.rsn
-	Chester Cheetah Wild Wild Quest	Kaneko Sound Team	Super Nintendo	ccwwq.rsn
-	Kidou Senshi Gundam: Cross Dimension 0079	enichi Kamio	Super Nintendo	cd79.rsn
-	Cannon Fodder	Jon Hare, Allister Brimble, Richard Joseph	Super Nintendo	cf.rsn
-	College Football USA '97	Matt Scott	Super Nintendo	cfu97.rsn
-	Cosmo Gang the Puzzle	Saya-Saya	Super Nintendo	cgp.rsn
-	Cosmo Gang: The Video	Yoshie Arakawa, Nobuyuki Hara, Nekoko	Super Nintendo	cgv.rsn
-	BS Cheap de Gorgeous	Akito Nakatsuka	Super Nintendo	cheap.rsn
+	Capcom's MVP Football	Ed Bogas, Gary Clinton	Super Nintendo	cmf.rsn
+	Capcom's Soccer Shootout	Tomoko Matsushima	Super Nintendo	jle94.rsn
+	Captain America and The Avengers	Eric Swanson	Super Nintendo	capam.rsn
+	Captain Commando	Masaki Izutani	Super Nintendo	captc.rsn
+	Captain Novolin	Kingsley Thurber, Mark Ganus	Super Nintendo	cano.rsn
+	Captain Tsubasa 3: Koutei no Chousen	Shake Keijin	Super Nintendo	ct3.rsn
+	Captain Tsubasa IV: Pro no Rival-tachi	Sugito Miyashiro	Super Nintendo	ct4.rsn
+	Captain Tsubasa J: The Way to World Youth	Koji Yamada	Super Nintendo	ctj.rsn
+	Captain Tsubasa V: Hasha no Shougou Champion	Chinatsu Okayasu, Hiroshi Miya	Super Nintendo	ct5.rsn
+	Caravan Shooting Collection	Tsukasa Masuko, Takeaki Kunimo	Super Nintendo	csc.rsn
+	Carrier Aces	Christopher Barker	Super Nintendo	cace.rsn
+	Casper	Mark Van Hecke	Super Nintendo	casp.rsn
+	Casper	Iku Mizutani, Kinuyo Yamashita	Super Nintendo	cas.rsn
+	CB Chara Wars: Ushinawareta Gag	Fumitaka Anzai, Michel Kamijim	Super Nintendo	cbcw.rsn
+	Champions World Class Soccer	Tristan Des Pres, Jeff Tveraas	Super Nintendo	cwcs.rsn
+	Championship Pool	Jerry Gerber	Super Nintendo	cp.rsn
+	Championship Soccer '94	Richard Joseph	Super Nintendo	sens.rsn
+	Chaos Engine	Richard Joseph, Joi	Super Nintendo	sof.rsn
+	Chaos Seed: Feng Shui Kairouki	Yasunori Shiono, Katsuyoshi Ha	Super Nintendo	cs.rsn
+	Chavez	David Whittaker	Super Nintendo	rbb.rsn
+	Cheap de Gorgeous Vol.1	Akito Nakatsuka	Super Nintendo	cheap.rsn
+	Chester Cheetah: Too Cool to Fool		Super Nintendo	cctcf.rsn
+	Chester Cheetah: Wild Wild Quest		Super Nintendo	ccwwq.rsn
 	Chinhai	Kazuo Sawa	Super Nintendo	chinh.rsn
-	Cho Aniki	Sanae Kasahara, Taku Iwasaki, Don Makkou	Super Nintendo	cho.rsn
-	Kyle Petty's No Fear Racing	Aubrey Hodges	Super Nintendo	circ.rsn
-	Civilization	Asmik Sound Team	Super Nintendo	civ.rsn
-	Cyber Knight	Michiharu Hasuya, Osamu Kasai, Junko Yokoyama	Super Nintendo	ck.rsn
-	Cyber Knight 2	Yoshikatsu & Kyouko Sakai (Blue Moon)	Super Nintendo	ck2.rsn
-	Classic Kong Complete	Unknown	Super Nintendo	ckc.rsn
+	Cho Aniki: Bakuretsu Rantou Hen	Sanae Kasahara, Taku Iwasaki, 	Super Nintendo	cho.rsn
 	Choplifter 3	Marshall Parker	Super Nintendo	cl3.rsn
+	Chou Mahou Tairiku Wozz	Tomoyuki Hamada, Takeshi Sato,	Super Nintendo	wozz.rsn
+	Chou Makai Taisen! Dorabocchan	Hisashi Matsushita	Super Nintendo	ttsmf.rsn
+	Choujikuu Yousai Macross: Scrambled Valkyrie	Noboru Yamane	Super Nintendo	smsv.rsn
+	Choukou Goukami Xardion	Kohei Tanaka	Super Nintendo	xrdn.rsn
+	Choumakaimura	Mari Yamaguchi	Super Nintendo	sgng.rsn
+	Christmas Craze	Shiru	Super Nintendo	xmas.rsn
+	Christmas Demo	The Doctor	Super Nintendo	acd.rsn
+	Chrono Trigger	Yasunori Mitsuda, Nobuo Uemats	Super Nintendo	ct.rsn
+	Chrono Trigger Pre-Release	Yasunori Mitsuda, Nobuo Uemats	Super Nintendo	ctp.rsn
+	Chuck Rock	Steve Collett	Super Nintendo	crock.rsn
+	Circuit USA	Aubrey Hodges	Super Nintendo	circ.rsn
+	Classic Kong Complete		Super Nintendo	ckc.rsn
 	Clay Fighter	Mitchell Stein, Brian Luzietti	Super Nintendo	clay.rsn
 	Cliffhanger	Brian Howarth	Super Nintendo	cliff.rsn
-	Clue	Sculptured Software sound team	Super Nintendo	clue.rsn
-	Capcom's MVP Football	Ed Bogas, Gary Clinton	Super Nintendo	cmf.rsn
-	Cameltry	Pinch Punch (YO & KN)	Super Nintendo	cml.rsn
-	Cybernator	Masanao Akahori	Super Nintendo	cn.rsn
-	Congo's Caper	Emi Shimizu, Min-Key Momo, N'gja Miura, Z Yamanaka	Super Nintendo	cngc.rsn
-	Computer Nouryoku Kaiseki Ultra Baken	Culture Brain Sound Team	Super Nintendo	cnkub.rsn
-	Contra III: The Alien Wars	Miki Yanagisawa, Masanori Adachi, Tappi Iwase	Super Nintendo	cntr3.rsn
+	Clock Tower	Kouji Niikura, Kaori Takazoe	Super Nintendo	ctow.rsn
+	Clock Works	Nori Atsumi	Super Nintendo	cw.rsn
+	Clue		Super Nintendo	clue.rsn
+	College Football USA '97: The Road to New Orleans	Matt Scott	Super Nintendo	cfu97.rsn
+	College Slam	Darren Mitchell	Super Nintendo	csb.rsn
+	Columbus no Tamagoyaki 1	Akito Nakatsuka	Super Nintendo	colu.rsn
 	Columns	Hikoshi Hashimoto	Super Nintendo	col.rsn
-	BS Columbus no Tamagoyaki	Akito Nakatsuka	Super Nintendo	colu.rsn
-	Cool World	Dean Evans, Keith Tinman	Super Nintendo	coolw.rsn
-	Cu-On-Pa	Ken Kojima	Super Nintendo	cop.rsn
-	Coron Land	Tomoyuki Hamada	Super Nintendo	corl.rsn
-	Corn Buster	Bart Roijmans, Ruud Van De Moosdijk	Super Nintendo	cornb.rsn
-	Championship Pool	Jerry Gerber	Super Nintendo	cp.rsn
-	Cosmo Police Galivan 2	Kenji Yoshida	Super Nintendo	cpg2.rsn
-	Cal Ripken Jr. Baseball	Brian Howarth	Super Nintendo	crjb.rsn
-	Chuck Rock	Steve Collett	Super Nintendo	crock.rsn
-	Crayon Shin-chan: Arashi wo yobu Enji	Norihiko Togashi	Super Nintendo	crs.rsn
-	Crayon Shin-chan 2	Norihiko Togashi	Super Nintendo	crs2.rsn
-	Crayon Shin-chan: Nagagutsu Dobon!!	Sanae Kasahara, Dougen Shibuya, 	Super Nintendo	crsnd.rsn
-	Chaos Seed	Yasunori Shiono, Katsuyoshi Hayashi, Yukio Nakajima	Super Nintendo	cs.rsn
-	College Slam Basketball	Darren Mitchell	Super Nintendo	csb.rsn
-	Caravan Shooting Collection	Hudson Soft	Super Nintendo	csc.rsn
-	Cool Spot	Tommy Tallarico	Super Nintendo	cspot.rsn
+	Combatribes	Kazunaka Yamane	Super Nintendo	cbtr.rsn
+	Computer Nouryoku Kaiseki Ultra Baken		Super Nintendo	cnkub.rsn
 	Congo the Movie: The Secret of Zinj	Brian Schmidt	Super Nintendo	csz.rsn
-	Chrono Trigger	Yasunori Mitsuda	Super Nintendo	ct.rsn
-	Captain Tsubasa 3	Shake Keijin	Super Nintendo	ct3.rsn
-	Captain Tsubasa 4	Sugito Miyashiro	Super Nintendo	ct4.rsn
-	Captain Tsubasa 5	Chinatsu Okayasu, Hiroshi Miyazaki	Super Nintendo	ct5.rsn
-	Controller Test Cartridge	Nintendo Sound Team	Super Nintendo	ctc.rsn
-	Cutthroat Island	Chris Jojo, Paul Tonge	Super Nintendo	cti.rsn
-	Captain Tsubasa J	Koji Yamada	Super Nintendo	ctj.rsn
-	Clock Tower	Kaori Takazoe	Super Nintendo	ctow.rsn
-	Chrono Trigger Pre-Release	Yasunori Mitsuda	Super Nintendo	ctp.rsn
-	Märchen Adventure Cotton 100%	Kenichi Hirata	Super Nintendo	cttn.rsn
-	Clock Works	M.C. Noric	Super Nintendo	cw.rsn
-	Champions World Class Soccer	Tristan Des Pres	Super Nintendo	cwcs.rsn
+	Congo's Caper	Emi Shimizu, Min-Key Momo, N'g	Super Nintendo	cngc.rsn
+	Contra III: The Alien Wars	Miki Higashino, Masanori Adach	Super Nintendo	cntr3.rsn
+	Controller Test Cartridge		Super Nintendo	ctc.rsn
+	Cool Spot	Tommy Tallarico	Super Nintendo	cspot.rsn
+	Cool World	Dean Evans, Keith Tinman	Super Nintendo	coolw.rsn
+	Corn Buster	Bart Roijmans, Ruud Van De Moo	Super Nintendo	cornb.rsn
+	Coron Land	Tomoyuki Hamada	Super Nintendo	corl.rsn
+	Cosmo Gang the Puzzle	Saya-Saya	Super Nintendo	cgp.rsn
+	Cosmo Gang Video	Yoshie Arakawa, Nobuyuki Hara,	Super Nintendo	cgv.rsn
+	Cosmo Police Galivan II: Arrow of Justice	Kenji Yoshida	Super Nintendo	cpg2.rsn
+	Crayon Shin-chan 2: Dai Maou no Gyakushuu	Norihiko Togashi	Super Nintendo	crs2.rsn
+	Crayon Shin-chan: Arashi wo yobu Enji	Norihiko Togashi	Super Nintendo	crs.rsn
+	Crayon Shin-chan: Nagagutsu Dobon!!	Sanae Kasahara, Dougen Shibuya	Super Nintendo	crsnd.rsn
+	Crystal Beans From Dungeon Explorer	Yoshio Tsuru, Jun Takema, Tsuk	Super Nintendo	cb.rsn
+	Cu-On-Pa	Ken Kojima	Super Nintendo	cop.rsn
+	Cute Angela: Great Journey	Paul Lay	Super Nintendo	cagj.rsn
+	Cutthroat Island	Martin Goodall, James Hannigan	Super Nintendo	cti.rsn
+	Cyber Knight	Michiharu Hasuya, Osamu Kasai,	Super Nintendo	ck.rsn
+	Cyber Knight 2: Chikyuu Teikoku no Yabou	Blue Moon	Super Nintendo	ck2.rsn
+	Cyber Spin	Junya Kozakai	Super Nintendo	fgpx.rsn
+	Cyborg 009		Super Nintendo	cb9.rsn
+	D-Force		Super Nintendo	difo.rsn
+	Daffy Duck: The Marvin Missions	Jim Hedges	Super Nintendo	marv.rsn
+	Dai-3-ji Super Robot Taisen	Shinichi Tanaka	Super Nintendo	srt3.rsn
+	Dai-4-ji Super Robot Taisen	Shinichi Tanaka	Super Nintendo	srt4.rsn
+	Daikaijuu Monogatari	Haruyoshi Rokudo	Super Nintendo	dkm.rsn
+	Daikoukai Jidai 2	Yoko Kanno	Super Nintendo	uw2.rsn
+	Daisenryaku Expert	Yoshinori Hirahara, Akiko Hash	Super Nintendo	de.rsn
+	Daisenryaku Expert WWII: War in Europe	Tamiya Terashima, Yoshinori Hi	Super Nintendo	de2.rsn
+	Dan Dan Belt Conveyor Milk no Maki	Akito Nakatsuka	Super Nintendo	milk.rsn
+	Darius Force	Kiyoshi Kusatsu, Watanabe, Tan	Super Nintendo	df.rsn
+	Darius Twin	Norihiro Furukawa, Pochi	Super Nintendo	dtwin.rsn
 	Dark Half	Tomoyuki Hamada	Super Nintendo	daha.rsn
-	Dark Law - Meaning of Death	Satoshi Nagano, Michihico Shichi	Super Nintendo	dala.rsn
-	Dolucky's A-League Soccer	Hideyuki Shimono	Super Nintendo	dals.rsn
-	Tuff E Nuff	Yasuhiko Takashiba, Suguru Ishida	Super Nintendo	dance.rsn
-	Super Dany	David de Grutolla	Super Nintendo	dany.rsn
-	Dark Kingdom	Jimmy & Patty	Super Nintendo	dark.rsn
-	The Death and Return of Superman	Glenn Stafford, Michael Morhaime	Super Nintendo	dars.rsn
-	Daze Before Christmas	Kim M. Jensen, Geir Tjelta	Super Nintendo	dbc.rsn
-	Dragon Ball Z: Hyper Dimension	Takano, Nakajima, Tonkupon, Chatrita	Super Nintendo	dbhd.rsn
-	Dragon: The Bruce Lee Story	Allistar Brimble	Super Nintendo	dbls.rsn
-	Dear Boys	Kenji Yamazaki, Yoshikazu Yao	Super Nintendo	dboys.rsn
-	Death Brade	Hiroaki Yoshida, Akira Takemoto	Super Nintendo	dbra.rsn
-	Dragon Ball Z Super Gokuden: Totsugeki-Hen	TOSE Sound Team	Super Nintendo	dbth.rsn
-	Dragon Ball Z: Super Butouden	Kenji Yamamoto, Kumagorou	Super Nintendo	dbzb.rsn
-	Dragon Ball Z: Super Butouden 2	Kenji Yamamoto, SWITCH-E, Kumatarou	Super Nintendo	dbzb2.rsn
-	Dragon Ball Z: Super Butouden 3	Kenji Yamamoto, Amayang, Chatrasch, Switch-E	Super Nintendo	dbzb3.rsn
-	Dragonball Z RPG	Takano	Super Nintendo	dbzr.rsn
-	Demon's Crest	Toshihiko Horiyama	Super Nintendo	dc.rsn
-	David Crane's Amazing Tennis	Mark Van Hecke	Super Nintendo	dcat.rsn
-	Double Dragon 5	Rob Atesalp	Super Nintendo	dd5.rsn
-	Donald Duck: Mahou no Boushi	T. Hirano, T. Miura	Super Nintendo	ddmb.rsn
-	Dino Dini's Soccer	Steve Duckworth, Neil Baldwin	Super Nintendo	dds.rsn
-	Daisenryaku Expert	Yoshinori Hirahara, Akikio Hashimoto, Koji Yamada	Super Nintendo	de.rsn
-	Daisenryaku Expert WWII	Tamiya Terashima	Super Nintendo	de2.rsn
-	Demolition Man	Devin Hurd	Super Nintendo	deman.rsn
-	Kaite Tukutte Asoberu Dezaemon	Koichi Ishibashi, Akiyoshi Saito, Kazuo Oikawa, Hitoshi Nishimura	Super Nintendo	dezae.rsn
-	Darius Force	Kusatsu, Watanabe, Tanabe	Super Nintendo	df.rsn
-	Dossun! Ganseki Battle	I'Max Sound Team	Super Nintendo	dgb.rsn
-	Dharma Doujou	Sven Maz, Famishin	Super Nintendo	dhdo.rsn
-	Dino City	Hiroshi Kimura	Super Nintendo	dici.rsn
-	Dimension Force	Asmik Sound Team	Super Nintendo	difo.rsn
-	Dirt Racer	Tony Williams	Super Nintendo	dirt.rsn
-	Kinnikuman: Dirty Challenger	Norihiko Togashi	Super Nintendo	dirty.rsn
-	Derby Jockey	Hime Suzuki, Geeshii Kohmasu, Ackey	Super Nintendo	dj.rsn
-	Derby Jockey 2	Maki Kirioka, Yoko Suzuki, Shigenori Masuko	Super Nintendo	dj2.rsn
-	Donkey Kong	Taisuke Araki	Super Nintendo	dk.rsn
-	Dragon Knight 4	Witch	Super Nintendo	dk4.rsn
-	Donkey Kong Country	Dave Wise	Super Nintendo	dkc.rsn
-	Donkey Kong Country 3	Eveline Fischer	Super Nintendo	dkdt.rsn
-	Dai Kaiju Monogatari	Haruyoshi Rokudo	Super Nintendo	dkm.rsn
-	Donkey Kong Country 2	Dave Wise	Super Nintendo	dkq.rsn
-	Doukyuusei 2	Manabu Kunieda	Super Nintendo	dks2.rsn
+	Dark Kingdom	Jimmy, Patty	Super Nintendo	dark.rsn
+	Dark Law: Meaning of Death	Satoshi Nagano, Michihiko Shic	Super Nintendo	dala.rsn
 	Date Kimiko no Virtual Tennis	Takayuki Suzuki, Jun Enoki	Super Nintendo	dkvt.rsn
-	Dolucky's Kusa Yakyu	Yoshiyuki Ito	Super Nintendo	dky.rsn
-	Der Langrisser	Noriyuki Iwadare	Super Nintendo	dl.rsn
-	Demon of Laplace	Akiko Kosaka	Super Nintendo	dlp.rsn
-	Dolucky no Puzzle Tour '94	Hideyuki Shimono, Akihito Okawa	Super Nintendo	dlpt.rsn
-	Dungeon Master	Tsukasa Tawada, Hikoshi Hashimoto	Super Nintendo	dm.rsn
-	Dream Maze: Kigurumi Daibouken	Nori Atsumi	Super Nintendo	dmkd.rsn
-	Downtown Nekketsu Baseball Monogatari	Cube, Chikaki Iizuka, Kiyomi Kat	Super Nintendo	dnbm.rsn
-	Dual Orb	Lucky-7	Super Nintendo	do.rsn
-	Dual Orb 2	Nobuyuki Hara, Yu Yoshida	Super Nintendo	do2.rsn
-	Arkanoid: Doh it Again	Seiji Momoi, Katsuhisa Ishikawa	Super Nintendo	doh.rsn
-	Dokapon 321	Yoshiyuki Ishii, Dota Ando	Super Nintendo	doka.rsn
-	Doom	Bobby Prince	Super Nintendo	doom.rsn
-	Doraemon	Hisao Ogawa, Takashi Kutsukake, Tomoko Matsushima	Super Nintendo	dor.rsn
-	Doraemon 2	Hisao Ogawa, Takashi Kutsukake, Tomoko Matsushima, Masayuki Horie	Super Nintendo	dor2.rsn
-	Doraemon 3	Tomoyuki Hamada	Super Nintendo	dor3.rsn
-	Doraemon 4	Akira Ootaka	Super Nintendo	dor4.rsn
-	Dragon Quest 1 & 2	Koichi Sugiyama	Super Nintendo	dq12.rsn
-	Dragon Quest 3	Koichi Sugiyama	Super Nintendo	dq3.rsn
-	Dragon Quest 5	Koichi Sugiyama	Super Nintendo	dq5.rsn
-	Dragon Quest 6	Koichi Sugiyama	Super Nintendo	dq6.rsn
-	Dorque and Imp	Daniel Adler	Super Nintendo	dqai.rsn
-	Dragon's Earth	Kouji Niikura, Hiroyuki Naka, Hiroshi Taniguchi	Super Nintendo	drea.rsn
-	Adventures of Dr. Franken	Tee the Darknight, Unyque Artists	Super Nintendo	drf.rsn
-	Drakkhen	Hiroyuki Masuno, LSVD Programmer	Super Nintendo	drk.rsn
-	Dragon's Lair	Mark Cooksey	Super Nintendo	drla.rsn
-	BS Do-Re-Mi	Akito Nakatsuka	Super Nintendo	drm.rsn
-	Do-Re-Mi Fantasy	Jun Chiki Chikuma	Super Nintendo	drmf.rsn
-	Star Trek Deep Space Nine: The Crossroads of Time	Novotrade Sound Team	Super Nintendo	ds9.rsn
-	Dragon Slayer	Mieko Ishikawa, Masaaki Kawai	Super Nintendo	dslh.rsn
-	Desert Strike	Brian Schmidt	Super Nintendo	dsrg.rsn
-	DynamiTracer	Nobuo Uematsu	Super Nintendo	dt.rsn
+	David Crane's Amazing Tennis	Mark Van Hecke	Super Nintendo	dcat.rsn
+	Daze Before Christmas	Kim Morten Jensen, Geir Tjelta	Super Nintendo	dbc.rsn
+	Dead Dance	Yasuhiko Takashiba, Suguru Ish	Super Nintendo	dance.rsn
 	Deae Tonosama Appare Ichiban	Masashi Kageyama	Super Nintendo	dtai.rsn
+	Dear Boys	Kenji Yamazaki, Yoshikazu Yao	Super Nintendo	dboys.rsn
+	Death and Return of Superman	Glenn Stafford, Michael Morhai	Super Nintendo	dars.rsn
+	Death Brade	Hiroaki Yoshida, Akira Takemot	Super Nintendo	dbra.rsn
+	Demolition Man	Devin Hurd	Super Nintendo	deman.rsn
+	Demon's Blazon: Makaimura Monshou Hen	Toshihiko Horiyama	Super Nintendo	dc.rsn
+	Dennis	Keith Tinman	Super Nintendo	dtm.rsn
+	Densetsu no Ogre Battle: Ogre Battle Saga Episode Five: The March of the Black Queen	Masaharu Iwata, Hitoshi Sakimo	Super Nintendo	ogre.rsn
+	Der Langrisser	Noriyuki Iwadare	Super Nintendo	dl.rsn
+	Derby Jockey 2	Maki Kirioka, Yoko Suzuki, Shi	Super Nintendo	dj2.rsn
+	Derby Jockey: Kishou he no Michi	Hime Suzuki, Geeshii Kohmasu, 	Super Nintendo	dj.rsn
+	Desert Strike: Return to the Gulf	Brian Schmidt	Super Nintendo	dsrg.rsn
+	Dharma Doujou	Sven Maz, Famishin	Super Nintendo	dhdo.rsn
+	Dig & Spike Volleyball	Lucky Tocky	Super Nintendo	vbt.rsn
+	Dino City	Hiroshi Kimura	Super Nintendo	dici.rsn
+	Dino Dini's Soccer	Steve Duckworth, Neil Baldwin	Super Nintendo	dds.rsn
+	Dirt Racer	Tony Williams	Super Nintendo	dirt.rsn
 	Dirt Trax FX	Mark Ganus, Kingsley Thurber	Super Nintendo	dtfx.rsn
-	Dynamaite: The Las Vegas	N. Miyauchi	Super Nintendo	dtlv.rsn
-	Dennis the Menace	Keith Tinman	Super Nintendo	dtm.rsn
-	Doom Troopers	Fletcher Beasley	Super Nintendo	dtr.rsn
+	Do-Re-Mi Fantasy: Milon no Doki Doki Daiboken	Jun Chikuma	Super Nintendo	drmf.rsn
+	Do-Re-Mi No.2 5-10	Akito Nakatsuka	Super Nintendo	drm.rsn
+	Dokapon 3.2.1.: Arashi wo Yobu Yuujou	Yoshiyuki Ishii, Dota Ando	Super Nintendo	doka.rsn
+	Dokuritsu Sensou		Super Nintendo	lod.rsn
+	Dolucky no A.League Soccer	Hideyuki Shimono	Super Nintendo	dals.rsn
+	Dolucky no Kusa Yakyuu	Yoshiyuki Ito	Super Nintendo	dky.rsn
+	Dolucky no Puzzle Tour '94	Hideyuki Shimono, Akihito Okaw	Super Nintendo	dlpt.rsn
+	Donald Duck Mahou No Boushi	Takahisa Hirano, Takeshi Miura	Super Nintendo	ddmb.rsn
+	Donald Duck: Maui Mallard in Cold Shadow	Michael Giacchino, Patrick J. 	Super Nintendo	maui.rsn
+	Donkey Kong	Taisuke Araki	Super Nintendo	dk.rsn
+	Donkey Kong Country	David Wise, Eveline Novakovic,	Super Nintendo	dkc.rsn
+	Donkey Kong Country 2: Diddy's Kong Quest	David Wise	Super Nintendo	dkq.rsn
+	Donkey Kong Country 3: Dixie Kong's Double Trouble	Eveline Novakovic, David Wise	Super Nintendo	dkdt.rsn
+	Doom	Bobby Prince	Super Nintendo	doom.rsn
+	Doomsday Warrior	Junta	Super Nintendo	brnr.rsn
+	Doraemon 2: Nobita no Toys Land Daibouken	Hisao Ogawa, Takashi Kutsukake	Super Nintendo	dor2.rsn
+	Doraemon 3: Nobita to Toki no Hougyoku	Tomoyuki Hamada	Super Nintendo	dor3.rsn
+	Doraemon 4: Nobita to Tsuki no Okoku	Akira Ootaka	Super Nintendo	dor4.rsn
+	Doraemon: Nobita to Yousei no Kuni	Hisao Ogawa, Takashi Kutsukake	Super Nintendo	dor.rsn
+	Dossun! Ganseki Battle		Super Nintendo	dgb.rsn
+	Double Dragon V: The Shadow Falls	Rob Atesalp	Super Nintendo	dd5.rsn
+	Doukyusei 2	Manabu Kunieda	Super Nintendo	dks2.rsn
+	Down the World: Mervil's Ambition	Jeff Pfeifer, Rob Pfeifer	Super Nintendo	dtw.rsn
+	Downtown Nekketsu Baseball Monogatari: Baseball de Shoufuda! Kunio-kun	Cube, Chikaki Iizuka, Kiyomi K	Super Nintendo	dnbm.rsn
+	Dr. Mario		Super Nintendo	tdm.rsn
+	Dragon Ball Z: Chou Gokuu Den: Totsugeki-hen		Super Nintendo	dbth.rsn
+	Dragon Ball Z: Hyper Dimension	Takano, Nakajima, Tonkupon, Ch	Super Nintendo	dbhd.rsn
+	Dragon Ball Z: La Legende Saien	Kenji Yamamoto (2), SWITCH-E, 	Super Nintendo	dbzb2.rsn
+	Dragon Ball Z: Super Butouden	Kenji Yamamoto (2), Kumagorou	Super Nintendo	dbzb.rsn
+	Dragon Ball Z: Super Butouden 3	Kenji Yamamoto (2), Amayang, C	Super Nintendo	dbzb3.rsn
+	Dragon Ball Z: Super Saiya Densetsu	Takano	Super Nintendo	dbzr.rsn
+	Dragon Knight 4	Witch	Super Nintendo	dk4.rsn
+	Dragon Quest	Koichi Sugiyama	Super Nintendo	bsdq.rsn
+	Dragon Quest 1 & 2	Koichi Sugiyama	Super Nintendo	dq12.rsn
+	Dragon Quest 3: Soshite Densetsu he...	Koichi Sugiyama	Super Nintendo	dq3.rsn
+	Dragon Quest 5: Tenkuu no Hanayome	Koichi Sugiyama	Super Nintendo	dq5.rsn
+	Dragon Quest 6: Maboroshi no Daichi	Koichi Sugiyama	Super Nintendo	dq6.rsn
+	Dragon Slayer: The Legend of Heroes	Mieko Ishikawa, Masaaki Kawai	Super Nintendo	dslh.rsn
+	Dragon View	M. Takenada, N. Komatsu, T. Se	Super Nintendo	dv.rsn
+	Dragon's Earth	Kouji Niikura, Hiroyuki Naka, 	Super Nintendo	drea.rsn
+	Dragon's Lair	Robert Mann, Chris Davison, Ma	Super Nintendo	drla.rsn
+	Dragon: The Bruce Lee Story	Allister Morten Brimble	Super Nintendo	dbls.rsn
+	Drakkhen	Hiroyuki Masuno, LSVD Programm	Super Nintendo	drk.rsn
 	Dream TV	David Whittaker	Super Nintendo	dtv.rsn
-	Down the World	Jeff Pfeifer, Rob Pfeifer	Super Nintendo	dtw.rsn
-	Darius Twin	Wiz. Master, Pochi	Super Nintendo	dtwin.rsn
-	Dun Quest	D.S.P	Super Nintendo	dunq.rsn
-	Dragon View	M. Takenaka, N. Komatsu, T. Sekido, Mercado Inc. Staff	Super Nintendo	dv.rsn
-	Road Runner's Death Valley Rally	Nu Romantic Productions	Super Nintendo	dvr.rsn
-	Dracula X	Tomoya Tomita, Masanari Iwata, Harumi Ueko, Masahiko Kimura	Super Nintendo	dx.rsn
-	Earth Light	Tomotsune Maeno	Super Nintendo	earl.rsn
-	Energy Breaker	Yukio Nakajima	Super Nintendo	eb.rsn
-	ESPN Baseball Tonight	Tristan Des Pres, Jeff Tveraas, John McMack	Super Nintendo	ebt.rsn
-	Estopolis Denki	Yasunori Shiono	Super Nintendo	ed.rsn
-	Lufia 2	Yasunori Shiono	Super Nintendo	ed2.rsn
-	Super E.D.F. (American)	Tsukasa Tawada, Yasuhiko "Zep" Takashiba	Super Nintendo	edf.rsn
-	Edo no Kiba	Takaharu Umezu	Super Nintendo	edk.rsn
-	Exhaust Heat	Masanao Akahori, Opus Corp.	Super Nintendo	eh.rsn
-	Exhaust Heat 2	Masanao Akahori, H. Nakayama	Super Nintendo	eh2.rsn
-	ESPN National Hockey Night	Rex Baca, Joe Hight	Super Nintendo	ehn.rsn
-	Sangokushi Eiketsu Den	Akinaga Yoshida	Super Nintendo	eikt.rsn
-	Elfaria	Shigeaki Saegusa	Super Nintendo	elf.rsn
-	Elfaria 2	Yukihide Takekawa	Super Nintendo	elf2.rsn
-	Emerald Dragon	Hirohiko Fukuda	Super Nintendo	emd.rsn
-	Eien no Filena	Hideaki Kumagai	Super Nintendo	enf.rsn
-	Eye of the Beholder	Capcom Sound Team	Super Nintendo	eotb.rsn
-	Equinox	Geoff & Tim Follin	Super Nintendo	eq.rsn
-	Elite Soccer	Allister Brimble, Kenji Ikeda	Super Nintendo	esc.rsn
-	Emmitt Smith Football	Dan Canary	Super Nintendo	esf.rsn
-	ESPN Sunday Night NFL	Jim Wallace, Steve Melillo	Super Nintendo	espns.rsn
-	Esparks: Ijikuu kara no Raihousha	Takeaki Sugimoto	Super Nintendo	esprk.rsn
-	ESPN Speedworld	Rex Baca, Joe Hight	Super Nintendo	espw.rsn
-	Estpolis Denki 2 Prototype	Yasunori Shiono	Super Nintendo	est2p.rsn
-	EEK! The Cat	Barry Leitch, Dean Evans	Super Nintendo	etc.rsn
-	Eurit	Paul Ruskay	Super Nintendo	eurit.rsn
-	E.V.O.: Search for Eden	Koichi Sugiyama	Super Nintendo	evo.rsn
+	Drift King Shutokou Battle 2		Super Nintendo	sbr2.rsn
+	Dual Orb 2	Nobuyuki Hara, Yu Yoshida	Super Nintendo	do2.rsn
+	Dual Orb: Seireiju Densetsu	Lucky-7	Super Nintendo	do.rsn
+	Dun Quest: Majin Fuuin no Densetsu	Kazuo Sawa	Super Nintendo	dunq.rsn
+	Dungeon Master	Tsukasa Tawada, Hikoshi Hashim	Super Nintendo	dm.rsn
+	Dynamaite: The LasVegas	N. Miyauchi	Super Nintendo	dtlv.rsn
+	Dynami Tracer	Nobuo Uematsu	Super Nintendo	dt.rsn
+	Earth Defense Force	Tsukasa Tawada, Yasuhiko Takas	Super Nintendo	edf.rsn
+	Earth Light: Anime-tic Space War Game	Tomotsune Maeno	Super Nintendo	earl.rsn
+	Earthbound	Keiichi Suzuki, Hirokazu Tanak	Super Nintendo	mo2.rsn
 	Earthworm Jim	Mark Miller	Super Nintendo	ewj.rsn
 	Earthworm Jim 2	Tommy Tallarico	Super Nintendo	ewj2.rsn
+	Edo no Kiba	Takaharu Umezu	Super Nintendo	edk.rsn
+	Eek! The Cat	Barry Leitch, Dean Evans	Super Nintendo	etc.rsn
+	Eien no Filena	Hideaki Kumagai	Super Nintendo	enf.rsn
+	Elfaria 2: The Quest of the Meld	Yukihide Takekawa	Super Nintendo	elf2.rsn
+	Elfaria: A Fantastic Theater	Shigeaki Saegusa	Super Nintendo	elf.rsn
+	Elite Soccer	Allister Morten Brimble, Kenji	Super Nintendo	esc.rsn
+	Emerald Dragon	Hirohiko Fukuda	Super Nintendo	emd.rsn
+	Emmitt Smith Football	Dan Canary	Super Nintendo	esf.rsn
+	Energy Breaker	Yukio Nakajima, Yasunori Shion	Super Nintendo	eb.rsn
+	Equinox	Tim Follin, Geoff Follin	Super Nintendo	eq.rsn
+	Eric Cantona Football Challenge	Daevid Peel, Phil Tootill, Ian	Super Nintendo	strkr.rsn
+	Esparks: Ijikuu kara no Raihousha	Takeaki Sugimoto	Super Nintendo	esprk.rsn
+	ESPN Baseball Tonight	Tristan Des Pres, Jeff Tveraas	Super Nintendo	ebt.rsn
+	ESPN National Hockey Night	Rex Baca, Joe Hight	Super Nintendo	ehn.rsn
+	ESPN Speed World	Rex Baca, Joe Hight	Super Nintendo	espw.rsn
+	ESPN Sunday Night NFL	Jim Wallace, Steve Melillo	Super Nintendo	espns.rsn
+	Estpolis Denki	Yasunori Shiono, Aki Zaitsu, N	Super Nintendo	ed.rsn
+	Estpolis Denki 2	Yasunori Shiono	Super Nintendo	ed2.rsn
+	Estpolis Denki 2 Prototype	Yasunori Shiono	Super Nintendo	est2p.rsn
+	Eurit	Paul Ruskay	Super Nintendo	eurit.rsn
+	Euro Football Champ	Ishi Babio, Norihiro Furukawa,	Super Nintendo	ssc.rsn
+	Europa Sensen	Yuji Ohno	Super Nintendo	oeptv.rsn
+	Excitebike Bun Bun Mario Battle Stadium 1	Yuichi Ozaki	Super Nintendo	smeb.rsn
+	Exhaust Heat	Masanao Akahori, Opus Corp.	Super Nintendo	eh.rsn
+	Exhaust Heat 2: F1 Driver he no Kiseki	Masanao Akahori, H. Nakayama	Super Nintendo	eh2.rsn
+	Extra Innings	Tetsuya Furumoto, Katsunori Uj	Super Nintendo	hpgl.rsn
 	F-1 Grand Prix	Naoki Itamura	Super Nintendo	f1gp.rsn
-	F-1 Grand Prix Part II	Video System Sound Team	Super Nintendo	f1gp2.rsn
-	F-1 Grand Prix Part III	Video System Sound Team	Super Nintendo	f1gp3.rsn
+	F-1 Grand Prix Part II		Super Nintendo	f1gp2.rsn
+	F-1 Grand Prix Part III		Super Nintendo	f1gp3.rsn
+	F-Zero	Yumiko Kanki, Naoto Ishida	Super Nintendo	fz.rsn
+	F1 Pole Position	Team Help	Super Nintendo	hgp.rsn
+	F1 Pole Position 2	Kouji Niikura, Masamichi Yamaz	Super Nintendo	hgp2.rsn
 	F1 World Championship Edition	Andy Brock	Super Nintendo	f1wc.rsn
-	Gundam F-91	Norihiko Togashi	Super Nintendo	f91.rsn
-	FIFA Soccer '97	Mark Ortiz	Super Nintendo	f97gb.rsn
-	FIFA Soccer '98	Mark Ortiz	Super Nintendo	f98gb.rsn
+	Faceball 2000	George Alistair Sanger	Super Nintendo	fb.rsn
+	Famicom Tantei Club Part 2: Ushiro ni Tatsu Shoujo	Kenji Yamamoto	Super Nintendo	ftc2.rsn
 	Family Dog	Mark Van Hecke	Super Nintendo	famd.rsn
-	Faceball 2000	George Sanger	Super Nintendo	fb.rsn
-	Ren & Stimpy Show: Fire Dogs	Gwynn, Justin Scharvona, Martin Simpson	Super Nintendo	fdogs.rsn
-	Fight da Pon!	Iku Mizutani, Shinya Kurahashi, Kinuyo Yamashita	Super Nintendo	fdp.rsn
-	Fire Emblem 3	Yuka Tsujiyoko	Super Nintendo	fe3.rsn
-	Fire Emblem 4	Yuka Tsujiyoko	Super Nintendo	fe4.rsn
-	Tengai Makyo Zero	Toshiyuki Sasagawa, Kohei Tanaka	Super Nintendo	feoez.rsn
-	Fire Emblem Thracia 776	Yuka Tsujiyoko	Super Nintendo	fet.rsn
 	Family Feud	Mark Van Hecke, Jim Wallace	Super Nintendo	feud.rsn
-	Final Fantasy 4	Nobuo Uematsu	Super Nintendo	ff4.rsn
-	Final Fantasy 5	Nobuo Uematsu	Super Nintendo	ff5.rsn
-	Final Fantasy 6	Nobuo Uematsu	Super Nintendo	ff6.rsn
-	Final Fight	Toshio Kajino	Super Nintendo	ffi.rsn
-	Final Fight 2	Yasuaki Fujita, Mari Yamaguchi, Yuki Iwai, Setsuo Yamamoto, Yuko Takehara, Tatsuya Nishimura	Super Nintendo	ffi2.rsn
-	Final Fight 3	Katsunari Kitajima	Super Nintendo	ffi3.rsn
-	Frantic Flea	John Anguish	Super Nintendo	fflea.rsn
-	Final Fantasy USA: Mystic Quest	Ryuji Sasai	Super Nintendo	ffmq.rsn
-	Foreman For Real	Chris Jojo, Paul Tonge, Suddi Raval	Super Nintendo	ffr.rsn
-	Fatal Fury	Hiroshi Ebihara	Super Nintendo	ffu.rsn
-	Fatal Fury 2	Kennosuke Suemura, Hiroshi Ebihara	Super Nintendo	ffu2.rsn
-	Fatal Fury Special	Yasumasa Yamada	Super Nintendo	ffus.rsn
-	Future GPX: Cyber Formula	Junya Kozakai	Super Nintendo	fgpx.rsn
-	Fighter's History	Maro (Gamadelic), Z Yamanaka	Super Nintendo	fh.rsn
-	Fighter's History 2	Atomic Hanada (Gamadelic)	Super Nintendo	fh2.rsn
-	Flying Hero - Bugyuru no Daibouk	itsuhito Tanaka	Super Nintendo	fhbd.rsn
-	The Firemen	Hideto Maeda, Konomi Ito, Hironori Tanaka, Hiroyuki Naka	Super Nintendo	fir.rsn
-	Firearm	Tim Follin, Mike Follin	Super Nintendo	firea.rsn
-	The Flintstones	Keith Tinman, Jonathan Dunn	Super Nintendo	flint.rsn
-	Flashback	John Hancock, Jean Baudlot, Fabrice Visserot	Super Nintendo	fls.rsn
-	Front Mission	Yoko Shimomura	Super Nintendo	fm.rsn
-	Onita Atsushi FMW	Takeshi Yasuda	Super Nintendo	fmw.rsn
-	Fun 'N Games	Chip Burwell	Super Nintendo	fng.rsn
-	Football Fury	Megumi Maz-ura	Super Nintendo	footf.rsn
-	Super Fire Pro Wrestling X	Chiyomaru Shikura	Super Nintendo	fpwx.rsn
-	First Queen	Masaki Sasaki, Hiroshi Ootake	Super Nintendo	fq.rsn
-	Frogger	Majesco Sound Team	Super Nintendo	frgr.rsn
-	FrogNES	Francesco Stano	Super Nintendo	frog.rsn
-	First Samurai	Artrmis, Ica	Super Nintendo	frsa.rsn
 	Farland Story	Tomoo Kasahara, Music Worx	Super Nintendo	fs.rsn
-	Farland Story 2	Masataka Kitaura, Atsuyoshi Isemura, Rikei Hirashima, Music Worx	Super Nintendo	fs2.rsn
-	FIFA Soccer '96	Andy Brock, Andrew Barnabas, Robert Bailey	Super Nintendo	fs96.rsn
+	Farland Story 2	Masakata Kitaura, Atsuyoshi Is	Super Nintendo	fs2.rsn
+	Fatal Fury	Hiroshi Ebihara	Super Nintendo	ffu.rsn
+	Fatal Fury 2	Kennosuke Suemura, Hiroshi Ebi	Super Nintendo	ffu2.rsn
+	Fatal Fury Special	Yasumasa Yamada	Super Nintendo	ffus.rsn
+	Fever Pitch Soccer	John Hancock	Super Nintendo	hos.rsn
 	FIFA 97: Gold Edition	Chris Taylor	Super Nintendo	fs97.rsn
-	Fire Striker	Nori Atsumi	Super Nintendo	fsr.rsn
-	Finalset Tennis	K. Yamamoto	Super Nintendo	fst.rsn
+	FIFA Soccer '97	Mark Ortiz	Super Nintendo	f97gb.rsn
+	FIFA Soccer '98: Road to World Cup	Mark Ortiz	Super Nintendo	f98gb.rsn
+	FIFA Soccer 96	Andy Brock, Andrew Barnabas, R	Super Nintendo	fs96.rsn
+	Fighter's History	Maro, Z Yamanaka	Super Nintendo	fh.rsn
+	Fighter's History: Mizoguchi Kiki Ippatsu!!	Seiichi Hamada	Super Nintendo	fh2.rsn
+	Final Fantasy II	Nobuo Uematsu	Super Nintendo	ff4.rsn
+	Final Fantasy III	Nobuo Uematsu	Super Nintendo	ff6.rsn
+	Final Fantasy USA: Mystic Quest	Ryuji Sasai, Yasuhiro Kawakami	Super Nintendo	ffmq.rsn
+	Final Fantasy V	Nobuo Uematsu	Super Nintendo	ff5.rsn
+	Final Fight	Toshio Kajino	Super Nintendo	ffi.rsn
+	Final Fight 2	Yasuaki Fujita, Mari Yamaguchi	Super Nintendo	ffi2.rsn
+	Final Fight 3	Katsunari Kitajima	Super Nintendo	ffi3.rsn
 	Final Stretch	Masanao Akahori	Super Nintendo	fstr.rsn
-	Fighing To Basshing	Iku Mizutani, Kinuyo Yamashita, Shinya Kurahashi	Super Nintendo	ftb.rsn
-	Famicom Tantei Club 2	Kenji Yamamoto	Super Nintendo	ftc2.rsn
+	Finalset	K. Yamamoto	Super Nintendo	fst.rsn
+	Fire Emblem: Monshou no Nazo	Yuka Tsujiyoko	Super Nintendo	fe3.rsn
+	Fire Emblem: Seisen no Keifu	Yuka Tsujiyoko	Super Nintendo	fe4.rsn
+	Fire Emblem: Tracia 776	Yuka Tsujiyoko	Super Nintendo	fet.rsn
+	Fire Fighting	Takahiro Ogata, Saika Chan	Super Nintendo	igf.rsn
+	Firearm	Tim Follin	Super Nintendo	firea.rsn
+	Firemen	Hideto Maeda, Konomi Ito, Hiro	Super Nintendo	fir.rsn
+	Firepower 2000	David Whittaker	Super Nintendo	swiv.rsn
+	Firestriker	Nori Atsumi	Super Nintendo	fsr.rsn
 	Fireteam Rogue	Matt Berardo, Scott Shelley	Super Nintendo	ftm.rsn
-	Full Throttle Racing	Neil Biggin	Super Nintendo	ftr.rsn
-	From TV Animation Slam Dunk	Amayang	Super Nintendo	ftsd.rsn
-	From TV Animation Slam Dunk 2	Shigemitsu Goto, Sukezo Ouyama	Super Nintendo	ftsd2.rsn
-	From TV Animation Slam Dunk: SD Heat Up!	Shigemitsu Goto, Sukezo Ouyama	Super Nintendo	ftsdh.rsn
-	Flintstones: Treasure of Sierra Madrock	N. Furukawa, K. Suemura	Super Nintendo	ftsm.rsn
-	BS Furoito no Chousenjou	Akito Nakatsuka	Super Nintendo	furo.rsn
-	F-Zero	Yumiko Kanki	Super Nintendo	fz.rsn
-	Inspector Gadget	Kennosuke Suemura, Saori Kobayashi	Super Nintendo	gadg.rsn
-	Game Genie	Codemasters Sound Team	Super Nintendo	gage.rsn
-	Gamars Copier	Kaiser Electronics Sound Team	Super Nintendo	gam.rsn
-	Gamble Hourouki	VAP Sound Team	Super Nintendo	gambh.rsn
-	Great Battle 3	Norihiko Togashi	Super Nintendo	gb3.rsn
-	The Great Battle IV	Norihiko Togashi	Super Nintendo	gb4.rsn
-	The Great Battle V	Norihiko Togashi, Kennosuke Suemura	Super Nintendo	gb5.rsn
-	Great Battle Gaiden 2	Kajiya Project	Super Nintendo	gbg2.rsn
-	Gulliver Boy	Toyakazu Nagaishi, Eiji Hirasawa, Chieko Akiyama	Super Nintendo	gboy.rsn
-	Gokinjo Bouken Tai	Akihiko Mori	Super Nintendo	gbt.rsn
-	Ghost Chaser Densei	Noboru Yamane	Super Nintendo	gcd.rsn
-	Gradius 3	Kazuki Muraoka, Kazuhiko Uehara, Harumi Ueko, Yukie Morimoto	Super Nintendo	gd3.rsn
-	GD Leen	Yuu Ohyama, Toshimichi Isoe, Masakazu Anai, Hitoshi Sakimoto	Super Nintendo	gdl.rsn
-	Ganbare Daiku no Gensan	Rikei Hirashima	Super Nintendo	gdng.rsn
-	Ginga Eiyuu Densetsu	Michiharu Hasuya, Osamu Kasai, Junko Yokoyama, Kunihiro Someya	Super Nintendo	ged.rsn
-	BS Gekkan Coin Toss Deck	Akito Nakatsuka	Super Nintendo	gek.rsn
-	Genocide 2	Hideyuki Shimono, Naoyuki Kimura, BITS Soundteam	Super Nintendo	gen2.rsn
+	First Queen: Ornic Senki	Masaki Sasaki, Hiroshi Ootake	Super Nintendo	fq.rsn
+	First Samurai	Artrmis, Ica	Super Nintendo	frsa.rsn
+	Flashback	John Hancock, Jean Baudlot, Fa	Super Nintendo	fls.rsn
+	Flying Hero: Bugyuru no Daibouken	Mitsuhito Tanaka	Super Nintendo	fhbd.rsn
+	Football Fury	Megumi Maz-ura	Super Nintendo	footf.rsn
+	Foreman For Real	Chris Jojo, Paul Tonge, Suddi 	Super Nintendo	ffr.rsn
+	Frantic Flea	John Anguish	Super Nintendo	fflea.rsn
+	Frogger		Super Nintendo	frgr.rsn
+	FrogNES	Francesco Stano	Super Nintendo	frog.rsn
+	Front Mission	Noriko Matsueda, Yoko Shimomur	Super Nintendo	fm.rsn
+	Front Mission: Gun Hazard	Nobuo Uematsu, Yasunori Mitsud	Super Nintendo	gh.rsn
+	Full Power	Neil Biggin	Super Nintendo	ftr.rsn
+	Furoito no Chousenjou 1	Akito Nakatsuka	Super Nintendo	furo.rsn
+	G.O.D.: Mezameyo to Yobu Koe ha Kikoe	Demon Kogure, Kouichi Matsumot	Super Nintendo	god.rsn
+	Gaia Gensouki	Yasuhiro Kawasaki	Super Nintendo	iog.rsn
+	Gakkou de atta Kowai Hanashi	Yoko Watanabe	Super Nintendo	gkh.rsn
+	Gal Kan Bazooka Dai-5-Kan	Akito Nakatsuka	Super Nintendo	kan.rsn
+	Galaxy Robo	Don	Super Nintendo	grobo.rsn
+	Galaxy Wars		Super Nintendo	gw.rsn
+	Gamars Copier		Super Nintendo	gam.rsn
+	Gamble Hourouki		Super Nintendo	gambh.rsn
+	Gambler Jiko Chuushinha 2: Dorapon Quest	Tomoyuki Hamada	Super Nintendo	gjc2.rsn
+	Game Genie		Super Nintendo	gage.rsn
+	Gamera: Gyaos Gekimetsu Sakusen	Motoaki Takenouchi, ABS System	Super Nintendo	gggs.rsn
+	Gan Gan Ganchan	Minako Adachi	Super Nintendo	ggg.rsn
+	Ganbare Goemon 2: Kiteretsu Shougun Magginesu	Kazuhiko Uehara, Tomoya Tomita	Super Nintendo	gg2.rsn
+	Ganbare Goemon 3: Shishijyuurokubei no Karakuri Manji Katame	Kazuhiko Uehara, Yukie Morimot	Super Nintendo	gg3.rsn
+	Ganbare Goemon 4: Kirakira Douchuu: Boku ga Dancer ni Natta Riyuu	Kazuhiko Uehara, Yukie Morimot	Super Nintendo	gg4.rsn
+	Ganbare Goemon: Yukihime Kyushutsu Emaki	Kazuhiko Uehara, Harumi Ueko	Super Nintendo	gg.rsn
+	Ganbare! Daiku no Gensan	Rikei Hirashima	Super Nintendo	gdng.rsn
+	Ganso Pachinko Ou	Masahito Miyamoto, Mikio Ohno	Super Nintendo	gpo.rsn
+	Garry Kitchen's Super Battletank	Mark Van Hecke	Super Nintendo	sbtk.rsn
+	GD Leen	Yuu Ohyama, Toshimichi Isoe, M	Super Nintendo	gdl.rsn
+	GeGeGe no Kitaro: Fukkatsu!! Tenma Daiou	Tomoyuki Hamada, Kohiro Ito, K	Super Nintendo	gnk.rsn
+	Gekisou Sentai Car Rangers: Zenkai! Racer Senshi	Hiroyuki Iwatsuki, Haruo Ohash	Super Nintendo	car.rsn
+	Gekitotsu Dangan Jidousha Kessen Battle Mobile	Hiroki Kamata	Super Nintendo	btmb.rsn
+	Gemfire	Masumi Itou	Super Nintendo	srb.rsn
+	Genghis Khan II: Clan of the Gray Wolf	Michiru Ooshima	Super Nintendo	gk2.rsn
 	Genjuu Ryodan	Toshio Okamoto	Super Nintendo	genjr.rsn
+	Genocide 2	Hideyuki Shimono, Naoyuki Kimu	Super Nintendo	gen2.rsn
 	George Foreman's KO Boxing	Marshall Parker, Andrew Bailey	Super Nintendo	gfko.rsn
-	Ganbare Goemon	Kazuhiko Uehara, Harumi Ueko	Super Nintendo	gg.rsn
-	Ganbare Goemon 2	Kazuhiko Uehara, Tomoya Tomita, Nobuyuki Akena	Super Nintendo	gg2.rsn
-	Ganbare Goemon 3	Kazuhiko Uehara, Yukie Morimoto, Noriko Takahashi, Jun Funahashi, Tomoya Tomita, Nobuyuki Akena	Super Nintendo	gg3.rsn
-	Ganbare Goemon 4	Kazuhiko Uehara, Yukie Morimoto, Tomoya Tomita	Super Nintendo	gg4.rsn
+	Getsumen no Anubis	Noboru Iwata, Hiroshi Fujioka,	Super Nintendo	gna.rsn
+	Ghost Chaser Densei	Noboru Yamane	Super Nintendo	gcd.rsn
+	Ghost Sweeper Mikami: Joreishi wa Nice Body	Kinuyo Yamashita, Hiroyuki Iwa	Super Nintendo	gsm.rsn
+	Ghoul Patrol	Eric Swanson, David Warhol	Super Nintendo	ghoul.rsn
+	Ginga Eiyuu Densetsu	Michiharu Hasuya, Osamu Kasai,	Super Nintendo	ged.rsn
+	Ginga Sengoku Gunyuuden Rai	Takane Okubo	Super Nintendo	gsgr.rsn
+	Gionbana	Kenji Yoshida, Ministry	Super Nintendo	gion.rsn
 	Go Go Ackman	Kajima Shitamachi	Super Nintendo	gga.rsn
 	Go Go Ackman 2	K'Mixa	Super Nintendo	gga2.rsn
 	Go Go Ackman 3	K'Mixa	Super Nintendo	gga3.rsn
 	Go! Go! Dodge League	Gappy, Masakatsu Maekawa	Super Nintendo	ggdl.rsn
-	Gan Gan Ganchan	Minako Adachi	Super Nintendo	ggg.rsn
-	Gamera: Gyaosu Gekimetsu Sakusen	Motoaki Takenouchi, ABS Systems	Super Nintendo	gggs.rsn
-	Front Mission: Gun Hazard	Nobuo Uematsu	Super Nintendo	gh.rsn
-	Granhistoria	Motoki Takenouchi	Super Nintendo	ghis.rsn
-	Ghoul Patrol	Eric Swanson, Dave Warhol	Super Nintendo	ghoul.rsn
-	Gionbana	Kenji Yoshida, Ministry	Super Nintendo	gion.rsn
-	Gambler Jiko Chuushinha 2: Dorapon Quest	Tomoyuki Hamada	Super Nintendo	gjc2.rsn
-	Super Aoki Ookami to Shiroki Mejika: Genchou Hishi	Michiru Ooshima	Super Nintendo	gk2.rsn
-	Godzilla: Kaijuu Daikessen	PiPo Morinaga, Takuya Yasuda, Yuji Yoshikawa	Super Nintendo	gkd.rsn
-	Gakko de atta Kowai Hanashi	Yoko Watanabe	Super Nintendo	gkh.rsn
-	Getsumen no Anubis	Noboru Iwata, Hiroshi Fujioka, Hiroshi Iizuka, Yoshiaki Kubotera, Hiroaki Shibata, Kaori Ohshima	Super Nintendo	gna.rsn
-	Gegege no Kitaro	Tomoyuki Hamada, Kohiro Ito, Kunihiro Komatsu	Super Nintendo	gnk.rsn
-	Gunple: Gunman's Proof	ASCII sound team	Super Nintendo	gnpl.rsn
-	G.O.D. 	Demon Kogure, Kouichi Matsumoto, Haruo Yasuba	Super Nintendo	god.rsn
+	Goal!	CMS Takeshi	Super Nintendo	sgoal.rsn
 	Gods	John Foxx, David Whittaker	Super Nintendo	gods.rsn
-	Gokujyo Parodius	Keroppi Inoue, Nobuyuki Akena	Super Nintendo	gp.rsn
-	GP-1	Atlus Sound Team	Super Nintendo	gp1.rsn
-	GP-1 Part II	Takane Okubo, Mimura Kazunari	Super Nintendo	gp1p2.rsn
-	BS Goods Press 7	Akito Nakatsuka	Super Nintendo	gpgg7.rsn
-	BS Goods Press 3	Akito Nakatsuka	Super Nintendo	gpggs.rsn
-	Ganso Pachinko Ou	Masahito Miyamoto, Mikio Ohno	Super Nintendo	gpo.rsn
-	Galaxy Robo	Don	Super Nintendo	grobo.rsn
-	Shinzui Taikyoku Igo Go Sennin	Toyakazu Nagaishi	Super Nintendo	gs.rsn
+	Godzilla: Kaijuu Daikessen	PiPo Morinaga, Takuya Yasuda, 	Super Nintendo	gkd.rsn
+	Gokinjo Bouken Tai	Akihiko Mori	Super Nintendo	gbt.rsn
+	Gokujou Parodius	Keroppi Inoue, Nobuyuki Akena	Super Nintendo	gp.rsn
+	Golf Daisuki! O.B. Club		Super Nintendo	obg.rsn
+	Goods Press Gatsu Gou 3	Akito Nakatsuka	Super Nintendo	gpggs.rsn
+	Goods Press Gatsu Gou 7	Akito Nakatsuka	Super Nintendo	gpgg7.rsn
+	Goof Troop	Yuki Iwai	Super Nintendo	gt.rsn
+	Gouketuji Ichizoko	Hidehito Aoki, Misaki Okibe	Super Nintendo	pi.rsn
 	Gourmet Sentai Bara Yarou	Ogawa Ikko	Super Nintendo	gsby.rsn
-	Ginga Sengoku Gunyuuden Rai	Takane Okubo	Super Nintendo	gsgr.rsn
-	Ghost Sweeper Mikami: Gokuraku Daisakusen	inuyo Yamashita, Hiroyuki Iwats	Super Nintendo	gsm.rsn
-	Goof Troop	Yuki Satomura	Super Nintendo	gt.rsn
-	GT Racing	Lenar Sound Team	Super Nintendo	gtr.rsn
+	Gousou Shinrai Densetsu: Musya	Kiyoko Asukawa	Super Nintendo	musya.rsn
+	GP-1		Super Nintendo	gp1.rsn
+	GP-1 Part II	Takane Okubo, Mimura Kazunari	Super Nintendo	gp1p2.rsn
+	Gradius III	Kazuki Muraoka, Kazuhiko Uehar	Super Nintendo	gd3.rsn
+	Granhistoria: Genshi Sekaiki	Motoaki Takenouchi	Super Nintendo	ghis.rsn
+	Great Battle 2: Last Fighter Twin	Norihiko Togashi	Super Nintendo	lft.rsn
+	Great Battle 3	Norihiko Togashi	Super Nintendo	gb3.rsn
+	Great Battle 5	Norihiko Togashi, Kennosuke Su	Super Nintendo	gb5.rsn
+	Great Battle Gaiden 2: Matsuri da Wasshoi	Kajiya Project	Super Nintendo	gbg2.rsn
+	GT Racing		Super Nintendo	gtr.rsn
 	Gun Force	Martin Simpson	Super Nintendo	gunf.rsn
-	Nickelodeon GUTS	Brian Schmidt	Super Nintendo	guts.rsn
-	Galaxy Wars	Imagineer Sound Team	Super Nintendo	gw.rsn
-	Gundam Wing: Endless Duel	Hiroyuki Iwatsuki, Haruo Ohashi	Super Nintendo	gwed.rsn
-	Hisshou 777 Fighter	Tenpei Sato	Super Nintendo	h7f.rsn
-	Hisshou 777 Fighter II	Tenpei Sato	Super Nintendo	h7f2.rsn
-	Hisshou 777 Fighter III	Tenpei Sato, Tatsuya Sato	Super Nintendo	h7f3.rsn
-	Home Alone	Mark van Hecke	Super Nintendo	ha.rsn
-	Home Alone 2	Mark Van Hecke	Super Nintendo	ha2.rsn
-	Hagane	Takahito Abe	Super Nintendo	hag.rsn
-	Hanjuku Hero	Koichi Sugiyama	Super Nintendo	hahe.rsn
-	Hajimari no Mori	Kenji Yamamoto, Kozue Ishikawa	Super Nintendo	haji.rsn
-	Harapeko Bakka	Toshiyuki Takine	Super Nintendo	hb.rsn
-	Hardball 3	Alistair Hirst, Judd Skinner	Super Nintendo	hb3.rsn
-	Hanna Barbera's Turbo Toons	Richard Horrocks	Super Nintendo	hbtt.rsn
-	Hiouden	Motoi Sakuraba, Shinji Tamura, Hiroya Hatsushiba	Super Nintendo	hdn.rsn
-	Heracles no Eikou III	Atomic Hanada, Seiji Momoi, N'gja Miura	Super Nintendo	he3.rsn
-	Heracles no Eikou IV	Shogo Sakai, Atomic Hanada, Koremasa, Emi Shimizu, Seilah, Z Yamanaka, N'gja Miura, Seiji Momoi	Super Nintendo	he4.rsn
-	Hercules	Alan Menken, David Zippel, Mark Ortiz	Super Nintendo	herc.rsn
-	Hanafuda	Masato Miyamoto	Super Nintendo	hf.rsn
-	Hanafuda Ou	Masahito Miyamoto	Super Nintendo	hfo.rsn
-	Hourai Gakuen no Bouken	Hitoshi Sakimoto	Super Nintendo	hgb.rsn
-	Human Grand Prix	Team Help	Super Nintendo	hgp.rsn
-	Human Grand Prix 2	Kouji Niikura, Masamichi Yamazaki	Super Nintendo	hgp2.rsn
-	Human Grand Prix 3	Takamitsu Kajikawa	Super Nintendo	hgp3.rsn
-	Human Grand Prix 4	Yukie Sugawara	Super Nintendo	hgp4.rsn
-	Heisei Gunjin Shougi	Yoshiaki Hirasawa	Super Nintendo	hgs.rsn
-	Harley's Humongous Adventure	Brian Schmidt	Super Nintendo	hha.rsn
-	Heian Huunden	Shinya Kurahashi, Kinuyo Yamashita, Iku Mizutani	Super Nintendo	hhu.rsn
-	Honkakuha Igo: Gosei	T. Hagiwara	Super Nintendo	higo.rsn
-	Home Improvement	Jim Wallace, Steve Melillo	Super Nintendo	himp.rsn
-	Hokuto no Ken 5	J-Walk, Mitsuyasu Tomohisa	Super Nintendo	hk5.rsn
-	Hokuto no Ken 6	Shouei System Sound Team	Super Nintendo	hk6.rsn
-	Hokuto no Ken 7	Mitsuyasu Tomohisa	Super Nintendo	hk7.rsn
-	Hong Kong 97	Surapon	Super Nintendo	hk97.rsn
-	Hiryu no Ken S: Golden Fighter	Eiji Miyabi	Super Nintendo	hkgf.rsn
-	Honkaku Mahjong Tetsuman	Syscom Sound Team	Super Nintendo	hmat.rsn
+	Gunple: Strange World Gunman's Proof		Super Nintendo	gnpl.rsn
 	Habu Meijin no Omoshiro Shougi	Cube	Super Nintendo	hmos.rsn
+	Hagane	Takahito Abe	Super Nintendo	hag.rsn
 	Haisei Mahjong Ryouga	Nobuyuki Shioda	Super Nintendo	hmr.rsn
-	Hunchback of Notre Dame	Tiertex Sound Team	Super Nintendo	hnd.rsn
-	Dodge Danpei	Katsuhiro Hayashi	Super Nintendo	hndd.rsn
-	Hayazashi Nidan - Morita Shogi	Michio Miyagi	Super Nintendo	hnms.rsn
-	Hebereke no Popun	Noriaki Urata, Kazuo Nii, Hiroshi Tsukamoto	Super Nintendo	hnp.rsn
-	Hook	Leslie Bricusse, John Williams, Tetsuya Furumoto, Katsunori Ujiie	Super Nintendo	hook.rsn
-	Hebereke no Oishii Puzzle wa Irimasekna	Hiroshi Tsukamoto, Jun Enoki, Op	Super Nintendo	hopi.rsn
-	Head-On Soccer	Jonh Hancock	Super Nintendo	hos.rsn
-	Hakunetsu Pro Yakyuu '93: Ganba League	Tetsuya Furumoto, Katsunori Ujii	Super Nintendo	hp93.rsn
-	Hakunetsu Pro Yakyuu '94: Ganba League 3	Tetsuya Furumoto, Takafumi Fujis	Super Nintendo	hp94.rsn
-	Hakunetsu Pro Yakyuu: Ganba League	Tetsuya Furumoto, Katsunori Ujii	Super Nintendo	hpgl.rsn
-	Hunt for Red October	John Spence	Super Nintendo	hro.rsn
-	Hero Senki	Shinichi Tanaka, Noboru Yamane	Super Nintendo	hs.rsn
-	Honkaku Shougi Fuuunji Ryuuou	Aisystem Tokyo Sound Team	Super Nintendo	hsfr.rsn
+	Hajimari no Mori	Kenji Yamamoto, Kozue Ishikawa	Super Nintendo	haji.rsn
+	Hakunetsu Professional Baseball '94: Ganba League 3	Tetsuya Furumoto, Takafumi Fuj	Super Nintendo	hp94.rsn
+	Hakunetsu Professional Baseball: Ganba League '93	Tetsuya Furumoto, Katsunori Uj	Super Nintendo	hp93.rsn
+	HAL's Hole in One Golf	Hirokazu Ando	Super Nintendo	joho.rsn
+	Hamelin no Violin Hiki	Yoshiyuki Mori	Super Nintendo	voh.rsn
+	Hanafuda Ou	Masahito Miyamoto	Super Nintendo	hfo.rsn
+	Hanjuku Hero: Aah, Sekai yo Hanjuku Nare...!!	Koichi Sugiyama	Super Nintendo	hahe.rsn
+	Hanna Barbera's Turbo Toons	Richard Horrocks	Super Nintendo	hbtt.rsn
+	Hansei Zaru Jiro-kun no Daibouken	Kyohei Sada, Inata, Ootera, To	Super Nintendo	hzkd.rsn
+	Harapeko Bakka	Toshiyuki Takine	Super Nintendo	hb.rsn
+	Hardball III	Alistair Hirst, Judd Skinner	Super Nintendo	hb3.rsn
+	Harley's Humongous Adventure	Brian Schmidt	Super Nintendo	hha.rsn
 	Hashire Hebereke	Atsushi Mihiro, Mutech	Super Nintendo	hsh.rsn
-	Hurricanes Trainer	Radium	Super Nintendo	ht.rsn
-	Hat Trick Hero 2	ukio Nakajima	Super Nintendo	hth2.rsn
+	Hat Trick Hero 2	Yukio Nakajima	Super Nintendo	hth2.rsn
+	Hayazashi Nidan: Morita Shogi		Super Nintendo	hnms.rsn
+	Hebereke no Oishii Puzzle wa Irimasen ka	Hiroshi Tsukamoto, Jun Enoki, 	Super Nintendo	hopi.rsn
+	Hebereke no Popun	Noriaki Urata, Kazuo Nii, Hiro	Super Nintendo	hnp.rsn
+	Hebereke's Popoitto		Super Nintendo	pph.rsn
+	Heian Huunden	Shinya Kurahashi, Kinuyo Yamas	Super Nintendo	hhu.rsn
+	Heisei Gunjin Shogi	Yoshiaki Hirasawa	Super Nintendo	hgs.rsn
+	Heisei Inu Monogatari Bow: Pop'n Smash!!	Norihiko Togashi	Super Nintendo	pns.rsn
+	Heisei Shin Onigashima Kouhen	Yuichi Ozaki, Akito Nakatsuka	Super Nintendo	son.rsn
+	Heiwa Parlor! Mini 8 Pachinko Jikki Simulation	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pms.rsn
+	Hello! Pac-Man	Fuken Tajima, Hasson's Family	Super Nintendo	pacm2.rsn
+	Herakles no Eikou 3: Kamigami no Tinmoku	Seiichi Hamada, Seiji Momoi, N	Super Nintendo	he3.rsn
+	Herakles no Eikou 4: Kamigami kara no Okurimono	Shogo Sakai, Seiichi Hamada, K	Super Nintendo	he4.rsn
+	Hercules	Alan Menkin, David Zippel, Mar	Super Nintendo	herc.rsn
+	Hero Senki: Project Olympus	Shinichi Tanaka, Noboru Yamane	Super Nintendo	hs.rsn
+	Hi no Ouji: Yamato Takeru	Tomoyuki Hamada	Super Nintendo	ytak.rsn
+	Hiouden: Mamono-tachi to no Chikai	Motoi Sakuraba, Shinji Tamura,	Super Nintendo	hdn.rsn
+	Hiryu no Ken S: Golden Fighter	Eiji Miyabi	Super Nintendo	hkgf.rsn
+	Hisshou 777 Fighter II: Pachi Slot Hi Jouhou	Tenpei Sato	Super Nintendo	h7f2.rsn
+	Hisshou 777 Fighter III: Kokuryuuou no Fukkatsu	Tenpei Sato, Tatsuya Sato	Super Nintendo	h7f3.rsn
+	Hisshou 777 Fighter: Pachi Slot Ryuuguu Densetsu	Tenpei Sato	Super Nintendo	h7f.rsn
 	Hit the Ice	Tono	Super Nintendo	hti.rsn
-	Holy Umbrella	Hisashi Matsushita	Super Nintendo	hu.rsn
-	The Incredible Hulk	Steve Collett	Super Nintendo	hulk.rsn
-	Humans	GameTek Sound Team	Super Nintendo	human.rsn
+	Hokuto no Ken 5: Tenma Ryuuseiden: Ai Zesshou	J-Walk, Mitsuyasu Tomohisa	Super Nintendo	hk5.rsn
+	Hokuto no Ken 6: Gekitou Denshouken: Haou heno Michi		Super Nintendo	hk6.rsn
+	Hokuto no Ken 7: Seiken Retsuden: Denshousha heno Michi	Mitsuyasu Tomohisa	Super Nintendo	hk7.rsn
+	Holy Umbrella: Dondera no Mubou!!	Hisashi Matsushita	Super Nintendo	hu.rsn
+	Home Alone	Mark Van Hecke, John Williams	Super Nintendo	ha.rsn
+	Home Alone 2: Lost in New York	Mark Van Hecke	Super Nintendo	ha2.rsn
+	Home Improvement	Dan Foliart, Jim Wallace, Stev	Super Nintendo	himp.rsn
+	Hong Kong 97	Surapon	Super Nintendo	hk97.rsn
+	Honkaku Mahjong Tetsuman		Super Nintendo	hmat.rsn
+	Honkaku Shougi: Fuuunji Ryuuou		Super Nintendo	hsfr.rsn
+	Honkakuha Igo: Gosei	T. Hagiwara	Super Nintendo	higo.rsn
+	Honkakuha Taikyoku Shougi: Shougi Club		Super Nintendo	shgc.rsn
+	Honke Hanafuda	Masato Miyamoto	Super Nintendo	hf.rsn
+	Honoo no Toukyuuji: Dodge Danpei	Katsuhiro Hayashi	Super Nintendo	hndd.rsn
+	Hook	Tetsuya Furumoto, Katsunori Uj	Super Nintendo	hook.rsn
+	Hoshi no Kirby 3	Jun Ishikawa	Super Nintendo	kdl3.rsn
+	Hoshi no Kirby Super Deluxe	Jun Ishikawa, Dan Miyakawa	Super Nintendo	kss.rsn
+	Hourai Gakuen no Bouken!: Tenkousei Scramble	Hitoshi Sakimoto	Super Nintendo	hgb.rsn
+	Human Grand Prix 3: F-1 Triple Battle	Takamitsu Kajikawa	Super Nintendo	hgp3.rsn
+	Human Grand Prix 4: F-1 Dream Battle	Yukie Sugawara	Super Nintendo	hgp4.rsn
+	Humans		Super Nintendo	human.rsn
+	Hunchback of Notre Dame		Super Nintendo	hnd.rsn
 	Hurricanes	Andy Brock	Super Nintendo	hurr.rsn
-	Super Volley II	Video System Sound Team	Super Nintendo	hvbsv.rsn
-	Hyper Iria	Kiyotaka Sato, Shintaro Hirakawa, Nobuhiro Makino	Super Nintendo	hyir.rsn
-	Hysteria	Saverio Russo	Super Nintendo	hyst.rsn
-	Hansei Zarujirou Kun no Daibouken	Kyohei Sada, Inata, Ootera, Toyo	Super Nintendo	hzkd.rsn
+	Hurricanes Trainer	Radium	Super Nintendo	ht.rsn
+	Hyper Iria	Kiyotaka Sato, Shintaro Hiraka	Super Nintendo	hyir.rsn
+	Hyper V-Ball		Super Nintendo	hvbsv.rsn
 	Hyper Zone	Jun Ishikawa	Super Nintendo	hzone.rsn
-	Iron Commando	Carlo Perconti	Super Nintendo	icom.rsn
-	Idea no Hi	Mitsuyasu Tomohisa, Masahiro Kusunoki	Super Nintendo	idea.rsn
-	Ignition Factor	Takahiro Ogata, Saika Chan	Super Nintendo	igf.rsn
-	Igo Club	Hect Sound Team	Super Nintendo	igoc.rsn
-	Itou Hatasu Rokudan no Shougi Dojo	Toshiyuki Takine	Super Nintendo	ihrsd.rsn
-	Indiana Jones' Greatest Adventures	Rudolf Stember, John Williams	Super Nintendo	ijga.rsn
-	Ihatovo Monogatari	Tsukasa Tawada	Super Nintendo	im.rsn
-	Imperium	Tenpei Satou, Tatsuya Sato, Hiroki Uematsu	Super Nintendo	imp.rsn
-	Incantation	Titus Sound Team	Super Nintendo	inca.rsn
-	Inindo	Hiori Wakakuwa	Super Nintendo	ini.rsn
+	Hysteria		Super Nintendo	hyst.rsn
+	Idea no Hi	Mitsuyasu Tomohisa, Masahiro K	Super Nintendo	idea.rsn
+	Igo Club		Super Nintendo	igoc.rsn
+	Ihatov Monogatari	Tsukasa Tawada	Super Nintendo	im.rsn
+	Ikari no Yousai	Yasuyuki Suzuki	Super Nintendo	olb.rsn
 	Illvanian no Shiro	A. Suda	Super Nintendo	ins.rsn
-	Illusion of Gaia	Yasuhiro Kawasaki	Super Nintendo	iog.rsn
-	Ippatsu Gyakuten: Keiba Keirin Kyoutei	Masahito Miyamoto, OeRSTED	Super Nintendo	ipgt.rsn
-	Itadaki Street 2	Kyohei Tsutsumi	Super Nintendo	is2.rsn
-	Inazuma Serve da!!	Kyohei Sada, Akiko Goto, Pure Sound	Super Nintendo	isbv.rsn
-	Itchy and Scratchy Game	Shahid Ahmad	Super Nintendo	isg.rsn
+	Imperium	Tenpei Sato, Tatsuya Sato, Hir	Super Nintendo	imp.rsn
+	Inazuma Serve da!! Super Beach Volley	Kyohei Sada, Akiko Goto, Pure 	Super Nintendo	isbv.rsn
+	Incantation		Super Nintendo	inca.rsn
+	Indiana Jones' Greatest Adventures	Rudolf Stember, John Williams	Super Nintendo	ijga.rsn
+	Inindo: Way of the Ninja	Hiori Wakakuwa	Super Nintendo	ini.rsn
+	Inspector Gadget	Kennosuke Suemura, Saori Kobay	Super Nintendo	gadg.rsn
 	International Superstar Soccer	Harumi Ueko, Hideyuki Eto	Super Nintendo	iss.rsn
-	International Superstar Soccer Deluxe	Hideyuki Eto, Harumi Ueko, Tomoy	Super Nintendo	issdx.rsn
+	International Superstar Soccer Deluxe	Hideyuki Eto, Harumi Ueko, Tom	Super Nintendo	issdx.rsn
 	International Tennis Tour	Michel Winogradoff	Super Nintendo	itt.rsn
+	Ippatsu Gyakuten: Keiba Keirin Kyoutei	Masahito Miyamoto, OeRSTED	Super Nintendo	ipgt.rsn
+	Iron Commando	Carlo Perconti	Super Nintendo	icom.rsn
+	Itadaki Street 2: Neon Sign ha Bara Iro ni	Kyohei Tsutsumi, Takane Okubo,	Super Nintendo	is2.rsn
+	Itchy and Scratchy Game	Shahid Ahmad	Super Nintendo	isg.rsn
+	Itou Hatasu Rokudan no Shougi Doujou	Toshiyuki Takine	Super Nintendo	ihrsd.rsn
 	Izzy's Quest for the Olympic Rings	Devin Hurd	Super Nintendo	izzy.rsn
-	Jammit	Dominique Wildiez, Dwight Stone	Super Nintendo	jamit.rsn
-	The Jungle Book	Tommy Tallarico, Joey Kuras, Mark Miller, Donald S. Griffin, Dr. Stephen Clarke-Willson, Richard M. Sherman, Robert B. Sherman, Terry Gilkyson	Super Nintendo	jbook.rsn
+	J-League Super Soccer	Andy Brock	Super Nintendo	jlss.rsn
+	J.League Excite Stage '95	Triad	Super Nintendo	jle95.rsn
+	J.League Soccer Prime Goal	Kouji Nakagawa	Super Nintendo	jlpg.rsn
+	J.League Soccer Prime Goal 2	Kouji Nakagawa	Super Nintendo	jlpg2.rsn
+	J.League Super Soccer '95	Masaaki Nishizawa, Eisaku Nanb	Super Nintendo	jls95.rsn
+	Jack Nicklaus Golf		Super Nintendo	jng.rsn
+	Jaleco Rally Big Run: The Supreme 4WD Challenge		Super Nintendo	jbrr.rsn
+	James Pond 3: Operation Starfish	Richard Joseph, Graham King	Super Nintendo	sjp3.rsn
+	James Pond's Crazy Sports	Richard Joseph	Super Nintendo	aqua.rsn
+	Jammes	Tsukasa Masuko	Super Nintendo	jms.rsn
+	Jammit	Dominique Wildiez, Dwight Ston	Super Nintendo	jamit.rsn
+	Janyuuki Gokuu Randa	T. Hagiwara	Super Nintendo	jgk.rsn
 	Jelly Boy	Steve Collett, Nick Stroud	Super Nintendo	jboy.rsn
 	Jelly Boy 2	Yoshinori Sunahara	Super Nintendo	jboy2.rsn
-	Jaleco Rally Big Run: The Supreme 4WD Challenge	Jaleco Sound Team	Super Nintendo	jbrr.rsn
-	Jaki Crush	Naxat Soft Sound Team	Super Nintendo	jc.rsn
+	Jeopardy!	Mark Van Hecke	Super Nintendo	jeop.rsn
+	Jerry Boy	Hirohiko Fukuda, Manabu Saito,	Super Nintendo	jerry.rsn
+	Jetsons: Invasion of the Planet Pirates	Hideki Takahagi, Mitsuhito Tan	Super Nintendo	jets.rsn
+	Jigsaw Party	Nobuyuki	Super Nintendo	piece.rsn
+	Jikkyou Oshaberi Parodius: Forever with Me	Kazuhiko Uehara, Masanari Iwat	Super Nintendo	jop.rsn
+	Jikkyou Powerful Pro Yakyuu '94	Masahiro Ikariko, Hideto Inoue	Super Nintendo	pow94.rsn
+	Jikkyou Powerful Pro Yakyuu 3		Super Nintendo	jppy3.rsn
+	Jim Lee's Wild C.A.T.S.: Covert Action Teams	Tommy Tallarico	Super Nintendo	jlwc.rsn
+	Jim Power: The Lost Dimension in 3D	Chris HÃ¼lsbeck	Super Nintendo	jmpwr.rsn
 	Jimmy Connors Pro Tennis Tour	Roger Goede	Super Nintendo	jcptt.rsn
-	Judge Dredd	Andy Brock	Super Nintendo	jd.rsn
-	Jeopardy!	Gametek Sound Team	Super Nintendo	jeop.rsn
-	Jerry Boy	Hirohiko Fukuda, Manabu Saito, Akira Yamaoka	Super Nintendo	jerry.rsn
-	Jetsons: Invasion of the Planet Pirates	Hideki Takahagi, Mitsuhito Tanak	Super Nintendo	jets.rsn
-	Janyuuki Gokuu Randa	T. Hagiwara	Super Nintendo	jgk.rsn
-	Jissen Kyotei	Masahito Miyamoto, Kiyohiro Sada, Minako Adachi	Super Nintendo	jkyo.rsn
-	J League Excite Stage '94	Tomoko Matsushima	Super Nintendo	jle94.rsn
-	J-League Excite Stage '95	Triad	Super Nintendo	jle95.rsn
-	J-League Soccer Prime Goal	Kouji Nakagawa	Super Nintendo	jlpg.rsn
-	J-League Soccer Prime Goal 2	Kouji Nakagawa	Super Nintendo	jlpg2.rsn
-	J-League Soccer Prime Goal 3	Eriko Imura	Super Nintendo	jlpg3.rsn
-	J-League Super Soccer '95	Masaaki Nishizawa, Eisaku Nanbu, Kennosuke Suemura	Super Nintendo	jls95.rsn
-	J-League Super Soccer	Andy Brock	Super Nintendo	jlss.rsn
-	Jim Lee's Wild C.A.T.S.	Tommy Tallarico	Super Nintendo	jlwc.rsn
-	Joe and Mac	Seiichi Hanada, Min-Key Momo, Takafumi Miura, "Z" Yamanaka	Super Nintendo	jm.rsn
-	Joe and Mac 2	T. Kiuchi, Z Yamanaka	Super Nintendo	jm2.rsn
-	Jissen! Mahjong Shinan	Syscom Sound Team	Super Nintendo	jmahs.rsn
+	Jissen Kyoutei	Masahito Miyamoto, Kiyohiro Sa	Super Nintendo	jkyo.rsn
+	Jissen! Mahjong Shinan		Super Nintendo	jmahs.rsn
+	Joe & Mac	Seiichi Hamada, Min-Key Momo, 	Super Nintendo	jm.rsn
+	Joe & Mac 2: Lost in the Tropics	T. Kiuchi, Z Yamanaka	Super Nintendo	jm2.rsn
 	John Madden Football	Rob Hubbard	Super Nintendo	jmf.rsn
-	Jim Power	Chris Hülsbeck	Super Nintendo	jmpwr.rsn
-	Jammes	Tsukasa Masuko	Super Nintendo	jms.rsn
-	Jack Nicklaus Golf	Sculptured Software Sound Team	Super Nintendo	jng.rsn
-	HAL's Hole in One Golf	Hirokazu Ando	Super Nintendo	joho.rsn
 	Jojo no Kimyou na Bouken	Noboru Yamane	Super Nintendo	jojo.rsn
-	Jikkyou Oshaberi Parodius	Kazuhiko Uehara, Masanari Iwata, Tomoya Tomita, Saiko Miki, Takahito Uenishi, Nobuyuki Akena	Super Nintendo	jop.rsn
-	Jungle no Ojya Tachan	Kuusou Kagaku Sound Team	Super Nintendo	jot.rsn
-	Jurassic Park	Jonathan Dunn	Super Nintendo	jp.rsn
-	Jurassic Park 2	Dean Evans, Jonathan Dunn	Super Nintendo	jp2.rsn
-	Jissen Pachinko Hisshouhou! 2	Masakatsu Maekawa	Super Nintendo	jph2.rsn
-	Jikkyou Powerful Pro Yakyuu 3	Konami sound team	Super Nintendo	jppy3.rsn
-	Jutei Senki	Tsutomu Shimizu, Nobuhiro Makino	Super Nintendo	js.rsn
-	Jungle Strike	Neil Biggin	Super Nintendo	jst.rsn
-	Justice League Task Force	Glenn Stafford	Super Nintendo	jstcl.rsn
+	Judge Dredd	Andy Brock	Super Nintendo	jd.rsn
 	Jumpin' Derby	Nobuyuki Shioda	Super Nintendo	jumpd.rsn
-	Jungle Wars 2	Toshio Okamoto	Super Nintendo	jw2.rsn
-	Kirby's Avalanche	Einosuke Nagao, Hirokazu Ando	Super Nintendo	ka.rsn
-	King Arthur and the Knights of Justice	Robert Ridihalgh	Super Nintendo	kakj.rsn
-	BS Gal Kan Bazooka Dai-5-Kan	Akito Nakatsuka	Super Nintendo	kan.rsn
-	Kabuki Rocks	Tsukasa Masuko, Ichiban Ujigami	Super Nintendo	karo.rsn
-	King Arthur's World	Martin Simpson, Justin Scharvona	Super Nintendo	kaw.rsn
-	Kidou Butoden G-Gundam	D-Tamura	Super Nintendo	kbgg.rsn
-	Kablooey (American)	Hiroyuki Masuno	Super Nintendo	kbly.rsn
-	Kawasaki Caribbean Challenge	Jeff Tveraas	Super Nintendo	kcc.rsn
-	Kingyo Chuihou!	Yasuyuki Suzuki	Super Nintendo	kctgg.rsn
-	Kunio-Kun no Dodge Ball	Kazuo Sawa, Chiaki Iizuka, Reiko Uehara, Kiyomi Kataoka	Super Nintendo	kdb.rsn
-	Kirby's Dream Course	Hirokazu Ando	Super Nintendo	kdc.rsn
-	Kirby's Dream Land 3	Jun Ishikawa	Super Nintendo	kdl3.rsn
-	Kenyu Densetsu Yaiba	Banpresto Sound Team	Super Nintendo	kdy.rsn
-	Kishin Douji Zenki	Cube	Super Nintendo	kdz.rsn
-	Kishin Douji Zenki 2	Eiko Kaneda	Super Nintendo	kdz2.rsn
-	Kishin Douji Zenki 3	Gouji Tsuno	Super Nintendo	kdz3.rsn
-	Keeper	Kenichi Hirata	Super Nintendo	keep.rsn
-	Keiba Eight Special 2	Kazunaka Yamane, Kazuo Sawa	Super Nintendo	kesp2.rsn
-	Ken Griffey Jr. Baseball	Chris Jojo, Paul Tonge, Matthew Cannon, Geoff & Tim Follin	Super Nintendo	kgjb.rsn
-	Koi ha Balance	Kenji Ito	Super Nintendo	khb.rsn
-	Katou Hifumi Kudan Shougi Club	Natsu System Sound Team	Super Nintendo	khksc.rsn
-	Killer Instinct	Robin Beanland	Super Nintendo	ki.rsn
-	Kiki Kaikai	Hiroyuki Iwatsuki	Super Nintendo	kiki.rsn
-	Kiki Kaikai 3	Don, K. Yamashita, Haruou, A. Yamao	Super Nintendo	kiki3.rsn
-	Kerokero Keroppi no Bouken Nikki	Shigeru Koizumi, Takeaki Sugimoto	Super Nintendo	kkbn.rsn
-	Kirby's Kira Kira Kids	Jun Ishikawa, Hirokazu Ando	Super Nintendo	kkk.rsn
-	Kishin Korinden Oni	Yoko Watanabe	Super Nintendo	kko.rsn
-	Kidou Keisatsu Patlabor	Toshihiko Miyoshi, Yoshiaki Hirasawa, Naoya Fukushima, YaAMo	Super Nintendo	kkp.rsn
-	Kevin Keegan's Player Manager	Koji Hayashi	Super Nintendo	kkpm.rsn
-	Kid Klown in Crazy Chase	S. Furuta, Y. Orishige, Musica Presto	Super Nintendo	klown.rsn
-	King of the Monsters	Genki Sound Team	Super Nintendo	km.rsn
-	King of the Monsters 2	M. Maekawa, E. Kaneda, H. Kobayashi, M. Honmyou	Super Nintendo	km2.rsn
-	Kikuni Masahiko no Jantoushi Dora Ou	Juke Hiroi	Super Nintendo	kmjdo.rsn
-	Kindai Mahjong Special	Outback Sound Team	Super Nintendo	kmsp.rsn
-	Kyuuyaku Megami Tensei	Tsukasa Masuko, Hitoshi Sakimoto	Super Nintendo	kmt.rsn
-	Kouryu no Mimi	Youko Takada, Kiyohiro Sada	Super Nintendo	knm.rsn
-	Kunio no Oden	Kiyomi Kataoka, Reiko Uehara, Chikaki Iizuka, Taku Urabe	Super Nintendo	kno.rsn
-	BS Kirby no Omocha Hako: Baseball	Hirokazu Ando	Super Nintendo	knoh.rsn
-	Kirby no Omochabako: Hoshi Kuzushi	Takane Okubo	Super Nintendo	knok.rsn
-	Kawa no Nushi Tsuri 2	Pack-in-Video Sound Team	Super Nintendo	knt2.rsn
-	Kamaitachi no Yoru	Kojiro Nakajima	Super Nintendo	kny.rsn
-	Kick Off	David Whittaker, Koji Hayashi	Super Nintendo	ko.rsn
-	Kick Off 3	Koji Hayashi	Super Nintendo	ko3.rsn
-	The King of Dragons	Yoko Shimomura	Super Nintendo	kod.rsn
-	Konae-Chan no DokiDoki Pengin Kazoku	Pax Softnica Sound Team	Super Nintendo	konae.rsn
-	The King of Rally	Yusuke Takahama	Super Nintendo	kor.rsn
-	Knights of the Round	Isao "Oyaji" Ave	Super Nintendo	kotr.rsn
-	Kamen Rider	orihiko Togashi	Super Nintendo	kr.rsn
-	Kabuki-chou Reach Mahjong Tonpuu Sen	Yasuhiro Kawasaki, I. Okita	Super Nintendo	krmt.rsn
-	Kamen Rider SD	enichi Kamio	Super Nintendo	krsd.rsn
-	Kouryuuki	Tomoki Hasegawa	Super Nintendo	kryk.rsn
-	Kawasaki Superbike Challenge	Mike Ash, Probe	Super Nintendo	ksc.rsn
-	Krusty's Super Funhouse	David Whittaker, Nu Romantic Productions	Super Nintendo	ksfh.rsn
+	Jungle Book	Tommy Tallarico, Joey Kuras, M	Super Nintendo	jbook.rsn
+	Jungle no Ouja Taachan: Sekai Manyuu Dai Kakutou no Maki		Super Nintendo	jot.rsn
+	Jungle Strike	Neil Biggin	Super Nintendo	jst.rsn
+	Jungle Wars 2: Kodai Mahou Atimos no Nazo	Toshio Okamoto	Super Nintendo	jw2.rsn
+	Jurassic Park	Jonathan Dunn	Super Nintendo	jp.rsn
+	Jurassic Park 2: The Chaos Continues	Dean Evans, Jonathan Dunn	Super Nintendo	jp2.rsn
+	Justice League Task Force	Glenn Stafford	Super Nintendo	jstcl.rsn
+	Jyutei Senki	Tsutomu Shimizu, Nobuhiro Maki	Super Nintendo	js.rsn
+	K.H. Rummenigge's Player Manager	Koji Hayashi	Super Nintendo	kkpm.rsn
+	Kabuki Rocks	Tsukasa Masuko, Ichiban Ujigam	Super Nintendo	karo.rsn
+	Kabuki-chou Reach Mahjong: Toupuusen	Yasuhiro Kawasaki, I. Okita	Super Nintendo	krmt.rsn
+	Kaite Tsukutte Asoberu Dezaemon	Koichi Ishibashi, Akiyoshi Sai	Super Nintendo	dezae.rsn
+	Kaizou Choujin Shubibinman Zero	Kenichi Koyano, Naoko Mikami	Super Nintendo	ktsz.rsn
 	Kakinoki Shougi	Cube	Super Nintendo	ksh.rsn
-	Koushien 2	Affect Sound Team	Super Nintendo	ksn2.rsn
-	Koushien 3	Toshiyuki Takine	Super Nintendo	ksn3.rsn
-	Kirby Super Star	Jun Ishikawa, Dan Miyakawa	Super Nintendo	kss.rsn
-	Shigetaka Kashiwagi's Top Water Bassing	Hiroaki Hontani	Super Nintendo	kstwb.rsn
-	Kidou Senshi V Gundam	SWITCH-E, MITSUTO.S	Super Nintendo	ksvg.rsn
-	Kunio Tachi no Bannka	Hitoshi Yamane	Super Nintendo	ktb.rsn
-	Kaizou Tyoujin Shubibinman Zero	Kenichi Koyano, Naoko Mikami (Two Five)	Super Nintendo	ktsz.rsn
+	Kamaitachi no Yoru	Kojiro Nakashima, Kota Kato	Super Nintendo	kny.rsn
+	Kamen Rider	Norihiko Togashi	Super Nintendo	kr.rsn
+	Kamen Rider SD: Shutsugeki!! Rider Machine	Kenichi Kamio	Super Nintendo	krsd.rsn
+	Karuraou	Harumi Fujita	Super Nintendo	skb.rsn
+	Kashiwagi Shigetaka no Top Water Bassing	Hiroaki Hontani	Super Nintendo	kstwb.rsn
+	Katou Hifumi Kudan Shougi Club		Super Nintendo	khksc.rsn
+	Kawa no Nushi Tsuri 2		Super Nintendo	knt2.rsn
+	Kawasaki Carribean Challenge	Jeff Tveraas	Super Nintendo	kcc.rsn
+	Kawasaki Superbike Challenge	Mike Ash, Probe	Super Nintendo	ksc.rsn
+	Keeper		Super Nintendo	keep.rsn
+	Keiba Eight Special 2	Kazunaka Yamane, Kazuo Sawa	Super Nintendo	kesp2.rsn
 	Keiba Yosou: Baken Renkinjutsu	Don	Super Nintendo	kybr.rsn
-	Lagoon	"GO" Saito, Masae Sakaide	Super Nintendo	lag.rsn
-	Last Action Hero	Sony Imagesoft Sound Team	Super Nintendo	lah.rsn
-	Live A Live	Yoko Shimomura	Super Nintendo	lal.rsn
-	Lamborghini American Challenge	Frederic Prados	Super Nintendo	lambo.rsn
-	La Wares	J-Force Sound Team	Super Nintendo	lawa.rsn
-	Last Bible 3	Yanda	Super Nintendo	lb3.rsn
-	Lady Stalker	Eri Sugai	Super Nintendo	ldst.rsn
+	Ken Griffey Jr. Presents Major League Baseball	Chris Jojo, Paul Tonge, Matthe	Super Nintendo	kgjb.rsn
+	Ken Griffey Jr.'s Winning Run	Eveline Novakovic	Super Nintendo	wnrn.rsn
+	Kendo Rage	Takahiro Wakuta	Super Nintendo	mama.rsn
+	Kentouou World Champion Boxing	Mitsuhito Tanaka	Super Nintendo	tko.rsn
+	Kenyuu Densetsu Yaiba		Super Nintendo	kdy.rsn
+	Kero Kero Keroppi no Bouken Nikki: Nemureru Mori no Keroriinu	Shigeru Koizumi, Takeaki Sugim	Super Nintendo	kkbn.rsn
+	Kick Off	David Whittaker, Koji Hayashi	Super Nintendo	ko.rsn
+	Kick Off 3: European Challenge	Koji Hayashi	Super Nintendo	ko3.rsn
+	Kid Klown in Crazy Chase	S. Furuta, Y. Orishige, Musica	Super Nintendo	klown.rsn
+	Kidou Butouden G Gundam	Daisuke Tamura	Super Nintendo	kbgg.rsn
+	Kidou Keisatsu Patlabor	Toshihiko Miyoshi, Yoshiaki Hi	Super Nintendo	kkp.rsn
+	Kidou Senshi Gundam F-91: Formula Senki 0122	Norihiko Togashi	Super Nintendo	f91.rsn
+	Kidou Senshi Gundam: Cross Dimension 0079	Kenichi Kamio	Super Nintendo	cd79.rsn
+	Kidou Senshi V Gundam	MITSUTO.S, SWITCH-E	Super Nintendo	ksvg.rsn
+	Kidou Senshi Z-Gundam: Away to the Newtype	Akihiko Mori	Super Nintendo	zgd.rsn
+	Kiki Kaikai: Nazo no Kuro Manto	Hiroyuki Iwatsuki	Super Nintendo	kiki.rsn
+	Kiki Kaikai: Tsukiyozoushi	Hiroyuki Iwatsuki, Kinuyo Yama	Super Nintendo	kiki3.rsn
+	Kikuni Masahiko no Jantoushi Doraou	Juke Hiroi	Super Nintendo	kmjdo.rsn
+	Killer Instinct	Robin Beanland, Graeme Norgate	Super Nintendo	ki.rsn
+	Kindai Mahjong Special		Super Nintendo	kmsp.rsn
+	King Arthur & The Knights of Justice	Robert Ridihalgh	Super Nintendo	kakj.rsn
+	King Arthur's World	Martin Simpson, Justin Scharvo	Super Nintendo	kaw.rsn
+	King of Dragons	Yoko Shimomura	Super Nintendo	kod.rsn
+	King of the Monsters		Super Nintendo	km.rsn
+	King of the Monsters 2	M. Maekawa, E. Kaneda, H. Koba	Super Nintendo	km2.rsn
+	Kingyo Chuuihou! Tobidase Game Gakuen	Yasuyuki Suzuki	Super Nintendo	kctgg.rsn
+	Kinnikuman: Dirty Challenger	Norihiko Togashi	Super Nintendo	dirty.rsn
+	Kirby Bowl	Hirokazu Ando	Super Nintendo	kdc.rsn
+	Kirby no Omocha Hako	Hirokazu Ando	Super Nintendo	knoh.rsn
+	Kirby no Omochabako: Hoshi Kuzushi	Takane Okubo	Super Nintendo	knok.rsn
+	Kirby's Avalanche	Einosuke Nagao, Hirokazu Ando	Super Nintendo	ka.rsn
+	Kirby's Kira Kira Kids	Jun Ishikawa, Hirokazu Ando	Super Nintendo	kkk.rsn
+	Kishin Douji Zenki: Denei Raibu	Eiko Kaneda	Super Nintendo	kdz2.rsn
+	Kishin Douji Zenki: Rettou Raiden	Cube	Super Nintendo	kdz.rsn
+	Kishin Douji Zenki: Tenchi Meidou	Gouji Tsuno	Super Nintendo	kdz3.rsn
+	Kishin Kourinden Oni	Yoko Watanabe	Super Nintendo	kko.rsn
+	Knights of the Round	Isao Abe	Super Nintendo	kotr.rsn
+	Koi ha Balance: Battle of Lovers	Kenji Ito	Super Nintendo	khb.rsn
+	Konae-chan no DokiDoki Penguin Kazoku		Super Nintendo	konae.rsn
+	Kouryuu Densetsu Villgust: Kieta Shoujo	Shinichi Tanaka	Super Nintendo	vill.rsn
+	Kouryuu no Mimi	Youta Kitagami, Kiyohiro Sada	Super Nintendo	knm.rsn
+	Kouryuuki	Tomoki Hasegawa	Super Nintendo	kryk.rsn
+	Koushien 2		Super Nintendo	ksn2.rsn
+	Koushien 3	Toshiyuki Takine	Super Nintendo	ksn3.rsn
+	Krusty's Super Funhouse	David Whittaker, Nu Romantic P	Super Nintendo	ksfh.rsn
+	Kunio no Oden	Kiyomi Kataoka, Reiko Uehara, 	Super Nintendo	kno.rsn
+	Kunio-kun no Dodgeball Zenin Shugo	Kazuo Sawa, Chiaki Iizuka, Rei	Super Nintendo	kdb.rsn
+	Kuusou Kagaku Sekai Gulliver Boy	Toyakazu Nagaishi, Eiji Hirasa	Super Nintendo	gboy.rsn
+	Kyoraku Sanyo Maruhon Parlor Parlor! 5	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pp5.rsn
+	Kyoraku Sanyo Toyomaru Daiichi Maruhon Parlor Parlor! 2	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pp2.rsn
+	Kyoraku Sanyo Toyomaru Okumura Daiichi Maruhon Parlor Parlor! 4 CR	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pp4.rsn
+	Kyoraku Sanyo Toyomaru Okumura Taiyou Parlor Parlor! 3	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pp3.rsn
+	Kyoraku Sanyo Toyomaru Parlor Parlor!	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pp.rsn
+	Kyuuyaku Megami Tensei	Tsukasa Masuko, Hitoshi Sakimo	Super Nintendo	kmt.rsn
+	Lady Stalker: Kako kara no Chousen	Eri Sugai	Super Nintendo	ldst.rsn
+	Lagoon	Hideki Suzuki	Super Nintendo	lag.rsn
+	Lamborghini: American Challenge	Frederic Prados	Super Nintendo	lambo.rsn
+	LaPlace no Ma	Akiko Kosaka	Super Nintendo	dlp.rsn
+	Las Vegas Dream	Kimitaka Matsumae	Super Nintendo	vegas.rsn
+	Last Action Hero	Shahid Ahmad	Super Nintendo	lah.rsn
+	Last Bible 3	Hiroyuki Yanada	Super Nintendo	lb3.rsn
+	Lawnmower Man	Allister Morten Brimble	Super Nintendo	lmm.rsn
 	Legend	Carlo Perconti	Super Nintendo	leg.rsn
+	Legend of Zelda: A Link to the Past	Koji Kondo	Super Nintendo	loz3.rsn
 	Lemmings	Tomomi Hatakeyama	Super Nintendo	lem.rsn
 	Lemmings 2	Mike Clark	Super Nintendo	lem2.rsn
-	Lethal Enforcers	Harumi Ueko. Kenichiro Fukui	Super Nintendo	len.rsn
-	Lethal Weapon	Barry Leitch	Super Nintendo	lethw.rsn
-	Last Fighter Twin	orihiko Togashi	Super Nintendo	lft.rsn
-	Libble Rabble	obuyuki Ohnogi	Super Nintendo	libl.rsn
-	Light Fantasy	Michiharu Hasuya, Osamu Kasai, Tsuruchan	Super Nintendo	lifa.rsn
-	The Lion King	Frank Klepacki, Dwight Okahara, Patrick J. Collins	Super Nintendo	lion.rsn
-	Lucky Luke	L'Eoscene, Emmanuel Regis	Super Nintendo	ll.rsn
-	Lord Monarch	Sound Team JDK	Super Nintendo	lm.rsn
-	Little Magic	Altron Sound Team	Super Nintendo	lmag.rsn
-	Little Master	Yuji Yamada	Super Nintendo	lmas.rsn
-	The Lawnmower Man	llister Brimble	Super Nintendo	lmm.rsn
-	Paladin's Quest	Kohei Tanaka	Super Nintendo	ln.rsn
-	Lennus 2	Kohei Tanaka	Super Nintendo	ln2.rsn
-	Liberty or Death	Koei Sound Team	Super Nintendo	lod.rsn
-	Logos Panic	Kenji Yamazaki	Super Nintendo	lopa.rsn
-	Legend of Zelda: A Link to the Past	Koji Kondo	Super Nintendo	loz3.rsn
-	Lode Runner Twin	Daisuke Emura	Super Nintendo	lrt.rsn
-	Looney Tunes Basketball	Paul Webb, James Hebdon, Mark Ganus, Kingsley Thurber, Roy Wilkins	Super Nintendo	ltbb.rsn
-	Record of Lodoss War	Yoshikatsu Sakai, Kyoko Sakai	Super Nintendo	lts.rsn
-	Lester the Unlikely	John Schappert, Jason Andersen, Byte Size Sound	Super Nintendo	ltul.rsn
-	Out to Lunch	Mark Knight	Super Nintendo	lunch.rsn
-	Lupin the 3rd	Toshio Ogawa	Super Nintendo	lupin.rsn
+	Lennus 2: Fuuin no Shito	Kohei Tanaka, Akihiko Mori	Super Nintendo	ln2.rsn
+	Lennus: Kodai Kikai no Kioku	Kohei Tanaka	Super Nintendo	ln.rsn
+	Lester the Unlikely	John Schappert, Jason Anderson	Super Nintendo	ltul.rsn
+	Lethal Enforcers	Harumi Ueko, Kenichiro Fukui	Super Nintendo	len.rsn
+	Lethal Weapon	Dean Evans, Keith Tinman, Barr	Super Nintendo	lethw.rsn
+	Libble Rabble	Nobuyuki Ohnogi	Super Nintendo	libl.rsn
+	Light Fantasy	Michiharu Hasuya, Osamu Kasai,	Super Nintendo	lifa.rsn
+	Lion King	Frank Klepacki, Dwight K. Okah	Super Nintendo	lion.rsn
+	Little Magic		Super Nintendo	lmag.rsn
+	Little Master: Niji Iro no Maseki	Yuji Yamada	Super Nintendo	lmas.rsn
+	Live-a-Live	Yoko Shimomura	Super Nintendo	lal.rsn
+	Lock On	Don	Super Nintendo	sad.rsn
+	Lode Runner Twin: Justy to Liberty no Daibouken		Super Nintendo	lrt.rsn
+	Lodoss Tou Senki	Yoshikatsu Sakai, Kyoko Sakai	Super Nintendo	lts.rsn
+	Logos Panic Go.A.I.Sa.Tsu	Kenji Yamazaki	Super Nintendo	lopa.rsn
+	Looney Tunes B-Ball	Paul Webb, James Hebdon, Mark 	Super Nintendo	ltbb.rsn
+	Lord Monarch		Super Nintendo	lm.rsn
+	Lord of Darkness	Yoko Kanno	Super Nintendo	nbb.rsn
 	Love Quest	Mya-n Suzuki, Koji Morikawa	Super Nintendo	lvqst.rsn
+	Lucky Luke	L&#x27;Eoscene, Emmanuel Regis	Super Nintendo	ll.rsn
+	Lupin III: Densetsu no Hihou wo Oe!	Toshio Ogawa	Super Nintendo	lupin.rsn
+	Madden '97	Mark Ortiz	Super Nintendo	m97gb.rsn
 	Madden NFL '94	Brian Schmidt	Super Nintendo	m94.rsn
 	Madden NFL '95	Brian Schmidt	Super Nintendo	m95.rsn
 	Madden NFL '96	Tommy Tallarico	Super Nintendo	m96.rsn
 	Madden NFL '97	Brian Schmidt	Super Nintendo	m97.rsn
-	Madden '97	Mark Ortiz	Super Nintendo	m97gb.rsn
 	Madden NFL '98	Mark Ortiz	Super Nintendo	m98.rsn
-	M.A.C.S. Basic Rifle Simulator	Sculptured Software Sound Team	Super Nintendo	macs.rsn
-	Magna Braban	Tenpei Sato, Tatsuya Sato	Super Nintendo	magna.rsn
-	Mahjong Club	Natsu System Sound Team	Super Nintendo	mahcl.rsn
-	Majyuuou	Tomohiro Endo, Hiroshi Iizuka	Super Nintendo	maj.rsn
-	The Mahjong Touhaiden	Soushi Hosoi, Pirowo	Super Nintendo	majt.rsn
-	Madou Monogatari	Einosuke Nagao, Tsuyoshi Matsushima	Super Nintendo	mam.rsn
-	Makeruna Makendo	Takahiro Wakuta	Super Nintendo	mama.rsn
-	Makeruna Makendo 2	Toshiro Mitsutomi	Super Nintendo	mama2.rsn
-	Mystic Ark	Akihiko Mori	Super Nintendo	mark.rsn
-	Daffy Duck: The Marvin Missions	Jim Hedges	Super Nintendo	marv.rsn
-	The Mask	Phil Crescenzo	Super Nintendo	mask.rsn
-	Math Blaster: Episode One	Mark Cooksey, Tom Zehnder	Super Nintendo	mathb.rsn
-	Maui Mallard in Cold Shadow	Michael Giacchino, Patrick Collins, Steve Duckworth	Super Nintendo	maui.rsn
-	Mario & Wario	Junichi Masuda	Super Nintendo	mawa.rsn
-	Mazinger Z	Michiaki Watanabe, Shinichi Tanaka	Super Nintendo	mazz.rsn
-	Magicboy	George Villiers	Super Nintendo	mboy.rsn
-	Metal Combat	Yuka Tsujiyoko, Kenichi Nishimaki, Masaya Kuzume	Super Nintendo	mc.rsn
+	Madou Monogatari: Hanamaru Dai Youchienji	Einosuke Nagao, Tsuyoshi Matsu	Super Nintendo	mam.rsn
+	Magic Boy	George Villiers	Super Nintendo	mboy.rsn
+	Magic Johnson no Super Slam Dunk	Michelle Simon	Super Nintendo	mjssd.rsn
+	Magic Knight Rayearth	Daisuke Tamura	Super Nintendo	mkr.rsn
+	Magic Sword	Manami Matsumae	Super Nintendo	mcsd.rsn
 	Magical Drop	Maro, Mr. K, N'gja Miura	Super Nintendo	mcdp.rsn
-	Magical Drop 2	Masaaki Iwasaki, Hiroaki Yoshida, Seiichi Hamada, Shogo Sakai, Z. Yamanaka	Super Nintendo	mcdp2.rsn
-	Miracle Casino Paradise	Yuzo Koshiro	Super Nintendo	mcp.rsn
-	Magic Sword	Manami Gotoh	Super Nintendo	mcsd.rsn
-	Mechwarrior	Marshall Parker	Super Nintendo	mcwr.rsn
-	Mechwarrior 3050	Brian Schmidt	Super Nintendo	mcwr3.rsn
-	Momotarou Dentetsu Happy	Kazuyuki Sekiguchi, Kazuaki Miyaji	Super Nintendo	mdh.rsn
-	Madara 2	Masanori Adachi, Tappi Iwase	Super Nintendo	mdr2.rsn
-	Madara Saga	Hidehiko Enomoto, Masafumi Ogata	Super Nintendo	mdrs.rsn
-	Metal Marines	Hiromi Shibano	Super Nintendo	mema.rsn
-	Metal Morph	Marc Scheafgen, Martin Galway, Alistair Hirst	Super Nintendo	memo.rsn
-	Miracle Girls	Masakatsu Maekawa, Eiko Kaneda	Super Nintendo	mg.rsn
+	Magical Drop 2	Masaaki Iwasaki, Hiroaki Yoshi	Super Nintendo	mcdp2.rsn
 	Magical Pop'n	Ichirou Ishibashi	Super Nintendo	mgp.rsn
-	Mahjong Gokuu Tenjiku	Tomomi Hatakeyama	Super Nintendo	mgt.rsn
-	Mohawk and Headphone Jack	Mike Cihak, Matt Scott, Byte Size Sound	Super Nintendo	mhj.rsn
-	Mahjong Hishouden: Naki no Ryuu	IGS Sound Team	Super Nintendo	mhnr.rsn
-	Milandra	Takane Ookubo	Super Nintendo	mil.rsn
-	BS Dan Dan Belt Conveyor Milk no Maki	Akito Nakatsuka	Super Nintendo	milk.rsn
-	Mario is Missing	Sam Powell, Rob Wallace	Super Nintendo	mim.rsn
-	Micro Machines	Matthew Simmonds	Super Nintendo	mima.rsn
-	Micro Machines 2	Tim Bartlett	Super Nintendo	mima2.rsn
-	Chaos in the Windy City	David Whittaker, Murray Allen, Marc Farly, Don Veca	Super Nintendo	mjcwc.rsn
-	Magic Johnson's Super Slam Dunk	Michelle Simon	Super Nintendo	mjssd.rsn
-	Mortal Kombat	Dan Forden, Mark Ganus, Kingsley Thurber, Sam Powell	Super Nintendo	mk.rsn
-	Mortal Kombat 2	Dan Forden, Mark Ganus, Dean Morrell, James Hebdon, Paul Webb	Super Nintendo	mk2.rsn
-	Mortal Kombat 3	Dan Forden	Super Nintendo	mk3.rsn
-	Matsumura Kunihiro Den	Masahiro Kusunoki	Super Nintendo	mkh.rsn
-	Maka Maka	Mitsuyasu Tomohisa, Masahiro Kusunoki	Super Nintendo	mkmk.rsn
-	Mahou Kishi Reiasu	Daisuke Tamura	Super Nintendo	mkr.rsn
-	Mega-Lo-Mania	Richard Joseph, Michael Burdett, Koji Hayashi	Super Nintendo	mlm.rsn
-	Mickey Mania: The Timeless Adventures of Mickey Mouse	Blythe Soustra, Matt Furniss, Mi	Super Nintendo	mm.rsn
-	Might and Magic 2 (European)	Elite Sound Team	Super Nintendo	mm2.rsn
-	Might and Magic 2 (Japanese)	Atsuhito Motoyama, Akikaz	Super Nintendo	mm2j.rsn
-	Might and Magic 3	Iguana Sound Team	Super Nintendo	mm3.rsn
-	Megaman 7	Yuko Takehara, Toshihiko Horiyama, Makoto Tomozawa	Super Nintendo	mm7.rsn
-	Mighty Max	Matt Furniss, Krisalis	Super Nintendo	mmax.rsn
+	Magical Taruruuto-kun: Magic Adventure	Norihiko Togashi	Super Nintendo	mtma.rsn
+	Magna Braban: Henreki no Yusha	Tenpei Sato, Tatsuya Sato	Super Nintendo	magna.rsn
+	Mahjong Club		Super Nintendo	mahcl.rsn
+	Mahjong Goku Tenjiku	Tomomi Hatakeyama	Super Nintendo	mgt.rsn
+	Mahou Poi Poi Poitto!	Sven Maz	Super Nintendo	mppp.rsn
+	Majin Tensei	Hidehito Aoki	Super Nintendo	mt.rsn
+	Majin Tensei 2: Spiral Nemesis	Misaki Okibe, Hidehito Aoki	Super Nintendo	mt2.rsn
+	Maka Maka	Mitsuyasu Tomohisa, Masahiro K	Super Nintendo	mkmk.rsn
+	Makeruna Makendou 2: Kimero Youkai Souri	Toshiro Mitsutomi	Super Nintendo	mama2.rsn
+	Manchester United Championship Soccer	Matt Furniss	Super Nintendo	mucs.rsn
+	Marchen Adventure Cotton 100%	Kenichi Hirata	Super Nintendo	cttn.rsn
+	Mario & Wario	Junichi Masuda	Super Nintendo	mawa.rsn
+	Mario is Missing!	Rob Wallace, Sam Powell	Super Nintendo	mim.rsn
+	Mario no Super Picross	Toshiyuki Ueno	Super Nintendo	msp.rsn
+	Mario Paint	Hirokazu Tanaka, Ryoji Yoshito	Super Nintendo	mpnt.rsn
+	Mario's Time Machine	Mark Knight	Super Nintendo	mtm.rsn
+	Mark Davis' The Fishing Master	Iku Mizutani, Kinuyo Yamashita	Super Nintendo	obbf.rsn
+	Marko's Magic Football	Jolyon Myers, Climax	Super Nintendo	mmf.rsn
+	Marvel Super Heroes in War of the Gems	Takane Okubo, Katsunari Kitaji	Super Nintendo	wotg.rsn
+	Marvelous: Mouhitotsu no Takarajima	Yuichi Ozaki	Super Nintendo	mvls.rsn
+	Mary Shelley's Frankenstein	Ronnie Shahmoon	Super Nintendo	msfr.rsn
+	Masaki Takemiya Kudan no Igo Taishou		Super Nintendo	tmkit.rsn
+	Maten Densetsu: Senritsu no Ooparts	Yuji Goto	Super Nintendo	mtd.rsn
+	Math Blaster: Episode 1	Mark Cooksey, Tom Zehnder	Super Nintendo	mathb.rsn
+	Matsumura Kunihiro Den: Saikyou no Rekishi wo Nurikaeru!	Masahiro Kusunoki	Super Nintendo	mkh.rsn
+	Mazinger Z	Shinichi Tanaka	Super Nintendo	mazz.rsn
+	Mecarobot Golf	Michiharu Hasuya, Osamu Kasai,	Super Nintendo	snbt.rsn
+	Mega Man Soccer	Toshio Okamoto, Kenichi Tomiza	Super Nintendo	mms.rsn
+	Mega Man VII	Tatsuya Nishimura, Yuko Takeha	Super Nintendo	mm7.rsn
+	Mega Man X	Setsuo Yamamoto, Makoto Tomoza	Super Nintendo	mmx.rsn
+	Mega Man X 2	Yuki Iwai	Super Nintendo	mmx2.rsn
+	Mega Man X 3		Super Nintendo	mmx3.rsn
+	Mega-lo-Mania	Koji Hayashi, Richard Joseph, 	Super Nintendo	mlm.rsn
+	Melfand Stories	Mitsuhito Tanaka	Super Nintendo	ms.rsn
+	Metal Combat: Falcon's Revenge	Yuka Tsujiyoko, Kenichi Nishim	Super Nintendo	mc.rsn
+	Metal Marines	Shibanon	Super Nintendo	mema.rsn
 	Metal Max 2	Satoshi Kadokura	Super Nintendo	mmax2.rsn
 	Metal Max Returns	Satoshi Kadokura	Super Nintendo	mmaxr.rsn
-	Marko's Magic Football	Jolyon Myers, Climax	Super Nintendo	mmf.rsn
-	Mick & Mack as the Global Gladiators	Tommy Tallarico, Probe	Super Nintendo	mmgg.rsn
-	Megaman Soccer	Toshio Okamoto, Kenichi Tomizawa, Norihiko Togashi	Super Nintendo	mms.rsn
-	Megaman X	Capcom	Super Nintendo	mmx.rsn
-	Megaman X2	Yuki Iwai	Super Nintendo	mmx2.rsn
-	Megaman X3	Kinuyo Yamashita	Super Nintendo	mmx3.rsn
-	Earthbound	Akio Ohmori, Ritsuo Kamimura, Ke	Super Nintendo	mo2.rsn
-	Modular Escape	Ballistics	Super Nintendo	mode.rsn
-	Monstania	Noriyuki Iwadare	Super Nintendo	mon.rsn
-	Monopoly	Nu Romantic Productions	Super Nintendo	mono.rsn
-	Monopoly 2	Yasutsuna Sasaki	Super Nintendo	mp2.rsn
-	Monopoly (Japanese)	Koichi Sugiyama	Super Nintendo	mpjp.rsn
-	Ms. Pac-Man	Matt Schneider	Super Nintendo	mpm.rsn
-	Mario Paint	Hirokazu Tanaka, Ryoji Yoshitomi, Kazumi Totaka	Super Nintendo	mpnt.rsn
-	Mahou Poi Poi Poitto!	Sven Maz	Super Nintendo	mppp.rsn
-	The Magical Quest	Mari Yamaguchi, Tatsuya Nishimura	Super Nintendo	mq.rsn
-	The Magical Quest 2: The Great Circus Mystery	Mari, Anie	Super Nintendo	mq2.rsn
-	The Magical Quest 3	Mari, Anie	Super Nintendo	mq3.rsn
-	Mr.Do!	yunichi Saitoh	Super Nintendo	mrdo.rsn
-	Melfand Stories	Mitsuhito Tanaka	Super Nintendo	ms.rsn
-	Mary Shelley's Frankenstein	Ronnie Shahmoon	Super Nintendo	msfr.rsn
+	Metal Morph	Marc Schaefgen, Martin Galway,	Super Nintendo	memo.rsn
 	Metal Slader Glory: Director's Cut	Takane Okubo	Super Nintendo	msg.rsn
-	Mario's Super Picross	Toshiyuki Ueno	Super Nintendo	msp.rsn
-	Majin Tensei	Hidehito Aoki	Super Nintendo	mt.rsn
-	Majin Tensei 2	Misaki Okibe	Super Nintendo	mt2.rsn
-	Maten Densetsu	Yuji Goto	Super Nintendo	mtd.rsn
-	Mario's Time Machine	Mark Knight	Super Nintendo	mtm.rsn
-	Magical Taruruto Kun	Norihiko Togashi	Super Nintendo	mtma.rsn
-	Multi Play Volleyball	Toshiyuki Takine	Super Nintendo	mtpvb.rsn
-	Mickey's Ultimate Challenge	Jeff Avella, Voldi Way, Ken Bailey	Super Nintendo	muc.rsn
-	Manchester United Championship Soccer	Matt Furniss	Super Nintendo	mucs.rsn
-	Mulan	Tiertex Sound Team	Super Nintendo	mulan.rsn
-	Gousou Jinrai Densetsu Musya	Kiyoko Asukawa	Super Nintendo	musya.rsn
-	Marvelous	Yuichi Ozaki	Super Nintendo	mvls.rsn
-	Metal Warriors	David Warhol, Erik Swanson	Super Nintendo	mw.rsn
-	Motoko-chan no Wonder Kitchen	Nintendo Sound Team	Super Nintendo	mwk.rsn
-	Mystery Circle	K Amusement Sound Team	Super Nintendo	myc.rsn
-	Mini Yonku Shining Scorpion	Nobuyuki Shioda	Super Nintendo	myss.rsn
-	BS Nintendo HP 5-17	Akito Nakatsuka	Super Nintendo	n517.rsn
-	BS Nintendo HP 5-31	Akito Nakatsuka	Super Nintendo	n531.rsn
-	Nichibutsu Arcade Classics	Nichibutsu Sound Team	Super Nintendo	nac.rsn
-	Nichibutsu Arcade Classics 2	Syscom Sound Team	Super Nintendo	nac2.rsn
+	Metal Warriors	David Warhol, Eric Swanson	Super Nintendo	mw.rsn
+	Michael Jordan: Chaos in the Windy City	David Whittaker, Murray Allen,	Super Nintendo	mjcwc.rsn
+	Mick & Mack as the Global Gladiators	Tommy Tallarico, Probe	Super Nintendo	mmgg.rsn
+	Mickey & Donald Magical Adventure 3	Mari Yamaguchi, Tatsuya Nishim	Super Nintendo	mq3.rsn
+	Mickey & Minnie Magical Adventure 2	Mari Yamaguchi, Tatsuya Nishim	Super Nintendo	mq2.rsn
+	Mickey Mania	Blythe Soustra, Matt Furniss, 	Super Nintendo	mm.rsn
+	Mickey no Magical Adventure	Mari Yamaguchi, Tatsuya Nishim	Super Nintendo	mq.rsn
+	Mickey no Tokyo Disneyland Daibouken	Shigenori Masuko, Yoko Suzuki,	Super Nintendo	tdl.rsn
+	Mickey's Ultimate Challenge	Jeff Avella, Voldi Way, Ken Ba	Super Nintendo	muc.rsn
+	Micro Machines	Matthew Simmonds	Super Nintendo	mima.rsn
+	Micro Machines 2: Turbo Tournament	Tim Bartlett	Super Nintendo	mima2.rsn
+	Might and Magic II: Gates to Another World		Super Nintendo	mm2.rsn
+	Might and Magic III: Isles of Terra		Super Nintendo	mm3.rsn
+	Might and Magic: Book Two	Atsuhiro Motoyama, Akikaz	Super Nintendo	mm2j.rsn
+	Mighty Max	Matt Furniss, Krisalis	Super Nintendo	mmax.rsn
+	Mighty Morphin Power Rangers	Iku Mizutani, Kinuyo Yamashita	Super Nintendo	pr.rsn
+	Mighty Morphin Power Rangers: The Fighting Edition	Hiroyuki Iwatsuki, Haruo Ohash	Super Nintendo	prfe.rsn
+	Mighty Morphin Power Rangers: The Movie	Hiroyuki Iwatsuki, Haruo Ohash	Super Nintendo	prmv.rsn
+	Milandra	Takane Okubo	Super Nintendo	mil.rsn
+	Mini Yonku Shining Scorpion: Let's & Go!!	Nobuyuki Shioda	Super Nintendo	myss.rsn
+	Miracle Casino Paradise	Yuzo Koshiro	Super Nintendo	mcp.rsn
+	Miracle Girls	Masakatsu Maekawa, Eiko Kaneda	Super Nintendo	mg.rsn
+	Mo Hawk & Headphone Jack	Mike Cihak, Matt Scott, Byte S	Super Nintendo	mhj.rsn
+	Modular Escape		Super Nintendo	mode.rsn
+	Momotarou Dentetsu Happy	Kazuyuki Sekiguchi, Kazuaki Mi	Super Nintendo	mdh.rsn
+	Monopoly	Nu Romantic Productions	Super Nintendo	mono.rsn
+	Monopoly	Koichi Sugiyama	Super Nintendo	mpjp.rsn
+	Monopoly 2	Yasutsuna Sasaki	Super Nintendo	mp2.rsn
+	Monstania	Noriyuki Iwadare	Super Nintendo	mon.rsn
+	Mortal Kombat	Dan Forden, Mark Ganus, Kingsl	Super Nintendo	mk.rsn
+	Mortal Kombat 2	Dan Forden, Mark Ganus, Dean M	Super Nintendo	mk2.rsn
+	Mortal Kombat 3	Dan Forden	Super Nintendo	mk3.rsn
+	Motoko-chan no Wonder Kitchen		Super Nintendo	mwk.rsn
+	Mouryou Senki Madara 2	Masanori Adachi, Tappi Iwase	Super Nintendo	mdr2.rsn
+	Mr. Do!	Jyunichi Saitoh	Super Nintendo	mrdo.rsn
+	Mr. Nutz	Raphael Gesqua	Super Nintendo	nutz.rsn
+	Mr. Tuff	Allister Morten Brimble, Steve	Super Nintendo	tuff.rsn
+	Ms. Pac-Man	Matt Schneider	Super Nintendo	mpm.rsn
+	Mulan		Super Nintendo	mulan.rsn
+	Multi-Play Volleyball	Toshiyuki Takine	Super Nintendo	mtpvb.rsn
+	Multi-Purpose Arcade Combat Simulator - Basic Rifle Marksmanship		Super Nintendo	macs.rsn
+	Muscle Bomber: The Body Explosion		Super Nintendo	snsm.rsn
+	Mutant Chronicles: Doom Troopers	Fletcher Beasley	Super Nintendo	dtr.rsn
+	MVP Baseball	Kingsley Thurber	Super Nintendo	rcmb.rsn
+	Mystery Circle		Super Nintendo	myc.rsn
+	Mystic Ark	Akihiko Mori	Super Nintendo	mark.rsn
+	N-Warp Daisakusen	Benoit Charcosset	Super Nintendo	nwd.rsn
+	Nage Libre: Seijaku no Suishin	Yusuke Takahama, Michihiko Shi	Super Nintendo	nl.rsn
+	Nakajima Satoru Kanshuu Super F-1 Hero	Yusuke Takahama	Super Nintendo	sf1h.rsn
+	Naki no Ryuu: Mahjong Hishouden		Super Nintendo	mhnr.rsn
+	Nangoku Shounen Papuwa-kun	Yoshiyuki Mori	Super Nintendo	nspk.rsn
+	Naruhodo! The World	Yoshio Kobayashi, Kinya Aikawa	Super Nintendo	nawo.rsn
+	Natsuki Crisis Battle	Sabakuma Yuki, Tomo Chan, AKP	Super Nintendo	ncb.rsn
+	Natsume Championship Wrestling	Iku Mizutani, Kinuyo Yamashita	Super Nintendo	znpwd.rsn
+	Naxat Super Pinball: Jaki Crush		Super Nintendo	jc.rsn
 	NBA All-Star Challenge	Marshall Parker, Andrew Bailey	Super Nintendo	nasc.rsn
-	Naruhodo The World	Yoshio Kobayashi	Super Nintendo	nawo.rsn
+	NBA Give 'n Go	Masahiko Kimura, Kazuhiko Ueha	Super Nintendo	nbagg.rsn
+	NBA Hang Time	John Hey, Kevin Quinn	Super Nintendo	nbah.rsn
+	NBA Jam		Super Nintendo	nbaj.rsn
+	NBA Jam: Tournament Edition		Super Nintendo	njte.rsn
 	NBA Live '97	Brian Schmidt	Super Nintendo	nba97.rsn
 	NBA Live '98	Mark Ortiz	Super Nintendo	nba98.rsn
-	NBA Give 'n Go	Masahiko Kimura, Kazuhiro Uehara	Super Nintendo	nbagg.rsn
-	NBA Hang Time	John Hey, Kevin Quinn	Super Nintendo	nbah.rsn
-	NBA Jam	Acclaim Sound Team	Super Nintendo	nbaj.rsn
-	Nobunaga no Yabou Busyo Fuunroku	Yoko Kanno	Super Nintendo	nbb.rsn
-	Nobunaga no Yabou Haouden	Yoko Kanno	Super Nintendo	nbh.rsn
-	Nobunaga no Yabou Tenshouki	Yoko Kanno	Super Nintendo	nbt.rsn
-	Nobunaga no Yabou Zenkokuban	Yoko Kanno	Super Nintendo	nbz.rsn
+	NCAA Basketball	Kingsley Thurber, Paul Webb, M	Super Nintendo	ncab.rsn
+	NCAA Final Four Basketball	Jerry Gerber, Dave O'Riva	Super Nintendo	nffb.rsn
 	NCAA Football	Andy Armer, DMP	Super Nintendo	ncaaf.rsn
-	NCAA Basketball	H. Kingsley Thurber, Paul Webb, Mark Ganus	Super Nintendo	ncab.rsn
-	Natsuki Crisis Battle	Sabakuma Yuki, Tomo Chan, AKP	Super Nintendo	ncb.rsn
-	No Escape	Shahid Ahmad, Andy Taylor	Super Nintendo	ne.rsn
-	Neugier	Yukihiro Takahashi	Super Nintendo	neu.rsn
-	Nosferatu	Masanao Akahori	Super Nintendo	nf.rsn
-	NFL Football	Michelle Simon	Super Nintendo	nfb.rsn
-	NCAA Final Four Basketball	Jerry Gerber, Dave O'Riva 	Super Nintendo	nffb.rsn
-	Ninja Gaiden Trilogy	More Yamasan	Super Nintendo	ngt.rsn
-	Newman-Haas Indy Car Racing	Neil Biggin	Super Nintendo	nhic.rsn
-	NHL Stanley Cup	Paul Webb, Mark Ganus	Super Nintendo	nhlsc.rsn
-	Nightmare Busters	Michel Golgevit, Olivier Rabat	Super Nintendo	nibus.rsn
-	Nigel Mansell's World Championship Racing	Patrick Phelan	Super Nintendo	nigel.rsn
-	Nontan to Issyo Kuru Kuru Puzzle	Tsukasa Masuko, Yan	Super Nintendo	nikk.rsn
-	NBA Jam Tournament Edition	Acclaim sound team	Super Nintendo	njte.rsn
-	Nage Libre	Yusuke Takahama, Michihiko Shichi	Super Nintendo	nl.rsn
-	Nyanko	Toyocazu Nagaishi, Eiji Hirasawa	Super Nintendo	nnk.rsn
-	Nintendo Power Menu Program	Nintendo Sound Team	Super Nintendo	npmp.rsn
-	NFL Quarterback Club	Fox Productions	Super Nintendo	nqc.rsn
-	NFL Quarterback Club '96	Darren Mitchell	Super Nintendo	nqc96.rsn
-	Network Q Rally	Andi McGinty	Super Nintendo	nqr.rsn
-	Nolan Ryan's Baseball	Affect Sound Team	Super Nintendo	nrbb.rsn
-	Nangoku Syonen Papuwa Kun	Yoshiyuki Mori	Super Nintendo	nspk.rsn
 	Nekketsu Tairiku Burning Heroes	Masanao Akahori, Atsushi Enoki	Super Nintendo	ntbh.rsn
+	Nekketsu! Beach Volley dayo Kunio-kun	Kazuo Sawa, Naoki Goto	Super Nintendo	bevb.rsn
+	Network Q Rally	Andi McGinty	Super Nintendo	nqr.rsn
+	Neugier: Umi to Kaze no Koudou	Yukihiro Takahashi	Super Nintendo	neu.rsn
+	New Yattaaman: Nanndai Kanndai Yajirobe	Kazuo Sawa	Super Nintendo	ny.rsn
+	Newman Haas IndyCar featuring Nigel Mansell	Neil Biggin	Super Nintendo	nhic.rsn
+	NFL Football	Michelle Simon	Super Nintendo	nfb.rsn
+	NFL Quarterback Club	Fox Productions	Super Nintendo	nqc.rsn
+	NFL Quarterback Club 96	Darren Mitchell	Super Nintendo	nqc96.rsn
+	NHL Stanley Cup	Paul Webb, Mark Ganus	Super Nintendo	nhlsc.rsn
+	Nichibutsu Arcade Classics	Slash, Asterisk	Super Nintendo	nac.rsn
+	Nichibutsu Arcade Classics 2: Heiankyo Alien		Super Nintendo	nac2.rsn
+	Nickelodeon GUTS	Brian Schmidt	Super Nintendo	guts.rsn
+	Nigel Mansell F1 Challenge	Patrick Phelan	Super Nintendo	nigel.rsn
+	Nightmare Busters	M. Golgevit, O. Rabat	Super Nintendo	nibus.rsn
+	Ninja Gaiden Trilogy	Miya, K. Nakabai, L. Shigeno, 	Super Nintendo	ngt.rsn
+	Nintendo HP 5-17	Akito Nakatsuka	Super Nintendo	n517.rsn
+	Nintendo HP 5-31	Akito Nakatsuka	Super Nintendo	n531.rsn
+	Nintendo Power Menu Program		Super Nintendo	npmp.rsn
+	Nitro Punks: Might Heads	Rikei Hirashima	Super Nintendo	rrod.rsn
+	No Escape	Shahid Ahmad, Andrew Taylor	Super Nintendo	ne.rsn
+	Nobunaga Kouki	Masamichi Iwasaki	Super Nintendo	sck.rsn
+	Nobunaga no Yabou: Haouden	Yoko Kanno	Super Nintendo	nbh.rsn
+	Nobunaga no Yabou: Tenshouki	Yoko Kanno	Super Nintendo	nbt.rsn
+	Nobunaga's Ambition	Yoko Kanno	Super Nintendo	nbz.rsn
+	Nolan Ryan's Baseball		Super Nintendo	nrbb.rsn
+	Nontan to Issho: Kuru Kuru Puzzle	Tsukasa Masuko, Yan	Super Nintendo	nikk.rsn
+	Nosferatu	Masanao Akahori	Super Nintendo	nf.rsn
 	Numbers Paradise	Kenichi Tanuma	Super Nintendo	nump.rsn
-	Mr. Nutz	Raphael Gesqua	Super Nintendo	nutz.rsn
-	N-Warp Daisakusen	Benoit Charcosset	Super Nintendo	nwd.rsn
-	New Yatterman	Kazuo Sawa	Super Nintendo	ny.rsn
-	Okamoto Ayako to Match Play Golf	Dota Ando	Super Nintendo	oampg.rsn
-	Ohmono Black Bass Fishing	Iku Mizutani, Kinuyo Yamashita	Super Nintendo	obbf.rsn
-	Out of Bounds Golf	asaya Sound Team	Super Nintendo	obg.rsn
+	O-Chan no Oekaki Logic	Kazuo Nii	Super Nintendo	ool.rsn
 	Obitus	Probe	Super Nintendo	obi.rsn
-	Oda Nobunaga - Haou no Gundan	Tokubee	Super Nintendo	odanb.rsn
+	Oda Nobunaga: Haou no Gundan	Tokubee	Super Nintendo	odanb.rsn
 	Oekaki Logic	Hikoshi Hashimoto	Super Nintendo	oelo.rsn
-	Operation Europe: Path to Victory	Yuji Ohno	Super Nintendo	oeptv.rsn
-	Super Off Road	Geoff & Tim Follin	Super Nintendo	off.rsn
-	Ogre Battle	Quest Sound Team	Super Nintendo	ogre.rsn
-	Otogirisou	Chiyoko Mitsumata	Super Nintendo	ogs.rsn
-	Super Okuman Tyoja Game	Yasuhiro Kawasaki, Masat Miyamoto	Super Nintendo	okutg.rsn
-	Operation Logic Bomb	Yasuyuki Suzuki	Super Nintendo	olb.rsn
+	Okamoto Ayako to Match Play Golf	Dota Ando	Super Nintendo	oampg.rsn
 	Olivia's Mystery	Nobuyuki Shioda	Super Nintendo	olim.rsn
+	Olympic Summer Games: Atlanta 1996	Mark Ortiz	Super Nintendo	osg.rsn
+	Olympic Summer Games: Atlanta 1996	Mark Ortiz	Super Nintendo	osggb.rsn
+	Ongaku Tsukuru: Kanadeeru	Kenichi Hirata, Youta Kitagami	Super Nintendo	otk.rsn
+	Onita Atsushi FMW	Takeshi Yasuda	Super Nintendo	fmw.rsn
+	Onizuka Katsuya Super Virtual Boxing	Mitsuhito Tanaka	Super Nintendo	svb.rsn
+	Operation Thunderbolt	Yojiro, Katsuhisa Ishikawa, Ya	Super Nintendo	othnd.rsn
+	Oraga Land Shusai: Best Farmer Senyuken	Yoko Suzuki, Maki Kirioka	Super Nintendo	osbs.rsn
+	Oscar		Super Nintendo	oscar.rsn
+	Othello World	Kimitaka Matsumae, Manami Mats	Super Nintendo	othw.rsn
 	Otoboke Ninja Colosseum	Tsukushi Sasaki, Akihiko Mori	Super Nintendo	onc.rsn
-	O-chan no Oekaki Logic	Kazuo Nii	Super Nintendo	ool.rsn
-	Ozumou Tamashii	Katsuhiro Hayashi, Kenji Sugai	Super Nintendo	oozta.rsn
-	Oraga Land Shusai	Yoko Suzuki, Maki Kirioka	Super Nintendo	osbs.rsn
-	Oscar	Flair Sound Team	Super Nintendo	oscar.rsn
-	Olympic Summer Games	Mark Ortiz	Super Nintendo	osg.rsn
-	Olympic Summer Games (Gameboy)	Mark Ortiz	Super Nintendo	osggb.rsn
-	Operation Thunderbolt	Yojiro, Babi, Yagi, Pochi, O.G.R., Zuntata	Super Nintendo	othnd.rsn
-	Othello World	Kimitaka Matsumae, Manami Matsumae	Super Nintendo	othw.rsn
-	Ongaku Tukuoolu Kanadeeru	Kenichi Hirata, Youta Kitagami, Hiromi Fuwa, Mitsuhiro Arisaka	Super Nintendo	otk.rsn
+	Otogirisou	Chiyoko Mitsumata	Super Nintendo	ogs.rsn
+	Out to Lunch	Mark Knight	Super Nintendo	lunch.rsn
 	Outlander	Ben Watkins	Super Nintendo	otld.rsn
-	Pac-Attack	Namco Sound Team	Super Nintendo	paca.rsn
-	Pac-Man 2	Fuken Tajima, Hasson's Family	Super Nintendo	pacm2.rsn
-	The Pagemaster	Steve Collett, Nick Stroud	Super Nintendo	page.rsn
-	Packy and Marlon	John Bartelt	Super Nintendo	pam.rsn
-	Pebble Beach Golf Links	Yumi Kinoshita	Super Nintendo	pbgl.rsn
-	Parodius Da!	Kazuhiko Uehara, Hideyuki Eto	Super Nintendo	pd.rsn
-	Pirates of Dark Water	Phase Out	Super Nintendo	pdw.rsn
-	Popeye	Chiaki Iizuka, Kiyomi Kataoka, Reiko Uehara	Super Nintendo	peye.rsn
-	Pitfall: The Mayan Adventure	Scott Martin Gershen, Robert Higgins, David Kneupper	Super Nintendo	pfma.rsn
-	PGA Tour '96	Steve Kirk, Chris Perry	Super Nintendo	pga96.rsn
-	PGA European Tour	Steve Kirk, Chris Perry	Super Nintendo	pgae.rsn
-	PGA Tour Golf	Rob Hubbard	Super Nintendo	pgat.rsn
-	Phantom 2040	Matt Scott, Burke Treischmann	Super Nintendo	phant.rsn
-	Phalanx	S. Yamaguchi	Super Nintendo	phlnx.rsn
-	Power Instinct	Hidehito Aoki, Misaki Okibe	Super Nintendo	pi.rsn
-	Pieces	Nobuyuki	Super Nintendo	piece.rsn
-	Power Piggs of the Dark Age	Mark Baril	Super Nintendo	piggs.rsn
-	Pikiinya!	Satoshi Kadokura, Katsuhiro Hatano, Cube, Tomohiro Endo, Hiroshi Iizuka, Hiroo Tengenji	Super Nintendo	piki.rsn
-	Pink Goes to Hollywood	Mark Steven Miller, Ted Allen, Nu Romantic Productions	Super Nintendo	pink.rsn
-	Pinocchio	llister Brimble	Super Nintendo	pino.rsn
-	Pipe Dream	Yumeo Suidou	Super Nintendo	pipe.rsn
-	Poko-Nyan!	Takumi Kusatei, Masahiro Kusunoki	Super Nintendo	pkn.rsn
-	Plok!	Geoff & Tim Follin	Super Nintendo	plok.rsn
-	Power Lode Runner	Shinji Tachikawa	Super Nintendo	plr.rsn
-	Prehistorik Man	Gilles Rea, Laurent Mignard, Rob Stevens	Super Nintendo	pman.rsn
+	Ozumou Damashii	Katsuhiro Hayashi, Kenji Sugai	Super Nintendo	oozta.rsn
+	P Man	Gilles Rea, Laurent Mignard, R	Super Nintendo	pman.rsn
+	Pac-Attack		Super Nintendo	paca.rsn
+	Pac-In-Time	Frederic Motte	Super Nintendo	pnt.rsn
+	Pachinko Hisshou Hou 2	Masakatsu Maekawa	Super Nintendo	jph2.rsn
 	Pachinko Maruhi Hisshouhou	Tenpei Sato, Tatsuya Sato	Super Nintendo	pmh.rsn
-	Pro Mahjong Kiwame	Tsugutoshi Goto	Super Nintendo	pmk.rsn
-	Pro Mahjong Kiwame 2	Tsugutoshi Goto, Akiyoshi Saito, Aka Ishibashi	Super Nintendo	pmk2.rsn
-	Pro Mahjong Kiwame 3	Kazuo Oikawa, Tsugutoshi Goto, Koichi Ishibashi, Aka Ishibashi, Akiyoshi Saito	Super Nintendo	pmk3.rsn
-	Pro Mahjong Kiwame GB	Athena Sound Team	Super Nintendo	pmkgb.rsn
-	Parlor! Mini	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pms.rsn
-	Power Moves	Hideki Suzuki	Super Nintendo	pmv.rsn
-	Pop'n Smash!!	Norihiko Togashi	Super Nintendo	pns.rsn
-	Pac-in-Time	Frederic Motte	Super Nintendo	pnt.rsn
-	Pop 'n' Twinbee	Kazuhiko Uehara, Masahiro "Ika Chan" Ikariko, Keroppi Inoue, Tomoya Tomita, Nobuyuki Akena, Masae Nakashima, Saiko Miki	Super Nintendo	pntb.rsn
-	Poko-Nyan! Yume no Daibouken	Shoji Tomii, Daisuke Inoue, Minoru Endou, Makoto Igarashi, JOEDOWN	Super Nintendo	pnyd.rsn
-	Panic in Nakayoshi World	Harumi Hujita, Yasuaki Hujita	Super Nintendo	pnyw.rsn
-	Pocahontas	Mark Ortiz, Alan Menken	Super Nintendo	poca.rsn
-	BS Pokekame Magajin	Akito Nakatsuka	Super Nintendo	poke.rsn
-	Prince of Persia	Toshiya Yamanaka, Tetsuya Nakano	Super Nintendo	pop.rsn
-	Prince of Persia 2	Jonelle Adkisson	Super Nintendo	pop2.rsn
-	Popful Mail	Mieko Ishikawa, Atsushi Shirakawa	Super Nintendo	popfm.rsn
-	Power of the Hired	Hiroo Tengenji, Yoshiaki Kubozuka, Hiroshi Fujioka, Masanori Hikichi, Tomohiro Endo	Super Nintendo	poth.rsn
-	Jikkyou Powerful Pro Yakyuu '94	Masahiro Ikariko, Hideto Inoue	Super Nintendo	pow94.rsn
-	Power Drive	Kev Bruce	Super Nintendo	powdr.rsn
-	Kyouraku Sanyou Toyomaru Parlor Parlor!	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pp.rsn
-	Kyouraku Sanyou Toyomaru Daiichi Maruhon Parlor Parlor! 2	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pp2.rsn
-	Kyouraku Sanyou Toyomaru Okumura Taiyou Parlor Parlor! 3	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pp3.rsn
-	Kyouraku Sanyou Toyomaru Okumura Daiichi Maruhon Parlor Parlor! 4 CR	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pp4.rsn
-	Kyouraku Sanyou Maruhon Parlor Parlor! 5	Motoi Sakuraba, Shinji Tamura	Super Nintendo	pp5.rsn
-	Popoitto Hebereke	unsoft Sound Team	Super Nintendo	pph.rsn
-	Porky Pig's Haunted Holiday (Sunsoft)	Kev Bruce	Super Nintendo	pphh.rsn
-	Populous	Kazuo Sawa	Super Nintendo	ppl.rsn
-	Poi Poi Ninja World	Ken-ichi Ohkuma	Super Nintendo	ppnw.rsn
-	Power Rangers	Iku Mizutani, Kinuyo Yamashita, Hiroyuki Iwatsuki	Super Nintendo	pr.rsn
-	Primal Rage	Jeanne Parson	Super Nintendo	prage.rsn
-	Power Rangers: The Fighting Edition	Hiroyuki Iwatsuki, Haruo Ohashi	Super Nintendo	prfe.rsn
-	Prime	Malibu Sound Team	Super Nintendo	prime.rsn
-	Princess Minerva	Hiroaki Iwatani 	Super Nintendo	prmn.rsn
-	Mighty Morphin' Power Rangers: The Movie	Hiroyuki Iwatsuki, Haruo Ohashi	Super Nintendo	prmv.rsn
-	Pro Quarterback	Leland Sound Team	Super Nintendo	proq.rsn
 	Pachinko Renchan Tengoku: Super CR Special	Tenpei Sato, Tatsuya Sato	Super Nintendo	prt.rsn
-	Power Rangers Zeo - Battle Racers	Hiroyuki Iwatsuki, Haruo Ohashi	Super Nintendo	prz.rsn
-	Power Slide FX	Richard Frankish	Super Nintendo	psfx.rsn
-	Pro Sport Hockey	CMS Takeshi	Super Nintendo	psh.rsn
-	Putty Squad	Richard Joseph	Super Nintendo	psq.rsn
-	Psycho Dream	Michiko Naruke	Super Nintendo	psycho.rsn
-	Pachinko Tetsujin: Shichiban Shoubu	Shigenori Masuko, Yasuyuki Suzuk	Super Nintendo	ptss.rsn
+	Pachinko Tetsujin 7ban Shobu	Shigenori Masuko, Yasuyuki Suz	Super Nintendo	ptss.rsn
+	Pacific Theater of Operations	Yasushi Miyagawa	Super Nintendo	tnk.rsn
+	Pacific Theater of Operations II	Yoichiro Yoshikawa	Super Nintendo	tnk2.rsn
+	Packy & Marlon	John Bartelt	Super Nintendo	pam.rsn
+	Pagemaster	Steve Collett, Nick Stroud, Ed	Super Nintendo	page.rsn
+	Panel de Pon	Masaya Kuzume, Yuka Tsujiyoko	Super Nintendo	ta.rsn
+	Panic in Nakayoshi World	Harumi Hujita, Yasuaki Hujita	Super Nintendo	pnyw.rsn
+	Parodius Da!: Shinwa kara Owarai he	Kazuhiko Uehara, Hideyuki Eto	Super Nintendo	pd.rsn
+	Peace Keepers	Atsuyoshi Isemura, Hyu	Super Nintendo	rbs.rsn
+	Pebble Beach Golf Links	Yumi Kinoshita	Super Nintendo	pbgl.rsn
+	PGA European Tour	Steve Kirk, Chris Perry	Super Nintendo	pgae.rsn
+	PGA Tour 96	Steve Kirk, Chris Perry	Super Nintendo	pga96.rsn
+	PGA Tour Golf	Rob Hubbard	Super Nintendo	pgat.rsn
+	Phalanx	S. Yamaguchi	Super Nintendo	phlnx.rsn
+	Phantom 2040	Matt Scott, Burke Treischmann	Super Nintendo	phant.rsn
+	Pikiinya!	Satoshi Kadokura, Katsuhiro Ha	Super Nintendo	piki.rsn
 	Pilotwings	Soyo Oka	Super Nintendo	ptws.rsn
-	Puzzle Bobble	Kazuko "Karu" Umino	Super Nintendo	pubo.rsn
-	Pushover	Keith Tinman, Dean Evans	Super Nintendo	push.rsn
-	Powermonger	Tim Wright, Probe Sound Team	Super Nintendo	pwrmg.rsn
-	Pro Yakyuu Nettou Puzzle Stadium	Yasushi Matsuki, Masayuki Tanoue	Super Nintendo	pynps.rsn
+	Pink Panther	Mark Miller, Ted Allen, Nu Rom	Super Nintendo	pink.rsn
+	Pinocchio	Allister Morten Brimble	Super Nintendo	pino.rsn
+	Pipe Dream	Yumeo Suidou	Super Nintendo	pipe.rsn
+	Pirates of Dark Water	Phase Out	Super Nintendo	pdw.rsn
+	Pitfall: Maya no Daibouken	Scott Martin Gershen, Robert H	Super Nintendo	pfma.rsn
+	Planet's Champ TG 3000	Neil Biggin	Super Nintendo	tg3.rsn
+	Plok	Tim Follin, Geoff Follin	Super Nintendo	plok.rsn
+	Pocahontas	Mark Ortiz, Alan Menkin	Super Nintendo	poca.rsn
+	Poi Poi Ninja World	Kenichi Okuma	Super Nintendo	ppnw.rsn
+	Pokekame Magajin	Akito Nakatsuka	Super Nintendo	poke.rsn
+	Poko Nyan! Henpokorin Adventure	Takumi Kusatei, Masahiro Kusun	Super Nintendo	pkn.rsn
+	Poko Nyan! Yume no Daibouken	Shoji Tomii, Daisuke Inoue, Mi	Super Nintendo	pnyd.rsn
+	Pop 'N' Twinbee	Kazuhiko Uehara, Masahiro Ikar	Super Nintendo	pntb.rsn
+	Pop'n Twinbee: Rainbow Bell Adventures	Kenichi Matsubara, Yukie Morim	Super Nintendo	trba.rsn
+	Popeye: Ijiwaru Majo Sea Hag no Maki	Chiaki Iizuka, Kiyomi Kataoka,	Super Nintendo	peye.rsn
+	Popful Mail	Mieko Ishikawa, Atsushi Shirak	Super Nintendo	popfm.rsn
+	Populous	Kazuo Sawa	Super Nintendo	ppl.rsn
+	Porky Pig's Haunted Holiday	Kev Bruce, Jez	Super Nintendo	pphh.rsn
+	Power Athlete	Hideki Suzuki	Super Nintendo	pmv.rsn
+	Power Drive	Kev Bruce	Super Nintendo	powdr.rsn
+	Power Lode Runner	Shinji Tachikawa	Super Nintendo	plr.rsn
+	Power of the Hired	Hiroo Tengenji, Yoshiaki Kuboz	Super Nintendo	poth.rsn
+	Power Piggs of the Dark Age	Mark Baril	Super Nintendo	piggs.rsn
+	Power Rangers Zeo: Battle Racers	Hiroyuki Iwatsuki, Haruo Ohash	Super Nintendo	prz.rsn
+	Power Slide ECTS Demo	Richard Frankish	Super Nintendo	psfx.rsn
+	Powermonger	Tim Wright	Super Nintendo	pwrmg.rsn
+	Primal Rage	Jeanne Parson	Super Nintendo	prage.rsn
+	Prime		Super Nintendo	prime.rsn
+	Prince of Persia	Toshiya Yamanaka, Tetsuya Naka	Super Nintendo	pop.rsn
+	Prince of Persia 2: The Shadow & The Flame	Jonelle Adkisson	Super Nintendo	pop2.rsn
+	Princess Minerva	Hiroaki Iwatani	Super Nintendo	prmn.rsn
+	Pro Mahjong Kiwame	Tsugutoshi Goto	Super Nintendo	pmk.rsn
+	Pro Mahjong Kiwame GB		Super Nintendo	pmkgb.rsn
+	Pro Mahjong Kiwame II	Tsugutoshi Goto, Akiyoshi Sait	Super Nintendo	pmk2.rsn
+	Pro Mahjong Kiwame III	Kazuo Oikawa, Tsugutoshi Goto,	Super Nintendo	pmk3.rsn
+	Pro Quarterback		Super Nintendo	proq.rsn
+	Pro Soccer	Kazuo Sawa	Super Nintendo	wls.rsn
+	Pro Sport Hockey	CMS Takeshi	Super Nintendo	psh.rsn
+	Pro Yakyuu Nettou Puzzle Stadium	Yasushi Matsuki, Masayuki Tano	Super Nintendo	pynps.rsn
+	Psycho Dream	Michiko Naruke	Super Nintendo	psycho.rsn
+	Push-Over	Keith Tinman, Dean Evans	Super Nintendo	push.rsn
+	Putty Moon	Richard Joseph	Super Nintendo	spt.rsn
+	Putty Squad	Richard Joseph	Super Nintendo	psq.rsn
 	Q*bert 3	Joe McDermott	Super Nintendo	qb3.rsn
-	Rendering Ranger R2	tefan Kramer, Jesper "Jo" Olsen	Super Nintendo	r2.rsn
-	Race Drivin'	Mark Van Hecke	Super Nintendo	raced.rsn
-	Rampart	Dave O'Riva, Alex Rudis	Super Nintendo	ramp.rsn
-	Rap Basketball	Jim Wallace, Steve Melillo	Super Nintendo	rapbb.rsn
-	Ruin Arm	Switch-E, Studio M2, ST-Type M, Prince E, Chatru	Super Nintendo	rarm.rsn
-	Riddick Bowe Boxing	David Whittaker	Super Nintendo	rbb.rsn
-	Super RBI Baseball	DMP	Super Nintendo	rbi.rsn
-	Rushing Beat Syura	Atsu Isemura, Hyu	Super Nintendo	rbs.rsn
-	Rockfall	Paul Lay	Super Nintendo	rckf.rsn
-	Roger Clemens' MVP Baseball	Kingsley Thurber	Super Nintendo	rcmb.rsn
-	Robocop 3	Jonathan Dunn	Super Nintendo	rcop3.rsn
-	Radical Dreamers 	Yasunori Mitsuda	Super Nintendo	rd.rsn
-	Raiden Densetsu	Akira Sato	Super Nintendo	rdn.rsn
-	Realm	Flair Sound Team	Super Nintendo	realm.rsn
-	Revolution X	Chris Granner, Kev Bruce	Super Nintendo	revx.rsn
-	Megaman and Bass	Kirikiri-Chan, Naoshi Mizuta, Akari Kaida	Super Nintendo	rf.rsn
-	Ryukiheidan Danzarubu	Hiroshi Nishizawa	Super Nintendo	rhdz.rsn
-	RHI Roller Hockey '95	Paul Ruskay	Super Nintendo	rhi95.rsn
-	Boxing Legends of the Ring	Mark Ganus, Dean Morrell	Super Nintendo	ring.rsn
-	Rival Turf	Zoso Takashiba, Atsu Isemura	Super Nintendo	rival.rsn
-	Rap Jam	Michel Winogradoff	Super Nintendo	rj.rsn
-	Rejoice	CHACKey	Super Nintendo	rjc.rsn
-	Riverse Kids	Unknown	Super Nintendo	rk.rsn
-	Rokudenashi Blues	M2, Kyomoe	Super Nintendo	rkdb.rsn
-	Ranma 1/2: Akaneko-dan Teki Hihou	Toshio Okamoto	Super Nintendo	rmath.rsn
-	Ranma 1/2: Bakuretsu Rantouhen	Toshio Okamoto	Super Nintendo	rmbr.rsn
-	Ranma 1/2 - Chonai Gekitou Hen	Jun Enoki, Masanao Akahori, T. Suzuki	Super Nintendo	rmcg.rsn
-	RPG Maker	Shigeharu Isoda, Mitsuhiro Arisaka	Super Nintendo	rmk.rsn
-	RPG Maker 2	Shigeharu Isoda, Mitsuhiro Arisaka	Super Nintendo	rmk2.rsn
-	Rocko's Modern Life	Nu Romantic Productions	Super Nintendo	rml.rsn
-	Ranma 1/2: Ougi Jaanken	Rumic Soft sound team	Super Nintendo	rmoj.rsn
-	Rudra no Hihou	Ryuji Sasai	Super Nintendo	rnh.rsn
-	Art of Fighting	Seisuke Itoh	Super Nintendo	rnk.rsn
-	Ryuuko no Ken 2	Yasumasa Yamada	Super Nintendo	rnk2.rsn
-	Ren & Stimpy: Buckeroo$	Mark Van Hecke	Super Nintendo	rnsb.rsn
-	Return of Double Dragon	Kazunaka Yamane	Super Nintendo	rodd.rsn
-	Rise of the Robots	Brian May	Super Nintendo	rotr.rsn
-	RPM Racing	George Sanger	Super Nintendo	rpmr.rsn
-	Road Riot 4WD	Ed Bogas, Gary Clinton	Super Nintendo	rr4w.rsn
-	Rex Ronan	Sculptured Software Sound Team	Super Nintendo	rres.rsn
+	R-Type 3: The Third Lightning	Ikuko Mimori	Super Nintendo	rt3.rsn
+	Race Drivin	Mark Van Hecke	Super Nintendo	raced.rsn
+	Radical Dreamers	Yasunori Mitsuda	Super Nintendo	rd.rsn
+	Radical Psycho Machine Racing	George Alistair Sanger	Super Nintendo	rpmr.rsn
 	Radical Rex	Marshall Parker	Super Nintendo	rrex.rsn
-	Rocky Rodent	Rikei Hirashima	Super Nintendo	rrod.rsn
-	Rock 'n' Roll Racing	Tim Follin	Super Nintendo	rrr.rsn
+	Raiden Densetsu	Akira Sato	Super Nintendo	rdn.rsn
+	Ramos Rui no World Wide Soccer	Bob Dayley, Eric Nunamaker, Ki	Super Nintendo	tmss.rsn
+	Rampart	Dave O'Riva, Alex Rudis	Super Nintendo	ramp.rsn
+	Ranma 1/2	Toshio Okamoto	Super Nintendo	rmbr.rsn
+	Ranma 1/2: Akanekodan no Hihou	Toshio Okamoto	Super Nintendo	rmath.rsn
+	Ranma 1/2: Chonai Gekitou Hen	Jun Enoki, Masanao Akahori, T.	Super Nintendo	rmcg.rsn
+	Ranma 1/2: Ougi Jaanken		Super Nintendo	rmoj.rsn
+	Rap Basketball	Dan Foliart, Jim Wallace, Stev	Super Nintendo	rapbb.rsn
+	RapJam: Volume One	Michel Winogradoff	Super Nintendo	rj.rsn
+	Realm		Super Nintendo	realm.rsn
+	Rejoice! Aretha Oukoku no Kanata	Chackey	Super Nintendo	rjc.rsn
+	Ren & Stimpy Show: Buckeroo$!	Mark Van Hecke	Super Nintendo	rnsb.rsn
+	Ren & Stimpy Show: Fire Dogs	Justin Scharvona, Martin Simps	Super Nintendo	fdogs.rsn
+	Ren and Stimpy Show: Time Warp	Paul Webb	Super Nintendo	rstw.rsn
+	Rendering Ranger R2	Stefan Kramer, Poul-Jesper Ols	Super Nintendo	r2.rsn
+	Return of Double Dragon	Kazunaka Yamane	Super Nintendo	rodd.rsn
+	Revolution X	Chris Granner, Kev Bruce	Super Nintendo	revx.rsn
+	Rex Ronan: Experimental Surgeon		Super Nintendo	rres.rsn
+	RHI Roller Hockey  '95	Paul Ruskay	Super Nintendo	rhi95.rsn
+	Rise of the Robots	Richard Joseph, Brian May	Super Nintendo	rotr.rsn
+	Rival Turf	Zoso Takashiba, Atsuyoshi Isem	Super Nintendo	rival.rsn
+	Riverse Kids		Super Nintendo	rk.rsn
+	Road Riot 4WD	Ed Bogas, Gary Clinton	Super Nintendo	rr4w.rsn
+	Road Runner	Nu Romantic Productions	Super Nintendo	dvr.rsn
+	Robocop 3	Jonathan Dunn	Super Nintendo	rcop3.rsn
+	Robocop Versus Terminator	Sam Powell, Anthony Shields	Super Nintendo	rvt.rsn
+	Robotrek	Ayako Yoda	Super Nintendo	rtrek.rsn
+	Rock N' Roll Racing	Tim Follin	Super Nintendo	rrr.rsn
+	Rocketeer	George Alistair Sanger	Super Nintendo	rt.rsn
+	Rockfall	Paul Lay	Super Nintendo	rckf.rsn
+	Rockman & Forte	Kirikiri-Chan, Naoshi Mizuta, 	Super Nintendo	rf.rsn
+	Rocko's Modern Life: Spunky's Dangerous Day	Nu Romantic Productions	Super Nintendo	rml.rsn
+	Rokudenashi Blues: Taiketsu! Tokyo Shitennou	M2, Kyomoe	Super Nintendo	rkdb.rsn
+	Romance of the Three Kingdoms II	Minoru Mukaiya	Super Nintendo	rtk2.rsn
+	Romance of the Three Kingdoms III: Dragon of Destiny	Minoru Mukaiya	Super Nintendo	rtk3.rsn
+	Romance of the Three Kingdoms IV: Wall of Fire	Jun Nagao, Kunio Kubota	Super Nintendo	rtk4.rsn
 	Romancing SaGa	Kenji Ito	Super Nintendo	rs.rsn
 	Romancing SaGa 2	Kenji Ito	Super Nintendo	rs2.rsn
 	Romancing SaGa 3	Kenji Ito	Super Nintendo	rs3.rsn
-	Ren and Stimpy: Time Warp	Paul Webb	Super Nintendo	rstw.rsn
-	Rocketeer	George Sanger	Super Nintendo	rt.rsn
-	R-Type 3	Ikuko Mimori	Super Nintendo	rt3.rsn
-	Romance of the Three Kingdoms 2	Minoru Mukaiya	Super Nintendo	rtk2.rsn
-	Sangokushi 3	Minoru Mukaiya	Super Nintendo	rtk3.rsn
-	Sangokushi 4	Jun Nagao, Kunio Kubota 	Super Nintendo	rtk4.rsn
-	Robotrek	Ayako Yoda	Super Nintendo	rtrek.rsn
+	RPG Tsukuru 2	Shigeharu Isoda, Mitsuhiro Ari	Super Nintendo	rmk2.rsn
+	RPG Tsukuru: Super Dante	Shigeharu Isoda, Mitsuhiro Ari	Super Nintendo	rmk.rsn
+	Rudra no Hihou	Ryuji Sasai	Super Nintendo	rnh.rsn
+	Ruin Arm	SWITCH-E, Studio M2, ST-Type M	Super Nintendo	rarm.rsn
 	Run Saber	Hikoshi Hashimoto	Super Nintendo	run.rsn
-	Robocop vs. the Terminator	Sam Powell, Anthony Shields	Super Nintendo	rvt.rsn
-	Suzuka 8 Hours	Katsuhiro Hayashi	Super Nintendo	s8h.rsn
-	Super Aleste	Takeuchi, Nagao, Katsumi Tanaka	Super Nintendo	sa.rsn
-	Space Ace	George Villiers	Super Nintendo	sace.rsn
-	Super Air Diver	Don	Super Nintendo	sad.rsn
-	Super Air Diver 2	Shimami Sakuba, Kazuya Suyama	Super Nintendo	sad2.rsn
-	Skipp and Friends	Coda	Super Nintendo	saf.rsn
-	Adventure Island	Yuzo Koshiro	Super Nintendo	sai.rsn
-	Super Adventure Island 2	Akihiro Akamatsu, Sachiko Oita, Shinji Nakaya	Super Nintendo	sai2.rsn
-	Same Game	Naoaki Ikehata, JOEDOWN, Hiromichi Furuya, Kazuhiko Sawaguchi	Super Nintendo	same.rsn
+	Ryuukihei Dan Danzarubu	Hiroshi Nishizawa	Super Nintendo	rhdz.rsn
+	Ryuuko no Ken 2	Yasumasa Yamada	Super Nintendo	rnk2.rsn
+	S.O.S.	Kouji Niikura, Hiroyuki Naka, 	Super Nintendo	sos.rsn
+	S.O.S.: Sink or Swim	Tim Haywood	Super Nintendo	sosw.rsn
+	Saibara Reiko no Mahjong Hourouki	Haruo Ohashi, Shinya Kurahashi	Super Nintendo	srmh.rsn
+	Saikousoku Shikou Shougi Mahjong		Super Nintendo	sssm.rsn
+	Same Game Another Character	Naoaki Ikehata, JOEDOWN, Hirom	Super Nintendo	same.rsn
 	Samurai Shodown	Hiroo Ikeda	Super Nintendo	samu.rsn
+	Sandra no Daibouken: Valkyrie to no Deai	Norihiko Togashi, Nakanobu, Eb	Super Nintendo	whrl.rsn
+	Sangokushi Eiketsu Den	Akinaga Yoshida	Super Nintendo	eikt.rsn
+	Sangokushi Seishi: Tenbu Spirits	135	Super Nintendo	sstbs.rsn
+	Sankyo Fever! Fever!	Motoi Sakuraba, Shinji Tamura	Super Nintendo	sff.rsn
+	Sanrio Shanghai		Super Nintendo	sans.rsn
+	Sanrio World Smash Ball	Okkuba Takane, Mimura Kazunari	Super Nintendo	swsb.rsn
 	Sansara Naga 2	Kenji Kawai	Super Nintendo	sana2.rsn
-	Sanrio Shanghai	ASCII Sound Team	Super Nintendo	sans.rsn
-	BS SatesupuDX 4	Akito Nakatsuka, Naoto Ishida	Super Nintendo	sate.rsn
-	Spider-Man and the X-Men	Geoff & Tim Follin	Super Nintendo	saxar.rsn
-	Soul Blazer	Yukihide Takekawa, Kazz Tomaya	Super Nintendo	sb.rsn
-	Super Big 2	Unknown	Super Nintendo	sb2.rsn
-	Super Baseball 2020	J. Kuramochi, Hiroo Ikeda	Super Nintendo	sb20.rsn
-	Super Buster Bros.	Tetsuya Nishimura, Minae Fujii	Super Nintendo	sbb.rsn
-	Super Black Bass	Cube	Super Nintendo	sbb1.rsn
-	Super Black Bass 2	Michiya Hirasawa, Tukushi Sasaki, Akihiko Mori	Super Nintendo	sbb2.rsn
-	Shien: The Blade Chaser	Akihiko Mori	Super Nintendo	sbc.rsn
-	Super Back to the Future 2	Hitoshi Sakimoto	Super Nintendo	sbf2.rsn
-	Super Bikkuriman	omoyuki Hamada	Super Nintendo	sbk.rsn
-	Super Bases Loaded	Tatsuya	Super Nintendo	sbl.rsn
-	Super Bases Loaded 2	CMS Takeshi	Super Nintendo	sbl2.rsn
-	Super Bases Loaded 3	Shibikkun, Suitton, Gotton	Super Nintendo	sbl3.rsn
-	Sonic Blastman	Zuntata, Ishikawa	Super Nintendo	sblm.rsn
-	Sonic Blastman 2	K. Watanabe, N. Yagishita	Super Nintendo	sblm2.rsn
-	Super Bomberman	Jun Chiki Chikuma	Super Nintendo	sbm.rsn
-	Super Bomberman 2	Yasuhiko Fukuda	Super Nintendo	sbm2.rsn
-	Super Bomberman 3	Jun Chiki Chikuma	Super Nintendo	sbm3.rsn
-	Super Bomberman 4	Jun Chiki Chikuma	Super Nintendo	sbm4.rsn
-	Super Bomberman 5	Kazuko Sugiyama	Super Nintendo	sbm5.rsn
-	The Simpsons: Bart's Nightmare	Dean Morrell	Super Nintendo	sbn.rsn
-	Super Bombliss	MITSUTO.S	Super Nintendo	sbom.rsn
-	Super Bowling	Athena Sound Team	Super Nintendo	sbowl.rsn
-	Syutoko Battle Racing 2	BPS Sound Team	Super Nintendo	sbr2.rsn
-	Super Battleship	Christopher Barker	Super Nintendo	sbs.rsn
-	Super Battletank (American)	Mark Van Hecke	Super Nintendo	sbtk.rsn
-	Super Battletank 2	Jim Wallace	Super Nintendo	sbtk2.rsn
-	Super Batter Up	Yoshinori Kawamoto, Shinya Yamada	Super Nintendo	sbup.rsn
-	Sim City	Soyo Oka	Super Nintendo	sc.rsn
-	Super Casino 2	Masahito Miyamoto	Super Nintendo	scas2.rsn
-	Scooby Doo Mysteries	Martin Gwynn Jones, Martin Simpson	Super Nintendo	scd.rsn
-	Super Chase H.Q.	Yasuhisa Watanabe, Naoto Yagishita	Super Nintendo	schq.rsn
-	Shin Chou Kouki	Masamichi Iwasaki	Super Nintendo	sck.rsn
-	Super Conflict: The Mideast	Robert Ridihalgh	Super Nintendo	scme.rsn
-	Super Caesar's Palace	Tommy Tallarico, Steve Henefin	Super Nintendo	scp.rsn
-	Super Castlevania 4	Masanori Adachi, Taro Kudou	Super Nintendo	scv4.rsn
-	Secret of Mana	Hiroki Kikuta	Super Nintendo	sd2.rsn
-	Seiken Densetsu 3	Hiroki Kikuta	Super Nintendo	sd3.rsn
-	Super Double Dragon	Kazunaka Yamane	Super Nintendo	sdd.rsn
-	SD F-1 Grand Prix	Naoki Itamura, P. H. Soyama, Dave	Super Nintendo	sdf1g.rsn
-	SD Gundam 2	Hi-Tech-Icchy, Pro-Mars	Super Nintendo	sdg2.rsn
-	SD Great Battle	Norihiko Togashi	Super Nintendo	sdgb.rsn
-	SD Gundam Gaiden	Ani	Super Nintendo	sdgg.rsn
-	SD Gundam Gaiden 2	Miyuki Uemura	Super Nintendo	sdgg2.rsn
-	SD Gundam G-Next	Japan Art Media Sound Team	Super Nintendo	sdggn.rsn
+	Satella Walker: Sate Bou wo Sukuidasu!	Naoto Ishida, Akito Nakatsuka	Super Nintendo	bssw2.rsn
+	SatesupuDX 4	Akito Nakatsuka, Naoto Ishida	Super Nintendo	sate.rsn
+	Scooby-Doo	Martin Gwynn Jones, Martin Sim	Super Nintendo	scd.rsn
+	SD F-1 Grand Prix	Naoki Itamura, P. H. Soyama, D	Super Nintendo	sdf1g.rsn
+	SD Gundam Gaiden 2: Entaku no Kishi	Miyuki Uemura	Super Nintendo	sdgg2.rsn
+	SD Gundam Gaiden: Knight Gundam Monogatari Ooinaru Isan	Ani	Super Nintendo	sdgg.rsn
+	SD Gundam GNext		Super Nintendo	sdggn.rsn
 	SD Gundam GX	Tomoyuki Hamada	Super Nintendo	sdggx.rsn
-	SD Gundam Power Formation Puzzle	Takane Okubo, Katsunari Kitajima	Super Nintendo	sdgpf.rsn
-	SD Kidou Senshi Gundam V	Sabakuma Yuki	Super Nintendo	sdgv.rsn
-	SD Gundam X: Super Gachapon World	Tomoyuki Hamada, Masas.	Super Nintendo	sdgx.rsn
-	SD Hiryu no Ken	Akinori Sawa, Eiji Miyabi	Super Nintendo	sdhk.rsn
-	Sword Maniac	Hayato Matsuo	Super Nintendo	sdmc.rsn
-	Super Drift Out	Kenji Yamazaki	Super Nintendo	sdo.rsn
-	Seifuku Densetsu - Pretty Fighter	Akihiko Mori	Super Nintendo	sdpf.rsn
-	SD Ultra Battle	Kyohei Sada, Minako Adachi, Akira Shouji, Kiyoshi Suzuki	Super Nintendo	sdub.rsn
-	Super Dunk Star	Kazuo Sawa	Super Nintendo	sduns.rsn
-	Sim Earth	Takane Okubo	Super Nintendo	se.rsn
-	Sensible Soccer	Richard Joseph	Super Nintendo	sens.rsn
-	Super Star Wars: The Empire Strikes Back	Paul Webb	Super Nintendo	sesb.rsn
-	Star Fox	Hajime Hirasawa	Super Nintendo	sf.rsn
-	Super F1 Circus	Nyorita Peter Ilich Ogawa	Super Nintendo	sf1c.rsn
-	Super F1 Hero	Yusuke Takahama	Super Nintendo	sf1h.rsn
-	Street Fighter 2	Yoshihiro Sakaguchi, Yoko Shimomura, Tetsuya Nishimura, Isao Abe	Super Nintendo	sf2.rsn
-	Street Fighter 2 Turbo	Yoshihiro Sakaguchi, Yoko Shimomura, Tetsuya Nishimura	Super Nintendo	sf2t.rsn
-	Street Fighter Alpha 2	Setsuo Yamamoto, Syun Nishigaki, Tatsuro Suzuki	Super Nintendo	sfa2.rsn
-	Space Football	Colin Bennun	Super Nintendo	sfb.rsn
-	Super Family Circuit	Nobuyuki Ohnogi	Super Nintendo	sfc.rsn
-	Super Famicom Box	Nintendo Sound Team	Super Nintendo	sfcb.rsn
-	Super Famicom Wars	Kenichi Nishiyama	Super Nintendo	sfcw.rsn
-	Sankyou Fever Fever!	Motoi Sakuraba, Shinji Tamura	Super Nintendo	sff.rsn
-	Super Family Gerende	Kouji Nakagawa	Super Nintendo	sfg.rsn
-	Super Final Match Tennis	Takamitsu Kajikawa	Super Nintendo	sfmt.rsn
-	Super Fire Pro Wrestling	Hiroya Niwayama, Hironori Tanaka, Masamichi Yamazaki, Tetsuji Ohtani, Hiroshi Suzuki	Super Nintendo	sfpw.rsn
-	Super Formation Soccer	Hiroya Niwayama, Hironori Tanaka, Masamichi Yamazaki, Tetsuji Ohtani	Super Nintendo	sfs.rsn
-	Super Formation Soccer 2	Masamichi Yamazaki, Hironori Tanaka, Hideto Maeda	Super Nintendo	sfs2.rsn
-	Super Formation Soccer '94	Masamichi Yamazaki, Hironori Tanaka, Yukie Sugawara, Yayoi Okumura, Takamitsu Kajikawa	Super Nintendo	sfs94.rsn
-	Super Formation Soccer '95	Yukie Sugawara, Kouji Niikura	Super Nintendo	sfs95.rsn
-	Super Formation Soccer '96	Ichiro Atsuno, Masamichi Yamazaki	Super Nintendo	sfs96.rsn
-	Super Family Tennis	Yoshinori Kawamoto	Super Nintendo	sft.rsn
-	Starfield Trainer	The Doctor	Super Nintendo	sftr.rsn
-	Star Fox 2	Kozue Ishikawa, Yumiko Kanki	Super Nintendo	sfx2.rsn
-	St. Giga 10gatsu Gou	St. Giga Sound Team	Super Nintendo	sg10g.rsn
-	The Shinri Game 3	Visit Sound Team	Super Nintendo	sg3.rsn
-	Stargate	Steve Collett, Andy Brock	Super Nintendo	sgate.rsn
-	Super Game Boy	Akito Nakatsuka, Naoto Ishida	Super Nintendo	sgb.rsn
-	Super Gameboy 2	Akito Nakatsuka	Super Nintendo	sgb2.rsn
+	SD Gundam Power Formation Puzzle	Takane Okubo, Katsunari Kitaji	Super Nintendo	sdgpf.rsn
+	SD Gundam X: Super Gachapon World	Tomoyuki Hamada	Super Nintendo	sdgx.rsn
+	SD Hiryuu no Ken	Akinori Sawa, Eiji Miyabi	Super Nintendo	sdhk.rsn
+	SD Kidou Senshi Gundam 2	Hi-Tech-Icchy, Pro-Mars	Super Nintendo	sdg2.rsn
+	SD Kidou Senshi Gundam: V Sakusen Shidou	Sabakuma Yuki	Super Nintendo	sdgv.rsn
+	SD The Great Battle: Arutanaru Chousen	Norihiko Togashi	Super Nintendo	sdgb.rsn
+	SD Ultra Battle: Seven Densetsu	Kyohei Sada, Minako Adachi, Ak	Super Nintendo	sdub.rsn
+	SeaQuest DSV	Dean Morrell	Super Nintendo	sqdsv.rsn
+	Secret of Evermore	Jeremy Soule	Super Nintendo	soe.rsn
+	Secret of Mana	Hiroki Kikuta	Super Nintendo	sd2.rsn
+	Seifuku Densetsu Pretty Fighter	Akihiko Mori	Super Nintendo	sdpf.rsn
+	Seijuu Maden: Beasts & Blades	Tsukasa Masuko, Abusan	Super Nintendo	smbb.rsn
+	Seiken Densetsu 3	Hiroki Kikuta	Super Nintendo	sd3.rsn
 	Sengoku Denshou	Osamu Kido, Takeshi Sakamoto	Super Nintendo	sgd.rsn
-	Speedy Gonzalez	Mark Cooksey	Super Nintendo	sggb.rsn
-	Sugoi Hebereke	Naoki Kodaka, Hitoshi Sakimoto, Naoki Sarabanado, Kansei Kraftwerk, Prophet Kazuo, Atsushsi Mihiro (Phase Out)	Super Nintendo	sgh.rsn
-	Super Genjin 2	Nobuyuki Nakamura	Super Nintendo	sgj2.rsn
-	Same Game Mario	Tawayuki Iwabuchi	Super Nintendo	sgm.rsn
-	Super Gomoku Narabe Renju	Naxat Soft sound team	Super Nintendo	sgn.rsn
-	Super Ghouls 'n' Ghosts	Mari Yamaguchi	Super Nintendo	sgng.rsn
-	Super Gussun Oyoyo	K. Yamazaki	Super Nintendo	sgo.rsn
-	Super Gussun Oyoyo 2	K. Yamazaki	Super Nintendo	sgo2.rsn
-	Super Goal!	CMS Takeshi	Super Nintendo	sgoal.rsn
-	Super Godzilla	Michiharu Hasuya, Junko Yokoyama	Super Nintendo	sgod.rsn
-	Super Hockey '94	Hayato Matsuo, Hitoshi "YmoH.S" Sakimoto	Super Nintendo	sh94.rsn
-	Street Hockey '95	Dwight Stone, Dominique Wildiez	Super Nintendo	sh95.rsn
-	The Shadow	Jonathan Dunn	Super Nintendo	shad.rsn
-	Shaq Fu	Raphael Gesqua	Super Nintendo	shaq.rsn
-	Shonen Ashibe	Ebiten	Super Nintendo	shas.rsn
-	Shiki Eiyuu Den	Asami Hasegawa	Super Nintendo	shed.rsn
-	Shanghai	Sigeharu Isoda, Masato Takada	Super Nintendo	shg.rsn
-	Shanghai 2	Hot-B Sound Team	Super Nintendo	shg2.rsn
-	Shougi Club	Natsu System Sound Team	Super Nintendo	shgc.rsn
-	Shougi Fuurinkazan	Pony Canyon Sound Team	Super Nintendo	shgfk.rsn
-	Super High Impact	Marshall Parker	Super Nintendo	shi.rsn
-	Shinseiki Odysselya	Tenpei Sato, Hisayoshi Ogura	Super Nintendo	shod.rsn
-	Shinseiki Odysselya 2	Studio Chriche, Fumito Tamayama, Shigenori Masuko	Super Nintendo	shod2.rsn
+	Sengoku no Hasha: Tenka Fubu he no Michi	Kenichi Okuma, Sanae Kasahara	Super Nintendo	skh.rsn
 	Shadowrun	Marshall Parker	Super Nintendo	shr.rsn
-	Shougi Saikyou	Toshiyuki Takine	Super Nintendo	shsa.rsn
-	Sailor Moon Super S: Zenin Sanka!! Shuyaku Soudatsusen	Seisuke Itoh, Hiroo Ikeda, Katsu	Super Nintendo	shuso.rsn
-	Space Invaders	Katsuhisa Ishikawa, Kennosuke Suemura	Super Nintendo	si.rsn
-	Super International Cricket	Marshall Parker	Super Nintendo	sic.rsn
-	Sports Illustrated Championship Football and Baseball	Audio Cyber Factory	Super Nintendo	sicfb.rsn
-	Side Pocket	Fox Productions	Super Nintendo	sidep.rsn
-	SimAnt	Takane Okubo	Super Nintendo	sima.rsn
-	Super Indy Champ	K. Yamamoto	Super Nintendo	sindc.rsn
+	Shanghai II: Dragon's Eye		Super Nintendo	shg2.rsn
+	Shanghai: Banri no Choujou	Shigeharu Isoda, Masato Takada	Super Nintendo	shg.rsn
+	Shaq Fu	Raphael Gesqua	Super Nintendo	shaq.rsn
+	Shien The Blade Chaser	Akihiko Mori	Super Nintendo	sbc.rsn
+	Shigesato Itoi no Bass Tsuri No.1	Tadashi Ikegami	Super Nintendo	bfn1.rsn
+	Shijou Saikyou League Serie A: Ace Striker	Masahito Nakano, Atsuhiro Moto	Super Nintendo	sslsa.rsn
+	Shijou Saikyou no Quiz Ou Kettei Sen Super	Takeaki Sugimoto	Super Nintendo	ssnqs.rsn
+	Shiki Eiyuu Den	Asami Hasegawa	Super Nintendo	shed.rsn
+	Shimono Masaki no Fishing To Bassing	Iku Mizutani, Kinuyo Yamashita	Super Nintendo	ftb.rsn
 	Shin Ikkaku Senkin	Takayuki Suzuki	Super Nintendo	sis.rsn
-	Space Invaders (Super Game Boy)	Katsuhisa Ishikawa, Kennosuke Suemura	Super Nintendo	sisgb.rsn
-	Super James Pond	Richard Joseph	Super Nintendo	sjp.rsn
-	Super James Pond 2	Keith Tinman	Super Nintendo	sjp2.rsn
-	Super James Pond 3	Richard Joseph, Graham King	Super Nintendo	sjp3.rsn
-	SWAT Kats	omoyuki Hamada	Super Nintendo	sk.rsn
-	Sougou Kakutougi Astral Bout	Takuo Uchida, Yukiyoshi Fujimoto, Jun Otsuki	Super Nintendo	skab.rsn
-	Astral Bout 2	Takuo Uchida, Yukiyoshi Fujimoto	Super Nintendo	skab2.rsn
-	Astral Bout 3	Hikoshi Hashimoto, Takuo Uchida, Kazuhiko Ohki	Super Nintendo	skab3.rsn
-	Skyblazer	Harumi Fujita	Super Nintendo	skb.rsn
-	Sengo Kuno Hasha	Ken-ichi Okuma, Sanae Kasahara	Super Nintendo	skh.rsn
-	Super Kyuukyoku Harikiri Stadium	Sanae Kasahara	Super Nintendo	skhs.rsn
-	Skuljagger	Dave Hayes, Rod Barr	Super Nintendo	skjg.rsn
-	Super Koukou Yakyuu: Ikkyuu Nyuukon	Mitsuhito Tanaka	Super Nintendo	skyin.rsn
-	Super Slapshot	Tommy Tallarico	Super Nintendo	slap.rsn
-	Slayers	Banpresto Sound Team	Super Nintendo	slay.rsn
-	Super Loopz	Koji Hayashi	Super Nintendo	sloop.rsn
-	Super Metroid	Minako Hamano	Super Nintendo	sm.rsn
-	Super Mad Champ	Hikoshi Hashimoto	Super Nintendo	smadc.rsn
-	Super Mario All-Stars	Koji Kondo	Super Nintendo	smas.rsn
-	Seijuu Maden - Beasts & Blades	Tsukasa Masuko	Super Nintendo	smbb.rsn
-	Shin Momotarou Densetsu	Kazuyuki Sekiguchi	Super Nintendo	smd.rsn
-	Super Momotarou Dentetsu DX	Kazuyuki Sekiguchi	Super Nintendo	smdd.rsn
-	Super Mario Excitebike	Yuichi Ozaki	Super Nintendo	smeb.rsn
-	Sailor Moon Super S: Fuwa Fuwa Panic	Bandai Sound Team	Super Nintendo	smffp.rsn
-	Super Mario Kart	Soyo Oka	Super Nintendo	smk.rsn
-	Spider-Man: Lethal Foes	Shoji Tomii, Minoru Endou, Makoto Igarashi, Daisuke Inoue	Super Nintendo	smlf.rsn
-	Sailor Moon: Another Story	Takanori Arisawa	Super Nintendo	smoon.rsn
-	Super Morph	Graham King	Super Nintendo	smph.rsn
-	Super Mario RPG	Yoko Shimomura	Super Nintendo	smr.rsn
-	Shodan Morita Shougi	Random House Sound Team	Super Nintendo	smsh.rsn
-	Bishoujo Senshi Sailormoon S - Jougai Rantou		Super Nintendo	smsjr.rsn
-	Sailor Moon S: Kurukkurin	Kazuo Sawa	Super Nintendo	smsk.rsn
-	Small Soldiers	Mark Ortiz	Super Nintendo	smso.rsn
-	Sailor Moon S: Kondowa Puzzle de Oshioikiyo!	Harumi Fujita	Super Nintendo	smspo.rsn
-	Shooting Macross	Noboru Yamane	Super Nintendo	smsv.rsn
+	Shin Kidou Senki Gundam W: Endless Duel	Hiroyuki Iwatsuki, Haruo Ohash	Super Nintendo	gwed.rsn
 	Shin Megami Tensei	Tsukasa Masuko	Super Nintendo	smt.rsn
 	Shin Megami Tensei 2	Tsukasa Masuko	Super Nintendo	smt2.rsn
-	Shin Megami Tensei: If...	Tsukasa Masuko	Super Nintendo	smti.rsn
-	The Smurfs	Frederic Mentzen	Super Nintendo	smurf.rsn
-	The Smurfs 2	Climax	Super Nintendo	smurf2.rsn
-	Super Mario World	Koji Kondo	Super Nintendo	smw.rsn
-	Super Ninja Boy	Eiji Miyabi	Super Nintendo	snb.rsn
-	Sporting News Baseball	RDB, Masakatsu Maekawa	Super Nintendo	snbb.rsn
-	Mecarobot Golf	Michiharu Hasuya, Osamu Kasai, Takashi Tsurutani	Super Nintendo	snbt.rsn
-	Snoopy Concert	Hirokazu Tanaka, Minako Hamano	Super Nintendo	snc.rsn
-	Super Sangokushi	Yoko Kanno	Super Nintendo	sngks.rsn
-	Super Ninja Kun	Takahiro Ogata	Super Nintendo	snk.rsn
-	Shodai Nekketsu Kouha Kunio-Kun	Akira Inoue, Taku Urabe, Mihiya Hirasawa	Super Nintendo	snkk.rsn
-	Super Naxat Open	Hisashi Matsushita	Super Nintendo	sno.rsn
-	Shin Nippon Pro Wrestling	Hamasan	Super Nintendo	snpw.rsn
+	Shin Megami Tensei if...	Tsukasa Masuko	Super Nintendo	smti.rsn
+	Shin Momotarou Densetsu	Kazuyuki Sekiguchi	Super Nintendo	smd.rsn
+	Shin Nekketsu Kouha Kunio Tachi no Banka	Hitoshi Yamane	Super Nintendo	ktb.rsn
+	Shin Nihon Pro Wrestling '94: Battlefield in Tokyo Dome	Kenichi Koyano	Super Nintendo	snw94.rsn
+	Shin Nihon Pro Wrestling: Chousenshi in Tokyo Dome	Hamasan	Super Nintendo	snpw.rsn
+	Shin SD Sengokuden: Daishougun Retsuden	Michiya Hirasawa, Tsukushi Sas	Super Nintendo	ssds.rsn
+	Shin Seikoku: La Wares		Super Nintendo	lawa.rsn
+	Shin Shougi Club		Super Nintendo	sshgc.rsn
+	Shin Star Trek: The Next Generation: Ooinaru Isan IFD no Nazo o Oe	Andrew Edlen, Joseph White	Super Nintendo	stn.rsn
+	Shinseiki Odysselya	Tenpei Sato, Hisayoshi Ogura	Super Nintendo	shod.rsn
+	Shinseiki Odysselya 2	Studio Chriche, Fumito Tamayam	Super Nintendo	shod2.rsn
+	Shinzui Taikyoku Igo: Go Sennin	Toyakazu Nagaishi	Super Nintendo	gs.rsn
+	Shiroi Ring he: Twinkle Little Star	Hideyuki Sugai, Kenichi Tomiza	Super Nintendo	srtls.rsn
+	Shodai Nekketsu Kouha Kunio-kun	Akira Inoue, Taku Urabe, Michi	Super Nintendo	snkk.rsn
+	Shodan Morita Shogi		Super Nintendo	smsh.rsn
+	Shodankurai Nintei: Shodan Pro Mahjong	Eurhythm, Kenichi Fujii	Super Nintendo	snspm.rsn
 	Shonen Ninja Sasuke	Kazuo Sawa	Super Nintendo	sns.rsn
-	Saturday Night Slam Masters	Capcom Sound Team	Super Nintendo	snsm.rsn
-	Shodankurai Nintei Shodan Pro Mahjong	Eurhythm, Kenichi Fujii	Super Nintendo	snspm.rsn
-	Sound Novel Tsukuru	Shigeharu Isoda, Mitsuhiro Arisaka	Super Nintendo	snt.rsn
-	Shin Nihon Pro Wrestling '94	Kenichi Koyano	Super Nintendo	snw94.rsn
-	Super Nazo Puyo	BA.M, Einosuke Nagao, Tsuyoshi Matsushima, TAISHOW, SUPERKENTA	Super Nintendo	snz.rsn
-	Super Nazo Puyo 2	BA.M, Tsuyoshi Matsushima, SUPERKENTA, Einosuke Nagao	Super Nintendo	snz2.rsn
-	Star Ocean	Motoi Sakuraba	Super Nintendo	so.rsn
-	Secret of Evermore	Jeremy Soule	Super Nintendo	soe.rsn
-	Soldiers of Fortune	Richard Joseph	Super Nintendo	sof.rsn
-	Soccer Kid	Matt Furniss	Super Nintendo	sokid.rsn
-	Solid Runner	Mitsuhito Tanaka, Toshiaki Sakoda, Pure Sound	Super Nintendo	solid.rsn
-	Heisei Shin Onigashima (New)	Yuichi Ozaki, Akihito Nakatsuka	Super Nintendo	son.rsn
-	Super Oozumou Netsusen Daiichiban	Hiromi Shibano	Super Nintendo	sond.rsn
-	Song Master	Tsuyoshi Tanaka, Cozy	Super Nintendo	song.rsn
-	Super Off Road: The Baja	Chip Burwell	Super Nintendo	sortb.rsn
-	S.O.S.	Kouji Niikura, Hiroyuki Naka, Hiroshi Taniguchi	Super Nintendo	sos.rsn
-	Sink or Swim	Tim Haywood	Super Nintendo	sosw.rsn
-	Shadow of the Beast	Probe	Super Nintendo	sotb.rsn
-	Secret of the Stars	Tukushi Sasaki	Super Nintendo	sots.rsn
-	Soul Blade	Unknown	Super Nintendo	soulb.rsn
-	Bishoujo Janshi Suuchiipai	Megu chan, ISE	Super Nintendo	sp.rsn
-	Super Puyo Puyo 2	BA.M, Einosuke Nagao, Tsuyoshi Matsushima	Super Nintendo	sp2.rsn
-	Super Puyo Puyo 2 Remix	BA.M, Einosuke Nagao, Tsuyoshi Matsushima	Super Nintendo	sp2r.rsn
-	Super Pachinko	Takane Okubo	Super Nintendo	spach.rsn
-	Super Play Action Football	Yoshi	Super Nintendo	spaf.rsn
-	Sparkster	Kazuhiko Uehara, Masahiro Ikariko, M. Matsuhira, Y. Yamane, Akira Yamaoka	Super Nintendo	spark.rsn
-	Super Pachinko Taisen	Kenji Yamazaki	Super Nintendo	spata.rsn
-	Super Professional Baseball 2	Bokubo	Super Nintendo	spb2.rsn
-	Super Pinball - Behind the Mask	Yusuke Takahama	Super Nintendo	spbtm.rsn
-	Super Bomberman Panic Bomber W	Ken-ichi Koyano, Hitoshi Sakimoto	Super Nintendo	spbw.rsn
-	Spellcraft	ASCII Sound Team	Super Nintendo	spc.rsn
-	Spindizzy Worlds	Akiko Hashimoto, Yoshinori Hirahara	Super Nintendo	spdz.rsn
+	Shoot Your Load	The Doctor	Super Nintendo	syl.rsn
+	Shougi Fuurinkazan		Super Nintendo	shgfk.rsn
+	Shougi Saikyou	Toshiyuki Takine	Super Nintendo	shsa.rsn
+	Shounen Ashibe: Goma-chan no Yuuenchi Daibouken	Ebiten	Super Nintendo	shas.rsn
+	Shounin yo Taishi o Idake!!	Kenichi Kamio, Tomoyuki Hamada	Super Nintendo	syti.rsn
+	Sid Meier's Civilization		Super Nintendo	civ.rsn
+	Side Pocket	Fox Productions	Super Nintendo	sidep.rsn
+	Silva Saga 2	Katsuhisa Ishida, Masanao Akah	Super Nintendo	ss2.rsn
+	Sim City	Soyo Oka	Super Nintendo	sc.rsn
+	Sim Earth: The Living Planet	Takane Okubo	Super Nintendo	se.rsn
+	SimAnt	Takane Okubo	Super Nintendo	sima.rsn
+	Ski Paradise with Snowboard	Michel Winogradoff	Super Nintendo	wesas.rsn
+	Skipp and Friends	Steven Velema, Hubert Lamontag	Super Nintendo	saf.rsn
+	Skuljagger: Revolt of the Westicans	David Hayes, Rod Barr	Super Nintendo	skjg.rsn
+	Slam Dunk: Yonkyo Taiketsu!!	Amayang	Super Nintendo	ftsd.rsn
+	Slayers		Super Nintendo	slay.rsn
+	Small Soldiers	Mark Ortiz	Super Nintendo	smso.rsn
+	Smash Tennis	Yoshinori Kawamoto	Super Nintendo	sft.rsn
+	Smash TV	Marshall Parker	Super Nintendo	stv.rsn
+	SNES Burn-in Test Cart	Akito Nakatsuka	Super Nintendo	burn.rsn
+	SNES Test Program	Koji Kondo	Super Nintendo	test.rsn
+	Snoopy Concert	Hirokazu Tanaka, Minako Hamano	Super Nintendo	snc.rsn
+	Snow White in Happily Ever After	Ian Howe	Super Nintendo	swhea.rsn
+	Solid Runner	Mitsuhito Tanaka, Toshiaki Sak	Super Nintendo	solid.rsn
+	Song Master	Tsuyoshi Tanaka, Koji Abe	Super Nintendo	song.rsn
+	Sonic Blast Man	Zuntata, Ishikawa	Super Nintendo	sblm.rsn
+	Sonic Blast Man II	K. Watanabe, N. Yagishita	Super Nintendo	sblm2.rsn
+	Sougou Kakutougi Astral Bout	Takuo Uchida, Yukiyoshi Fujimo	Super Nintendo	skab.rsn
+	Sougou Kakutougi Astral Bout 2: The Total Fighters	Takuo Uchida, Yukiyoshi Fujimo	Super Nintendo	skab2.rsn
+	Sougou Kakutougi Rings: Astral Bout 3	Hikoshi Hashimoto, Takuo Uchid	Super Nintendo	skab3.rsn
+	Soukou Kihei Votoms: The Battling Road	Kenji Yoshida	Super Nintendo	vt.rsn
+	Soul Blade		Super Nintendo	soulb.rsn
+	Soul Blader	Yukihide Takekawa, Kazz Tomaya	Super Nintendo	sb.rsn
+	Sound Novel Tsukuru	Shigeharu Isoda, Mitsuhiro Ari	Super Nintendo	snt.rsn
+	Sousa Sentai Wappers 1	Akito Nakatsuka	Super Nintendo	sswap.rsn
+	Space Ace	George Villiers	Super Nintendo	sace.rsn
+	Space Football: One on One	Colin Bennun	Super Nintendo	sfb.rsn
+	Space Invaders	Katsuhisa Ishikawa, Kennosuke 	Super Nintendo	sisgb.rsn
+	Space Invaders	Katsuhisa Ishikawa, Kennosuke 	Super Nintendo	si.rsn
+	Space Megaforce	Keiji Takeuchi, Nagao, Katsumi	Super Nintendo	sa.rsn
+	Spark World	Minako Adachi	Super Nintendo	spw.rsn
+	Sparkster	Kazuhiko Uehara, Masahiro Ikar	Super Nintendo	spark.rsn
+	Spawn	Harumi Fujita	Super Nintendo	spwn.rsn
+	Special Tee Shot	Yumiko Kanki	Super Nintendo	sts.rsn
 	Spectre	Christopher Barker	Super Nintendo	spec.rsn
-	Speed Racer	Mark Baril, Paul Wilkinson	Super Nintendo	speed.rsn
-	Spirou	Frederic Mentzen, Thierry Caron, Emmanuel Regis	Super Nintendo	spir.rsn
+	Speed Racer in My Most Dangerous Adventures	Mark Baril, Paul Wilkinson	Super Nintendo	speed.rsn
+	Speedy Gonzales in Los Gatos Bandidos	Mark Cooksey	Super Nintendo	sggb.rsn
+	Spellcraft		Super Nintendo	spc.rsn
+	Spider-Man	Fletcher Beasley, Joe Perry	Super Nintendo	spm.rsn
+	Spider-Man & Venom: Maximum Carnage	Chris Jojo, Allister Morten Br	Super Nintendo	svmc.rsn
+	Spider-Man & Venom: Separation Anxiety	Suddi Raval, Paul Tonge	Super Nintendo	svsa.rsn
+	Spider-Man and the X-Men in Arcade's Revenge	Tim Follin, Geoff Follin	Super Nintendo	saxar.rsn
+	Spider-Man: Lethal Foes	Shoji Tomii, Minoru Endo, Mako	Super Nintendo	smlf.rsn
+	Spindizzy Worlds	Akiko Hashimoto, Yoshinori Hir	Super Nintendo	spdz.rsn
+	Spirou	Frederic Mentzen, Thierry Caro	Super Nintendo	spir.rsn
+	Spriggan Powered	Mutumi Isimura, Hisasi Matusit	Super Nintendo	sprp.rsn
+	St.Giga 10 Gatsu Gou		Super Nintendo	sg10g.rsn
+	Star Fox	Hajime Hirasawa	Super Nintendo	sf.rsn
+	Star Fox 2	Kozue Ishikawa, Yumiko Kanki	Super Nintendo	sfx2.rsn
+	Star Ocean	Motoi Sakuraba	Super Nintendo	so.rsn
+	Star Trek Deep Space Nine: Crossroads of Time		Super Nintendo	ds9.rsn
+	Star Trek: Starfleet Academy Starship Bridge Simulator	Ken Allen	Super Nintendo	stsfa.rsn
+	Starfield Trainer	The Doctor	Super Nintendo	sftr.rsn
+	Stargate	Steve Collett, Andy Brock	Super Nintendo	sgate.rsn
+	Stealth		Super Nintendo	stl.rsn
+	Sterling Sharpe's End 2 End		Super Nintendo	sse2e.rsn
+	Steven Seagal is the Final Option	Fred Porter	Super Nintendo	ssitfo.rsn
+	Stone Protectors	Steve Duckworth	Super Nintendo	stone.rsn
+	Street Combat		Super Nintendo	strc.rsn
+	Street Fighter Alpha 2	Setsuo Yamamoto, Syun Nishigak	Super Nintendo	sfa2.rsn
+	Street Fighter II Turbo	Yoshihiro Sakaguchi, Yoko Shim	Super Nintendo	sf2t.rsn
+	Street Fighter II: The World Warrior	Yoshihiro Sakaguchi, Yoko Shim	Super Nintendo	sf2.rsn
+	Street Hockey '95	Dwight Stone, Dominique Wildie	Super Nintendo	sh95.rsn
+	Street Racer	Allister Morten Brimble	Super Nintendo	srace.rsn
+	Strike Gunner	Shotaro Sasaki, Koichi Ishibas	Super Nintendo	stg.rsn
+	Stunt Race FX	Shinobu Amayake	Super Nintendo	wt.rsn
+	Sufami Turbo	Kenichi Okuma	Super Nintendo	suftu.rsn
+	Sugoi Hebereke	Naoki Kodaka, Hitoshi Sakimoto	Super Nintendo	sgh.rsn
+	Sunset Riders	Naohisa Morota	Super Nintendo	ssrd.rsn
+	Supapoon	Kaori Idaya, Nobu	Super Nintendo	spn.rsn
+	Supapoon DX	Kaori Idaya, Nobuhiro Ohuchi	Super Nintendo	spndx.rsn
+	Super 3D Baseball	CMS Takeshi	Super Nintendo	sbl2.rsn
+	Super 4WD: The Baja	Chip Burwell	Super Nintendo	sortb.rsn
+	Super Adventure Island	Yuzo Koshiro	Super Nintendo	sai.rsn
+	Super Adventure Island 2	Akihiro Akamatsu, Sachiko Oita	Super Nintendo	sai2.rsn
+	Super Air Diver 2	Shimami Sakuba, Kazuya Suyama	Super Nintendo	sad2.rsn
+	Super Back to the Future 2	Hitoshi Sakimoto	Super Nintendo	sbf2.rsn
+	Super Baseball 2020	J. Kuramochi, Hiroo Ikeda	Super Nintendo	sb20.rsn
+	Super Baseball Simulator 1.000		Super Nintendo	bsim.rsn
+	Super Bases Loaded	Tatsuya	Super Nintendo	sbl.rsn
+	Super Bases Loaded 3: License to Steal	Shibikkun, Suitton, Gotton	Super Nintendo	sbl3.rsn
+	Super Batter Up	Yoshinori Kawamoto, Shinya Yam	Super Nintendo	sbup.rsn
+	Super Battleship	Christopher Barker	Super Nintendo	sbs.rsn
+	Super Battletank 2	Jim Wallace	Super Nintendo	sbtk2.rsn
+	Super BC Kid	Masaaki Nishizawa, Keiji Ueki,	Super Nintendo	bonk.rsn
+	Super Big 2		Super Nintendo	sb2.rsn
+	Super Bikkuriman	Tomoyuki Hamada	Super Nintendo	sbk.rsn
+	Super Black Bass	Cube	Super Nintendo	sbb1.rsn
+	Super Bomberman	Jun Chikuma	Super Nintendo	sbm.rsn
+	Super Bomberman 2	Hirohiko Fukuda	Super Nintendo	sbm2.rsn
+	Super Bomberman 3	Jun Chikuma, Keita Hoshi	Super Nintendo	sbm3.rsn
+	Super Bomberman 4	Jun Chikuma	Super Nintendo	sbm4.rsn
+	Super Bomberman 5	Jun Chikuma, Hirohiko Fukuda	Super Nintendo	sbm5.rsn
+	Super Bomberman: Panic Bomber W	Kenichi Koyano, Hitoshi Sakimo	Super Nintendo	spbw.rsn
+	Super Bombliss	MITSUTO.S	Super Nintendo	sbom.rsn
+	Super Bowling		Super Nintendo	sbowl.rsn
+	Super Buster Bros.	Tetsuya Nishimura, Minae Fujii	Super Nintendo	sbb.rsn
+	Super Caesar's Palace	Tommy Tallarico, Steve Henefin	Super Nintendo	scp.rsn
+	Super Casino 2	Masahito Miyamoto	Super Nintendo	scas2.rsn
+	Super Chase H.Q.	Yasuhisa Watanabe, Naoto Yagis	Super Nintendo	schq.rsn
+	Super Chinese World	Eiji Miyabi	Super Nintendo	snb.rsn
+	Super Conflict: The Mideast	Robert Ridihalgh	Super Nintendo	scme.rsn
+	Super Copa	Bob Dayley, Eric Nunamaker, Ki	Super Nintendo	suco.rsn
+	Super Daikoukai Jidai	Yoko Kanno	Super Nintendo	uw.rsn
+	Super Dany	David de Gruttola	Super Nintendo	dany.rsn
+	Super Dogfight: F-14 Tomcat Air Combat Game	Mark Van Hecke	Super Nintendo	tbnfz.rsn
+	Super Double Dragon	Kazunaka Yamane	Super Nintendo	sdd.rsn
+	Super Double Yakuman	Kazunaka Yamane	Super Nintendo	sudy.rsn
+	Super Double Yakuman II		Super Nintendo	sudy2.rsn
+	Super Drift Out	Kenji Yamazaki	Super Nintendo	sdo.rsn
+	Super Dunk Star	Kazuo Sawa	Super Nintendo	sduns.rsn
+	Super F1 Circus	Nyorita Peter Ilich Ogawa	Super Nintendo	sf1c.rsn
+	Super Famicom Box		Super Nintendo	sfcb.rsn
+	Super Famicom Wars	Kenichi Nishiyama	Super Nintendo	sfcw.rsn
+	Super Family Circuit	Nobuyuki Ohnogi	Super Nintendo	sfc.rsn
+	Super Family GelÃ¤nde	Kouji Nakagawa	Super Nintendo	sfg.rsn
+	Super Famista	Yoshinori Kawamoto, Shinya Yam	Super Nintendo	sufa.rsn
+	Super Famista 2		Super Nintendo	sufa2.rsn
+	Super Final Match Tennis	Takamitsu Kajikawa	Super Nintendo	sfmt.rsn
+	Super Fire Pro Wrestling 1	Hiroya Niwayama, Hironori Tana	Super Nintendo	sfpw.rsn
+	Super Fire Pro Wrestling X	Chiyomaru Shikura	Super Nintendo	fpwx.rsn
+	Super Formation Soccer	Hiroya Niwayama, Hironori Tana	Super Nintendo	sfs.rsn
+	Super Formation Soccer 2	Masamichi Yamazaki, Hironori T	Super Nintendo	sfs2.rsn
+	Super Formation Soccer 94: World Cup Edition	Masamichi Yamazaki, Hironori T	Super Nintendo	sfs94.rsn
+	Super Formation Soccer 95: della Serie A	Yukie Sugawara, Kouji Niikura	Super Nintendo	sfs95.rsn
+	Super Formation Soccer 96: World Club Edition	Ichiro Atsuno, Masamichi Yamaz	Super Nintendo	sfs96.rsn
+	Super Gameboy	Akito Nakatsuka, Naoto Ishida	Super Nintendo	sgb.rsn
+	Super Gameboy 2	Akito Nakatsuka	Super Nintendo	sgb2.rsn
+	Super Genjin 2	Nobuyuki Nakamura	Super Nintendo	sgj2.rsn
+	Super Godzilla	Michiharu Hasuya, Junko Yokoya	Super Nintendo	sgod.rsn
+	Super Gomoku Narabe Renju		Super Nintendo	sgn.rsn
+	Super Gussun Oyoyo	K. Yamazaki	Super Nintendo	sgo.rsn
+	Super Gussun Oyoyo 2	K. Yamazaki	Super Nintendo	sgo2.rsn
+	Super Hanafuda	Cube	Super Nintendo	suha.rsn
+	Super High Impact	Marshall Parker	Super Nintendo	shi.rsn
+	Super Hockey '94	Hayato Matsuo, Hitoshi Sakimot	Super Nintendo	sh94.rsn
+	Super Indy Champ	K. Yamamoto	Super Nintendo	sindc.rsn
+	Super International Cricket	Marshall Parker	Super Nintendo	sic.rsn
+	Super James Pond	Richard Joseph	Super Nintendo	sjp.rsn
+	Super James Pond II	Keith Tinman	Super Nintendo	sjp2.rsn
+	Super Kokou Yakyuu: Ichikyuu Jikkon	Mitsuhito Tanaka	Super Nintendo	skyin.rsn
+	Super Kyukyoku Harikiri Stadium	Sanae Kasahara	Super Nintendo	skhs.rsn
+	Super Loopz	Koji Hayashi	Super Nintendo	sloop.rsn
+	Super Mad Champ	Hikoshi Hashimoto	Super Nintendo	smadc.rsn
+	Super Mahjong		Super Nintendo	sumj.rsn
+	Super Mahjong 2: Honkaku 4 Nin Uchi!	Masakatsu Maekawa	Super Nintendo	sumj2.rsn
+	Super Mahjong 3: Karakuchi	Masakatsu Maekawa	Super Nintendo	sumj3.rsn
+	Super Mahjong Taikai	Hiori Wakakuwa	Super Nintendo	sumt.rsn
+	Super Mario All-Stars	Koji Kondo, Soyo Oka	Super Nintendo	smas.rsn
+	Super Mario Kart	Soyo Oka	Super Nintendo	smk.rsn
+	Super Mario RPG	Yoko Shimomura	Super Nintendo	smr.rsn
+	Super Mario World	Koji Kondo	Super Nintendo	smw.rsn
+	Super Mario World 2: Yoshi's Island	Koji Kondo	Super Nintendo	yi.rsn
+	Super Metroid	Kenji Yamamoto, Minako Hamano	Super Nintendo	sm.rsn
+	Super Momotarou Dentetsu DX	Kazuyuki Sekiguchi	Super Nintendo	smdd.rsn
+	Super Morph	Graham King	Super Nintendo	smph.rsn
+	Super Naxat Open: Golf de Shoubu da! Dorabocchan	Hisashi Matsushita	Super Nintendo	sno.rsn
+	Super Nazo Puyo 2: Ruru no Tetsuwan Hanjyou ki	BA.M, Tsuyoshi Matsushima, SUP	Super Nintendo	snz2.rsn
+	Super Nazo Puyo: Ruru no Ruu	BA.M, Einosuke Nagao, Tsuyoshi	Super Nintendo	snz.rsn
+	Super NES Nintendo Scope 6		Super Nintendo	ss6.rsn
+	Super Ninja-Kun	Takahiro Ogata	Super Nintendo	snk.rsn
+	Super Off Road	Tim Follin, Geoff Follin	Super Nintendo	off.rsn
+	Super Okuman Chouja Game: The Game of Billionaire	Yasuhiro Kawasaki, Masato Miya	Super Nintendo	okutg.rsn
+	Super Oozumou: Nessen Ou Ichiban	Hiromi Shibano	Super Nintendo	sond.rsn
+	Super Pachinko	Takane Okubo	Super Nintendo	spach.rsn
+	Super Pachinko Taisen	Kenji Yamazaki	Super Nintendo	spata.rsn
+	Super Pinball: Behind the Mask	Yusuke Takahama	Super Nintendo	spbtm.rsn
+	Super Play Action Football	Yoshi	Super Nintendo	spaf.rsn
 	Super Power League	Masakatsu Maekawa	Super Nintendo	spl.rsn
 	Super Power League 2	Masakatsu Maekawa	Super Nintendo	spl2.rsn
 	Super Power League 3	Masakatsu Maekawa	Super Nintendo	spl3.rsn
 	Super Power League 4	Masakatsu Maekawa	Super Nintendo	spl4.rsn
-	Spider-Man	Joe Perry	Super Nintendo	spm.rsn
-	Supapoon	Kaori Idaya, Nobu	Super Nintendo	spn.rsn
-	Supapoon DX	Kaori Idaya, Nobuhiro Ohuchi	Super Nintendo	spndx.rsn
-	Super Punch-Out!!	Takashi Kumegawa, Masaru Sakakibara	Super Nintendo	spo.rsn
+	Super Professional Baseball 2	Bokubo	Super Nintendo	spb2.rsn
+	Super Punch-Out!!	Takashi Kumegawa, Masaru Sakak	Super Nintendo	spo.rsn
 	Super Puyo Puyo	Einosuke Nagao	Super Nintendo	spp.rsn
-	Spriggan Powered	Mutumi Isimura, Hisasi Matusita	Super Nintendo	sprp.rsn
-	Super Putty	Richard Joseph	Super Nintendo	spt.rsn
-	Spark World	Minako Adachi	Super Nintendo	spw.rsn
-	Spawn	Harumi Fujita	Super Nintendo	spwn.rsn
-	SeaQuest DSV	Dean Morrell	Super Nintendo	sqdsv.rsn
-	Street Racer	Allister Brimble	Super Nintendo	srace.rsn
-	Super Royal Blood	Masumi Itou	Super Nintendo	srb.rsn
-	Saibara Rieko no Mahjong Hourouki	Haruo Ohashi, Shinya Kurahashi	Super Nintendo	srmh.rsn
+	Super Puyo Puyo 2	BA.M, Einosuke Nagao, Tsuyoshi	Super Nintendo	sp2.rsn
+	Super Puyo Puyo 2 Remix	BA.M, Einosuke Nagao, Tsuyoshi	Super Nintendo	sp2r.rsn
 	Super R-Type	Charlie Y.K, Hiya, Hiroshi	Super Nintendo	srt.rsn
-	Super Robot Taisen 3	Shinichi Tanaka	Super Nintendo	srt3.rsn
-	Super Robot Taisen 4	Shinichi Tanaka	Super Nintendo	srt4.rsn
+	Super R.B.I. Baseball	DMP	Super Nintendo	rbi.rsn
 	Super Robot Taisen EX	Shinichi Tanaka	Super Nintendo	srte.rsn
-	Masoukishin	Daisuke Fujimoto	Super Nintendo	srtg.rsn
-	Super Star Wars: Return of the Jedi	Paul Webb	Super Nintendo	srtj.rsn
-	Shiroi Ring he: Twinkle Little Star	Hideyuki Sugai, Kenichi Tomizawa	Super Nintendo	srtls.rsn
-	Silva Saga 2	Katsuhisa Ishida, Masanao Akahori, Jun Enoki	Super Nintendo	ss2.rsn
-	Super Scope 6	Nintendo Sound Team	Super Nintendo	ss6.rsn
-	Super Soccer Champ	Ishi Babio, Wiz Master, Pochi	Super Nintendo	ssc.rsn
-	Shin SD Sengokuden: Daishougun Retsuden	Michiya Hirasawa, Tsukushi Sasak	Super Nintendo	ssds.rsn
-	Super Strike Eagle	Scott Patterson, Jeff Briggs	Super Nintendo	sse.rsn
-	Sterling Sharpe: End 2 End	TOSE Sound Team	Super Nintendo	sse2e.rsn
-	Super Street Fighter 2 (Japanese)	Yoshihiro Sakaguchi, Yoko Shimom	Super Nintendo	ssf2.rsn
-	Super Shougi	I'Max Sound Team	Super Nintendo	sshg.rsn
+	Super Robot Taisen Gaiden: Masoukishin	Daisuke Fujimoto	Super Nintendo	srtg.rsn
+	Super Sangokushi	Yoko Kanno	Super Nintendo	sngks.rsn
+	Super Shadow of the Beast	Probe	Super Nintendo	sotb.rsn
+	Super Shougi		Super Nintendo	sshg.rsn
 	Super Shougi 2	Toshiyuki Takine	Super Nintendo	sshg2.rsn
-	Super Shougi 3	Betop Sound Team	Super Nintendo	sshg3.rsn
-	Shin Shougi Club	Natsu System Sound Team	Super Nintendo	sshgc.rsn
-	Steven Seagal is the Final Option	Fred Porter	Super Nintendo	ssitfo.rsn
-	Shijou Saikyou League Serie A: Ace Striker	Masahito Nakano, Atsuhiro Motoya	Super Nintendo	sslsa.rsn
-	Shijou Saikyou no Quiz Ou Ketteisen Super	Takeaki Sugimoto	Super Nintendo	ssnqs.rsn
-	Super Soukoban	A. Suda	Super Nintendo	ssou.rsn
-	Sunset Riders	Naohisa Morota	Super Nintendo	ssrd.rsn
-	Saikousoku Shikou Shougi Mahjong	Varie Sound Team	Super Nintendo	sssm.rsn
-	Super Stadium	Affect Sound Team	Super Nintendo	ssta.rsn
-	Tenbu Spirits	135	Super Nintendo	sstbs.rsn
-	Super Star Wars	Paul Webb	Super Nintendo	ssw.rsn
-	BS Sousa Sentai Wappers	Akito Nakatsuka	Super Nintendo	sswap.rsn
-	Super Tetris 2	Mitsuhiko.T, K4, DHAL-CHAN	Super Nintendo	st2.rsn
-	Super Tetris 2 Limited Edition	Mitsuhiko.T, K4, DHAL-CHAN	Super Nintendo	st2l.rsn
-	Super Tetris 3	Shigemitsu Goto	Super Nintendo	st3.rsn
-	Super Trump Collection	Pure Sound	Super Nintendo	stc.rsn
-	Super Tennis	Yoshi	Super Nintendo	sten.rsn
-	Super Tekkyu Fight!	Maz, Less Series	Super Nintendo	stf.rsn
-	Strike Gunner	Shotaro Sasaki, Aka Ishibashi	Super Nintendo	stg.rsn
-	Sutte Hakkun	Akito Nakatsuka	Super Nintendo	sth.rsn
-	Super Troll Islands	Richard Joseph	Super Nintendo	sti.rsn
-	Stealth	Axes Art Amuse Sound Team	Super Nintendo	stl.rsn
-	Star Trek: The Next Generation	Andrew Edlen, Joseph White	Super Nintendo	stn.rsn
-	Stone Protectors	Steve Duckworth	Super Nintendo	stone.rsn
-	Street Combat	Irem sound team	Super Nintendo	strc.rsn
-	Striker	Daevid Peel, Phil Tootill, Ian Moran	Super Nintendo	strkr.rsn
-	Special Tee Shot	Yumiko Kameya	Super Nintendo	sts.rsn
-	Star Trek: Starfleet Academy	Ken Allen	Super Nintendo	stsfa.rsn
-	Super Tsume Shougi 1000	Pure Sound	Super Nintendo	stsh.rsn
-	Super Smash TV	Marshall Parker	Super Nintendo	stv.rsn
-	Super Ultra Baseball 2	Culture Brain sound team	Super Nintendo	sub2.rsn
-	Super Copa	Bob Dayley, Eric Nunamaker, Kingsley Thurber	Super Nintendo	suco.rsn
-	Super Double Yakuman	Kazunaka Yamane	Super Nintendo	sudy.rsn
-	Super Double Yakuman 2	Imagesoft Sound Team	Super Nintendo	sudy2.rsn
-	Super Famista	Yoshinori Kawamoto, Shinya Yamada	Super Nintendo	sufa.rsn
-	Super Famista 2	Namco sound team	Super Nintendo	sufa2.rsn
-	Sufami Turbo BIOS	Kenichi Ohkuma	Super Nintendo	suftu.rsn
-	Super Hanafuda	Cube	Super Nintendo	suha.rsn
-	Super Mahjong	I'Max Sound Team	Super Nintendo	sumj.rsn
-	Super Mahjong 2	Masakatsu Maekawa	Super Nintendo	sumj2.rsn
-	Super Mahjong 3	Masakatsu Maekawa	Super Nintendo	sumj3.rsn
-	Super Mahjong Taikai	Hiori Wakakuwa	Super Nintendo	sumt.rsn
-	Super Uno	Toshiyuki Takine	Super Nintendo	suno.rsn
+	Super Shougi 3: Kitaihei		Super Nintendo	sshg3.rsn
+	Super Slap Shot	Tommy Tallarico	Super Nintendo	slap.rsn
+	Super Snakey	Robert Ridihalgh	Super Nintendo	wsnk.rsn
 	Super Solitaire	Marshall Parker	Super Nintendo	suso.rsn
+	Super Soukoban	A. Suda	Super Nintendo	ssou.rsn
+	Super Stadium		Super Nintendo	ssta.rsn
+	Super Star Wars	Paul Webb	Super Nintendo	ssw.rsn
+	Super Star Wars: Empire Strikes Back	Paul Webb	Super Nintendo	sesb.rsn
+	Super Star Wars: Return of the Jedi	Paul Webb	Super Nintendo	srtj.rsn
+	Super Street Fighter 2: The New Challengers	Yoshihiro Sakaguchi, Yoko Shim	Super Nintendo	ssf2.rsn
+	Super Strike Eagle	Scott Patterson, Jeff Briggs	Super Nintendo	sse.rsn
+	Super Syobo Syobo CG Collection		Super Nintendo	syobo.rsn
+	Super Tekkyuu Fight!	Maz, Less Series	Super Nintendo	stf.rsn
+	Super Tennis	Yoshi	Super Nintendo	sten.rsn
+	Super Tetris 2 & Bombliss	Mitsuhiko.T, K4, DHAL-CHAN	Super Nintendo	st2.rsn
+	Super Tetris 2 & Bombliss Limited Edition	Mitsuhiko.T, K4, DHAL-CHAN	Super Nintendo	st2l.rsn
+	Super Tetris 3	Shigemitsu Goto	Super Nintendo	st3.rsn
+	Super Troll Islands	Richard Joseph	Super Nintendo	sti.rsn
+	Super Trump Collection	Pure Sound	Super Nintendo	stc.rsn
+	Super Tsume Shougi 1000	Pure Sound	Super Nintendo	stsh.rsn
+	Super Turrican	Chris HÃ¼lsbeck	Super Nintendo	turr.rsn
+	Super Turrican 2	Chris HÃ¼lsbeck	Super Nintendo	turr2.rsn
+	Super Ultra Baseball 2		Super Nintendo	sub2.rsn
+	Super Uno	Toshiyuki Takine	Super Nintendo	suno.rsn
 	Super Valis IV	Junta	Super Nintendo	sv4.rsn
-	Onizuka Katsuya Super Virtual Boxing	itsuhito Tanaka	Super Nintendo	svb.rsn
-	Super Variable Geo	Technical Group Laboratory Sound Team	Super Nintendo	svg.rsn
-	Syvalion	Koichi Sugiyama, Hayato Matsuo, Katsunari Kitajima	Super Nintendo	svln.rsn
-	Spider-Man and Venom: Maximum Carnage	Chris Jojo, Alistair Brimble	Super Nintendo	svmc.rsn
-	Spider-Man & Venom: Separation Anxiety	Suddi Raval, Paul Tonge	Super Nintendo	svsa.rsn
-	Sonic Wings	aoki Sakamura, M. Yamana	Super Nintendo	sw.rsn
-	Super Wild Card	JSI Sound Team	Super Nintendo	swc.rsn
-	Super Widget	T's Music	Super Nintendo	swdg.rsn
-	Snow White: Happily Ever After	Ian Howe	Super Nintendo	swhea.rsn
-	Super Swiv	David Whittaker	Super Nintendo	swiv.rsn
-	Sword World SFC	Yumi Kinoshita, Yusaburo Shimajyo, Shigekazu Kamaki, Yoshiya Takayama, Daisuke Emura	Super Nintendo	sws.rsn
-	Sword World SFC 2	Daisuke Emura	Super Nintendo	sws2.rsn
-	Sanrio World Smash Ball	Okkuba Takane	Super Nintendo	swsb.rsn
+	Super Variable Geo		Super Nintendo	svg.rsn
+	Super Wagyan Land	Norihiko Togashi	Super Nintendo	wgl.rsn
+	Super Widget	Tomoyuki Hamada	Super Nintendo	swdg.rsn
+	Super Wild Card DX V1.122		Super Nintendo	swc.rsn
+	Super Zugan 2: Tsukanpo Fighter	Eiko Kaneda, Kaori Idaya	Super Nintendo	sz2.rsn
+	Super Zugan: Hakotenjou kara no Shoutai	Masakatsu Maekawa, Yukino Yabe	Super Nintendo	sz.rsn
 	Sutobasu Yarou Show: 3 on 3 Basketball	Nobuyuki Shioda	Super Nintendo	syaro.rsn
-	Shoot Your Load	The Doctor	Super Nintendo	syl.rsn
+	Sutte Hakkun	Akito Nakatsuka	Super Nintendo	sth.rsn
+	Suzuka 8 Hours	Katsuhiro Hayashi	Super Nintendo	s8h.rsn
+	SWAT Kats: The Radical Squadron	Tomoyuki Hamada	Super Nintendo	sk.rsn
+	Sword Maniac	Hayato Matsuo, Hitoshi Sakimot	Super Nintendo	sdmc.rsn
+	Sword World SFC	Yumi Satake, Yusaburo Shimajyo	Super Nintendo	sws.rsn
+	Sword World SFC 2: Inishie no Kyojin Densetsu	Daisuke Emura	Super Nintendo	sws2.rsn
 	Syndicate	Russell Shaw	Super Nintendo	syn.rsn
-	Super Syobo Syobo CG Collection	Unknown	Super Nintendo	syobo.rsn
-	Shounin yo, Taishi o Idake!!	Kenichi Kamio, Tomoyuki Hamada	Super Nintendo	syti.rsn
-	Super Zugan	Masakatsu Maekawa, Yukino Yabe	Super Nintendo	sz.rsn
-	Super Zugan 2	Eiko Kaneda, Kaori Idaya	Super Nintendo	sz2.rsn
-	Terminator 2: Judgment Day	Shahid Ahmad	Super Nintendo	t2jd.rsn
+	Syvalion	Hayato Matsuo, Katsunari Kitaj	Super Nintendo	svln.rsn
 	T2: The Arcade Game	Andy Brock	Super Nintendo	t2tag.rsn
-	Panel de Pon	Masaya Kuzume	Super Nintendo	ta.rsn
-	Waratte Iitomo! Tamorinpic	Athena Sound Team	Super Nintendo	tamo.rsn
-	Troy Aikman NFL Football	Rob Atesalp	Super Nintendo	tanf.rsn
-	Tarot Mystery	Ukiyotei Sound Team	Super Nintendo	tarm.rsn
+	Table Game Dai-Shuugo!! Shogi Mahjong Hanafuda		Super Nintendo	tbgmd.rsn
 	Tactical Soccer	Akira Takemoto	Super Nintendo	taso.rsn
-	Taz-Mania	Mitchell Stein, Mark Miller, Jason Anderson, John Schappert	Super Nintendo	taz.rsn
-	Thoroughbred Breeder 2	Hect Sound Team	Super Nintendo	tb2.rsn
-	Thoroughbred Breeder 3	Tsukasa Tawada, Seiichi Satou, Hitoshi "YmoH.S" Sakimoto	Super Nintendo	tb3.rsn
-	Tetris Battle Gaiden	Tomoyuki Hamada	Super Nintendo	tbat.rsn
-	Table Game Daishuugou!	Varie Sound Team	Super Nintendo	tbgmd.rsn
-	Turn and Burn: No Fly Zone	Mark Van Hecke	Super Nintendo	tbnfz.rsn
-	Total Carnage	Byte Size Sound	Super Nintendo	tcar.rsn
-	Treasure Conflix	Junya Nakano	Super Nintendo	tcx.rsn
-	Mickey no Tokyo Disneyland Daibouken	Shigenori Masuko, Yoko Suzuki, M	Super Nintendo	tdl.rsn
-	Tetris & Dr. Mario	Nintendo Sound Team	Super Nintendo	tdm.rsn
-	Thunder Spirits	Tomomi Ootani, Naosuke Arai	Super Nintendo	tdsp.rsn
-	Tenchi Muyo RPG	Shintaro Hirakawa	Super Nintendo	temu.rsn
-	SNES Test Program	Koji Kondo	Super Nintendo	test.rsn
-	Tetris 2	Elorg Sound Team	Super Nintendo	tet2.rsn
-	Top Gear	Kemco sound team	Super Nintendo	tg.rsn
-	Top Gear 2	Patrick Phelan, Ashley Bennett, Paul Bennet	Super Nintendo	tg2.rsn
-	Top Gear 3000	Neil Biggin	Super Nintendo	tg3.rsn
-	Thunderbirds	Kennosuke Suemura	Super Nintendo	thbi.rsn
-	Tinhead	Paul Tonge, Alistair Brimble	Super Nintendo	thead.rsn
-	Treasure Hunter G	Hitoshi "YmoH.S" Sakimoto	Super Nintendo	thg.rsn
-	The Tick	Paul Tonge, Tony Williams	Super Nintendo	tick.rsn
-	Taikyoku Igo Idaten	Toyakazu Nagaishi	Super Nintendo	tii.rsn
-	Time Cop	David de Gruttola	Super Nintendo	timec.rsn
-	Teenage Mutant Ninja Turtles IV: Turtles in Time	Kazuhiko Uehara, Harumi Ueko	Super Nintendo	tit.rsn
-	Tom and Jerry	John Spence	Super Nintendo	tj.rsn
-	Taekwon-Do	Human Sound Team	Super Nintendo	tkd.rsn
-	Tekichuu Keiba Juku	Banpresto Sound Team	Super Nintendo	tkj.rsn
-	Tokimeki Memorial	Keroppi Inoue, Noriko Takahashi	Super Nintendo	tkmm.rsn
-	TKO Super Championship Boxing	itsuhito Tanaka	Super Nintendo	tko.rsn
-	Tokoro's Mahjong	Vic Tokai sound team	Super Nintendo	tkrm.rsn
-	Taikou Rissiden	Michiru Oshima	Super Nintendo	tkrsd.rsn
-	True Lies	Marshall Parker, Dominic Morabito	Super Nintendo	tl.rsn
-	The Last Battle	Tomoro Okamoto	Super Nintendo	tlb.rsn
-	Tottemo! Lucky Man	Harumi Fujita, Yasuaki Fujita, First Circle	Super Nintendo	tlm.rsn
-	Top Management 2	Koei Sound Team	Super Nintendo	tm2.rsn
-	Takemiya Masaki Kudan no Igo Taishou	KSS Sound Team	Super Nintendo	tmkit.rsn
-	Teenage Mutant Ninja Turtles: Tournament Fighters	Kazuhiko Uehara, Hideto Inoue, H	Super Nintendo	tmnt5.rsn
-	Tony Meola's Sidekicks Soccer	Bob Dayley, Eric Nunamaker, Kingsley Thurber	Super Nintendo	tmss.rsn
-	Torneco no Daibouken	Koichi Sugiyama	Super Nintendo	tnd.rsn
-	Teitoku no Ketsudan	Yasushi Miyagawa	Super Nintendo	tnk.rsn
-	Teitoku no Ketsudan 2	Yoichiro Yoshikawa	Super Nintendo	tnk2.rsn
-	Tenshi no Uta	Motoi Sakuraba, Shinji Tamura, Ryota Furuya, Hassy	Super Nintendo	tnu.rsn
-	The Ninja Warriors	Hiroyuki Iwatsuki, N. Tate	Super Nintendo	tnw.rsn
-	Tactics Ogre	Hitoshi "YmoH.S" Sakimoto	Super Nintendo	to.rsn
-	Tales of Phantasia	Motoi Sakuraba, Shinji Tamura	Super Nintendo	top.rsn
-	Tsuppari Oozumo Rissin Shusse Hen	Keiji Yamagishi, Kaorin	Super Nintendo	torsh.rsn
-	Total Football	Jolyon Myers	Super Nintendo	totf.rsn
-	Toys	Mark Van Hecke	Super Nintendo	toys.rsn
-	Theme Park	Russell Shaw	Super Nintendo	tp.rsn
-	Timon and Pumbaa's Jungle Games	Mark Ortiz	Super Nintendo	tpjg.rsn
-	Twinbee: Rainbow Bell Adventure	Kenichi Matsubara, Yukie Morimoto, Saiko Miki	Super Nintendo	trba.rsn
-	Trinea	Kazuyasu Hiroe, Kohji Abe, Tsuyoshi Tanaka, Mitsuru Takashi, Senkyokukun, Sugar, "E", DJ Jun	Super Nintendo	trin.rsn
-	Troddlers	Allister Brimble	Super Nintendo	trod.rsn
-	Terranigma	Miyoko Kobayashi, Masanori Hikichi	Super Nintendo	ts.rsn
+	Tactics Ogre: Let Us Cling Together	Hitoshi Sakimoto, Masaharu Iwa	Super Nintendo	to.rsn
+	Tadaima Yuusha Boshuuchuu Okawari		Super Nintendo	tybo.rsn
+	Taekwon-Do		Super Nintendo	tkd.rsn
+	Taikou Risshiden	Michiru Ooshima	Super Nintendo	tkrsd.rsn
+	Taikyoku Igo: Idaten	Toyakazu Nagaishi	Super Nintendo	tii.rsn
+	Tales of Phantasia	Motoi Sakuraba, Shinji Tamura,	Super Nintendo	top.rsn
+	Tarot Mystery		Super Nintendo	tarm.rsn
+	Taz-Mania	Mitchell Stein, Mark Miller, J	Super Nintendo	taz.rsn
 	Tecmo Super Baseball	Rick Rhodes	Super Nintendo	tsb.rsn
-	Tecmo Super Bowl	Rika Shigeno, Keiji Yamagishi, Kaori Nakabai, Hiroshi Miyazaki	Super Nintendo	tsbw.rsn
-	The Shinri Game	Visit Sound Team	Super Nintendo	tsg.rsn
-	The Shinri Game 2: Magical Trip	Kenji Yamazaki	Super Nintendo	tsg2.rsn
-	Time Slip	Martin Walker	Super Nintendo	tslip.rsn
-	Tecmo Super NBA Basketball	George Sanger, Mark Ganus, Paul Webb	Super Nintendo	tsnb.rsn
-	Traverse: Starlight and Prairie	Daisuke Tamura	Super Nintendo	tsp.rsn
-	Toy Story	Randy Newman, Andy Blythe, Marten Joustra	Super Nintendo	tst.rsn
-	Tin Star	Chris Jojo, Matthew Cannon, Suddi Raval	Super Nintendo	tstar.rsn
-	Toy Story	Randy Newman	Super Nintendo	tstgb.rsn
-	Tsuyoshi Shikkarishinasai Taisen Puzzle-Dama	Kenichi Matsubara, Hideto Inoue,	Super Nintendo	tstp.rsn
-	Tsuri Taro	Katsuhiro Hayashi	Super Nintendo	tsuta.rsn
-	Tiny Toon Adventures: Buster Busts Loose	Kazuhiko Uehara, Yukie Morimoto	Super Nintendo	tta.rsn
-	TinTin au Tibet	Fabrice Bouillon, Emmanuel Regis	Super Nintendo	ttat.rsn
-	Tiny Toon Adventures: Wacky Sports Challenge	Jun Funahashi, M. Matsuhira	Super Nintendo	ttawsc.rsn
-	Thomas the Tank Engine & Friends	Geoff & Tim Follin	Super Nintendo	ttef.rsn
-	The Twisted Tales of Spike McFang	Hisashi Matsushita	Super Nintendo	ttsmf.rsn
-	TinTin: Le Temple du Solei	L'Eoscene, Emmanuel Regis	Super Nintendo	ttts.rsn
-	Time Trax	Richard Joseph	Super Nintendo	ttx.rsn
-	Mr. Tuff	Allister Brimble, Steve Blenkinsopp	Super Nintendo	tuff.rsn
-	Super Turrican	Chris Hülsbeck	Super Nintendo	turr.rsn
-	Super Turrican 2	Chris Hülsbeck	Super Nintendo	turr2.rsn
+	Tecmo Super Bowl	Rika Shigeno, Keiji Yamagishi,	Super Nintendo	tsbw.rsn
+	Tecmo Super NBA Basketball	George Alistair Sanger, Mark G	Super Nintendo	tsnb.rsn
+	Teenage Mutant Hero Turtles IV: Turtles in Time	Kazuhiko Uehara, Harumi Ueko	Super Nintendo	tit.rsn
+	Teenage Mutant Hero Turtles: Tournament Fighters	Kazuhiko Uehara, Hideto Inoue,	Super Nintendo	tmnt5.rsn
+	Tekichuu Keiba Juku		Super Nintendo	tkj.rsn
+	Tenchi Muyou: Game hen	Shintaro Hirakawa	Super Nintendo	temu.rsn
+	Tenchi Souzou	Miyoko Kobayashi, Masanori Hik	Super Nintendo	ts.rsn
+	Tengai Makyou Zero	Toshiyuki Sasagawa, Kohei Tana	Super Nintendo	feoez.rsn
+	Tenshi no Uta: Shiroki Tsubasa no Inori	Motoi Sakuraba, Shinji Tamura	Super Nintendo	tnu.rsn
+	Terminator 2: Judgment Day	Shahid Ahmad	Super Nintendo	t2jd.rsn
+	Tetris 2		Super Nintendo	tet2.rsn
+	Tetris Battle Gaiden	Tomoyuki Hamada	Super Nintendo	tbat.rsn
 	Tetsuwan Atom	M. Nozawa	Super Nintendo	twa.rsn
-	Tadaima Yusya Bosyutyu Okawari	Yayoi Okumura, Hideto Maeda, Shunichi Shigematsu, Nobuo Fujii	Super Nintendo	tybo.rsn
-	Ultra Seven	Minoru Yuasa, Hiroaki Koi, Go Takano	Super Nintendo	u7.rsn
-	Ultra Baseball Jitsumeiban	Culture Brain Sound Team	Super Nintendo	ubj.rsn
-	Ultra Baseball Jitsumeiban 2	Culture Brain Sound Team	Super Nintendo	ubj2.rsn
-	Ultra Baseball Jitsumeiban 3	Culture Brain Sound Team	Super Nintendo	ubj3.rsn
-	Undercover Cops	Hiya-Unit	Super Nintendo	ucc.rsn
-	Ultima: Kyouryuu Teikoku	arry Leitch	Super Nintendo	ukt.rsn
-	Utyu no Kishi Tekkaman Blade	Skeleton	Super Nintendo	uktb.rsn
-	Ultra League	Kazuo Sawa	Super Nintendo	ulmst.rsn
-	Ultima 6	Kazuo Sawa	Super Nintendo	ult6.rsn
-	Ultima 7	Martin Galway, Dana Glover, Kirk Winterrowd	Super Nintendo	ult7.rsn
-	Ultraman	Takahiro Wakuta	Super Nintendo	ultm.rsn
+	The Flintstones	Keith Tinman, Jonathan Dunn	Super Nintendo	flint.rsn
+	The Flintstones	N. Furukawa, K. Suemura	Super Nintendo	ftsm.rsn
+	The Hunt for Red October	John Spence	Super Nintendo	hro.rsn
+	The Incredible Hulk	Steve Collett	Super Nintendo	hulk.rsn
+	The King of Rally	Yusuke Takahama	Super Nintendo	kor.rsn
+	The Last Battle	Tomoro Okamoto	Super Nintendo	tlb.rsn
+	The Mahjong Touhaiden	Soushi Hosoi, Pirowo	Super Nintendo	majt.rsn
+	The Mask	Phil Crescenzo	Super Nintendo	mask.rsn
+	The NinjaWarriors	Hiroyuki Iwatsuki, N. Tate	Super Nintendo	tnw.rsn
+	The Shadow	Jonathan Dunn	Super Nintendo	shad.rsn
+	The Shinri Game 2: Magical Trip	Kenji Yamazaki	Super Nintendo	tsg2.rsn
+	The Shinri Game 3		Super Nintendo	sg3.rsn
+	The Shinri Game: Akuma no Kokoroji		Super Nintendo	tsg.rsn
+	The Simpsons: Bart no Fushigi na Yume no Daibouken	Dean Morrell	Super Nintendo	sbn.rsn
+	The Smurfs	Frederic Mentzen	Super Nintendo	smurf.rsn
+	The Smurfs 2	Climax	Super Nintendo	smurf2.rsn
+	The Sporting News Power Baseball	RDB, Masakatsu Maekawa	Super Nintendo	snbb.rsn
+	The Tick	Paul Tonge, Tony Williams	Super Nintendo	tick.rsn
+	The Untouchables	Keith Tinman	Super Nintendo	unt.rsn
+	Theme Park	Russell Shaw	Super Nintendo	tp.rsn
+	Thomas the Tank Engine and Friends	Tim Follin, Geoff Follin	Super Nintendo	ttef.rsn
+	Thoroughbred Breeder 2		Super Nintendo	tb2.rsn
+	Thoroughbred Breeder 3	Tsukasa Tawada, Seiichi Satou,	Super Nintendo	tb3.rsn
+	Thunder Spirits	Tomomi Ootani, Toshiharu Yaman	Super Nintendo	tdsp.rsn
+	Thunderbirds: Kokusai Kyuujotai Shutsudou seyo!	Kennosuke Suemura	Super Nintendo	thbi.rsn
+	Time Cop	David de Gruttola	Super Nintendo	timec.rsn
+	Time Trax	Richard Joseph	Super Nintendo	ttx.rsn
+	Timeslip	Martin Walker	Super Nintendo	tslip.rsn
+	Timon & Pumbaa's Jungle Games	Mark Ortiz	Super Nintendo	tpjg.rsn
+	Tin Star	Chris Jojo, Matthew Cannon, Su	Super Nintendo	tstar.rsn
+	Tinhead	Paul Tonge, Allister Morten Br	Super Nintendo	thead.rsn
+	Tintin in Tibet	Fabrice Bouillon, Emmanuel Reg	Super Nintendo	ttat.rsn
+	Tintin: Prisoners of the Sun	L&#x27;Eoscene, Emmanuel Regis	Super Nintendo	ttts.rsn
+	Tiny Toon Adventures: Buster Busts Loose!	Kazuhiko Uehara, Yukie Morimot	Super Nintendo	tta.rsn
+	Tiny Toon Adventures: Wacky Sports Challenge	Jun Funahashi, Minako Matsuhir	Super Nintendo	ttawsc.rsn
+	Tokimeki Memorial: Densetsu no Ju no Shita De	Keroppi Inoue, Noriko Takahash	Super Nintendo	tkmm.rsn
+	Tokoro's Mahjong		Super Nintendo	tkrm.rsn
+	Tom & Jerry	John Spence	Super Nintendo	tj.rsn
+	Top Gear	Barry Leitch	Super Nintendo	tg.rsn
+	Top Gear 2	Patrick Phelan, Ashley Bennet,	Super Nintendo	tg2.rsn
+	Top Management 2		Super Nintendo	tm2.rsn
+	Torneco no Daibouken: Fushigi no Dungeon	Koichi Sugiyama	Super Nintendo	tnd.rsn
+	Total Carnage	Byte Size Sound	Super Nintendo	tcar.rsn
+	Total Football	Jolyon Myers	Super Nintendo	totf.rsn
+	Tottemo! Lucky Man: Lucky Cookie Roulette de Totsugeki	Harumi Fujita, Yasuaki Fujita,	Super Nintendo	tlm.rsn
+	Toy Story	Randy Newman, Patrick J. Colli	Super Nintendo	tst.rsn
+	Toy Story	Randy Newman	Super Nintendo	tstgb.rsn
+	Toys	Mark Van Hecke	Super Nintendo	toys.rsn
+	Traverse: Starlight and Prairie	Daisuke Tamura	Super Nintendo	tsp.rsn
+	Treasure Conflix	Junya Nakano	Super Nintendo	tcx.rsn
+	Treasure Hunter G	Mitsuhito Tanaka, Toshiaki Sak	Super Nintendo	thg.rsn
+	Trinea	Hiroe Kazuyasu, Koji Abe, Tsuy	Super Nintendo	trin.rsn
+	Troddlers	Allister Morten Brimble	Super Nintendo	trod.rsn
+	Troy Aikman NFL Football	Rob Atesalp	Super Nintendo	tanf.rsn
+	True Golf Classics: Waialae Country Club	Yumi Satake	Super Nintendo	waia.rsn
+	True Lies	Marshall Parker, Dominic Morab	Super Nintendo	tl.rsn
+	Tsuppari Oozumou: Rissin Syusse-hen		Super Nintendo	torsh.rsn
+	Tsuri Taro	Katsuhiro Hayashi	Super Nintendo	tsuta.rsn
+	Tsuyoshi Shikkarai Shinasai: Taisen Puzzle-Dama	Kenichi Matsubara, Hideto Inou	Super Nintendo	tstp.rsn
+	TV Animation Slam Dunk 2: IH Yosen Kanzenban	Shigemitsu Goto, Sukezo Ouyama	Super Nintendo	ftsd2.rsn
+	TV Animation Slam Dunk: SD Heat Up!!	Shigemitsu Goto, Sukezo Ouyama	Super Nintendo	ftsdh.rsn
+	Uchuu no Kishi: Tekkaman Blade	Skeleton	Super Nintendo	uktb.rsn
+	Uchuu Race: Astro Go! Go!	Yusuke Takahama	Super Nintendo	agogo.rsn
+	UFO Kamen Yakisoban: Ketoraa no Kuroi Inbou	Nobuyuki Shioda	Super Nintendo	yaki.rsn
+	Ultima Gaiden: Kurokishi no Inbou	Raymond Benson, Randy Buck, Ma	Super Nintendo	urov2.rsn
+	Ultima VI: Itsuwari no Yogensha	Kazuo Sawa	Super Nintendo	ult6.rsn
+	Ultima VII: The Black Gate	Martin Galway, Dana Glover, Ki	Super Nintendo	ult7.rsn
+	Ultima: The Savage Empire	Barry Leitch	Super Nintendo	ukt.rsn
+	Ultra Baseball Jitsumei Ban		Super Nintendo	ubj.rsn
+	Ultra Baseball Jitsumei Ban 2		Super Nintendo	ubj2.rsn
+	Ultra Baseball Jitsumei Ban 3		Super Nintendo	ubj3.rsn
+	Ultra League: Moero! Soccer Daisessen	Kazuo Sawa	Super Nintendo	ulmst.rsn
+	Ultra Seven	Minoru Yuasa, Hiroaki Kai, Go 	Super Nintendo	u7.rsn
+	Ultraman	Takahiro Wakuta, Kunio Miyauch	Super Nintendo	ultm.rsn
 	Ultraman: Towards the Future	Norihiko Togashi	Super Nintendo	um.rsn
 	Umihara Kawase	Pas de Chat	Super Nintendo	umi.rsn
-	Umizuri Meijin	Hikoshi Hashimoto	Super Nintendo	umizm.rsn
-	Untitled NFL Football Game	Sculptured Software Sound Team	Super Nintendo	unfl.rsn
+	Umitsuri Meijin: Suzuki-hen	Hikoshi Hashimoto	Super Nintendo	umizm.rsn
+	Undake 30: Same Game Mario Version	Tawayuki Iwabuchi	Super Nintendo	sgm.rsn
+	Undercover Cops	Hiya-Unit	Super Nintendo	ucc.rsn
 	Uniracers	Colin Anderson	Super Nintendo	unir.rsn
-	The Untouchables	Keith Tinman	Super Nintendo	unt.rsn
-	Ultima: Runes of Virtue 2	Raymond Benson, Randy Buck, Martin Galway, Dana Glover, Marc Schawfgen	Super Nintendo	urov2.rsn
+	Universal Soldier	Dave Rogers, Paul Kenny, Chris	Super Nintendo	usol.rsn
+	Untitled NFL Football Game		Super Nintendo	unfl.rsn
 	Urban Strike	Don Veca	Super Nintendo	us.rsn
-	Universal Soldier	Dave Rogers, Paul Kenny, Chris Hulsbeck	Super Nintendo	usol.rsn
-	Ushio and Tora	Masako Inata	Super Nintendo	ut.rsn
+	Ushio to Tora	Masako Inata	Super Nintendo	ut.rsn
 	Utopia	Barry Leitch	Super Nintendo	uto.rsn
-	Super Dai Koukai Jidai	Yoko Kanno	Super Nintendo	uw.rsn
-	Dai Koukai Jidai 2	Yoko Kanno	Super Nintendo	uw2.rsn
-	Virtual Bart	Mark Ganus, Kingsley Thurber, Eric Nunamaker, James Hebdon	Super Nintendo	vbart.rsn
-	Volleyball Twin	Lucky Tocky	Super Nintendo	vbt.rsn
-	Vegas Stakes	Kimitaka Matsumae	Super Nintendo	vegas.rsn
 	Verne World	Ryuichi Nitta	Super Nintendo	vewo.rsn
-	Villgust	Shinichi Tanaka	Super Nintendo	vill.rsn
-	Violinist of Hameln	Y. Mori	Super Nintendo	voh.rsn
+	Virtual Bart	Mark Ganus, Kingsley Thurber, 	Super Nintendo	vbart.rsn
 	Vortex	Justin Scharvona	Super Nintendo	vor.rsn
-	Vs. Collection	Pure Sound	Super Nintendo	vsc.rsn
-	Soukoukihei Votoms	Kenji Yoshida	Super Nintendo	vt.rsn
+	VS. Collection	Pure Sound	Super Nintendo	vsc.rsn
+	Wagyan Paradise	Yoshinori Kawamoto, Eriko Imur	Super Nintendo	wgp.rsn
+	Wakataka Oozumou: Yume no Kyoudai Taiketsu	Takane Okubo, Takako Ono	Super Nintendo	wtoz.rsn
+	Waku Waku Ski Wonder Shoot		Super Nintendo	wws.rsn
+	Wally wo Sagase!: Ehon no Kuni no Daibouken	Masanao Akahori, Jun Enoki	Super Nintendo	wally.rsn
+	Wappers Souryu Hen	Akito Nakatsuka	Super Nintendo	wapa.rsn
 	War 2410	Susan Lee, Jeff Rogan	Super Nintendo	w2410.rsn
-	Wings 2 Aces High	George Sanger, Joe McDermott, David Govett, Kevin Phelan	Super Nintendo	w2ah.rsn
-	War 3010	Steve Melillo	Super Nintendo	w3010.rsn
-	Waialae Country Club	Yumi Kinoshita	Super Nintendo	waia.rsn
-	Wally wo Sagase	Masanao Akahori	Super Nintendo	wally.rsn
-	BS Wapaaz Souryu Hen	Akito Nakatsuka	Super Nintendo	wapa.rsn
+	War 3010: The Revolution	Steve Melillo	Super Nintendo	w3010.rsn
+	Waratte Iitomo! Tamorinpic		Super Nintendo	tamo.rsn
 	Warlock	Eric Swanson	Super Nintendo	warl.rsn
 	WarpSpeed	Ken Allen	Super Nintendo	warp.rsn
 	Waterworld	Dean Evans	Super Nintendo	wawo.rsn
-	Wing Commander: Secret Missions	Sam Powell, George Sanger, David Govett, Marc Schaefgen	Super Nintendo	wc.rsn
-	Wrecking Crew '98	Takane Okubo	Super Nintendo	wc98.rsn
-	World Class Rugby	Koji Hayashi, David Whittaker	Super Nintendo	wcr.rsn
-	World Cup USA '94	John Hancock	Super Nintendo	wcu94.rsn
-	World Cup '98	Mark Ortiz	Super Nintendo	wcup.rsn
-	WCW SuperBrawl Wrestling	Marshall Parker	Super Nintendo	wcwsb.rsn
-	Wedding Peach	Innerbrain, Noriko Yamamoto, Masafumi Ogata	Super Nintendo	wedp.rsn
-	Winter Extreme: Skiing and Snowboarding	Michel Winogradoff	Super Nintendo	wesas.rsn
-	Wheel of Fortune: Deluxe Edition	Barry Leitch, Ian Howe	Super Nintendo	wfdx.rsn
-	Winter Gold FX	Jeroen Tel	Super Nintendo	wgfx.rsn
-	Super Wagan Land	Norihiko Togashi	Super Nintendo	wgl.rsn
 	Wayne Gretzky and the NHLPA All-Stars	Eric Nunamaker, Sam Powell	Super Nintendo	wgnhl.rsn
-	Wagyan Paradise	Eriko Imura	Super Nintendo	wgp.rsn
-	Wild Guns	Hiroyuki Iwatsuki, Haruo Ohashi	Super Nintendo	wguns.rsn
-	World Heroes	N. Taro, H.P.E.	Super Nintendo	wh.rsn
-	World Heroes 2	Sin Tensaw Yama, K. Oshikiri, Toyokazu Nagaishi	Super Nintendo	wh2.rsn
-	Whizz	Flair Sound Team	Super Nintendo	whizz.rsn
-	Whirlo	Norihiko Togashi, Nakanobu, Ebihara	Super Nintendo	whrl.rsn
-	Wizardry I II III	Kentarou Haneda	Super Nintendo	wiz123.rsn
-	Wizardry V	Kentarou Haneda	Super Nintendo	wiz5.rsn
-	Wizardry VI	Kentarou Haneda	Super Nintendo	wiz6.rsn
-	Wizardry Gaiden IV	Ikurou Fujiwara	Super Nintendo	wizg4.rsn
-	WeaponLord	Brian Schmidt	Super Nintendo	wl.rsn
-	World League Soccer	Kazuo Sawa	Super Nintendo	wls.rsn
-	World Masters Golf	Chris Brighton	Super Nintendo	wmg.rsn
-	Ken Griffey Jr. Winning Run	Eveline Fischer	Super Nintendo	wnrn.rsn
-	Wolverine: Adamantium Rage	Dylan Beale	Super Nintendo	woar.rsn
-	Winter Olympic Games	Doug Anderson, Jeremy Sherlock	Super Nintendo	wog.rsn
-	Wolf Child	Martin Iveson, Steve Collett	Super Nintendo	wolf.rsn
-	World of Manga II	MTV	Super Nintendo	wom.rsn
+	WCW SuperBrawl Wrestling	Marshall Parker	Super Nintendo	wcwsb.rsn
+	Weapon Lord	Brian Schmidt	Super Nintendo	wl.rsn
+	Wedding Peach	Innerbrain, Noriko Yamamoto, M	Super Nintendo	wedp.rsn
+	Wheel of Fortune	Barry Leitch, Ian Howe	Super Nintendo	wfdx.rsn
+	Whizz		Super Nintendo	whizz.rsn
+	Wild Guns	Hiroyuki Iwatsuki, Haruo Ohash	Super Nintendo	wguns.rsn
+	Wing Commander	Sam Powell, George Alistair Sa	Super Nintendo	wc.rsn
+	Winter Gold	Jeroen Godfried Tel	Super Nintendo	wgfx.rsn
+	Winter Olympic Games: Lillehammer '94	Doug Anderson, Jeremy Sherlock	Super Nintendo	wog.rsn
+	Wizard of Oz	Robert Ridihalgh	Super Nintendo	woz.rsn
+	Wizardry Gaiden IV: Throb of the Demon's Heart	Ikuro Fujiwara	Super Nintendo	wizg4.rsn
+	Wizardry I-II-III: The Story of Llylgamyn	Kentaro Haneda, Katsuyoshi Nit	Super Nintendo	wiz123.rsn
+	Wizardry V: Heart of the Maelstrom	Kentaro Haneda	Super Nintendo	wiz5.rsn
+	Wizardry VI: Bane of the Cosmic Forge	Kentaro Haneda	Super Nintendo	wiz6.rsn
+	Wolfchild	Martin Iveson, Steve Collett	Super Nintendo	wolf.rsn
+	Wolverine	Dylan Beale	Super Nintendo	woar.rsn
+	Wonder Project J: Kikai no Shounen Pino	Akihiko Mori	Super Nintendo	wpj.rsn
 	Wondrous Magic	Yuji Nomi, Hiroki Kamata	Super Nintendo	wonm.rsn
 	Wordtris	Paul Mogg	Super Nintendo	word.rsn
+	World Class Rugby	Koji Hayashi, David Whittaker	Super Nintendo	wcr.rsn
+	World Cup '98	Mark Ortiz	Super Nintendo	wcup.rsn
+	World Cup USA 94	John Hancock	Super Nintendo	wcu94.rsn
+	World Heroes	N. Taro, H.P.E.	Super Nintendo	wh.rsn
+	World Heroes 2	Sin Tensaw Yama, K. Oshikiri, 	Super Nintendo	wh2.rsn
+	World Masters Golf	Chris Brighton	Super Nintendo	wmg.rsn
+	World of Manga II	Saverio Russo	Super Nintendo	wom.rsn
 	Worms	Bjorn Lynne	Super Nintendo	worms.rsn
-	War of the Gems	Takane Okubo, Katsunari Kitajima	Super Nintendo	wotg.rsn
-	Wizard of Oz	Robert Ridihalgh	Super Nintendo	woz.rsn
-	Chou Mahou Tairiku Wozz	Tomoyuki Hamada, Takeshi Saitou, Seiichi Tokunaga	Super Nintendo	wozz.rsn
-	Wonder Project J	Akihiko Mori	Super Nintendo	wpj.rsn
-	WildSnake	Robert Ridihalgh	Super Nintendo	wsnk.rsn
-	Stunt Race FX	Shinobu Amayake	Super Nintendo	wt.rsn
-	Wakataka Oozumou	Takane Ohkubo, Takako Ono	Super Nintendo	wtoz.rsn
-	WWF Wrestlemania: The Arcade Game	Paul Webb, Dean Morrell	Super Nintendo	wwfa.rsn
-	WWF Raw	Dean Morrell, Mark Ganus, Kingsley Thurber, Scott Freeman	Super Nintendo	wwfr.rsn
+	Wrecking Crew '98	Takane Okubo, Hirokazu Tanaka	Super Nintendo	wc98.rsn
+	WWF Raw	Dean Morrell, Mark Ganus, King	Super Nintendo	wwfr.rsn
 	WWF Royal Rumble	Paul Webb, Kingsley Thurber	Super Nintendo	wwfrr.rsn
 	WWF Super Wrestlemania	Paul Webb, Kingsley Thurber	Super Nintendo	wwfsw.rsn
-	Waku Waku Ski Wonder Shoot	Human Sound Team	Super Nintendo	wws.rsn
-	Xak	Hiroshi Amagi	Super Nintendo	xak.rsn
-	XBand Modem	Johny Turpin	Super Nintendo	xband.rsn
+	WWF Wrestlemania: The Arcade Game	Paul Webb, Dean Morrell	Super Nintendo	wwfa.rsn
+	X-Band Modem	Johny Turpin	Super Nintendo	xband.rsn
 	X-Kaliber 2097	Psykosonik	Super Nintendo	xkb.rsn
+	X-Men vs. Street Fighter		Super Nintendo	xmvsf.rsn
 	X-Men: Mutant Apocalypse	Setsuo Yamamoto	Super Nintendo	xma.rsn
-	Christmas Craze	Shiru	Super Nintendo	xmas.rsn
-	X-Men vs. Street Fighter	Unknown	Super Nintendo	xmvsf.rsn
-	Xardion	Kohei Tanaka	Super Nintendo	xrdn.rsn
 	X-Zone	S. Yamaguchi	Super Nintendo	xz.rsn
-	UFO Kamen Yakisoban	N. Shioda	Super Nintendo	yaki.rsn
-	Yoshi's Cookie	Noriko Nishizaka	Super Nintendo	yc.rsn
-	Yoshi's Island	Koji Kondo	Super Nintendo	yi.rsn
-	Yuujin Janjuu Gakuen	Varie Sound Team	Super Nintendo	yjjg.rsn
-	Youkai Buster	Mitsuhito Tanaka	Super Nintendo	ykb.rsn
-	Yakouchuu	Tsugutoshi Goto	Super Nintendo	ykc.rsn
-	Young Merlin	Dwight K. Okahara, Frank Klepacki, Paul S. Mudra	Super Nintendo	ym.rsn
-	Yume Maboroshi no Gotoku	Miyuki Uemura	Super Nintendo	ymng.rsn
-	Yuujin no Furi Furi Girls	T. Hagiwara	Super Nintendo	ynffg.rsn
-	Yoshi no Kuruppon	Human Sound Team	Super Nintendo	ynk.rsn
-	Yogi Bear	George Villiers	Super Nintendo	yogi.rsn
-	Yuuyu no Quiz de Go! Go!	Tamayo Kawamoto, Masako Inata, Kiyohiro Sada	Super Nintendo	yqgg.rsn
-	Ys 3: Wanderers From Ys	Michiharu Hasuya, Masaaki Harada, Osamu Kasai	Super Nintendo	ys3.rsn
-	Ys IV: Mask of the Sun	K. Yoshiaki, H. Masanori, K. Miyoko, I. Naoyuki, E. Tomohiro, T. Hiroo	Super Nintendo	ys4.rsn
-	Ys V	Mieko Ishikawa, Naoki Kaneda, Satoshi Arai, Atsushi Shirakawa, Masaru Nakajima	Super Nintendo	ys5.rsn
-	Yoshi's Safari	Yasushi Tokunaga, Yoshiki Nishimura, Miyuki Uemura	Super Nintendo	ysfr.rsn
-	Yamato Takeru	Tomoyuki Hamada	Super Nintendo	ytak.rsn
+	Xak: The Art of Visual Stage	Hiroshi Amagi	Super Nintendo	xak.rsn
 	Yadamon Wonderland Dreams	Kazuo Sawa	Super Nintendo	ywd.rsn
-	Yuu Yuu Hakusho	Yoshinori Kawamoto, Kouji Nakagawa	Super Nintendo	yyh.rsn
-	Yuu Yuu Hakusho 2	T. Ichida, Asshin	Super Nintendo	yyh2.rsn
-	Yuu Yuu Hakusho: Tokubetsu Hen	Kouji Nakagawa	Super Nintendo	yyht.rsn
-	Zero 4 Champ RR	Katsuhiro Hayashi, Jouji Iijima	Super Nintendo	z4cr.rsn
-	Zombies Ate My Neighbors	Joe McDermott	Super Nintendo	zamn.rsn
-	Zan 2 Spirits	Motoi Sakuraba	Super Nintendo	zan2.rsn
-	Zan 3 Spirits	Motoi Sakuraba, Hiroya Hatsushiba, Shinji Tamura	Super Nintendo	zan3.rsn
-	Z-Gundam: Away to the Newtype	Akihiko Mori	Super Nintendo	zgd.rsn
-	Zen Nihon GT Sensyuken	Kaneko Sound Team	Super Nintendo	zgts.rsn
-	Zico Soccer	Akira Takemoto	Super Nintendo	zico.rsn
-	Zenkoku Juudan Ultra Shinri Game	Haruma Fujita	Super Nintendo	zjsg.rsn
-	Zero the Kamikaze Squirrel	Fox Productions	Super Nintendo	zks.rsn
-	'96 Zenkoku Koukou Soccer Senshuken	Toshiyuki Takine, Gocky in Bose	Super Nintendo	zkss.rsn
-	Zenkoku Koukou Soccer Senshuken 2	Syscom Sound Team	Super Nintendo	zkss2.rsn
-	Zenkoku Koukou Soccer Senshuken	Affect Sound Team	Super Nintendo	zkssh.rsn
+	Yakouchuu	Tsugutoshi Goto	Super Nintendo	ykc.rsn
+	Yoshi no Cookie	Noriko Nishizaka	Super Nintendo	yc.rsn
+	Yoshi no Kuruppon: Oven de Cookie		Super Nintendo	ynk.rsn
+	Yoshi no Road Hunting	Yoshiki Nishimura, Miyuki Uemu	Super Nintendo	ysfr.rsn
+	Youchien Senki Madara	Hidehiko Enomoto, Masafumi Oga	Super Nintendo	mdrs.rsn
+	Youkai Buster: Ruka no Daibouken	Mitsuhito Tanaka	Super Nintendo	ykb.rsn
+	Young Merlin	Dwight K. Okahara, Frank Klepa	Super Nintendo	ym.rsn
+	Ys III: Wanderers from Ys	Michiharu Hasuya, Masaaki Hara	Super Nintendo	ys3.rsn
+	Ys IV: Mask of the Sun	Yoshiaki Kubotera, Masanori Hi	Super Nintendo	ys4.rsn
+	Ys V Expert	Mieko Ishikawa, Naoki Kaneda, 	Super Nintendo	ys5.rsn
+	Yujin no Furi Furi Girls	T. Hagiwara	Super Nintendo	ynffg.rsn
+	Yume Maboroshi no Gotoku	Miyuki Uemura	Super Nintendo	ymng.rsn
+	Yume Meikyuu: Kigurumi Daibouken	Nori Atsumi	Super Nintendo	dmkd.rsn
+	Yuu Yu no Quiz de Go! Go!	Tamayo Kawamoto	Super Nintendo	yqgg.rsn
+	Yuu Yuu Hakusho	Yoshinori Kawamoto, Kouji Naka	Super Nintendo	yyh.rsn
+	Yuu Yuu Hakusho 2: Kakutou no Sho	T. Ichida, Asshin	Super Nintendo	yyh2.rsn
+	Yuu Yuu Hakusho: Tokubetsu-hen	Kouji Nakagawa	Super Nintendo	yyht.rsn
+	Yuujin Janjuu Gakuen		Super Nintendo	yjjg.rsn
 	Zakuro no Aji	Kyohei Sada	Super Nintendo	zna.rsn
-	Zennihon Pro Wrestling	Iku Mizutani, Kinuyo Yamashita, Hiroyuki Iwatsuki	Super Nintendo	znpw.rsn
-	Zennihon Pro Wrestling 2	Iku Mizutani, Kinuyo Yamashita, Hiroyuki Iwatsuki, Haruo Ohashi	Super Nintendo	znpw2.rsn
-	Zennihon Pro Wrestling Dash	Iku Mizutani, Kinuyo Yamashita, Hiroyuki Iwatsuki	Super Nintendo	znpwd.rsn
+	Zan II Spirits	Motoi Sakuraba	Super Nintendo	zan2.rsn
+	Zan III Spirits	Motoi Sakuraba, Hiroya Hatsush	Super Nintendo	zan3.rsn
+	Zelda no Densetsu Remix	Koji Kondo, Akito Nakatsuka, Y	Super Nintendo	bsz.rsn
+	Zen Nihon GT Senshuken: Hyper Battle Game		Super Nintendo	zgts.rsn
+	Zen Nihon Pro Wrestling	Iku Mizutani, Kinuyo Yamashita	Super Nintendo	znpw.rsn
+	Zen Nihon Pro Wrestling 2: 3.4 Budoukan	Iku Mizutani, Kinuyo Yamashita	Super Nintendo	znpw2.rsn
+	Zen Nihon Pro Wrestling: Fight da Pon!	Iku Mizutani, Shinya Kurahashi	Super Nintendo	fdp.rsn
+	Zenkoku Juudan Ultra Shinri Game	Harumi Fujita	Super Nintendo	zjsg.rsn
+	Zenkoku Koukou Soccer		Super Nintendo	zkssh.rsn
+	Zenkoku Koukou Soccer 2		Super Nintendo	zkss2.rsn
+	Zenkoku Koukou Soccer Senshuken '96	Toshiyuki Takine, Gocky in Bos	Super Nintendo	zkss.rsn
+	Zero 4 Champ RR	Katsuhiro Hayashi, Jouji Iijim	Super Nintendo	z4cr.rsn
+	Zero: The Kamikaze Squirrel	Fox Productions	Super Nintendo	zks.rsn
+	Zico Soccer	Akira Takemoto	Super Nintendo	zico.rsn
+	Zig Zag Cat: Dachou Kurabu mo Oosawagi da	Masako Inata	Super Nintendo	zzc.rsn
+	Zombies	Joe McDermott	Super Nintendo	zamn.rsn
 	Zone	Mitsuru Kamiyama	Super Nintendo	zone.rsn
-	Zool	Patrick Phelan	Super Nintendo	zool.rsn
-	Zoop	Bob Scumaci, Mark Davis, Brian Schmidt	Super Nintendo	zoop.rsn
-	Zootto Mahjong!	Kenji Okuda, Yuichi Ozaki	Super Nintendo	zoot.rsn
-	Zig Zag Cat	Masako Inata	Super Nintendo	zzc.rsn
+	Zool no Yume Boken	Patrick Phelan	Super Nintendo	zool.rsn
+	Zoop	Bob Scumaci, Mark Davis, Brian	Super Nintendo	zoop.rsn
+	Zootto Mahjong	Kenji Okuda, Yuichi Ozaki	Super Nintendo	zoot.rsn

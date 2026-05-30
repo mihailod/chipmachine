@@ -1,12 +1,13 @@
 data
 ====
+* investigate uncommenting nsfe.txt files -- will they play?
 *update databases to the latest -- mostly done
-* Creating 'Gamebase64' DB, source: data/Games.csv, songs count: 7604
-  however:    30001 chipmachine/data/Games.csv --- why the discrepancy?
+new csdb parsing issue -- claude session 2
+* run csdb script from 1 to 174978 and join that file with the 174978+ one
+  (compare for fun with the old one)?
 
 crashes:
 ========
-hired guns slumming -- example... crashes when quit while playing any mp3
 
 could not play song:
 ===================
@@ -20,7 +21,6 @@ silent playback
 ===============
 * (also on intel) elfforest 
 * (file not displayed on intel) delta patrol, youtube
-* Bitar till Kaffet stuff (mp3 podcasts?)
 
 console errors:
 ===============
@@ -32,7 +32,11 @@ other:
 
 product/process
 ===============
-- research/find better free AI than gemini
-- test build process on a different clean machine
 - use some IDE (with integrated AI?) for development?
 - once 1.1 is out: email the author, post on linkedin retro groups
+
+new features
+============
+- consolidate all db scripts into one unified
+- filter by platform (C64, Amiga...) and format (mod, ym, mp3...)
+-Separate db from code and auto-update db independently from code

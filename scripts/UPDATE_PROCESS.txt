@@ -1,7 +1,29 @@
+Dev notes on various databases and how they are updated
+=======================================================
+
+
   873009 chipmachine/data/csdb.xml
-see https://csdb.dk
-TODO agy started on this and created scripts/update_csdb.py
-need to wrap up
+THE C-64 SCENE DATABASE, see https://csdb.dk
+this script must run in (.venv)
+ASSUMPTION: the numbers are increasing and there is no retroactive "gap filling"
+1. figure out the highest existing id:
+grep -o '<ID>[0-9]*</ID>' data/csdb.xml | grep -o '[0-9]*' | sort -n | tail -1
+(174978)
+2. The latest release on CSDb right now is ID 261943 but they add daily so use 263000 upper bound
+3. python3 scripts/update_csdb.py --start-id 174979 --max-id 263000 data/csdb-174979-263000.xml
+sleep is 0.2s every 100 requests. the ETA is roughly 5–6 hours. Should be comfortably done overnight. Good luck!
+[INFO] Finished scan: processed up to ID 261,943, collected 84,088 releases (total time 25084.4s).
+25084s / 60 = 418.0667m / 60 = 7h
+started at 6AM -- will be done around 1PM
+
+LEGACY REFRESH IF WANTED:
+python3 scripts/update_csdb.py --start-id 1 --max-id 174978 data/csdb-1-174978.xml
+this will take up to 14h!
+OLD DB: Creating 'CSDb' DB, source: data/csdb.xml, songs count: 27080
+RUNNING...
+bad!!
+parsing fails on the small sample...
+csdb2 convo -- CONTINUE THERE parsing issue...
 
 
 
@@ -42,8 +64,6 @@ then we need to run this cleanup:
 sripts/update_Games_csv_post_cleanup.py
 and use the cleaned file
 
-
-
    15607 chipmachine/data/bitworld.txt -- NOTHING TO DO (?)
 created by scripts/ami.d which is heavily outdated
 "This file is a local data export from the historical BitWorld Amiga Demoscene Database (which was closely integrated with platforms like Kestra Amiga Demo Database and Exotica). It functions as a complete catalog linking historical Amiga disk tracker modules (.mod) to the specific underground demoscene productions, intros, and music disks they originally debuted in."
@@ -67,17 +87,24 @@ https://sndh.atari.org/download.php
 python3 update_sndh.py ~/Downloads/sndh_lf sndh.txt
 you know the drill by now :)
 
-    3976 chipmachine/data/rko.txt 3976 -> 5217
+    3976 chipmachine/data/rko.txt DONE 3976 -> 5217
 This file, rko.txt, is the index database for Remix.Kwed.Org (RKO), which is the primary internet archive for Commodore 64 MP3 remix tracks based on original SID chip music tunes.
 scripts/update_rko.py (by agy)
 
-    2974 chipmachine/data/bitar.xml
+    2974 chipmachine/data/bitar.xml -- podcasts... DEAD, REMOVED
+      19 chipmachine/data/bitar.txt -- podcasts... DEAD, REMOVED
 
     1922 chipmachine/data/c64takeaway.xml
 
-    1519 chipmachine/data/rsn.txt
-metadata index for the Super Nintendo (SNES) music
--- harder - ask agy
+
+
+
+    1519 chipmachine/data/rsn.txt -- DONE (count decreased by 2 -- this db is historically stable)
+metadata index for the Super Nintendo (SNES) music from snesmusic.org 
+chipmachine/scripts/update_rsn.py
+python3 chipmachine/scripts/update_rsn.py [--limit 20] --output rsn_sample.txt
+python3 chipmachine/scripts/update_rsn.py --output rsn_all.txt
+takes about 1 hour
 
     1265 chipmachine/data/amiremix.txt -- DONE 1,265 -> 1,711
 Metadata index file to search and stream Amiga track remixes from amigaremix.com
@@ -90,11 +117,18 @@ download and unzip then run:
 python3 update_hvtc.py ~/Downloads/hvtc hvtc.txt
 and replace the existing file
 
+
      413 chipmachine/data/nsfe.txt
+NES Sound Format Extended index file. The NSFE database is commented out at lines 208-215 of db.lua.
+https://forums.nesdev.org/viewtopic.php?t=21128
+Direct Archive Download (11.2 MB .rar): This archive contains Famicompo "Chapter One," Famicompo mini Volumes 1 through 10, and the Classical sections, pre-timed and organized with the exact filename syntax (like T_Original_...) visible in your nsfe.txt.
+
+
+
+
      314 chipmachine/data/scenesat.txt
      104 chipmachine/data/syntax.txt
       40 chipmachine/data/amigavibes.txt
-      19 chipmachine/data/bitar.txt
       13 chipmachine/data/demovibes.txt
       12 chipmachine/data/radio.txt
 
@@ -103,30 +137,31 @@ and replace the existing file
   ──────
   ### 1. Files USED to Build the Database (Defined in  lua/db.lua )
 
-   Data File                               | Associated Database Collection (ID)     | Parser Method Used
-  -----------------------------------------|-----------------------------------------|-----------------------------------------
-  X hvsc.txt                               | HVSC ( hvsc )                           |  parseStandard 
-  X Games.csv                              | Gamebase64 ( gb64 )                     |  parseGamebase 
-    csdb.xml                               | CSDb ( csdb )                           |  parseCsdb 
-  X allmods.txt                            | Modland ( modland )                     |  parseModland 
-  ? amp.txt                                | Amp ( amp )                             |  parseAmp 
-  ? bitworld.txt                           | Bitworld ( bitworld )                   |  parseBitworld 
-  X hvtc.txt                               | HVTC ( hvtc )                           |  parseStandard 
-    rsn.txt                                | snesmusic.org ( rsn )                   |  parseStandard 
-  X sndh.txt                               | sndh ( sndh )                           |  parseStandard 
-  X asma.txt                               | asma ( asma )                           |  parseStandard 
-  X rko.txt                                | remix.kwed.org ( rko )                  |  parseStandard 
-  X amiremix.txt                           | amigaremix ( amigaremix )               |  parseStandard 
-    scenesat.txt                           | scenesat ( scenesat )                   |  parseStandard 
-    demovibes.txt                          | Demovibes ( demovibes )                 |  parseStandard 
-    amigavibes.txt                         | Amigavibes ( amigavibes )               |  parseStandard 
-    radio.txt                              | Radio ( radio )                         |  parseStandard 
-    bitar.xml                              | Bitar till Kaffet (Live) ( bitar )      |  parseRss  (via  type = "podcast" )
-    bitar.txt                              | Bitar till Kaffet (Archive) ( bitar2 )  |  parseStandard 
-    syntax.txt                             | Syntax Error ( syntax )                 |  parseStandard 
-    c64takeaway.xml                        | C64 Take-away ( takeaway )              |  parseRss  (via  type = "podcast" )
-  X pouet.txt                              | Pouet/Youtube ( pouet )                 |  parseStandard 
-    playlists  (Dir)                       | Playlists ( pl )                        | Directory scanner ( listRecursive() )
+   Data File         | Associated Database Collection (ID)    | Parser Method Used
+  -------------------|----------------------------------------|-------------------
+  X hvsc.txt         | HVSC ( hvsc )                          | parseStandard 
+  X Games.csv        | Gamebase64 ( gb64 )                    | parseGamebase 
+... csdb.xml         | CSDb ( csdb )                          | parseCsdb 
+  X allmods.txt      | Modland ( modland )                    | parseModland 
+  ? amp.txt          | Amp ( amp )                            | parseAmp 
+  ? bitworld.txt     | Bitworld ( bitworld )                  | parseBitworld 
+  X hvtc.txt         | HVTC ( hvtc )                          | parseStandard 
+  x rsn.txt          | snesmusic.org ( rsn )                  | parseStandard 
+  X sndh.txt         | sndh ( sndh )                          | parseStandard 
+  X asma.txt         | asma ( asma )                          | parseStandard 
+  X rko.txt          | remix.kwed.org ( rko )                 | parseStandard 
+  X amiremix.txt     | amigaremix ( amigaremix )              | parseStandard 
+  ? nsfe.txt         | N/A ( commented out )                  | N/A (commented out)
+    scenesat.txt     | scenesat ( scenesat )                  | parseStandard 
+    demovibes.txt    | Demovibes ( demovibes )                | parseStandard 
+    amigavibes.txt   | Amigavibes ( amigavibes )              | parseStandard 
+    radio.txt        | Radio ( radio )                        | parseStandard 
+  X bitar.xml        | Bitar till Kaffet (Live) ( bitar )     | parseRss  (via type = "podcast" )
+  X bitar.txt        | Bitar till Kaffet (Archive) ( bitar2 ) | parseStandard 
+    syntax.txt       | Syntax Error ( syntax )                | parseStandard 
+    c64takeaway.xml  | C64 Take-away ( takeaway )             | parseRss  (via type = "podcast" )
+  X pouet.txt        | Pouet/Youtube ( pouet )                | parseStandard 
+    playlists  (Dir) | Playlists ( pl )                       | Directory scanner ( listRecursive() )
   ──────
   ### 2. Files NOT USED to Build the Database
 
@@ -135,8 +170,8 @@ and replace the existing file
 
   #### Commented-Out Collections:
 
-  •  nsfe.txt : This is a NES Sound Format Extended index file. The  NSFE  database collection is commented out at lines 208-
-  215 of db.lua.
+  • nsfe.txt : This is a NES Sound Format Extended index file.
+  The NSFE database collection is commented out at lines 208-215 of db.lua.
 
   #### Plugin & Engine-Specific Files (Used at Playback Time, not DB Build Time):
 
