@@ -137,7 +137,15 @@ bool MusicDatabase::parseCsdb(
         prod.title = htmldecode(utf8_encode(i["Name"].text()));
         prod.type = i["ReleaseType"].text();
         auto rating = i["CSDbRating"];
-        float rt = rating.valid() ? stod(rating.text()) : 0.0;
+
+        //float rt = rating.valid() ? stod(rating.text()) : 0.0;
+
+	float rt = 0.0;
+	if (rating.valid()) {
+    	    auto rtext = rating.text();
+    	    if (!rtext.empty()) rt = stod(rtext);
+	}
+
         // LOGD("Found %s (%s %d)", name, type, rt);
         std::string group;
         auto rb = i["ReleasedBy"];
@@ -157,9 +165,18 @@ bool MusicDatabase::parseCsdb(
         if ((endsWith(prod.type, "Music Collection") ||
              endsWith(prod.type, "Diskmag") || endsWith(prod.type, "Demo")) &&
             rt >= 0) {
-            for (auto const& s : i["Sids"].all("HVSCPath")) {
+
+            /*for (auto const& s : i["Sids"].all("HVSCPath")) {
                 prod.songs.push_back(s.text().substr(1));
-            }
+            }*/
+
+	    auto sids = i["Sids"];
+	    if (sids.valid()) {
+    	    for (auto const& s : sids.all("HVSCPath")) {
+        	prod.songs.push_back(s.text().substr(1));
+    	    	}
+	    }	
+
             callback(prod);
         }
     }

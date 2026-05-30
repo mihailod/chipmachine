@@ -1,8 +1,7 @@
 Dev notes on various databases and how they are updated
 =======================================================
 
-
-  873009 chipmachine/data/csdb.xml
+  873009 chipmachine/data/csdb.xml --- no music links here! just screenshots etc.
 THE C-64 SCENE DATABASE, see https://csdb.dk
 this script must run in (.venv)
 ASSUMPTION: the numbers are increasing and there is no retroactive "gap filling"
@@ -24,6 +23,15 @@ RUNNING...
 bad!!
 parsing fails on the small sample...
 csdb2 convo -- CONTINUE THERE parsing issue...
+
+the CSDb database serves two purposes:
+Screenshots — artwork to display while a SID plays
+Product→song linking — associating SID files with the demo/diskmag/collection that used them, so you can browse by release rather than by individual SID file
+It does NOT provide any audio itself — all audio is HVSC SID files.
+The flow is:
+HVSC is indexed first — every SID path gets hashed and stored in pathMap
+When CSDb is parsed, for each SID path in <Sids>:
+So CSDb only enriches songs already in HVSC — it can't add new songs. If a SID path in CSDb doesn't exist in HVSC, it's logged and ignored. If it does exist, the CSDb entry provides the screenshot and groups the song under a named product (demo, diskmag, etc.).
 
 
 
@@ -94,7 +102,10 @@ scripts/update_rko.py (by agy)
     2974 chipmachine/data/bitar.xml -- podcasts... DEAD, REMOVED
       19 chipmachine/data/bitar.txt -- podcasts... DEAD, REMOVED
 
-    1922 chipmachine/data/c64takeaway.xml
+
+
+
+    1922 chipmachine/data/c64takeaway.xml --------- TODO TODO
 
 
 
@@ -122,6 +133,12 @@ and replace the existing file
 NES Sound Format Extended index file. The NSFE database is commented out at lines 208-215 of db.lua.
 https://forums.nesdev.org/viewtopic.php?t=21128
 Direct Archive Download (11.2 MB .rar): This archive contains Famicompo "Chapter One," Famicompo mini Volumes 1 through 10, and the Classical sections, pre-timed and organized with the exact filename syntax (like T_Original_...) visible in your nsfe.txt.
+cm WILL play .nsfe files so why this was disabled?
+I downloaded the archive and decompressed it here:
+~/Downloads/FamicompoNSFE
+Create a file with 1 song and see if it can be parsed, put in db, and played from UI -- end to end POC.
+then create the database from the download
+maybe there is no lookup on web? if so i can even deliver the whole db with music with the app (only 11MB rar / 55MB uncompressed, maybe there is way to pull from the rar file)
 
 
 
