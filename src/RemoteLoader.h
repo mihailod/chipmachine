@@ -55,7 +55,8 @@ public:
         // so need a map of dbs which are local
         // and for now only the nsfe one is...
         // eg: nsfe::31_orange_painting.nsfe
-        return !(path.find("nsfe::") == std::string::npos);
+        // for now, if it starts with "nsfe::" it is local
+        return path.find("nsfe::") == 0;
     }
 
 private:
