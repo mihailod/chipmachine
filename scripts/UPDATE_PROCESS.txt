@@ -89,6 +89,7 @@ and use the cleaned file
 created by scripts/ami.d which is heavily outdated
 "This file is a local data export from the historical BitWorld Amiga Demoscene Database (which was closely integrated with platforms like Kestra Amiga Demo Database and Exotica). It functions as a complete catalog linking historical Amiga disk tracker modules (.mod) to the specific underground demoscene productions, intros, and music disks they originally debuted in."
 "The historic Amiga scene modules from the late 80s and 90s (Protracker, Soundtracker, and Future Composer files) are static and frozen in time. Your current bitworld.txt snapshot accurately indexes those classic demoscene years, which represents the core of the Amiga music library you'd want to browse or play anyway. No further cleanup or updates are required for this file."
+claude "Bottom line: The database content itself is fine and historically stable as claimed. But "no cleanup required" isn't quite right — there are a handful of structurally broken rows caused by a script bug (newline in URL before replacement), plus un-decoded HTML entities throughout. Whether those matter depends on how your player/browser code consumes the file."
 
 **********************************************
 
@@ -96,6 +97,7 @@ created by scripts/ami.d which is heavily outdated
 "Because amp.txt is strictly an output file written dynamically by your ami.d compilation routine, it can only be updated by running the full ami.d scraper.
 As established previously, running ami.d today will fail."
 "Leave amp.txt exactly as it is. It represents a perfectly preserved, self-contained snapshot of the classic tracking modules used across classic Amiga demoscene history. Chipmachine will read your existing data records flawlessly without any external assistance."
+Claude: [...] "NOTHING TO DO" verdict holds. 
 
 **********************************************
 
@@ -122,12 +124,24 @@ scripts/update_rko.py (by agy)
 
 **********************************************
 
-    2974 chipmachine/data/bitar.xml -- podcasts... DEAD, REMOVED
-      19 chipmachine/data/bitar.txt -- podcasts... DEAD, REMOVED
+    2974 chipmachine/data/bitar.xml -- podcasts... DEAD, REMOVED -- DONE
+      19 chipmachine/data/bitar.txt -- podcasts... DEAD, REMOVED -- DONE
 
 **********************************************
 
     1922 chipmachine/data/c64takeaway.xml --------- TODO TODO
+
+Good news: The podcast is very much alive and has its own feed now at https://c64takeaway.com/feed (the ListenNotes result reveals the Google Podcasts feed URL which decodes to exactly that). The latest episode was released June 16, 2025, and the native feed is at https://c64takeaway.com/feed.
+Bad news: Episode 64, released June 16, 2025, is the final one — Jan wrapped up the podcast after exactly 20 years.
+The fix is simple — update db.lua to point to the live feed instead of the stale local file:
+luasource = "https://c64takeaway.com/feed",
+song_list = "",   -- or remove it entirely
+That way parseRss fetches fresh XML with direct c64takeaway.com MP3 URLs instead of dead FeedBurner proxies. You'd also get all 64 episodes instead of just the 52 in your 2014 snapshot.
+The local c64takeaway.xml can then be retired — it's both stale and has broken playback URLs.
+
+
+
+
 
 **********************************************
 
@@ -244,7 +258,7 @@ Test song: Orange Painting (only 1 and only here)
   X bitar.xml        | Bitar till Kaffet (Live) ( bitar )     | parseRss  (via type = "podcast" )
   X bitar.txt        | Bitar till Kaffet (Archive) ( bitar2 ) | parseStandard 
     syntax.txt       | Syntax Error ( syntax )                | parseStandard 
-    c64takeaway.xml  | C64 Take-away ( takeaway )             | parseRss  (via type = "podcast" )
+... c64takeaway.xml  | C64 Take-away ( takeaway )             | parseRss  (via type = "podcast" )
   X pouet.txt        | Pouet/Youtube ( pouet )                | parseStandard 
     playlists  (Dir) | Playlists ( pl )                       | Directory scanner ( listRecursive() )
   ──────

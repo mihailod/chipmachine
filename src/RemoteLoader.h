@@ -8,6 +8,8 @@
 #include <string>
 #include <unordered_map>
 
+#include <iostream>
+
 class RemoteLoader
 {
 public:
@@ -40,6 +42,21 @@ public:
     static constexpr int DATA = 0;
     static constexpr int PARAMETER = 1;
     static constexpr int END = 2;
+
+    [[nodiscard]] static bool isLocalAsset(const std::string& path) {
+        // std::cout << path << std::endl; 
+        // return path.find("http://") == std::string::npos &&
+        //       path.find("https://") == std::string::npos &&
+        //       path.find("ftp://") == std::string::npos;
+
+        // todo implement better
+        // the path prefix is actually db name prefix
+        // eg modland::Soundtracker/SLL/sll1.mod
+        // so need a map of dbs which are local
+        // and for now only the nsfe one is...
+        // eg: nsfe::31_orange_painting.nsfe
+        return !(path.find("nsfe::") == std::string::npos);
+    }
 
 private:
     struct Source

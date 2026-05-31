@@ -276,13 +276,15 @@ void ChipMachine::updateKeys()
         int i = songList.selected();
         SongInfo song = musicDatabase.getSongInfo(iquery->getIndex(i));
         auto ext = getTypeFromName(song.path);
+
         bool isoffline = remoteLoader.isOffline(song.path);
-        if (ext != "")
-            topStatus.setText(utils::format("Format: %s (%s)%s", song.format,
-                                            ext, isoffline ? "*" : ""));
-        else
-            topStatus.setText(utils::format("Format: %s %s", song.format,
-                                            isoffline ? "*" : ""));
+	bool islocal = RemoteLoader::isLocalAsset(song.path);
+	if (islocal) {
+	    topStatus.setText(utils::format("Format: %s (%s)%s", song.format,ext, "+"));	
+	} else {
+            if (ext != "") topStatus.setText(utils::format("Format: %s (%s)%s", song.format,ext, isoffline ? "*" : ""));
+            else topStatus.setText(utils::format("Format: %s %s", song.format, isoffline ? "*" : ""));
+        }
         searchField.visible(false);
         filterField.visible(false);
         topStatus.visible(true);
