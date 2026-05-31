@@ -208,8 +208,29 @@ include_directories(${Python3_INCLUDE_DIRS})
 
 if(APPLE)
     add_executable(chipmachine MACOSX_BUNDLE ${MAIN_FILES} ${GUI_FILES} src/main.cpp)
+
+    # Existing: copy the compiled binary next to the build dir for direct invocation
     add_custom_command(TARGET chipmachine POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:chipmachine> ${CMAKE_CURRENT_BINARY_DIR})
+        COMMAND ${CMAKE_COMMAND} -E copy
+            $<TARGET_FILE:chipmachine>
+            ${CMAKE_CURRENT_BINARY_DIR})
+
+    # NEW: Mirror music/Console into the build-adjacent location so that
+    # resolve_resource_root()'s dev-mode candidate path ("..") resolves
+    # correctly when running the raw binary straight from build/.
+    # This means `cmake --build` + ./chipmachine works without any manual
+    # symlinking or copying of the music directory.
+    # If music/Console doesn't exist yet (CI, fresh clone) the command is a
+    # safe no-op: make_directory never fails, copy_directory on a missing
+    # source directory will warn but not abort the build.
+    add_custom_command(TARGET chipmachine POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory
+            "${CMAKE_SOURCE_DIR}/music/Console"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${CMAKE_SOURCE_DIR}/music/Console"
+            "${CMAKE_CURRENT_BINARY_DIR}/../music/Console"
+        COMMENT "-> Syncing music/Console .nsfe tracks to build tree (dev-mode path resolution)")
+
 else()
     add_executable(chipmachine ${MAIN_FILES} ${GUI_FILES} src/main.cpp)
 endif()
@@ -286,17 +307,33 @@ endif()
 
 target_compile_options(adplugin PRIVATE -fsigned-char)
 
-# Bundle setup
+# ---------------------------------------------------------------------------
+# Bundle install() setup — used by cmake --install and as a reference layout.
+# Note: package_app.sh is the authoritative release packager; this block
+# keeps `cmake --install` consistent and documents the expected asset layout.
+# ---------------------------------------------------------------------------
 if(APPLE)
     set(APPS ${CMAKE_CURRENT_BINARY_DIR}/Chipmachine.app)
     set(DIRS "")
     install(CODE "
-       file(COPY \"\${CMAKE_SOURCE_DIR}/lua\" DESTINATION Chipmachine.app/Contents/Resources/)
+       file(COPY \"\${CMAKE_SOURCE_DIR}/lua\"  DESTINATION Chipmachine.app/Contents/Resources/)
        file(COPY \"\${CMAKE_SOURCE_DIR}/data\" DESTINATION Chipmachine.app/Contents/Resources/)
-       file(MAKE_DIRECTORY Chipmachine.app/Contents/Resources/bin) 
+       file(MAKE_DIRECTORY Chipmachine.app/Contents/Resources/bin)
        file(COPY \"\${CMAKE_SOURCE_DIR}/Info.plist\" DESTINATION Chipmachine.app/Contents/)
+
+       # NEW: Copy .nsfe music tracks so the bundle produced by cmake --install
+       # matches what package_app.sh builds. resolve_resource_root() in the C++
+       # layer expects these at Contents/Resources/music/Console/.
+       if(EXISTS \"\${CMAKE_SOURCE_DIR}/music/Console\")
+           file(COPY \"\${CMAKE_SOURCE_DIR}/music/Console\"
+                DESTINATION Chipmachine.app/Contents/Resources/music/)
+           message(STATUS \"-> Bundled music/Console into Resources\")
+       else()
+           message(WARNING \"music/Console not found — bundle will have no built-in .nsfe tracks\")
+       endif()
+
        include(BundleUtilities)
-       fixup_bundle(\"\${APPS}\"   \"\"   \"\$\\\{DIRS\}\")
+       fixup_bundle(\"\${APPS}\" \"\" \"\$\\\{DIRS\}\")
        file(COPY \"\${CMAKE_SOURCE_DIR}/bin/ffmpeg\" DESTINATION Chipmachine.app/Contents/Resources/bin/)
        " COMPONENT Runtime)
 endif()

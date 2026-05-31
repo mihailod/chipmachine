@@ -103,28 +103,82 @@ int main(int argc, char* argv[])
 
     InitializeUpdateVerificationSubsystem();
 
+    // -----------------------------------------------------------------------
+    // Search path for the resource root (the directory that contains data/,
+    // lua/, and music/).
+    //
+    // Candidate order:
+    //   1. Contents/Resources/          — production .app bundle (Apple only)
+    //   2. exe/../chipmachine/          — dev: binary in workspace_root/build/
+    //   3. exe/../../chipmachine/       — dev: binary nested one level deeper
+    //   4. exe/../                      — dev: binary directly in project root
+    //   5. exe/../../                   — dev: alternative nesting
+    //   6. AppDir                       — Linux AppImage / fallback
+    //
+    // findFile() walks each candidate and returns the first directory that
+    // contains a file or folder named "data" — the presence of data/ is the
+    // reliable indicator that we found the correct resource root.
+    //
+    // IMPORTANT: The bundle candidate (Resources/) must remain FIRST so that
+    // a packaged .app never accidentally falls through to a stale dev tree
+    // that happens to exist on the same machine.
+    // -----------------------------------------------------------------------
     auto search_path = makeSearchPath(
         {
 #ifdef __APPLE__
+            // Bundle mode: MacOS/chipmachine → ../Resources
+            // This is the authoritative production path. It resolves correctly
+            // regardless of where the user places the .app on their system,
+            // and is fully sandbox-compatible (no home-directory access needed).
             Environment::getExeDir() / ".." / "Resources",
-#else
-            Environment::getExeDir(),
 #endif
             Environment::getExeDir() / ".." / "chipmachine",
             Environment::getExeDir() / ".." / ".." / "chipmachine",
             Environment::getExeDir() / "..",
-            Environment::getExeDir() / ".." / "..", Environment::getAppDir() },
+            Environment::getExeDir() / ".." / "..",
+            Environment::getAppDir()
+        },
         true);
     LOGD("PATH:%s", search_path);
 
     auto data_dir = findFile(search_path, "data");
 
     if (!data_dir) {
-        fprintf(stderr, "** Error: Could not find data files\n");
+        fprintf(stderr,
+            "** Error: Could not find data files.\n"
+#ifdef __APPLE__
+            "   Searched for 'data/' inside:\n"
+            "     - Contents/Resources/  (bundle mode)\n"
+            "     - ../chipmachine/      (dev mode from build/)\n"
+            "   If running a packaged .app, re-run package_app.sh to rebuild.\n"
+            "   If running in dev mode, ensure the build directory is inside\n"
+            "   the workspace root (workspace_root/build/).\n"
+#endif
+        );
         exit(-1);
     }
 
+    // work_dir is the resource root — the parent of data/, lua/, and music/.
+    // All downstream asset paths are constructed relative to this.
     auto work_dir = data_dir->parent_path();
+
+    // Emit a diagnostic early if music/Console is missing from the resolved
+    // root. This surfaces packaging regressions immediately at launch rather
+    // than as a silent "no songs found" state deep in the music database.
+    {
+        utils::path music_console = work_dir / "music" / "Console";
+        if (!utils::exists(music_console)) {
+            fprintf(stderr,
+                "[chipmachine] WARNING: music/Console not found at: %s\n"
+                "   Built-in .nsfe tracks will be unavailable.\n"
+#ifdef __APPLE__
+                "   Bundle build: re-run package_app.sh (Section 4b copies the tracks).\n"
+                "   Dev build:    run `cmake --build` to sync tracks via POST_BUILD,\n"
+                "                 or ensure chipmachine/music/Console/ exists in the source tree.\n"
+#endif
+                , music_console.string().c_str());
+        }
+    }
 
     utils::path binDir = (work_dir / "bin");
     utils::path exeDir = Environment::getExeDir();
@@ -132,14 +186,10 @@ int main(int argc, char* argv[])
     std::string newPath =
         exeDir.string() + ":" + binDir.string() + ":" + currentPath;
     setenv("PATH", newPath.c_str(), 1);
-    //printf("NEW PATH SET TO: %s\n", newPath.c_str());
-    //fflush(stdout);
 
     utils::path certPath = (work_dir / "cert.pem");
     if (utils::exists(certPath)) {
         setenv("SSL_CERT_FILE", certPath.string().c_str(), 0); // Don't overwrite if set
-        //printf("SSL_CERT_FILE SET TO: %s\n", certPath.string().c_str());
-        //fflush(stdout);
     }
 
     musix::ChipPlugin::createPlugins(work_dir / "data");

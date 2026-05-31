@@ -33,7 +33,6 @@ if [ ! -f "$VERSION_H_PATH" ]; then
     exit 1
 fi
 
-# Extract the version inside the quotes from #define VERSION_STR "X.Y.Z"
 VERSION_STR=$(sed -n 's/#define VERSION_STR "\(.*\)"/\1/p' "$VERSION_H_PATH" | tr -d '[:space:]')
 
 if [ -z "$VERSION_STR" ]; then
@@ -78,7 +77,6 @@ else
     exit 1
 fi
 
-# Inside Section 4 of package_app.sh:
 if [ -f "${CHIPMACHINE_DIR}/data/misc/Credits.rtf" ]; then
     echo "-> Packaging Credits into bundle..."
     cp "${CHIPMACHINE_DIR}/data/misc/Credits.rtf" "${RESOURCES_DIR}/"
@@ -98,73 +96,106 @@ fi
 
 if [ -d "${CHIPMACHINE_DIR}/bin" ]; then
     echo "-> Packaging helper binaries into bundle..."
-    # Put all binaries in MacOS so they share the library pathing and codesigning context
     cp -L "${CHIPMACHINE_DIR}/bin/ffmpeg" "${MAC_OS_DIR}/"
     cp -L "${CHIPMACHINE_DIR}/bin/yt-dlp" "${MAC_OS_DIR}/"
     cp -P "${CHIPMACHINE_DIR}/bin/youtube-dl" "${MAC_OS_DIR}/"
-    
     chmod +x "${MAC_OS_DIR}/ffmpeg"
     chmod +x "${MAC_OS_DIR}/yt-dlp"
 else
     echo "WARNING: bin folder not found at ${CHIPMACHINE_DIR}/bin. YouTube playback will fail."
 fi
 
+# *** 4b. Bundle .nsfe music tracks into Contents/Resources/music/Console/ ***
+#
+# Strategy:
+#   - Source: chipmachine/music/Console/*.nsfe  (and any sub-structure beneath it)
+#   - Destination: ChipMachineAS.app/Contents/Resources/music/Console/
+#
+# The destination path intentionally mirrors the relative layout the C++ runtime
+# expects so that CFBundleCopyResourcesDirectoryURL() + "/music/Console/" resolves
+# to exactly these files in production. In local dev the binary reads the live
+# source tree directly (see get_music_resource_path() in the C++ layer).
+# -----------------------------------------------------------------
+MUSIC_SRC="${CHIPMACHINE_DIR}/music/Console"
+MUSIC_DEST="${RESOURCES_DIR}/music/Console"
+
+if [ -d "${MUSIC_SRC}" ]; then
+    # Count .nsfe files so we can emit a meaningful diagnostic
+    NSFE_COUNT=$(find "${MUSIC_SRC}" -maxdepth 1 -name "*.nsfe" | wc -l | tr -d '[:space:]')
+    if [ "${NSFE_COUNT}" -eq 0 ]; then
+        echo "WARNING: music/Console/ exists but contains no .nsfe files. Bundle music will be empty."
+    else
+        echo "-> Bundling ${NSFE_COUNT} .nsfe track(s) into ${MUSIC_DEST} ..."
+    fi
+
+    mkdir -p "${MUSIC_DEST}"
+
+    # Use cp -R to preserve any sub-directory hierarchy that may exist under Console/
+    # (e.g. Console/Famicom/, Console/GameBoy/) while still being safe for a flat layout.
+    cp -R "${MUSIC_SRC}/." "${MUSIC_DEST}/"
+
+    # Verify the copy succeeded and at least one .nsfe landed in the bundle
+    BUNDLED_COUNT=$(find "${MUSIC_DEST}" -name "*.nsfe" | wc -l | tr -d '[:space:]')
+    echo "   Verified ${BUNDLED_COUNT} .nsfe file(s) present inside bundle."
+else
+    # Treat a missing music directory as a hard error in release mode;
+    # warn-only for local/dry-run builds so CI without music assets doesn't break.
+    if $RELEASE_IT; then
+        echo "CRITICAL ERROR: music/Console source directory not found at ${MUSIC_SRC}!"
+        echo "               A release build MUST include bundled .nsfe tracks."
+        exit 1
+    else
+        echo "WARNING: music/Console not found at ${MUSIC_SRC}. Skipping music bundling (dry-run mode)."
+        echo "         End-users will have no bundled tracks. Set up the music/ directory before --releaseit."
+    fi
+fi
+
 # 5. Fix Native ARM64 Dynamic Library Linkages Deeply
 echo "-> Resolving recursive dynamic library paths..."
 
-# Global associative array for dependency state tracking
 typeset -A PROCESSED_LIBS
 
 discover_and_patch() {
     local TARGET_FILE_PATH="$1"
-    
-    # Check if the file is a Mach-O binary before attempting to patch it
+
     if ! file "$TARGET_FILE_PATH" | grep -q "Mach-O"; then
         return 0
     fi
 
-    # Process line-by-line while cleanly splitting out whitespaces and the trailing metadata parentheses
     otool -L "$TARGET_FILE_PATH" | grep -E '/opt/homebrew/|/usr/local/' | awk '{print $1}' | while read -r RAW_LIB; do
-        # Robustly strip any hidden tabs, trailing carriage returns, or spaces
         local LIB=$(echo "$RAW_LIB" | tr -d '[:space:]')
         [ -z "$LIB" ] && continue
-        
+
         local LIB_BASE=$(basename "$LIB")
         local DEST_LIB_PATH="${MAC_OS_DIR}/${LIB_BASE}"
-        
+
         if [ -z "${PROCESSED_LIBS[$LIB_BASE]}" ]; then
             echo "    Isolating dependency: $LIB_BASE (Required by $(basename "$TARGET_FILE_PATH"))"
-            
+
             if [ ! -f "$DEST_LIB_PATH" ]; then
                 cp "$LIB" "$DEST_LIB_PATH"
                 chmod +w "$DEST_LIB_PATH"
             fi
-            
-            # Register globally
+
             PROCESSED_LIBS[$LIB_BASE]=1
-            
-            # Safe depth-first recursion
             discover_and_patch "$DEST_LIB_PATH"
         fi
-        
-        # Rewrite absolute dependency paths to relative bundle references explicitly
+
         echo "    [Patching Executable Linkage] inside $(basename "$TARGET_FILE_PATH"): changing $LIB -> @executable_path/$LIB_BASE"
         install_name_tool -change "$LIB" "@executable_path/$LIB_BASE" "$TARGET_FILE_PATH"
     done
-    
+
     if [[ "$TARGET_FILE_PATH" == *.dylib ]]; then
         install_name_tool -id "@executable_path/$(basename "$TARGET_FILE_PATH")" "$TARGET_FILE_PATH"
     fi
 }
 
-# Run dependency injection pass for primary Mach-O binaries in the MacOS folder
 for EXE in "${MAC_OS_DIR}/"*; do
     if [ -x "$EXE" ] && [ ! -L "$EXE" ]; then
         discover_and_patch "$EXE"
     fi
 done
 
-# Run deep dependency pass explicitly on any Python binary modules/extension libraries inside data directory
 echo "-> Patching compiled Python native extensions inside bundle..."
 find "${RESOURCES_DIR}/data/python_runtime" -type f \( -name "*.so" -o -name "*.dylib" -o -name "*.bundle" \) | while read -r PYTHON_EXT; do
     discover_and_patch "$PYTHON_EXT"
@@ -191,32 +222,28 @@ fi
 # 7. Apply ad-hoc code signatures
 echo "-> Applying ad-hoc code signatures..."
 if command -v codesign &> /dev/null; then
-    # Target and sign Python binary extensions first (deepest level)
     find "${RESOURCES_DIR}/data/python_runtime" -type f \( -name "*.so" -o -name "*.dylib" -o -name "*.bundle" \) | while read -r py_ext; do
         codesign -f -s - "$py_ext"
     done
 
-    # Sign all dylibs and binaries in the MacOS folder next
     for f in "${MAC_OS_DIR}/"*; do
         if [ -f "$f" ] && [ ! -L "$f" ]; then
             codesign -f -s - "$f"
         fi
     done
-    
-    # Sign main bundle last
+
     codesign -f -s - "${TARGET_DIR}"
     echo "-> Code signing complete."
 fi
 
 echo "=== Success: ${APP_NAME} generated cleanly in workspace root! ==="
-echo "=== Making the final distribution package...==="
+echo "=== Making the final distribution package... ==="
 
-# Change context into the workspace directory so zip handles local filenames exclusively
 cd "${WORKSPACE_ROOT}"
 zip -r -y ./ChipMachineAS.zip ./${APP_NAME}
 cd "${CHIPMACHINE_DIR}"
 
-echo "=== Done!==="
+echo "=== Done! ==="
 echo "*** Planned template command details:"
 echo "------------------------------------------------------------"
 echo "gh release create v${VERSION_STR}-as ../ChipMachineAS.zip \\"
@@ -229,22 +256,18 @@ echo "------------------------------------------------------------"
 # Conditional Interactive Release Verification Block
 # -----------------------------------------------------------------
 if $RELEASE_IT; then
-    # Check if gh CLI is missing before attempting interaction
     if ! command -v gh &> /dev/null; then
         echo "ERROR: 'gh' command line tool not found in PATH. Skipping automated execution."
         exit 1
     fi
 
-    # Prompt user on standard error channel to preserve any output streaming architectures
     printf "Provide release notes and confirm the official release upload to GitHub per command above [Y/N] ? " >&2
     read -r RESPONSE
 
     if [[ "$RESPONSE" == "y" || "$RESPONSE" == "Y" ]]; then
-        # Capture the specific note payload requested
         printf "Release short note (CTRL+C to abort): " >&2
         read -r SHORT_NOTE
-        
-        # Build pristine string appending note with precise spacing constraints
+
         RELEASE_NOTES="Apple Silicon maintenance release v${VERSION_STR}. ${SHORT_NOTE}"
 
         echo "-> Initiating deployment via GitHub CLI..."
