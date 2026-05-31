@@ -129,7 +129,7 @@ scripts/update_rko.py (by agy)
 
 **********************************************
 
-    1922 chipmachine/data/c64takeaway.xml --------- TODO TODO
+    1922 chipmachine/data/c64takeaway.xml --------- DONE. 52 -> 64
 
 Good news: The podcast is very much alive and has its own feed now at https://c64takeaway.com/feed (the ListenNotes result reveals the Google Podcasts feed URL which decodes to exactly that). The latest episode was released June 16, 2025, and the native feed is at https://c64takeaway.com/feed.
 Bad news: Episode 64, released June 16, 2025, is the final one — Jan wrapped up the podcast after exactly 20 years.
@@ -138,10 +138,8 @@ luasource = "https://c64takeaway.com/feed",
 song_list = "",   -- or remove it entirely
 That way parseRss fetches fresh XML with direct c64takeaway.com MP3 URLs instead of dead FeedBurner proxies. You'd also get all 64 episodes instead of just the 52 in your 2014 snapshot.
 The local c64takeaway.xml can then be retired — it's both stale and has broken playback URLs.
-
-
-
-
+Claude made a new XML...
+since the podcast is now dead, that is the final database -- no updates in future needed unless they ressurect the podcast
 
 **********************************************
 
@@ -258,7 +256,7 @@ Test song: Orange Painting (only 1 and only here)
   X bitar.xml        | Bitar till Kaffet (Live) ( bitar )     | parseRss  (via type = "podcast" )
   X bitar.txt        | Bitar till Kaffet (Archive) ( bitar2 ) | parseStandard 
     syntax.txt       | Syntax Error ( syntax )                | parseStandard 
-... c64takeaway.xml  | C64 Take-away ( takeaway )             | parseRss  (via type = "podcast" )
+  X c64takeaway.xml  | C64 Take-away ( takeaway )             | parseRss  (via type = "podcast" )
   X pouet.txt        | Pouet/Youtube ( pouet )                | parseStandard 
     playlists  (Dir) | Playlists ( pl )                       | Directory scanner ( listRecursive() )
   ──────
