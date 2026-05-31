@@ -1,7 +1,8 @@
 Dev notes on various databases and how they are updated
 =======================================================
 
-  873009 chipmachine/data/csdb.xml --- no music links here! just screenshots etc.
+  873009 chipmachine/data/csdb.xml --- DONE -- 53985 -> 138694
+no music links here! just screenshots etc.
 THE C-64 SCENE DATABASE, see https://csdb.dk
 this script must run in (.venv)
 ASSUMPTION: the numbers are increasing and there is no retroactive "gap filling"
@@ -13,7 +14,7 @@ grep -o '<ID>[0-9]*</ID>' data/csdb.xml | grep -o '[0-9]*' | sort -n | tail -1
 sleep is 0.2s every 100 requests. the ETA is roughly 5–6 hours. Should be comfortably done overnight. Good luck!
 [INFO] Finished scan: processed up to ID 261,943, collected 84,088 releases (total time 25084.4s).
 25084s / 60 = 418.0667m / 60 = 7h
-started at 6AM -- will be done around 1PM
+use:scripts/csdb_merge.py to merge 2 xml files: the existing one and the new one with additional ids.
 
 LEGACY REFRESH IF WANTED:
 python3 scripts/update_csdb.py --start-id 1 --max-id 174978 data/csdb-1-174978.xml
@@ -225,7 +226,7 @@ Test song: Orange Painting (only 1 and only here)
   -------------------|----------------------------------------|-------------------
   X hvsc.txt         | HVSC ( hvsc )                          | parseStandard 
   X Games.csv        | Gamebase64 ( gb64 )                    | parseGamebase 
-... csdb.xml         | CSDb ( csdb )                          | parseCsdb 
+  X csdb.xml         | CSDb ( csdb )                          | parseCsdb 
   X allmods.txt      | Modland ( modland )                    | parseModland 
   ? amp.txt          | Amp ( amp )                            | parseAmp 
   ? bitworld.txt     | Bitworld ( bitworld )                  | parseBitworld 

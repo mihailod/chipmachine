@@ -3,9 +3,13 @@ data
 *update databases to the latest -- mostly done
 * (OPTIONAL -- will take 14 hours) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 
+optimizations
+=============
+slow song start --why?
+
 crashes:
 ========
-- refactor/simplify the quit situation while playing back, one hang observed
+- speed-up/refactor/simplify the quit situation while playing back, one hang observed
 
 could not play song:
 ===================

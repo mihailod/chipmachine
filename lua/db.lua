@@ -183,15 +183,15 @@ DB = {
 --	song_list = "data/bitar.txt",
 --	color = 0xfffff
 --},
-{
-	name = "This Week in Chiptune",
-	id = "weekchip",
-	type =  "podcast",
-	source = "",
-	presenter = "Dj CUTMAN",
-	song_list = "http://thisweekinchiptune.libsyn.com/rss",
-	color = 0xfffff
-},
+--{
+--	name = "This Week in Chiptune",
+--	id = "weekchip",
+--	type =  "podcast",
+--	source = "",
+--	presenter = "Dj CUTMAN",
+--	song_list = "http://thisweekinchiptune.libsyn.com/rss",
+--	color = 0xfffff
+--},
 
 -- this is dead
 --{
@@ -213,26 +213,17 @@ DB = {
 	-- presenter = "Sol"
 	color = 0xfffff
 },
--- {
--- 	name = "NSFE",
--- 	id = "nsfe",
--- 	source = "",
--- 	song_list = "data/nsfe.txt",
--- 	local_dir = "/opt/M/nsfe",
--- 	color = 0xfffff
--- },
-
-         {
-           name = "NSFE",
-           id = "nsfe",
-           source = "",
-           song_list = "data/nsfe.txt",
-           local_dir = "music/Console",
-           song_template = "no title composer no path",
-           format = "NSFE",
-           color = 0xfffff
-       },
-
+{
+        name = "NSFE",
+        id = "nsfe",
+        source = "",
+        song_list = "data/nsfe.txt",
+        -- this one has local files!
+        local_dir = "music/Console",
+        song_template = "no title composer no path",
+        format = "NSFE",
+        color = 0xfffff
+},
 {
 	name = "C64 Take-away",
 	id = "takeaway",
