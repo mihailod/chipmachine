@@ -60,23 +60,23 @@ P3-Frankerat-2001-01-03-Siddar_o_Moddar_6.mp3	M-P3 #6
 2002-04-18_Syntax_Error_54.mp3	Syntax Error #54 (Gremlins vs Lufia)
 2002-04-25_Syntax_Error_55.mp3	Syntax Error #55 (Duke Nukem vs Zool)
 2002-05-02_Syntax_Error_56.mp3	Syntax Error #56 (Sapparna slår till)
-2002-05-09_Syntax_Error_57.mp3	Syntax Error #57
-2002-05-16_Syntax_Error_58.mp3	Syntax Error #58
-2002-05-23_Syntax_Error_59.mp3	Syntax Error #59
-2002-05-30_Syntax_Error_60.mp3	Syntax Error #60
-2002-08-08_Syntax_Error_61.mp3	Syntax Error #61
-2002-08-15_Syntax_Error_62.mp3	Syntax Error #62
-2002-08-22_Syntax_Error_63.mp3	Syntax Error #63
-2002-08-29_Syntax_Error_64.mp3	Syntax Error #64
+2002-05-09_Syntax_Error_57.mp3	Syntax Error #57 (MacTone vs Greg)
+2002-05-16_Syntax_Error_58.mp3	Syntax Error #58 (Nintendo)
+2002-05-23_Syntax_Error_59.mp3	Syntax Error #59 (Mega Man & NES Remixes)
+2002-05-30_Syntax_Error_60.mp3	Syntax Error #60 (Sinclair ZX Spectrum)
+2002-08-08_Syntax_Error_61.mp3	Syntax Error #61 (SC68 & Amiga)
+2002-08-15_Syntax_Error_62.mp3	Syntax Error #62 (Baseball Stars)
+2002-08-22_Syntax_Error_63.mp3	Syntax Error #63 (Panasonic 3DO)
+2002-08-29_Syntax_Error_64.mp3	Syntax Error #64 (Street Gangs & Nintendo World Cup)
 2002-10-03_Syntax_Error_65.mp3	Syntax Error #65 (CD-releaser: Pontonius, Covox och Slagsmålsklubben)
 2002-10-10_Syntax_Error_66.mp3	Syntax Error #66 (Loonie, Gameboj Hitparade & de 6 grundpelarna inom spelmusikarkiv.)
 2002-10-17_Syntax_Error_67.mp3	Syntax Error #67 (Yasunori Mitsuda special (mit-suda yasu-nori))
 2002-10-24_Syntax_Error_68.mp3	Syntax Error #68 (Vem, var när?)
-2002-10-31_Syntax_Error_69.mp3	Syntax Error #69
-2002-11-07_Syntax_Error_70.mp3	Syntax Error #70
-2002-11-14_Syntax_Error_71.mp3	Syntax Error #71
-2002-11-21_Syntax_Error_72.mp3	Syntax Error #72
-2002-11-28_Syntax_Error_73.mp3	Syntax Error #73
+2002-10-31_Syntax_Error_69.mp3	Syntax Error #69 (Solar Jetman & Salamander)
+2002-11-07_Syntax_Error_70.mp3	Syntax Error #70 (Sierra)
+2002-11-14_Syntax_Error_71.mp3	Syntax Error #71 (BMX Kids & Output 64)
+2002-11-21_Syntax_Error_72.mp3	Syntax Error #72 (Mission Impossible NES)
+2002-11-28_Syntax_Error_73.mp3	Syntax Error #73 (World of Warcraft Preview)
 2002-12-19_Syntax_Error_76.mp3	Syntax Error #76
 2003-01-16_Syntax_Error_77.mp3	Syntax Error #77
 2003-01-23_Syntax_Error_78.mp3	Syntax Error #78

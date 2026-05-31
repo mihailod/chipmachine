@@ -227,12 +227,30 @@ So it's 4 SceneSat "Sound of Scenesat" compilation albums (sos1–sos4), 314 tra
 
 **********************************************
 
+     104 chipmachine/data/syntax.txt -- DONE 104 -> 104 but fixed subtitles
+This is "Syntax Error" — a Swedish chiptune/game music radio show that aired on Sveriges Radio P3 (national radio) from 2001-2003, hosted by Sol. The first 6 entries are the precursor show "Siddar o Moddar" (also on P3). It's a legendary show in the demoscene community.
+Your file goes up to #101 (2007) with a big gap — #74, #75, #100 are missing, and nothing after #101. Let me check what's available now:
+The site is alive. The download page references MP3 files directly from syntaxerror.nu — but the source in db.lua points to http://se-ksd-01.files.syntaxerror.nu/mp3/. Let me check if that server is still up and what's actually there:
+
+The old server se-ksd-01.files.syntaxerror.nu is alive and serving files. The existing entries are all playable.
+
+Now the improvements I can make:
+
+Fill in subtitles for #57–73 that were blank in your file (now known from the site)
+Add #100 — the finale episode, which the about page confirms exists
+Keep #74, #75 as-is — officially "Missing" per the site
+#101 is already in your file (the 2007 comeback episode)
+
+All 404. #100 is simply not on the server — consistent with the about page saying it was "an hour long" special, probably never uploaded or lost. Skip it.
+The update is just the subtitle fixes for #57–73. Present the file as-is without #100:
+
+**********************************************
 
 
-     104 chipmachine/data/syntax.txt
       40 chipmachine/data/amigavibes.txt
       13 chipmachine/data/demovibes.txt
       12 chipmachine/data/radio.txt
+
 
 **********************************************
 **********************************************
@@ -247,30 +265,31 @@ So it's 4 SceneSat "Sound of Scenesat" compilation albums (sos1–sos4), 314 tra
   X Games.csv        | Gamebase64 ( gb64 )                    | parseGamebase 
   X csdb.xml         | CSDb ( csdb )                          | parseCsdb 
   X allmods.txt      | Modland ( modland )                    | parseModland 
-  - amp.txt          | Amp ( amp )                            | parseAmp 
+  O amp.txt          | Amp ( amp )                            | parseAmp 
   ? bitworld.txt     | Bitworld ( bitworld )                  | parseBitworld 
   X hvtc.txt         | HVTC ( hvtc )                          | parseStandard 
-  x rsn.txt          | snesmusic.org ( rsn )                  | parseStandard 
+  X rsn.txt          | snesmusic.org ( rsn )                  | parseStandard 
   X sndh.txt         | sndh ( sndh )                          | parseStandard 
   X asma.txt         | asma ( asma )                          | parseStandard 
   X rko.txt          | remix.kwed.org ( rko )                 | parseStandard 
   X amiremix.txt     | amigaremix ( amigaremix )              | parseStandard 
   X nsfe.txt         | N/A ( commented out )                  | N/A (commented out)
-    scenesat.txt     | scenesat ( scenesat )                  | parseStandard 
+  X scenesat.txt     | scenesat ( scenesat )                  | parseStandard 
     demovibes.txt    | Demovibes ( demovibes )                | parseStandard 
     amigavibes.txt   | Amigavibes ( amigavibes )              | parseStandard 
     radio.txt        | Radio ( radio )                        | parseStandard 
-  X bitar.xml        | Bitar till Kaffet (Live) ( bitar )     | parseRss  (via type = "podcast" )
+  X bitar.xml        | Bitar till Kaffet (Live) ( bitar )     | parseRss (type = "podcast" )
   X bitar.txt        | Bitar till Kaffet (Archive) ( bitar2 ) | parseStandard 
-    syntax.txt       | Syntax Error ( syntax )                | parseStandard 
-  X c64takeaway.xml  | C64 Take-away ( takeaway )             | parseRss  (via type = "podcast" )
+  X syntax.txt       | Syntax Error ( syntax )                | parseStandard 
+  X c64takeaway.xml  | C64 Take-away ( takeaway )             | parseRss (type = "podcast" )
   X pouet.txt        | Pouet/Youtube ( pouet )                | parseStandard 
-    playlists  (Dir) | Playlists ( pl )                       | Directory scanner ( listRecursive() )
+N/A playlists  (Dir) | Playlists ( pl )                       | Directory 
+
   ──────
+
   ### 2. Files NOT USED to Build the Database
 
-  These files exist in the  data/  directory but are never loaded or processed during the music database creation ( music.db  &
-  index.dat  generation):
+  These files exist in the  data/  directory but are never loaded or processed during the music database creation ( music.db & index.dat generation):
 
   #### Commented-Out Collections:
 
@@ -284,21 +303,20 @@ X •  Songlengths.md5 : Utilized directly by the SID player engine to dynamical
   playback (via MD5 hashing), completely bypassed by the database parser.
 X •  STIL.txt : The SID Tune Information List contains textual background information and comments for C64 tracks, queried by
   the player interface when a SID file is loaded.
-- •  adplug.db : An internal binary database used solely by the  AdPlug  player plugin to handle OPL2/OPL3 (AdLib) metadata.
+- •  adplug.db : An internal binary database used solely by the AdPlug player plugin to handle OPL2/OPL3 (AdLib) metadata.
 - •  hebios.bin : Emulation BIOS file utilized exclusively by the HEBIOS console sound emulator.
-- •  sc68  /  sc68.cfg : The emulator engine configuration file and resources for SC68 (Atari ST) playback.
+- •  sc68/sc68.cfg : The emulator engine configuration file and resources for SC68 (Atari ST) playback.
 
   #### Obsolete & System Files:
 
   •  OLDVICESonglengths.txt : Obsolete text file containing C64 track lengths for the old VICE emulators (scheduled for removal,
   completely ignored by database indexing).
-  •  Bello.otf  /  Neutra.otf : System typography font files used to render the graphical UI.
+  •  Bello.otf / Neutra.otf : System typography font files used to render the graphical UI.
   •  extractor.py : Python script used to fetch or process indexes, not loaded by C++ database builder.
   •  __pycache__  /  python_runtime  /  misc  /  c64  /  uade : Utility directories that house scripts, compilers, emulators,
   and assets.
 
-
-
+- - - - - - - - - -
 
 Here are five explicit examples of brand-new SID files that were added in recent HVSC updates. These files exist at the bottom of your newly generated hvsc.txt database but are completely absent from your original chipmachine/data/hvsc.txt baseline.
 You can use these paths to verify that chipmachine's player engine can locate, parse, and play the new tracks from your local disk.
@@ -348,6 +366,8 @@ New entries in V19 not in old file: 4357
    26848  Goblin
    26849  Zombie Massacre
    26850  Carrier-Bourne Fighter Simulation
+
+nsfe tester: search for orange painting
 
 
 
