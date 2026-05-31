@@ -5,11 +5,9 @@ data
 
 optimizations
 =============
-slow song start --why?
 
 crashes:
 ========
-- speed-up/refactor/simplify the quit situation while playing back, one hang observed
 
 could not play song:
 ===================

@@ -210,6 +210,7 @@ private:
     }
 
     void nextScreenshot();
+    void loadScreenshot(const std::string& shot);
 
     utils::path workDir;
 
@@ -370,3 +371,4 @@ private:
     std::atomic<bool> isShuttingDown{false};
 };
 } // namespace chipmachine
+

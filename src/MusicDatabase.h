@@ -297,6 +297,12 @@ private:
     mutable std::mutex chkMutex;
     mutable std::mutex dbMutex;
     sqlite3db::Database db;
+
+    // Dedicated connection for getSongScreenshots() — called from a detached
+    // thread, so it cannot share the main db connection.
+    mutable std::mutex screenshotMutex;
+    mutable std::unique_ptr<sqlite3db::Database> screenshotDb;
+
     bool reindexNeeded;
     bool rebuildForced = false;
     uint32_t totalSongs = 0;

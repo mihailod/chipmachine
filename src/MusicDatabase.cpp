@@ -818,10 +818,19 @@ SongInfo MusicDatabase::getSongInfo(int index) const
 }
 std::string MusicDatabase::getSongScreenshots(SongInfo& s)
 {
+    // Called from a detached thread in MusicPlayerList. lookup() has already
+    // been called on the worker thread (safe, main db) before dispatch, so we
+    // skip it here. All db access here uses screenshotDb — a dedicated
+    // read-only connection — under screenshotMutex to avoid races with the
+    // main db connection.
+    std::lock_guard<std::mutex> lock(screenshotMutex);
+    if (!screenshotDb) {
+        screenshotDb = std::make_unique<sqlite3db::Database>(
+            (Environment::getCacheDir() / "music.db").string());
+    }
+    auto& sdb = *screenshotDb;
 
-    lookup(s);
     auto parts = split(s.path, "::");
-    //LOGD(s.path);
     if (parts.size() < 2) return "";
     std::string collection = parts[0];
     std::string shot;
@@ -843,7 +852,7 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         s.metadata[SongInfo::INFO] = "";
         LOGD("Got pouet shot %s", shot);
     } else {
-        auto q = db.query<std::string, std::string, std::string, std::string>(
+        auto q = sdb.query<std::string, std::string, std::string, std::string>(
             "SELECT product.title, product.screenshots, product.type, "
             "collection.id "
             "FROM product, prod2song, song, collection "
@@ -866,14 +875,16 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                 collection = c;
                 lowestDist = ld;
             }
-            // if(format.find("Game") != std::string::npos ||
-            // format.find("Demo") != std::string::npos ||
-            // format.find("Trackmo") != std::string::npos)     break;
         }
     }
     if (shot != "") {
         std::string prefix;
-        if (!startsWith(shot, "http")) prefix = getScreenshotURL(collection);
+        if (!startsWith(shot, "http")) {
+            // getScreenshotURL uses sdb (safe — same dedicated connection)
+            auto q = sdb.query<std::string>(
+                "SELECT url FROM collection WHERE id = ?", collection);
+            if (q.step()) prefix = q.get();
+        }
         std::vector<std::string> parts = split(shot, ";");
         if (collection == "gb64")
             parts.insert(parts.begin(), path_directory(parts[0]) + "/" +
@@ -1437,3 +1448,4 @@ std::vector<SongInfo>& MusicDatabase::getPlaylist(std::string const& plist)
     return empty;
 }
 } // namespace chipmachine
+

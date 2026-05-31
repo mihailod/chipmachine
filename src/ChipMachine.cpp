@@ -371,6 +371,67 @@ void ChipMachine::updateScreenshotArea()
     screenShotIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
 }
 
+void ChipMachine::loadScreenshot(const std::string& shot)
+{
+    // Called from Playstarted (immediate) and from the Playing poll (late arrival).
+    // Guards against re-loading the same URL and against loading an empty shot.
+    if (shot == currentScreenshot) {
+        // Already loaded or loading — just advance to next frame
+        nextScreenshot();
+        return;
+    }
+
+    screenShotIcon.clear();
+    screenshots.clear();
+    currentScreenshot = shot;
+
+    if (shot == "") return;
+
+    auto parts = utils::split(shot, ";");
+    int total = parts.size();
+    auto cb = [=](utils::File f) {
+        if (currentScreenshot == "")
+            return;
+        int t = total;
+        if (!f) {
+            // Keep processing
+        } else {
+            try {
+                if (utils::toLower(utils::path_extension(
+                        f.getName())) == "gif") {
+                    t--;
+                    for (auto& bm : image::load_gifs(f.getName())) {
+                        for (auto& px : bm) {
+                            if ((px & 0xffffff) == 0)
+                                px &= 0xffffff;
+                        }
+                        screenshots.emplace_back(f.getFileName(), bm);
+                        t++;
+                    }
+                } else {
+                    auto bm = image::load_image(f.getName());
+                    for (auto& px : bm) {
+                        if ((px & 0xffffff) == 0) px &= 0xffffff;
+                    }
+                    screenshots.emplace_back(f.getFileName(), bm);
+                }
+            } catch (image::image_exception& e) {
+                LOGD("Failed to load image");
+            }
+        }
+
+        if (screenshots.size() >= t) {
+            screenshots.erase(std::remove(screenshots.begin(),
+                                          screenshots.end(), ""),
+                              screenshots.end());
+            sort(screenshots.begin(), screenshots.end());
+            nextScreenshot();
+        }
+    };
+    for (auto& p : parts)
+        webutils::Web::getInstance().getFile(p, cb);
+}
+
 void ChipMachine::nextScreenshot()
 {
     setShotAt = utils::getms();
@@ -474,60 +535,7 @@ void ChipMachine::update()
         }
 
         auto shot = currentInfo.metadata[SongInfo::SCREENSHOT];
-
-        if (shot != currentScreenshot) {
-            screenShotIcon.clear();
-            screenshots.clear();
-            currentScreenshot = shot;
-
-            if (shot != "") {
-                auto parts = utils::split(shot, ";");
-                int total = parts.size();
-                auto cb = [=](utils::File f) {
-                    if (currentScreenshot == "")
-                        return;
-                    int t = total;
-                    if (!f) {
-                        // Keep processing
-                    } else {
-                        try {
-                            if (utils::toLower(utils::path_extension(
-                                    f.getName())) == "gif") {
-                                t--;
-                                for (auto& bm : image::load_gifs(f.getName())) {
-                                    for (auto& px : bm) {
-                                        if ((px & 0xffffff) == 0)
-                                            px &= 0xffffff;
-                                    }
-                                    screenshots.emplace_back(f.getFileName(),
-                                                             bm);
-                                    t++;
-                                }
-                            } else {
-                                auto bm = image::load_image(f.getName());
-                                for (auto& px : bm) {
-                                    if ((px & 0xffffff) == 0) px &= 0xffffff;
-                                }
-                                screenshots.emplace_back(f.getFileName(), bm);
-                            }
-                        } catch (image::image_exception& e) {
-                            LOGD("Failed to load image");
-                        }
-                    }
-
-                    if (screenshots.size() >= t) {
-                        screenshots.erase(std::remove(screenshots.begin(),
-                                                      screenshots.end(), ""),
-                                          screenshots.end());
-                        sort(screenshots.begin(), screenshots.end());
-                        nextScreenshot();
-                    }
-                };
-                for (auto& p : parts)
-                    webutils::Web::getInstance().getFile(p, cb);
-            }
-        } else
-            nextScreenshot();
+        loadScreenshot(shot);
 
         currentTween.finish();
         currentInfoField[0].pos.x = currentInfoField[1].pos.x;
@@ -577,6 +585,19 @@ void ChipMachine::update()
                                .onComplete(f);
         }
         currentTween.start();
+    }
+
+    // Late-arrival screenshot poll: the async DB query in MusicPlayerList may
+    // finish after Playstarted fires (typically 65-180ms later). When that
+    // happens currentScreenshot is "" but player.getInfo() now has the URL.
+    // Poll each frame while Playing with no screenshot loaded so we pick it up
+    // without waiting for the next song change.
+    if (playerState == MusicPlayerList::Playing && currentScreenshot == "") {
+        auto shot = player.getInfo().metadata[SongInfo::SCREENSHOT];
+        if (shot != "") {
+            currentInfo.metadata[SongInfo::SCREENSHOT] = shot;
+            loadScreenshot(shot);
+        }
     }
 
     if (playerState == MusicPlayerList::Error) {
@@ -759,3 +780,4 @@ void ChipMachine::render(uint32_t delta)
     webutils::Web::pollAll();
 }
 } // namespace chipmachine
+
