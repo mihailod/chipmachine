@@ -93,7 +93,7 @@ claude "Bottom line: The database content itself is fine and historically stable
 
 **********************************************
 
-    8640 chipmachine/data/amp.txt -- NOTHING TO DO (?)
+    8640 chipmachine/data/amp.txt -- NOTHING TO DO
 "Because amp.txt is strictly an output file written dynamically by your ami.d compilation routine, it can only be updated by running the full ami.d scraper.
 As established previously, running ami.d today will fail."
 "Leave amp.txt exactly as it is. It represents a perfectly preserved, self-contained snapshot of the classic tracking modules used across classic Amiga demoscene history. Chipmachine will read your existing data records flawlessly without any external assistance."
@@ -221,7 +221,14 @@ Test song: Orange Painting (only 1 and only here)
 
 **********************************************
 
-     314 chipmachine/data/scenesat.txt
+     314 chipmachine/data/scenesat.txt 314 -> 534
+So it's 4 SceneSat "Sound of Scenesat" compilation albums (sos1–sos4), 314 tracks total. SceneSat is very much alive and has grown. Your file covers volumes 1–4 (314 tracks), but they're now up to volume 6, with volumes 5 and 6 adding another ~129 tracks. The files are still hosted on static.scenesat.com. Vol 7 also exists with 91 tracks (released September 2023).
+534 lines total (314 original + 220 new).
+
+**********************************************
+
+
+
      104 chipmachine/data/syntax.txt
       40 chipmachine/data/amigavibes.txt
       13 chipmachine/data/demovibes.txt
@@ -240,7 +247,7 @@ Test song: Orange Painting (only 1 and only here)
   X Games.csv        | Gamebase64 ( gb64 )                    | parseGamebase 
   X csdb.xml         | CSDb ( csdb )                          | parseCsdb 
   X allmods.txt      | Modland ( modland )                    | parseModland 
-  ? amp.txt          | Amp ( amp )                            | parseAmp 
+  - amp.txt          | Amp ( amp )                            | parseAmp 
   ? bitworld.txt     | Bitworld ( bitworld )                  | parseBitworld 
   X hvtc.txt         | HVTC ( hvtc )                          | parseStandard 
   x rsn.txt          | snesmusic.org ( rsn )                  | parseStandard 

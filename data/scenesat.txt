@@ -312,3 +312,223 @@ Triace		Imaginary Numbers	MP3	sos4dir/mp3lo/95.triace_-_imaginary_numbers-lq.mp3
 moonove		Dawn	MP3	sos4dir/mp3lo/96.moonove_-_dawn-lq.mp3
 SunSpire		Life	MP3	sos4dir/mp3lo/97.sunspire_-_life-lq.mp3
 CZ-Tunes		The Countdown	MP3	sos4dir/mp3lo/98.cz-tunes_-_the_countdown-lq.mp3
+Electrominister		Switch Me On, Turn Me Up	MP3	sos5dir/mp3lo/01.electrominister_-_switch_me_on_turn_me_up-lq.mp3
+d4XX		Rough (SceneSat Edition)	MP3	sos5dir/mp3lo/02.d4xx_-_rough_scenesat_edition-lq.mp3
+Jogeir Liljedahl & Rapture		The Lost Wiener (2D Sexy Mix)	MP3	sos5dir/mp3lo/03.jogeir_liljedahl_and_rapture_-_the_lost_wiener_2d_sexy_mix-lq.mp3
+Emortal		Keep Going	MP3	sos5dir/mp3lo/04.emortal_-_keep_going-lq.mp3
+Mark 'TDK' Knight		Element No.10 (SceneSat Edit)	MP3	sos5dir/mp3lo/05.mark_tdk_knight_-_element_no10_scenesat_edit-lq.mp3
+!Cube		Bullet Sequence (Byproduct Remix)	MP3	sos5dir/mp3lo/06.cube_-_bullet_sequence_byproduct_remix-lq.mp3
+Chronberg		Dick da Vinci and Planet Pow	MP3	sos5dir/mp3lo/07.chronberg_-_dick_da_vinci_and_planet_pow-lq.mp3
+Subi		Happy Accident	MP3	sos5dir/mp3lo/08.subi_-_happy_accident-lq.mp3
+Response of Darklite		Einstein Was Wrong: E=MDMA² (twin-psyster-edit²)	MP3	sos5dir/mp3lo/09.response_of_darklite_-_einstein_was_wrong_e=mdma²_twin-psyster-edit²-lq.mp3
+Alkama		Dumdumdum	MP3	sos5dir/mp3lo/10.alkama_-_dumdumdum-lq.mp3
+Sidman		Back 2 School - Old Skool	MP3	sos5dir/mp3lo/11.sidman_-_back_2_school_-_old_skool-lq.mp3
+Mr Brain Surgon		So Sown Up (feat. Chris Garfield)	MP3	sos5dir/mp3lo/12.mr_brain_surgon_-_so_sown_up_feat_chris_garfield-lq.mp3
+Twolegs		Bloomy Habitat	MP3	sos5dir/mp3lo/13.twolegs_-_bloomy_habitat-lq.mp3
+Ore Saarde		Palmas	MP3	sos5dir/mp3lo/14.ore_saarde_-_palmas-lq.mp3
+Bacter		Invisible	MP3	sos5dir/mp3lo/15.bacter_-_invisible-lq.mp3
+melcom		Desolate Runner 3: Cosmic Waves	MP3	sos5dir/mp3lo/16.melcom_-_desolate_runner_3_cosmic_waves-lq.mp3
+T-101		Unchained	MP3	sos5dir/mp3lo/17.t-101_-_unchained-lq.mp3
+vincenzo		Re-Structured	MP3	sos5dir/mp3lo/18.vincenzo_-_re-structured-lq.mp3
+MAGNUS		Go	MP3	sos5dir/mp3lo/19.magnus_-_go-lq.mp3
+Orion Deluxe		Slightly Strange	MP3	sos5dir/mp3lo/20.orion_deluxe_-_slightly_strange-lq.mp3
+LMan		My Life (feat. Sunflower)	MP3	sos5dir/mp3lo/21.lman_-_my_life_feat_sunflower-lq.mp3
+Infamous		Sweet Dreams	MP3	sos5dir/mp3lo/22.infamous_-_sweet_dreams-lq.mp3
+SunSpire		Pulsating Light (SceneSat Edit)	MP3	sos5dir/mp3lo/23.sunspire_-_pulsating_light_scenesat_edit-lq.mp3
+Corpsicle		Distant	MP3	sos5dir/mp3lo/24.corpsicle_-_distant-lq.mp3
+Dane		Disgrace (Lea Dreamers Remix)	MP3	sos5dir/mp3lo/25.dane_-_disgrace_lea_dreamers_remix-lq.mp3
+Mitch van Hayden		Nerd Love (I'm Your Computer)	MP3	sos5dir/mp3lo/26.mitch_van_hayden_-_nerd_love_im_your_computer-lq.mp3
+BeeZerk		Rafael	MP3	sos5dir/mp3lo/27.beezerk_-_rafael-lq.mp3
+Jeroen Tel		Pools of Poison (Jeenio vs. WAVE)	MP3	sos5dir/mp3lo/28.jeroen_tel_-_pools_of_poison_jeenio_vs_wave-lq.mp3
+Teetow		Sevenfold	MP3	sos5dir/mp3lo/29.teetow_-_sevenfold-lq.mp3
+Romeo Knight		Cream of the Earth (Firefox Dirty Drummer Remake vs. Romeo Knight)	MP3	sos5dir/mp3lo/30.romeo_knight_-_cream_of_the_earth_firefox_dirty_drummer_remake_vs_romeo_knight-lq.mp3
+Ferrara		Suitcase Clockwork	MP3	sos5dir/mp3lo/31.ferrara_-_suitcase_clockwork-lq.mp3
+Anders Enger Jensen		Rainbow Dreams	MP3	sos5dir/mp3lo/32.anders_enger_jensen_-_rainbow_dreams-lq.mp3
+Dave Lowe		Carrier Command (Dr.Future's Top Gun Edit)	MP3	sos5dir/mp3lo/33.dave_lowe_-_carrier_command_drfutures_top_gun_edit-lq.mp3
+Rapture		Candy Bar Superfreak	MP3	sos5dir/mp3lo/34.rapture_-_candy_bar_superfreak-lq.mp3
+Danko		8-Bit Boys	MP3	sos5dir/mp3lo/35.danko_-_8-bit_boys-lq.mp3
+Jeroen Tel		JT In Space (DMC's Man on the Moon Dub)	MP3	sos5dir/mp3lo/36.jeroen_tel_-_jt_in_space_dmcs_man_on_the_moon_dub-lq.mp3
+GOOD & GUNSTIG		Destination (Radio Cut) [feat. Netpoet]	MP3	sos5dir/mp3lo/37.good_and_gunstig_-_destination_radio_cut_feat_netpoet-lq.mp3
+CoLD SToRAGE		Xanderful	MP3	sos5dir/mp3lo/38.cold_storage_-_xanderful-lq.mp3
+Paokala		Neutron Highway	MP3	sos5dir/mp3lo/39.paokala_-_neutron_highway-lq.mp3
+CZ-Tunes		Sidthies	MP3	sos5dir/mp3lo/40.cz-tunes_-_sidthies-lq.mp3
+Trace		ChipChop	MP3	sos5dir/mp3lo/41.trace_-_chipchop-lq.mp3
+Spexzter of Darklite		New Steps, New Direction	MP3	sos5dir/mp3lo/42.spexzter_of_darklite_-_new_steps_new_direction-lq.mp3
+The Hooligan		Human Robotics V2 (Relaxed Edition)	MP3	sos5dir/mp3lo/43.the_hooligan_-_human_robotics_v2_relaxed_edition-lq.mp3
+PsychNerD		Neuroland	MP3	sos5dir/mp3lo/44.psychnerd_-_neuroland-lq.mp3
+Alpa		Bosscat	MP3	sos5dir/mp3lo/45.alpa_-_bosscat-lq.mp3
+N-Joy		Koi Pond	MP3	sos5dir/mp3lo/46.n-joy_-_koi_pond-lq.mp3
+Jogeir Liljedahl		Exotic Bliss	MP3	sos5dir/mp3lo/47.jogeir_liljedahl_-_exotic_bliss-lq.mp3
+Mordi		The Tongue Drum	MP3	sos5dir/mp3lo/48.mordi_-_the_tongue_drum-lq.mp3
+DHS		Blossoming Flower	MP3	sos5dir/mp3lo/49.dhs_-_blossoming_flower-lq.mp3
+BMan		Confidence	MP3	sos5dir/mp3lo/50.bman_-_confidence-lq.mp3
+Phobium		Mentat Empath	MP3	sos5dir/mp3lo/51.phobium_-_mentat_empath-lq.mp3
+Proteque		Eternity	MP3	sos5dir/mp3lo/52.proteque_-_eternity-lq.mp3
+Jeroen Tel		Inner Voice	MP3	sos5dir/mp3lo/53.jeroen_tel_-_inner_voice-lq.mp3
+Mikael Fyrek		Traces	MP3	sos5dir/mp3lo/54.mikael_fyrek_-_traces-lq.mp3
+moonove		Lily	MP3	sos5dir/mp3lo/55.moonove_-_lily-lq.mp3
+Xiny6581		Stratospheres	MP3	sos5dir/mp3lo/56.xiny6581_-_stratospheres-lq.mp3
+Hansee		Elevated (Feat. Mordi)	MP3	sos6dir/mp3lo/01.hansee_-_elevated_feat_mordi-lq.mp3
+Emortal		Run Away	MP3	sos6dir/mp3lo/02.emortal_-_run_away-lq.mp3
+Dascon		Semper Fidelis	MP3	sos6dir/mp3lo/03.dascon_-_semper_fidelis-lq.mp3
+Dafunk		Down	MP3	sos6dir/mp3lo/04.dafunk_-_down-lq.mp3
+Rapture		Dreams of a Robot	MP3	sos6dir/mp3lo/05.rapture_-_dreams_of_a_robot-lq.mp3
+Pex Mahoney Tufvesson		Load Error (Feat. Jesper of PPOT)	MP3	sos6dir/mp3lo/06.pex_mahoney_tufvesson_-_load_error_feat_jesper_of_ppot-lq.mp3
+Saga Musix		Plug & Play	MP3	sos6dir/mp3lo/07.saga_musix_-_plug_and_play-lq.mp3
+D4XX		Two-Thousand-Twenty-One	MP3	sos6dir/mp3lo/08.d4xx_-_two-thousand-twenty-one-lq.mp3
+Sidman		Higher State	MP3	sos6dir/mp3lo/09.sidman_-_higher_state-lq.mp3
+Uctumi		Another Hardware Malfunction	MP3	sos6dir/mp3lo/10.uctumi_-_another_hardware_malfunction-lq.mp3
+Teo		Red October	MP3	sos6dir/mp3lo/11.teo_-_red_october-lq.mp3
+Electrominister		To Eat A Guitar	MP3	sos6dir/mp3lo/12.electrominister_-_to_eat_a_guitar-lq.mp3
+The Surgon		Your Flag Means Nothing	MP3	sos6dir/mp3lo/13.the_surgon_-_your_flag_means_nothing-lq.mp3
+Danko		Den Sista Ninjan 2 Går På Disco (feat. Maskinpop)	MP3	sos6dir/mp3lo/14.danko_-_den_sista_ninjan_2_gar_pa_disco_feat_maskinpop-lq.mp3
+DoKToR		The Dark Electric Sounds of Sahara	MP3	sos6dir/mp3lo/15.doktor_-_the_dark_electric_sounds_of_sahara-lq.mp3
+Larsec		Jack's Wasted Life	MP3	sos6dir/mp3lo/16.larsec_-_jacks_wasted_life-lq.mp3
+Magnar		Penetration	MP3	sos6dir/mp3lo/17.magnar_-_penetration-lq.mp3
+Wright & Bastard		Simple Things	MP3	sos6dir/mp3lo/18.wright_and_bastard_-_simple_things-lq.mp3
+Teetow		A Final Hyperfunk	MP3	sos6dir/mp3lo/19.teetow_-_a_final_hyperfunk-lq.mp3
+SunSpire		Rocking Zen (feat. Carol Ink)	MP3	sos6dir/mp3lo/20.sunspire_-_rocking_zen_feat_carol_ink-lq.mp3
+CoLD SToRAGE		Escape Velocity	MP3	sos6dir/mp3lo/21.cold_storage_-_escape_velocity-lq.mp3
+Bacter & Jeenio		In Quarantine	MP3	sos6dir/mp3lo/22.bacter_and_jeenio_-_in_quarantine-lq.mp3
+Netpoet		Always Will	MP3	sos6dir/mp3lo/23.netpoet_-_always_will-lq.mp3
+Twolegs		Thrill Me	MP3	sos6dir/mp3lo/24.twolegs_-_thrill_me-lq.mp3
+Wataru		8 Bit Flow	MP3	sos6dir/mp3lo/25.wataru_-_8_bit_flow-lq.mp3
+ALPA		Vi på Dataspelsgatan	MP3	sos6dir/mp3lo/26.alpa_-_vi_pa_dataspelsgatan-lq.mp3
+Jeroen Tel		Reality 77	MP3	sos6dir/mp3lo/27.jeroen_tel_-_reality_77-lq.mp3
+BeeZerk		Satellite Guidance	MP3	sos6dir/mp3lo/28.beezerk_-_satellite_guidance-lq.mp3
+Byproduct		We're All Biohazards Now	MP3	sos6dir/mp3lo/29.byproduct_-_were_all_biohazards_now-lq.mp3
+CZ-Tunes		Memoriesid	MP3	sos6dir/mp3lo/30.cz-tunes_-_memoriesid-lq.mp3
+The Hooligan		Bounty Killers	MP3	sos6dir/mp3lo/31.the_hooligan_-_bounty_killers-lq.mp3
+melcom		Night Air	MP3	sos6dir/mp3lo/32.melcom_-_night_air-lq.mp3
+Mitch van Hayden		Meadows of microTech [Star Citizen Tribute Song]	MP3	sos6dir/mp3lo/33.mitch_van_hayden_-_meadows_of_microtech_star_citizen_tribute_song-lq.mp3
+Katzy		The Dark Nebula Cloud	MP3	sos6dir/mp3lo/34.katzy_-_the_dark_nebula_cloud-lq.mp3
+Mister Electric Demon		When It's Time to Return Home	MP3	sos6dir/mp3lo/35.mister_electric_demon_-_when_its_time_to_return_home-lq.mp3
+RedHeat		Gravity Assist	MP3	sos6dir/mp3lo/36.redheat_-_gravity_assist-lq.mp3
+Proteque		Reception Control	MP3	sos6dir/mp3lo/37.proteque_-_reception_control-lq.mp3
+Phobium		Spikey Cadeau	MP3	sos6dir/mp3lo/38.phobium_-_spikey_cadeau-lq.mp3
+Xerxes		Roland Calls In Sick	MP3	sos6dir/mp3lo/39.xerxes_-_roland_calls_in_sick-lq.mp3
+Xiny6581		Wavephorms	MP3	sos6dir/mp3lo/40.xiny6581_-_wavephorms-lq.mp3
+Master of Cowbells		Dés Vu	MP3	sos6dir/mp3lo/41.master_of_cowbells_-_des_vu-lq.mp3
+N-Joy		Strawberry Sundae	MP3	sos6dir/mp3lo/42.n-joy_-_strawberry_sundae-lq.mp3
+Dr.Future		Love, Sex and Rock 'n' Roll	MP3	sos6dir/mp3lo/43.drfuture_-_love_sex_and_rock_n_roll-lq.mp3
+Turbo Knight		Ignite (feat. Dimi Kaye)	MP3	sos6dir/mp3lo/44.turbo_knight_-_ignite_feat_dimi_kaye-lq.mp3
+Anders Enger Jensen		Analog Love	MP3	sos6dir/mp3lo/45.anders_enger_jensen_-_analog_love-lq.mp3
+Boogeyman		Total Overload	MP3	sos6dir/mp3lo/46.boogeyman_-_total_overload-lq.mp3
+Teo & Danko		Neon Prime Westfalen	MP3	sos6dir/mp3lo/47.teo_and_danko_-_neon_prime_westfalen-lq.mp3
+Ctrl-Z		Acrasia	MP3	sos6dir/mp3lo/48.ctrl-z_-_acrasia-lq.mp3
+Infamous		These Are The Things On My Mind	MP3	sos6dir/mp3lo/49.infamous_-_these_are_the_things_on_my_mind-lq.mp3
+Corpsicle		Circurial	MP3	sos6dir/mp3lo/50.corpsicle_-_circurial-lq.mp3
+electrosponge		Smongeboard	MP3	sos6dir/mp3lo/51.electrosponge_-_smongeboard-lq.mp3
+Twolegs		Before the Storm	MP3	sos6dir/mp3lo/52.twolegs_-_before_the_storm-lq.mp3
+BAAB		Escapade	MP3	sos6dir/mp3lo/53.baab_-_escapade-lq.mp3
+Lord		Miracle Mike	MP3	sos6dir/mp3lo/54.lord_-_miracle_mike-lq.mp3
+LMan		Misjudgement Day	MP3	sos6dir/mp3lo/55.lman_-_misjudgement_day-lq.mp3
+Subi		Last Minute Checks	MP3	sos6dir/mp3lo/56.subi_-_last_minute_checks-lq.mp3
+Ferrara		Chase Theme (One Last Run)	MP3	sos6dir/mp3lo/57.ferrara_-_chase_theme_one_last_run-lq.mp3
+Martin Wall		We're All Atoms	MP3	sos6dir/mp3lo/58.martin_wall_-_were_all_atoms-lq.mp3
+Chris Hülsbeck		Hopes and Dreams	MP3	sos6dir/mp3lo/59.chris_hulsbeck_-_hopes_and_dreams-lq.mp3
+Jogeir Liljedahl		Summer Air	MP3	sos6dir/mp3lo/60.jogeir_liljedahl_-_summer_air-lq.mp3
+Mikael Fyrek		Myrddin	MP3	sos6dir/mp3lo/61.mikael_fyrek_-_myrddin-lq.mp3
+Mitch van Hayden		Exploring ArcCorp [Star Citizen Tribute Song]	MP3	sos6dir/mp3lo/62.mitch_van_hayden_-_exploring_arccorp_star_citizen_tribute_song-lq.mp3
+PsychNerD		Triptych 3.01	MP3	sos6dir/mp3lo/63.psychnerd_-_triptych_301-lq.mp3
+Orion Deluxe		Clouds	MP3	sos6dir/mp3lo/64.orion_deluxe_-_clouds-lq.mp3
+Saarde		Mental Frequency (SceneSat version)	MP3	sos6dir/mp3lo/65.saarde_-_mental_frequency_scenesat_version-lq.mp3
+Paokala		Ten Thousand Homeworlds (Extended)	MP3	sos6dir/mp3lo/66.paokala_-_ten_thousand_homeworlds_extended-lq.mp3
+PsychNerD		Triptych 3.02	MP3	sos6dir/mp3lo/67.psychnerd_-_triptych_302-lq.mp3
+pROPER dISCO		Stay	MP3	sos6dir/mp3lo/68.proper_disco_-_stay-lq.mp3
+Xerxes		Eva's Melody	MP3	sos6dir/mp3lo/69.xerxes_-_evas_melody-lq.mp3
+CZ-Tunes		Nightsky Dreams	MP3	sos6dir/mp3lo/70.cz-tunes_-_nightsky_dreams-lq.mp3
+PsychNerD		Triptych 3.03	MP3	sos6dir/mp3lo/71.psychnerd_-_triptych_303-lq.mp3
+moonove		Taol-Amzer	MP3	sos6dir/mp3lo/72.moonove_-_taol-amzer-lq.mp3
+Jogeir Liljedahl		All These Moments	MP3	sos6dir/mp3lo/73.jogeir_liljedahl_-_all_these_moments-lq.mp3
+Jogeir Liljedahl		Vita De Novo	MP3	sos7dir/mp3lo/01.jogeir_liljedahl_-_vita_de_novo-lq.mp3
+Rapture		Greylag Runners	MP3	sos7dir/mp3lo/02.rapture_-_greylag_runners-lq.mp3
+pROPER dISCO		Gameplay	MP3	sos7dir/mp3lo/03.proper_disco_-_gameplay-lq.mp3
+Pex Mahoney Tufvesson		Belong (feat Jesper of PPOT)	MP3	sos7dir/mp3lo/04.pex_mahoney_tufvesson_-_belong_feat_jesper_of_ppot-lq.mp3
+The Surgon		All I Ever Wanted (monologue)	MP3	sos7dir/mp3lo/05.the_surgon_-_all_i_ever_wanted_monologue-lq.mp3
+Maskinpop		Paperboy (TDG Peaperboayh style)	MP3	sos7dir/mp3lo/06.maskinpop_-_paperboy_tdg_peaperboayh_style-lq.mp3
+melcom		Pyramid Song	MP3	sos7dir/mp3lo/07.melcom_-_pyramid_song-lq.mp3
+Danko		Voyage 707	MP3	sos7dir/mp3lo/08.danko_-_voyage_707-lq.mp3
+Martin Wall		Song For K	MP3	sos7dir/mp3lo/09.martin_wall_-_song_for_k-lq.mp3
+N-Joy / TsW		Piccole Cose Perdute	MP3	sos7dir/mp3lo/10.n-joy_tsw_-_piccole_cose_perdute-lq.mp3
+DHS + Commander K + Twisty J		Gone	MP3	sos7dir/mp3lo/11.dhs_and_commander_k_and_twisty_j_-_gone-lq.mp3
+Teetow		Good Thing	MP3	sos7dir/mp3lo/12.teetow_-_good_thing-lq.mp3
+Twolegs		Cassiopeia	MP3	sos7dir/mp3lo/13.twolegs_-_cassiopeia-lq.mp3
+ALPA		São Paulo	MP3	sos7dir/mp3lo/14.alpa_-_sao_paulo-lq.mp3
+Chris Hülsbeck		Interstellar Sentinel Level 4	MP3	sos7dir/mp3lo/15.chris_hulsbeck_-_interstellar_sentinel_level_4-lq.mp3
+Captain		Space Debris (Remixed by BeeZerk)	MP3	sos7dir/mp3lo/16.captain_-_space_debris_remixed_by_beezerk-lq.mp3
+JLD		SEC-T 2023 (feat. Oscar & ziona)	MP3	sos7dir/mp3lo/17.jld_-_sec-t_2023_feat_oscar_and_ziona-lq.mp3
+mA2E		Pixel Pulse	MP3	sos7dir/mp3lo/18.ma2e_-_pixel_pulse-lq.mp3
+Mattias Brian		Walking Distance	MP3	sos7dir/mp3lo/19.mattias_brian_-_walking_distance-lq.mp3
+Sonic Wanderer		Eternal Voyage (The Journey Back)	MP3	sos7dir/mp3lo/20.sonic_wanderer_-_eternal_voyage_the_journey_back-lq.mp3
+The Hooligan		R41N	MP3	sos7dir/mp3lo/21.the_hooligan_-_r41n-lq.mp3
+Proteque		Obsidian Silence	MP3	sos7dir/mp3lo/22.proteque_-_obsidian_silence-lq.mp3
+Panta Rhei		Running	MP3	sos7dir/mp3lo/23.panta_rhei_-_running-lq.mp3
+LooPeR231		Land of Dreamy Deaths	MP3	sos7dir/mp3lo/24.looper231_-_land_of_dreamy_deaths-lq.mp3
+Moonove		Led Storm	MP3	sos7dir/mp3lo/25.moonove_-_led_storm-lq.mp3
+Infamous		Parallax Stroller	MP3	sos7dir/mp3lo/26.infamous_-_parallax_stroller-lq.mp3
+tenfour		Bright Velvet	MP3	sos7dir/mp3lo/27.tenfour_-_bright_velvet-lq.mp3
+Demichelis		Howard Jones	MP3	sos7dir/mp3lo/28.demichelis_-_howard_jones-lq.mp3
+N-Joy / TsW		Strolling in Okinawa	MP3	sos7dir/mp3lo/29.n-joy_tsw_-_strolling_in_okinawa-lq.mp3
+Zeus		CP Intro (Remixed by BeeZerk)	MP3	sos7dir/mp3lo/30.zeus_-_cp_intro_remixed_by_beezerk-lq.mp3
+Mattias Brian		Bring the past	MP3	sos7dir/mp3lo/31.mattias_brian_-_bring_the_past-lq.mp3
+Jogeir Liljedahl		Sparkle of Light	MP3	sos7dir/mp3lo/32.jogeir_liljedahl_-_sparkle_of_light-lq.mp3
+Danko		World Apart	MP3	sos7dir/mp3lo/33.danko_-_world_apart-lq.mp3
+Cordis		Bright (Original Mix)	MP3	sos7dir/mp3lo/34.cordis_-_bright_original_mix-lq.mp3
+Teo		Big Kick Energy	MP3	sos7dir/mp3lo/35.teo_-_big_kick_energy-lq.mp3
+melcom		Rotten	MP3	sos7dir/mp3lo/36.melcom_-_rotten-lq.mp3
+Ferrara		Laser Surveillance Design	MP3	sos7dir/mp3lo/37.ferrara_-_laser_surveillance_design-lq.mp3
+Bacter & Saga Musix		Deep Space	MP3	sos7dir/mp3lo/38.bacter_and_saga_musix_-_deep_space-lq.mp3
+Byproduct		Navigate This	MP3	sos7dir/mp3lo/39.byproduct_-_navigate_this-lq.mp3
+Vedder & ALPA		Lost Nights	MP3	sos7dir/mp3lo/40.vedder_and_alpa_-_lost_nights-lq.mp3
+LMan		Pixelated Neon Nights	MP3	sos7dir/mp3lo/41.lman_-_pixelated_neon_nights-lq.mp3
+Triace		Hingekl4ngt	MP3	sos7dir/mp3lo/42.triace_-_hingekl4ngt-lq.mp3
+Spexzter of Darklite		Springeling	MP3	sos7dir/mp3lo/43.spexzter_of_darklite_-_springeling-lq.mp3
+QM / Team210		Arcade Dreamscapes	MP3	sos7dir/mp3lo/44.qm_team210_-_arcade_dreamscapes-lq.mp3
+Trace		Complex Rythm	MP3	sos7dir/mp3lo/45.trace_-_complex_rythm-lq.mp3
+AstroSam		Gascloud Gazer	MP3	sos7dir/mp3lo/46.astrosam_-_gascloud_gazer-lq.mp3
+Synesthesia		View from the Top	MP3	sos7dir/mp3lo/47.synesthesia_-_view_from_the_top-lq.mp3
+Mitch van Hayden		Cosmic Pavane	MP3	sos7dir/mp3lo/48.mitch_van_hayden_-_cosmic_pavane-lq.mp3
+Sinatra		Harōkiti	MP3	sos7dir/mp3lo/49.sinatra_-_harōkiti-lq.mp3
+Hansee		AstroMonica	MP3	sos7dir/mp3lo/50.hansee_-_astromonica-lq.mp3
+Triace & mA2E		Str8 outta Skövde	MP3	sos7dir/mp3lo/51.triace_and_ma2e_-_str8_outta_skovde-lq.mp3
+Teo		Aero	MP3	sos7dir/mp3lo/52.teo_-_aero-lq.mp3
+Ctrl-Z		Apricity	MP3	sos7dir/mp3lo/53.ctrl-z_-_apricity-lq.mp3
+Danko		Götterfunken	MP3	sos7dir/mp3lo/54.danko_-_gotterfunken-lq.mp3
+ALPA		Warriors	MP3	sos7dir/mp3lo/55.alpa_-_warriors-lq.mp3
+DHS		C0R3	MP3	sos7dir/mp3lo/56.dhs_-_c0r3-lq.mp3
+electrosponge		Birdless	MP3	sos7dir/mp3lo/57.electrosponge_-_birdless-lq.mp3
+Synesthesia		Anticipation	MP3	sos7dir/mp3lo/58.synesthesia_-_anticipation-lq.mp3
+Phobium		I Wish It Would Stay	MP3	sos7dir/mp3lo/59.phobium_-_i_wish_it_would_stay-lq.mp3
+Floaf		Dear Leslie	MP3	sos7dir/mp3lo/60.floaf_-_dear_leslie-lq.mp3
+The Hooligan		The World Is A Stage	MP3	sos7dir/mp3lo/61.the_hooligan_-_the_world_is_a_stage-lq.mp3
+Walkman		Poormouth (Firefox & Mantronix Remix)	MP3	sos7dir/mp3lo/62.walkman_-_poormouth_firefox_and_mantronix_remix-lq.mp3
+Skaven252		Clockbound Days	MP3	sos7dir/mp3lo/63.skaven252_-_clockbound_days-lq.mp3
+CoLD SToRAGE		Christie's Gate	MP3	sos7dir/mp3lo/64.cold_storage_-_christies_gate-lq.mp3
+Trace		DinkDunk	MP3	sos7dir/mp3lo/65.trace_-_dinkdunk-lq.mp3
+D4XX		Hearts on Fire	MP3	sos7dir/mp3lo/66.d4xx_-_hearts_on_fire-lq.mp3
+Elwood		Fall From Sky (Remixed by BeeZerk)	MP3	sos7dir/mp3lo/67.elwood_-_fall_from_sky_remixed_by_beezerk-lq.mp3
+ALPA		Sprite Street	MP3	sos7dir/mp3lo/68.alpa_-_sprite_street-lq.mp3
+Dr.Future		Fairytale Bliss (DRF Remix)	MP3	sos7dir/mp3lo/69.drfuture_-_fairytale_bliss_drf_remix-lq.mp3
+Infamous		Click Boom	MP3	sos7dir/mp3lo/70.infamous_-_click_boom-lq.mp3
+Magnar		Running	MP3	sos7dir/mp3lo/71.magnar_-_running-lq.mp3
+T-101		REM Cycle	MP3	sos7dir/mp3lo/72.t-101_-_rem_cycle-lq.mp3
+Binge_n Lord/Spreadpoint		Remember Palazzo	MP3	sos7dir/mp3lo/73.binge_n_lord_spreadpoint_-_remember_palazzo-lq.mp3
+Triace		Hepatitis B (Extended Cure)	MP3	sos7dir/mp3lo/74.triace_-_hepatitis_b_extended_cure-lq.mp3
+Wright & Bastard		2060 Or 2061 (Feat. Mc KRYPTOMEDIC)	MP3	sos7dir/mp3lo/75.wright_and_bastard_-_2060_or_2061_feat_mc_kryptomedic-lq.mp3
+LooPeR231		Unusuality	MP3	sos7dir/mp3lo/76.looper231_-_unusuality-lq.mp3
+Die Dame		Happiness	MP3	sos7dir/mp3lo/77.die_dame_-_happiness-lq.mp3
+Phobium		Dairy Street Blues	MP3	sos7dir/mp3lo/78.phobium_-_dairy_street_blues-lq.mp3
+Wright & Bastard		2050 Or 2051	MP3	sos7dir/mp3lo/79.wright_and_bastard_-_2050_or_2051-lq.mp3
+Slaze		Esoteric Doctrine	MP3	sos7dir/mp3lo/80.slaze_-_esoteric_doctrine-lq.mp3
+Infamous		Chaos Theory	MP3	sos7dir/mp3lo/81.infamous_-_chaos_theory-lq.mp3
+Fabbroz		About90s	MP3	sos7dir/mp3lo/82.fabbroz_-_about90s-lq.mp3
+LooPeR231		WOTW - Intro Number 61	MP3	sos7dir/mp3lo/83.looper231_-_wotw_-_intro_number_61-lq.mp3
+pROPER dISCO		Spectragon	MP3	sos7dir/mp3lo/84.proper_disco_-_spectragon-lq.mp3
+Dr.Future		Dreams II (DRF Remix)	MP3	sos7dir/mp3lo/85.drfuture_-_dreams_ii_drf_remix-lq.mp3
+BMan		Orbit	MP3	sos7dir/mp3lo/86.bman_-_orbit-lq.mp3
+Moonove		Cybernoid 2 Reboot	MP3	sos7dir/mp3lo/87.moonove_-_cybernoid_2_reboot-lq.mp3
+Alkama		Aquaverse	MP3	sos7dir/mp3lo/88.alkama_-_aquaverse-lq.mp3
+Jakim & MichU		Access Denied (Remixed by BeeZerk)	MP3	sos7dir/mp3lo/89.jakim_and_michu_-_access_denied_remixed_by_beezerk-lq.mp3
+Ferrara		The Last Bird on Earth	MP3	sos7dir/mp3lo/90.ferrara_-_the_last_bird_on_earth-lq.mp3
+ALPA		Parts of a pixel	MP3	sos7dir/mp3lo/91.alpa_-_parts_of_a_pixel-lq.mp3
