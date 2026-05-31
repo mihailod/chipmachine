@@ -1,0 +1,42 @@
+ChipmachineAS release process
+=============================
+
+1. Bump the app version
+-----------------------
+in code: mihailod@Mac chipmachine % vi src/version.h.VERSION_STR 
+
+2. Bump the DB version
+----------------------
+only id changed/updated (this is rare)
+db version in lua/db.lua
+current: VERSION = 24; (intel stopped at 23)
+
+3. Run the package script
+-------------------------
+In chipmachine folder:
+./package_app.sh
+upon finishing, the script will print something like this:
+=== Done! ===
+*** Planned template command details:
+------------------------------------------------------------
+gh release create v1.1-as ../ChipMachineAS.zip \
+  --title "ChipMachineAS v1.1" \
+  --notes "Apple Silicon maintenance release v1.1. <short note text to be provided>" \
+  --repo "mihailod/chipmachine"
+------------------------------------------------------------
+
+an example:
+
+gh release create v1.0.3-as ../ChipMachineAS.zip \
+  --title "ChipMachineAS v1.0.3" \
+  --notes "Apple Silicon maintenance release v1.0.3. Version check on start, multiple crash fixes, improved DB indexing and About popup, Help screen fix, cosmetic improvements." \
+  --repo "mihailod/chipmachine"
+
+(replace the note with the new note)
+
+
+Revert/undo a bad release
+-------------------------
+cd chipmachine
+gh release upload v1.0.0-as ../ChipMachineAS-macOS26-ARM64.zip --clobber --repo "mihailod/chipmachine"
+where v1.0.0-as should be replaced with the last good release you wanna revert to
