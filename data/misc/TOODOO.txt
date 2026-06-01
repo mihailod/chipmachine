@@ -1,7 +1,6 @@
 data
 ====
-*update databases to the latest -- mostly done
-* (OPTIONAL -- will take 14 hours) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
+- [OPTIONAL -- will take 14 hours and not sure if it will improve anything] run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 
 optimizations
 =============
@@ -34,6 +33,7 @@ product/process
 ===============
 - use some IDE (with integrated AI?) for development?
 - once 1.1 is out: email the author, post on linkedin retro groups
+
 
 new features
 ============

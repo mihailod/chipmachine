@@ -265,7 +265,9 @@ Done by Codex.
 
 **********************************************
 
-      12 chipmachine/data/radio.txt
+      12 chipmachine/data/radio.txt --- DONE 11 -> 9
+ I’m checking which streams are still live and which ones have moved so I can refresh the file without breaking the parser.
+Some of the legacy station endpoints are slow or dead, so I’m letting the probes finish rather than guessing. If the failures cluster around a few hosts, I’ll update those directly and leave the rest alone. Codex made the list.
 
 **********************************************
 **********************************************
@@ -292,7 +294,7 @@ Done by Codex.
   X scenesat.txt     | scenesat ( scenesat )                  | parseStandard 
   X demovibes.txt    | Demovibes ( demovibes )                | parseStandard 
   X amigavibes.txt   | Amigavibes ( amigavibes )              | parseStandard 
-    radio.txt        | Radio ( radio )                        | parseStandard 
+  X radio.txt        | Radio ( radio )                        | parseStandard 
   X bitar.xml        | Bitar till Kaffet (Live) ( bitar )     | parseRss (type = "podcast" )
   X bitar.txt        | Bitar till Kaffet (Archive) ( bitar2 ) | parseStandard 
   X syntax.txt       | Syntax Error ( syntax )                | parseStandard 
