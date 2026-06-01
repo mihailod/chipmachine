@@ -219,6 +219,8 @@ Gemini summary:
 
 Test song: Orange Painting (only 1 and only here)
 
+All other .nsf must play from interent, pulled from modland...
+
 **********************************************
 
      314 chipmachine/data/scenesat.txt 314 -> 534

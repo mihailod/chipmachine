@@ -1,16 +1,15 @@
 data
 ====
-- radio screenshots missing or ugly: rainwave (favicon issue?)
-- radio db ugly scroll -- reads the screen art url!? 
-- [OPTIONAL -- will take 14 hours and not sure if it will improve anything] run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
+- (minor) radio screenshots missing for rainwave (favicon issue)
+- (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 
 crashes:
 ========
 P0 still sometimes chokes on quit when playing
-P0 new app still asks permission for Documents when playing nsfe files
 
 could not play song:
 ===================
+- zelda shi --- .OVI and .OPI extension don't play
 * (intel crash, fixed on arm) lightforce jochen (last one) File not found 7CJ5AJ4@J5JCE??7CH5AH4@H2>H4HAC??5AF4@F2>F0<F2F@A????[0uade warning: Song ended prematurely due to error: score died -- Gemini says corrupted file
 
 could not load file
@@ -27,6 +26,7 @@ console errors:
 
 other:
 ======
+- what is the relation between apone and musicplayer/apone? can we remove one
 - remove obsolete vice completely 
 - add a test file for EVERY supported extension
 

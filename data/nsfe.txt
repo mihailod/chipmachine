@@ -1,8 +1,5 @@
 	"Castle" from MysticQuest	bob		33_bob1.nsfe
 	"MASAI" from DJMAX Portable	SBR		40_sbr_masai.nsfe
-	"Raika Is Good Enough" Medley	Tsu Ryu/Konami of Japan		T_GooniesII-SailorRaika_RaikaIsGoodEnough_Medley.nsfe
-	"Raika is Good Enough" Medley	Tsu Ryu/Konami 1987		T_GooniesII-SailorRaika_RaikaIsGoodEnough_Medleyv2.nsfe
-	"Rakusho!" Theme of Raika	Tsu Ryu		T_Original_Rakusho!.nsfe
 	"Smiles and Tears" from MOTHER2	bob		38_bob2.nsfe
 	"Where Clarion Holds Forth"	0xabad1dea		33_clarionholdsforth.nsfe
 	"Whirlwind" Raika No Tojo [Raika Fanfare]	Tsu Ryu and K. Manami		03_T_SailorRaika_RaikaFanfare.nsfe
@@ -21,9 +18,7 @@
 	14_Meteor3	<?>		14_Meteor3.nsfe
 	14_OreimoHellFCM8beta	<?>		14_OreimoHellFCM8beta.nsfe
 	16_atlussongsmegamitenseiiistyle	<?>		16_atlussongsmegamitenseiiistyle.nsfe
-	180sx ~Passionate Racer~	Tsu Ryu		T_Original_180sxPassionateRacer.nsfe
 	18_ironcladfcm9originals	<?>		18_ironcladfcm9originals.nsfe
-	1943: The Battle of Midway	<?>		1943.nsfe
 	20_spaceBoss	<?>		20_spaceBoss.nsfe
 	21st Century Pop Song (Hymie's Basement Cover)	CIN_ S_FF_RY		04_21stCenturyPopSong.nsfe
 	21st Century Schizoid Man	YS		65_21st.nsfe
@@ -59,7 +54,6 @@
 	68_djbouche_fcm8	<?>		68_djbouche_fcm8.nsfe
 	69_fcm9_hellsinker	<?>		69_fcm9_hellsinker.nsfe
 	8 Bit Back Alley Swagga	MandraSigma		36_8_Bit_Back_Alley_Swagga.nsfe
-	8 Eyes	Kenzou Kumei		8 Eyes.nsfe
 	87_Vivaldi_ogt180	<?>		87_Vivaldi_ogt180.nsfe
 	89_fcm9	<?>		89_fcm9.nsfe
 	8bit goa	kuske/KPLECRAFT		14_kp_8bitgoa.nsfe
@@ -67,79 +61,42 @@
 	8jiDayo! ZenInShuGo -BONMAWARI-	Wiz.		23_bonmawri.nsfe
 	900 Degrees (FCM edit)	BEEPBOY		24_900degrees.nsfe
 	90_pathetique	<?>		90_pathetique.nsfe
-	A Boy and his Blob	Alex Demeo, Mark van Hecke, ...		A Boy and His Blob.nsfe
 	A change of probability	onikuma		22_degi_oni.nsfe
 	A city of many wonders	za909		004_Acityofmanywonders.nsfe
 	A Fox in Heat	Optomon		03_FoxInHeat.nsfe
 	a lovely song from 2011	GreaseMonkey		25_gm-bangarang.nsfe
-	A Nightmare on Elm Street	David Wise		A Nightmare on Elm Street.nsfe
 	A piece of your brain	mrb		46_brain.nsfe
-	A Silent Christmas ~ Midnight ~	Tsu Ryu		T_Original_ASilentChristmas.nsfe
 	A Traditional Children's Waltz	Heosphoros		10_Heosphoros_-_A_Traditional_Childrens_Waltz_MMC5.nsfe
 	A-Ha - Take On Me	M		061_TakeOnMe.nsfe
-	Abadox	Kyouhei Sada		Abadox.nsfe
-	Aboard Steel Frieght-6033	Tsu Ryu		T_Original_AboardSteelFrieght6033.nsfe
-	Accursed Fury	Tsu Ryu		T_Original_AccursedFury.nsfe
+	Abadox	Kyouhei Sada		Abadox.nsf
 	Acidjazzed Evening	ImATrackMan		090_Acidjazzed_Evening.nsfe
 	Action 53	Velathnos		05_Action_53.nsfe
 	ADAMANT	MISOKA		15_adamant.nsfe
-	Addams Family: Pugsley's Scavenger Hunt	<?>		Addams Family Pugsley's Scavenger Hunt.nsfe
-	Adrenaline Fighting Spirit	Tsu Ryu		T_Original_AdrenalineFightingSpirit.nsfe
-	Adventure Island	<?>		Adventure Island.nsfe
-	Adventure Island 2	Okkun Medaka		Adventure Island 2.nsfe
-	Adventures In The Magic Kingdom	Yoko Shimomura		Adventures In The Magic Kingdom.nsfe
-	Adventures of Dino Riki	<?>		Adventures of Dino Riki.nsfe
-	Adventures of Lolo	<?>		Adventures of Lolo.nsfe
-	Adventures of Lolo 2			Adventures of Lolo 2.nsfe
-	Adventures of Lolo 3			Adventures of Lolo 3.nsfe
 	Aerodynamic	Ikuma Morata		27_aerodynamic.nsfe
 	Afternoon, at last	Please Lose Battle		052_Afternoon_at_last.nsfe
 	Against Overwhelming Odds	RushJet1		02_against_odds.nsfe
 	Agua De Beber	Agentflit		22_agua_de_beber_1.nsfe
-	Ai Senshi Nicole - BGM 01	Cover by Tsu Ryu		T_AiSenshiNicole_BGM1.nsfe
-	Ai Senshi Nicole - BGM 02	Cover by Tsu Ryu 		T_AiSenshiNicole_BGM2.nsfe
-	Ai Senshi Nicole - BGM 03	Cover by Tsu Ryu		T_AiSenshiNicole_BGM3.nsfe
-	Ai Senshi Nicole - BGM 04	Cover by Tsu Ryu		T_AiSenshiNicole_BGM4.nsfe
-	Ai Senshi Nicole - BGM 05	Cover by Tsu Ryu		T_AiSenshiNicole_BGM5.nsfe
-	Ai Senshi Senshi - BGM 06	Cover by Tsu Ryu		T_AiSenshiNicole_BGM6.nsfe
-	Ai Senshi Senshi - BGM 07	Cover by Tsu Ryu		T_AiSenshiNicole_BGM7.nsfe
 	AIR BUSTER - Seaside Front	ROP		21_Cov_AirBusterRound1.nsfe
-	Air Fortress	Escaper Kanagushi		Air Fortress.nsfe
 	Air on G "Swing"	Wiz.		32_bah_gair.nsfe
-	Akumajou Densetsu	Yoshinori Sasaki,Jun Funahashi,Y.Morimoto		Akumajou Densetsu.nsfe
-	Akumajou Dracula - Cross Heart	Cover by Tsu Ryu		T_AkumajouDracula_CrossYourHeart_VRC7Ver.nsfe
-	Aladdin	<?>		Aladdin.nsfe
-	Aladdin (Unlicensed)	<?>		Aladdin (Unlicensed).nsfe
-	Alien 3	Jeroen Tel		Alien 3.nsfe
 	Alkali Earth	RushJet1		13_AlkaliEarth.nsfe
 	All The Right Friends	kvee		12_kvee_-_all_the_right_friends.nsfe
-	Almana no Kiseki	<?>		Arumana no Kiseki (FDS).nsfe
-	Alone	Tsu Ryu		T_Original_Alone.nsfe
 	alpha strike	coda		09_strike.nsfe
 	Ambient Music 42 Universes	YS		44_42universe.nsfe
 	anak pantai	crazygame		65_anakpantai.nsfe
 	ANANSE [spider man] 1&2	Bob OdenVIRT		161_ANANSE.nsfe
 	ANGEL	elsynth		07_angel.nsfe
-	Anjelica, Daisukiyo	Tsu Ryu		T_Original_AnjelicaDaisukiyo.nsfe
-	Another Harsh Winter	Tsu Ryu		T_Original_AnotherHarshWinter.nsfe
 	anti-sound 9	nin-kuuku		38_antisound.nsfe
-	Anticipation	David Wise		Anticipation (1988)(Rare).nsfe
 	Any which way	nobody		60_any_which_way.nsfe
 	Apidya- Meadow's Edge Part 1	kenshirotakahashi		127_apidyameadowsedgepart1.nsfe
 	Aquila	Eightecs		12_eightecs-aquila.nsfe
 	Arachno - A Sad Touch	SketchMan3		134_Arachno_ASadTouch.nsfe
-	Argus No Senshi	<?>		Argos No Senshi.nsfe
 	ARMED POLICE BATRIDER / Theme of Carpet Stories	sb		35_btrd_cpt.nsfe
-	Armored Protagonist	Tsu Ryu		T_Original_ArmoredProtagonist.nsfe
 	Arrivee des camionneurs	K->		11_adc.nsfe
-	Artificial Intelligence Bomb	Naruto		Artificial Intelligence Bomb.nsfe
 	Artificial Intelligence Bomb	NARUTO		38_aibomb.nsfe
 	asdf	xaimus		42_x-JAPANIMU.nsfe
 	Asparagus	Javel		41_fcwow14.nsfe
 	ass	ass		35_ass.nsfe
-	Asterix	Alberto Gonzalez		Asterix.nsfe
 	astroglide's theme	surasshu		17_surasshu-astroglides_theme.nsfe
-	Astyanax	<?>		Astyanax.nsfe
 	Athena	Arc-Demon		086_athena.nsfe
 	axon	xaimus		53_xaimus-axon.nsfe
 	B-WINGS - without Wings	DDSS		122_b-wings_2.nsfe
@@ -152,10 +109,7 @@
 	BaitoHell 2000 / MENU	U.G.M.		05_baitohell2000.nsfe
 	Ballade in G Minor (Finale)	Optomon		43_Ballade1_2.nsfe
 	Banshee Arcade	Vespeon		076_Vespeon-Banshee_Arcade.nsfe
-	Bard's Tale - Tales of the Unknown	G. Takahashi		bards tale j.nsfe
 	BASSKOT	ROP		029_ropm130526.nsfe
-	Batman	Nobuyuki Kun & Kodaka San		Batman.nsfe
-	Batman: Return of the Joker	Naoki Kodaka, Hara Nobuyuki, Shinichi Seya		Batman Return of the Joker.nsfe
 	Batteries on Backbeat	Levus		45_batteriesonbackbeat.nsfe
 	Battle Against The Last Minute	jrlepage		083_jrlepage_-_battle_against_the_last_minute.nsfe
 	Battle for Survival	Tappy		29_bfs.nsfe
@@ -166,32 +120,24 @@
 	BATTLE SHIP (SPACE MANBOW)	skinnyhead2000		030_BATTLESHIP.nsfe
 	Battle Theme (Final Fantasy IV)	Firippu		14_Firippu_Battle_Theme.nsfe
 	Battle with Ahuizotl	Gamma		07_gamma_-_battle_with_ahuizotl.nsfe
-	Battletoads	David Wise		Battletoads.nsfe
-	Battletoads & Double Dragon	David Wise		Battletoads & Double Dragon.nsfe
 	beard adventures	Ted Buttly		57_beard.nsfe
 	Bearforce1 - Bearforce1 (Medley)	Ironclad		025_Bearforce1.nsfe
 	beatmaniaIIDX10th -Daisuke-	Wiz.		19_daisuke.nsfe
 	Beautiful Flower	Rubbish (Robert Kreese)		23_rubbish_-_beautiful_flower.nsfe
-	Beepin' Frusteration	Tsu Ryu		T_Original_BeepinFrusteration.nsfe
 	Beethoven Virus	EXCALIpUR		13_beethoven_virus.nsfe
 	Behind the Mask	YS		03_behind.nsfe
 	Behind the smile	elsynth		28_bts.nsfe
 	Berserkeräxian	Strobe/TiTAN		01_berserkeraxian.nsfe
 	Beyonds The Bounds (from"ANUBIS Z.O.E.")	m_036		106_beyond_the_bounds_fnc_test_edit02.nsfe
 	Bible Adventures (Genesis) - Gameplay	HybridEconomy		080_BIBLE_ADVENTURES.nsfe
-	Big Nose the Caveman	<?>		Big Nose the Caveman.nsfe
 	bigloaf's bbq	freedrull		60_bigloaf.nsfe
 	Bimetallic	Tappy		27_Bimetallic.nsfe
-	Bionic Commando	"Gondamin"		BionicCommando.nsfe
 	Bipolar man	nobody		38_bipolardesu.nsfe
 	Bitter-Orange	Doppi		60_bit20k.nsfe
 	Blackbird	slam		33_Blackbird.nsfe
-	Blades of Steel	<?>		Blades of Steel.nsfe
-	Blaster Master	Naoki Kodaka & Marumo		Blaster Master.nsfe
 	BLAZE UNION medley	SBR		46_sbr_blaze.nsfe
 	blood In/Out	Kasper Hoglund		25_samples.nsfe
 	BLOOD LEGACY	mukunda		58_bloodlegacy.nsfe
-	Blood Soldier 	Tsu Ryu		T_Original_BloodSoldier.nsfe
 	Blood-stained Gothic Shota Doll	chibi-tech		03_shota_doll.nsfe
 	Blue Sands	Optomon		32_BlueSands.nsfe
 	bmIIDX16EMPRESS - smooooch･∀･	Robokabuto		10_smooooch_v01.nsfe
@@ -206,7 +152,6 @@
 	BOSS BATTLE	YS		03_BossBattle.nsfe
 	Boss Battle	Bathacker		073_bossbattle.nsfe
 	Boyfriend and Girlfriend	Kulor		26_BoyfriendAndGirlfriend.nsfe
-	Bram Stoker's Dracula	Jeroen Tel		Bram Stoker's Dracula.nsfe
 	Brave Man/Far Away (Truxton Stage 1)	Gabe Fracas		56_truxton.nsfe
 	Braveman	hydden		089_rock_010.nsfe
 	Breakfast Chase scene	MandraSigma		16_Breakfast_Chase_Scene.nsfe
@@ -215,11 +160,7 @@
 	Brilliant Lips	Tappy		21_bl.nsfe
 	BROWNWAVE	Chema64		30_chema64_-_brownwave.nsfe
 	Bubble and Wily Mix	hydden		026_rockman2_bubble_wily.nsfe
-	Bubble Bobble	Tadashi Kimijima		Bubble Bobble.nsfe
-	Bubble Bobble 2	< ? >		Bubble Bobble 2.nsfe
 	Bubble Crab in Sunsoft style	za909		101_bubblecrab.nsfe
-	Bucky O'Hare	T. Sumiyama		Bucky O' Hare.nsfe
-	Burger Time	<?>		Burger Time.nsfe
 	BURNING DESIRE-HAT ON FIRE-	xaimus		28_gays.nsfe
 	BURNING ROAD - from "NIGHT STRIKER"	T.Kawanishi		16_burning_road.nsfe
 	Butterfly Net	MisfitChris		22_famientry_0.nsfe
@@ -227,20 +168,14 @@
 	Buy Some Tacos Will Ya'!	Dajin		17_tacos.nsfe
 	C64 Ghouls&Ghosts: Title	nin-kuuku		83_gg.nsfe
 	Calcutta (Taxi, Taxi, Taxi)	Archj		44_ArchjCalcutta.nsfe
-	California Games	<?>		California Games.nsfe
 	Candy Galy	FUN		05_CandyGaly.nsfe
 	Capitaine Flam	madbrain		37_flam.nsfe
 	Captain Parrot	reduz/Juan Linietsky		27_reduz_-_Captain_Parrot.nsfe
 	Cardinal Knowledge	nobody		61_cardinalknowledge.nsfe
-	Carnival Babel - Blue Seed OP	Cover by Tsu Ryu		T_BlueSeed_CarnivalBabel_OpeningTheme.nsfe
 	Casanova	yesso		61_Casanova.nsfe
 	Casino Night Zone	RushJet1		17_casino.nsfe
-	Castlevania	Club Kukeiha		Castlevania.nsfe
-	Castlevania 2:Simon's Quest	Kenichi Matsubara or S. Terishima		Castlevania 2.nsfe
-	Castlevania 3:Dracula's Curse	Y.Sasaki,J.Funamashi,and Y.Morimoto		Castlevania 3.nsfe
 	Castlevania III Beginning reremix by 2a03	tamanegisoldier		25_cv3_beginning_2a03.nsfe
 	Castlevania: Portrait of Ruin - Crucifix Held Close	HertzDevil		09_super_accurate_cover.nsfe
-	Catch That Cat!	Tsu Ryu		T_Original_CatchThatCat!.nsfe
 	CAVALLERIA RUSTICANA	Yoshi Soft		03_cavinter.nsfe
 	Cave	Bathacker		055_cave.nsfe
 	Cave Story - 'Gravity'	psn		35_gravity.nsfe
@@ -257,57 +192,37 @@
 	cherry drive	coda		51_cherry_drive.nsfe
 	Chill Live mix FCM10 edit.	Bun		007_chill_fcm10.nsfe
 	Chime	bob		40_bob3.nsfe
-	Chip & Dale Rescue Rangers 2	<?>		Chip n' Dale Rescue Rangers 2.nsfe
-	Chip 'N Dale Rescue Rangers	<?>		Chip 'N Dale Rescue Rangers.nsfe
 	Chipmunks - Don't Be Late	Pere Noel		25_chipmunks.nsfe
 	Chiptuned ROCKMAN8 FrostManStage	hydden		154_rock8_frostv4.nsfe
 	Chiyo-chan's Cooking Song	tripflag		46_cooking-is-so-fun.nsfe
 	Cho Aniki -Stage Clear-	Wiz.		107_aniki_sc.nsfe
-	Choujin Sentai Jetman	Hiroyuki Iwatsukitaru		Choujin Sentai Jetman.nsfe
-	Choujinrou Senki Warwolf	S. Sakai, T. Miura, Y. Takahama		Choujinrou Senki Warwolf.nsfe
-	Christmas NES Music #1	Tsu Ryu		T_ChristmasCover1_MidnightClear.nsfe
 	CHRONO CROSS ～時の傷痕～	KAY		12_kizuato.nsfe
 	Chrono Trigger - To Far Away Times	Fearofdark		44_fod_ctfarawaytimes.nsfe
 	CHRONO TRIGGER - 風の憧憬 -	Robokabuto		63_ct109_x01.nsfe
 	chukulun	ui		080_ui_-_chukulun.nsfe
 	cinema show	chunter		24_cinemashow.nsfe
 	Circus Galop	TURD IDiOT QUEEN		011_c.nsfe
-	Citrus Flavored Dreams	Tsu Ryu		T_Original_CitrusFlavoredDreams.nsfe
-	City of Infidels	Tsu Ryu		T_Original_CityofInfidels.nsfe
 	Cityroof Rider	Matrixz		16_matrixz_-_cityroof_rider.nsfe
-	Clash at Demonhead	<?>		Clash at Demonhead.nsfe
 	Cliffs of Nintendover	SLiVeR		15_sliver_-_cliffs_of_nintendover.nsfe
 	Close to the Edge[Yes]	YS		157_Close_to_the_edge.nsfe
 	Cnice	Alex Mauer		22_04-cnice.nsfe
-	Cocoron	Y.Yokoyama, T.Tateishi		Cocoron.nsfe
 	Code Vats	Zan-zan-zawa-veia		04_codevats.nsfe
 	Coffee	datamnesia		101_datamnesia-Coffee.nsfe
 	Colony	Ionustron		32_Colony.nsfe
 	Comedians' Gallop (Parodius Style)	kenshirotakahashi		173_comediansgallopparodiusstyle.nsfe
-	Commando	Tama and Saka		Commando.nsfe
 	Commencement	chunter		021_commencement.nsfe
 	Computer Log - 10 24 2012	KungFuFurby		46_ComputerLog10242012.nsfe
 	Conquer the Skies	madbrain		40_Conquer_the_Skies.nsfe
-	Conquest of the Crystal Palace	Tomohisa, Iwatan		Conquest of the Crystal Palace.nsfe
 	Continuum (Super ACiD Block Attack)	MrKsoft		028_Continuum.nsfe
-	Contra	H. Maezawa, K. Sada, & Club Kukeiha		Contra.nsfe
-	Contra (Japan)	H. Maezawa & K. Sada		Contra (Japan).nsfe
-	Contra Force	Matsubara, Manno, Tomita & Funahasi Chuma		Contra Force.nsfe
 	Contra(GB) ED Theme	m_036		58_contraGB_ed.nsfe
-	Control Factor	Tsu Ryu		T_Original_ControlFactor.nsfe
 	Corpse Party BGM10	Bun		34_cop10_fc.nsfe
 	Cosmic Surfin' (Easy version)	ROP		04_cosmicsurfin.nsfe
 	COWBOY BEBOP - American Money	ZEX		85_COWBOY_BEBOP_AmericanMoney.nsfe
 	CQ Boss (Konami Mix)	RushJet1		41_cq_boss.nsfe
-	Crash 'n the Boys: Street Challenge	Kazuo Sawa, Michiya Hirasawa		Crash 'n the Boys - Street Challenge.nsfe
 	Crash Bandicoot 2: N-Tranced - Lagoony Tunes	za909		138_LagoonyTunes.nsfe
-	Crisis Force	K.Matsubara, Y.Manno, J.Chuuma		Crisis Force.nsfe
 	Cronoculus	Blitz Lunar & Lychee~		33_blitzlunar_lychee_-_cronoculus.nsfe
 	Cruel Angel's Thesis (Neon Genesis Evangelion OP)	null1024		41_cruel-angels-thesis.nsfe
-	Cry To Sleep ~ Spring Night ~	Tsu Ryu		T_Original_CryToSleep-SpringNight.nsfe
-	Crystalis	Yoko.O		Crystalis.nsfe
 	CT:ToFarAwayTimes-FarFutureMix:ExttendVer	Robokabuto		128_ct317_t01nsd.nsfe
-	Cursed Corridor	Tsu Ryu		T_Original_CursedCorridor.nsfe
 	Cutey Honey OP	reduz/Juan Linietsky		37_cuteyhoneyop.nsfe
 	cutting it close	zabutom		72_cutting_it_close.nsfe
 	CV-Vile Intent	Teuoxton		10_vile.nsfe
@@ -317,36 +232,27 @@
 	Dandilion Ride	Fearofdark		45_fod_dandilion.nsfe
 	DARIUS Gaiden -TOUEI(Projection)	Wiz.		22_drg_toei.nsfe
 	Dark Road / The Road of the Apotropaic God ~ Dark Road	HertzDevil		114_HINA.nsfe
-	Darkwing Duck	Junko Tamitani		Darkwing Duck.nsfe
 	Data Corruption	8bitmatt		096_data-corruption.nsfe
 	Daybreak at Ghilcrest (Cryamore OST)	Fearofdark		038_fod_cryamore_daybreakatghilcrest.nsfe
 	DDSAT2 / Epic Battle	Tappy		45_eb.nsfe
 	Dead lock	Robokabuto		29_deadlock.nsfe
 	DEAD-ROCK!	Wiz.		74_deadrock.nsfe
-	Deadly Towers			Deadly Towers.nsfe
-	Dear Friend, Dear Sky	Tsu Ryu		T_Original_DearFriendMyDearSky.nsfe
 	death place (Phantasy Star II)	MeD		19_ps2_deathplace_040508.nsfe
 	Declaration Of War	SBR		18_sbr_sylpheed.nsfe
 	Decoy No. 22	TQ-Jam		11_decoy22.nsfe
 	Deerhoof-Twin Killers	CAK (Chris Knight)		23_CAK_-_Twin_Killers.nsfe
-	Deja Vu	<?>		Deja Vu.nsfe
-	Demon Sword			Demon Sword.nsfe
 	dendrite	xaimus		21_xaimus-dendrite.nsfe
 	Depths of the Machine	N0rmak		026_DepthsOfTheMachine.nsfe
 	Desert Dilemma	Prizmatic Spray		32_DesertDilemma.nsfe
 	Devotee of bass	ROP		16_ropm120927t2.nsfe
 	Diablo Rag	James QuestMaster		003_diablo_rag.nsfe
-	Dick Tracy	George Sanger		Dick Tracy.nsfe
 	die happy in the soft sun	B00daW		39_diehappyinthesoftsun-fc.nsfe
 	diet pepsi shit the dick [DUBSTEP REMIX]	Bob OdenVIRT		075_new.nsfe
 	Digiphone	nin-kuuku		025_digiphone.nsfe
 	Dimension-Reversing Dualities	Diad		18_DimensionReversingDualities.nsfe
 	Dirty Water	Cina Saffary		50_dirty_water.nsfe
-	Disc Error	Tsu Ryu		T_Original_DiscError.nsfe
 	disk panic	hally		16_diskpanic.nsfe
-	Disney's Duck Tales	<?>		Duck Tales.nsfe
 	Distant Sun	Zillah		059_Distant_Sun.nsfe
-	Dis~ - Mugen No Ryvius	Cover by Tsu Ryu		T_Dis_MugenNoRyvius.nsfe
 	Divertiment in D (KV136) Allegro	Yoshi Soft		21_kv136_1.nsfe
 	DJMAX PORTABLE -BLYTHE-	Wiz.		07_djm_blyt.nsfe
 	DKC2 - King K. Rool Battle	jrlepage		23_krool2.nsfe
@@ -356,40 +262,19 @@
 	Doggtales - The Moon	madbrain		63_Doggtales_-_The_Moon.nsfe
 	dogma	ui		37_ui_-_dogma.nsfe
 	Doki Doki Morning (BABYMETAL cover)	datamnesia		005_datamnesia-doki_doki_morning.nsfe
-	Don't Lose!	Tsu Ryu		T_Original_DontLose!.nsfe
-	Donkey Kong	<?>		Donkey Kong.nsfe
-	Donkey Kong Country 4 (Pirate)	Hummer Cheng		Donkey Kong Country 4.nsfe
-	Donkey Kong(FDS)	<?>		Donkey Kong FDS.nsfe
 	Dot Matrix Glory	Chema64		39_chema64_-_dot_matrix_glory.nsfe
 	Double Dealing Character: Bamboo Forest of the Full Moon	HertzDevil		067_imperishable.nsfe
-	Double Dragon	<?>		Double Dragon 1.nsfe
-	Double Dragon II: The Revenge	K.Yamane,M.Hirasawa		Double Dragon 2.nsfe
-	Double Dragon III: The Sacred Stones	Inoue & Nozaki & Hirarin & Kame		Double Dragon 3.nsfe
-	Dr. Mario	Hirokazu Tanaka		Dr. Mario.nsfe
 	Dr. Sinbad on tha grind	TristEndo		06_Dr.sinbad_on_tha_Grind_0.nsfe
-	Dracula II (FDS)	Kenichi Matsubara or S.Terishima		Dracula II (FDS).nsfe
 	Dracula Theme Park (Konami style)	za909		060_DraculasThemePark.nsfe
-	Dragon Fighter	Ukkari Yamanishi		Dragon Fighter.nsfe
-	Dragon Quest	Kouichi Sugiyama		Dragon Quest.nsfe
-	Dragon Quest IV	Kouichi Sugiyama		Dragon Quest 4.nsfe
 	DRAGON QUEST VIII Ending	片翼の人		24_dq8ending.nsfe
 	DRAGON SPIRIT - AREA 1,2	ZEX		38_DragonSpirit_AREA1_2.nsfe
 	Dragon Spirit - Glacier Land	ZEX		03_ds10.nsfe
-	Dragon Warrior	Kouichi Sugiyama		Dragon Warrior.nsfe
-	Dragon Warrior 2	Kouichi Sugiyama		Dragon Warrior 2.nsfe
-	Dragoon X Omega II v1.26      	Sliver X		Dragoon X Omega II (v1.26).nsfe
 	Drill Dozer - Top Gear GO-GO-GO!	metalidol		64_screw_breaker_.nsfe
-	Drop Zone	Neil Baldwin		Drop Zone.nsfe
 	Dubmood: We Have Accidently Borrowed Your Votedisk	tripflag		098_votedisk.nsfe
-	Duck Hunt	???		Duck Hunt.nsfe
-	Duck Hunt (VS)	< ? >		Duck Hunt (VS).nsfe
-	Duck Tales (Protoype)	<?>		Duck Tales Prototype.nsfe
 	Duck Tales - The Moon	Kuhneghetz		28_kuhneghetz_-_duck_tales_-_the_moon_vrc6_ntsc.nsfe
-	Duck Tales 2	<?>		DuckTales2.nsfe
 	duu	nin-kuuku		003_dudu.nsfe
 	Dwarf Desert (Lagoon)	Matrixz		57_dwarfdesert.nsfe
 	Dynamite Headdy- Schumacher Fly	kenshirotakahashi		176_dynamiteheaddyschumacherfly.nsfe
-	Dynowarz: The Destruction of Spondylus	O. Kasai, M. Harada, N. Nakayam		Dynowarz.nsfe
 	e+e	the k		14_e_e.nsfe
 	EARLY DAYS	psycomu		20_edays.nsfe
 	EarthBound: Snowman	Elu		102_SnowmanEB.nsfe
@@ -408,7 +293,6 @@
 	Epic Tech	Anamanaguchi		21_EpicTech.nsfe
 	Epileptic Connie	Alex Mauer		34_epileptic_connie.nsfe
 	Epoch ~ Wings of Time	Xcalber		16_Epoch-WoT.nsfe
-	Erik The Viking	Neil Baldwin		Erik The Viking.nsfe
 	ERRORLEVEL6	DDSS		22_ERRORLEVEL6.nsfe
 	ESAKA?	tamanegisoldier		28_kof96_esaka.nsfe
 	Escaping the Void	IIFierceDeityII		21_Untitled.nsfe
@@ -417,7 +301,6 @@
 	Eve burst error	Ｓ．Ｗ．		148_eve.nsfe
 	Everybody Sleeps	Anamanaguchi		17_anamanaguchi_-_everybody_sleeps.nsfe
 	Excellent Vibes!	chibi-tech		26_vibes.nsfe
-	Excitebike	<?>		Excitebike.nsfe
 	Extra Levels	Space Madness		10_Bonus.Levels.with.DPCM.nsfe
 	Extremely Slick: Extra Remixed	Sig Benis		27_MonsquazPCM.nsfe
 	F-ZERO GX Advertise	bob		15_fzero.nsfe
@@ -427,24 +310,16 @@
 	Fagetbass	GoldenShower/Fezuke/IaTM/Bari10		036_fagetbass.nsfe
 	Fairy Tail Main Theme	xia0xia0		04_ft_main_theme.nsfe
 	Fallen Angel	plrusek		59_Fallen_Angel.nsfe
-	Falsion	Sakamoto, Takenouchi, Fujio		Falsion.nsfe
 	FamiClub	datamnesia		064_datamnesia-FamiClub.nsfe
-	Famicom Grand Prix II - 3D Hot Rally	Soyo Oka, Hiroaki Suga, Hideki Kanazashi		Famicom Grand Prix II - 3D Hot Rally.nsfe
 	Famicompo OHC Edition	Basement Skeletor		34_famicompoOHCEdition.nsfe
 	Fantaisie-Impromptu	El Huesudo II		171_fantaisie.nsfe
-	Fantasy Zone	Masaharu Iwata		Fantasy Zone.nsfe
-	Fantasy Zone (Japan)	N. Morota		Fantasy Zone (Japan).nsfe
 	FANTASY ZONE / OPA-OPA!	KARA		54_opa-opa.nsfe
 	Far Beyond The Sun	Rusutaku		18_farbeyondthesun.nsfe
 	Fast Fuse (Kasabian)	Levus		006_fastfuse.nsfe
-	Faxanadu	<?>		Faxanadu.nsfe
 	faygroove	chunter		29_faygroove.nsfe
 	FCM ENTRY MEGAMIX	ROP		053_ropm130609.nsfe
 	fcm01.nsf	ant1		104_fcm01.nsfe
-	Feel You	Tsu Ryu		T_Original_FeelYou.nsfe
 	Fellini Bergman camping trip	CAK		27_CAK_-_Fellini_Bergman_camping_trip.nsfe
-	Ferrari Grand Prix Challenge	Neil Baldwin		Ferrari Grand Prix Challenge.nsfe
-	Fester's Quest			Fester's Quest.nsfe
 	Fester's Quest - Overworld	Kuhneghetz		34_kuhneghetz_-_festers_quest_overworld.nsfe
 	Festival Route	ROP		01_RopmFamicompoMini.nsfe
 	Fez - Home	HertzDevil		036_501th.nsfe
@@ -453,14 +328,10 @@
 	FF5 はるかなる故郷 Waltz	Bun		40_ff5_hwlz.nsfe
 	FFV-メインテーマ-	Robokabuto		10_ff5_101x01.nsfe
 	FFVI- The Decisive Battle	Teuoxton		06_decisive.nsfe
-	Fiesta! Fiesta! ( Loop Ver. )	Tsu Ryu		T_Original_FiestaFiesta!.nsfe
 	Fifteen Minnows	Kulor		08_15minno.nsfe
 	Fight Against Kajidoh, Who Likes Transforming	Moo66		37_Famicompo_8_Entry_Moo66.nsfe
 	fighting pose	surasshu		10_surasshu-fighting_pose_wa_date_janai.nsfe
 	Fin del mundo del fin	Chema64		20_chema64_-_fin_del_mundo_del_fin.nsfe
-	Final Fantasy 1	Nobuo Uematsu		Final Fantasy 1.nsfe
-	Final Fantasy 2	Nobuo Uematsu		Final Fantasy 2.nsfe
-	Final Fantasy 3	Nobuo Uematsu		Final Fantasy 3.nsfe
 	Final Fantasy 4 バトル1 FCアレンジ	hydden		02_4_battle1.nsfe
 	Final Fantasy 9 - black mages	nin-kuuku		35_ff9_blackmage.nsfe
 	FINAL FANTASY IV - 最後の闘い	Bow		47_FF4_43.nsfe
@@ -468,37 +339,25 @@
 	FINAL FANTASY V: Battle with Gilgamesh	K->		18_big_bridge.nsfe
 	Final Fantasy X - Normal Battle	kitchenmaniac111		52_ffxbattle.nsfe
 	Final Level	Ultra Raptor 7		17_final_level.nsfe
-	Final Mission	Kyouhei Sada		Final Mission.nsfe
 	FINAL WEAPON	ROP		18_ropm091118.nsfe
 	FinalFantasy Medley in FCM10	DDSS		056_FF-Medley.nsfe
 	FinalFight2 / Carve a Dragon Wood	nitrodead		54_finalfight2.nsfe
-	Fire 'N Ice	Kajiya Shitamachi		Fire 'N Ice.nsfe
-	Fire Blooded Rival	Tsu Ryu		T_Original_FireBloodedRival.nsfe
-	Fire Blooded Rival	Tsu Ryu		T_Original_FireBloodedRival_DPCMVersion.nsfe
 	Fire Breath	stad		15_fire_breath.nsfe
 	Fire Burning in Apt. 91	DJ Choplines		39_91.nsfe
-	Fire Emblem	Yuka Tsujiyoko, Hirokazu Tanaka		Fire Emblem.nsfe
-	Fire Emblem Gaiden	Yuka Tsujiyoko		Fire Emblem Gaiden.nsfe
 	Firth of Fifth	chunter		40_firthoffifth.nsfe
 	Fisticuffs	CIN_ S_FF_RY		32_fisticuffs.nsfe
 	Five Mile Woods	Alex Mauer		26_five_mile_woods.nsfe
 	Fleur de Paris	dw_junon		24_fdp.nsfe
 	Fluesopp	Alex Mauer		35_fluesopp.nsfe
 	Fly! Gundam	shiningfinger		022_gundam.nsfe
-	Flying Dragon-The Secret Scroll	<?>		Flying Dragon.nsfe
-	Flying Dragon-The Secret Scroll	<?>		Flying DragonHiryuNoKen.nsfe
-	Flying Warriors	<?>		Flying Warriors.nsfe
 	Flyswatter ~ Level 2	Tarn		083_flyswatter.nsfe
 	Frankenstein	M		071_Frankenstein.nsfe
-	Freedom Force	<?>		Freedom Force.nsfe
-	Friday the 13th	David Wise		Friday the 13th.nsfe
 	Friends	片翼の人		15_friends.nsfe
 	Friends in the Float Islands	Mr_Master		031_FriendsInTheFloatIslands.nsfe
 	Friends: I'll be there for you	Archj		51_ill_be_there_for_you.nsfe
 	Frost Man - Mega Man 8	Warheart		180_frost_man_mm8.nsfe
 	Frosty Snowland	JonponsVids		24_FrostySnowland.nsfe
 	Frozen Starlight	Kreese		29_kreese_-_frozen_starlight.nsfe
-	Fudou Myouou Den			Fudou Myouou Den.nsfe
 	Fun Times	Tony Thai		54_funtimes.nsfe
 	Funk Shui	SLiVeR		14_sliver_-_funk_shui.nsfe
 	Funktastic	Strobe/TiTAN		09_strobe-funktastic.nsfe
@@ -506,17 +365,10 @@
 	Funky Shota	Tappy		56_funky_shota.nsfe
 	further advances in beatology	zeekay		55_further_advances_in_beatology.nsfe
 	Futari no Kimochi no Honto no Himitsu	plrusek&goomba		100_kill_me_baby_ed.nsfe
-	G.I. Joe: A Real American Hero	Takaha, Nobuyuki "Shiochan" Shioda		G.I.Joe - A Real American Hero.nsfe
-	G.I. Joe: The Atlantis Factor	<?>		G.I.Joe - The Atlantis Factor.nsfe
 	G1 Fanfale at Nakayama Keibajo	YS		002_g1.nsfe
-	Galaga Inspirational 	Tsu Ryu		T_Original_GalagaInspirational.nsfe
 	GALAXY FORCE - NAME ENTRY -	NECOCAT		02_gf-ne-n106.nsfe
 	Galaxy Tonite	Nullsleep		41_nullsleep_-_galaxy_tonite.nsfe
-	Gallantry - Raiden	Tsu Ryu [original by Seibu Kaihatsu]		T_Raiden_Gallantry.nsfe
 	Ganbare Goemon - Yae	Blitz Lunar		03_blitzlunar_-_ganbaregoemon_yae.nsfe
-	Gargoyle's Quest II	"Sato"		Gargoyle's Quest 2.nsfe
-	Gatekeepers - Kyokara Ashita e	Cover by Tsu Ryu		T_GateKeepers_KyouKaraAshitae_EndingTheme.nsfe
-	GateKeepers - Opening Theme	Cover by Tsu Ryu		T_GateKeepers_AsuNoEgaoNoTameNi_OpeningTheme.nsfe
 	Gauntlet IV - Transparent Obstacle	Raijin		051_v1_GauntletIV_TransparentObstacle.nsfe
 	Gejmbåj	ImATrackMan		174_Gejmbaj.nsfe
 	Gekioko Jungle	hydden		043_rock2_stage6.nsfe
@@ -525,37 +377,26 @@
 	George Michael/Reign of Kindo - Careless Whisper/Let It Go	lob31		013_alsoreal.nsfe
 	Gershon Kingsley & Hot Butter: Popcorn	Rusutaku		121_popcorn_fcm10.nsfe
 	get out and flirt	otto tsr		10_tsr_-_get_out_and_flirt.nsfe
-	Get The World! Nes Version	NSF by Tsu Ryu		T_GetTheWorld!_NesVersion.nsfe
 	Get Wild '12 feat. Miku Hatsune	YS		88_YS_getwild.nsfe
-	Getsufuu Maden	<?>		Getsufuu Maden.nsfe
 	Geyxeri IV	Strobe/TiTAN		06_geyxeriIV_SE.nsfe
 	ghost gnats	chunter		24_ghostgnat.nsfe
-	Ghostbusters 2	Frank Covitz, Mark Vanheck		Ghostbusters 2.nsfe
-	Ghosts 'n Goblins	<?>		Ghosts 'n Goblins.nsfe
-	Ghoul School 	Scott Marshall		Ghoul School.nsfe
 	GhoulBooze	nin-kuuku		43_GhoulBooze.nsfe
 	Giant Steps	sergeeo		35_giantsteps.nsfe
 	Giant Steps	bradsmith		36_coltrane.nsfe
 	Giant Stone Space Station	Tom 7 Entertainment System		22_t7es-stone.nsfe
 	gigamental	null1024		34_gigamental.nsfe
-	Gimmick!	Masashi Kageyama & Naohisa Morota		Gimmick!.nsfe
 	Ginga no 3 nin - Field	DDSS		058_gingano3nin_Field.nsfe
 	Give Life Harder Around the Booty	chunter		099_givelife.nsfe
 	Glacierman	hydden		072_rock2_009.nsfe
 	Gnome all alone	Dj Subahbooty		54_gnome_all_alone.nsfe
 	Gods Intro	Tappy		64_gods_intro.nsfe
-	Godzilla	<?>		Godzilla.nsfe
 	Going My Way	ROP		05_Org_GoingMyWay.nsfe
 	going to the store	coda		34_jjp.nsfe
 	Gonna Fly Now [Theme From Rocky]	YS		48_rocky.nsfe
 	Good Memories	OffGao		046_3.nsfe
-	Goonies	???		Goonies.nsfe
-	Goonies 2	<?>		Goonies II.nsfe
 	Gotta Stay Fly -=*Ultra Gaylord DnB Mixx*=-	Sam "Three 6 Mafia" Blye		044_GottaStayFlyDnB.nsfe
 	Gotye / Somebody That I Used To Know	jmr		75_jmr-Somebody_That_I_Used_to_Know-Gotye.nsfe
-	Gradius	MIKI-CHANG		Gradius.nsfe
 	Gradius	ナナシ		18_gra1_Start.nsfe
-	Gradius II	H. Maezawa & Y. Morimoto		Gradius II.nsfe
 	Gradius II - Yet Another Boss	Kuhneghetz		20_kuhneghetz_-_gradius_ii_-_yet_another_boss.nsfe
 	GRADIUS II-GOFERの野望-全曲ﾒﾄﾞﾚｰ	ZEX		22_GRADIUSII.nsfe
 	Grandia - Battle 3	dw_junon		13_dw_junon_-_FcmC_CoverENTRY1.nsfe
@@ -563,11 +404,9 @@
 	Gravity Falls (Disney cartoon)	Crab sound		084_gravityfalls.nsfe
 	gravy radio	coda		25_gravy.nsfe
 	Great Battle on the Vast Sky	片翼の人		23_dq8_vastsky.nsfe
-	Greedy Eyes	Tsu Ryu		T_Original_GreedyEyes.nsfe
 	Green Hill Zone	DJ Bouche		39_Sonic1GreenHillZone.nsfe
 	Green Ocean	nin-kuuku		03_song.nsfe
 	Gremlins 2	nin-kuuku		36_gremlinrag2.nsfe
-	Gremlins 2: The New Batch	Nobuyuki Hara, About SS, Kodaka		Gremlins 2.nsfe
 	Greyfunk	chunter		61_greyfunk.nsfe
 	Grief (Parts 1 - 5)	Flaminglog		032_Grief.nsfe
 	GROOVE 20100813 - 1H1D mix -	ROP		010_ropm130630.nsfe
@@ -575,12 +414,8 @@
 	groovy cavery	surasshu		01_groovy_cavery_slowpitch.nsfe
 	GTA III - intro	nin-kuuku		042_gta3n106.nsfe
 	GTR Attack!	Gamma		09_gamma_-_gtr_attack.nsfe
-	Guardian Legend	Miyamo Shant		Guardian Legend.nsfe
-	Guerilla War	Kenny Oh Chan & Tarkun		Guerilla War.nsfe
 	Guerilla Warrior	N0rmak		061_GuerillaWarrior.nsfe
 	gummyman	nurv cockyman		32_gummyman.nsfe
-	Gun-Nac	Golfer Sakoda		Gun Nac.nsfe
-	Gun.Smoke	Junko 'Swimmer Tamichan' Tamiya		Gun.Smoke.nsfe
 	GURAGURA	ナナシ		09_GURAGURA.nsfe
 	Had a dream about you	TristEndo		05_Had_a_dream_about_you.nsfe
 	hakonotaiatarimix	neguse		05_hakonotaiatarimix.nsfe
@@ -594,29 +429,22 @@
 	haxus the conqueror	xaimus		46_xaimus-haxus.nsfe
 	Heads or Tails? Real or Not (by Emarosa)	Zanny77		131_HeadsorTails.nsfe
 	Heart on a Line	tadpole		28_songdata.nsfe
-	Heartless Hero	Tsu Ryu		T_Original_HeartlessHero.nsfe
-	Heartless Hero (N106 Version)	Tsu Ryu		T_Original_HeartlessHero_N106Version.nsfe
 	Heatman Remix	YS		24_Heatman2.nsfe
-	Heaven Blue	Tsu Ryu		T_Original_HeavenBlue.nsfe
 	Heavenly Haruka ~God bless~	Tsu Ryu		05_T_Original_HeavenlyHaruka.nsfe
 	Heavy Images	null1024		43_heavy_images.nsfe
-	Hebereke	Nobuyuki, About SS, Kodaka San		Hebereke.nsfe
 	Heim This!	madbrain		01_Heim_This.nsfe
 	Hero	DJ Disk Jockey		28_Hero.nsfe
 	Hero 2	Bob OdenVIRT		048_hero2.nsfe
 	Hero 3	HybridEconomy		071_hero3.nsfe
 	Hero Abuse	Tom 7 Entertainment System		13_heroabuse.nsfe
-	Hero Quest (Prototype)	Neil Baldwin		Hero Quest.nsfe
 	Heroic Battle	Tappy		04_hb.nsfe
 	Hey Ocean! - Terribly Stable (boss rush mix)	icesoldier		11_terribly_stable.nsfe
 	Hey You	Tappy		41_hey_you.nsfe
 	High Preformance Sportscar	TristEndo		19_High_preformance_sportscar.nsfe
 	Highway Action	Eightecs		02_eightecs-highway-action.nsfe
 	Highway moon	sisho		06_highway_moon.nsfe
-	Highway Star/Rad Racer	Nobuo Uematsu		HighwayStar.nsfe
 	hikari	onehalf		18_hikari.nsfe
 	Hipster Image - Make Her Mine	M		024_MakeHerMine.nsfe
-	Hitomi Wa 1K - MF MIKU Ending	Tsu Ryu and K. Manami		T_MetalFighterMiku_EndingTheme.nsfe
 	Hitoriheishi Hiru ~Striving~	Tsu Ryu		06_T_Original_HitoriheishiHiru.nsfe
 	Hoegaarden Black	MeD		30_D_hoegaardenblack_070813.nsfe
 	Hold it!	Svetlana		028_hold.nsfe
@@ -626,10 +454,8 @@
 	horizontal desync	null1024		10_horizontal_desync.nsfe
 	HOT JUPITER	surasshu		22_HOT_JUPITER.nsfe
 	House cleaning music	miau		02_HCM.nsfe
-	Humid	Tsu Ryu		T_Original_Humid.nsfe
 	HUNG BOOTY	DJ BOOTY BLIP		09_hunngh.nsfe
 	Hungry Pumkin	dalmashes		03_569716.nsfe
-	Hydlide 3	<?>		Hydlide 3 - Yami Kara no Houmonsha (1989)(T&E)(Namco).nsfe
 	HYDLIDE3 FAIRYLAND	Robokabuto		30_hyd3_05v1.nsfe
 	Hyp	IIFierceDeityII		027_Hyp.nsfe
 	Hyper Dimension Fighter	m_036		39_hdf.nsfe
@@ -638,9 +464,6 @@
 	Hypnotoad (400 Hz)	Hypnotoad		15_Hypnotoad.nsfe
 	I don't know what I'm going	dw_junon		21_dw_junon_-_FcmC_OriginalrENTRY3.nsfe
 	i hate song titles	zabutom		40_ihatesongtitles.nsfe
-	I'll Wait For You In Heaven v2	Tsu Ryu		T_Original_I'llWaitForYouInHeaven_Ver2.nsfe
-	I'll Wait For You In Heaven..	Tsu Ryu		T_Original_I'llWaitForYouInHeaven_Ver1.nsfe
-	Ice Climbers	<?>		Ice Climbers.nsfe
 	Ice Valley	Tappy		02_ice_valley.nsfe
 	Identity	RushJet1 and Tadpole		62_identity.nsfe
 	If Jonny Craig Was a Robot, He'd Like This Song	Zanny77		070_JonnyCraig.nsfe
@@ -651,20 +474,13 @@
 	In Company of Death	Necrophageon		04_In_Company_of_Death.nsfe
 	In Control	Kreese		42_kreese_-_in_control.nsfe
 	IN MY DREAM	Tappy		61_in_my_dream.nsfe
-	Incredible Crash Test Dummies	Tim and Geoff Follin		Incredible Crash Test Dummies.nsfe
-	Infinity - Lost Universe Theme	Cover by Tsu Ryu		T_LostUniverse_Infinity_OpeningTheme.nsfe
 	Insurrection	RushJet1		15_insurrect.nsfe
 	Intergalactic Impact	Eightecs		13_eightecs-famicompo5.nsfe
 	Internet Friends	Skrill Chipper		13_internetfriends.nsfe
 	Into Wily's Fortress	RushJet1		15_wfortress.nsfe
 	Invasion of the 7th Planet	RushJet1		03_uranus-invasion.nsfe
 	Invention No.1 in C BWV 772	dw_junon		16_dw_junon_-_FcmC_CoverENTRY3.nsfe
-	Invincible Fighter	Tsu Ryu		T_Original_InvincibleFighter.nsfe
-	Iron Conqueror	Tsu Ryu		T_Original_IronConqueror.nsfe
-	Ironsword: Wizards & Warriors II	David Wise		Ironsword - Wizards & Warriors 2.nsfe
-	Isolated Warrior	<?>		Isolated Warrior.nsfe
 	J.S.Bach Fugue in G minor (The Little) BWV.578	Ｓ．Ｗ．		137_Bach_BWV578.nsfe
-	Jackal	Sakamoto & Fujio		Jackal.nsfe
 	Jacky is my Girlfrend	K->		18_jacky.nsfe
 	Jammin' On My Old Piano	KONNO		19_piano_R2.nsfe
 	Jerusalem Sunset ~Divinity~	Tsu Ryu		08_T_Original_JerusalemSunset.nsfe
@@ -673,16 +489,13 @@
 	Joe South - Hush	M		085_Hush.nsfe
 	Johnson	dusthillguy		43_johnson_.nsfe
 	JOSOU MAN (新堂真弓 with メイド隊)	チ○テクちゃん		15_loldemoscenesoftwarethashsogheymang.nsfe
-	Journey to Silius	Nobuyuki Hara, Shinichi Seya, Naoki Kodaka		Journey to Silius.nsfe
 	JUMP MAN STAGE 1	LOLEY SMUTTS		53_JUMPMAN.nsfe
-	Jurassic Park	Jonathan Dunn		Jurassic Park.nsfe
 	Just A Day	poko-chip		30_pok_just.nsfe
 	Juventino Rosas-Sobre las Olas	Kuhneghetz		67_kuhneghetz_-_juventino_rosas_sobre_las_olas.nsfe
 	K.F.A.	Shnabubula		03_ShnabubulaKungFuAlley.nsfe
 	Kakuga (KOKUGA Theme 3)	Fukui.cat		159_KOKUGA11.nsfe
 	Kaneda's Theme from AKIRA	YS		01_YS_akira.nsfe
 	Kappa	TQ-Jam		066_kappa.nsfe
-	Karnov	<?>		Karnov.nsfe
 	Katarmari Damacy - Que Sera Sera	Fearofdark		019_fod_queserasera1.nsfe
 	KE-TSU-I kizunajigokutachi: INTERCEPTION	Fukui.cat		45_A.nsfe
 	Kera-ma-go	KAY		09_keramago.nsfe
@@ -690,49 +503,37 @@
 	Kesson Daslef	Cina Saffary		27_kesson_daslef.nsfe
 	Kevvviiinnn - Stage 50	HertzDevil		060_stage50.nsfe
 	Kfine	Alex Mauer		18_07-kfine.nsfe
-	Kick Master	Takaha, Shiochan		Kick Master.nsfe
-	Kid Icarus	Hiro "Hip" Tanaka		Kid Icarus.nsfe
 	Kill Me no Baby! (vnsf1034 edition)	osoumen		017_killmenobaby.nsfe
 	Killer Instinct	nin-kuuku		155_ki.nsfe
 	King Chippo	Rubbish (Robert Kreese)		11_rubbish_-_king_chippo.nsfe
 	King Dedede's Theme	Mr_Master		175_KingDededeTheme.nsfe
-	King Kong 2	Rusher Shinya, Brilliant Satoe, Yamako, Charley-Sada		King Kong 2.nsfe
 	KING OF CANA'AN	kfaraday		102_kingofcanaan.nsfe
 	King of Hearts	reduz/Juan Linietsky		26_reduz_-_King_of_Hearts.nsfe
 	Kirby SDX Soundtest#17	逝きたい窒素		12_dyna2.nsfe
-	Kirby's Adventure	Hirokazu Ando, Jun Ishikawa		Kirby's Adventure.nsfe
 	Kirby's Adventure Boss Battle	Mr_Master		103_KirbysAdventureBoss.nsfe
 	Kirby's Dream Land 2- Dark Castle	Tern		58_dark.nsfe
 	Kirby's Dream Land 3 - Hyper Zone 1	Blitz Lunar		20_blitzlunar_-_kd3_hyperzone1.nsfe
 	Kirby's Return to Dreamland - スカイタワー	Dhi		60_skytower.nsfe
 	Klaus Doldinger / Ein fall für zwei title	MUSICMAN / SPEEDFISTERS & SHAFT / FUNK DEZIGN		41_methamphetamphetamphetamine.nsfe
-	Klax	Dave O'Riva		Klax.nsfe
 	Knight's Errand	Raijin		30_1_LangrisserIIKnightsErrand.nsfe
 	kokiriko bushi	Tappy		31_kokiriko.nsfe
 	Konzert in D (KV386b) Allegro	Yoshi Soft		14_kv386b_1.nsfe
-	Kotetsu No Kokoro!	Tsu Ryu and S-Kino		T_Original_KotetsuNoKokoro!.nsfe
 	Kouchou Kouchou	Christerious		41_Kouchou_Kouchou.nsfe
-	Kujaku Ou 2	<?>		Kujaku Ou 2.nsfe
 	Kwakalicious	madbrain		19_Kwakalicious.nsfe
 	L'Amour Toujours	chunter		31_lamour_toujours.nsfe
 	L.D.C. - The Andes Mountain	Kuhneghetz		20_kuhneghetz_-_lucky_dime_caper_the_andes_mountain.nsfe
 	LAB	MISOKA		16_lab.nsfe
 	Lady Navigation　～C Style～	M		087_ladyNavigation.nsfe
-	Lagrange Point	Akio Dobashi & Noriyuki Takahashi		Lagrange Point.nsfe
 	Lagrange Point- Fighters' Sadness	kenshirotakahashi		163_lagrangepointfighterssadness.nsfe
 	LARGE HADRON COLLIDER MAN	kaiser		25_LHC_MAN.nsfe
 	Lasers in my Pockets	Robotronus		76_Lasers_in_my_Pockets.nsfe
-	Last Action Hero	<?>		Last Action Hero.nsfe
 	latex church	surasshu		18_surasshu-latex_church.nsfe
 	Lava drama	Matrixz		09_lavadrama.nsfe
-	Lava Shower	Tsu Ryu		T_Original_LavaShower.nsfe
 	Laxity's Bossa Nova	Kulor		32_BossaNova.nsfe
 	Le Cygne(Le Carnaval Des Animaux	片翼の人		26_cygne.nsfe
 	Lean Forward {RFR}	TristEndo		07_LeanForward.nsfe
 	Learning and Failing to Fly	reduz/Juan Linietsky		25_reduz_-_Learning_and_Failing_to_Fly.nsfe
 	LED Storm Intro/Title	Kulor		33_LEDStormIntro.nsfe
-	Legacy of the Wizard (Dragon Slayer IV)	Yuzo Koshiro		Legacy of the Wizard.nsfe
-	Legendary Wings	Yuukichan's Papa, Tmayochan, C. Manami		Legendary Wings.nsfe
 	Legendary Wings	m_036		18_legendary_vrc6_fixed03.nsfe
 	LEMMINGS	Kef Li		37_lems.nsfe
 	lemonade stand	Svetlana		04_lemonade.nsfe
@@ -741,14 +542,9 @@
 	Level 2-1	Ultra Raptor 7		02_level2-1.nsfe
 	Level 3-1	Ultra Raptor 7		11_level3-1.nsfe
 	Level Up	Will Kindricks		045_levelup.nsfe
-	Lifeforce	<?>		Lifeforce.nsfe
-	Lightning Wielder	Tsu Ryu		T_Original_LightningWielder.nsfe
-	Link No Bouken	Tsukasan		Link No Bouken.nsfe
 	LIQUID BOOTY EXPERIMENT	DJ BOOTY BLIP		86_assy.nsfe
 	Little Mermaid's Vacation	Kulor		30_LittleMermaidsVacation.nsfe
 	little my star	rute		05_lmsfc.nsfe
-	Little Nemo: The Dream Master	"Gonzou" (Junko Tamiya)		LittleNemo.nsfe
-	Little Samson	Kazuhide Sasuga, Yukimari		Little Samson.nsfe
 	living hollow	coda		02_lh.nsfe
 	Loading	Loading		015_Loading.nsfe
 	Long Sequential Isolation	Zero-Spectrum		18_LSI3.nsfe
@@ -758,14 +554,12 @@
 	LOVE -piano trance mix-	Wiz.		01_jon_love.nsfe
 	Love is in the air (Yoshi's Story)	Javel		65_yosh.nsfe
 	love is insecurable	chibi-tech		21_itotallyfrenchedyourmom.nsfe
-	Lovely Anjelica	Tsu Ryu		T_Original_LovelyAnjelica.nsfe
 	Lovely Magic	いわむぅ		27_lovelymg.nsfe
 	Low Nebular Orbit	reduz/Juan Linietsky		23_lownebular.nsfe
 	LSD (from CHAOS)	poko-chip		29_Lsd.nsfe
 	lucky bunny foot	zeekay		31_foot10.nsfe
 	Lucky Monkey - 04	avox		66_avox-lm04.nsfe
 	Luigi in the Sky With Diamonds	M		039_LuigiInTheSkyWithDiamonds.nsfe
-	M.C. Kids	Charles Deenen		M.C. Kids.nsfe
 	Machines of Loving Grace	Chema64		106_chema64_-_machines_of_loving_grace.nsfe
 	Macklemore - Thrift Shop	kfaraday		136_macklmor.nsfe
 	MAD RUBIS (from DRAGON QUEST II)	Wiz.		010_madrubis.nsfe
@@ -776,40 +570,27 @@
 	maisfield (famicompo mini ver.)	Hex125		30_maisfield_v2.nsfe
 	Majestic Motherfuckin' Castle	danooct1		165_castle.nsfe
 	malevolent scary wagoner	smh		52_wagoner.nsfe
-	Maniac Mansion	David Warhol		Maniac Mansion.nsfe
 	Maniacitis	null1024		47_maniacitis.nsfe
 	Mantle and Crust	CIN_ S_FF_RY		13_mantleandcrust.nsfe
-	Marble Madness	<?>		Marble Madness.nsfe
 	Marching Spiders	Archj		19_ArchjMarchingSpiders.nsfe
 	Marginal Consciousness (Stage7)	kt.		19_MarginalConsciousness.nsfe
-	Mario Bros.	<?>		Mario Bros.nsfe
-	Mario Fantasy Adventure	Nobuo Uematsu, Acmlm		Mario Fantasy Adventure.nsfe
 	Mario Kart: Super Circuit - Cheese Land BGM	DJ Bouche		08_cheese3.nsfe
 	Mario Kart: Super Circuit - Menu BGM	DJ Bouche		09_mksc_menu.nsfe
 	Mariotropolis	加山。		12_mtp.nsfe
 	marooned in space	surasshu		16_marooned.nsfe
-	Marvel's X-Men	<?>		Marvel's X-Men.nsfe
 	Mary had a little lamb	TristEndo		21_maryhadalittlelamb.nsfe
 	maste	ui		08_2011-ui_-_maste.nsfe
 	master debater	surasshu		16_surasshu-master_debater_1.nsfe
 	Matt Bianco: Lost Souls	SBR		37_sbr_lostsouls.nsfe
-	Maze of Galious 2	O. Hidemoni, S. Shinya et al.		Maze of Galious 2.nsfe
 	meccha man	surasshu		50_meccha_man.nsfe
 	MECHANICAL FIELD	ROP		09_rop_fcm2_1.nsfe
-	Mechanical Soul	Tsu Ryu 		T_Original_MechanicalSoul.nsfe
 	MECHANICOM.	TRASHAPPY!		11_MECHANICOM..nsfe
 	Mechanize	Flaminglog		092_Mechanize.nsfe
 	MEDAROT3 LAST BATTLE	nabec		123_medarot3lastbt.nsfe
 	MediEvil - The Crystal Caves	Z/\ch/\ri/\s		27_FCmini9medicrystal.nsfe
-	Mega Man	Chanchacobin M., Yuukican's Papa		Mega Man 1.nsfe
 	mega man	Bob OdenVIRT		142_megaman.nsfe
 	Mega Man 9.5	RushJet1		33_mm9-5.nsfe
 	Mega Man Battle Network 6: Surge of Power!	Tappy		178_SoP.nsfe
-	Mega Man II	Ogeretsu, Manami, Yuukichan's Papa		Mega Man 2.nsfe
-	Mega Man III	Bunbun		Mega Man 3.nsfe
-	Mega Man IV	Ojalin, Bun Bun		Mega Man 4.nsfe
-	Mega Man Ultra	Various, Arranged by Infidelity		Mega Man Ultra.nsfe
-	Mega Man V	Mari		Megaman 5.nsfe
 	Mega Man X: Sting Chameleon	Bathacker		075_stingchameleon.nsfe
 	megaderp	Lapine		48_MEGADERP.nsfe
 	Megaman 3- Whistle Concert	kenshirotakahashi		133_megaman3whistleconcert.nsfe
@@ -820,49 +601,31 @@
 	MELTY BLOOD - The end of 1000 years	boldowa		80_The_end_of_1000_years.nsfe
 	Memory	fprimeofx		166_memory.nsfe
 	mental depression	ROP		04_fcmcl04.nsfe
-	Metal Gear	Kazuki Muraoka		Metal Gear.nsfe
-	Metal Storm	Toru Watanabe		Metal Storm.nsfe
-	Meteor Beat	Tsu Ryu		T_Original_MeteorBeat.nsfe
 	Meteoric Swarm	K->		19_Meteoric_Swarm.nsfe
-	Metroid	Hiro "Hip" Tanaka		Metroid FDS.nsfe
-	Metroid	Hiro "Hip" Tanaka		Metroid.nsfe
 	metroid	nin-kuuku		032_metroid.nsfe
 	Metroid Fusion - Vs. Ishtar/Gedo	jrlepage		08_ishtar.nsfe
 	Mickey Mania - Captain Pete	Kuhneghetz		51_kuhneghetz_-_mickey_mania_captain_pete.nsfe
-	Mickey Mousecapade	<?>		Mickey Mousecapade.nsfe
 	Microbeings	Fearofdark		056_fod_micro4.nsfe
-	Mig 29 Soviet Fighter	<?>		Mig 29 Soviet Fighter.nsfe
-	Mighty Final Fight	Setsuo Yamamoto, Yuko Takehara		Mighty Final Fight.nsfe
 	Mighty Switch Force! - Yummy	icesoldier		43_mightyswitchforce-yummy.nsfe
-	Mike Tyson's Punch-Out!!	U.Kaneoko,A.Nakatuka,and K.Yamamoto		Mike Tyson's Punch Out!!.nsfe
 	Miko-Miko Nurse OP Title	Loser Kashiwagi, Chu(߄D;;)		Miko Miko Nurse.nsfe
 	Miko-Miko Nurse Opening Title THeme	chibi-tech		10_mikomiko.nsfe
 	MILLION DOLLAR BUDGETS	fuckyeahdrifloon		14_millionbudget.nsfe
-	Milon's Secret Castle	<?>		Milon's Secret Castle.nsfe
 	minimal loops 20130618	ROP		031_ropm130618.nsfe
 	mirrored corridor	coda		24_corridor.nsfe
 	Missile Compound	N0rmak		050_MissileCompound.nsfe
-	Mitsume ga Tooru	Hiroyuki Iwatsuki		Mitsume ga Tooru.nsfe
 	MM3 Skull Castle	Heosphoros		17_Skull_Castle_MM3.nsfe
 	MNSG - Transformed Oedo Castle	Blitz Lunar		06_blitz_lunar_-_MN64-transformed_oedo_castle.nsfe
-	Moai Kun	H. Ueko		Moai Kun.nsfe
 	mokimaF	TQ-Jam		31_mokimaf.nsfe
 	momentary	psycomu		01_momentary_lv.nsfe
 	Monkey Island theme	Gux		09_monkey.nsfe
 	Monkeytronic	Basement Skeletor		35_Monkeytronic.nsfe
-	Monopoly	Bill Williams		Monopoly.nsfe
-	Monster Party	Mikumonky, Hashimotoravolta		Monster Party.nsfe
-	Moon Crystal	Tsukasa Tawada		Moon Crystal.nsfe
 	MOON OVER THE CASTLE	K->		04_moc.nsfe
 	MOONLIGHT	mukunda		38_moonlight.nsfe
-	Morning Impression	Tsu Ryu		T_Original_MorningImpression.nsfe
 	Morning Music	Bow		164_MorningMusic.nsfe
 	MORSHU'S NEW AUTOTUNE HIT!	Gabe Fracas		55_MORSHUS_NEW_FAMITRACKER_HIT.nsfe
 	Mostrillos de Gelatinas	ui		16_mostrillos_de_gelatinas.nsfe
-	Mother	Keiichi Suzuki, Hirokazu Tanaka		Mother.nsfe
 	MOTHER 2: Flying Man	bob		11_fly.nsfe
 	MOTHER Main Field BGM	bob		01_mother1.nsfe
-	Mouryou Senki Madara	Konami Kuheiha Club		Madara.nsfe
 	MOXIE	madbrain		71_Moxie.nsfe
 	Mr Vain (ikuma famitracker rmx)	Ikuma Morata		09_Mr_Vain_Ikuma_remix.nsfe
 	Mr. Nutz - Clouds (SMD version)	Kuhneghetz		43_kuhneghetz_-_mr_nutz_clouds_sega_mega_drive_version_NTSC.nsfe
@@ -876,14 +639,12 @@
 	my name is music	gere-gere		05_gere-gere_1.nsfe
 	MySoul,YourBeats! -TV Size-	Robokabuto		52_MySoul-YourBeats_v01TV.nsfe
 	Naoki Sato/Ryomaden	YS		64_ryomaden.nsfe
-	NARC	<?>		NARC.nsfe
 	Neon Lights	Anamanaguchi		11_anamanaguchi_-_neon_lights.nsfe
 	neswip	xaimus		21_xaimus-neswip.nsfe
 	Neural Gear - DON'T TARRY	Ionustron		39_TARRYv7.nsfe
 	Neurotoxin M	coda		18_neurotoxinm.nsfe
 	Never Forget FCM	JonponsVids		043_neverforgetfcm10.nsfe
 	Never Never Gonna Give You Up	El Huesudo II		19_giveyouuploop.nsfe
-	New Ghostbusters II	Jun Ishikawa		New Ghostbusters 2.nsfe
 	NEW RALLY-X DPCM VERSION	3-108 from MCK-2ch		01_rallyx.nsfe
 	New Super Mario Bros Wii Beach Stage	Mr_Master		041_NSMBWBeach.nsfe
 	Next Stage	poko-chip		38_NextSt.nsfe
@@ -894,9 +655,6 @@
 	Nights	datamnesia		019_datamnesia-Nights.nsfe
 	nimgemzebub	kuske/KPLECRAFT		11_kp_nimgem.nsfe
 	Ninja Bolognese	Moo66		179_Ninja_Bolognese.nsfe
-	Ninja Gaiden	More Yamasan, B.B, Hakase		Ninja Gaiden 1.nsfe
-	Ninja Gaiden II:The Dark Sword of Chaos	Shitamachi Kajiya, Mayu, Miya		Ninja Gaiden 2.nsfe
-	Ninja Gaiden III - The Ancient Ship of Doom	Miya, Kaori Nakabai, L. Shigeno		Ninja Gaiden III - The Ancient Ship of Doom.nsfe
 	Nirvana - Smells like teen spirit	M		135_Nirvana.nsfe
 	NISE ROPHON 2012-12-61	NISE ROPHON		28_niserop_2012-12-61.nsfe
 	NJ version 2	Alex Mauer		19_09-nj-v2.nsfe
@@ -927,31 +685,24 @@
 	Open season 6 main theme symphonic instrumental	Open season 6 main theme symphonic instrumental		018_open_season_6_main_theme_symphonic_instrumental.nsfe
 	Opus One	Anthony Armetta		25_Opus.nsfe
 	orange painting	miau		31_orange_painting.nsfe
-	Ordyne -Round X-	Wiz. [orig: Shinji "Megaten" Hosoe]		Ordyne - Round X.nsfe
 	ORDYNE -Round X-	Wiz.		27_odyn_rdx.nsfe
 	Oreimo Hell 2 - GothLoli Attack	ROP		01_GothloliAttack.nsfe
 	Oscar	TQ-Jam		008_oscar.nsfe
 	Oskari travels to Ur	madbrain		22_Oskari3_0.nsfe
 	Out Run - LAST WAVE	ZEX		66_OutRun_LastWave.nsfe
-	Outpost Escapade	Tsu Ryu		T_Original_OutpostEscapade.nsfe
 	OutRun: Passing Breeze (1993)	Bow		112_PassingBreeze1993.nsfe
 	OutRun♪♪MAGICAL SOUND SHOWER	ZEX		069_OutRun_MagicalSoundShower.nsfe
 	OUtSidE thE WORLd!	Homan Pardis		01_homan-outside_the_world.nsfe
-	Over Horizon	Masaharu "Rezon" Iwata		Over Horizon.nsfe
 	Overdrive!	RushJet1		06_overdrive.nsfe
 	Overkill: Stage Introduction	kenshirotakahashi		05_overkillstageintroduction.nsfe
 	OVERWHELMING FEELING OF SADNESS	Sig Benis		70_NESSadAdventure.nsfe
 	Overworld 3	James QuestMaster		069_red_moon.nsfe
 	p	freedrull		24_p.nsfe
-	P.O.W.	<?>		POW.nsfe
 	P.S.Groove #2	ROP		16_ropfcm3_06.nsfe
 	PACHELBEL'S PIRATESHIP	Sig Benis		39_HYPERSPACEADVENTURE.nsfe
-	Palamedes 2 - Star Twinkles	Kyohei Sada		Palamedes 2 - Star Twinkles.nsfe
 	Panic Station	Levus		84_panicstation.nsfe
-	Parachute!	Tsu Ryu		T_Original_Parachute!.nsfe
 	parade	mochi		58_parade.mochi.nsfe
 	Parallologram	Blitz Lunar		44_blitzlunar_-_paralollogram.nsfe
-	Parodius Da!	Takeyasu, Tomita		Parodius Da!.nsfe
 	Passing Breeze	Bow		073_PassingBreeze.nsfe
 	Passing Through The Forest	DynamiteManEXE		156_PassingThroughTheForest.nsfe
 	PCM	KARA		13_pit.nsfe
@@ -963,26 +714,17 @@
 	Penna Cathedral	Bathacker		014_pennacathedral.nsfe
 	Perfect Dark - Unused Death Music	James QuestMaster		088_you_fail.nsfe
 	Perfume Medley	K->		11_perfume.nsfe
-	Pescatore (Prototype)	<?>		Pescatore.nsfe
 	Pet Ri Kuhr	rmk		067_ptc.nsfe
 	PHANTASY STAR III -ENDING 2-	Kaoru		31_PS3_ed2b.nsfe
 	phantele see	B00daW		38_phantelesee-fc.nsfe
 	Phi-dentity Crisis	Blitz Lunar		20_blitzlunar_-_phi-dentity_crisis.nsfe
 	Phoenix Wright Dual Destinies - Logic and Tech	psn		072_logicandtechdd.nsfe
 	Phoenix Wright Dual Destinies - Pursuit	psn		118_pursuitdd.nsfe
-	Pictionary 	???		Pictionary.nsfe
-	Pin-Bot	David Wise, Paul Proctor, Carole Stamper		Pin-Bot.nsfe
-	Pinball Quest			Pinball Quest.nsfe
 	Pink Streets	plrusek		30_Pink_Streets.nsfe
 	Pinkie's Homebrew	Interrobang Pie		45_FC8_PinkiesHomebrew.nsfe
-	Pipe Dream	J.Dale, K.Hatlelid, M.Sokyrka		Pipe Dream.nsfe
 	pitch black intrusion	coda		12_pbi.nsfe
 	Pitfall II: Lost Caverns	Kuhneghetz		51_kuhneghetz_-_pitfall_ii_lost_caverns_NTSC.nsfe
-	Pixelated Caffine	Tsu Ryu		T_Original_PixelatedCaffine.nsfe
 	Planethopper	TristEndo		35_Planethopper.nsfe
-	Platinum River - Data March -	Tsu Ryu		T_Original_PlatinumRiver-DataMarch.nsfe
-	Platoon	Jonathan Dunn		Platoon.nsfe
-	Player Select Theme - SF2	Cover by Tsu Ryu		T_StreetFighterII_PlayerSelectTheme.nsfe
 	Please Let That Be You	animalstyle		05_please_let_that_be_you.nsfe
 	Plok!: Creepy Crag	jrlepage		52_jp_democompo5_-_Plok_-_Creepy_Crag.nsfe
 	Plok's House	Ares64		054_ploks_house.nsfe
@@ -992,11 +734,8 @@
 	Pokemon Trainer Battle Remix	JonponsVids		32_PokemonTrainerBattleRemix.nsfe
 	Polygon Sun (120Hz)	Marshall Art		045_MarshallArt-PolygonSun-VRC6-120Hz.nsfe
 	pongarmy	nin-kuuku		085_pongarmy.nsfe
-	Popeye	<?>		Popeye.nsfe
 	Posr Chik	Zan-zan-zawa-veia		67_hugeslut.nsfe
 	Postmodern Warfare	RushJet1		49_postmodern_warfare.nsfe
-	Power Blade	<?>		Power Blade.nsfe
-	Power Blade II	Kinuyo Yamashita		Power Blade II.nsfe
 	Power Bounce	Rubbish (Robert Kreese)		12_rubbish_-_power_bounce.nsfe
 	PowerDance	Chris Pickett		47_PowerDance.nsfe
 	PowerDrift Ecourse ArtisticTraps	ZEX		25_PowerDrift_ArtisticTraps.nsfe
@@ -1010,19 +749,15 @@
 	Propellerheads / History Repeating	SBR		25_sbr_history_rep.nsfe
 	PTCG - Club Master Duel!	Mex		26_pokemon.nsfe
 	pulsecreamcone	coda		08_pcc2.nsfe
-	Punch-Out!!	Yukio Kaneoka		Punch-Out (Arcade).nsfe
 	pung	tripflag		08_pung.nsfe
 	Puppe	rute		10_puppe.nsfe
 	PURE STONE	Nobuyuki		14_purestone.nsfe
 	Purple Aurora	Kulor		15_PurpleAurora.nsfe
 	Pushing Onwards	GamerTehness		070_pushingonwards.nsfe
-	Puss 'n Boots: Pero's Great Adventure	Tomohisa Mitsuyasu		Puss 'n Boots.nsfe
-	Puyo Puyo 	<?>		Puyo Puyo (1993)(Compile)(Tokuma Shoten).nsfe
 	Pyrotek Medley	Tappy		29_pyro_med.nsfe
 	Quartett in F (KV370) Allegro	Yoshi Soft		02_kv370_1.nsfe
 	Que?	Dr. Panqueca		44_Dr._Panqueca_-_que.nsfe
 	R-TYPE STAGE 1	ZEX		14_R-TYPE_STAGE1.nsfe
-	R.C.PRO-AM	< ? >		RC Pro-Am.nsfe
 	Race Against Time	Meckz		37_imusthurryandcompleteitfixed.nsfe
 	Radiant Silvergun - Evasion	Pocket Dokuro		19_EvasionFCM9.nsfe
 	RADIANT SILVERGUN - RETURN-帰還-	ZEX		37_RADIANT_SILVERGUN_RETURN.nsfe
@@ -1033,9 +768,6 @@
 	RAINBOW ADVENTURE	Sig Benis		50_NESRainbowAdventure.nsfe
 	rainbow crash	coda		26_crash.nsfe
 	RAINING SNOW - NSF Remix	ROP		35_rainsnow.nsfe
-	Rakusho! ( N106 Version )	Tsu Ryu		T_Original_Rakusho!_N106Version.nsfe
-	Rakusho! Theme of Raika	Tsu Ryu and S-Kino		T_SailorRaika_Rakusho!_KonamiVersion.nsfe
-	Rambo	<?>		Rambo.nsfe
 	ranranran dayo, rakistaa	surasshu		22_RANRAN.nsfe
 	Rap - Stage Clear (Quartet)	am192168		10_rap.nsfe
 	REAL BLUE	maak		04_realblue.nsfe
@@ -1047,7 +779,6 @@
 	Renard - Rave On (cover)	Raphaelgoulart		074_raveon.nsfe
 	Rengoku II  "1F: Superbia"	SBR		06_sbr_rengoku.nsfe
 	Renny Blaster Stage1(live)	油壺 蜜男		18_RennyBlaster_Stage1.nsfe
-	Rescue: The Embassy Mission	<?>		Rescue - The Embassy Mission.nsfe
 	Respect the Cheng	Kitsune New Cheng		02_respectthecheng.nsfe
 	Resurrection - Opening	James QuestMaster		090_resurrection.nsfe
 	retardation!	zabutom		57_retardation.nsfe
@@ -1059,31 +790,18 @@
 	Rise 'n' Shine	Tony Thai		19_risenshine.nsfe
 	rise or fall (Phantasy Star II)	BO		10_ps2_riseorfall_040807.nsfe
 	Ritual	Eightecs		05_eightecs-ritual.nsfe
-	River City Ransom	Kazuo Sawa		River City Ransom.nsfe
 	Rob Lord, Discworld / Unseen University Halls	B00daW		16_uuhalls-fc.nsfe
 	Robert Fripp and Peter Sinfield - Pictures of a City	El Huesudo II		30_pictures.nsfe
-	Robin Hood - Prince of Thieves	Paul Webb		Robin Hood - Prince of Thieves (1991)(Sculptured Software).nsfe
-	Robocop	Sakai, Miura, Iwasaki, Suzuki		Robocop.nsfe
-	Robocop 3	Jeroen Tel		Robocop 3.nsfe
 	RobotBoy Returns	m_036		07_robotboy_returns.nsfe
 	Robowarrior- Main Theme	kenshirotakahashi		091_robowarriormaintheme.nsfe
 	Rock me, Chippy	plrusek		23_rock_me_chippy.nsfe
 	rocketbutt	xaimus		40_xaimus-staringatadaftsky.nsfe
-	Rockman 2 GrayZone	WINED		Rockman Grayzone.nsfe
-	Rockman 2 Mininum	Tar		Rockman 2Min.nsfe
 	Rockman 7 - Walk the invisible	MusashiAA		21_MusashiAA_Rockman7_WalkTheInvisible.nsfe
-	Rockman Deus Ex Machina	IKA		Rockman DEM.nsfe
-	Rockman Exhaust	DHI		Rockman EXHAUST.nsfe
 	Rockman Like BGM 2 STAGE 4	hydden		017_rock2_016.nsfe
 	Rockman Like BGM: 8boss battle	hydden		24_rock_boss1.nsfe
-	Rockman No constancy	Various, Arranged by IKA		Rockman No constancy.nsfe
 	Rockman8 Astroman Stage FC arrange	hydden		014_rock8_astro.nsfe
 	rocky mountain oysters	Ted Buttly		27_rocky.nsfe
 	ROD LAND - Story1 Ending	ROP		01_Cov_RodLandst1ed.nsfe
-	Rod Land / Yousei Monogatari Rodland	Tsukasa Tawada / Simon Pick		RodLand.nsfe
-	Roller Ball	???		RollerBall.nsfe
-	Rollergames	Suzuki,Matsuo,Fujio,Hanzawa		Rollergames (1990)(Konami).nsfe
-	Romance - Yoko Ishida	NSF by Tsu Ryu		T_Romance_NesVersion.nsfe
 	Ronery Booogalooo	Bolk		48_ronery_booogalooo.nsfe
 	Rope	Javel		43_ret4.nsfe
 	Row, Row, Row Your Boat	kitchenmaniac111		38_kitchenmaniacrowentry.nsfe
@@ -1093,12 +811,7 @@
 	RUNNING THROUGH THE CYBER WORLD	KARA		23_RTTCW.nsfe
 	Running, Running	James QuestMaster		42_running_running.nsfe
 	runway from reality	warlord		44_runway_from_reality.nsfe
-	Rush'n'Attack	<?>		Rush 'n' Attack.nsfe
-	Rygar			Rygar.nsfe
 	Saddle Your Moon Horse and Ride to Ptolemaeus	bradsmith		09_moonhorse.nsfe
-	Sadist's Fall	Tsu Ryu		T_Original_SadistFall.nsfe
-	Sailor Raika - Defiance	Tsu Ryu		T_Original_Defiance.nsfe
-	Sailor Raika - Whirlwind	Tsu Ryu		T_Original_Whirlwind.nsfe
 	sakaru saku	kaiser		18_sakura_saku.nsfe
 	Salamander 2: Silvery Wings Again	jrlepage		61_jrlepage_-_Salamander2_-_Silvery_Wings_Again.nsfe
 	sambaNES (or FAMIsamba)	chunter		14_sambanes.nsfe
@@ -1108,32 +821,25 @@
 	SCADS	TsuzareggaTNT		11_scads.nsfe
 	Scaling The Dragon Fortress	Fearofdark		44_fod_dragonfortress.nsfe
 	Scarborough Fair	TQ-Jam		152_scarborough.nsfe
-	School Battle	Tsu Ryu		T_Original_SchoolBattle.nsfe
 	Schools TV-Opening Music (1964)	dw_junon		11_BBC_Schools_Television_Opening_Music_1964_Lionel_Salter.nsfe
 	scraper	Hex125		24_scraper.nsfe
 	SD The Great Battle V - Mountain Path	Ironclad		029_mountainpath.nsfe
 	Sea of Memories	RushJet1		20_sea_memories.nsfe
 	Second Tunnel Scene Song	Nysnamovois		59_fcmcov.nsfe
-	Section Z			Section Z.nsfe
 	Seiken Densetsu 3 - High Tension Wire	flashygoodness		08_SD3_HTW.nsfe
 	Sentient Beings	MKC		17_Sentient_Beings.nsfe
 	Sentimental Hurry Dash !	Bun		55_bun_shd.nsfe
-	Separated by Distance	Tsu Ryu		T_Original_SeparatedByDistance.nsfe
 	Septentrion -The Sinking ship-	Bun		81_sep_main.nsfe
 	Serenade Nr.13 (KV525) Menuetto	Yoshi Soft		10_kv525_3.nsfe
 	Serial Gazer	Blitz Lunar		48_blitz_lunar_-_serial_gazer.nsfe
-	Sesame Street ABC - 123	<?>		Sesame Street ABC - 123.nsfe
 	set blaster=a220 i5 d1	nin-kuuku		66_AdLibInferno.nsfe
 	Severe Breakdown	Strobe/TiTAN		07_strobe-severebreakdown.nsfe
 	Sewer Gator	Tern		058_sewergator.nsfe
-	Shadowgate	<?>		Shadowgate.nsfe
 	SHALOM -Requiem-	Wiz.		55_shlm_req.nsfe
-	Shatterhand	Iku Mizutani, Kouichi Yamanishi		Shatterhand.nsfe
 	Shi Kong Xing Shou - Battle 1	Reverie		040_SKXSBattle1.nsfe
 	Shi-fen-lan-tan	BEEPBOY		107_ShiFenLanTan.nsfe
 	Shimmering Lake	Strobe/TiTAN		01_strobe-shimmeringlake.nsfe
 	Shining Force 2, To Arms!	Ionustron		70_ARMvF.nsfe
-	Shinobi Soul	Tsu Ryu		T_Original_ShinobiSoul.nsfe
 	Shiver Star Select	Teuoxton		33_ShiverStarSelect.nsfe
 	Sho-nen wa tabi ni deru	Bun		35_shounen.nsfe
 	Shoot down!	K->		05_shoot_down.nsfe
@@ -1146,7 +852,6 @@
 	silicon romance	coda		26_silicon.nsfe
 	Silly Tune	Raphaelgoulart		042_silly.nsfe
 	SILPHEED (MCD) -Mobile Fortress-	Wiz.		22_slp_fort.nsfe
-	Silver Surfer	Tim Follin & Geoff Follin		Silver Surfer.nsfe
 	Silvio Rodriguez - Mi Lecho Está Tendido	El Huesudo II		108_milechoestatendido.nsfe
 	Sim City -Megalopolis-	hemlocker		184_simcity_megalopolis.nsfe
 	Sim City -Opening-	hemlocker		160_simcity_opening.nsfe
@@ -1159,40 +864,26 @@
 	Sister Tangerine	TQ-Jam		12_tangerine.nsfe
 	Sixpence None the Richer - Kiss Me	DJ Choplines		72_kiss_me.nsfe
 	Sixtee	mint		56_sixtee.nsfe
-	Skate or Die 2	Rob Hubbard		Skate or Die 2.nsfe
-	Skate or Die!	Rob Hubbard,Kyle Granger,Christopher Grigg		Skate or Die!.nsfe
-	Ski or Die	Rob Hubbard		Ski or Die.nsfe
 	Skulls & Crossbones: One-Eye's Ship	jrlepage		39_SKULLXBO.nsfe
 	Skunny Kart - Drivin' On	Kuhneghetz		08_kuhneghetz_-_skunny_kart_drivin_on_NTSC.nsfe
 	Sky #1	M.A.X.		50_AirBattle.nsfe
 	Skyline	TristEndo		41_skyline.nsfe
 	Skyrim Title Theme NES Cover	Gladian00b		046_skyrim.nsfe
-	Slam Dunk - Ending Theme	Cover by Tsu Ryu		T_SlamDunk_EndingTheme.nsfe
-	Slam Dunk - Opening Theme	Cover by Tsu Ryu		T_SlamDunk_OpeningTheme.nsfe
 	Slash (Castlevania: Dracula X)	novakhord		66_Castlevania_Dracula_X_-_Slash.nsfe
 	Slash (Castlevania: Dracula X)	skinnyhead2000		10_slash.nsfe
 	Slavonic Dance 7 in C Minor (Parodius Style)	kenshirotakahashi		151_slavonicdance7incminorparodiusstyle.nsfe
-	Slayer of Lies ( Full Ver. )	Tsu Ryu		T_Original_SlayerofLies_FullVersion.nsfe
-	Slayer of Lies ( Intro )	Tsu Ryu		T_Original_SlayerofLies_IntroVersion.nsfe
 	Slayers Next - Give A Reason	DJ Bouche		25_give_a_reason.nsfe
-	Slayers TRY - Breeze (Opening)	Cover by Tsu Ryu		T_SlayersTRY_Breeze.nsfe
-	Slayers TRY - Breeze (Opening)	Cover by Tsu Ryu		T_SlayersTRY_Breeze_DPCM.nsfe
-	Slayers TRY - Dont Discouraged	Cover by Tsu Ryu		T_SlayersTRY_DontBeDiscouraged.nsfe
 	Sleep Vacation 7	MisfitChris		36_sleepvacation.nsfe
 	slutfest inc.	surasshu		19_surasshu-slutfest_inc_0.nsfe
 	SML- Daisy's Theme (Music Box)	kenshirotakahashi		120_supermariolanddaisysthememusicbox.nsfe
 	SMW2 - Big Bad Baby Bowser	HertzDevil		53_bbbb.nsfe
 	SmwCastle Theme	mithew		037_Smwcastle.nsfe
-	Snake Rattle & Roll	Dave Wise		Snake Rattle 'n' Roll.nsfe
-	Snake's Revenge	T. Ogura		Snakes Revenge.nsfe
 	SNATCHER - THEME OF ENDING	Bow		141_SNATCHER_30.nsfe
 	Snow	Wyatt		057_Snow.nsfe
-	Snow Bros.	Osamu Ohta, Tatsuya Uemura, Mikiko Suzuki		Snow Bros.nsfe
 	Snow field	Bun		28_bun_snow2.nsfe
 	Snow mecha take-off!	Aegis		30_snowmech.nsfe
 	soft	xaimus		37_xaimus-softnes.nsfe
 	Sol-Feace: Glacier	Kayama		42_nesmusic.nsfe
-	Solstice	Tim Follin		Solstice.nsfe
 	Song Of The Prairie	片翼の人		21_prairie.nsfe
 	Sonic 2 - Chemical Plant	nin-kuuku		13_Sonic2_Chemical.nsfe
 	Sonic 3 - Icecap Zone 1	Kuhneghetz		38_kuhneghetz_-_sonic_3_icecap_zone_1_NTSC.nsfe
@@ -1220,23 +911,17 @@
 	sprite bells	hally		23_spritebells.nsfe
 	Spy vs Spy - BGM	ROP		02_spyvspsy.nsfe
 	Squarepusher Theme	bob		12_sp.nsfe
-	Staff Roll Theme - SFII	Tsu Ryu		T_StreetFighterII_CreditsTheme_NesVersion.nsfe
 	STAGE 1 (IMAGE)	ROP		07_ropfcm3_01.nsfe
 	Stage 16	Verteks		044_Stage16.nsfe
 	Stage7	K->		57_stage7.nsfe
 	Stalk + Cab Chase	Gux		10_stalkcab.nsfe
 	Star Crystal Journey	Tom 7 Entertainment System		08_no2.nsfe
-	Star Tropics II: Zoda's Revenge	T. Kumegawa, Y. Hirai		Startropics 2 - Zoda's Revenge.nsfe
-	Star Wars	Marshall Parker		Star Wars.nsfe
-	Star Wars - The Empire Strikes Back	Paul Webb		The Empire Strikes Back.nsfe
 	staring down the schoolkids (in my ice-cream van)	kfaraday		12_gradeskoolmix3.nsfe
-	Startropics	Y. Hirai		Startropics.nsfe
 	STELLAR WIND	Akima		47_stellarwind.nsfe
 	Sten Lysholm Larsen - sll8	dusthillguy		26_sll8_.nsfe
 	Steve Reich: Electric Counterpoint III - Fast	lyzell		62_ec3_nsf_120903.nsfe
 	Sticker of Puyo Puyo	Reverie		149_Sticker.nsfe
 	Stickerbrush Symphony (Donkey Kong Country 2)	DJ Bouche		05_StickerbrushSymphony.nsfe
-	Stinger	Kyouhei 'Charlie' Sada		Stinger.nsfe
 	stoicraze	MeD		01_stoicraze_050402.nsfe
 	Storm Eagle Redux	RushJet1		24_stormeagle.nsfe
 	Strangers	Cina Saffary		25_strangers.nsfe
@@ -1244,8 +929,6 @@
 	Strauss, Johann II/An der schonen, blauen Donau	RKO		14_t2060.nsfe
 	STREET FIGHTER ZERO2/Sakura	pori		35_SakuraStageBGM.nsfe
 	Stress	RushJet1		098_dt.nsfe
-	Strider Hiryu	"Misses Tarumi"		Strider Hiryu.nsfe
-	Strider Hiryu	"Misses Tarumi"		StriderHiryu.nsfe
 	Stroll in park	ROP		03_fcmcl03.nsfe
 	Sturdy Wings - TRIGON	sb		65_trigon_st3_4_.nsfe
 	submarine conflict	miau		36_submarine_conflict.nsfe
@@ -1254,28 +937,18 @@
 	Sugarless GiRL (Capsule cover)	datamnesia		158_datamnesia-sugarless_girl.nsfe
 	Sukisa...	Bun		14_sukisa.nsfe
 	Summers Last Setting Sun (On and On)	MisfitChris		49_summer.nsfe
-	Sunday Walkabout	Tsu Ryu		T_Original_SundayWalkabout.nsfe
 	sundried	bradsmith		04_sundried.nsfe
 	sunken cathedral	zabutom		31_zbt - sunken cathedral.nsfe
 	Sunsoft Attack #1	za909		100_SunsoftAttack1.nsfe
 	Sunsoft Attack #2	za909		049_SunsoftAttack2.nsfe
 	Super Adventure Island - Blue Blue Moon	Kuhneghetz		077_kuhneghetz_-_super_adventure_island_blue_blue_moon.nsfe
 	Super Bomberman 2 - Battle1	poriesuteru		69_battle1.nsfe
-	Super Contra	H.Maezawa		Super Contra.nsfe
-	Super Dodge Ball	Kazuo Sawa		Super Dodge Ball.nsfe
-	Super Donkey Kong (Pirate)	<?>		Super Donkey Kong (Pirate).nsfe
 	Super Intelligence	Strobe/TiTAN		10_strobe-superintelligence.nsfe
 	Super Mario Bros Theme	DJ Bouche		49_smas.nsfe
-	Super Mario Bros.	Koji Kondo		Super Mario Bros 1.nsfe
-	Super Mario Bros. 1/2/Vs.	Koji Kondo		Super Mario Bros. 1 and 2.nsfe
-	Super Mario Bros. 2	Koji Kondo		Super Mario Bros 2.nsfe
-	Super Mario Bros. 3	Koji Kondo		Super Mario Bros 3.nsfe
 	Super Mario Bros.: Overworld	DJ Bouche		21_mariorem.nsfe
-	Super Mario World	<?>		Super Mario World.nsfe
 	Super R-Type	nin-kuuku		02_supertype.nsfe
 	Super Reggae	chunter		23_superreggae.nsfe
 	Super Rock 'n Roll	KungFuFurby		013_SuperRockNRoll.nsfe
-	Super Spike V'Ball	K. Yamane, M. Hirasawa, T. Hirono		Super Spike V Ball.nsfe
 	Super Star Suite	nobody		36_kssuite_final.nsfe
 	SuperDuper Spaceship 1	Strobe/TiTAN		14_strobe-superduperspaceship1.nsfe
 	Superforce	null1024		73_superforce.nsfe
@@ -1286,38 +959,24 @@
 	suspended animation	graa		16_suspend.nsfe
 	SWAG SONG 2	swag69master420		027_swag.nsfe
 	Swedish Ninjas	Eightecs vs Rubbish		27_eightecs_vs_rubbish_swedishninjas_0.nsfe
-	Sweet Home	<?>		Sweet Home.nsfe
 	swimming in cosmos	CapBeard		49_buttbuttbutt.nsfe
 	Swinging On a Star	chunter		42_swinging.nsfe
 	Swingy Chaos	Christerious		108_SwingyChaos.nsfe
-	Swords and Serpents	<?>		Swords and Serpents.nsfe
 	sympathetic groove	chunter		30_sympgroove.nsfe
 	Syndeton	datamnesia		091_datamnesia-Syndeton.nsfe
 	Syvalion(sfc) -chapter 4-	3-738		03_syvalion_chapter4.nsfe
-	T&C Surf Design - Wood & Water Rage	Hirohiko Takayama		T&C Surf Design - Wood & Water Rage.nsfe
-	Taboo: The Sixth Sense	David Wise		Taboo - The Sixth Sense.nsfe
-	TaleSpin	<?>		Tale Spin.nsfe
 	Tarentelle en la bémol majeur	jrlepage		02_chpn_trntl.nsfe
-	Target Renegade	Tim Follin		Target Renegade.nsfe
 	taru wo mawase	rute		23_taru.nsfe
 	TECHNIC BEAT - MARCHEN MAZE	加山。		139_mm.20130710.nsfe
 	Techno Sonata	FCM QUARTET		17_t_sonata.nsfe
 	Techno song	mrb		11_cantgones.nsfe
-	Tecmo Bowl	K.Y. Jet		Tecmo Bowl.nsfe
-	Tecmo World Wrestling	Yamagishi,Okamura,Miyazaki,Tanaka		Tecmo World Wrestling.nsfe
-	Teenage Mutant Ninja Turtles	Keizo Nakamura		Teenage Mutant Ninja Turtles.nsfe
-	Teenage Mutant Ninja Turtles 2	Y.Manno, K.Nakamura		Teenage Mutant Ninja Turtles 2.nsfe
 	Tegucigalpa	sisho		22_sisho.nsfe
 	Tempest - Acidjazzed Evening	GamerTehness		124_acidjazzedevening.nsfe
 	TEMPORARY PEACE	MISOKA		17_temporarypeace.nsfe
-	Tenshinokyusoku - Starship Yohko	Cover by Tsu Ryu		T_TenshiNoKyusoku_StarshipYohko.nsfe
-	Terminator 2	Tim and Geoff Follin		Terminator 2.nsfe
 	Terra's Lament	RushJet1		22_terraslament.nsfe
 	Tesla Boy - Fire	OverCoat		26_oc-fire.nsfe
-	Tetris (Nintendo)	< ? >		Tetris (Nintendo).nsfe
 	That's Paradise	coda		19_paradise.nsfe
 	The 8th Struggle	JillSandwich93		82_13thstruggle.nsfe
-	The Adventures of Bayou Billy	Kyouhei Sada, Hidenori Maezawa, Atsushi Fujio, Shinkon Ogura		Adventures of Bayou Billy.nsfe
 	The Alchemist (8-bit)	reduz/Juan Linietsky		28_reduz_-_The_Alchemist.nsfe
 	The Alien Agenda	SLiVeR		10_sliver_-_the_alien_agenda.nsfe
 	The Bad Ending	L77		035_0-9A-Za-z._.nsfe
@@ -1338,10 +997,8 @@
 	The Last Sunrise	RushJet1		012_last_sunrise.nsfe
 	The Legend of Dragoon - Village of Tragedy	DynamiteManEXE		177_VillageofTragedy_Finished.nsfe
 	The Legend Of Tristendo	MisfitChris		64_legend.nsfe
-	The Legend of Zelda	Koji Kondo		Zelda.nsfe
 	The Legend of Zelda: Minish Cap - Minish Village	Blitz Lunar		28_blitzlunar_-_zeldaminishcap_minishvillage.nsfe
 	The Leyend of the Ghost Town and BEARDIEMAN the drunk pirate	ui		47_2011-ui_-_The_Leyend_of_the_Ghost_Town_and_BEARDIEMAN_the_drunk_pirate.nsfe
-	The Little Mermaid	<?>		The Little Mermaid.nsfe
 	The Man With the Machine Gun	MeD		34_D_ff8_machinegun_070813.nsfe
 	The Moon on Sunday	reduz/Juan Linietsky		53_sundaymoon.nsfe
 	The Most Underrated SM64 Track	Kulor		36_Piranha.nsfe
@@ -1349,7 +1006,6 @@
 	The Pitfalls of Solitude	Necrophageon		103_Necrophageon_-_The_Pitfalls_of_Solitude.nsfe
 	The Pizza dinosaurs of Planet Awesome	TristEndo		27_thepizzadinosaursofplanetawesome.nsfe
 	The Prelude (FFIV)	R-ML		72_ffiv_prelude.nsfe
-	The Smurfs	Alberto Jose Gonzalez		Smurfs, The.nsfe
 	The Smurfs (NES & SMS) - Swamp	Kuhneghetz		07_kuhneghetz_-_the_smurfs_nes_sms_-_swamp.nsfe
 	The Souvenir Of Sanctuary	m_036		08_psyoblademd.nsfe
 	THE SWAG SONG	swag69master420		035_SWAG.nsfe
@@ -1358,34 +1014,9 @@
 	The_Heavy_Hates_This_Game	IIFierceDeityII		150_The_Heavy_Hates_This_Game.nsfe
 	THEME FOR MYSTIC WARRIORS	Wiz.		21_mysw_1st.nsfe
 	Theme from Solstice (VRC6 Remix)	Tern		047_solsticeVRC6.nsfe
-	Theme of Balrog(Bison) - SFII	Tsu Ryu		T_StreetFighterII_BalrogTheme_NesVersion.nsfe
-	Theme of Balrog(Neardeath) SF2	Tsu Ryu		T_StreetFighterII_BalrogThemeND_NesVersion.nsfe
 	Theme of Barack Obama	Slimeball		001_ThemeofBarackObama.nsfe
-	Theme of Bison (Neardeath) SF2	Tsu Ryu		T_StreetFighterII_BisonThemeND_NesVersion.nsfe
-	Theme of Bison - SFII	Cover by Tsu Ryu 2003		T_StreetFighterII_BisonTheme_NesVersion.nsfe
-	Theme of Blanka (Neardeath) - SF	Cover by Tsu Ryu		T_StreetFighterII_BlankaThemeND_NesVersion.nsfe
-	Theme of Blanka - SF2	Cover by Tsu Ryu		T_StreetFighterII_BlankaTheme_NesVersion.nsfe
-	Theme of Chun-Li - SFII	Cover by Tsu Ryu		T_StreetFighterII_ChunLiTheme_NesVersion.nsfe
-	Theme of ChunLi(Neardeath) - SF2	Cover by Tsu Ryu		T_StreetFighterII_ChunLiThemeND_NesVersion.nsfe
-	Theme of Dhalsim (Neardeath) - S	Cover by Tsu Ryu		T_StreetFighterII_DhalsimThemeND_NesVersion.nsfe
-	Theme of Dhalsim - SF2	Cover by Tsu Ryu		T_StreetFighterII_DhalsimTheme_NesVersion.nsfe
-	Theme of E.Honda (Neardeath)	Cover by Tsu Ryu and S-Kino		T_StreetFighterII_HondaThemeND_NesVersion.nsfe
-	Theme of E.Honda - SFII	Cover by Tsu Ryu and S-Kino		T_StreetFighterII_HondaTheme_NesVersion.nsfe
-	Theme of Guile (Neardeath)- SF2	Cover by Tsu Ryu		T_StreetFighterII_GuileThemeND_NesVersion.nsfe
-	Theme of Guile - SF2	Cover by Tsu Ryu		T_StreetFighterII_GuileTheme_NesVersion.nsfe
-	Theme of Ken (Neardeath) - SF2	Cover by Tsu Ryu		T_StreetFighterII_KenThemeND_NesVersion.nsfe
-	Theme of Ken - SF2	Cover by Tsu Ryu		T_StreetFighterII_KenTheme_NesVersion.nsfe
 	Theme of Kouichi Hiramoto	SBR		19_sbr_wangan.nsfe
-	Theme of Megumi - Sailor Raika	Tsu Ryu and S-Kino		T_Original_SuperKick.nsfe
 	Theme of R.O.D -Opening Version-	SBR		105_sbr_rod.nsfe
-	Theme of Ryu (Neardeath) - SFII	Remade by Tsu Ryu		T_StreetFighterII_RyuThemeND_NesVersion.nsfe
-	Theme of Ryu - SFII (NES version	Remade by Tsu Ryu - 2003		T_StreetFighterII_RyuTheme_NesVersion.nsfe
-	Theme of Sagat - SFII	Tsu Ryu		T_StreetFighterII_SagatTheme_NesVersion.nsfe
-	Theme of Sagat(Neardeath) SF2	Tsu Ryu		T_StreetFighterII_SagatThemeND_NesVersion.nsfe
-	Theme of Vega( Neardeath ) - SFI	Tsu Ryu		T_StreetFighterII_VegaThemeND_NesVersion.nsfe
-	Theme of Vega/Balrog - SFII	Tsu Ryu		T_StreetFighterII_VegaTheme_NesVersion.nsfe
-	Theme of Zangief - SF2	Cover by Tsu Ryu		T_StreetFighterII_ZangiefTheme_NesVersion.nsfe
-	Theme of Zangief(Neardeath)SF2	Tsu Ryu		T_StreetFighterII_ZangiefThemeND_NesVersion.nsfe
 	There is No Time to Lose	Bow		09_There_is_No_Time_to_Lose.nsfe
 	There's a Bull in my Pyjamas!!!	Kuhneghetz		14_kuhneghetz_-_theres_a_bull_in_my_pyjamas.nsfe
 	theXtrahappytimefunsongyay11	Chip Champion		48_xtrahapyfunsongyay.nsfe
@@ -1397,28 +1028,16 @@
 	Thunder Force IV - Omake 2	metalidol		07_tf4_omake2.nsfe
 	Tidsjakten!	hally		37_Tidsjakten.nsfe
 	Tier 3 Redux	Shnabubula		051_Tier3Redux.nsfe
-	Time Diver Eon Man	<?>		Time Diver Eon Man.nsfe
-	Time Lord	<?>		Time Lord.nsfe
 	Time To Go Home, My Friend	Chip Jockey & plrusek		087_entry.nsfe
 	Tiny Life	Comagain		25_Tinylife.nsfe
-	Tiny Toon Adventures	Funahashi, Nakashima & Minami		Tiny Toon Adventures.nsfe
 	Tip&Mantronix: Agony - Ending Theme	chibi-tech		17_agonyend.nsfe
-	Title Theme - SFII (NES Version)	Remade by Tsu Ryu		T_StreetFighterII_TitleTheme_NesVersion.nsfe
-	TMNT 3 - The Manhattan Project	Yuichi Sakakura, Tomoya Tomita, Kouzou Nakamura		Teenage Mutant Ninja Turtles III - The Manhattan Project.nsfe
-	To Be The Wind - MF Miku Opening	Cover by Tsu Ryu		T_MetalFighterMiku_OpeningTheme.nsfe
 	TO MAKE THE END OF BATTLE	chanabey		30_ys2op.nsfe
 	todays a great day for sports	otto tsr		06_otto_tsr_-_todays_a_great_day_for_sports-maison_ikkoku.nsfe
-	Tom & Jerry	Tim and/or Geoff Follin		Tom and Jerry.nsfe
-	Tombs and Treasure	Nihon Falcom, Miyamo, Shanto, Civic Shinkun		Tombs & Treasure.nsfe
-	Top Gun: Dual Fighters	<?>		Top Gun - Dual Fighters.nsfe
 	Tough and Cool	Heosphoros		07_Tough_and_Cool.nsfe
-	Tough Boy - Hokuto No Ken	Remade by Tsu Ryu & K.Manami		T_HokutoNoKen_ToughBoy_NesVersion.nsfe
 	toukiet	slam		023_toukiet.nsfe
-	Treasure Master	Tim Follin		Treasure Master.nsfe
 	treemonsters	nin-kuuku		084_tree.nsfe
 	tribute to the past	stinger		10_tribute.nsfe
 	Trip World - World 1	shiningfinger		068_World1.nsfe
-	Trojan	<?>		Trojan.nsfe
 	Tropical Pink	Blitz Lunar		47_blitzlunar_-_tropical_pink.nsfe
 	Truth -- T-SQUARE	surasshu		39_TRUTH.nsfe
 	Tsurupettan	plrusek		169_tsurupettan.nsfe
@@ -1437,23 +1056,17 @@
 	U.N. Owen was Her?	ZYH		50_un_famicompo.nsfe
 	U.N.オーエンは彼女なのか？	EXCALIpUR		14_th6_15.nsfe
 	UFO-Disco	nin-kuuku		041_ufodisco.nsfe
-	Ultima: Quest of the Avatar	Seiji Toda		Ultima - Quest of the Avatar.nsfe
 	Un5th Symphony	madbrain		42_Un5th.nsfe
-	Unconditional Romance	Tsu Ryu		T_Original_UnconditionalRomance.nsfe
 	underderderground	bradsmith		06_underderderground.nsfe
 	Underwater Lab Tune	Pocket Dokuro		49_Lab.nsfe
 	Underwater Station	xaimus		13_xaimus-underwaterstation.nsfe
-	Uninvited	< ? >		Uninvited.nsfe
 	Unkai	M.A.X.		34_Unkai.nsfe
 	UNLIMITED SaGa: Battle Theme EX	Ionustron		162_BEXvshort.nsfe
 	Unnamed Original	MovieMovies1		07_unnamed.nsfe
-	Until Next Time! ~Closing~	Tsu Ryu		T_Original_UntilNextTime!.nsfe
 	until the setting of the sun	gakineko		26_until_the_setting_of_the_sun.nsfe
-	Untouchable Gunfighter	Tsu Ryu		T_Original_UntouchableGunfighter.nsfe
 	updraft	maak		23_fcm7_entry.nsfe
 	Usual Day	ipi		062_UsualDay.nsfe
 	Uz 3.0 PIPS	Xyz		016_UZPIPS.nsfe
-	V.G Neo - We Survive (VRC7)	Cover by Tsu Ryu		T_VariableGeoNEO_WeSurvive_VRC7Ver.nsfe
 	Valkyrie's Adventure/Unused Song	dw_junon		21_walkure_unused.nsfe
 	Vampire Killer	Milos		71_vampire_killer_vrc6.nsfe
 	vem hojde tempot?	torborn ahlqvist		39_tempot.nsfe
@@ -1468,7 +1081,6 @@
 	W-Ai no imi wo oshiete	freedrull		48_W_Ai-no-Imi-wo-Oshiete.nsfe
 	Walking on clouds	Kreese		29_kreese_-_walking_on_clouds.nsfe
 	WAR	RushJet1		26_war-fcm.nsfe
-	Wario's Woods	Shinobu Amayake, Soyo Oka		Wario's Woods.nsfe
 	WARKLE	mrb		45_warkle.nsfe
 	Warm Chessbricks	Matrixz		24_matrixz_-_warm_chessbricks.nsfe
 	Warm stroll on day	ROP		01_fcmcl01.nsfe
@@ -1477,9 +1089,7 @@
 	Wasteland	丼		28_wasteland.nsfe
 	We Are The World	Wiz.		09_weartwld_NEW.nsfe
 	We Can Relive a Bitter-Sweet Memory	ilocan18		53_040917su.nsfe
-	We Survive - V.G Neo Opening	Cover by Tsu Ryu - 2004		T_VariableGeoNEO_WeSurvive_OpeningTheme.nsfe
 	Werelizard	madbrain		54_WERELIZ.nsfe
-	Werewolf - The Last Warrior	Sakai, Miura, Takahama		Werewolf - The Last Warrior.nsfe
 	Wert	mntorankusu		31_wert_final.nsfe
 	Westwind	Kami		07_kmi-west.nsfe
 	What Can I Do?	MovieMovies1		12_What_Can_I_Do.nsfe
@@ -1487,22 +1097,14 @@
 	What U Need	Tern		093_whatuneed.nsfe
 	What was once a great nation	TristEndo		22_whatwasonceagreatnation.nsfe
 	Whigfield - Saturday Night	Kuhneghetz		42_kuhneghetz_-_saturday_night.nsfe
-	Wild Gunman	< ? >		Wild Gunman.nsfe
 	Windy Valley (with a Swing)	JillSandwich93		11_WindyValley.nsfe
 	Wing Defenders	W2X		28_wing_defenders.nsfe
 	Winter Celebration	rana		030_yufu_a.nsfe
-	Wizards & Warriors	Dave/id Wise		Wizards & Warriors.nsfe
-	Wizards & Warriors III	David Wise		Wizards & Warriors 3.nsfe
-	Wolverine	Software Creations Ltd.		Wolverine.nsfe
 	wunderfonk	miau		32_wunderfonk.nsfe
-	Wurm: Journey to the Center of the Earth	<?>		Wurm.nsfe
-	WWF WrestleMania	David Wise		WWF WrestleMania.nsfe
-	WWF WrestleMania Challenge	David Wise		WWF WrestleMania Challenge.nsfe
 	www novel series "Your house burns?"	Bun		05_omae.nsfe
 	Xak -The Art of Visual Stage: Dragon Spirits	Manbow-J		35_xaksht.nsfe
 	XakIII: The voice of Moon	[OK]		13_xak3_06.nsfe
 	xevious	xevious		021_xevious.nsfe
-	Xexyz	Hirohiko Takayama		Xexyz.nsfe
 	Xexyz- song no.03_arrange	Lawrence Power		29_Xexyz_cover_song3_arrange.nsfe
 	xlnt grv	surasshu		51_xlnt_grv.nsfe
 	xpansions	xaimus		04_xaimus-xpansions.nsfe
@@ -1512,30 +1114,18 @@
 	YMO / Technopolis	YS		32_Technopolis.nsfe
 	YMO: Hi-Tech Hippies	Hex125		40_hitexh.nsfe
 	YMO: ハイスクールララバイ	油壺 蜜男		78_HighSchoolLullaby.nsfe
-	Yoshi	Junichi Masuda		Yoshi.nsfe
-	Yoshi's Cookie	Akira Nobuya, Noriko Tsutomu		Yoshi's Cookie.nsfe
 	Yoshi's Island - Flower Garden (1-1)	DJ Bouche		26_flowergarden.nsfe
 	Yoshi's Island theme 4	mrb		17_yoshi.nsfe
 	Yoshi's Island: Athletic	flashygoodness		052_yoshis_island_athletic.nsfe
-	You Don't Know Me	Tsu Ryu		T_Original_YouDontKnowMe.nsfe
 	Young Leaves	Cina Saffary		29_youngleaves.nsfe
-	Ys 1: Ancient Ys Vanished Omen	<?>		Ys - Ancient Ys Vanished Omen.nsfe
-	Ys 2: Ancient Ys Vanished - Final Chapter	Yuzo Koshiro		Ys 2 - Ancient Ys Vanished - Final Chapter.nsfe
-	Ys 3: Wanderers from Ys	Sound Team JDK		Ys 3 - Wanderers from Ys (1991)(Falcom)(26 Tracks).nsfe
 	Ys CHURCH	ZEX		28_Ys_CHURCH.nsfe
 	Ys Origin: Beyond the Beginning -Re:Generation-	rana		77_ys_origin_regene.nsfe
-	Yume KohJoh Doki Doki Panic	Koji Kondo		DokiDokiPanic.nsfe
-	Yuuyuuki	Soyo Oka		Yuuyuuki.nsfe
 	Zazen Town (Goemon 64)	Tern		012_zazen.nsfe
 	Zedd - Shave It Up	Tern		05_shave.nsfe
 	Zeke & Luther Theme	Bob OdenVIRT		19_zeke_and_luther_theme.nsfe
-	Zelda II - The Adventure of Link	Akito Nakatsuka		Zelda II - The Adventure of Link.nsfe
-	Zen Intergalactic Ninja	J. Kane, Nakamur, Ayachan, Sakagon, T. Tommy		Zen Intergalactic Ninja.nsfe
 	ZENZA BOSS (IMAGE)	ROP		24_ropfcm3_03.nsfe
 	zJam300	zabutom		28_zjam300.nsfe
-	Zombie Nation	Norio Nakagata		Zombie Nation.nsfe
 	Zombieaster (One Hour Compo)	Ikuma Morata		59_Ikuma_Zombieaster.nsfe
-	Zubanukeru!	Tsu Ryu		T_Original_Zubanukeru!.nsfe
 	zubat's revenge	miau		17_09.nsfe
 	あの坂をのぼれば、海が見える	片翼の人		47_anosaka.nsfe
 	あの夏の匂い、忘れない	193.FC-AIR9		15_natsurenai.nsfe
