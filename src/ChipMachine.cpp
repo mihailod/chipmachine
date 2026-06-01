@@ -529,6 +529,9 @@ void ChipMachine::update()
         } else {
             m = compressWhitespace(player.getMeta("message"));
         }
+        if (m == "" && utils::startsWith(dbInfo.path, "radio::")) {
+            m = currentInfo.title;
+        }
         if (scrollText != m) {
             scrollEffect.set("scrolltext", m);
             scrollText = m;
@@ -636,6 +639,9 @@ void ChipMachine::update()
         songField.setText(utils::format("[%02d/%02d]", currentTune + 1,
                                         currentInfo.numtunes));
         auto m = compressWhitespace(player.getMeta("message"));
+        if (m == "" && utils::startsWith(dbInfo.path, "radio::")) {
+            m = currentInfo.title;
+        }
         if (m != "" && scrollText != m) {
             scrollEffect.set("scrolltext", m);
             scrollText = m;

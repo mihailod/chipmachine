@@ -421,8 +421,11 @@ void MusicPlayerList::playCurrent()
                 auto shot = mdb.getSongScreenshots(infoCopy);
                 // Write back only if still on the same song
                 LOCK_GUARD(plMutex);
-                if (currentInfo.path == infoCopy.path && shot != "") {
-                    currentInfo.metadata[SongInfo::SCREENSHOT] = shot;
+                if (dbInfo.path == infoCopy.path) {
+                    currentInfo.metadata = infoCopy.metadata;
+                    if (shot != "") {
+                        currentInfo.metadata[SongInfo::SCREENSHOT] = shot;
+                    }
                 }
             }).detach();
         }
