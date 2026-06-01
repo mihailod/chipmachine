@@ -1,13 +1,18 @@
-Demovibes #1		Willbe	MP3	Demovibes1.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibes-mp3cover01.jpg
-Demovibes #2		Willbe	MP3	Demovibes2.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibes-mp3cover02.jpg
-Demovibes #3		Willbe	MP3	Demovibes3.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibes-mp3cover03.jpg
-Demovibes #4		Willbe	MP3	Demovibes4.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibes-mp3cover04.jpg
-Demovibes #5		Willbe	MP3	Demovibes5.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibes-mp3cover05.jpg
-Demovibes #6		Willbe	MP3	Demovibes6.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibes-mp3cover06.jpg
-Demovibes #7		Willbe	MP3	Demovibes7.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibes-mp3cover07.jpg
-Demovibes #8		Willbe	MP3	Demovibes8.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibes-mp3cover08.jpg
-Demovibes #9		Willbe	MP3	Demovibes9.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibes-mp3cover09.jpg
-Demovibes #10		Willbe	MP3	Demovibes10.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibes-mp3cover10.jpg
-Demovibes #11		Willbe	MP3	Demovibes11.mp3	https://demovibes.org/wp-content/uploads/2015/04/demovibes11.jpg
-Demovibes Live #1		Willbe	MP3	DemovibesLive1.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibeslive-mp3cover01-1024x1024.jpg
-Demovibes Live #2		Willbe	MP3	DemovibesLive2.mp3	https://demovibes.org/wp-content/uploads/2015/01/demovibeslive-mp3cover02-1024x1024.jpg
+Demovibes 1 - Slow motion realms		Willbe	MP3	demovibes1.mp3	https://www.demovibes.org/demovibes1.jpg
+Demovibes 2 - The turbo breakbeat revenge		Willbe	MP3	demovibes2.mp3	https://www.demovibes.org/demovibes2.jpg
+Demovibes 3 - Pixels in sequence		Willbe	MP3	demovibes3.mp3	https://www.demovibes.org/demovibes3.jpg
+Demovibes 4 - Visible Channels		Willbe	MP3	demovibes4.mp3	https://www.demovibes.org/demovibes4.jpg
+Demovibes 5 - The MOD inside		Willbe	MP3	demovibes5.mp3	https://www.demovibes.org/demovibes5.jpg
+Demovibes 6 - Decode the decade		Willbe	MP3	demovibes6.mp3	https://www.demovibes.org/demovibes6.jpg
+Demovibes 7 - Rip is lame		Willbe	MP3	demovibes7.mp3	https://www.demovibes.org/demovibes7.jpg
+Demovibes 8 - Still kickin bytes		Willbe	MP3	demovibes8.mp3	https://www.demovibes.org/demovibes8.jpg
+Demovibes 9 - Party, people going		Willbe	MP3	demovibes9.mp3	https://www.demovibes.org/demovibes9.jpg
+Demovibes 10 - Wurst demo ever		Willbe	MP3	demovibes10.mp3	https://www.demovibes.org/demovibes10.jpg
+Demovibes 11 - Long time, no scene		Willbe	MP3	demovibes11.mp3	https://www.demovibes.org/demovibes11.jpg
+Demovibes 12 - Back from the tape		Willbe	MP3	demovibes12.mp3	https://www.demovibes.org/demovibes12.jpg
+Demovibes 13 - The number of the bit		Willbe	MP3	demovibes13.mp3	https://www.demovibes.org/demovibes13.jpg
+Demovibes 14 - In memory of Maf		Willbe	MP3	demovibes14.mp3	https://www.demovibes.org/demovibes14.jpg
+Demovibes 15 - Tracks, Odds & Miracles		Willbe	MP3	demovibes15.mp3	https://www.demovibes.org/demovibes15.jpg
+Demovibes 16 - The Memory of the Shadow		Willbe	MP3	demovibes16.mp3	https://www.demovibes.org/demovibes16.jpg
+Demovibes Live 1		Willbe	MP3	demovibeslive1.mp3	https://www.demovibes.org/demovibeslive1.jpg
+Demovibes Live 2		Willbe	MP3	demovibeslive2.mp3	https://www.demovibes.org/demovibeslive2.jpg

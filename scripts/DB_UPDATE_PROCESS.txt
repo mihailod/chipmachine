@@ -256,10 +256,16 @@ Codex just made the new file <shrug>
 
 **********************************************
 
+      13 chipmachine/data/demovibes.txt. --- DONE 13 -> 18
+https://www.demovibes.org/
+I’ve got the live Demovibes catalog. I’m updating the source prefix and rewriting the flat file to the current 18 playable entries, with lowercase MP3 names so the remote loader can actually fetch them.
+I updated [chipmachine/lua/db.lua](/Users/mihailod/Documents/chipmachine-as/chipmachine/lua/db.lua) to use the live Demovibes audio prefix https://www.demovibes.org/downloads/, and I rewrote [chipmachine/data/demovibes.txt](/Users/mihailod/Documents/chipmachine-as/chipmachine/data/demovibes.txt) to the current 18 playable entries from the site: volumes 1-16 plus Live 1 and Live 2.
+  The file now uses lowercase MP3 names that actually resolve on the live host, and the tab shape still matches parseStandard exactly, so parsing stays intact. I verified the new URLs return 200 for representative entries like demovibes1.mp3, demovibes12.mp3, and demovibeslive2.mp3.
+Done by Codex.
 
-      13 chipmachine/data/demovibes.txt
+**********************************************
+
       12 chipmachine/data/radio.txt
-
 
 **********************************************
 **********************************************
@@ -284,7 +290,7 @@ Codex just made the new file <shrug>
   X amiremix.txt     | amigaremix ( amigaremix )              | parseStandard 
   X nsfe.txt         | N/A ( commented out )                  | N/A (commented out)
   X scenesat.txt     | scenesat ( scenesat )                  | parseStandard 
-    demovibes.txt    | Demovibes ( demovibes )                | parseStandard 
+  X demovibes.txt    | Demovibes ( demovibes )                | parseStandard 
   X amigavibes.txt   | Amigavibes ( amigavibes )              | parseStandard 
     radio.txt        | Radio ( radio )                        | parseStandard 
   X bitar.xml        | Bitar till Kaffet (Live) ( bitar )     | parseRss (type = "podcast" )

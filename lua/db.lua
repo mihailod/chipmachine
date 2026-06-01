@@ -148,7 +148,7 @@ DB = {
 {
 	name = "Demovibes",
 	id =  "demovibes",
-	source = "http://www.demovibes.org/downloads/",
+	source = "https://www.demovibes.org/downloads/",
 	song_list = "data/demovibes.txt",
 	color = 0xfffff
 },
