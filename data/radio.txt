@@ -1,9 +1,9 @@
 Scenesat		Shoutcast	M3U	https://scenesat.com/listen/normal/max.m3u	https://scenesat.com/static/img/ssr_logo_288.png
 SLAY Radio		Shoutcast	M3U	https://www.slayradio.org/tune_in.php/128kbps/slayradio.128.m3u	https://www.slayradio.org/images/fb_icon.jpg
-Nectarine		Shoutcast	MP3	https://scenestream.io/necta64.mp3	http://static.radio.net/images/broadcasts/8c/5b/9360/c175.png
+Nectarine		Shoutcast	MP3	https://scenestream.io/necta64.mp3	https://scenestream.net/static/media/compilations/icons/necta2005_nectarine_ojuice_fruit.png
 VGM Radio		Shoutcast	MP3	http://radio.vgmradio.com:8040/stream	https://pbs.twimg.com/profile_images/1800051507/vgmradio-icon_400x400.png
 NoLife-Radio		Shoutcast	MP3	https://listen.nolife-radio.com/stream	https://lh5.ggpht.com/EtGXhsOUrTZctNdR8Q8E6dRu60C-oc2QvRoSJ5i4kBA4BYHJbYC0jDbMrQf-kK6sDNx9=w300
-Rainwave		Shoutcast	M3U	http://chipstream.rainwave.cc:8000/chiptune.mp3.m3u	https://lh3.ggpht.com/D_Sgp-4MLjLEH1gJbyQCTbsoC40wQ2zAYMtujxwawsdnz1G55zvHHj9fGrVsSK1OEQ=w300
-The Sid Station		Shoutcast	PLS	https://solid24.streamupsolutions.com:2199/tunein/icfablwz.pls	http://c64radio.com/images/img0001.png
+Rainwave		Shoutcast	M3U	http://chipstream.rainwave.cc:8000/chiptune.mp3.m3u	https://rainwave.cc/favicon.ico
+The Sid Station		Shoutcast	PLS	https://solid24.streamupsolutions.com:2199/tunein/icfablwz.pls	https://c64radio.com/images/tsslogo.png
 Radio PARALAX		Shoutcast	MP3	https://ssl.radio-paralax.de:8443/stream	https://i3.radionomy.com/radios/400/53ce7a7d-ff16-4da1-a48d-394b927ba5dc.gif
-CVGM Radio		Shoutcast	MP3	http://radio.chapter3-it.io/cvgm128
+CVGM Radio		Shoutcast	MP3	http://radio.chapter3-it.io/cvgm128	https://radio.cvgm.net/favicon.ico
