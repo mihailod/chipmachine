@@ -33,6 +33,7 @@ void initYoutube(sol::state&);
 #include "di.hpp"
 namespace di = boost::di;
 
+#include <filesystem>
 #include <optional>
 #include <vector>
 
@@ -65,7 +66,8 @@ int main(int argc, char* argv[])
         bool full_screen = false;
         bool telnet_server = false;
         bool only_headless = false;
-        bool force_db = false;
+        bool force_reindex = false;
+        bool delete_web_cache = false;
         std::string play_what;
 #ifdef TEXTMODE_ONLY
         bool text_mode = true;
@@ -89,7 +91,8 @@ int main(int argc, char* argv[])
                            },
                            "Debug output");
 
-    opts.add_flag("--db", options.force_db, "Force database rebuild");
+    opts.add_flag("--forcedbreindex", options.force_reindex, "Force database rebuild");
+    opts.add_flag("--deletewebcache", options.delete_web_cache, "Delete web cache");
     opts.add_option("-T,--telnet", options.telnet_server,
                     "Start telnet server");
     opts.add_option("-p,--port", options.port, "Port for telnet server", true);
@@ -100,6 +103,15 @@ int main(int argc, char* argv[])
     opts.add_option("files", options.songs, "Songs to play");
 
     CLI11_PARSE(opts, argc, argv)
+
+    if (options.delete_web_cache) {
+        utils::print_fmt("Clearing Web Cache...\n");
+        auto cacheDir = Environment::getCacheDir();
+        auto webFilesDir = cacheDir / "_webfiles";
+        LOGD("Deleting web cache directory: %s", webFilesDir.string());
+        std::error_code ec;
+        std::filesystem::remove_all(webFilesDir.string(), ec);
+    }
 
     InitializeUpdateVerificationSubsystem();
 
@@ -322,7 +334,7 @@ int main(int argc, char* argv[])
     LOGD("WorkDir:%s", work_dir);
 
     auto& music_db = injector.create<chipmachine::MusicDatabase&>();
-    if (options.force_db) {
+    if (options.force_reindex) {
         music_db.forceRebuild();
     }
 

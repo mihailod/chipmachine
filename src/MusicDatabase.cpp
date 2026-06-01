@@ -1324,6 +1324,12 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
     LOGD("DBVERSION %d INDEXVERSION %d SQLITEVERSION %d", dbVersion,
          indexVersion, sqliteVersion);
     if (dbVersion != indexVersion || dbVersion != sqliteVersion) {
+        utils::print_fmt("Clearing Web Cache (DB update detected)...\n");
+        auto cacheDir = Environment::getCacheDir();
+        auto webFilesDir = cacheDir / "_webfiles";
+        std::error_code ec;
+        std::filesystem::remove_all(webFilesDir.string(), ec);
+
         db.exec("DROP TABLE IF EXISTS collection");
         db.exec("DROP TABLE IF EXISTS song");
         db.exec("DROP TABLE IF EXISTS product");

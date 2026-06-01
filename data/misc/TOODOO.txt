@@ -1,13 +1,13 @@
 data
 ====
-- radio screenshots missing or ugly: scenesat, slay, rainwave, sid station, 
+- radio screenshots missing or ugly: rainwave (favicon issue?)
+- radio db ugly scroll -- reads the screen art url!? 
 - [OPTIONAL -- will take 14 hours and not sure if it will improve anything] run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
-
-optimizations
-=============
 
 crashes:
 ========
+P0 still sometimes chokes on quit when playing
+P0 new app still asks permission for Documents when playing nsfe files
 
 could not play song:
 ===================
