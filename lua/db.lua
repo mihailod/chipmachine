@@ -155,8 +155,9 @@ DB = {
 {
 	name = "Amigavibes",
 	id =  "amigavibes",
-	source = "http://www.amigavibes.org/index.php/download/category/2-podcast-musicaux?download=",
+	source = "https://stats.podcloud.fr/amigavibes/",
 	song_list = "data/amigavibes.txt",
+	song_template = "title format path",
 	color = 0xfffff
 },
 {

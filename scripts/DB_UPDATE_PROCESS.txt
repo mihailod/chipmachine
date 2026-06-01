@@ -246,8 +246,17 @@ The update is just the subtitle fixes for #57–73. Present the file as-is witho
 
 **********************************************
 
+      40 chipmachine/data/amigavibes.txt. --- DONE 40 -> 116
+AmigaVibes podcast episode catalog, sourced from the live podCloud feed at
+  https://amigavibes.lepodcast.fr/rss.
+I regenerated the flat file from that feed, excluded the non-episode Amiga
+  Playground item, and brought it up to 116 entries through episode 104.
+I’ve got the actual playable prefix now: the audio files live under https://stats.podcloud.fr/amigavibes/, and the dataset needs to be stored as relative enclosure paths. I’m reverting the accidental Demovibes change, then I’ll update the AmigaVibes entry and rebuild amigavibes.txt to match the new source.
+Codex just made the new file <shrug>
 
-      40 chipmachine/data/amigavibes.txt
+**********************************************
+
+
       13 chipmachine/data/demovibes.txt
       12 chipmachine/data/radio.txt
 
@@ -276,7 +285,7 @@ The update is just the subtitle fixes for #57–73. Present the file as-is witho
   X nsfe.txt         | N/A ( commented out )                  | N/A (commented out)
   X scenesat.txt     | scenesat ( scenesat )                  | parseStandard 
     demovibes.txt    | Demovibes ( demovibes )                | parseStandard 
-    amigavibes.txt   | Amigavibes ( amigavibes )              | parseStandard 
+  X amigavibes.txt   | Amigavibes ( amigavibes )              | parseStandard 
     radio.txt        | Radio ( radio )                        | parseStandard 
   X bitar.xml        | Bitar till Kaffet (Live) ( bitar )     | parseRss (type = "podcast" )
   X bitar.txt        | Bitar till Kaffet (Archive) ( bitar2 ) | parseStandard 

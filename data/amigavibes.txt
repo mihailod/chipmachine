@@ -1,40 +1,116 @@
-AmigaVibes Podcast #1 - First Step			MP3	1:podcast-1-first-step
-AmigaVibes Podcast #2 - Second Floor			MP3	2:podcast-2-second-floor
-AmigaVibes Podcast #3 - The Three Wise-Man			MP3	3:podcast-3-the-three-wise-man
-AmigaVibes Podcast #4 - The fantastic four			MP3	4:podcast-4-the-fantastic-four
-AmigaVibes Podcast #5 - Gorin_no_Sho			MP3	5:podcast-5-gorin-no-sho
-AmigaVibes Podcast #6 - Into the Shad			MP3	6:podcast-6-into-the-shad
-AmigaVibes Podcast #7 - Seven Seas			MP3	7:podcast-7-seven-seas
-AmigaVibes Podcast #8 - Eight bells			MP3	8:podcast-8-eight-bell
-AmigaVibes Podcast #9 - Nine Chambers of Shaolin			MP3	9:podcast-9-nine-chambers-of-shaolin
-AmigaVibes Podcast #10 - The Ten Commandments			MP3	10:podcast-10-the-ten-commandments
-AmigaVibes Podcast #10bis - Incunable 2k10			MP3	11:podcast-10bis-incunable-2k10
-AmigaVibes Podcast #11 B - Summer Camp			MP3	12:podcast-11-summer-camp
-AmigaVibes Podcast #11 C - Odyssey			MP3	13:podcast-11-c-odyssey
-AmigaVibes Podcast #11 - The Force			MP3	14:podcast-11-la-force
-AmigaVibes Podcast #12 - The Twelves Signs			MP3	15:podcast-12-the-twelves-signs
-AmigaVibes Podcast #12 B - AC-RGC-2K9-2K11			MP3	16:podcast-12-b-ac-rgc-2k9-2k11
-AmigaVibes Podcast #13 - The Thirtheen Selenim			MP3	17:podcast-13-the-thirtheen-selenim
-AmigaVibes Podcast #14 - The Return of the Fourteen Samurai			MP3	18:podcast-14-the-return-of-the-fourteen-samurai
-AmigaVibes Podcast #15 - Dark Helmet			MP3	19:podcast-15-dark-helmet
-AmigaVibes Podcast #16 - 64 humanity			MP3	20:podcast-16-64-humanity
-AmigaVibes Podcast #15 B - Fifteen - Akira			MP3	21:podcast-15-b-quinze-akira
-AmigaVibes Podcast #16 B - Zen Nihon Scene Renmei - Edo Dome Fest			MP3	22:podcast-16-b-edo-dome-fest
-AmigaVibes Podcast #17 - Sen no Sen			MP3	23:podcast-17-sen-no-sen
-AmigaVibes Podcast #18 - Go no Sen			MP3	24:podcast-18-go-no-sen
-AmigaVibes Podcast #19 - Sen Chip			MP3	25:podcast-19-sen-no-chip
-AmigaVibes Podcast #20 - DemoJS Pride			MP3	27:podcast-20-demojs-pride
-AmigaVibes Podcast #21 - DemoJS live by Moonove			MP3	28:podcast-21-demojs-live-by-moonove
-AmigaVibes Podcast #22 - Gerp 2013			MP3	29:podcast-22-gerp2013
-AmigaVibes Podcast #23 - Function 2K13			MP3	30:podcast-23-function2k13
-AmigaVibes Podcast #24 - Alchemy-Special-Strider			MP3	31:podcast-24-alchimie-special-strider
-AmigaVibes Podcast #25 - Alchemy-Special-DemoJS2K13			MP3	32:podcast-25-alchimie-demojs2k13
-AmigaVibes Podcast #26 - Special  - Alchimie2K13		AmigaVibes	MP3	33:podcast-26-alchimie2k13
-AmigaVibes Podcast #27 - X-Copy Party			MP3	34:podcast-27-x-copy-party
-AmigaVibes Podcast #28 - Edo Demo Fest Shin-den Shin			MP3	35:podcast28-edf-shindenshin
-AmigaVibes Podcast #29 - Assembly - The Listening			MP3	36:podcast29-assembly-thelistening
-AmigaVibes Podcast #30 - Assembly - Dance Dance			MP3	37:podcast30-assembly-dancedance
-AmigaVibes Podcast #31 - Demodays 4ever			MP3	38:podcast31-demodays4ever
-AmigaVibes Podcast #32 - Assembly 2K15 - Listening compo			MP3	39:podcast32-assembly-2k15-listening
-AmigaVibes Podcast #33 - Assembly 2K15 - Fast than Light			MP3	40:podcast33-assembly-2k15-fastthanlight
-AmigaVibes Podcast #34 - DemoJS 2K14 - The Other Days - Live			MP3	41:podcast34-tod-livesession
+AmigaVibes Podcast #1 - First Step	MP3	podcast-1-first-step/enclosure.eb800fe50672feae43802f189bfac9f818091cb033b559a322c29353cec310c1.mp3?p=f
+AmigaVibes Podcast #2 - Second Floor	MP3	podcast-2-second-floor/enclosure.cf75a6acd84fee953049cea6e74313f4e9733c3810fa268331c7e6ccd671091a.mp3?p=f
+AmigaVibes Podcast #3 - The Three Wise-Man	MP3	podcast-3-the-three-wise-man/enclosure.34e56cccb127e91bd775f8ed0fb22c4980b049dbe6939309e919f2d4b2393351.mp3?p=f
+AmigaVibes Podcast #4 - The Fantastic Four	MP3	podcast-4-the-fantastic-four/enclosure.cad1fb126b1c595f0a27db3cdd6ff6eb1cdea6f67e6e2684bd14c8b94e0f68c1.mp3?p=f
+AmigaVibes Podcast #5 - Gorin_no_Sho	MP3	podcast-5-gorin-no-sho/enclosure.58c53a33d6f25082c6fbae0739268f99a289f067b772d5c0bba7ad52350ddace.mp3?p=f
+AmigaVibes Podcast #6 - Into the Shad	MP3	podcast-6-into-the-shad/enclosure.8a7eb5a916ac26bff0c549aa238e72f81d3bd4d7388d81c80698cf1f57f83742.mp3?p=f
+AmigaVibes Podcast #7 - Seven Seas	MP3	podcast-7-seven-seas/enclosure.2744105cb98d85a81feef0c1c76f67348ffe6cde1b6c6c45b93a4c9e269c7579.mp3?p=f
+AmigaVibes Podcast #8 - Eight bells	MP3	podcast-8-eight-bells/enclosure.fed9c96ceaaceb1bcae1a67ade8820f69c6bdff4c36eea4765d952ec303030d0.mp3?p=f
+AmigaVibes Podcast #9 - Nine Chambers Of Shaolin	MP3	podcast-9-nine-chambers-of-shaolin/enclosure.6251883a94d0d86917dd26d0ce551b21a18b60faf05df2666983c24a4cc36b3c.mp3?p=f
+AmigaVibes Podcast #10 - The Ten Commandments	MP3	podcast-10-the-ten-commandments/enclosure.622c579e9083138ab43ee3ca694371cd82889d7259498739484dc09cd2f3f2f0.mp3?p=f
+AmigaVibes Podcast #10 B - Incunable 2k10	MP3	podcast-10-b-incunable-2k10/enclosure.7695f5701623aaf897bb0afec3ed94ec2daf1baacf8cf01af6757de619694c2b.mp3?p=f
+AmigaVibes Podcast #11 - La Force	MP3	podcast-11-la-force/enclosure.306fe312fe7bc8f65474cc9daa91b64b12f37260f68d45cc44f159b7fab9c002.mp3?p=f
+AmigaVibes Podcast #11 B - SummerCamp	MP3	podcast-11-b-summercamp/enclosure.b09f334f4e7b5ef04f205db7b8a6efb4b26946468585cfcd4f0af28e2f214dbf.mp3?p=f
+AmigaVibes Podcast #11 C - Odyssey	MP3	podcast-11-c-odyssey/enclosure.529cda4b7e4091d83754f1d0a61ef31a9ab44880553c46d2afa23bacb62201d6.mp3?p=f
+AmigaVibes Podcast #12 - The_Twelves_Signs	MP3	podcast-12-the-twelves-signs/enclosure.e553bfaf51456f0c342b38504b33314c59bb47fe5181eb929dc43ac6c7bcda4c.mp3?p=f
+AmigaVibes Podcast #12 B - AC-RGC-2K9-2K11	MP3	podcast-12-b-ac-rgc-2k9-2k11/enclosure.9f044da6d501e346094caec7e1135b203258b8150f1dbbfd40094c44dd8955d3.mp3?p=f
+AmigaVibes Podcast #13 - The_Thirtheen_Selenim	MP3	podcast-13-the-thirtheen-selenim/enclosure.923d90486b3b0fc292d0321b8bc5e80d60392b4aed33b712143c78db066a3fad.mp3?p=f
+AmigaVibes Podcast #14 - The_Return_of_the_Fourteen_Samurai	MP3	podcast-14-the-return-of-the-fourteen-samurai/enclosure.40695e1d2a65f02c7382ec0915b4a478338c8cd733f7bf4cfcfe3c812b823007.mp3?p=f
+AmigaVibes Podcast #15 - Dark Helmet	MP3	podcast-15-dark-helmet/enclosure.a032409b27feedb1725931f37538c774bbbf8c503846c942f462dc774a6b1aec.mp3?p=f
+AmigaVibes Podcast #15 B - Quinze - Akira	MP3	podcast-15-b-quinze-akira/enclosure.3826af99b1cc84c2bda21ae19b10f9bdbe7dcb6c548420635f5e43598724fa58.mp3?p=f
+AmigaVibes Podcast #16 - 64 Humanity	MP3	podcast-16-64-humanity/enclosure.8c425794c8680f44ed5cc38065fc7d7714855ae8a191d5dd69936bd3a6f52ccc.mp3?p=f
+AmigaVibes Podcast #16 B - Zen Nihon Scene Renmei - Edo Dome Fest	MP3	podcast-16-b-zen-nihon-scene-renmei-edo-dome-fest/enclosure.1909b287c3bf6bdfb89e4107d521679156e81b609e2b5fd3f0f8e11994c11ed2.mp3?p=f
+AmigaVibes Podcast #17 - Sen No Sen	MP3	podcast-17-sen-no-sen/enclosure.f81616a83dd6fe680d0de4f512f760862ae8bd1a17c13fa429d1009951e83746.mp3?p=f
+AmigaVibes Podcast #18 B - Go no Sen	MP3	podcast-18-b-go-no-sen/enclosure.cadf9981110b527480b15549c1eec23ac0af64ba889fbdd758c082c3c3e53dfa.mp3?p=f
+AmigaVibes Podcast #18 - Aard-S3sSiOn	MP3	podcast-18-aard-s3ssion/enclosure.cadf9981110b527480b15549c1eec23ac0af64ba889fbdd758c082c3c3e53dfa.mp3?p=f
+AmigaVibes Podcast #19 - Sen No Chip	MP3	podcast-19-sen-no-chip/enclosure.63dea80ec3ee26324b5683e28d3e1299666ae1ad47e0a1c13d74bdbf2367ca67.mp3?p=f
+AmigaVibes Podcast #20 - DemoJS Pride	MP3	podcast-20-demojs-pride/enclosure.864d5f122da27819e8f40308cd9b2dd49c16f1d6b87b2a0bbfe5c9893831d8b1.mp3?p=f
+AmigaVibes Podcast #21 - DemoJS Live By Moonove	MP3	podcast-21-demojs-live-by-moonove/enclosure.7c7cbd5bcf7a6b469f6874d42abe5e290774a091f0f9be213f72b87c684451a6.mp3?p=f
+AmigaVibes Podcast #22 - Gerp2013	MP3	podcast-22-gerp2013/enclosure.316b08e19477ab100b6e01490bcc154cc258ea97f31a007409059e30571781ce.mp3?p=f
+AmigaVibes Podcast #23 - Function2K13	MP3	podcast-23-function2k13/enclosure.fe9e016a3e5e5010c1ca0903fb7589ba6ebfdc537526439404838cfba8db59d8.mp3?p=f
+AmigaVibes Podcast #24 - Alchimie-Special Strider	MP3	podcast-24-alchimie-special-strider/enclosure.1c80c33333251d18fb5743627b9967fcf84830d1217a4c602323b31f5a274045.mp3?p=f
+AmigaVibes Podcast #25 - Alchimie-Special-DemoJS2K13	MP3	podcast25-alchimie-special-demojs2k13/enclosure.20fd91bfe1dd1bfe0ca8277de43ae2b38c018e9bf890c79fa462954cd0d4d3d1.mp3?p=f
+AmigaVibes Podcast #26 - AmigaVibes - Special Alchimie2K13	MP3	podcast-26-amigavibes-special-alchimie2k13/enclosure.cb560d96b01174f0fea22c679dea2684d59f3c0bcb198fc7ff4389fa7d001c8f.mp3?p=f
+AmigaVibes Podcast #27 - X - Copy Party	MP3	podcast-27-x-copy-party/enclosure.b811c61ca29fe86bcf675925edbba81d6502a8ef830708dcea0028968004d65d.mp3?p=f
+AmigaVibes Podcast #28 - Edo Demo Fest - Shin Den Shin	MP3	podcast-28-edo-demo-fest-shin-den-shin/enclosure.e9230b22457922412a20b00277bb0ac3ce8ffa6346217ab9f64ba65d8bb42b3d.mp3?p=f
+AmigaVibes Podcast #29 - Assembly - The Listening	MP3	podcast-29-assembly-the-listening/enclosure.c5881ed86c929f61d5edbc1ce4b7d202d3aa0e335e569357b9bc9a46cb137a80.mp3?p=f
+AmigaVibes Podcast #30 - Assembly - Dance Dance	MP3	podcast-30-assembly-dance-dance-dot-dot-dot/enclosure.dc7e4c2b01c093584bd855401a9f69e5fee86bd73b30c42da23ce89e108c6878.mp3?p=f
+AmigaVibes Podcast #31 - Demodays 4ever	MP3	podcast-31-demodays-4-ever/enclosure.1f0c1e995e18265ea8034f55a7eef385353a1da3497311239f87777813a74496.mp3?p=f
+AmigaVibes Podcast #32 - Assembly2K15 - The Listening	MP3	podcast-32-assembly2k15-the-listening/enclosure.e17d09e4aab6f208232237297779b89e0c8da95f79953263882de93ae9a27164.mp3?p=f
+AmigaVibes Podcast #33 - Assembly2K15 - Fast Than Light	MP3	podcast-33-assembly-2k15-fast-than-light/enclosure.5752894f8e85fcf4eb9fbd51c2374e7065dcffb32f4afadefa7ee92880f8eead.mp3?p=f
+AmigaVibes Podcast #34 - DemoJS2014-The_Other_Days-Live Session	MP3	podcast-34-demojs-2014-the-other-days-live-session/enclosure.5ee5349079e699ed5460fab93a256a9683a301696adbabbbb7f3be5e1264cffb.mp3?p=f
+AmigaVibes Podcast #35 - Alchimie0xb-Kioniro	MP3	podcast-35-alchimie-0xb-kioniro/enclosure.1a7b09b1066cc1f17314396d93fb81bef4ee5700401ba88f62cfbc5d67696869.mp3?p=f
+AmigaVibes Podcast #36 - Alchimie 0xb-Jayblood	MP3	podcast-36-alchimie-0xb-jayblood/enclosure.bcd94a84d1b69bdfa6c34939831be9254e4973d8d9ed76127f38b1b28a328e8d.mp3?p=f
+AmigaVibes Podcast #37 - TheGathering15 - Freestyle - EndLess Summer Of The Crown	MP3	podcast-37-the-gathering-2k15-freestyle-endless-summer-of-the-crown/enclosure.fdf1dad0d68246cfe3940b6d1677aae7d0206dfd5d5bce45efbd7d6f7cf70916.mp3?p=f
+AmigaVibes Podcast #38 - TheGathering15 - Remix - HoldUBack	MP3	podcast-38-the-gathering-2k15-remix-holduback/enclosure.32466004640ee36b3e796f6ea997ac7600f30587531656b03d73fdadff124dc3.mp3?p=f
+AmigaVibes Podcast #39 - Revision2K16 - On The Road Again	MP3	podcast-39-revision-2k16-on-the-road-again/enclosure.f8ed733db8c832511abf6caca0cee9707f44af1dcaaef8dc022ab73e6b2e94ab.mp3?p=f
+AmigaVibes Podcast #40 - Evoke my Spirit	MP3	podcast-40-evoke-my-spirit/enclosure.c0aa8bd3b77627b0ab77025edb7a502802740a62eb1717f2ea8f917b414b530b.mp3?p=f
+AmigaVibes Podcast #41 - Cahier De Vacances	MP3	podcast-41-cahier-de-vacances/enclosure.a092b2c113741f1e2de96754c874dc33cc88e341922d4c514a38ece914fcecf4.mp3?p=f
+AmigaVibes Podcast #42 - Flashback_to_another_world	MP3	podcast-42-flashback-to-another-world/enclosure.5f450ed1ae0adf0a835d390f2e91e6f9b30b5706c4b9c5dd3a985827d198f8a5.mp3?p=f
+AmigaVibes Podcast #43 - Sweet Dreams Of Payback	MP3	publication-sans-titre-57aba96a6e7334020b020000/enclosure.6b3134f2f58e678e9f2adf84e68ddc4222cd8994d35748681ac79efd1342280f.mp3?p=f
+AmigaVibes Podcast #44 - On The Riverwash Beach	MP3	publication-sans-titre-57b3a4a96e733455c7010000/enclosure.32440d1572d42d98f91146626d8ab58df1e9dcdd1286baed57492a4a78b5a41f.mp3?p=f
+AmigaVibes Podcast #45 - Outline off the Limits	MP3	podcast-45-outline-off-the-limits/enclosure.4dd3d252b02935c487775b02ed10be435e2e890e27ac61ad5f6c813ae70bae40.mp3?p=f
+AmigaVibes Podcast #46 - Gerp On Stage	MP3	publication-sans-titre-57e59d1c6e73341e17010000/enclosure.07a628f21f6ca89214ee78d1ce03086d47b08995ced90522efeb1064157753cb.mp3?p=f
+AmigaVibes Podcast #47 - Edo Demo Miyako	MP3	publication-sans-titre-57fac5416e73345e75020000/enclosure.1e6efcd71d7607f2f5318f2acb0be9c25c653739d14dcca2f242c7c02a1c5a47.mp3?p=f
+AmigaVibes Podcast #48 - Aciiiiiiiiiiiiiiiiiiiiid AmigaVibes	MP3	podcast-48-aciiiiiiiiiiiiiiiiiiiiid-amigavibes/enclosure.fd98e29af4a69dc2a77d6ec7a6dc06c1bb395fe1c922abf64af3b2ad77d6a6c2.mp3?p=f
+AmigaVibes Podcast #49 - Freestyle The Gathering	MP3	podcast-49-freestyle-the-gathering/enclosure.ac5131990a9e7231f1552b2a070ee06ce9979500655faf99edf159dcb8532611.mp3?p=f
+AmigaVibes Podcast #50 - Within A Dream Of Solskogen	MP3	podcast-50-within-a-dream-of-solskogen/enclosure.6fafdb5048f099da74ae9e67aa7a2f965415a74a33af333751f87c1a209e7a79.mp3?p=f
+AmigaVibes Podcast #51 - Quintessence Alchimique	MP3	podcast-51-quintessence-alchimique/enclosure.2bd4276ca2c18ac966205d3b008acbc42b42faeff8915a0e86c3bd73342f7847.mp3?p=f
+AmigaVibes Podcast #52 - The Rising Sundown	MP3	podcast-52-the-rising-sundown/enclosure.9c490db56b62d38bddd1a00f4e7e5cb0d850beb6ef7ab532960447fd34191f03.mp3?p=f
+AmigaVibes Podcast #53 - Synchrony Flow Ahead	MP3	podcast-53-synchrony-flow-ahead/enclosure.38d98b12f14f615f95bec21000078b24722f7342fc17585eed6c847e6993d854.mp3?p=f
+AmigaVibes Podcast #54 - The Nordlicht Winter is Coming	MP3	podcast-54-the-nordlicht-winter-is-coming/enclosure.e3424cdfb873347d5166417aba2196f5bd8e3169012abc0d722509b56e5e5958.mp3?p=f
+AmigaVibes Podcast #55 - Das ist DiHalt 1516	MP3	podcast-55-das-ist-dihalt-1516/enclosure.96a67d63cd4b3374955163c27574f51f3dc332d6b51eec463ee332abf410f19d.mp3?p=f
+AmigaVibes Podcast #56 - Edison The Light On	MP3	podcast-56-edison-the-light-on/enclosure.aabf885783b7a13989b2d07d1de8c247812c3d74dc78f7b7ee3747b8e6578607.mp3?p=f
+AmigaVibes Podcast #57 - Simulaatio The Listening	MP3	podcast-57-simulaatio-the-listening/enclosure.72e4fda6a7a630a14796f70051307fdad19b57154b22bb53c3c1ab05ab30bca9.mp3?p=f
+AmigaVibes Podcast #58 - The Dance Simu	MP3	podcast-58-the-dance-simu/enclosure.1e1bf19dee6d18ab5f8fcf924d8b48116e17661d879cf000c2d7b8733295cb3d.mp3?p=f
+AmigaVibes Podcast #58 BL - RGP - The Other Days - Live At RGP 2017 - No Comment	MP3	podcast-58-bl-rgp-the-other-days-live-at-rgp-2017-no-comment/enclosure.7a54c2413cb7aee0d1fe524066e2f3078c3b75dd47c3174d3cba1a50ffcd2385.mp3?p=f
+AmigaVibes Podcast #59 - Under Construction - First Stone	MP3	podcast-59-under-construction-first-stone/enclosure.7c39f868d91cc8789e89c0c9a12b6d9ca1f285a1aa84c384f7728437be5ecc58.mp3?p=f
+AmigaVibes Podcast #59 B - Revision Avant Les Vacances	MP3	podcast-59-b-revision-avant-les-vacances/enclosure.b33f9a370bf45e7b8bc9351cf9c9f719dc7be37c62e05d5aacae8cea0e453471.mp3?p=f
+AmigaVibes Podcast #60 - Simulaatio The Dance Mix	MP3	podcast-60-simulaatio-the-dance-mix/enclosure.640cb15a9f2e5654784b8a1cc8664b041075a143d5669681d9e38835f4ce4605.mp3?p=f
+AmigaVibes Podcast #61 - @party & Birdie	MP3	podcast-61-arobase-party-et-birdie/enclosure.5b0151c77674bc831fcf64acf7e8987327bea187bacbd609b62e1e9cf18ed6fa.mp3?p=f
+AmigaVibes Podcast #62 - Another Function	MP3	podcast-62-another-function/enclosure.d79060e24b26217c851d6a469e488fa3b0fc2fb099eea8894d161437bc1a3507.mp3?p=f
+AmigaVibes Podcast #63 - Outline Limitless	MP3	podcast-63-outline-limitless/enclosure.eaaddf9528abf3dc1bed3b6b04a96a5adf243519962f2653ae9acf33bbff1463.mp3?p=f
+AmigaVibes Podcast #64 - Assembly Sixteen Eons Listening	MP3	podcast-64-assembly-sixteen-eons-listening/enclosure.550533d155fa459de8a744539b33749cd4029b9634586916d974de886d4989c1.mp3?p=f
+AmigaVibes Podcast #65 - Assembly-Dancing At 16	MP3	podcast-65-assembly-dancing-at-16/enclosure.9962d795b352c8d819b312bdb98a9cce153d8baf9ab7c4e369db0b8db175dbf3.mp3?p=f
+AmigaVibes Podcast #66 - Evoke - True Color Demo Scene	MP3	podcast-66-evoke-true-color-demo-scene/enclosure.e06d767bde8980df5a7eda61e23e60f69259a8da5b4be3b31ac2f9da638610e4.mp3?p=f
+AmigaVibes Podcast #67 - Gathering of Masterblaster and Heartbit	MP3	podcast-67-gathering-of-masterblaster-and-heartbit/enclosure.8cb2b3d6af7b05a21ba00428394a6485627aac23ae59f56bf91dc85bd81c1668.mp3?p=f
+AmigaVibes Podcast #68 - Solskogen nuskool.mp3	MP3	podcast-68-solskogen-nuskool-point-mp3/enclosure.7e81ae0ce83fe30e6b66a2cc955c97ca7b0a85231837a97ce694467eaea1e57f.mp3?p=f
+AmigaVibes Podcast #69 - Meet the Assembly and Listening	MP3	podcast-69-meet-the-assembly-and-listening/enclosure.95444b6a36c0392dc5364cda35ff2294612a62a55bfb12e8f5db8bdf6e8d50f9.mp3?p=f
+AmigaVibes Podcast #70 - A Walk In The Function Desert	MP3	podcast-70-a-walk-in-the-function-desert/enclosure.f0b2ab13726a78f82fe6aaa89d6d9a1e73691145a8139bf822ad6e25b7edc6c9.mp3?p=f
+AmigaVibes Podcast #71 - Happy Riverwashing on the spur	MP3	podcast-71-happy-riverwashing-on-the-spur/enclosure.ccfde761211f3388d56cd872040b9c5b80413ca87b1c0f6c6480daec0de8e3b1.mp3?p=f
+AmigaVibes Podcast #72 B - Listening in the Assembly	MP3	podcast-72-b-listening-in-the-assembly/enclosure.3f713d841cb7c62b1a97fc800dd721125f3528bfd56dcfc10d353d5446c9280c.mp3?p=f
+AmigaVibes Podcast #72 - The Real Scene After Christmas return	MP3	podcast-72-the-real-scene-after-christmas-return/enclosure.e421d48dbba44a81864e1fdc4ddc16cc8d8a5b7fe4cf762a1211c76937a476d8.mp3?p=f
+AmigaVibes Podcast #73 - Amigalloween !	MP3	podcast-73-amigalloween/enclosure.acf93ac4701149562634fa9f3ec085f56416d577788301bfa413c6410e09dd00.mp3?p=f
+AmigaVibes Podcast #74 - Interstate in demoscene	MP3	podcast-74-interstate-in-demoscene/enclosure.3654e3a32b33856858609b9c7440674a2fa9d270aba8949a973a01c035112fb1.mp3?p=f
+AmigaVibes Podcast #74 B - A Birdie Story	MP3	podcast-74-b-a-birdie-story/enclosure.eb11f08a7e3882dc363262ee658a063fd82b1d1362a6d0989c0c38573924f0dc.mp3?p=f
+AmigaVibes Podcast #75 - A tribute to Tarzin	MP3	podcast-75-a-tribute-to-tarzin/enclosure.4d9d4de806016df0b6523d832df32c6d4bc453d72944d259a235eb8f1bbfc290.mp3?p=f
+AmigaVibes Podcast #75 B - A light in the Dark	MP3	podcast-75-b-a-light-in-the-dark/enclosure.f3d4e254a2c5435b7e3c927be861dc6b326c9a1c3197611f17d5d94d5296100a.mp3?p=f
+AmigaVibes Podcast #76 - Quinzomania	MP3	podcast-76-quinzomania/enclosure.330dc0b949f09a850048933c9d699ba2215bcd9fd3158e3e228cc2c9fafd0390.mp3?p=f
+AmigaVibes Podcast #77 - The Vampire (V4) Chronicles	MP3	podcast-77-the-vampire-v4-chronicles/enclosure.535cc624e26399d155467d585d24146e9018cfb80fcd646ee734434f151dd95e.mp3?p=f
+AmigaVibes Podcast #78 - Unstoppable	MP3	podcast-78-unstoppable/enclosure.39fd9dfecaaf77163e3900de92cb2ccea69e79ca1eb3b7fcbf2792cb41b2ab2d.mp3?p=f
+AmigaVibes Podcast #79 - The Last Ever Sundown	MP3	podcast-79-the-last-ever-sundown/enclosure.8c02abda34db792b0520b85e6210b0408cc421c9d5a7e9351b28a1fec5a78b5f.mp3?p=f
+AmigaVibes Podcast #80 - A star is born !	MP3	podcast-80-a-star-is-born/enclosure.b35ce6ba10ca226369086806ec0a13b505f502e5a4374ef14ebbea267e13cc21.mp3?p=f
+AmigaVibes Podcast #81 - Oups Sorry !	MP3	podcast-81-oups-sorry/enclosure.dd9d156ebdbc8724ced89d7e31f211f56097e97bd8654e58959aa575d3f67961.mp3?p=f
+AmigaVibes Podcast #82 - Arok auround the Clock	MP3	podcast-82-arok-auround-the-clock/enclosure.d368612423bbde12971d40bdbf022700975b530073be145e8c49873d43bbc959.mp3?p=f
+AmigaVibes Podcast #83 - Nordlicht is forever sixteen	MP3	podcast-83-nordlicht-is-forever-sixteen/enclosure.ee3a3053ae7cc513eeb624b03532623c2044319b4057cca95732feca5ed64fe6.mp3?p=f
+AmigaVibes Podcast #84 - Unique is on Amiga is Unique	MP3	podcast-84-unique-is-on-amiga-is-unique/enclosure.7283d665569b893688d1ee615504753ebeacff263169e7be726a6bb85b089549.mp3?p=f
+AmigaVibes Podcast #85 - Deconfinement Day	MP3	podcast-85-deconfinement-day/enclosure.e565a2be690394e981f2d141a222f7266f6919ef6b2ec9e7fb35d44786f51f6c.mp3?p=f
+AmigaVibes Podcast #86 - Instanssii is the new Oomph	MP3	podcast-86-instanssii-is-the-new-oomph/enclosure.873ee242cc2a2921af485bbf8f1f0f63f3933b441a5e711cf4a7a0fa39e3b47a.mp3?p=f
+AmigaVibes Podcast #87 - One day one demo-end of the year 2019	MP3	podcast-87-one-day-one-demo-end-of-the-year-2019/enclosure.e6e849beb873f8085ba7b45d56d6d5ffe728c803fcca23e740e5f26486971a9c.mp3?p=f
+AmigaVibes Podcast #88 - End of this Fxxxing World	MP3	podcast-88-end-of-this-fxxxing-world/enclosure.ac4b25462ae6ac730b6d2438558e64c7536dc549efb8f1bfba0023a94dd316a0.mp3?p=f
+AmigaVibes Podcast #89 - A little selection of Awards 2016	MP3	podcast-89-a-little-selection-of-awards-2016/enclosure.9e94360ae6a2ad2eecee3efee2781a873cf55c403b21e69ea238c5ee3aa11573.mp3?p=f
+AmigaVibes Podcast #90 - Into the Vortex	MP3	podcast-90-into-the-vortex/enclosure.ec640a0c229235805864c677a16d8eb6672185e2cb327896146310d0db6d2892.mp3?p=f
+AmigaVibes Podcast #91 - Boring Sunday	MP3	podcast-91-boring-sunday/enclosure.6cd1b00ae5991385378ec60c679d6312c6d635329e64f88b82b7fc8e460ec023.mp3?p=f
+AmigaVibes Podcast #92 - Hot Summer	MP3	podcast-92-hot-summer/enclosure.825c781a535673b027b2d97e4337d4e4b10f8186f436742f680dc2046d0da43d.mp3?p=f
+AmigaVibes Podcast #93 - Listening to the Assembly	MP3	podcast-93-listening-to-the-assembly/enclosure.742898b315bb462701c71e6f64b3260d81890a858510253261996d7bafb55369.mp3?p=f
+AmigaVibes Podcast #94 - Evoke some Wishes	MP3	podcast-94-evoke-some-wishes/enclosure.84a986f7e9173ee578003d97797a2d292295223bce88873564753daf1c6950cd.mp3?p=f
+AmigaVibes Podcast #95 - Switched On TG16	MP3	podcast-95-switched-on-tg16/enclosure.5ca74a9d0f627970774a7c103972ff27e52623bf9ad2c6a11f5aaf007d04dfa4.mp3?p=f
+AmigaVibes Podcast #96 - The Showdown (Function 2023)	MP3	podcast-96-the-showdown-function-2023/enclosure.5731fb17c027250601ce7953e01cdf5c083e6d997eed7d2b1211abbbc5e00a46.mp3?p=f
+AmigaVibes Podcast #97 - Amiga Rulezzz in Shadow party 2k25	MP3	podcast-97-amiga-rulezzz-in-shadow-party-2k25/enclosure.ff0b20a78ed38b7a809ae55a61fa671301bd0f852b645b2d0229dbac593395c2.mp3?p=f
+AmigaVibes Podcast #98 - Floppy Disk	MP3	podcast-98-floppy-disk/enclosure.ba826a4022ea6cb08f3c8e722a9fd41b43ecbd63831688564ed889f73d655be7.mp3?p=f
+AmigaVibes Podcast #99 - C64 a little bit in Shadow party 2k25	MP3	podcast-99-c64-a-little-bit-in-shadow-party-2k25/enclosure.89bb3071c2cd47eed5502a924e5371a31cb3126f025df1c461781bbb75bc1c8e.mp3?p=f
+AmigaVibes Podcast #100 - The Meteoriks Shadows	MP3	podcast-100-the-meteoriks-shadows/enclosure.3445ff4c8998a96c42f6f3a58e0595758b4ae5b838ef3c55030e69815e890dd7.mp3?p=f
+AmigaVibes Podcast #101 - The 24 Shadows Assembly	MP3	podcast-101-the-24-shadows-assembly/enclosure.f3192f473b2e9773f4a8d7450bf1b174028469af46d18d7b49bffd8967c19073.mp3?p=f
+AmigaVibes Podcast #102 - The Shadow Revision XXV	MP3	podcast-102-the-shadow-revision-xxv/enclosure.956fc4fb57a7e3609c75cf153faa9f76cfb100f2f1bc412443d6a4246a55ffb3.mp3?p=f
+AmigaVibes Podcast #103 - The Assembly Summer Party XXV	MP3	podcast-103-the-assembly-summer-party-xxv/enclosure.4cabeddcb24b66c54ce852df65c7d01709420b140c7f9a892a301f85253b9e1e.mp3?p=f
+AmigaVibes Podcast #104 - Another shot of Demoscene energy	MP3	podcast-104-another-shot-of-demoscene-energy/enclosure.1aca90298e2551ccd40d33877f39fab5e50c0ff6bb4037aba4fd009b349ee329.mp3?p=f
