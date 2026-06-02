@@ -7,7 +7,7 @@
 -- the intel chipmachine stopped at 23 (November 2017)
 -- after 8+ years, May 2026 24 is a major update
 -- to almost all databases bringing ~25% songs
-VERSION = 24;
+VERSION = 25;
 
 DB = {
 {

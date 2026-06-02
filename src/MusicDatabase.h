@@ -285,6 +285,7 @@ private:
     static constexpr int PLAYLIST_INDEX = 0x10000000;
 
     RemoteLoader& remoteLoader;
+    utils::path workDir;
 
     SearchIndex composerIndex;
     SearchIndex titleIndex;

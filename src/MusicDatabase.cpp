@@ -485,9 +485,12 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
     if (source == "") source = screen_source;
 
     db.exec("BEGIN TRANSACTION");
+    // Store the raw relative local_dir from vars so the DB is portable across
+    // install locations (dev tree, /Applications, etc.). generateIndex()
+    // resolves it against the current workDir at runtime.
     db.exec("INSERT INTO collection (name, id, url, localdir, description) "
             "VALUES (?, ?, ?, ?, ?)",
-            name, id, source, local_dir.string(), description);
+            name, id, source, vars["local_dir"], description);
     auto collection_id = db.last_rowid();
     dontIndex.resize(collection_id + 1);
     dontIndex[collection_id] = 0;
@@ -1098,6 +1101,11 @@ void MusicDatabase::generateIndex()
         "SELECT ROWID,id,url,localdir FROM collection");
     while (q.step()) {
         auto c = q.get<Collection>();
+        // Resolve relative local_dir against the current resource root so the
+        // app works correctly regardless of where it was indexed (dev tree vs
+        // /Applications bundle).
+        if (!c.local_dir.empty() && !c.local_dir.is_absolute())
+            c.local_dir = workDir / c.local_dir;
         // NOTE c.name is really c.id
         loader.registerSource(c.name, c.url, c.local_dir.string());
     }
@@ -1235,6 +1243,7 @@ void MusicDatabase::generateIndex()
 
 void MusicDatabase::initFromLuaAsync(utils::path const& workDir)
 {
+    this->workDir = workDir;
     indexing = true;
     initFuture = std::async(std::launch::async, [=]() {
         std::lock_guard lock{ dbMutex };
@@ -1247,6 +1256,7 @@ void MusicDatabase::initFromLuaAsync(utils::path const& workDir)
 
 bool MusicDatabase::initFromLua(utils::path const& workDir)
 {
+    this->workDir = workDir;
     auto playlistPath = Environment::getConfigDir() / "playlists";
     utils::create_directory(playlistPath);
     bool favFound = false;
