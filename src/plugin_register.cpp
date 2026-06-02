@@ -1,6 +1,6 @@
 #include <vector>
 
-/* vice uad ffmpeg -- TOODOO ADD THESE ONCE YOU FIGURE OUT HOW */
+/* vice bridge, ffmpeg and uade are now integrated */
 
 extern "C" {
     void adplugin_register();      // Adlib / OPL

@@ -25,9 +25,6 @@ console errors:
 
 other:
 ======
-- fork https://github.com/myon98/98fmplayer.git and point to that in README
-- what is the relation between apone and musicplayer/apone? can we remove one
-- remove obsolete vice completely 
 - remove some other dead / unused files?
 - add a test file for EVERY supported extension
 
@@ -35,6 +32,7 @@ product/process
 ===============
 - use some IDE (with integrated AI?) for development?
 - once 1.1 is out: email the author, post on linkedin retro groups
+- cleanup cmtest
 
 extension support
 =================
