@@ -72,15 +72,17 @@ To authorize and run the application on your Mac, follow these steps:
 
 ## Building for Apple Silicon (ALPHA/WIP, see TOODOO.txt)
 
-	# mkdir chipmachine-as ; cd chipmachine-as
-	# git clone https://github.com/mihailod/chipmachine.git
-	# git clone https://github.com/mihailod/apone.git
-	# git clone https://github.com/mihailod/musicplayer.git
-	# git clone https://github.com/mihailod/vice310.git
-	# git clone https://github.com/mihailod/98fmplayer.git
-	# mkdir build ; cd build
-	# cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
-	# ninja
+```bash
+mkdir chipmachine-as && cd chipmachine-as
+git clone https://github.com/mihailod/chipmachine.git
+git clone https://github.com/mihailod/apone.git
+git clone https://github.com/mihailod/musicplayer.git
+git clone https://github.com/mihailod/vice310.git
+git clone https://github.com/mihailod/98fmplayer.git
+mkdir build && cd build
+cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
+ninja
+```
 
 * Running the app from the build folder: ./chipmachine
 * Packaging the app: chipmachine/package_ap.sh
