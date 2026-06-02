@@ -77,7 +77,7 @@ To authorize and run the application on your Mac, follow these steps:
 	# git clone https://github.com/mihailod/apone.git
 	# git clone https://github.com/mihailod/musicplayer.git
 	# git clone https://github.com/mihailod/vice310.git
-	# git clone https://github.com/myon98/98fmplayer.git
+	# git clone https://github.com/mihailod/98fmplayer.git
 	# mkdir build ; cd build
 	# cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 	# ninja
