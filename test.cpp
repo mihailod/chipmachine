@@ -13,14 +13,18 @@ namespace di = boost::di;
 #include <coreutils/log.h>
 #include <musicplayer/src/chipplugin.h>
 #include <musicplayer/src/plugins/plugins.h>
+#include <musicplayer/src/plugins/uadeplugin/UADEPlugin.h>
 
 #include <algorithm>
 #include <array>
 #include <cstdlib>
+#include <filesystem>
+#include <fstream>
 #include <numeric>
 #include <string>
 #include <unordered_map>
 #include <set>
+namespace fs = std::filesystem;
 
 TEST_CASE("modutils", "[machine]")
 {
@@ -207,6 +211,69 @@ TEST_CASE("UADE Richard Joseph sng", "[music]")
     // Non-silent output means the .ins samples were located and loaded.
     REQUIRE(energy != 0);
 }
+TEST_CASE("UADE YMST secondary files", "[uade]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::UADEPlugin plugin{"data"};
+    auto tmp = fs::temp_directory_path();
+
+    SECTION("extracts replay name embedded in YMST header")
+    {
+        auto path = tmp / "test_replay.ymst";
+        {
+            std::ofstream f(path, std::ios::binary);
+            std::string content = "YMST" + std::string(252, '\x00') + "YM.BIG_replay\x00";
+            f.write(content.data(), content.size());
+        }
+        auto files = plugin.getSecondaryFiles(path.string());
+        REQUIRE(files.size() == 1);
+        REQUIRE(files[0] == "ym.big_replay");
+        fs::remove(path);
+    }
+
+    SECTION("handles variant replay names correctly")
+    {
+        auto path = tmp / "test_amberstar.ymst";
+        {
+            std::ofstream f(path, std::ios::binary);
+            std::string content = "YMST" + std::string(252, '\x00') + "YM.AMBERSTAR_replay\x00";
+            f.write(content.data(), content.size());
+        }
+        auto files = plugin.getSecondaryFiles(path.string());
+        REQUIRE(files.size() == 1);
+        REQUIRE(files[0] == "ym.amberstar_replay");
+        fs::remove(path);
+    }
+
+    SECTION("returns empty for YMST without embedded replay name")
+    {
+        auto path = tmp / "test_no_replay.ymst";
+        {
+            std::ofstream f(path, std::ios::binary);
+            std::string content = "YMST" + std::string(64, '\x00');
+            f.write(content.data(), content.size());
+        }
+        auto files = plugin.getSecondaryFiles(path.string());
+        REQUIRE(files.empty());
+        fs::remove(path);
+    }
+
+    SECTION("returns empty for empty YMST file without crash")
+    {
+        auto path = tmp / "test_empty.ymst";
+        { std::ofstream f(path, std::ios::binary); }
+        auto files = plugin.getSecondaryFiles(path.string());
+        REQUIRE(files.empty());
+        fs::remove(path);
+    }
+
+    SECTION("returns empty for nonexistent YMST file without crash")
+    {
+        auto files = plugin.getSecondaryFiles("/nonexistent/path/song.ymst");
+        REQUIRE(files.empty());
+    }
+}
+
 TEST_CASE("OpenMPT", "[music]") { testPlugin<musix::OpenMPTPlugin>("testmus/openmpt", ""); }
 TEST_CASE("GSF", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib"); }
 TEST_CASE("NDS", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib"); }
