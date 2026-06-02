@@ -15,8 +15,11 @@ namespace chipmachine {
 
 MusicPlayerList::~MusicPlayerList()
 {
-    cancelStreaming();
+    // Quit the FIFOs first so any thread blocked in sfifo->put() (e.g. the curl
+    // streaming thread) is immediately unblocked. cancelStreaming() and the
+    // playerThread join both complete quickly after this.
     mp.quit();
+    cancelStreaming();
     quitThread = true;
     if (playerThread.joinable())
         playerThread.join();
@@ -508,11 +511,21 @@ void MusicPlayerList::playCurrent()
         if (mp.streamFile("dummy.mp3")) {
             SET_STATE(Playstarted);
             auto sfifo = mp.getStreamFifo();
-            auto self = shared_from_this();
+            // Use weak_ptr instead of shared_ptr so the WebJob lambda does NOT
+            // keep MusicPlayerList alive. A shared_from_this() here would create
+            // a reference cycle: MusicPlayerList → RemoteLoader → Web → WebJob →
+            // lambda → shared_ptr<MusicPlayerList>. When the DI injector destroys
+            // MusicPlayerList the ref count would stay at 1 (owned by the lambda),
+            // so ~MusicPlayerList() would never run, stream_fifo would never be
+            // quit, the curl thread would stay blocked in sfifo->put() holding
+            // Web::m, and Web::~Web() (called next) would deadlock on that mutex.
+            auto weakSelf = weak_from_this();
             remoteLoader.stream(
                 currentInfo.path,
-                [self, sfifo](int what, const uint8_t* ptr, int n) -> bool {
+                [weakSelf, sfifo](int what, const uint8_t* ptr, int n) -> bool {
                     if (sfifo->isQuitting()) return false;
+                    auto self = weakSelf.lock();
+                    if (!self) return false;
                     if (what == RemoteLoader::PARAMETER) {
                         self->mp.setParameter((char*)ptr, n);
                     } else if (what == RemoteLoader::DATA) {

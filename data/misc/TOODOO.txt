@@ -5,7 +5,6 @@ data
 
 crashes:
 ========
-P0 still sometimes chokes on quit when playing
 
 could not play song:
 ===================
