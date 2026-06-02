@@ -97,7 +97,7 @@ ninja
 * *ESC* = Clear search field
 * *SHIFT-ESC* = Quit
 * *F7* = Toggle Favorite
-* Type _shoutacst_ to see the radio-stations
+* Type _shoutcast_ to see the radio-stations
 
 ## Data Sources
 
