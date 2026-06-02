@@ -48,6 +48,8 @@ endif()
 # Subproject Paths
 set(AP1_ROOT ../apone CACHE PATH "Where apone is checked out")
 set(MUSICPLAYER ../musicplayer CACHE PATH "Where musicplayer is checked out")
+set(FMP98_ROOT ../../98fmplayer CACHE PATH "Where 98fmplayer is checked out")
+get_filename_component(FMP98_ROOT "${FMP98_ROOT}" ABSOLUTE BASE_DIR "${CMAKE_SOURCE_DIR}")
 get_filename_component(VICE_ROOT "${CMAKE_SOURCE_DIR}/../vice310" ABSOLUTE)
 set(VICE_ROOT ${VICE_ROOT} CACHE PATH "Where vice is checked out")
 
