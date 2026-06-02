@@ -186,6 +186,35 @@ TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "sm
 // SAME directory as the module, so the .sng must be played in place (not copied
 // to a temp dir, which would lose the .ins and break sample loading). This test
 // fails if that regression is reintroduced.
+// Regression test for Pumatracker (.puma) files.
+// UADE's eagleplayer.conf uses prefixes=puma, so files stored as "name.puma"
+// (modland convention) must be renamed to "puma.name" before uade_play().
+// Without that rename the format goes unrecognised and plays silence.
+TEST_CASE("UADE Pumatracker puma", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::UADEPlugin plugin{ "data" };
+
+    std::string const puma = "testmus/uade/toki-5.puma";
+    REQUIRE(plugin.canHandle(puma));
+
+    auto* player = plugin.fromFile(puma);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 TEST_CASE("UADE Richard Joseph sng", "[music]")
 {
     logging::setLevel(logging::Level::Warning);

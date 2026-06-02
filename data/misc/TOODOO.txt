@@ -2,6 +2,7 @@ data
 ====
 - (minor) radio screenshots missing for rainwave (favicon issue)
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
+- (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
 
 crashes:
 ========
@@ -12,11 +13,10 @@ could not play song:
 
 could not load file
 ===================
-* (also on intel!) star trek tactical
+
 
 silent playback
 ===============
-* (also on intel) elfforest 
 * (file not displayed on intel) delta patrol, youtube
 
 console errors:
