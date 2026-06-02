@@ -879,6 +879,10 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                 lowestDist = ld;
             }
         }
+        if (lowestDist > static_cast<int>(baseName.length())) {
+            shot = "";
+            LOGD("Screenshot match too weak (%d), skipping", lowestDist);
+        }
     }
     if (shot != "") {
         std::string prefix;
