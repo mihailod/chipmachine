@@ -17,6 +17,7 @@ extern "C" {
     void openmptplugin_register(); // Trackers (MOD, XM, IT, S3M)
     void rsnplugin_register();     // Rar-packaged SNES
     void s98plugin_register();     // PC-98
+    void fmpplugin_register();     // PC-98 FMP
     void sc68plugin_register();    // Atari ST
     void stsoundplugin_register(); // Atari ST (YM2149)
     void tedplugin_register();     // Commodore Plus/4
@@ -42,6 +43,7 @@ void register_plugins() {
     openmptplugin_register();
     rsnplugin_register();
     s98plugin_register();
+    fmpplugin_register();
     sc68plugin_register();
     stsoundplugin_register();
     tedplugin_register();

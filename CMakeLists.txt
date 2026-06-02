@@ -127,7 +127,7 @@ set(MUSICPLAYER_PLUGINS
     openmptplugin htplugin heplugin ndsplugin gmeplugin sc68plugin
     usfplugin stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
     ayflyplugin mdxplugin s98plugin aoplugin gsfplugin tedplugin v2plugin
-    ffmpegplugin uadeplugin
+    ffmpegplugin uadeplugin fmpplugin
 )
 add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
 add_subdirectory(${MUSICPLAYER}/src/psf psf)
@@ -296,7 +296,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     set(SILENT_TARGETS
         vicepluginbridge ndsplugin gsfplugin usfplugin heplugin adplugin
         aoplugin v2plugin unrar coreutils lua crypto tedplugin gmeplugin
-        openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin ffmpegplugin uadeplugin rsnplugin
+        openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin ffmpegplugin uadeplugin rsnplugin fmpplugin
     )
     foreach(target_item ${SILENT_TARGETS})
         if(TARGET ${target_item})
