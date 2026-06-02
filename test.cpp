@@ -16,6 +16,7 @@ namespace di = boost::di;
 
 #include <algorithm>
 #include <array>
+#include <cstdlib>
 #include <numeric>
 #include <string>
 #include <unordered_map>
@@ -174,6 +175,38 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
 TEST_CASE("GME", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme/working", ""); }
 TEST_CASE("AdPlug", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", ".rol", "data"); }
 TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
+
+// Regression test for two-file Richard Joseph songs (.sng + .ins).
+// "cannon fodder (intro).sng" needs its companion ".ins" for any audio. The
+// RichardJoseph Amiga player loads samples by swapping ".sng" -> ".INS" in the
+// SAME directory as the module, so the .sng must be played in place (not copied
+// to a temp dir, which would lose the .ins and break sample loading). This test
+// fails if that regression is reintroduced.
+TEST_CASE("UADE Richard Joseph sng", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::UADEPlugin plugin{ "data" };
+
+    std::string const sng = "testmus/uade/cannon fodder (intro).sng";
+    REQUIRE(plugin.canHandle(sng));
+
+    auto* player = plugin.fromFile(sng);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    // Non-silent output means the .ins samples were located and loaded.
+    REQUIRE(energy != 0);
+}
 TEST_CASE("OpenMPT", "[music]") { testPlugin<musix::OpenMPTPlugin>("testmus/openmpt", ""); }
 TEST_CASE("GSF", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib"); }
 TEST_CASE("NDS", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib"); }
