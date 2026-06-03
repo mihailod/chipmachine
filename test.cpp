@@ -179,6 +179,8 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
 TEST_CASE("GME", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme/working", ""); }
 TEST_CASE("AdPlug", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", ".rol", "data"); }
 TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
+TEST_CASE("PxTone", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/ptcop", ""); }
+TEST_CASE("PxTune", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/pttune", ""); }
 
 // Regression test for AdLib Tracker 2 "A2M version 11" files, played by the
 // newer a2m-v2 loader (Ca2mv2Player). The AdPlugin constructor calls

@@ -26,6 +26,7 @@ extern "C" {
     void vicepluginbridge_register();
     void ffmpegplugin_register();
     void uadeplugin_register();
+    void pxtoneplugin_register();
 }
 
 void register_plugins() {
@@ -52,4 +53,5 @@ void register_plugins() {
     vicepluginbridge_register();
     ffmpegplugin_register();
     uadeplugin_register();
+    pxtoneplugin_register();
 }

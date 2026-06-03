@@ -127,7 +127,7 @@ set(MUSICPLAYER_PLUGINS
     openmptplugin htplugin heplugin ndsplugin gmeplugin sc68plugin
     usfplugin stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
     ayflyplugin mdxplugin s98plugin aoplugin gsfplugin tedplugin v2plugin
-    ffmpegplugin uadeplugin fmpplugin
+    ffmpegplugin uadeplugin fmpplugin pxtoneplugin
 )
 add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
 add_subdirectory(${MUSICPLAYER}/src/psf psf)

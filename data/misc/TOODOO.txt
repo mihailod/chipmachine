@@ -3,6 +3,7 @@ data
 - (minor) radio screenshots missing for rainwave (favicon issue)
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
+- in general genuinely bad or missing files should be removed from the index
 
 crashes:
 ========
@@ -42,7 +43,7 @@ extension support
 Unsupported extensions in the database (≥10 files, .gz excluded)
 
 Count	Ext	Format	Difficulty	Notes
-1,783	.ptcop	PxTone Collage (Pixel/Cave Story)	Moderate	Official C++ library released by Pixel on GitHub (pxtone); needs a new plugin wrapping it
+1,783	.ptcop DONE	PxTone Collage (Pixel/Cave Story)	Moderate	Official C++ library released by Pixel on GitHub (pxtone); needs a new plugin wrapping it
 1,446	.str	Stereo Sidplayer (C64)	Moderate	Two SIDs playing in stereo; VICE can load them, VicePlugin would need extension
 1,104	.pvi	FMP/Euphony PCM sample bank (PC-98)	N/A	Auxiliary sample bank for .eup songs, not a standalone track
 657	.mmd3	OctaMED MMD3 (Amiga)	Moderate	MMD0/1/2 work via UADE; MMD3 is the enhanced version — UADE or libopenmpt may already decode it but the extension is simply not listed
@@ -53,7 +54,7 @@ Count	Ext	Format	Difficulty	Notes
 385	.sgc	Sega Master System / Game Gear	Easy	GME already supports SGC; just add "sgc" to GMEPlugin's supported_ext set
 377	.org	Organya / Cave Story OrgMaker	Moderate	Simple proprietary format; multiple open-source playback implementations on GitHub (organya, org-player)
 325	.pmb	Euphony PCM sample bank (PC-98)	N/A	Auxiliary file for .eup songs, not standalone
-315	.pttune	PxTone (older format, same family)	Moderate	Same pxtone library handles both .ptcop and .pttune
+315	.pttune DONE	PxTone (older format, same family)	Moderate	Same pxtone library handles both .ptcop and .pttune
 296	.mbm	MoonBlaster (MSX)	Hard	MSX sample-based tracker; needs .mbk sample banks alongside; MSX emulation required; no ready C library found
 272	.bgm	MuSICA (PC-98)	Hard	Japanese PC-98 music driver; very niche; no known open-source decoder outside of full PC-98 emulators
 246	.sunvox	SunVox modular synth	Moderate	Official free SDK (sunvox_lib) with C API from warmplace.ru; well-documented
