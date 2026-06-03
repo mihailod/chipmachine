@@ -47,19 +47,18 @@ DONE 1,783	.ptcop 	PxTone Collage (Pixel/Cave Story)	Moderate	Official C++ libra
 
 DONE 1,446	.str	Stereo Sidplayer (C64)	Moderate	Two SIDs playing in stereo; VICE can load them, VicePlugin would need extension
 
-1,104	.pvi	FMP/Euphony PCM sample bank (PC-98)	N/A	Auxiliary sample bank for .eup songs, not a standalone track
-
-657	.mmd3	OctaMED MMD3 (Amiga)	Moderate	MMD0/1/2 work via UADE; MMD3 is the enhanced version — UADE or libopenmpt may already decode it but the extension is simply not listed
+DONE 657	.mmd3	OctaMED MMD3 (Amiga)	Moderate	MMD0/1/2 work via UADE; MMD3 is the enhanced version — UADE or libopenmpt may already decode it but the extension is simply not listed
 
 610	.mgs	MGSDRV (MSX)	Hard	MSX music driver format; playback requires MSX hardware emulation; some open-source players exist (mgsdrv replayer) but no ready-made C library
 
 535	.psy	Psycle tracker	Hard	Open-source tracker (psycle.sf.net) but the file format is complex and there's no standalone decode library
 
 501	.eup	Euphony (PC-98 OPL/ADPCM)	Moderate	FMPPlugin exists and handles .opi/.ovi/.ozi; Euphony (.eup) is a related but distinct PC-98 format — open-source players exist on Japanese sites
+1,104	.pvi	FMP/Euphony PCM sample bank (PC-98)	N/A	Auxiliary sample bank for .eup songs, not a standalone track
 
 DONE 427	.sng Various (UADE disabled)	Easy	Deliberately commented out in UADEPlugin (/*"sng"*/); investigate why — likely a collision with another plugin — then either re-enable or route to the correct one
 
-385	.sgc	Sega Master System / Game Gear	Easy	GME already supports SGC; just add "sgc" to GMEPlugin's supported_ext set
+385	.sgc	Sega Master System / Game Gear	NEW EMU NEEDED	This vendored game-music-emu has no SGC core (no Sgc_Emu, no SGC in gme_type_list/CMake). Newer libgme supports it; would need to vendor that core.
 
 377	.org	Organya / Cave Story OrgMaker	Moderate	Simple proprietary format; multiple open-source playback implementations on GitHub (organya, org-player)
 
@@ -87,7 +86,7 @@ DONE 315	.pttune PxTone (older format, same family)	Moderate	Same pxtone library
 
 169	.opx	OPLLDRV (PC-98 OPL)	Hard	PC-98 OPL music driver; related to FMP ecosystem but distinct; no known standalone C library
 
-168	.wsr	WonderSwan sound	Easy	GME already supports WSR; just add "wsr" to GMEPlugin's supported_ext set
+168	.wsr	WonderSwan sound	NEW EMU NEEDED	This vendored game-music-emu has no WonderSwan core. Only newer libgme/separate cores support .wsr; would need to vendor one.
 
 152	.xrns	Renoise (modern)	Hard	Proprietary zipped XML format; no open-source decoder; Renoise SDK is closed
 

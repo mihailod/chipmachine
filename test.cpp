@@ -182,6 +182,39 @@ TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "sm
 TEST_CASE("PxTone", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/ptcop", ""); }
 TEST_CASE("PxTune", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/pttune", ""); }
 
+// Regression test for OctaMED MMD3 routing. libopenmpt's MED loader decodes the
+// whole MMD0..MMD3 family by content, but Tables.cpp only advertises the "med"
+// extension, so openmpt_is_extension_supported("mmd3") is false. UADE already
+// claims mmd0/mmd1/mmd2 (and registers later, so first-match routing leaves them
+// with UADE), but nothing claimed ".mmd3" at all -- the file was rejected by
+// every plugin. OpenMPTPlugin::canHandle now maps ".mmd3" in explicitly. This
+// test fails if that mapping is removed (canHandle goes false) or if libopenmpt
+// stops decoding the format (no audio).
+TEST_CASE("OpenMPT MMD3 plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::OpenMPTPlugin plugin;
+
+    std::string const mmd3 = "testmus/openmpt/straight-into-my-soul.mmd3";
+    REQUIRE(plugin.canHandle(mmd3));
+
+    auto* player = plugin.fromFile(mmd3);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // Regression test for AdLib Tracker 2 "A2M version 11" files, played by the
 // newer a2m-v2 loader (Ca2mv2Player). The AdPlugin constructor calls
 // CPlayer::songlength(), which plays the whole tune to the end on a throwaway
