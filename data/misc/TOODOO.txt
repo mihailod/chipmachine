@@ -9,6 +9,7 @@ crashes:
 
 could not play song:
 ===================
+* amegas encore
 
 
 could not load file
@@ -24,13 +25,16 @@ console errors:
 
 other:
 ======
+- test:
+Trying testmus/sc68/eob - intro.snd
+[SC68Plugin.cpp:70] Verify mem failed
+#### Playing testmus/sc68/eob - intro.snd : FAILED
 - remove some other dead / unused files?
 - add a test file for EVERY supported extension
 
 product/process
 ===============
 - use some IDE (with integrated AI?) for development?
-- once 1.1 is out: email the author, post on linkedin retro groups
 - cleanup cmtest
 
 extension support

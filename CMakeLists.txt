@@ -197,12 +197,6 @@ add_custom_target(chipmachine.doc_files SOURCES ${DOC_FILES})
 add_custom_target(chipmachine.script_files SOURCES ${SCRIPT_FILES})
 
 # ---------------------------------------------------------------------------
-# Python Native Environment Discovery
-# ---------------------------------------------------------------------------
-find_package(Python3 COMPONENTS Development REQUIRED)
-include_directories(${Python3_INCLUDE_DIRS})
-
-# ---------------------------------------------------------------------------
 # Targets Execution definitions (Direct file-level dependency tracking)
 # ---------------------------------------------------------------------------
 
@@ -248,7 +242,6 @@ target_link_libraries(chipmachine PRIVATE
     avformat
     avutil
     swresample
-    ${Python3_LIBRARIES}
 )
 target_compile_definitions(chipmachine PRIVATE -DAPP_NAME=chipmachine)
 
@@ -266,8 +259,7 @@ if(NOT WIN32)
         avformat
         avutil
         swresample
-        ${Python3_LIBRARIES}
-    )
+        )
 endif()
 
 add_executable(mksonglist mksonglist/mksonglist.cpp src/SongFileIdentifier.cpp)
@@ -286,7 +278,6 @@ target_link_libraries(cmtest PRIVATE
     avformat
     avutil
     swresample
-    ${Python3_LIBRARIES}
 )
 target_include_directories(cmtest PRIVATE ${APONE}/mods)
 target_compile_definitions(cmtest PRIVATE -DTESTING)

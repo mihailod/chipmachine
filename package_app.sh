@@ -2,7 +2,9 @@
 set -e
 
 # Establish precise absolute paths independent of execution context
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# ${0:A:h} is zsh-native: :A resolves to absolute path, :h strips the filename.
+# BASH_SOURCE[0] is a bash-ism and is undefined (empty) in zsh — do not use it.
+SCRIPT_DIR="${0:A:h}"
 CHIPMACHINE_DIR="${SCRIPT_DIR}"
 WORKSPACE_ROOT="$(cd "${CHIPMACHINE_DIR}/.." && pwd)"
 BUILD_DIR="${WORKSPACE_ROOT}/build"
@@ -94,13 +96,37 @@ if [ -f "/opt/homebrew/etc/openssl@3/cert.pem" ]; then
     cp -L "/opt/homebrew/etc/openssl@3/cert.pem" "${RESOURCES_DIR}/"
 fi
 
+# Destination for the yt-dlp PyInstaller onedir tree.
+#
+# CRITICAL: it must live in Contents/Resources/, NOT Contents/MacOS/.
+# Apple reserves Contents/MacOS/ for Mach-O executables only. The PyInstaller
+# onedir payload is hundreds of .py files plus *.dist-info directories;
+# codesign treats EVERY file under MacOS/ as nested code and aborts the whole
+# bundle signature ("code object is not signed at all" / "bundle format
+# unrecognized"). Under Resources/ those same files are sealed as data and the
+# bundle signs cleanly. The path Contents/Resources/bin/ytdlp is already on the
+# runtime PATH: main.cpp adds work_dir/bin/ytdlp (work_dir == Resources in
+# bundle mode), so no C++ change is required.
+YTDLP_DEST="${RESOURCES_DIR}/bin/ytdlp"
+
 if [ -d "${CHIPMACHINE_DIR}/bin" ]; then
-    echo "-> Packaging helper binaries into bundle..."
+    echo "-> Packaging helper binaries into bundle (arm64 only)..."
+    # ffmpeg: single arm64 Mach-O executable. A lone binary is legal in MacOS/
+    # and signs without issue; main.cpp finds it via exeDir on PATH.
     cp -L "${CHIPMACHINE_DIR}/bin/ffmpeg" "${MAC_OS_DIR}/"
-    cp -L "${CHIPMACHINE_DIR}/bin/yt-dlp" "${MAC_OS_DIR}/"
-    cp -P "${CHIPMACHINE_DIR}/bin/youtube-dl" "${MAC_OS_DIR}/"
     chmod +x "${MAC_OS_DIR}/ffmpeg"
-    chmod +x "${MAC_OS_DIR}/yt-dlp"
+
+    # yt-dlp: PyInstaller *onedir* bundle (fast ~0.1s cold start). Copy the
+    # whole directory (yt-dlp exe + _internal/) into Contents/Resources/bin/ytdlp.
+    if [ -d "${CHIPMACHINE_DIR}/bin/ytdlp" ]; then
+        mkdir -p "${RESOURCES_DIR}/bin"
+        rm -rf "${YTDLP_DEST}"
+        cp -R "${CHIPMACHINE_DIR}/bin/ytdlp" "${YTDLP_DEST}"
+        chmod +x "${YTDLP_DEST}/yt-dlp"
+    else
+        echo "WARNING: bin/ytdlp onedir not found. YouTube playback will be slow/broken."
+    fi
+
 else
     echo "WARNING: bin folder not found at ${CHIPMACHINE_DIR}/bin. YouTube playback will fail."
 fi
@@ -191,15 +217,34 @@ discover_and_patch() {
 }
 
 for EXE in "${MAC_OS_DIR}/"*; do
-    if [ -x "$EXE" ] && [ ! -L "$EXE" ]; then
+    if [ -f "$EXE" ] && [ -x "$EXE" ] && [ ! -L "$EXE" ]; then
         discover_and_patch "$EXE"
     fi
 done
 
 echo "-> Patching compiled Python native extensions inside bundle..."
-find "${RESOURCES_DIR}/data/python_runtime" -type f \( -name "*.so" -o -name "*.dylib" -o -name "*.bundle" \) | while read -r PYTHON_EXT; do
-    discover_and_patch "$PYTHON_EXT"
-done
+if [ -d "${RESOURCES_DIR}/data/python_runtime" ]; then
+    find "${RESOURCES_DIR}/data/python_runtime" -type f \( -name "*.so" -o -name "*.dylib" -o -name "*.bundle" \) | while read -r PYTHON_EXT; do
+        discover_and_patch "$PYTHON_EXT"
+    done
+fi
+
+# 5b. Verify ALL bundled Mach-O binaries are pure arm64 (no Intel slices).
+# Runs after dylib bundling so every copied library is covered — not just
+# the helper executables that existed before step 5. Scans both Contents/MacOS/
+# (main exe, ffmpeg, bundled dylibs) and the yt-dlp tree in Resources/bin
+# (its yt-dlp exe + every *.so/*.dylib under _internal/).
+# Uses process substitution (< <(...)) so the while loop runs in the current
+# shell, not a subshell — this ensures `exit 1` aborts the whole script.
+echo "-> Verifying all bundled Mach-O files are arm64-only..."
+while read -r MACH_O_CANDIDATE; do
+    if file "$MACH_O_CANDIDATE" | grep -q "Mach-O"; then
+        if file "$MACH_O_CANDIDATE" | grep -qE "x86_64|i386|Intel"; then
+            echo "CRITICAL: $MACH_O_CANDIDATE contains a non-arm64 slice. Aborting."
+            exit 1
+        fi
+    fi
+done < <(find "${MAC_OS_DIR}" "${YTDLP_DEST}" -type f 2>/dev/null)
 
 # 6. Build the Icons
 if [ -f "${ICON_PATH}" ]; then
@@ -220,20 +265,44 @@ if [ -f "${ICON_PATH}" ]; then
 fi
 
 # 7. Apply ad-hoc code signatures
+#
+# Strategy: sign each nested Mach-O individually (deepest content first), then
+# seal the outer bundle LAST — and WITHOUT --deep.
+#
+# Why not --deep: --deep recursively descends into the yt-dlp PyInstaller tree
+# and tries to interpret its package/*.dist-info directories as nested bundles,
+# failing with "bundle format unrecognized, invalid, or unsuitable". Because the
+# tree now lives in Contents/Resources/ (not MacOS/), codesign seals it as data
+# via the normal resource envelope, so the plain bundle seal handles it
+# correctly. We only need to individually sign the actual Mach-O code: the main
+# executable, ffmpeg and bundled dylibs in MacOS/, plus yt-dlp and every
+# *.so/*.dylib under the Resources ytdlp tree.
 echo "-> Applying ad-hoc code signatures..."
 if command -v codesign &> /dev/null; then
-    find "${RESOURCES_DIR}/data/python_runtime" -type f \( -name "*.so" -o -name "*.dylib" -o -name "*.bundle" \) | while read -r py_ext; do
-        codesign -f -s - "$py_ext"
-    done
+    if [ -d "${RESOURCES_DIR}/data/python_runtime" ]; then
+        find "${RESOURCES_DIR}/data/python_runtime" -type f \( -name "*.so" -o -name "*.dylib" -o -name "*.bundle" \) | while read -r py_ext; do
+            codesign -f -s - "$py_ext"
+        done
+    fi
 
-    for f in "${MAC_OS_DIR}/"*; do
-        if [ -f "$f" ] && [ ! -L "$f" ]; then
-            codesign -f -s - "$f"
+    # Sign every Mach-O under MacOS/ and the Resources ytdlp tree.
+    # Filter to Mach-O only — codesign rejects .py, .pyc, and other data files.
+    find "${MAC_OS_DIR}" "${YTDLP_DEST}" -type f 2>/dev/null | while read -r mf; do
+        if file "$mf" | grep -q "Mach-O"; then
+            codesign -f -s - "$mf"
         fi
     done
 
+    # Seal the bundle (no --deep — see header comment).
     codesign -f -s - "${TARGET_DIR}"
     echo "-> Code signing complete."
+
+    # Hard-verify the finished bundle so a signing regression fails the build.
+    if ! codesign --verify --deep --strict "${TARGET_DIR}" 2>/dev/null; then
+        echo "CRITICAL: codesign verification of ${TARGET_DIR} failed. Aborting."
+        exit 1
+    fi
+    echo "-> Code signature verified (--deep --strict)."
 fi
 
 echo "=== Success: ${APP_NAME} generated cleanly in workspace root! ==="
