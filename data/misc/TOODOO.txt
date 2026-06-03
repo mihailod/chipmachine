@@ -9,7 +9,6 @@ crashes:
 
 could not play song:
 ===================
-* amegas encore
 
 
 could not load file

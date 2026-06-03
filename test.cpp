@@ -180,6 +180,43 @@ TEST_CASE("GME", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme/working"
 TEST_CASE("AdPlug", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", ".rol", "data"); }
 TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
 
+// Regression test for AdLib Tracker 2 "A2M version 11" files, played by the
+// newer a2m-v2 loader (Ca2mv2Player). The AdPlugin constructor calls
+// CPlayer::songlength(), which plays the whole tune to the end on a throwaway
+// CSilentopl and then rewind()s back to the start. Ca2mv2Player::rewind() must
+// reset *all* tick counters (ticks, tick0, tickD); a previous version left
+// tick0/tickD at their end-of-song values, so during real playback
+// poll_proc()'s "ticks - tick0 + 1 >= speed" check never became true,
+// play_line() never ran, no notes were written to the OPL, and the tune played
+// completely silent. This test fails if that regression is reintroduced.
+TEST_CASE("AdPlug A2M v11 plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::AdPlugin plugin{ "data" };
+
+    std::string const a2m = "testmus/adlib/karsten obarski - amegas.a2m";
+    REQUIRE(plugin.canHandle(a2m));
+
+    // Constructing the player runs songlength() + rewind() internally.
+    auto* player = plugin.fromFile(a2m);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    // Non-silent output means rewind() correctly reset the tick counters so
+    // poll_proc() advanced through the pattern and keyed on notes.
+    REQUIRE(energy != 0);
+}
+
 // Regression test for two-file Richard Joseph songs (.sng + .ins).
 // "cannon fodder (intro).sng" needs its companion ".ins" for any audio. The
 // RichardJoseph Amiga player loads samples by swapping ".sng" -> ".INS" in the
