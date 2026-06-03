@@ -335,6 +335,12 @@ bool MusicDatabase::parseModland(
             song.format = parts[i++];
             if (hasSubFormats.count(song.format) > 0) song.format = parts[i++];
 
+            // Stereo Sidplayer tunes are a ".mus"/".str" pair. Index only the
+            // ".str" (stereo) file; the ".mus" companion is fetched as a
+            // secondary file at play time. (The mono "Sidplayer" collection,
+            // which has standalone ".mus" files, is unaffected.)
+            if (song.format == "Stereo Sidplayer" && ext == "mus") continue;
+
             song.composer = parts[i++];
 
             if (song.format == "MDX") {

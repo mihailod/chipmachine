@@ -362,6 +362,64 @@ TEST_CASE("AO", "[music]") { testPlugin<musix::AOPlugin>("testmus/ao", ""); }
 TEST_CASE("Ted", "[music]") { testPlugin<musix::TEDPlugin>("testmus/ted", ""); }
 TEST_CASE("V2", "[music]") { testPlugin<musix::V2Plugin>("testmus/v2", ""); }
 
+// Compute's Stereo Sidplayer support. A tune is a pair of files: a ".mus"
+// (first SID, voices 1-3) and a ".str" (second SID, voices 4-6). VICE is
+// handed the ".mus" and loads the ".str" sibling itself; the plugin redirects
+// a ".str" request to its ".mus" companion and reports the companion via
+// getSecondaryFiles() so the loader fetches both.
+TEST_CASE("Vice Stereo Sidplayer", "[music][vice]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::VicePlugin plugin{ "data" };
+
+    REQUIRE(plugin.canHandle("foo.sid"));
+    REQUIRE(plugin.canHandle("foo.mus"));
+    REQUIRE(plugin.canHandle("foo.str"));
+    REQUIRE(plugin.canHandle("FOO.STR"));
+    REQUIRE_FALSE(plugin.canHandle("foo.mod"));
+
+    auto exts = plugin.getSupportedExtensions();
+    REQUIRE(exts.count("sid") == 1);
+    REQUIRE(exts.count("mus") == 1);
+    REQUIRE(exts.count("str") == 1);
+
+    // The stereo (.str) file declares its .mus companion as a secondary file...
+    REQUIRE(plugin.getSecondaryFiles(
+                "testmus/libvice/stereo/linus and lucy.str") ==
+            std::vector<std::string>{ "linus and lucy.mus" });
+    // ...while the .mus has no secondaries of its own.
+    REQUIRE(plugin
+                .getSecondaryFiles("testmus/libvice/stereo/linus and lucy.mus")
+                .empty());
+
+    auto playsSound = [&](std::string const& file) {
+        std::array<int16_t, 8192> buffer{};
+        auto* player = plugin.fromFile(file);
+        if (player == nullptr) { return false; }
+        int64_t sum = 0;
+        int count = 50;
+        while (sum == 0 && count-- > 0) {
+            int rc = player->getSamples(&buffer[0], buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                if (buffer[i] != 0) {
+                    sum = 1;
+                    break;
+                }
+            }
+        }
+        delete player;
+        return sum != 0;
+    };
+
+    // Loading the .mus plays sound (and pulls in its .str sibling for stereo).
+    REQUIRE(playsSound("testmus/libvice/stereo/linus and lucy.mus"));
+    // Loading the .str redirects to the .mus companion and also plays.
+    REQUIRE(playsSound("testmus/libvice/stereo/raistlin the magician.str"));
+    // A regular .sid still loads and plays (no regression in psid_load_file).
+    REQUIRE(playsSound("testmus/libvice/10_Orbyte.sid"));
+}
+
 TEST_CASE("priority_map", "")
 {
     musix::ChipPlugin::createPlugins("data");
