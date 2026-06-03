@@ -209,22 +209,6 @@ if(APPLE)
             $<TARGET_FILE:chipmachine>
             ${CMAKE_CURRENT_BINARY_DIR})
 
-    # NEW: Mirror music/Console into the build-adjacent location so that
-    # resolve_resource_root()'s dev-mode candidate path ("..") resolves
-    # correctly when running the raw binary straight from build/.
-    # This means `cmake --build` + ./chipmachine works without any manual
-    # symlinking or copying of the music directory.
-    # If music/Console doesn't exist yet (CI, fresh clone) the command is a
-    # safe no-op: make_directory never fails, copy_directory on a missing
-    # source directory will warn but not abort the build.
-    add_custom_command(TARGET chipmachine POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory
-            "${CMAKE_SOURCE_DIR}/music/Console"
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-            "${CMAKE_SOURCE_DIR}/music/Console"
-            "${CMAKE_CURRENT_BINARY_DIR}/../music/Console"
-        COMMENT "-> Syncing music/Console .nsfe tracks to build tree (dev-mode path resolution)")
-
 else()
     add_executable(chipmachine ${MAIN_FILES} ${GUI_FILES} src/main.cpp)
 endif()

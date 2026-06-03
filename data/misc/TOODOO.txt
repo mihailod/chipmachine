@@ -18,7 +18,7 @@ could not load file
 
 silent playback
 ===============
-* (file not displayed on intel) delta patrol, youtube
+
 
 console errors:
 ===============
@@ -95,4 +95,4 @@ new features
 ============
 - consolidate all db scripts into one unified
 - filter by platform (C64, Amiga...) and format (mod, ym, mp3...)
--Separate db from code and auto-update db independently from code
+- Separate db from code and auto-update db independently from code
