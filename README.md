@@ -104,45 +104,43 @@ ninja
 
 ### Music Collections
 
-* Modland - http://ftp.modland.com/
-* High Voltage SID collection - http://www.hvsc.c64.org/
+* Modland - https://ftp.modland.com/
+* High Voltage SID collection - https://www.hvsc.c64.org/
+* Gamebase64 - http://www.gb64.com/
+* AMP (Amiga Music Preservation) - http://amp.dascene.net/
 * Amiga remix - http://amigaremix.com/
 * RKO - http://remix.kwed.org/
-* Atari ST - http://sndh.atari.org/
+* Atari ST (SNDH) - http://sndh.atari.org/
 * SNES Music - http://snesmusic.org/
-* Atari SAP - http://asma.atari.org/
-* Sounds of Scenesat - http://sos.scenesat.com/
+* Atari SAP (ASMA) - http://asma.atari.org/
+* HVTC (High Voltage TED Collection) - http://plus4world.powweb.com/
+* NSFE (local NES music collection)
+* Sounds of Scenesat - https://scenesat.com/
 * AmigaVibes - http://www.amigavibes.org/
-* Demovibes - http://www.demovibes.org/
+* Demovibes - https://www.demovibes.org/
 
 ### Demo databases
 
-* Pouet - http://pouet.net/
+* Pouet - https://www.pouet.net/
 * Bitworld - http://janeway.exotica.org.uk/
-* CSDb - http://csdb.dk/
+* CSDb - https://csdb.dk/
 
 ### Podcasts
 
-* Bitjam - http://www.bitfellas.org/podcast
 * Syntax Error - http://www.syntaxerror.nu/
 * C64 Take Away - http://c64takeaway.com/
-* Gamewave - http://gamewave.yays.co/
-* This Week in Chiptune - http://thisweekinchiptune.com/
-* Bitar Till Kaffet - http://www.bitartillkaffet.se/
 
 ### Shoutcast Radio
 
-Scenesat - http://www.scenesat.com/
-SLAY Radio - http://www.slayradio.org/
-Nectarine - https://www.scenemusic.net/
+Scenesat - https://scenesat.com/
+SLAY Radio - https://www.slayradio.org/
+Nectarine - https://scenestream.net/
 VGM Radio - http://vgmradio.com/
-NoLife-Radio - http://nolife-radio.com/
-Rainwave - http://chiptune.rainwave.cc/
-ChipBit - http://www.chipbit.net/
-The Sid Station - http://c64radio.com/
-Radio Parallax - http://www.radio-paralax.de/
-CGM UKScene Radio - http://www.lmp.d2g.com/
-Retro PC Game Music Streaming Radio - http://gyusyabu.ddo.jp/
+NoLife-Radio - https://www.nolife-radio.com/
+Rainwave - https://rainwave.cc/
+The Sid Station - https://c64radio.com/
+Radio PARALAX - https://www.radio-paralax.de/
+CVGM Radio - https://radio.cvgm.net/
 
 ## Music Plugins (Supported formats)
 
@@ -156,7 +154,7 @@ Support for Amiga tracker formats
 
 Support for Dreamcast and Sega Saturn music
 
-### Higly Experimental
+### Highly Experimental
 
 Support for Playstation 1 & 2 music
 
@@ -242,11 +240,19 @@ Support for RAR packed music (primarily SNES)
 
 ### Ayfly
 
-Support for various XZ Spectrum formats
+Support for various ZX Spectrum formats
 
 ### MDX
 
 Support for the Sharp X68000 Music Macro Language
+
+### FMP (98fmplayer)
+
+Support for NEC PC-98 FMP driver music (.opi / .ovi / .ozi)
+
+### PxTone
+
+Support for PxTone Collage music (.ptcop / .pttune) by Studio Pixel
 
 ### S98
 
@@ -279,4 +285,4 @@ Support for streaming audio
 
 ## V2
 
-Support for Farbrauisch V2 Synthesizer System modules
+Support for Farbrausch V2 Synthesizer System modules

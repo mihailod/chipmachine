@@ -11,7 +11,8 @@ crashes:
 could not play song:
 ===================
 - need to add support for Westwood .snd format, see comment by gemini 
---> .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM).
+
+- .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM).
 
 
 could not load file
@@ -125,6 +126,68 @@ DONE 315	.pttune PxTone (older format, same family)	Moderate	Same pxtone library
 51	.bmx	Unknown	Hard	No format info found matching this context
 
 48	.coco	Unknown	Hard	No format info found matching this context
+
+
+GEMINI TAKE:
+
+ Based on the notes in TOODOO.txt and my investigation of the current codebase, here is a report on the feasibility of
+  implementing the top unsupported extensions:
+
+  2. Euphony (.eup) - PC-98 OPL/ADPCM
+   * Status: Unsupported.
+   * Research: This is a Japanese PC-98 format. The project already has the 98fmplayer infrastructure and FMPPlugin
+     using fmgen for OPNA emulation. 
+   * Feasibility: Moderate. It would involve implementing a new driver (fmdriver_eup.c) in 98fmplayer/fmdriver.
+     Replayer source code is available in various open-source Japanese PC-98 tools (e.g., libeb or PMD replayers).
+
+  3. Organya (.org) - Cave Story (OrgMaker)
+   * Status: Unsupported.
+   * Research: A well-documented proprietary format. 
+   * Feasibility: Easy-Moderate. There are multiple tiny, open-source C++ implementations (e.g., Organya.cpp from the
+     nxengine project or standalone replayers like organya-replayer). A new OrgPlugin would be a straightforward
+     wrapper.
+
+  4. SunVox (.sunvox) - Modular Synth
+   * Status: Unsupported.
+   * Research: Alexander Zolotov (NightRadio) provides an official, free-to-use sunvox_lib with a simple C API.
+   * Feasibility: Easy. Adding a SunVoxPlugin would just involve wrapping the official SDK. The library handles all
+     synthesis and playback.
+
+  5. MGSDRV (.mgs) [610 files] & MoonBlaster (.mbm) [296 files]
+   * Status: Unsupported.
+   * Research: These are MSX music formats. MGS is Z80-based and MoonBlaster is sample-based. 
+   * Feasibility: Hard. They require significant MSX hardware emulation (Z80, OPLL/OPL4, PSG). While source code for
+     replayers exists (e.g., mgsplay), integrating them would mean bringing in a Z80 core and additional FM cores.
+
+  6. Quartet ST (.4v) - Atari ST Tracker
+   * Status: Unsupported.
+   * Research: A 4-voice sample-based format for the Atari ST.
+   * Feasibility: Moderate. There are C replayers available. Interestingly, the AyflyPlugin explicitly blocks files
+     with /quartet in the path, likely because they often use the .ay extension but aren't Spectrum-compatible.
+
+  7. Westwood .snd
+   * Status: Unsupported (previously causing errors in SC68).
+   * Research: These are OPL2/OPL3 (AdLib) based files.
+   * Feasibility: Easy-Moderate. The project already uses AdPlug, which has a CadlPlayer for Westwood .adl files. Many
+     Westwood .snd files are identical to or variants of .adl. Supporting them would likely involve adding the
+     extension to AdPlugin.cpp and possibly updating the AdPlug library version.
+
+  8. Psycle (.psy) - Modular Tracker
+   * Status: Unsupported.
+   * Research: Psycle is an open-source modular tracker, but the .psy format is essentially a dump of the internal
+     state. 
+   * Feasibility: Hard. There is no standalone "playback-only" library; supporting it would require porting a large
+     portion of the Psycle engine.
+
+  Summary of "Quick Wins"
+  ┌─────────┬───────────┬────────────────┬────────────────────────────────────────────────────────┐
+  │ Format  │ Extension │ Difficulty     │ Implementation Path                                    │
+  ├─────────┼───────────┼────────────────┼────────────────────────────────────────────────────────┤
+  │ SunVox  │ .sunvox   │ Easy           │ Wrap the official sunvox_lib SDK.                      │
+  │ Organya │ .org      │ Easy-Moderate  │ Add a new plugin using nxengine or similar source.     │
+  │ Euphony │ .eup      │ Moderate       │ Add a new driver to the existing FMPPlugin/98fmplayer. │
+  └─────────┴───────────┴────────────────┴────────────────────────────────────────────────────────┘
+
 
 
 
