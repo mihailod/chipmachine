@@ -596,7 +596,8 @@ TEST_CASE("coverage", "[music]")
         {"S98", "testmus/s98"},
         {"Audio Overload", "testmus/ao"},
         {"Tedplay", "testmus/ted"},
-        {"V2Plugin", "testmus/v2"}
+        {"V2Plugin", "testmus/v2"},
+        {"PxTone Collage Player", "testmus/pxtone"}
     };
 
     for (auto const& plugin : plugins) {

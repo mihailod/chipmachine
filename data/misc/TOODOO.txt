@@ -27,10 +27,7 @@ console errors:
 other:
 ======
 - remove westwood .snd files from db -- all play as .adl, .snd is not complete, no instruments
-- test cleanup
-- cmake and ninja cleanup output
-- remove some other dead / unused files?
-
+- test output and cases cleanup
 - add a test file for EVERY supported extension
 
 product/process
