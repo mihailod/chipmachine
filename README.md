@@ -89,6 +89,7 @@ ninja
 * *ENTER* to play, *SHIFT-ENTER* to enque
 * *F1* = Player screen, *F2* = Search screen
 * *F5* = Play/Pause
+* *F9* = Advanced search: set/reset search filter by platform (ie. Amiga)
 * *F6* = Next Song (or *ENTER* from Player Screen)
 * *ESC* = Clear search field
 * *SHIFT-ESC* = Quit

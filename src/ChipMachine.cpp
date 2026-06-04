@@ -33,6 +33,21 @@ std::string compressWhitespace(std::string const& text)
 
 namespace chipmachine {
 
+const std::vector<FilterOption> ChipMachine::filterOptions = {
+    { "[Show All]", {} },
+    { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER, SCREAMTRACKER, IMPULSETRACKER, FASTTRACKER } },
+    { "Atari", { ATARI } },
+    { "Commodore C64", { C64, SID } },
+    { "NES", { NES } },
+    { "SNES", { SNES } },
+    { "Game Boy / GBA", { GAMEBOY, GBA } },
+    { "Sega", { SEGA, SEGAMS, MEGADRIVE, DREAMCAST } },
+    { "PlayStation", { PLAYSTATION, PLAYSTATION2 } },
+    { "Nintendo 64 / DS", { NINTENDO64, NDS } },
+    { "Adlib / PC", { ADPLUG, PC } },
+    { "MP3 / OGG", { MP3, OGG } }
+};
+
 void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
                              uint32_t index, bool hilight)
 {
@@ -237,6 +252,45 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     commandScreen.add(&commandField);
     commandScreen.add(&commandList);
 
+    mainFilterField.setFont(font);
+    mainFilterField.visible(true);
+    mainFilterField.setText("");
+    mainScreen.add(&mainFilterField);
+
+    advancedTitle.setFont(font);
+    advancedTitle.color = 0xffffffaa;
+    advancedTitle.scale = searchField.scale;
+    advancedTitle.visible(true);
+    advancedTitle.setText("SELECT FILTER PLATFORM / FORMAT");
+    advancedScreen.add(&advancedTitle);
+
+    advancedList = VerticalList(
+        listrec, numLines,
+        [=](grappix::Rectangle& rec, int y, uint32_t index, bool hilight) {
+            if (index < filterOptions.size()) {
+                auto const& opt = filterOptions[index];
+                uint32_t c = 0xaa33bbff;
+                if (hilight) {
+                    static uint32_t markStartcolor = 0;
+                    if (markStartcolor != c) {
+                        markStartcolor = c;
+                        markColor = c;
+                        markTween = Tween::make()
+                                        .sine()
+                                        .repeating()
+                                        .from(markColor, hilightColor)
+                                        .seconds(1.0);
+                        markTween.start();
+                    }
+                    c = markColor;
+                }
+                grappix::screen.text(listFont, opt.name, rec.x, rec.y, c,
+                                     resultFieldTemplate.scale);
+            }
+        });
+    advancedList.setTotal(filterOptions.size());
+    advancedScreen.add(&advancedList);
+
     scrollText = "INITIAL_TEXT";
     scrollEffect.set("scrolltext",
       " . . . . . . " PROGRAM_NAME " " VERSION_STR
@@ -318,6 +372,9 @@ void ChipMachine::layoutScreen()
     commandField.scale = searchField.scale;
     commandField.cursorH = searchField.cursorH;
     commandField.cursorW = searchField.cursorW;
+
+    advancedTitle.pos = { (float)topLeft.x, (float)topLeft.y };
+    advancedTitle.scale = searchField.scale;
 
     favIcon.setArea(favPos);
 
@@ -772,6 +829,8 @@ void ChipMachine::render(uint32_t delta)
         mainScreen.render(screenptr, delta);
     } else if (currentScreen == SEARCH_SCREEN) {
         searchScreen.render(screenptr, delta);
+    } else if (currentScreen == ADVANCED_SCREEN) {
+        advancedScreen.render(screenptr, delta);
     } else {
         commandScreen.render(screenptr, delta);
     }

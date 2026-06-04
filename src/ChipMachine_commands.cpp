@@ -30,6 +30,37 @@ void ChipMachine::setupCommands()
         showScreen(COMMAND_SCREEN);
     });
 
+    cmd("show_advanced", [=] {
+        if (currentScreen != ADVANCED_SCREEN) lastScreen = currentScreen;
+        showScreen(ADVANCED_SCREEN);
+    });
+
+    cmd("select_filter", [=] {
+        int idx = advancedList.selected();
+        if (idx >= 0 && idx < filterOptions.size()) {
+            auto const& opt = filterOptions[idx];
+            if (opt.name == "[Show All]") {
+                selectedFilterName = "";
+                musicDatabase.setFormatFilter({});
+            } else {
+                selectedFilterName = opt.name;
+                musicDatabase.setFormatFilter(opt.matchedFormats);
+            }
+            iquery->invalidate();
+            
+            if (selectedFilterName.empty()) {
+                mainFilterField.setText("");
+            } else {
+                mainFilterField.setText(selectedFilterName + "   (F9 for all platforms)");
+            }
+        }
+        showScreen(MAIN_SCREEN);
+    });
+
+    cmd("close_advanced", [=] {
+        showScreen(lastScreen);
+    });
+
     cmd("toggle_command", [=] {
         if (currentScreen != COMMAND_SCREEN) {
             lastScreen = currentScreen;

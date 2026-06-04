@@ -84,9 +84,16 @@ private:
     std::shared_ptr<grappix::Texture> texture;
 };
 
+struct FilterOption {
+    std::string name;
+    std::vector<uint8_t> matchedFormats;
+};
+
 class ChipMachine
 {
 public:
+    static const std::vector<FilterOption> filterOptions;
+
     using Color = grappix::Color;
 
     void renderSong(const grappix::Rectangle& rec, int y, uint32_t index,
@@ -138,6 +145,7 @@ private:
         MAIN_SCREEN = 0,
         SEARCH_SCREEN = 1,
         COMMAND_SCREEN = 2,
+        ADVANCED_SCREEN = 3,
     };
 
     static const uint32_t SHIFT = 0x10000;
@@ -164,6 +172,9 @@ private:
                                             grappix::screen.width() - topLeft.x,
                                             downRight.y - topLeft.y - y));
         commandList.setArea(grappix::Rectangle(
+            topLeft.x, y, grappix::screen.width() - topLeft.x,
+            downRight.y - topLeft.y - y));
+        advancedList.setArea(grappix::Rectangle(
             topLeft.x, y, grappix::screen.width() - topLeft.x,
             downRight.y - topLeft.y - y));
     }
@@ -277,6 +288,12 @@ private:
     RenderSet commandScreen;
     LineEdit commandField;
     grappix::VerticalList commandList;
+
+    RenderSet advancedScreen;
+    grappix::VerticalList advancedList;
+    TextField advancedTitle;
+    TextField mainFilterField;
+    std::string selectedFilterName;
 
     std::string currentNextPath;
     SongInfo currentInfo;

@@ -188,6 +188,8 @@ public:
 
     void setFilter(std::function<bool(int)> f = nullptr) { filter = f; }
 
+    bool isFiltered(int index) const { return filter ? filter(index) : false; }
+
     uint32_t size() { return strings.size(); }
 
 private:

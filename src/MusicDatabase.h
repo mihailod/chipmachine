@@ -234,6 +234,7 @@ public:
     std::vector<SongInfo>& getPlaylist(std::string const& plist);
 
     void setFilter(std::string const& filter, int type = 0);
+    void setFormatFilter(std::vector<uint8_t> const& allowedFormats);
 
 private:
     void initDatabase(utils::path const& workDir, Variables& vars);
