@@ -272,6 +272,37 @@ TEST_CASE("Westwood SND plays sound", "[music]")
 TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
 TEST_CASE("PxTone", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/ptcop", ""); }
 TEST_CASE("PxTune", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/pttune", ""); }
+TEST_CASE("Org", "[music]") { testPlugin<musix::OrgPlugin>("testmus/org", ""); }
+
+// Organya (.org, Cave Story / OrgMaker). The .org file carries only the
+// sequence; the WAVE100 wavetable + drum PCM are a universal constant embedded
+// in the plugin (default_wdb.h), so a plain .org plus the built-in soundbank
+// must produce audio with no external/secondary files. This fails if the
+// embedded soundbank is dropped or the magic check in canHandle regresses.
+TEST_CASE("Org plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::OrgPlugin plugin;
+
+    std::string const org = "testmus/org/access.org";
+    REQUIRE(plugin.canHandle(org));
+
+    auto* player = plugin.fromFile(org);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
 
 // Regression test for OctaMED MMD3 routing. libopenmpt's MED loader decodes the
 // whole MMD0..MMD3 family by content, but Tables.cpp only advertises the "med"
@@ -597,7 +628,8 @@ TEST_CASE("coverage", "[music]")
         {"Audio Overload", "testmus/ao"},
         {"Tedplay", "testmus/ted"},
         {"V2Plugin", "testmus/v2"},
-        {"PxTone Collage Player", "testmus/pxtone"}
+        {"PxTone Collage Player", "testmus/pxtone"},
+        {"Organya Player", "testmus/org"}
     };
 
     for (auto const& plugin : plugins) {

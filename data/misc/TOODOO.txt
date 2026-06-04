@@ -12,6 +12,11 @@ could not play song:
 ===================
 - .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM).
 
+- investigate? The one nuance: fmgen's OPNA has a hardware-rhythm channel (6 ADPCM drums: BD/SD/TOP/HH/TOM/RIM) that loads external 2608_*.WAV files. FMP calls opna.Init(..., nullptr) — no rhythm path — so those drum samples are never loaded and that specific channel is silent. Important points:
+It's graceful (missing path → break, no crash, no shipped-file requirement).
+It's not new or FMP-specific — s98fmgen.cpp:68 inits the identical OPNA the same way (device.Init(clock, rate, false), null path). So FMP just matches the pre-existing S98 behavior; the hardware-rhythm drums have always been silent in this build.
+FM, SSG, melody all play. I ran the FMP test: title.ovi and lockstheme.ozi → OK.
+
 
 could not load file
 ===================
@@ -40,12 +45,28 @@ extension support
 
 Unsupported extensions in the database (≥10 files, .gz excluded)
 
-Count	Ext	Format	Difficulty	Notes
-DONE 1,783	.ptcop 	PxTone Collage (Pixel/Cave Story)	Moderate	Official C++ library released by Pixel on GitHub (pxtone); needs a new plugin wrapping it
+DONE:
+*****
 
-DONE 1,446	.str	Stereo Sidplayer (C64)	Moderate	Two SIDs playing in stereo; VICE can load them, VicePlugin would need extension
+Count	Ext	Format	Difficulty	Notes
+DONE 1,783 .ptcop 	PxTone Collage (Pixel/Cave Story)	Moderate	Official C++ library released by Pixel on GitHub (pxtone); needs a new plugin wrapping it
+
+DONE 315	.pttune PxTone (older format, same family)	Moderate	Same pxtone library handles both .ptcop and .pttune
+
+DONE 1,446 .str	Stereo Sidplayer (C64)	Moderate	Two SIDs playing in stereo; VICE can load them, VicePlugin would need extension
 
 DONE 657	.mmd3	OctaMED MMD3 (Amiga)	Moderate	MMD0/1/2 work via UADE; MMD3 is the enhanced version — UADE or libopenmpt may already decode it but the extension is simply not listed
+
+DONE 427	.sng Various (UADE disabled)	Easy	Deliberately commented out in UADEPlugin (/*"sng"*/); investigate why — likely a collision with another plugin — then either re-enable or route to the correct one
+
+DONE 385	.sgc	Sega Master System / Game Gear	NEW EMU NEEDED	This vendored game-music-emu has no SGC core (no Sgc_Emu, no SGC in gme_type_list/CMake). Newer libgme supports it; would need to vendor that core.
+
+DONE 377	.org	Organya / Cave Story OrgMaker	Moderate	Simple proprietary format; multiple open-source playback implementations on GitHub (organya, org-player)
+
+*******************************
+
+NOT DONE:
+*********
 
 610	.mgs	MGSDRV (MSX)	Hard	MSX music driver format; playback requires MSX hardware emulation; some open-source players exist (mgsdrv replayer) but no ready-made C library
 
@@ -56,14 +77,6 @@ DONE 657	.mmd3	OctaMED MMD3 (Amiga)	Moderate	MMD0/1/2 work via UADE; MMD3 is the
 1,104	.pvi	FMP/Euphony PCM sample bank (PC-98)	N/A	Auxiliary sample bank for .eup songs, not a standalone track
 325	.pmb	Euphony PCM sample bank (PC-98)	N/A	Auxiliary file for .eup songs, not standalone
 
-
-DONE 427	.sng Various (UADE disabled)	Easy	Deliberately commented out in UADEPlugin (/*"sng"*/); investigate why — likely a collision with another plugin — then either re-enable or route to the correct one
-
-DONE 385	.sgc	Sega Master System / Game Gear	NEW EMU NEEDED	This vendored game-music-emu has no SGC core (no Sgc_Emu, no SGC in gme_type_list/CMake). Newer libgme supports it; would need to vendor that core.
-
-377	.org	Organya / Cave Story OrgMaker	Moderate	Simple proprietary format; multiple open-source playback implementations on GitHub (organya, org-player)
-
-DONE 315	.pttune PxTone (older format, same family)	Moderate	Same pxtone library handles both .ptcop and .pttune
 
 296	.mbm	MoonBlaster (MSX)	Hard	MSX sample-based tracker; needs .mbk sample banks alongside; MSX emulation required; no ready C library found
 
@@ -137,13 +150,6 @@ GEMINI TAKE:
    * Feasibility: Moderate. It would involve implementing a new driver (fmdriver_eup.c) in 98fmplayer/fmdriver.
      Replayer source code is available in various open-source Japanese PC-98 tools (e.g., libeb or PMD replayers).
 
-  3. Organya (.org) - Cave Story (OrgMaker)
-   * Status: Unsupported.
-   * Research: A well-documented proprietary format. 
-   * Feasibility: Easy-Moderate. There are multiple tiny, open-source C++ implementations (e.g., Organya.cpp from the
-     nxengine project or standalone replayers like organya-replayer). A new OrgPlugin would be a straightforward
-     wrapper.
-
   4. SunVox (.sunvox) - Modular Synth
    * Status: Unsupported.
    * Research: Alexander Zolotov (NightRadio) provides an official, free-to-use sunvox_lib with a simple C API.
@@ -162,13 +168,6 @@ GEMINI TAKE:
    * Feasibility: Moderate. There are C replayers available. Interestingly, the AyflyPlugin explicitly blocks files
      with /quartet in the path, likely because they often use the .ay extension but aren't Spectrum-compatible.
 
-  7. Westwood .snd -- ABANDONED: all 22 songs covered by .adl
-   * Status: Unsupported (previously causing errors in SC68).
-   * Research: These are OPL2/OPL3 (AdLib) based files.
-   * Feasibility: Easy-Moderate. The project already uses AdPlug, which has a CadlPlayer for Westwood .adl files. Many
-     Westwood .snd files are identical to or variants of .adl. Supporting them would likely involve adding the
-     extension to AdPlugin.cpp and possibly updating the AdPlug library version.
-
   8. Psycle (.psy) - Modular Tracker
    * Status: Unsupported.
    * Research: Psycle is an open-source modular tracker, but the .psy format is essentially a dump of the internal
@@ -181,7 +180,6 @@ GEMINI TAKE:
   │ Format  │ Extension │ Difficulty     │ Implementation Path                                    │
   ├─────────┼───────────┼────────────────┼────────────────────────────────────────────────────────┤
   │ SunVox  │ .sunvox   │ Easy           │ Wrap the official sunvox_lib SDK.                      │
-  │ Organya │ .org      │ Easy-Moderate  │ Add a new plugin using nxengine or similar source.     │
   │ Euphony │ .eup      │ Moderate       │ Add a new driver to the existing FMPPlugin/98fmplayer. │
   └─────────┴───────────┴────────────────┴────────────────────────────────────────────────────────┘
 
@@ -189,10 +187,10 @@ GEMINI TAKE:
 
 
 
+*****************************************************
 
-
-new features
-============
+major new features
+==================
 - consolidate all db scripts into one unified
-- filter by platform (C64, Amiga...) and format (mod, ym, mp3...) -- pesic
+- filter by platform (C64, Amiga... -- DONE) and format (mod, ym, mp3...) -- pesic
 - Separate db from code and auto-update db independently from code

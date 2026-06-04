@@ -27,6 +27,7 @@ extern "C" {
     void ffmpegplugin_register();
     void uadeplugin_register();
     void pxtoneplugin_register();
+    void orgplugin_register();     // Organya / Cave Story (.org)
 }
 
 void register_plugins() {
@@ -54,4 +55,5 @@ void register_plugins() {
     ffmpegplugin_register();
     uadeplugin_register();
     pxtoneplugin_register();
+    orgplugin_register();
 }

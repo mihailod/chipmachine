@@ -73,6 +73,7 @@ git clone https://github.com/mihailod/musicplayer.git
 git clone https://github.com/mihailod/vice310.git
 git clone https://github.com/mihailod/98fmplayer.git
 git clone https://github.com/mihailod/libpxtone.git
+git clone https://github.com/mihailod/organya.h.git organya
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
@@ -277,6 +278,14 @@ Support for NEC PC-98 FMP driver music (.opi / .ovi / .ozi)
 ### PxTone
 
 Support for PxTone Collage music (.ptcop / .pttune) by Studio Pixel
+
+### Organya
+
+Support for Organya music (.org) by Studio Pixel, the sequenced format used by *Cave Story* (Doukutsu Monogatari) and authored in OrgMaker. PxTone's predecessor.
+
+The instrument data (the WAVE100 melody wavetable and the percussion samples) is a fixed soundbank shared by every Organya tune, so it is embedded directly in the plugin — a `.org` file plays with no additional/secondary files.
+
+Extensions: `.org`
 
 ### S98
 
