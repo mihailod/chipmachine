@@ -38,7 +38,8 @@ void ChipMachine::setVariable(const std::string& name, int index,
         { "command_field", &commandField },
         { "top_status", &topStatus },
         { "toast_field", &toastField },
-        { "result_field", &resultFieldTemplate }
+        { "result_field", &resultFieldTemplate },
+        { "main_filter", &mainFilterField }
     };
 
     auto path = makeSearchPath({ workDir }, false);

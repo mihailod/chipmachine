@@ -669,6 +669,25 @@ void MusicDatabase::setFilter(std::string const& collection, int type)
     }
 }
 
+void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
+{
+    if (allowedFormats.empty()) {
+        titleIndex.setFilter();
+    } else {
+        titleIndex.setFilter([=](int index) {
+            auto f = formats[index];
+            uint8_t fmtByte = f & 0xff;
+            if (fmtByte == PRODUCT) return false;
+            for (auto const& allowed : allowedFormats) {
+                if (fmtByte == allowed) {
+                    return false;
+                }
+            }
+            return true;
+        });
+    }
+}
+
 int MusicDatabase::search(std::string const& query, std::vector<int>& result,
                           unsigned int searchLimit)
 {
@@ -715,8 +734,11 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
             int songindex = composerToTitle[offset++];
 
             if (collectionFilter == -1 ||
-                (formats[songindex] >> 8) == collectionFilter)
-                result.push_back(songindex);
+                (formats[songindex] >> 8) == collectionFilter) {
+                if (!titleIndex.isFiltered(songindex)) {
+                    result.push_back(songindex);
+                }
+            }
         }
         if (result.size() >= searchLimit) break;
     }

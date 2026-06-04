@@ -63,6 +63,7 @@ void ChipMachine::setupRules()
         if_equals(currentScreen, MAIN_SCREEN), "show_search");
     addKey(keycodes::F5, "play_pause");
     addKey(keycodes::F3, "show_command");
+    addKey(keycodes::F9, "show_advanced");
 
     addKey(keycodes::BACKSPACE,
            if_equals(currentScreen, SEARCH_SCREEN) && if_null(currentDialog) &&
@@ -81,6 +82,10 @@ void ChipMachine::setupRules()
            "play_song");
     addKey(keycodes::ENTER, if_equals(currentScreen, COMMAND_SCREEN),
            "execute_selected_command");
+    addKey(keycodes::ENTER, if_equals(currentScreen, ADVANCED_SCREEN),
+           "select_filter");
+    addKey(keycodes::ESCAPE, if_equals(currentScreen, ADVANCED_SCREEN),
+           "close_advanced");
     addKey(keycodes::ENTER | SHIFT, if_equals(currentScreen, SEARCH_SCREEN),
            "enque_song");
     addKey(keycodes::F9, if_equals(currentScreen, SEARCH_SCREEN), "enque_song");
@@ -202,6 +207,8 @@ void ChipMachine::updateKeys()
         currentList = &songList;
     else if (currentScreen == COMMAND_SCREEN)
         currentList = &commandList;
+    else if (currentScreen == ADVANCED_SCREEN)
+        currentList = &advancedList;
 
     bool ascii = (event >= 'A' && event <= 'Z');
     if (ascii) event = tolower(event);
