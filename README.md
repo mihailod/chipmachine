@@ -121,18 +121,26 @@ ninja
 
 ### Demo databases
 
-* Pouet - https://www.pouet.net/ (production soundtracks streamed from YouTube)
-* Bitworld - http://janeway.exotica.org.uk/
-* CSDb - https://csdb.dk/
+* Pouet - https://www.pouet.net (production soundtracks streamed from YouTube)
+* Bitworld - http://janeway.exotica.org.uk
+* CSDb - https://csdb.dk
 
 ### Podcasts
 
-* Syntax Error - http://www.syntaxerror.nu/
-* C64 Take Away - http://c64takeaway.com/
+* Syntax Error - http://www.syntaxerror.nu
+* C64 Take Away - http://c64takeaway.com
 
-### Shoutcast Radio
+### Shoutcast Radio Streams
 
-Scenesat - https://scenesat.com ■ SLAY Radio - https://www.slayradio.org ■ Nectarine - https://scenestream.net ■ VGM Radio - http://vgmradio.com ■ NoLife-Radio - https://www.nolife-radio.com ■ Rainwave - https://rainwave.cc ■ The Sid Station - https://c64radio.com ■ Radio PARALAX - https://www.radio-paralax.de ■ CVGM Radio - https://radio.cvgm.net
+* Scenesat - https://scenesat.com
+* SLAY Radio - https://www.slayradio.org
+* Nectarine - https://scenestream.net
+* VGM Radio - http://vgmradio.com
+* NoLife-Radio - https://www.nolife-radio.com
+* Rainwave - https://rainwave.cc
+* The Sid Station - https://c64radio.com
+* Radio PARALAX - https://www.radio-paralax.de
+* CVGM Radio - https://radio.cvgm.net
 
 ## Music Plugins (Supported formats)
 
