@@ -121,7 +121,7 @@ ninja
 
 ### Demo databases
 
-* Pouet - https://www.pouet.net/
+* Pouet - https://www.pouet.net/ (production soundtracks streamed from YouTube)
 * Bitworld - http://janeway.exotica.org.uk/
 * CSDb - https://csdb.dk/
 
@@ -322,6 +322,10 @@ Support for streaming audio
 * Ogg/Vorbis
 
 Extensions: `.m4a` `.aac` `.mp3` `.mp4`
+
+### YouTube
+
+Streams audio directly from YouTube links (`youtube.com/` / `youtu.be/`). The bundled `yt-dlp` resolves the best audio stream, which is then played back via FFMpeg. This is how the Pouet database plays demoscene production soundtracks. `yt-dlp` ships with the app (`bin/ytdlp/`), so no extra setup is required.
 
 ### V2
 
