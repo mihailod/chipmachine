@@ -8,7 +8,7 @@ ChipMachineAS
 
 ![Annoying Popup](data/misc/argh.jpg)
 
-> ChipMachine is my favorite Mac retro chiptune player and I have been using it forever. However, when opening it on my Mac after a recent macOS update, I saw this annoying popup. It caused anger in me, and I channeled that anger into this project.
+> ChipMachine is my favorite Mac retro chiptune player and I have been using it forever. However, when opening it on my Mac after a recent macOS update, I saw this annoying popup above. It upset me and I channeled that anger into this project.
 
 ---
 
@@ -16,7 +16,7 @@ ChipMachineAS
 
 ## Intro
 
-*A demoscene/retro Jukebox/spotify-like  music player*
+*A demoscene/retro Jukebox/spotify-like music player*
 
 * **Intructions are dead simple:**
 * **Start typing to incrementally search aggregated database**
@@ -81,7 +81,7 @@ ninja
 * Running the app from the build folder: ./chipmachine
 * Packaging the app: chipmachine/package_ap.sh
 * See chipmachine/data/misc/TOODOO.txt for to-dos
-* AI tools used to help with the porting: Gemini, Antigravity, Claude, Codex)
+* AI tools used to help with the porting: Gemini, Antigravity, Claude, Codex
 
 ## Using the application
 
