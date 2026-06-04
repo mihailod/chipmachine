@@ -10,8 +10,6 @@ crashes:
 
 could not play song:
 ===================
-- need to add support for Westwood .snd format, see comment by gemini 
-
 - .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM).
 
 
@@ -28,7 +26,9 @@ console errors:
 
 other:
 ======
-- test:
+- remove westwood .snd files from db -- all play as .adl, .snd is not complete, no instruments
+- test cleanup
+- cmake and ninja cleanup output
 - remove some other dead / unused files?
 
 - add a test file for EVERY supported extension
@@ -165,7 +165,7 @@ GEMINI TAKE:
    * Feasibility: Moderate. There are C replayers available. Interestingly, the AyflyPlugin explicitly blocks files
      with /quartet in the path, likely because they often use the .ay extension but aren't Spectrum-compatible.
 
-  7. Westwood .snd
+  7. Westwood .snd -- ABANDONED: all 22 songs covered by .adl
    * Status: Unsupported (previously causing errors in SC68).
    * Research: These are OPL2/OPL3 (AdLib) based files.
    * Feasibility: Easy-Moderate. The project already uses AdPlug, which has a CadlPlayer for Westwood .adl files. Many

@@ -211,6 +211,64 @@ TEST_CASE("GME SGC plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 TEST_CASE("AdPlug", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", ".rol", "data"); }
+
+// Render up to `buffers` blocks and return summed absolute sample energy.
+static int64_t adplugEnergy(musix::ChipPlayer* player, int buffers)
+{
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < buffers; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    return energy;
+}
+
+// Regression test for Westwood .snd support (Eye of the Beholder, Legend of
+// Kyrandia, ...). These are headerless ADL/OPL tunes that reuse the generic
+// .snd extension. The vendored AdPlug already had the Westwood ADL player but
+// only accepted ".adl"; both adl.cpp's loader and adplug.cpp's player table now
+// also accept ".snd", and AdPlugin::canHandle validates .snd by reproducing the
+// ADL version detection so it claims real Westwood tunes without stealing the
+// Atari sc68 .snd files (which SC68Plugin validates by magic). The fixture is
+// the genuine Eye of the Beholder AdLib sound bank (a self-contained v1 Westwood
+// ADL tune) under a .snd extension.
+//
+// NOTE: bare per-track Westwood .snd rips (e.g. modland's "Westwood SND"
+// collection) store only the sequence data and reference an *external*
+// instrument bank that isn't in the file, so they decode to silence -- the
+// self-contained ".adl" version of each tune is the supported path. This
+// fixture deliberately uses ADL-format content so it actually produces audio.
+//
+// Also covers the subsong-navigation fix: AdPlugPlayer::seekTo() switches
+// subsong (Westwood files pack many tracks into one bank), which previously
+// no-op'd because the base ChipPlayer::seekTo() returned false. Fails if the
+// .snd routing/validation regresses, the ADL decoder goes silent, or subsong
+// seeking breaks.
+TEST_CASE("Westwood SND plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::AdPlugin plugin{"data"};
+
+    std::string const snd = "testmus/westwood/eobsound.snd";
+    REQUIRE(plugin.canHandle(snd));
+
+    auto* player = plugin.fromFile(snd);
+    REQUIRE(player != nullptr);
+
+    // Default subsong produces audio.
+    REQUIRE(adplugEnergy(player, 50) != 0);
+
+    // Out-of-range subsong is rejected; an in-range one is accepted and plays.
+    REQUIRE_FALSE(player->seekTo(99999, -1));
+    REQUIRE(player->seekTo(3, -1));
+    REQUIRE(adplugEnergy(player, 50) != 0);
+
+    delete player;
+}
 TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
 TEST_CASE("PxTone", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/ptcop", ""); }
 TEST_CASE("PxTune", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/pttune", ""); }
