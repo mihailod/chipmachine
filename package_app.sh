@@ -131,6 +131,20 @@ else
     echo "WARNING: bin folder not found at ${CHIPMACHINE_DIR}/bin. YouTube playback will fail."
 fi
 
+# SunVox engine: prebuilt, MIT-licensed shared library that SunVoxPlugin
+# dlopen()s at runtime from next to the executable (Environment::getExeDir()).
+# It is a lone arm64 Mach-O dylib, legal in Contents/MacOS/ and signed
+# individually in step 7. The vendored copy is arm64-only so the step 5b
+# architecture check passes.
+SUNVOX_DYLIB_SRC="${WORKSPACE_ROOT}/musicplayer/src/plugins/sunvoxplugin/sunvox_lib/sunvox.dylib"
+if [ -f "${SUNVOX_DYLIB_SRC}" ]; then
+    echo "-> Packaging SunVox engine (sunvox.dylib) into bundle..."
+    cp "${SUNVOX_DYLIB_SRC}" "${MAC_OS_DIR}/sunvox.dylib"
+    chmod +w "${MAC_OS_DIR}/sunvox.dylib"
+else
+    echo "WARNING: sunvox.dylib not found at ${SUNVOX_DYLIB_SRC}. .sunvox playback will fail."
+fi
+
 # *** 4b. Bundle .nsfe music tracks into Contents/Resources/music/Console/ ***
 #
 # Strategy:

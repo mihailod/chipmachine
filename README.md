@@ -245,7 +245,9 @@ Extensions: `.mp3`
 
 ### Vice
 
-Support for Commodore C64 music (.sid), including Compute's Stereo Sidplayer tunes (.mus / .str)
+Support for Commodore C64 music (mono and stereo SID)
+
+Extensions: `.sid` `.mus` `.str`
 
 ### Hively
 
@@ -273,25 +275,31 @@ Extensions: `.mdx` (with optional `.pdx` sample banks)
 
 ### FMP (98fmplayer)
 
-Support for NEC PC-98 FMP driver music (.opi / .ovi / .ozi)
+Support for NEC PC-98 FMP driver Including the OPNA hardware-rhythm drums
 
-Includes the OPNA hardware-rhythm drums: the rhythm sample ROM is decoded and embedded in the player, so percussion plays with no additional/secondary files.
+Extensions: `.opi` `.ovi` `.ozi`
 
 ### PxTone
 
-Support for PxTone Collage music (.ptcop / .pttune) by Studio Pixel
+Support for PxTone Collage music by Studio Pixel
+
+Extensions: `.ptcop` `.pttune`
 
 ### Organya
 
-Support for Organya music (.org) by Studio Pixel, the sequenced format used by *Cave Story* (Doukutsu Monogatari) and authored in OrgMaker. PxTone's predecessor.
-
-The instrument data (the WAVE100 melody wavetable and the percussion samples) is a fixed soundbank shared by every Organya tune, so it is embedded directly in the plugin — a `.org` file plays with no additional/secondary files.
+Support for Organya music by Studio Pixel
 
 Extensions: `.org`
 
+### SunVox
+
+Support for SunVox music by Alexander Zolotov (NightRadio)
+
+Extensions: `.sunvox`
+
 ### S98
 
-Support for retro hardware Music, including OPNA hardware-rhythm drums via the embedded rhythm sample ROM.
+Support for retro hardware Music, including OPNA hardware-rhythm drums
 
 Extensions: `.s98`
 
@@ -330,12 +338,13 @@ Support for streaming audio
 
 Extensions: `.m4a` `.aac` `.mp3` `.mp4`
 
-### YouTube
-
-Streams audio directly from YouTube links (`youtube.com/` / `youtu.be/`). The bundled `yt-dlp` resolves the best audio stream, which is then played back via FFMpeg. This is how the Pouet database plays demoscene production soundtracks. `yt-dlp` ships with the app (`bin/ytdlp/`), so no extra setup is required.
-
 ### V2
 
 Support for Farbrausch V2 Synthesizer System modules
 
 Extensions: `.v2` `.v2m`
+
+### YouTube
+
+Streams audio directly from YouTube links (`youtube.com/` / `youtu.be/`). The bundled `yt-dlp` resolves the best audio stream, which is then played back via FFMpeg. This is how the Pouet database plays demoscene production soundtracks. `yt-dlp` ships with the app (`bin/ytdlp/`), so no extra setup is required.
+

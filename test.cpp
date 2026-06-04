@@ -273,6 +273,36 @@ TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "sm
 TEST_CASE("PxTone", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/ptcop", ""); }
 TEST_CASE("PxTune", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/pttune", ""); }
 TEST_CASE("Org", "[music]") { testPlugin<musix::OrgPlugin>("testmus/org", ""); }
+TEST_CASE("SunVox", "[music]") { testPlugin<musix::SunVoxPlugin>("testmus/sunvox", ""); }
+
+// SunVox (.sunvox, NightRadio's modular synth). The engine ships as a prebuilt,
+// dlopen()ed shared library (MIT licensed, copied next to the test binary by
+// CMake). This exercises the real DB content -- the .sunvox files here are the
+// exact modland songs referenced by the chipmachine database.
+TEST_CASE("SunVox plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::SunVoxPlugin plugin;
+
+    std::string const sunvox = "testmus/sunvox/caravan.sunvox";
+    REQUIRE(plugin.canHandle(sunvox));
+
+    auto* player = plugin.fromFile(sunvox);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
 
 // Organya (.org, Cave Story / OrgMaker). The .org file carries only the
 // sequence; the WAVE100 wavetable + drum PCM are a universal constant embedded
@@ -636,7 +666,8 @@ TEST_CASE("coverage", "[music]")
         {"Tedplay", "testmus/ted"},
         {"V2Plugin", "testmus/v2"},
         {"PxTone Collage Player", "testmus/pxtone"},
-        {"Organya Player", "testmus/org"}
+        {"Organya Player", "testmus/org"},
+        {"SunVox Player", "testmus/sunvox"}
     };
 
     for (auto const& plugin : plugins) {

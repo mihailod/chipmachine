@@ -127,7 +127,7 @@ set(MUSICPLAYER_PLUGINS
     openmptplugin htplugin heplugin ndsplugin gmeplugin sc68plugin
     usfplugin stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
     ayflyplugin mdxplugin s98plugin aoplugin gsfplugin tedplugin v2plugin
-    ffmpegplugin uadeplugin fmpplugin pxtoneplugin orgplugin
+    ffmpegplugin uadeplugin fmpplugin pxtoneplugin orgplugin sunvoxplugin
 )
 add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
 add_subdirectory(${MUSICPLAYER}/src/psf psf)
@@ -266,6 +266,20 @@ target_link_libraries(cmtest PRIVATE
 target_include_directories(cmtest PRIVATE ${APONE}/mods
     ${MUSICPLAYER}/src/plugins/s98plugin/m_s98/device/fmgen)
 target_compile_definitions(cmtest PRIVATE -DTESTING)
+
+# The SunVox engine is a prebuilt shared library that the plugin dlopen()s at
+# runtime from next to the executable. Copy it beside each binary that can play
+# music so SunVoxPlugin can find it (see SUNVOX_RUNTIME_LIB in sunvoxplugin).
+if(SUNVOX_RUNTIME_LIB)
+    foreach(_sv_target chipmachine cm cmtest)
+        if(TARGET ${_sv_target})
+            add_custom_command(TARGET ${_sv_target} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    ${SUNVOX_RUNTIME_LIB}
+                    $<TARGET_FILE_DIR:${_sv_target}>)
+        endif()
+    endforeach()
+endif()
 
 # --- EXTERNAL STUFF COMPILER WARNING SUPPRESSION ---
 if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")

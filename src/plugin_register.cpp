@@ -28,6 +28,7 @@ extern "C" {
     void uadeplugin_register();
     void pxtoneplugin_register();
     void orgplugin_register();     // Organya / Cave Story (.org)
+    void sunvoxplugin_register();  // SunVox modular synth (.sunvox)
 }
 
 void register_plugins() {
@@ -56,4 +57,5 @@ void register_plugins() {
     uadeplugin_register();
     pxtoneplugin_register();
     orgplugin_register();
+    sunvoxplugin_register();
 }
