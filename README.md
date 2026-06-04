@@ -150,17 +150,25 @@ Support for Amiga tracker formats
 
 * ProTracker, ScreamTracker III, FastTracker II, Impulse Tracker, OpenMPT, ScreamTracker II, NoiseTracker, Soundtracker, Mod's Grave, UltraTracker, Composer 669 / UNIS 669, MultiTracker, OctaMed, Farandole Composer, DigiTracker, Extreme's Tracker, Velvet Studio, DSIK Format, DSMI, ASYLUM, Oktalyzer, X-Tracker, PolyTracker, Epic Megagames, MASI, MadTracker 2, DigiBooster Pro, DigiBooster, Imago Orpheus, Galaxy Sound System
 
+Extensions: `.mod` `.xm` `.it` `.s3m` `.mptm` `.stm` `.nst` `.m15` `.stk` `.wow` `.ult` `.669` `.mtm` `.med` `.far` `.mdl` `.ams` `.dsm` `.amf` `.okt` `.dmf` `.mt2` `.dbm` `.digi` `.imf` `.j2b` `.gdm` `.umx` `.mo3` (and other formats reported by libopenmpt)
+
 ### High Technology
 
 Support for Dreamcast and Sega Saturn music
+
+Extensions: `.ssf` `.dsf` `.minissf` `.minidsf`
 
 ### Highly Experimental
 
 Support for Playstation 1 & 2 music
 
+Extensions: `.psf` `.psf2` `.minipsf` `.minipsf2`
+
 ### NDS
 
 Support for Nintendo DS music
+
+Extensions: `.2sf` `.mini2sf`
 
 ### Game Music Emulator
 
@@ -168,17 +176,25 @@ Support for various 8 bit console music
 
 * ZX Spectrum, Amstrad CPC, Nintendo Game Boy, Sega Genesis, Mega Drive, NEC TurboGrafx-16, PC Engine, MSX Home Computer, other Z80 systems, Nintendo NES, Famicom (with VRC 6, Namco 106, and FME-7 sound), Atari systems using POKEY sound chip, Super Nintendo, Super Famicom, Sega Master System, Mark III, Sega Genesis, Mega Drive, BBC Micro
 
+Extensions: `.spc` `.nsf` `.nsfe` `.gbs` `.ay` `.gym` `.sap` `.vgm` `.vgz` `.hes` `.kss` `.sgc` `.emul`
+
 ### SC68
 
 Support for Atari 16 bit music
+
+Extensions: `.sc68` `.sndh` `.snd`
 
 ### USF
 
 Support for Nintendo 64 music
 
+Extensions: `.usf` `.miniusf`
+
 ### StSound
 
 Support for Atari ST music (older formats)
+
+Extensions: `.ym` `.mix`
 
 ### ADplug
 
@@ -222,9 +238,13 @@ eXotic ADlib Format by Riven the Mage,
 XMS-Tracker by MaDoKaN/E.S.G, 
 eXtra Simple Music by Davey W Taylor, 
 
+Extensions: `.a2m` `.adl` `.amd` `.bam` `.cff` `.cmf` `.d00` `.dfm` `.dmo` `.dro` `.dtm` `.hcs` `.hsp` `.imf` `.ksm` `.laa` `.lds` `.m` `.mad` `.mid` `.mkj` `.msc` `.mtk` `.rad` `.raw` `.rix` `.rol` `.as3m` `.sa2` `.sat` `.sci` `.agd` `.sdb` `.xad` `.xms` `.xsm` `.hsc` `.edl` `.mtr` `.adlib` `.sqx`
+
 ### MP3
 
 Support for MP3 music
+
+Extensions: `.mp3`
 
 ### Vice
 
@@ -234,17 +254,25 @@ Support for Commodore C64 music (.sid), including Compute's Stereo Sidplayer tun
 
 Support for AHX and HVL amiga music
 
+Extensions: `.ahx` `.hvl`
+
 ### RSN
 
 Support for RAR packed music (primarily SNES)
+
+Extensions: `.rsn` `.rps` `.rdc` `.rds` `.rgs` `.r64`
 
 ### Ayfly
 
 Support for various ZX Spectrum formats
 
+Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2` `.pt3` `.ftc` `.vtx` `.vt2` `.zxs` `.st13`
+
 ### MDX
 
 Support for the Sharp X68000 Music Macro Language
+
+Extensions: `.mdx` (with optional `.pdx` sample banks)
 
 ### FMP (98fmplayer)
 
@@ -258,13 +286,19 @@ Support for PxTone Collage music (.ptcop / .pttune) by Studio Pixel
 
 Support for retro hardware Music
 
+Extensions: `.s98`
+
 ### AudioOverload
 
 Support for Sega Saturn and Capcom Q music
 
+Extensions: `.ssf` `.minissf` `.qsf` `.miniqsf` `.spu`
+
 ### GSF
 
 Support for Gameboy Advance music
+
+Extensions: `.gsf` `.minigsf`
 
 ### UADE
 
@@ -272,17 +306,25 @@ Support for Amiga exotic (Delitracker) formats
 
 * ActionAmics AbyssHighestExperience ADPCM-mono AM-Composer AMOS ArtAndMagic Alcatraz-Packer ArtOfNoise-4V ArtOfNoise-8V AudioSculpture BeathovenSynthesizer BenDaglish BenDaglish-SID BladePacker ChipTracker Cinemaware CoreDesign custom CustomMade DariusZendeh DaveLowe DaveLowe-Deli DaveLoweNew DavidHanney DavidWhittaker DeltaMusic2.0 DeltaMusic1.3 Desire DIGI-Booster DigitalSonixChrome DigitalSoundStudio DynamicSynthesizer EMS EMS-6 FashionTracker FutureComposer1.3 FutureComposer1.4 Fred FredGray FutureComposer-BSI FuturePlayer ForgottenWorlds-Game GlueMon EarAche HowieDavies JochenHippel-CoSo QuadraComposer ImagesMusicSystem Infogrames InStereo InStereo2.0 JamCracker JankoMrsicFlogel JasonBrooke JasonPage JasonPage-JP JeroenTel JesperOlsen JochenHippel JochenHippel-7V Jochen-Hippel-ST KrisHatlelid Laxity LegglessMusicEditor ManiacsOfNoise MagneticFieldsPacker MajorTom Mark-Cooksey Mark-Cooksey-Old MarkII MartinWalker Maximum-Effect MCMD MED Medley MIDI-Loriciel MikeDavies MMDC Mugician MugicianII MusicAssembler MusicMaker-4V MusicMaker-8V MultiMedia-Sound NovoTradePacker NTSP-system Octa-MED Oktalyzer onEscapee PaulRobotham PaulShields PaulSummers PeterVerswyvelen PierreAdane ProfessionalSoundArtists PTK-Prowiz PumaTracker RichardJoseph RiffRaff RobHubbard RobHubbardOld Lionheart-Game SCUMM SeanConnolly SeanConran SIDMon1.0 SIDMon2.0 Silmarils SonicArranger SonicArranger-pc-all SonixMusicDriver SoundProgrammingLanguage SoundControl SoundFactory Sound-FX SoundImages SoundMaster SoundMon2.0 SoundMon2.2 SoundPlayer Special-FX Special-FX-ST SpeedyA1System SpeedySystem SteveBarrett SteveTurner SUN-Tronic Synth SynthDream SynthPack SynTracker TFMX TFMX-1.5-TFHD TFMX-7V TFMX-7V-TFHD TFMX-Pro TFMX-Pro-TFHD TFMX-ST ThomasHermann TimFollin TheMusicalEnlightenment TomyTracker Tronic UFO UltimateSoundtracker VoodooSupremeSynthesizer WallyBeben YM-2149 MusiclineEditor Soundtracker-IV Sierra-AGI DirkBialluch Quartet Quartet-PSG Quartet-ST 
 
+Extensions: several hundred Amiga player/packer extensions are matched as a filename prefix or suffix, e.g. `.mod` `.fc` `.fc13` `.fc14` `.hip` `.hip7` `.tfmx` `.mdat` `.ahx` `.thx` `.okt` `.med` `.mmd0` `.mmd1` `.mmd2` `.dw` `.cust` `.custom` `.sid1` `.sid2` `.ym` `.sng` `.digi` `.dss` `.jam` `.pru2` (see `UADEPlugin.cpp` for the full list)
+
 ### TedPlay
 
 Support for Plus/4 music
 
-### FFMPeg
+Extensions: `.prg`
+
+### FFMpeg
 
 Support for streaming audio
 
 * AAC
 * Ogg/Vorbis
 
-## V2
+Extensions: `.m4a` `.aac` `.mp3` `.mp4`
+
+### V2
 
 Support for Farbrausch V2 Synthesizer System modules
+
+Extensions: `.v2` `.v2m`
