@@ -132,15 +132,7 @@ ninja
 
 ### Shoutcast Radio
 
-Scenesat - https://scenesat.com/
-SLAY Radio - https://www.slayradio.org/
-Nectarine - https://scenestream.net/
-VGM Radio - http://vgmradio.com/
-NoLife-Radio - https://www.nolife-radio.com/
-Rainwave - https://rainwave.cc/
-The Sid Station - https://c64radio.com/
-Radio PARALAX - https://www.radio-paralax.de/
-CVGM Radio - https://radio.cvgm.net/
+Scenesat - https://scenesat.com ■ SLAY Radio - https://www.slayradio.org ■ Nectarine - https://scenestream.net ■ VGM Radio - http://vgmradio.com ■ NoLife-Radio - https://www.nolife-radio.com ■ Rainwave - https://rainwave.cc ■ The Sid Station - https://c64radio.com ■ Radio PARALAX - https://www.radio-paralax.de ■ CVGM Radio - https://radio.cvgm.net
 
 ## Music Plugins (Supported formats)
 
