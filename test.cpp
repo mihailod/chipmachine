@@ -177,6 +177,39 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
 }
 
 TEST_CASE("GME", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme/working", ""); }
+
+// Regression test for SGC (Sega Master System / Game Gear / ColecoVision)
+// support. The vendored Game_Music_Emu had the SGC emulator stripped out (the
+// USE_GME_SGC scaffolding was left behind but the Sgc_* sources were missing).
+// It was added back -- Sgc_Emu/Impl/Core/Cpu plus the Z80_Cpu core, Gme_Loader
+// and Sms_Fm_Apu it depends on -- and "sgc" registered in GMEPlugin. This plays
+// a real .sgc PSG tune and checks for audio. (The YM2413/OPLL FM chip is a stub
+// in this copy, so SMS FM is reported unsupported; Game Gear tunes like this one
+// are PSG-only and play fully.) Fails if SGC routing or the emulator regresses.
+TEST_CASE("GME SGC plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::GMEPlugin plugin;
+
+    std::string const sgc = "testmus/gme/working/Dynamite Headdy.sgc";
+    REQUIRE(plugin.canHandle(sgc));
+
+    auto* player = plugin.fromFile(sgc);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
 TEST_CASE("AdPlug", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", ".rol", "data"); }
 TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
 TEST_CASE("PxTone", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/ptcop", ""); }
