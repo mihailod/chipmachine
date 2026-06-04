@@ -228,7 +228,7 @@ Support for MP3 music
 
 ### Vice
 
-Support for Commodore C64 music
+Support for Commodore C64 music (.sid), including Compute's Stereo Sidplayer tunes (.mus / .str)
 
 ### Hively
 
