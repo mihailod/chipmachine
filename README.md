@@ -4,20 +4,13 @@ ChipMachineAS
   <img src="https://img.shields.io/github/downloads/mihailod/chipmachine/total?label=Total%20Downloads" alt="Total Downloads">
 </div>
 
-
-**Port of ChipMachine (see the fork info) for Apple Silicon.**
+**Port of ChipMachine for Apple Silicon.**
 
 ![Annoying Popup](data/misc/argh.jpg)
 
 > ChipMachine is my favorite Mac retro chiptune player and I have been using it forever. However, when opening it on my Mac after a recent macOS update, I saw this annoying popup. It caused anger in me, and I channeled that anger into this project.
 
 ---
-
-**ONLY BUILDING ON APPLE SILICON (ARM / M CHIPS) HAS BEEN TESTED -- INSTALL AT YOUR OWN RISK.**
-
-**BUILD SCRIPTS (FOR NOW) EXPLICITLY TARGET ONLY THE VERY LATEST macOS (26 / TAHOE) AND HAVE NOT BEEN TESTED ON OLDER VERSIONS.**
-
-**I AM USING AI (gemini/agy, claude, codex) TO HELP ME WITH THIS INTEL -> ARM PORT. SO IT IS ALSO AN EXPERIMENT IN HOW AI PERFORMS AT THIS TASK.**
 
 ![Screenshot](data/misc/screen.png)
 
@@ -34,17 +27,17 @@ ChipMachineAS
 
 ## Binaries
 
-Binaries for macOS (only tested on Tahoe for now) are available under *Releases*
+Binaries for macOS (tested on Tahoe) are available under *Releases*
 
-**NOTE I understand that Tahoe is a tough requirement for some however I have no means to test on older macOS. If you care about older macOS that much feel free to fix yourself (if something is not working) and I will approve pull requests (assuming you can properly test it)**
+**NOTE it should work on pre-Tahoe macOS however I have no means to test it**
 
 https://github.com/mihailod/chipmachine/releases
 
 ### Running on Mac (Gatekeeper Authorization)
 
-TESTED ON TAHOE ONLY
+The app is distributed with an ad-hoc code signature and macOS Gatekeeper will block it.
 
-Because this standalone app is distributed with an ad-hoc code signature, macOS Gatekeeper will block it. This is standard behavior for open-source binaries distributed outside the official Mac App Store ecosystem.
+This is standard behavior for open-source binaries distributed outside the official Mac App Store ecosystem.
 
 To authorize and run the application on your Mac, follow these steps:
 
@@ -68,9 +61,9 @@ To authorize and run the application on your Mac, follow these steps:
 
 * Make sure you have Homebrew installed (Apple Silicon homebrew in /opt/homebrew/ , make sure you are not using Intel legacy /usr/local tools)
 * brew install git cmake ninja freetype glew glfw3 lua fftw mpg123 python ffmpeg
-* (if some packages are reported missing later install then via brew and let me know -- I missed them in the line above)
+* (if some packages are reported missing later install then via brew and let me know -- I missed them in the line above!)
 
-## Building for Apple Silicon (ALPHA/WIP, see TOODOO.txt)
+## Building for Apple Silicon
 
 ```bash
 mkdir chipmachine-as && cd chipmachine-as
@@ -87,6 +80,8 @@ ninja
 
 * Running the app from the build folder: ./chipmachine
 * Packaging the app: chipmachine/package_ap.sh
+* See chipmachine/data/misc/TOODOO.txt for to-dos
+* AI tools used to help with the porting: Gemini, Antigravity, Claude, Codex)
 
 ## Using the application
 
@@ -104,20 +99,20 @@ ninja
 
 ### Music Collections
 
-* Modland - https://ftp.modland.com/
-* High Voltage SID collection - https://www.hvsc.c64.org/
-* Gamebase64 - http://www.gb64.com/
-* AMP (Amiga Music Preservation) - http://amp.dascene.net/
-* Amiga remix - http://amigaremix.com/
-* RKO - http://remix.kwed.org/
-* Atari ST (SNDH) - http://sndh.atari.org/
-* SNES Music - http://snesmusic.org/
-* Atari SAP (ASMA) - http://asma.atari.org/
-* HVTC (High Voltage TED Collection) - http://plus4world.powweb.com/
-* NSFE (local NES music collection)
-* Sounds of Scenesat - https://scenesat.com/
-* AmigaVibes - http://www.amigavibes.org/
-* Demovibes - https://www.demovibes.org/
+* Modland - https://ftp.modland.com
+* High Voltage SID collection - https://www.hvsc.c64.org
+* Gamebase64 - http://www.gb64.com
+* AMP (Amiga Music Preservation) - http://amp.dascene.net
+* Amiga remix - http://amigaremix.com
+* RKO - http://remix.kwed.org
+* Atari ST (SNDH) - http://sndh.atari.org
+* SNES Music - http://snesmusic.org
+* Atari SAP (ASMA) - http://asma.atari.org
+* HVTC (High Voltage TED Collection) - http://plus4world.powweb.com
+* NSFE (Famicompo mini NSFE archive of 1,228 songs from https://forums.nesdev.org/viewtopic.php?t=21128)
+* Sounds of Scenesat - https://scenesat.com
+* AmigaVibes - http://www.amigavibes.org
+* Demovibes - https://www.demovibes.org
 
 ### Demo databases
 
