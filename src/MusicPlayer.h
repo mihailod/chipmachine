@@ -5,7 +5,9 @@
 #include <coreutils/fifo.h>
 
 #include <atomic>
+#include <functional>
 #include <memory>
+#include <mutex>
 #include <vector>
 
 namespace musix {
@@ -71,6 +73,12 @@ public:
 
     void setAudioCallback(const std::function<void(int16_t*, int)>& cb)
     {
+        // Guarded because the CoreAudio thread reads/invokes audio_callback
+        // concurrently (see the play() lambda in the constructor). ~ChipMachine
+        // calls this with nullptr from the main thread during shutdown while
+        // audio is still live — without the lock that is a data race on the
+        // std::function object itself (UB), not just on what it points at.
+        std::lock_guard<std::mutex> lock(audio_cb_mutex);
         audio_callback = cb;
     }
 
@@ -82,6 +90,7 @@ private:
     SongInfo playing_info;
     // Fifo fifo;
     std::function<void(int16_t*, int)> audio_callback;
+    mutable std::mutex audio_cb_mutex;
 
     std::atomic<bool> paused{ false };
 

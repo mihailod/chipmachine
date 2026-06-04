@@ -36,12 +36,17 @@ MusicPlayer::MusicPlayer(std::shared_ptr<AudioPlayer> ap)
         if (fifo.filled() >= size) {
             fifo.get(ptr, size);
             play_pos += size / 2;
-            
+
             // CRITICAL LIFETIME GUARD:
-            // Ensure both the local target handle and the target callback are valid 
-            // before transferring data to the visualization/FFT layer.
-            if (!dont_play && audio_callback) {
-                audio_callback(ptr, size);
+            // Hold audio_cb_mutex while invoking so the std::function cannot be
+            // reassigned (e.g. setAudioCallback(nullptr) from ~ChipMachine on the
+            // main thread) underneath us. The lock is held only for the trivial
+            // FFT feed; the main thread never holds it for long.
+            if (!dont_play) {
+                std::lock_guard<std::mutex> lock(audio_cb_mutex);
+                if (audio_callback) {
+                    audio_callback(ptr, size);
+                }
             }
         } else {
             memset(ptr, 0, size * 2);
