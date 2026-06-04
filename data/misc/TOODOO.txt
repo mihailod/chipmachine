@@ -12,11 +12,6 @@ could not play song:
 ===================
 - .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM).
 
-- investigate? The one nuance: fmgen's OPNA has a hardware-rhythm channel (6 ADPCM drums: BD/SD/TOP/HH/TOM/RIM) that loads external 2608_*.WAV files. FMP calls opna.Init(..., nullptr) — no rhythm path — so those drum samples are never loaded and that specific channel is silent. Important points:
-It's graceful (missing path → break, no crash, no shipped-file requirement).
-It's not new or FMP-specific — s98fmgen.cpp:68 inits the identical OPNA the same way (device.Init(clock, rate, false), null path). So FMP just matches the pre-existing S98 behavior; the hardware-rhythm drums have always been silent in this build.
-FM, SSG, melody all play. I ran the FMP test: title.ovi and lockstheme.ozi → OK.
-
 
 could not load file
 ===================

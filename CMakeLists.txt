@@ -249,7 +249,7 @@ endif()
 add_executable(mksonglist mksonglist/mksonglist.cpp src/SongFileIdentifier.cpp)
 target_link_libraries(mksonglist PRIVATE coreutils archive sc68plugin mp3plugin)
 
-add_executable(cmtest testmain.cpp test.cpp ${MAIN_FILES})
+add_executable(cmtest testmain.cpp test.cpp test_opna_rhythm.cpp ${MAIN_FILES})
 target_link_libraries(cmtest PRIVATE 
     plugin_register 
     ${CORE_MODULES} 
@@ -263,7 +263,8 @@ target_link_libraries(cmtest PRIVATE
     avutil
     swresample
 )
-target_include_directories(cmtest PRIVATE ${APONE}/mods)
+target_include_directories(cmtest PRIVATE ${APONE}/mods
+    ${MUSICPLAYER}/src/plugins/s98plugin/m_s98/device/fmgen)
 target_compile_definitions(cmtest PRIVATE -DTESTING)
 
 # --- EXTERNAL STUFF COMPILER WARNING SUPPRESSION ---

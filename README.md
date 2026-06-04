@@ -275,6 +275,8 @@ Extensions: `.mdx` (with optional `.pdx` sample banks)
 
 Support for NEC PC-98 FMP driver music (.opi / .ovi / .ozi)
 
+Includes the OPNA hardware-rhythm drums: the rhythm sample ROM is decoded and embedded in the player, so percussion plays with no additional/secondary files.
+
 ### PxTone
 
 Support for PxTone Collage music (.ptcop / .pttune) by Studio Pixel
@@ -289,7 +291,7 @@ Extensions: `.org`
 
 ### S98
 
-Support for retro hardware Music
+Support for retro hardware Music, including OPNA hardware-rhythm drums via the embedded rhythm sample ROM.
 
 Extensions: `.s98`
 
