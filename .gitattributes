@@ -1,0 +1,6 @@
+# Exclude vendored / third-party code from GitHub Linguist language stats.
+# These are bundled tools and libraries, not part of this project's source.
+
+bin/**          linguist-vendored
+external/**      linguist-vendored
+catch.hpp        linguist-vendored
