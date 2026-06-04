@@ -3,9 +3,9 @@ import subprocess
 import os
 
 tasks = [
-    ("testmus/gme/working", "AY Emul/Agent X/agent-x1.emul"),
-    ("testmus/gme/working", "Megadrive GYM/- unknown/Art Alive/art alive.gym"),
-    ("testmus/gme/working", "Nintendo Sound Format/3-108/new rally-x.nsf"),
+    ("testmus/gme", "AY Emul/Agent X/agent-x1.emul"),
+    ("testmus/gme", "Megadrive GYM/- unknown/Art Alive/art alive.gym"),
+    ("testmus/gme", "Nintendo Sound Format/3-108/new rally-x.nsf"),
     ("testmus/gsf", "Gameboy Sound Format/Motoi Sakuraba/Tales Of Phantasia/01 yume wa owaranai.gsf"),
     ("testmus/ht", "Dreamcast Sound Format/Daisuke Ishiwatari/Guilty Gear X (Naomi)/ggx-68.dsf"),
     ("testmus/ht", "Dreamcast Sound Format/Daisuke Ishiwatari/Guilty Gear X (Naomi)/ggx-66-00-01.minidsf"),

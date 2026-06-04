@@ -26,6 +26,11 @@ namespace di = boost::di;
 #include <set>
 namespace fs = std::filesystem;
 
+// Running tallies across all playback (testPlugin) runs, summarized in "coverage".
+static int g_errors = 0;   // red lines: FAILED / NO SOUND / EXCEPTION
+static int g_warnings = 0; // yellow/gray lines: Skipping
+static int g_ok = 0;       // playback OK
+
 TEST_CASE("modutils", "[machine]")
 {
     auto x = getTypeAndBase("/blaj/mdat.gurgle%tjosan");
@@ -138,10 +143,12 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
 
             int64_t sum = 0;
             if (!plugin.canHandle(f.getName())) {
-                printf("Skipping %s\n", f.getName().c_str());
+                printf("\033[90mSkipping %s\033[0m\n", f.getName().c_str());
+                g_warnings++;
                 continue;
             }
-            printf("Trying %s\n", f.getName().c_str());
+            printf("Trying %s ... ", f.getName().c_str());
+            fflush(stdout);
             try {
                 auto* player = plugin.fromFile(f.getName());
                 if (player) {
@@ -164,10 +171,20 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
                     }
                     delete player;
                 }
-                printf("#### Playing %s : %s\n", f.getName().c_str(),
-                       player ? (sum == 0 ? "NO SOUND" : "OK") : "FAILED");
+                const char* status = player ? (sum == 0 ? "NO SOUND" : "OK") : "FAILED";
+                if (!player || sum == 0) {
+                    // rewrite the whole line in red on failure
+                    printf("\r\033[31mTrying %s ... playback %s\033[0m\n",
+                           f.getName().c_str(), status);
+                    g_errors++;
+                } else {
+                    printf("playback %s\n", status);
+                    g_ok++;
+                }
             } catch (std::exception& e) {
-                printf("#### Playing %s : EXCEPTION (%s)\n", f.getName().c_str(), e.what());
+                printf("\r\033[31mTrying %s ... playback EXCEPTION (%s)\033[0m\n",
+                       f.getName().c_str(), e.what());
+                g_errors++;
             }
         }
     } catch (std::exception& e) {
@@ -176,7 +193,7 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
     return true;
 }
 
-TEST_CASE("GME", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme/working", ""); }
+TEST_CASE("GME", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme", "nowork"); }
 
 // Regression test for SGC (Sega Master System / Game Gear / ColecoVision)
 // support. The vendored Game_Music_Emu had the SGC emulator stripped out (the
@@ -191,7 +208,7 @@ TEST_CASE("GME SGC plays sound", "[music]")
     logging::setLevel(logging::Level::Warning);
     musix::GMEPlugin plugin;
 
-    std::string const sgc = "testmus/gme/working/Dynamite Headdy.sgc";
+    std::string const sgc = "testmus/gme/Dynamite Headdy.sgc";
     REQUIRE(plugin.canHandle(sgc));
 
     auto* player = plugin.fromFile(sgc);
@@ -612,7 +629,7 @@ TEST_CASE("Vice Stereo Sidplayer", "[music][vice]")
     REQUIRE(playsSound("testmus/libvice/10_Orbyte.sid"));
 }
 
-TEST_CASE("priority_map", "")
+TEST_CASE("priority_map", "[.]")
 {
     musix::ChipPlugin::createPlugins("data");
     auto& plugins = musix::ChipPlugin::getPlugins();
@@ -638,13 +655,19 @@ TEST_CASE("priority_map", "")
 
 TEST_CASE("coverage", "[music]")
 {
+    printf("===========================================\n");
+    printf("\033[31mERRORS: %d\033[0m, \033[33mWARNINGS: %d\033[0m, \033[32mOK: %d\033[0m\n",
+           g_errors, g_warnings, g_ok);
+    printf("===========================================\n");
     musix::ChipPlugin::createPlugins("data");
     auto& plugins = musix::ChipPlugin::getPlugins();
-    
+
     std::vector<std::string> allMissing;
+    std::map<std::string, std::vector<std::string>> missingByDir;
+    size_t missingExtCount = 0;
     std::set<std::string> missingFolders;
     std::unordered_map<std::string, std::string> pluginDirs = {
-        {"Game Music Engine", "testmus/gme/working"},
+        {"Game Music Engine", "testmus/gme"},
         {"AdPlug", "testmus/adlib"},
         {"UADE", "testmus/uade"},
         {"OpenMPT", "testmus/openmpt"},
@@ -667,7 +690,8 @@ TEST_CASE("coverage", "[music]")
         {"V2Plugin", "testmus/v2"},
         {"PxTone Collage Player", "testmus/pxtone"},
         {"Organya Player", "testmus/org"},
-        {"SunVox Player", "testmus/sunvox"}
+        {"SunVox Player", "testmus/sunvox"},
+        {"FMPPlugin", "testmus/fmp"}
     };
 
     for (auto const& plugin : plugins) {
@@ -694,10 +718,28 @@ TEST_CASE("coverage", "[music]")
             }
         }
 
+        std::string shortDir = dir;
+        std::string prefix = "testmus/";
+        if (shortDir.rfind(prefix, 0) == 0) {
+            shortDir = shortDir.substr(prefix.length());
+        }
         for (auto const& ext : exts) {
             if (existingExts.count(ext) == 0) {
-                printf(".%s testing skipped, add file to folder %s\n", ext.c_str(), dir.c_str());
+                missingByDir[shortDir].push_back(ext);
+                missingExtCount++;
                 allMissing.push_back(name + ":" + ext + " (Target Folder: " + dir + ")");
+            }
+        }
+    }
+
+    if (!missingByDir.empty()) {
+        printf("\n\033[31m%zu missing folders with test files in testmus detected.\033[0m\n",
+               missingByDir.size());
+        printf("\033[31m%zu extensions not covered.\033[0m\n", missingExtCount);
+        for (auto const& [dir, exts] : missingByDir) {
+            printf("%s/: ", dir.c_str());
+            for (size_t i = 0; i < exts.size(); ++i) {
+                printf("%s%s", exts[i].c_str(), (i == exts.size() - 1) ? "\n" : ", ");
             }
         }
     }
