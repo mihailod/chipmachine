@@ -423,7 +423,7 @@ void ChipMachine::updateScreenshotArea()
     float final_h = bm_h * d;
 
     float x = screen.width() - final_w - (screen.width() * 0.05);
-    float y = topLeft.y;
+    float y = topLeft.y + screen.height() * 0.1;
 
     screenShotIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
 }
