@@ -75,6 +75,7 @@ git clone https://github.com/mihailod/98fmplayer.git
 git clone https://github.com/mihailod/libpxtone.git
 git clone https://github.com/mihailod/organya.h.git organya
 git clone https://github.com/mihailod/eupmini.git
+git clone --recursive https://github.com/mihailod/libkss.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
@@ -303,6 +304,12 @@ Extensions: `.sunvox`
 Support for Euphony music (FM Towns / PC-98)
 
 Extensions: `.eup`
+
+### MGS (MGSDRV)
+
+Support for MSX music.
+
+Extensions: `.mgs`
 
 ### S98
 

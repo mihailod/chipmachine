@@ -30,6 +30,7 @@ extern "C" {
     void orgplugin_register();     // Organya / Cave Story (.org)
     void sunvoxplugin_register();  // SunVox modular synth (.sunvox)
     void eupplugin_register();     // Euphony / FM Towns & PC-98 (.eup)
+    void kssplugin_register();     // MGSDRV / MSX (.mgs) via libkss
 }
 
 void register_plugins() {
@@ -60,4 +61,5 @@ void register_plugins() {
     orgplugin_register();
     sunvoxplugin_register();
     eupplugin_register();
+    kssplugin_register();
 }

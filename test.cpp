@@ -594,6 +594,39 @@ TEST_CASE("EUP plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// MGSDRV (.mgs, MSX) via the vendored libkss replayer. The MGSDRV Z80 driver is
+// embedded in libkss (modules/drivers/mgsdrv.h), so a plain .mgs needs no runtime
+// file -- the plugin emulates Z80 + PSG/SCC/OPLL and renders directly.
+TEST_CASE("MGS", "[music]") { testPlugin<musix::KSSPlugin>("testmus/mgs", ""); }
+// MGS plays sound. The embedded MGSDRV driver drives PSG/OPLL; the plugin must
+// detect the "MGS" signature, convert via KSS_bin2kss, and produce non-zero
+// audio with no external files. Fails if the driver blob is dropped (empty
+// MGSDRV array) or the canHandle signature check regresses.
+TEST_CASE("MGS plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::KSSPlugin plugin;
+
+    std::string const mgs = "testmus/mgs/snatcher - twilight of neo kobe city.mgs";
+    REQUIRE(plugin.canHandle(mgs));
+
+    auto* player = plugin.fromFile(mgs);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // OPNA hardware-rhythm drums. The OPNA rhythm sample ROM is embedded
 // (opna_rhythm_rom.cpp) and loaded by OPNA::Init via LoadEmbeddedRhythm(), so
 // FMP/S98 percussion plays with no runtime file. This keys on all six rhythm
