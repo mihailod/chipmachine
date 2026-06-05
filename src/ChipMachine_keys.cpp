@@ -120,8 +120,7 @@ void ChipMachine::setupRules()
     addKey('-', "volume_down");
     addKey({ '+', '=' }, "volume_up");
     addKey(keycodes::TAB, "toggle_command");
-    addKey(keycodes::HOME, if_equals(currentScreen, MAIN_SCREEN),
-           "local_file_playback");
+    addKey(keycodes::HOME, "local_file_playback");
     std::string empty("");
     addKey('i' | CTRL, if_equals(filter, empty), "set_collection_filter");
     addKey('i' | CTRL, if_not_equals(filter, empty), "clear_filter");
