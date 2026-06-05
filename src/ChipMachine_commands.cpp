@@ -69,6 +69,16 @@ void ChipMachine::setupCommands()
             showScreen(lastScreen);
     });
 
+    cmd("local_file_playback", [=] {
+        std::string path = open_file_dialog();
+        if (path != "") {
+            SongInfo si;
+            si.path = path;
+            player.playSong(si);
+            showScreen(MAIN_SCREEN);
+        }
+    });
+
     cmd("download_current", [=] {
         auto target = Environment::getHomeDir() / "Downloads";
         utils::create_directory(target);

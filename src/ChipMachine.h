@@ -186,6 +186,8 @@ private:
         "F9",  "F10",    "F11",      "F12"
     };
 
+    std::string open_file_dialog();
+
     void addKey(uint32_t key, statemachine::Condition const& cond,
                 std::string const& cmd);
 

@@ -173,6 +173,7 @@ set(MAIN_FILES
     src/youtube.cpp
     src/textmode.cpp
     src/CheckForUpdate.mm
+    src/NativeDialogs.mm
 )
 
 set(GUI_FILES

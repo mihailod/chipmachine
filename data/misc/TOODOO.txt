@@ -29,7 +29,6 @@ console errors:
 
 other:
 ======
-- add HOME = Local file playback
 - keep fixing red stuff in cmtest outpus
 - add a test file for EVERY supported extension
 
@@ -87,6 +86,7 @@ So the realistic "would actually sound right" addition is roughly ~1,232 solid p
 NOT DONE:
 *********
 
+PROMPT READY WHEN TOKENS ARE BACK
 2128 .mbm (MoonBlaster) — often OPL4/Moonsound, which libkss has no emulation for. Many .mbm files would load but sound wrong/silent. This is the one with real risk.
 .mbm	MoonBlaster (MBR143)	MoonBlaster (+edit mode)	2,128
 .mbm (2,128) is the big number but the weakest bet. MoonBlaster heavily uses OPL4/Moonsound, which libkss has no emulation for. A large fraction of those 2,128 would load but play wrong or silent. Hard to say exactly how many without testing a sample.
