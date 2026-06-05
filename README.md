@@ -305,11 +305,11 @@ Support for Euphony music (FM Towns / PC-98)
 
 Extensions: `.eup`
 
-### MGS (MGSDRV)
+### MSX (libkss)
 
-Support for MSX music.
+Support for MSX music. (Note no `.mbm` support yet — it generally requires OPL4/Moonsound, which libkss cannot emulate.)
 
-Extensions: `.mgs`
+Extensions: `.mgs` `.bgm` `.opx` `.mpk`
 
 ### S98
 

@@ -12,6 +12,7 @@ crashes:
 
 could not play song:
 ===================
+- .dmf starry viper -- investigate why, dmf should be covered
 - .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM).
 
 
@@ -74,44 +75,27 @@ MGSDRV (.mgs) [610 files] & MoonBlaster (.mbm) [296 files]
 "No existing plugin claims .mgs, and 1388 MGS songs are in database"
 296	.mbm	MoonBlaster (MSX)	HardER	MSX sample-based tracker; needs .mbk sample banks alongside; MSX emulation required; no ready C library found
 
+DONE 808 + 373 + 51 .bgm, .opx, .mpk — PSG/SCC/OPLL based, should work like MGS. Probably easy wins.
+.bgm	KINROU5	MuSICA	808
+.opx	OPX4KSS / OPLLDriver	OPLLDRV	373
+.mpk	MPK106/103	MPK	51
+.bgm + .opx + .mpk (1,232) are the safe wins — all PSG/SCC/OPLL-based, same chips MGS already uses, so they'd play like MGS does now.
+So the realistic "would actually sound right" addition is roughly ~1,232 solid plus an uncertain slice of the 2,128 MoonBlaster files.
+
 *******************************
 
 NOT DONE:
 *********
 
-MGS discovery:
-.bgm, .opx, .mpk — PSG/SCC/OPLL based, should work like MGS. Probably easy wins.
-.mbm (MoonBlaster) — often OPL4/Moonsound, which libkss has no emulation for. Many .mbm files would load but sound wrong/silent. This is the one with real risk.
-
-Verified — each extension maps cleanly to exactly one MSX collection (no extension collisions). Here's what's currently sitting unplayable in your database:
-
-Format	Driver	Collection	Songs in DB
+2128 .mbm (MoonBlaster) — often OPL4/Moonsound, which libkss has no emulation for. Many .mbm files would load but sound wrong/silent. This is the one with real risk.
 .mbm	MoonBlaster (MBR143)	MoonBlaster (+edit mode)	2,128
-.bgm	KINROU5	MuSICA	808
-.opx	OPX4KSS / OPLLDriver	OPLLDRV	373
-.mpk	MPK106/103	MPK	51
-Total excluded	3,360
-For comparison, .mgs (now playable) is 1,388.
-
-So there's a meaningful library locked behind those drivers — 3,360 songs, more than double the MGS count. Two important caveats before you decide whether that changes anything:
-
 .mbm (2,128) is the big number but the weakest bet. MoonBlaster heavily uses OPL4/Moonsound, which libkss has no emulation for. A large fraction of those 2,128 would load but play wrong or silent. Hard to say exactly how many without testing a sample.
-.bgm + .opx + .mpk (1,232) are the safe wins — all PSG/SCC/OPLL-based, same chips MGS already uses, so they'd play like MGS does now.
-So the realistic "would actually sound right" addition is roughly ~1,232 solid plus an uncertain slice of the 2,128 MoonBlaster files.
-
-You picked MGS-only and I'll leave it there — but given 1,232 reliably-playable songs are one small change away (re-enable 3 drivers + register 3 extensions, no OPL4 risk), want me to reconsider adding just .bgm/.opx/.mpk and leave .mbm out?
-
-----------------------
-
-
 
 535	.psy	Psycle tracker	Hard	Open-source tracker (psycle.sf.net) but the file format is complex and there's no standalone decode library
 Psycle (.psy) - Modular Tracker
    * Status: Unsupported.
    * Research: Psycle is an open-source modular tracker, but the .psy format is essentially a dump of the internal state. 
    * Feasibility: Hard. There is no standalone "playback-only" library; supporting it would require porting a large portion of the Psycle engine.
-
-
 
 272	.bgm	MuSICA (PC-98)	Hard	Japanese PC-98 music driver; very niche; no known open-source decoder outside of full PC-98 emulators
 

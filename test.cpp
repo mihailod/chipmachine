@@ -627,6 +627,45 @@ TEST_CASE("MGS plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// The other MSX libkss formats that share the KSSPlugin: MuSICA (.bgm, KINROU5
+// driver), OPLLDriver (.opx) and MPK (.mpk). All embed their Z80 driver like MGS
+// and drive PSG/SCC/OPLL, so they play self-contained. MoonBlaster (.mbm) is
+// deliberately not handled (needs OPL4).
+TEST_CASE("BGM", "[music]") { testPlugin<musix::KSSPlugin>("testmus/bgm", ""); }
+TEST_CASE("OPX", "[music]") { testPlugin<musix::KSSPlugin>("testmus/opx", ""); }
+TEST_CASE("MPK", "[music]") { testPlugin<musix::KSSPlugin>("testmus/mpk", ""); }
+// One file of each non-MGS libkss format must be detected by canHandle and
+// render non-zero audio with no external files -- this fails if any of the
+// KINROU/OPX/MPK driver blobs is dropped or a detector regresses.
+TEST_CASE("MSX libkss formats play sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::KSSPlugin plugin;
+
+    for (auto const& f : {"testmus/bgm/bolshoi kid.bgm",
+                          "testmus/opx/breakthrough.opx",
+                          "testmus/mpk/faraway memories.mpk"}) {
+        std::string const path = f;
+        INFO(path);
+        REQUIRE(plugin.canHandle(path));
+
+        auto* player = plugin.fromFile(path);
+        REQUIRE(player != nullptr);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+        REQUIRE(energy != 0);
+    }
+}
+
 // OPNA hardware-rhythm drums. The OPNA rhythm sample ROM is embedded
 // (opna_rhythm_rom.cpp) and loaded by OPNA::Init via LoadEmbeddedRhythm(), so
 // FMP/S98 percussion plays with no runtime file. This keys on all six rhythm
