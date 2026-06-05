@@ -300,11 +300,7 @@ Extensions: `.sunvox`
 
 ### Euphony
 
-Support for Euphony music (FM Towns / PC-98), played via the eupmini replayer.
-A song references its companion instrument banks — `.fmb` (FM) and `.pmb` (PCM)
-— by name in its header; those files must sit next to the `.eup`. The Modland
-"Euphony" collection bundles them automatically (`MULTI:` paths). The FM Towns
-dialect is supported; the PC-98 `.pvi` sample-bank dialect is not yet.
+Support for Euphony music (FM Towns / PC-98)
 
 Extensions: `.eup`
 
