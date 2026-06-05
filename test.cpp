@@ -27,9 +27,9 @@ namespace di = boost::di;
 namespace fs = std::filesystem;
 
 // Running tallies across all playback (testPlugin) runs, summarized in "coverage".
-static int g_errors = 0;   // red lines: FAILED / NO SOUND / EXCEPTION
-static int g_warnings = 0; // yellow/gray lines: Skipping
-static int g_ok = 0;       // playback OK
+static int g_errors = 0; // red lines: FAILED / NO SOUND / EXCEPTION
+static int g_skips = 0;   // gray lines: Skipping (plugin can't handle)
+static int g_ok = 0;     // playback OK
 
 TEST_CASE("modutils", "[machine]")
 {
@@ -144,7 +144,7 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
             int64_t sum = 0;
             if (!plugin.canHandle(f.getName())) {
                 printf("\033[90mSkipping %s\033[0m\n", f.getName().c_str());
-                g_warnings++;
+                g_skips++;
                 continue;
             }
             printf("Trying %s ... ", f.getName().c_str());
@@ -656,8 +656,8 @@ TEST_CASE("priority_map", "[.]")
 TEST_CASE("coverage", "[music]")
 {
     printf("===========================================\n");
-    printf("\033[31mERRORS: %d\033[0m, \033[33mWARNINGS: %d\033[0m, \033[32mOK: %d\033[0m\n",
-           g_errors, g_warnings, g_ok);
+    printf("\033[31mERRORS: %d\033[0m, \033[90mSKIPS: %d\033[0m, \033[32mOK: %d\033[0m\n",
+           g_errors, g_skips, g_ok);
     printf("===========================================\n");
     musix::ChipPlugin::createPlugins("data");
     auto& plugins = musix::ChipPlugin::getPlugins();

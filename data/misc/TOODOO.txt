@@ -40,10 +40,11 @@ extension support
 
 Unsupported extensions in the database (≥10 files, .gz excluded)
 
+Count	Ext	Format	Difficulty	Notes
+
 DONE:
 *****
 
-Count	Ext	Format	Difficulty	Notes
 DONE 1,783 .ptcop 	PxTone Collage (Pixel/Cave Story)	Moderate	Official C++ library released by Pixel on GitHub (pxtone); needs a new plugin wrapping it
 
 DONE 315	.pttune PxTone (older format, same family)	Moderate	Same pxtone library handles both .ptcop and .pttune
