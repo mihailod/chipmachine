@@ -1,4 +1,16 @@
 #!/usr/bin/env python3
+#
+# This script ONLY regenerates data/allmods.txt (the raw "size<TAB>path" listing
+# of every Modland file). It does NOT decide what counts as a song — that shaping
+# happens later in C++ MusicDatabase::parseModland at DB-build time.
+#
+# Euphony note: keep the .fmb / .pmb / .pvi instrument-bank files in this listing.
+# They are intentionally NOT stripped here. parseModland excludes them from the
+# song list (its `secondary` extension set) and EUPPlugin::getSecondaryFiles
+# fetches the correct bank for each .eup at play time. So re-running this script
+# is safe and reproduces the working state automatically — do not add bank
+# filtering here; the fix lives in parseModland (bump db.lua VERSION to reindex).
+#
 import subprocess
 import gzip
 import io

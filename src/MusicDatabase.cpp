@@ -293,7 +293,10 @@ bool MusicDatabase::parseModland(
 
     static const std::set<std::string> secondary = { "smpl", "sam", "ins",
                                                      "smp",  "pdx", "nt",
-                                                     "as" };
+                                                     "as",
+                                                     // Euphony instrument banks
+                                                     // (fetched via getSecondaryFiles)
+                                                     "fmb", "pmb", "pvi" };
     static const std::set<std::string> secondary_pref = { "smpl", "smp" };
     static const std::set<std::string> hasSubFormats = { "Spectrum", "Ad Lib",
                                                          "Video Game Music" };
@@ -319,8 +322,13 @@ bool MusicDatabase::parseModland(
             /* } */
             auto [ext, base] = getTypeAndBase(song.path);
 
-            if ((secondary.count(ext) > 0) ||
-                (secondary_pref.count(base) > 0) || endsWith(ext, "sflib")) {
+            // Match the secondary-extension list case-insensitively: Modland
+            // stores some collections UPPERCASE (e.g. FMP's .PVI/.OVI), so a
+            // case-sensitive check let bank files slip in as bogus standalone
+            // songs.
+            std::string extLower = toLower(ext);
+            if ((secondary.count(extLower) > 0) ||
+                (secondary_pref.count(base) > 0) || endsWith(extLower, "sflib")) {
                 continue;
             }
 
@@ -564,7 +572,7 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 uint64_t hash = MD5::hash(toLower(path));
                 auto it = pathMap.find(hash);
                 if (it == pathMap.end()) {
-                    LOGD("PATH '%s' not found", path);
+                    LOGV("PATH '%s' not found", path);
                 } else {
                     auto songrow = it->second;
                     query2.bind(prodrow, songrow).step();
@@ -600,7 +608,7 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 localCount++;
                 totalSongs++;
                 auto last = db.last_rowid();
-                if (collection_id == 6) LOGD("Inserting '%s'", song.path);
+                if (collection_id == 6) LOGV("Inserting '%s'", song.path);
                 auto hash = MD5::hash(utils::toLower(song.path));
                 pathMap[hash] = last;
             });
@@ -765,7 +773,7 @@ SongInfo& MusicDatabase::lookup(SongInfo& song)
                 path = parts[1];
             }
         }
-        LOGD("INDEX %s %s", parts[0], path);
+        LOGV("INDEX %s %s", parts[0], path);
     }
 
     auto q = db.query<std::string, std::string, std::string, std::string,
@@ -867,7 +875,7 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
     std::string shot;
     std::string title;
     std::string baseName = path_basename(parts[1]);
-    LOGD("Get screenhots / Path %s Collection '%s'", parts[1], parts[0]);
+    LOGV("Get screenhots / Path %s Collection '%s'", parts[1], parts[0]);
     if (s.metadata[SongInfo::SCREENSHOT] != "") {
         shot = s.metadata[SongInfo::SCREENSHOT];
     } else if (collection == "rsn") {
@@ -875,13 +883,13 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         shot = std::string("http://snesmusic.org/v2/images/screenshots/") +
                base + ".png";
         s.metadata[SongInfo::SCREENSHOT] = shot;
-        LOGD("Got rsn shot %s", shot);
+        LOGV("Got rsn shot %s", shot);
     } else if (collection == "pouet" || collection == "radio" ||
                collection == "demovibes") {
         shot = s.metadata[SongInfo::INFO];
         s.metadata[SongInfo::SCREENSHOT] = shot;
         s.metadata[SongInfo::INFO] = "";
-        LOGD("Got pouet shot %s", shot);
+        LOGV("Got pouet shot %s", shot);
     } else {
         auto q = sdb.query<std::string, std::string, std::string, std::string>(
             "SELECT product.title, product.screenshots, product.type, "
@@ -897,10 +905,10 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         while (q.step()) {
             std::string s, c;
             tie(title, s, format, c) = q.get_tuple();
-            LOGD("%s Collection %s Format %s", title, c, format);
+            LOGV("%s Collection %s Format %s", title, c, format);
             auto ld = levenshteinDistance(title, baseName);
             if (collection == "gb64" && c == "csdb") ld += 7;
-            LOGD("%s <=> %s : %d", title, baseName, ld);
+            LOGV("%s <=> %s : %d", title, baseName, ld);
             if (ld < lowestDist) {
                 shot = s;
                 collection = c;
@@ -909,7 +917,7 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         }
         if (lowestDist > static_cast<int>(baseName.length())) {
             shot = "";
-            LOGD("Screenshot match too weak (%d), skipping", lowestDist);
+            LOGV("Screenshot match too weak (%d), skipping", lowestDist);
         }
     }
     if (shot != "") {

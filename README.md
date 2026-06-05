@@ -74,6 +74,7 @@ git clone https://github.com/mihailod/vice310.git
 git clone https://github.com/mihailod/98fmplayer.git
 git clone https://github.com/mihailod/libpxtone.git
 git clone https://github.com/mihailod/organya.h.git organya
+git clone https://github.com/mihailod/eupmini.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
@@ -296,6 +297,16 @@ Extensions: `.org`
 Support for SunVox music by Alexander Zolotov (NightRadio)
 
 Extensions: `.sunvox`
+
+### Euphony
+
+Support for Euphony music (FM Towns / PC-98), played via the eupmini replayer.
+A song references its companion instrument banks — `.fmb` (FM) and `.pmb` (PCM)
+— by name in its header; those files must sit next to the `.eup`. The Modland
+"Euphony" collection bundles them automatically (`MULTI:` paths). The FM Towns
+dialect is supported; the PC-98 `.pvi` sample-bank dialect is not yet.
+
+Extensions: `.eup`
 
 ### S98
 

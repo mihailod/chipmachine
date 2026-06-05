@@ -560,6 +560,39 @@ TEST_CASE("RSN", "[music]") { testPlugin<musix::RSNPlugin>("testmus/rsn", ""); }
 TEST_CASE("MDX", "[music]") { testPlugin<musix::MDXPlugin>("testmus/mdx", ""); }
 TEST_CASE("S98", "[music]") { testPlugin<musix::S98Plugin>("testmus/s98", ""); }
 TEST_CASE("FMP", "[music]") { testPlugin<musix::FMPPlugin>("testmus/fmp", ""); }
+// Euphony (.eup, FM Towns / PC-98) via the vendored eupmini replayer. The .eup
+// references companion instrument banks (.fmb/.pmb) by name in its header; those
+// siblings live in the same dir and are skipped by canHandle (eup-only).
+TEST_CASE("EUP", "[music]") { testPlugin<musix::EUPPlugin>("testmus/eup", ""); }
+// Euphony plays sound, with companion banks. STARSKY.eup references the FM bank
+// "fmp" (fmp.fmb) and PCM bank "a_string" (a_string.pmb) by name in its header;
+// the plugin must locate those siblings in the song's directory and render
+// non-zero audio. Fails if header parsing, the .fmb/.pmb loader, or the ring
+// drain in getSamples regresses.
+TEST_CASE("EUP plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::EUPPlugin plugin;
+
+    std::string const eup = "testmus/eup/STARSKY.eup";
+    REQUIRE(plugin.canHandle(eup));
+
+    auto* player = plugin.fromFile(eup);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
 
 // OPNA hardware-rhythm drums. The OPNA rhythm sample ROM is embedded
 // (opna_rhythm_rom.cpp) and loaded by OPNA::Init via LoadEmbeddedRhythm(), so

@@ -7,7 +7,13 @@
 -- the intel chipmachine stopped at 23 (November 2017)
 -- after 8+ years, May 2026 24 is a major update
 -- to almost all databases bringing ~25% songs
-VERSION = 25;
+-- 26: Euphony (.eup) indexed standalone; .fmb/.pmb/.pvi banks excluded as
+--     songs (parseModland secondary set) and fetched via getSecondaryFiles
+-- 27: forces a clean reindex after the per-song index/screenshot LOGD spam was
+--     downgraded to LOGV (a full reindex was unusably slow printing it)
+-- 28: secondary-extension exclusion now case-insensitive, so FMP's UPPERCASE
+--     .PVI bank files stop being indexed as ~1074 bogus standalone songs
+VERSION = 28;
 
 DB = {
 {

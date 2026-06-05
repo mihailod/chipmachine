@@ -1,9 +1,11 @@
-data
-====
+data (in general need db version bump)
+======================================
 - (minor) radio screenshots missing for rainwave (favicon issue)
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
 - in general genuinely bad or missing files should be removed from the index
+- [DB change] remove westwood .snd files from db -- all play as .adl, .snd is not complete, no instruments
+
 
 crashes:
 ========
@@ -26,7 +28,6 @@ console errors:
 
 other:
 ======
-- remove westwood .snd files from db -- all play as .adl, .snd is not complete, no instruments
 - keep fixing red stuff in cmtest outpus
 - add a test file for EVERY supported extension
 
@@ -61,6 +62,9 @@ DONE 377	.org	Organya / Cave Story OrgMaker	Moderate	Simple proprietary format; 
 
 DONE 246	.sunvox	SunVox modular synth	Moderate	Official free SDK (sunvox_lib) with C API from warmplace.ru; well-documented
 
+DONE 501	.eup	Euphony (PC-98 OPL/ADPCM)	Moderate	FMPPlugin exists and handles .opi/.ovi/.ozi; Euphony (.eup) is a related but distinct PC-98 format — open-source players exist on Japanese sites
+DONE 325	.pmb	Euphony PCM sample bank (PC-98)	N/A	Auxiliary file for .eup songs, not standalone
+
 *******************************
 
 NOT DONE:
@@ -69,12 +73,6 @@ NOT DONE:
 610	.mgs	MGSDRV (MSX)	Hard	MSX music driver format; playback requires MSX hardware emulation; some open-source players exist (mgsdrv replayer) but no ready-made C library
 
 535	.psy	Psycle tracker	Hard	Open-source tracker (psycle.sf.net) but the file format is complex and there's no standalone decode library
-
-
-501	.eup	Euphony (PC-98 OPL/ADPCM)	Moderate	FMPPlugin exists and handles .opi/.ovi/.ozi; Euphony (.eup) is a related but distinct PC-98 format — open-source players exist on Japanese sites
-1,104	.pvi	FMP/Euphony PCM sample bank (PC-98)	N/A	Auxiliary sample bank for .eup songs, not a standalone track
-325	.pmb	Euphony PCM sample bank (PC-98)	N/A	Auxiliary file for .eup songs, not standalone
-
 
 296	.mbm	MoonBlaster (MSX)	Hard	MSX sample-based tracker; needs .mbk sample banks alongside; MSX emulation required; no ready C library found
 
@@ -139,12 +137,6 @@ GEMINI TAKE:
  Based on the notes in TOODOO.txt and my investigation of the current codebase, here is a report on the feasibility of
   implementing the top unsupported extensions:
 
-  2. Euphony (.eup) - PC-98 OPL/ADPCM
-   * Status: Unsupported.
-   * Research: This is a Japanese PC-98 format. The project already has the 98fmplayer infrastructure and FMPPlugin
-     using fmgen for OPNA emulation. 
-   * Feasibility: Moderate. It would involve implementing a new driver (fmdriver_eup.c) in 98fmplayer/fmdriver.
-     Replayer source code is available in various open-source Japanese PC-98 tools (e.g., libeb or PMD replayers).
 
   5. MGSDRV (.mgs) [610 files] & MoonBlaster (.mbm) [296 files]
    * Status: Unsupported.
@@ -164,17 +156,6 @@ GEMINI TAKE:
      state. 
    * Feasibility: Hard. There is no standalone "playback-only" library; supporting it would require porting a large
      portion of the Psycle engine.
-
-  Summary of "Quick Wins"
-  ┌─────────┬───────────┬────────────────┬────────────────────────────────────────────────────────┐
-  │ Format  │ Extension │ Difficulty     │ Implementation Path                                    │
-  ├─────────┼───────────┼────────────────┼────────────────────────────────────────────────────────┤
-  │ Euphony │ .eup      │ Moderate       │ Add a new driver to the existing FMPPlugin/98fmplayer. │
-  └─────────┴───────────┴────────────────┴────────────────────────────────────────────────────────┘
-
-
-
-
 
 *****************************************************
 
