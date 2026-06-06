@@ -12,7 +12,12 @@ crashes:
 
 could not play song:
 ===================
+- .sgc parlour
+
 - .dmf starry viper -- investigate why, dmf should be covered
+The actual failure: Deflemask .dmf and X-Tracker .dmf are two completely unrelated formats that happen to share an extension. OpenMPT (and modplug) only know X-Tracker DMF (magic: DDMF). Deflemask uses zlib-compressed binary data (magic: 0x78).
+
+
 - .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM).
 
 
@@ -29,6 +34,17 @@ console errors:
 
 other:
 ======
+- see starquake scoopex -- move scr a bit down
+
+- also starquake scoopex after some time:
+[tls @ 0x6000038429a0] IO Error: -9806
+[in#0/mov,mp4,m4a,3gp,3g2,mj2 @ 0x1587048f0] stream 0, offset 0x2400c1: partial file
+[in#0/mov,mp4,m4a,3gp,3g2,mj2 @ 0x1587047d0] Error during demuxing: Input/output error
+[aac @ 0x15860b340] decode_band_types: Input buffer exhausted before END element found
+[aist#0:0/aac @ 0x15860e770] [dec:aac @ 0x15860aea0] Error submitting packet to decoder: Invalid data found when processing input
+
+
+- can we detect "video unavailable" for youtube and show / print that?
 - keep fixing red stuff in cmtest outpus
 - add a test file for EVERY supported extension
 

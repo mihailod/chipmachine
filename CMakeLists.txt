@@ -248,7 +248,7 @@ if(NOT WIN32)
         )
 endif()
 
-add_executable(mksonglist mksonglist/mksonglist.cpp src/SongFileIdentifier.cpp)
+add_executable(mksonglist scripts/mksonglist/mksonglist.cpp src/SongFileIdentifier.cpp)
 target_link_libraries(mksonglist PRIVATE coreutils archive sc68plugin mp3plugin)
 
 add_executable(cmtest testmain.cpp test.cpp test_opna_rhythm.cpp ${MAIN_FILES})
