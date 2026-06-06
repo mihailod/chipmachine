@@ -12,7 +12,7 @@ ChipMachineAS
 
 ---
 
-![Screenshot](data/misc/screen.png)
+[![Screenshot](data/misc/screen.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
 
 ## Intro
 
