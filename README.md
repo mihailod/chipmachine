@@ -362,3 +362,41 @@ Extensions: `.v2` `.v2m`
 
 Streams audio directly from YouTube links (`youtube.com/` / `youtu.be/`). The bundled `yt-dlp` resolves the best audio stream, which is then played back via FFMpeg. This is how the Pouet database plays demoscene production soundtracks. `yt-dlp` ships with the app (`bin/ytdlp/`), so no extra setup is required.
 
+---
+
+## **Credits**
+
+This is mostly a preservation effort. I am making this project for myself so I am able to continue enjoying listening to my favorite music in a clean and ispirational way the original Chipmachine was providing to me over many many years.
+
+My work here is mostly based around:
+
+* **Porting**: from Intel to ARM
+* **Integration**: with / adding of various new plugins that did not exist in Intel version
+* **Content curation**: updating / ading more songs and fixing their metadata from various databases)
+* **Administation**: maintenance, releasing, pull requests merging, support, promoting
+
+**I don't take or imply any credit for the original idea and implementation and actual players development (the hardest part IMO).**
+
+Here is the attribution for the individual emulators, audio players, plugins, and core sub-routines utilized across this project sofar:
+
+* **OpenMPT (Tracker Formats):** Developed by the OpenMPT Project Team (originally founded by Olivier Lapicque). Licensed under BSD-3-Clause.
+* **GME / Game Music Emulator (Console Formats):** Developed by Shay Green. Licensed under LGPL-2.1-or-later.
+* **VICE (C64/SID emulation):** Developed by the VICE Core Team. Licensed under GPL-2.0-or-later.
+* **UADE (Amiga Exotic formats):** Developed by Heikki Orsila and the UADE Team. Licensed under GPL-2.0-or-later.
+* **StSound (Atari ST YM2149):** Developed by Arnaud Carré (Leonard/Oxygene). Licensed under MIT.
+* **SC68 (Atari ST/Amiga):** Developed by Benjamin Gerard. Licensed under GPL-3.0-or-later.
+* **AdPlug (PC AdLib/OPL):** Developed by Simon Peter and the AdPlug Team. Licensed under LGPL-2.1-or-later.
+* **Highly Experimental / PSF1/2:** Developed by Neill Corlett. Licensed under zlib License.
+* **AudioOverload Backend / AOSDK:** Developed by Richard Bannister and contributors. Licensed under Custom/Freeware permissive license.
+* **HivelyTracker (AHX/HVL):** Developed by IRIS (Peter "Yohng" V, Curt Cool). Licensed under BSD-3-Clause.
+* **MDX / S98 (PC-98 & Sharp X68000):** Emulation engines adapted from OpenMSX/GME variants. Licensed under GPL-2.0-or-later.
+* **Ayfly (ZX Spectrum AY-3-8910):** Developed by Sergey Vladimirov. Licensed under GPL-2.0-or-later.
+* **98fmplayer:** Developed by areis. Licensed under MIT.
+* **libkss (MSX KSS):** Developed by Mitsutaka Okazaki. Licensed under MIT.
+* **organya (Cave Story Organya format):** Developed by Studio Pixel (Daisuke Amaya). Portions adapted under MIT / Open Source.
+* **libpxtone (PixelTone audio):** Developed by Studio Pixel (Daisuke Amaya). Licensed under MIT.
+* **eupmini (PC-98 EUP audio):** Developed by various retro-computing contributors. Licensed under MIT.
+* **minimp3 (MP3 decoding):** Developed by Lieven van den Hauwe. Licensed under CC0-1.0 (Public Domain).
+* **Sol3 / Pybind11 / fmt (Core Infrastructure):** Developed by The Sol3/Pybind11/fmt Maintainers. Licensed under MIT.
+* **Freetype / Grappix (UI & Text):** Developed by The FreeType Project and Grappix contributors. Licensed under FTL / BSD-2-Clause.
+
