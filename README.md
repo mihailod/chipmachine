@@ -366,14 +366,14 @@ Streams audio directly from YouTube links (`youtube.com/` / `youtu.be/`). The bu
 
 ## **Credits**
 
-This is mostly a preservation effort. I am making this project for myself so I am able to continue enjoying listening to my favorite music in a clean and ispirational way the original Chipmachine was providing to me over many many years.
+This is mostly a preservation effort. I am making this project for myself so I am able to continue enjoying listening to my favorite music in a clean and inspirational way the original Chipmachine was providing to me over many many years.
 
 My work here is mostly based around:
 
 * **Porting**: from Intel to ARM
 * **Integration**: with / adding of various new plugins that did not exist in Intel version
-* **Content curation**: updating / ading more songs and fixing their metadata from various databases)
-* **Administation**: maintenance, releasing, pull requests merging, support, promoting
+* **Content curation**: updating / adding more songs and fixing their metadata from various databases)
+* **Administration**: maintenance, releasing, pull requests merging, support, promoting
 
 **I don't take or imply any credit for the original idea and implementation and actual players development (the hardest part IMO).**
 
