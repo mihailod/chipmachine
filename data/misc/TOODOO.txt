@@ -13,6 +13,86 @@ data (in general need db version bump)
 - in general genuinely bad or missing files should be removed from the index
 - [DB change] remove westwood .snd files from db -- all play as .adl, .snd is not complete, no instruments
 
+*************************************************
+* ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
+*************************************************
+
+1. The Mod Archive
+URL: [https://modarchive.org](https://modarchive.org)
+What it is: The single largest, active repository for tracker modules (.mod, .xm, .it, .s3m). While Modland is a massive raw FTP dump, Mod Archive is highly curated, reviewed, and rated by the community. Essential for tracker history.  
+The Mod Archive (Do Not Scrape)
+The site explicitly bans generic scrapers. However, they maintain their own official BitTorrent tracker specifically so users can download the entire site in bulk blocks.
+Navigate directly to http://tracker.modarchive.org/
+Download the core snapshot torrents (e.g., modarchive_2007_official_snapshot_120000_modules) which forms the massive base archive.
+Download the chronological addendum torrents (e.g., modarchive_2012_additions, etc.) to bring your local collection up to date.
+
+2. ExoticA / UnExoticA
+URL: [https://www.exotica.org.uk](https://www.exotica.org.uk)
+What it is: You have janeway.exotica.org.uk listed under demo databases, but you are missing the main site's crown jewel: UnExoticA. It tracks custom, exotic Amiga game music formats that don't fit into standard trackers (e.g., TFMX, Custom, HippoPlayer formats, Sonic Arranger).
+The site is heavily indexed and explicitly hosts single-file download collections for its entire music subsystem so you don't have to scrape thousands of individual game folders.
+Navigate to https://www.exotica.org.uk/wiki/UnExoticA
+Scroll to the downloads section. They provide a master collection pack (usually a massive .lha or .zip file containing all the exotic custom formats like TFMX and Sonic Arranger grouped by author/game).
+
+3. VGMRips
+URL: [https://vgmrips.net](https://vgmrips.net)
+What it is: The premier home for .vgm (Video Game Music) file logs, focusing heavily on arcade boards (Capcom CPS1/2/3, Sega system 16, Neo Geo) and sound chips like the YM2612, YM2151, and AY-3-8910.
+VGMRips (Use the Server Admin's Zip)
+The Reality: VGMRips is a database front-end. Scraping individual pages for .vgm packs will get your IP blocked. The former server host maintains an official, all-in-one compressed file.
+Go directly to the VGMRips forum thread: https://vgmrips.net/forum/viewtopic.php?t=496
+The thread is titled "VGMRips full download packs".
+Download the single aggregated zip file (VGMRips_all_of_them_[DATE].zip). It sits around 4 to 5 GB and contains every single pack logged on the site up to its compilation date.
+
+4. Project 2612 & SMS Power!
+URLs: [https://project2612.org](https://project2612.org) | [https://www.smspower.org](https://www.smspower.org)
+What they are: Definitive, dedicated system vaults. Project 2612 is the definitive source for Sega Genesis/Mega Drive .vgm rips. SMS Power handles Sega Master System, Game Gear, and SG-1000 audio logging.
+These sites are simple, predictable directory trees. They do not block standard command-line tools if you throttle your requests.
+Project 2612 (Sega Genesis)
+Use wget to cleanly mirror the entire structured .vgm archive directory. Use a mirror flag, reject HTML files, and add a mandatory delay to avoid triggering server alerts:
+Bash
+wget --mirror --no-parent --no-host-directories \
+     --reject "index.html*" --wait=1 --random-wait \
+     https://project2612.org/vgm/
+SMS Power! (Sega Master System / Game Gear)
+SMS Power hosts pre-packaged zip files of their entire music section.
+Bash
+wget --mirror --no-parent --accept "*.zip" \
+     --wait=1 --random-wait \
+     https://www.smspower.org/Music/
+
+5. Hoot Archive
+URL: ftp://[ftp.modland.com/pub/modules/Hoot/](https://ftp.modland.com/pub/modules/Hoot/) (or community mirrors like [http://snesmusic.org/hoot/vgm/](http://snesmusic.org/hoot/vgm/))
+What it is: Focuses heavily on Japanese PC-88, PC-98, Sharp X68000, and FM-towns game music logs. Essential if you want to dig into the PMD/PMD88 trackers and Yamaha FM-synthesis mastery.
+6. Mirsoft World of Game Mods
+
+URL: [http://www.mirsoft.info](http://www.mirsoft.info)
+What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.
+
+Demo Databases & Trackers
+
+1. Kestra BitWorld
+URL: [http://bitworld.bitfellas.org](http://bitworld.bitfellas.org)
+What it is: A sprawling, searchable database completely dedicated to tracking individual tracking artists, their releases, group affiliations, and scene history.
+
+2. Demozoo
+URL: [https://demozoo.org](https://demozoo.org)
+What it is: Pouet is great for comments and quick links, but Demozoo is the modern, highly structured relational database for the demoscene. It maps productions, groups, parties, and specific scene musicians across all platforms (including retro and modern PC).
+Demozoo is a highly structured database. Scraping the raw HTML pages is a waste of time and parsing energy. They provide a completely open, fully documented JSON API for bulk data synchronization.
+API Base: https://demozoo.org/api/v1/
+To extract all demoscene music production links programmatically, loop through the productions endpoint filtering by the music type:
+Bash
+curl -H "Accept: application/json" "https://demozoo.org/api/v1/productions/?production_type=music"
+Iterate through the paginated JSON responses to extract data fields natively instead of writing brittle regex scrapers.
+
+Radio Streams & Streams Media
+
+1. BitFellas (Radio Bitworld)
+URL: [http://www.bitfellas.org](http://www.bitfellas.org)
+What it is: Run by the same crew behind BitWorld, they host a highly active streaming radio network featuring dedicated 24/7 channels for demoscene music, chiptunes, and tracker tracks.
+
+2. Kohina
+URL: [https://www.kohina.com](https://www.kohina.com)
+What it is: One of the absolute oldest, purest retro audio streams still running. It plays exclusively 8-bit and 16-bit computer music (C64, Atari, Amiga, NES) directly simulated or sampled from original hardware.
+
 crashes:
 ========
 
