@@ -24,6 +24,7 @@ ChipMachineAS
 * **ENTER key = play**
 * **TAB key = help screen**
 * **(Read the scrolling text for more info)**
+* [Things in progress / to come](data/misc/TOODOO.txt)
 
 ## Binaries
 
@@ -98,6 +99,7 @@ ninja
 * *SHIFT-ESC* = Quit
 * *F7* = Toggle Favorite
 * Type _shoutcast_ to see the radio-stations
+* [Things in progress / to come](data/misc/TOODOO.txt)
 
 ## Data Sources
 
