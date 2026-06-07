@@ -24,7 +24,8 @@ ChipMachineAS
 * **ENTER key = play**
 * **TAB key = help screen**
 * **(Read the scrolling text for more info)**
-* [Things in progress / to come](data/misc/TOODOO.txt)
+* **[Things in progress / to come](data/misc/TOODOO.txt)**
+* **Ultimate goal: every chiptune searchable and instantly playable!** 
 
 ## Binaries
 
