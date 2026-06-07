@@ -7,6 +7,7 @@ security
 
 data (in general need db version bump)
 ======================================
+- add zx beeper videos from youtube if beeper solution not good
 - (minor) radio screenshots missing for rainwave (favicon issue)
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
