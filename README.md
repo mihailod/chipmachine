@@ -409,10 +409,11 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 
 ## Licensing
 
-Chipmachine is a combined work distributed under the GNU General Public License v3.0 
+Chipmachine is a combined work distributed under the [`GNU General Public License v3.0`](./LICENSE) 
 (or at your option, any later version) due to its underlying emulation dependencies.
 
-* **Core Architecture & Portions:** Copyright (c) 2022 Jonas Minnberg. Licensed under the MIT License.
+* **Original Program, Core Architecture:** Copyright (c) 2022 Jonas Minnberg. Licensed under the MIT License.
+* **Apple Silicon Port, Additional Plugins, Database Enhancements:** Copyright (c) 2026 Mihailo Despotović. Licensed under the MIT License.
 * **Atari ST/Amiga Emulation (SC68):** Licensed under GPL-3.0-or-later (forces overall project license).
 * **C64/A500 Emulation (VICE, UADE):** Licensed under GPL-2.0-or-later.
-* **Other Components:** See the `LEGAL` file for a complete matrix of MIT, BSD, and LGPL dependencies.
+* **Other Components:** See the [`LEGAL`](./LEGAL) file for a complete matrix of MIT, BSD, and LGPL dependencies.
