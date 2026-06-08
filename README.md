@@ -77,6 +77,7 @@ git clone https://github.com/mihailod/98fmplayer.git
 git clone https://github.com/mihailod/libpxtone.git
 git clone https://github.com/mihailod/organya.h.git organya
 git clone https://github.com/mihailod/eupmini.git
+git clone https://github.com/mihailod/zingzong.git
 git clone --recursive https://github.com/mihailod/libkss.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
@@ -184,7 +185,7 @@ Extensions: `.spc` `.nsf` `.nsfe` `.gbs` `.ay` `.gym` `.sap` `.vgm` `.vgz` `.hes
 
 Support for Atari 16 bit music
 
-Extensions: `.sc68` `.sndh` `.snd`
+Extensions: `.sc68` `.sndh` `.snd` `.4v`
 
 ### USF
 
@@ -402,4 +403,4 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **minimp3 (MP3 decoding):** Developed by Lieven van den Hauwe. Licensed under CC0-1.0 (Public Domain).
 * **Sol3 / Pybind11 / fmt (Core Infrastructure):** Developed by The Sol3/Pybind11/fmt Maintainers. Licensed under MIT.
 * **Freetype / Grappix (UI & Text):** Developed by The FreeType Project and Grappix contributors. Licensed under FTL / BSD-2-Clause.
-
+* **zingzong (Atari ST Quartet format):** Developed by Ben G. (benjihan). Licensed under MIT.

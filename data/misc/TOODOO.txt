@@ -188,7 +188,29 @@ So the realistic "would actually sound right" addition is roughly ~1,232 solid p
 DONE IN 1.2.1
 -------------
 
->>>>>>>>>> insert here >>>>>>>>>>
+DONE 240 .4v Quartet ST (Atari ST) DONE 4-voice sample tracker for Atari ST; .set is the companion sample file; UADE may be extensible to cover it
+Quartet ST (.4v) - Atari ST Tracker
+   * Status: Unsupported.
+   * Research: A 4-voice sample-based format for the Atari ST.
+   * Feasibility: Moderate. There are C replayers available. Interestingly, the AyflyPlugin explicitly blocks files with /quartet in the path, likely because they often use the .ay extension but aren't Spectrum-compatible.
+✦ The research on Quartet ST (.4v) is remarkably accurate, and the discovery regarding the AyflyPlugin blocking
+  /quartet paths is a high-signal technical observation.
+Engineering Commentary:
+   1. The "Blocking" Logic in AyflyPlugin:
+       * Your hunch is correct. Many legacy chiptune archives (like the old Project AY) bundled Quartet files under the .ay extension. 
+       * libayfly is a specialized emulator for AY-chip register dumps (like Spectrum or Amstrad CPC music). Quartet, however, is a software-mixing sample tracker for the Atari ST. 
+       * If Ayfly tried to "play" a Quartet file, it would be interpreting 68000 machine code as AY register writes, leading to catastrophic noise. The block in AyflyPlugin.cpp is a safety guard against this common mislabeling in music databases.
+   2. Implementation Feasibility: Moderate (leaning towards Easy)
+       * The "Gold Standard" Library: You should look at zingzong by Benjamin Gerard (Ben/OVR). It is a portable, MIT-licensed C library specifically designed to play Microdeal Quartet files (.4v, .set, .4q).
+       * Multi-file Challenge: The primary engineering hurdle is that Quartet is often split into two files: the song data (.4v) and the voice set (.set). 
+       * ChipMachine Advantage: ChipMachine already has an infrastructure for "secondary files" (used for Richard Joseph Amiga songs and .ins files). Implementing a QuartetPlugin would simply mean using the
+         getSecondaryFiles() hook to tell the player to look for the matching .set file in the same directory.
+   3. The .4q Variant:
+       * In the Atari ST scene, .4q is a "packed" version that bundles both the .4v and .set into one file. Supporting .4q would be even easier as it is self-contained.
+  Technical Verdict:
+  Quartet ST is a prime candidate for a native plugin. It represents the "missing link" between early beeper music and the ProTracker/MOD era on the Atari. By integrating the zingzong library, you could resolve the AyflyPlugin conflict properly by having a dedicated handler that actually plays the music instead of just blocking the path.
+  Recommendation: Upgrade status to "Highly Feasible." The existence of a clean, portable C replayer (zingzong) removes 90% of the implementation risk.
+
 
 NOT DONE:
 *********
@@ -219,31 +241,6 @@ NOT DONE:
    * Recommendation: Since you already have 98fmplayer source code in the repository (which focuses on PC-98 FM music), that would be the natural place to integrate a PC-98 MuSICA decoder if one were to be added. However, it currently only implements PMD and FMP drivers, confirming the niche status of MuSICA on that platform.
   Conclusion: You can play MSX .bgm files right now. Support for the PC-98 variant remains "Hard" due to the
   requirement for x86 driver emulation.
-
----
-
-198	.4v	Quartet ST (Atari ST)	Highly Feasible.	4-voice sample tracker for Atari ST; .set is the companion sample file; UADE may be extensible to cover it
-Quartet ST (.4v) - Atari ST Tracker
-   * Status: Unsupported.
-   * Research: A 4-voice sample-based format for the Atari ST.
-   * Feasibility: Moderate. There are C replayers available. Interestingly, the AyflyPlugin explicitly blocks files with /quartet in the path, likely because they often use the .ay extension but aren't Spectrum-compatible.
-✦ The research on Quartet ST (.4v) is remarkably accurate, and the discovery regarding the AyflyPlugin blocking
-  /quartet paths is a high-signal technical observation.
-Engineering Commentary:
-   1. The "Blocking" Logic in AyflyPlugin:
-       * Your hunch is correct. Many legacy chiptune archives (like the old Project AY) bundled Quartet files under the .ay extension. 
-       * libayfly is a specialized emulator for AY-chip register dumps (like Spectrum or Amstrad CPC music). Quartet, however, is a software-mixing sample tracker for the Atari ST. 
-       * If Ayfly tried to "play" a Quartet file, it would be interpreting 68000 machine code as AY register writes, leading to catastrophic noise. The block in AyflyPlugin.cpp is a safety guard against this common mislabeling in music databases.
-   2. Implementation Feasibility: Moderate (leaning towards Easy)
-       * The "Gold Standard" Library: You should look at zingzong by Benjamin Gerard (Ben/OVR). It is a portable, MIT-licensed C library specifically designed to play Microdeal Quartet files (.4v, .set, .4q).
-       * Multi-file Challenge: The primary engineering hurdle is that Quartet is often split into two files: the song data (.4v) and the voice set (.set). 
-       * ChipMachine Advantage: ChipMachine already has an infrastructure for "secondary files" (used for Richard Joseph Amiga songs and .ins files). Implementing a QuartetPlugin would simply mean using the
-         getSecondaryFiles() hook to tell the player to look for the matching .set file in the same directory.
-   3. The .4q Variant:
-       * In the Atari ST scene, .4q is a "packed" version that bundles both the .4v and .set into one file. Supporting .4q would be even easier as it is self-contained.
-  Technical Verdict:
-  Quartet ST is a prime candidate for a native plugin. It represents the "missing link" between early beeper music and the ProTracker/MOD era on the Atari. By integrating the zingzong library, you could resolve the AyflyPlugin conflict properly by having a dedicated handler that actually plays the music instead of just blocking the path.
-  Recommendation: Upgrade status to "Highly Feasible." The existence of a clean, portable C replayer (zingzong) removes 90% of the implementation risk.
 
 ---
 
@@ -338,34 +335,6 @@ Engineering Commentary:
 
 ---
 
-64	.prt	Pretracker (Amiga)	 *low-hanging fruit* Open-source on GitHub (1bsyl/pretracker); has a C replayer
-  The research for Pretracker (.prt) is solid but requires a nuanced understanding of the Amiga ecosystem and the available code.
-  1. Repository Identification: Correct (Mostly)
-   * The "1bsyl/pretracker" mention likely refers to 1bsyl (Sylvain Huet), who did indeed create a C replayer port of the Abyss PreTracker. 
-   * The Gold Mine: The repository 1bsyl/pretracker on GitHub is exactly what you need. It contains a modern C port (C99) that removes the Amiga hardware dependencies (Paula) and renders directly to an audio buffer.
-   * Link: github.com/1bsyl/pretracker (https://github.com/1bsyl/pretracker)
-  2. Feasibility Re-assessment: Moderate to Easy
-   * Why it's easier than others:
-       1. Portable C Code: The 1bsyl port is designed to work on modern OSs (Windows/Mac/Linux). It doesn't require a 68k emulator or Amiga ROMs.
-       2. Self-Contained Synthesis: Since Pretracker generates its own samples from parameters, you don't need external instrument libraries.
-       3. Clean API: The pretracker.c in that repo has a very simple interface: pre_init(), pre_render_samples(), and pre_tick().
-   * The "Catch": The replayer works by generating the entire song's samples into memory first (the "pre-calculation" phase). In a demoscene context, this is fine, but for a music player, you need to ensure this "init" time doesn't freeze the GUI. For a typical .prt file, it takes only a fraction of a second on modern CPUs.
-  3. Integration into ChipMachine:
-   * Plugin Path: You would create a new PretrackerPlugin in musicplayer/src/plugins.
-   * Infrastructure: Since the replayer provides raw samples, you would use the fromFile or fromStream interface and pipe the generated PCM into ChipMachine's fifo.
-   * UADE/libopenmpt Status: 
-       * libopenmpt does not support .prt.
-       * UADE can play it using the original Amiga binary replayer, but the native C port (1bsyl) is much more
-         efficient and "cleaner" for your architecture.
-  4. Summary of Findings:
-   * Format: Abyss PreTracker (Amiga chipmusic).
-   * Sound Engine: Software-synthesized samples + pattern tracker.
-   * Existing Tooling: 1bsyl/pretracker on GitHub is the definitive resource.
-   * Status: High-quality candidate for addition.
-  Recommendation: This is a "low-hanging fruit" for adding Amiga-centric content that isn't just another Protracker clone. The code is compact, portable, and produces high-quality "modern chip" sound.
-
----
-
 59	.st11	Sound Tracker 1.1 (ZX Spectrum) *TRIVIAL configuration update* ZX Spectrum AY tracker; AYFlyPlugin already handles related formats (stc, pt3, etc.); may be extensible
   The research for Sound Tracker 1.1 (.st11 / .stc) indicates that this is a Low-to-Moderate effort task because the infrastructure is already largely in place.
   1. Format Clarification: .stc is the key
@@ -432,12 +401,22 @@ Engineering Commentary:
 101 .mbk	MoonBlaster sample bank N/A Auxiliary bank for .mbm, not standalone
  93 .musx	Archimedes Tracker (Acorn RISC OS) Hard RISC OS–specific format; no known portable C decoder
  82 .mxtx	MaxTrax (Amiga) Hard Commercial Amiga tracker format; no known open-source decoder
+
  66 .fls Flash Tracker (ZX Spectrum) Hard ZX Spectrum AY tracker; niche; no known C library
+Feasibility: Moderate Value: Low (66 requests) Verdict: Low Priority.
+Reasoning: This is a ZX Spectrum AY-3-8912 format. Sergey Bulba's Ay_Emul source code (specifically ayfly / Ay_Emul.cpp) contains Z80 assembly/C routines to handle .fls playback. If ChipMachine already integrates Bulba's AY routines, adding the file extension pointer is feasible. However, given the low request volume, only pursue if it can be mapped directly to an existing backend engine.
+
  65 .sks Starkos (Atari ST)	Hard Atari ST tracker; no known portable decoder
  63 .sho Shroom tracker Hard	Very obscure; no public documentation or decoder found
  57 .am Ace Tracker (Amiga)	Hard Obscure Amiga format; not in UADE's list; no known decoder
  55 .gtk Beaver Sweeper Hard	Extremely obscure; no public info or decoder found
+
  54 .ned NerdTracker 2 Moderate NES-style tracker for PC; some source code available; limited community
+Feasibility: High / Moderate
+Value: Moderate (54 requests, but high historical relevance for NES chiptunes)
+Verdict: Approve for Implementation.
+Reasoning: NerdTracker 2 was a vital evolutionary step in the NES chiptune scene before NSF/Famitracker took over. The original MS-DOS C source code is publicly available. Because it maps directly to standard NES APU registers, it can be integrated into ChipMachine via a lightweight wrapper or by converting/subsuming the parsing logic into the existing NES emulation core.
+
  53 .instr	IFF-SMUS instrument file N/A Auxiliary instrument file for .smus tracks, not standalone
  51 .bmx Unknown Hard No format info found matching this context
  48 .coco	Unknown Hard No format info found matching this context
@@ -482,10 +461,16 @@ IMPOSSIBLE 120	.rns	Renoise old format	Hard	Explicitly blocked in OpenMPTPlugin 
   Conclusion
   Support for .rns is unlikely without a massive reverse-engineering effort or the release of the original Renoise 1.0 source code. The "Explicitly blocked" status in your plugin is correct; it prevents the engine from attempting to play a format it fundamentally does not understand.
 
+IMPOSSIBLE 64	.prt	Pretracker (Amiga)	 
+"PreTracker's pre-calculated instruments are rather complex, and the calculations required to generate them are not publicly known. Without PreTracker becoming open-source, I don't see any chance in supporting this format."
+Chris Hodges (Platon42) took the official binary blob, reverse-engineered the assembly, and optimized it.
+The Catch: While it is highly optimized for performance (twice the speed and half the packed size of Pink's original implementation), it was still ultimately designed to drop into rePlayer (the UADE-based Amiga music player ecosystem).
+
 *****************************************************
 
 major new features
 ==================
+- better matching and sourcing for screenshot, for example hybris should display hybris game art...
 - consolidate all db scripts into one unified
 - filter by platform (C64, Amiga... -- DONE) and format (mod, ym, mp3...) -- pesic
 - Separate db from code and auto-update db independently from code

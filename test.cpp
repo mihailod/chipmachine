@@ -14,6 +14,8 @@ namespace di = boost::di;
 #include <musicplayer/src/chipplugin.h>
 #include <musicplayer/src/plugins/plugins.h>
 #include <musicplayer/src/plugins/uadeplugin/UADEPlugin.h>
+#include <musicplayer/src/plugins/openmptplugin/OpenMPTPlugin.h>
+#include <musicplayer/src/plugins/quartetplugin/QuartetPlugin.h>
 
 #include <algorithm>
 #include <array>
