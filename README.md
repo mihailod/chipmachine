@@ -311,9 +311,9 @@ Extensions: `.eup`
 
 ### MSX (libkss)
 
-Support for MSX music. (Note no `.mbm` support yet — it generally requires OPL4/Moonsound, which libkss cannot emulate.)
+Support for MSX music
 
-Extensions: `.mgs` `.bgm` `.opx` `.mpk`
+Extensions: `.mgs` `.bgm` `.opx` `.mpk` `.mbm`
 
 ### S98
 

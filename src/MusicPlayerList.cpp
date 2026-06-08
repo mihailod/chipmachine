@@ -559,9 +559,13 @@ void MusicPlayerList::playCurrent()
                 files++;
                 auto url = path_directory(currentInfo.path) + "/" + s;
                 remoteLoader.load(url, [=](File f) {
+                    // Secondary files are companions (sample banks, voicesets),
+                    // not the song itself. Treat a missing one as non-fatal: the
+                    // main file already loaded, so let the plugin play whatever
+                    // it can (e.g. MoonBlaster renders bankless without its .mbk)
+                    // rather than failing the whole song on an absent companion.
                     if (!f) {
-                        errors.emplace_back("Could not load file");
-                        SET_STATE(Error);
+                        LOGW("Could not load secondary file %s", url);
                     } else {
                         songFiles.push_back(f);
                     }

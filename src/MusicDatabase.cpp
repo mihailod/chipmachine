@@ -296,7 +296,11 @@ bool MusicDatabase::parseModland(
                                                      "as",
                                                      // Euphony instrument banks
                                                      // (fetched via getSecondaryFiles)
-                                                     "fmb", "pmb", "pvi" };
+                                                     "fmb", "pmb", "pvi",
+                                                     // MoonBlaster ADPCM sample
+                                                     // banks (.mbk) -- companions
+                                                     // of .mbm, not standalone
+                                                     "mbk" };
     static const std::set<std::string> secondary_pref = { "smpl", "smp" };
     static const std::set<std::string> hasSubFormats = { "Spectrum", "Ad Lib",
                                                          "Video Game Music" };

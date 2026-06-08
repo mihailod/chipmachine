@@ -631,11 +631,50 @@ TEST_CASE("MGS plays sound", "[music]")
 
 // The other MSX libkss formats that share the KSSPlugin: MuSICA (.bgm, KINROU5
 // driver), OPLLDriver (.opx) and MPK (.mpk). All embed their Z80 driver like MGS
-// and drive PSG/SCC/OPLL, so they play self-contained. MoonBlaster (.mbm) is
-// deliberately not handled (needs OPL4).
+// and drive PSG/SCC/OPLL, so they play self-contained.
 TEST_CASE("BGM", "[music]") { testPlugin<musix::KSSPlugin>("testmus/bgm", ""); }
 TEST_CASE("OPX", "[music]") { testPlugin<musix::KSSPlugin>("testmus/opx", ""); }
 TEST_CASE("MPK", "[music]") { testPlugin<musix::KSSPlugin>("testmus/mpk", ""); }
+// MoonBlaster 1.4 (.mbm, MBR143 driver) drives PSG + MSX-MUSIC (YM2413) +
+// MSX-AUDIO (Y8950 ADPCM) -- all emulated, no OPL4. The .mbk ADPCM sample banks
+// are companion files (excluded here; they aren't standalone songs).
+TEST_CASE("MBM", "[music]") { testPlugin<musix::KSSPlugin>("testmus/mbm", ".mbk"); }
+// MBM plays sound, with its ADPCM bank. "Demosong.MBM" names bank "MBSTAND1" in
+// its header; the plugin must surface MBSTAND1.MBK via getSecondaryFiles, seed
+// libkss's autoload via KSS_autoload_mbk, convert through KSS_bin2kss/MBR143 and
+// render non-zero audio. Fails if the MBR143 blob is dropped (the converter was
+// previously excluded), the extension-based detection regresses, or the bank
+// pairing breaks.
+TEST_CASE("MBM plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::KSSPlugin plugin;
+
+    std::string const mbm = "testmus/mbm/Demosong.MBM";
+    REQUIRE(plugin.canHandle(mbm));
+
+    // Header names bank "MBSTAND1"; the plugin must surface it in Modland's
+    // exact (UPPERCASE) case so the host's secondary-file fetch resolves.
+    auto secondary = plugin.getSecondaryFiles(mbm);
+    REQUIRE(std::find(secondary.begin(), secondary.end(), "MBSTAND1.MBK") !=
+            secondary.end());
+
+    auto* player = plugin.fromFile(mbm);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
 // One file of each non-MGS libkss format must be detected by canHandle and
 // render non-zero audio with no external files -- this fails if any of the
 // KINROU/OPX/MPK driver blobs is dropped or a detector regresses.
@@ -677,6 +716,50 @@ TEST_CASE("OPNA rhythm", "[music]") { REQUIRE(opna_rhythm_plays_sound()); }
 TEST_CASE("AO", "[music]") { testPlugin<musix::AOPlugin>("testmus/ao", ""); }
 TEST_CASE("Ted", "[music]") { testPlugin<musix::TEDPlugin>("testmus/ted", ""); }
 TEST_CASE("V2", "[music]") { testPlugin<musix::V2Plugin>("testmus/v2", ""); }
+
+// Quartet ST (.4v) via the vendored zingzong replayer. A .4v carries only the
+// sequence; the instruments live in a companion voiceset (".set") with the same
+// basename in the same directory. QuartetPlugin locates that sibling (trying
+// both ".set" and ".SET") and declares it via getSecondaryFiles so the loader
+// fetches it. The ".set" itself is not a playable song, so it's excluded here.
+TEST_CASE("Quartet", "[music]") { testPlugin<musix::QuartetPlugin>("testmus/4v", ".set"); }
+
+// Quartet plays sound. "Bangkok.4v" needs its "Bangkok.set" voiceset for any
+// audio; the plugin must pair the two, hand both to zingzong, and render
+// non-zero output. Also exercises canHandle (.4v/.4q) and the secondary-file
+// pairing. Fails if the .set companion lookup, the zingzong load, or playback
+// regresses.
+TEST_CASE("Quartet plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::QuartetPlugin plugin;
+
+    std::string const fourv = "testmus/4v/Bangkok.4v";
+    REQUIRE(plugin.canHandle(fourv));
+    REQUIRE(plugin.canHandle("foo.4q"));
+    REQUIRE_FALSE(plugin.canHandle("foo.mod"));
+
+    // The .4v declares its .set voiceset companion as a secondary file.
+    REQUIRE(plugin.getSecondaryFiles(fourv) ==
+            std::vector<std::string>{ "Bangkok.set" });
+
+    auto* player = plugin.fromFile(fourv);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    // Non-silent output means the .set voiceset was located and loaded.
+    REQUIRE(energy != 0);
+}
 
 // Compute's Stereo Sidplayer support. A tune is a pair of files: a ".mus"
 // (first SID, voices 1-3) and a ".str" (second SID, voices 4-6). VICE is
@@ -798,7 +881,8 @@ TEST_CASE("coverage", "[music]")
         {"PxTone Collage Player", "testmus/pxtone"},
         {"Organya Player", "testmus/org"},
         {"SunVox Player", "testmus/sunvox"},
-        {"FMPPlugin", "testmus/fmp"}
+        {"FMPPlugin", "testmus/fmp"},
+        {"Quartet", "testmus/4v"}
     };
 
     for (auto const& plugin : plugins) {
