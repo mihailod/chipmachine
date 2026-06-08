@@ -103,10 +103,6 @@ could not play song:
 
 - .sgc parlour
 
-- .dmf starry viper -- investigate why, dmf should be covered
-The actual failure: Deflemask .dmf and X-Tracker .dmf are two completely unrelated formats that happen to share an extension. OpenMPT (and modplug) only know X-Tracker DMF (magic: DDMF). Deflemask uses zlib-compressed binary data (magic: 0x78).
-
-
 - .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM).
 
 
@@ -462,6 +458,10 @@ IMPOSSIBLE 64	.prt	Pretracker (Amiga)
 "PreTracker's pre-calculated instruments are rather complex, and the calculations required to generate them are not publicly known. Without PreTracker becoming open-source, I don't see any chance in supporting this format."
 Chris Hodges (Platon42) took the official binary blob, reverse-engineered the assembly, and optimized it.
 The Catch: While it is highly optimized for performance (twice the speed and half the packed size of Pink's original implementation), it was still ultimately designed to drop into rePlayer (the UADE-based Amiga music player ecosystem).
+
+IMPOSSIBLE - .dmf starry viper -- investigate why, dmf should be covered
+The actual failure: Deflemask .dmf and X-Tracker .dmf are two completely unrelated formats that happen to share an extension. OpenMPT (and modplug) only know X-Tracker DMF (magic: DDMF). Deflemask uses zlib-compressed binary data (magic: 0x78).
+Deflemask playback — the fast-fail is in place, but Deflemask DMF files (Heavy Viper/SuPeHaRiMAIN-StarrySky.dmf and anything else under the Deflemask/ modland category) are now just silently skipped. If you ever want actual playback, you'd need a Deflemask-capable player library. No known C/C++ open-source Deflemask player exists currently, so this is a "revisit when one appears" item rather than something actionable right now.
 
 *****************************************************
 

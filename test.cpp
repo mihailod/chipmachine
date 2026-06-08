@@ -33,6 +33,30 @@ static int g_errors = 0; // red lines: FAILED / NO SOUND / EXCEPTION
 static int g_skips = 0;   // gray lines: Skipping (plugin can't handle)
 static int g_ok = 0;     // playback OK
 
+// Extensions that are truly impossible to support (per data/misc/
+// not_supported_extensions.txt). These are silently ignored everywhere -- no
+// testing, no Skipping warning, no missing-coverage report -- and listed once
+// at the very end of the run. Stored lower-case and without the leading dot.
+static const std::set<std::string>& notSupportedExts()
+{
+    static const std::set<std::string> exts = [] {
+        std::set<std::string> s;
+        std::ifstream f("data/misc/not_supported_extensions.txt");
+        std::string line;
+        while (std::getline(f, line)) {
+            auto a = line.find_first_not_of(" \t\r\n");
+            if (a == std::string::npos) { continue; }
+            auto b = line.find_last_not_of(" \t\r\n");
+            line = line.substr(a, b - a + 1);
+            if (line.empty() || line[0] == '#') { continue; }
+            if (line[0] == '.') { line.erase(0, 1); }
+            if (!line.empty()) { s.insert(utils::toLower(line)); }
+        }
+        return s;
+    }();
+    return exts;
+}
+
 TEST_CASE("modutils", "[machine]")
 {
     auto x = getTypeAndBase("/blaj/mdat.gurgle%tjosan");
@@ -141,6 +165,11 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
         
         for (auto f : files) {
             if (exclude != "" && f.getName().find(exclude) != std::string::npos)
+                continue;
+
+            // silently ignore extensions flagged impossible-to-support
+            if (notSupportedExts().count(
+                    utils::toLower(utils::path_extension(f.getName()))) > 0)
                 continue;
 
             int64_t sum = 0;
@@ -740,6 +769,8 @@ static void writeWSRFile(const fs::path& p, const std::vector<uint8_t>& data)
     }
 }
 
+TEST_CASE("WSR", "[music]") { testPlugin<musix::WSRPlugin>("testmus/wsr", ".md"); }
+
 TEST_CASE("WSR plays", "[music]")
 {
     logging::setLevel(logging::Level::Warning);
@@ -1042,6 +1073,7 @@ TEST_CASE("coverage", "[music]")
             shortDir = shortDir.substr(prefix.length());
         }
         for (auto const& ext : exts) {
+            if (notSupportedExts().count(utils::toLower(ext)) > 0) { continue; }
             if (existingExts.count(ext) == 0) {
                 missingByDir[shortDir].push_back(ext);
                 missingExtCount++;
@@ -1087,4 +1119,16 @@ TEST_CASE("coverage", "[music]")
     }
 
     printf("\n>>> Hint: run cmtest priority_map to see the plugin handling priority map for each extension\n\n");
+
+    auto const& unsupported = notSupportedExts();
+    if (!unsupported.empty()) {
+        printf(">>> Extensions EXPLICITLY not supported (per "
+               "not_supported_extension.txt): ");
+        bool first = true;
+        for (auto const& ext : unsupported) {
+            printf("%s.%s", first ? "" : ", ", ext.c_str());
+            first = false;
+        }
+        printf("\n\n");
+    }
 }
