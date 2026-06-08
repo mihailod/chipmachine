@@ -1,4 +1,4 @@
-ChipMachineAS
+**ChipMachineAS**
 
 <div align="right">
   <img src="https://img.shields.io/github/downloads/mihailod/chipmachine/total?label=Total%20Downloads" alt="Total Downloads">
@@ -84,10 +84,10 @@ cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
 ```
 
-* Running the app from the build folder: ./chipmachine
-* Packaging the app: chipmachine/package_ap.sh
-* See chipmachine/data/misc/TOODOO.txt for to-dos
-* AI tools used to help with the porting: Gemini, Antigravity, Claude, Codex
+* Running the app from the build folder: ./chipmachine (-h for all options)
+* Packaging the app: [package_app.sh](package_app.sh)
+* Database update info: [scripts/DB_UPDATE_PROCESS.txt](scripts/DB_UPDATE_PROCESS.txt)
+* AI tools used to help with the porting: Claude, Gemini, Antigravity, Codex
 
 ## Using the application
 
