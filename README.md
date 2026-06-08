@@ -404,3 +404,15 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **Sol3 / Pybind11 / fmt (Core Infrastructure):** Developed by The Sol3/Pybind11/fmt Maintainers. Licensed under MIT.
 * **Freetype / Grappix (UI & Text):** Developed by The FreeType Project and Grappix contributors. Licensed under FTL / BSD-2-Clause.
 * **zingzong (Atari ST Quartet format):** Developed by Ben G. (benjihan). Licensed under MIT.
+
+---
+
+## Licensing
+
+Chipmachine is a combined work distributed under the GNU General Public License v3.0 
+(or at your option, any later version) due to its underlying emulation dependencies.
+
+* **Core Architecture & Portions:** Copyright (c) 2022 Jonas Minnberg. Licensed under the MIT License.
+* **Atari ST/Amiga Emulation (SC68):** Licensed under GPL-3.0-or-later (forces overall project license).
+* **C64/A500 Emulation (VICE, UADE):** Licensed under GPL-2.0-or-later.
+* **Other Components:** See the `LEGAL` file for a complete matrix of MIT, BSD, and LGPL dependencies.

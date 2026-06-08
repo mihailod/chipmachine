@@ -1,0 +1,126 @@
+CHIPMACHINE PORT DEPENDENCY MATRIX & LEGAL NOTICES
+
+This file contains attribution and licensing information for the core 
+architecture and all backend emulation modules compiled into this port.
+
+===============================================================================
+1. CORE ARCHITECTURE
+===============================================================================
+Component: Chipmachine Core
+Copyright: Copyright (c) 2022 Jonas Minnberg
+License: MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy 
+of this software and associated documentation files (the "Software"), to deal 
+in the Software without restriction, including without limitation the rights 
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+copies of the Software, and to permit persons to whom the Software is 
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in 
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+THE SOFTWARE.
+
+===============================================================================
+2. COPYLEFT DEPENDENCIES (FORCING COMBINED WORK TO GPL-3.0-OR-LATER)
+===============================================================================
+Component: SC68 (Atari ST/Amiga)
+Author: Developed by Benjamin Gerard
+License: GNU General Public License v3.0 or later
+
+Component: VICE (C64/SID Emulation)
+Author: Developed by the VICE Core Team
+License: GNU General Public License v2.0 or later
+
+Component: UADE (Amiga Exotic Formats)
+Author: Developed by Heikki Orsila and the UADE Team
+License: GNU General Public License v2.0 or later
+
+Component: MDX / S98 (PC-98 & Sharp X68000 Engine variants)
+Author: Adapted from OpenMSX/GME variants
+License: GNU General Public License v2.0 or later
+
+Component: Ayfly (ZX Spectrum AY-3-8910)
+Author: Developed by Sergey Vladimirov
+License: GNU General Public License v2.0 or later
+
+===============================================================================
+3. LESSER COPYLEFT DEPENDENCIES
+===============================================================================
+Component: GME / Game Music Emulator (Console Formats)
+Author: Developed by Shay Green
+License: GNU Lesser General Public License v2.1 or later
+
+Component: AdPlug (PC AdLib/OPL)
+Author: Developed by Simon Peter and the AdPlug Team
+License: GNU Lesser General Public License v2.1 or later
+
+===============================================================================
+4. PERMISSIVE THIRD-PARTY DEPENDENCIES
+===============================================================================
+Component: OpenMPT (Tracker Formats)
+Author: Developed by the OpenMPT Project Team (originally Olivier Lapicque)
+License: BSD-3-Clause
+
+Component: HivelyTracker (AHX/HVL)
+Author: Developed by IRIS (Peter "Yohng" V, Curt Cool)
+License: BSD-3-Clause
+
+Component: FreeType
+Author: The FreeType Project
+License: FreeType License (FTL) / BSD-2-Clause
+
+Component: StSound (Atari ST YM2149)
+Author: Developed by Arnaud Carré (Leonard/Oxygene)
+License: MIT License
+
+Component: 98fmplayer
+Author: Developed by areis
+License: MIT License
+
+Component: libkss (MSX KSS)
+Author: Developed by Mitsutaka Okazaki
+License: MIT License
+
+Component: organya (Cave Story Organya format)
+Author: Developed by Studio Pixel (Daisuke Amaya)
+License: MIT License / Open Source Portions
+
+Component: libpxtone (PixelTone audio)
+Author: Developed by Studio Pixel (Daisuke Amaya)
+License: MIT License
+
+Component: eupmini (PC-98 EUP audio)
+Author: Retro-computing community contributors
+License: MIT License
+
+Component: Sol3 / Pybind11 / fmt (Core Infrastructure)
+Author: The Sol3, Pybind11, and fmt Maintainers
+License: MIT License
+
+Component: zingzong (Atari ST Quartet format)
+Author: Developed by Ben G. (benjihan)
+License: MIT License
+
+Component: Highly Experimental (PSF1/2)
+Author: Developed by Neill Corlett
+License: zlib License
+
+Component: minimp3 (MP3 decoding)
+Author: Developed by Lieven van den Hauwe
+License: Creative Commons Zero v1.0 Universal (CC0-1.0 Public Domain)
+
+===============================================================================
+5. CUSTOM / FREEWARE PERMISSIVE DEPENDENCIES
+===============================================================================
+Component: AudioOverload Backend / AOSDK
+Author: Developed by Richard Bannister and contributors
+License: Custom Permissive Freeware License
+Notice: Included non-commercially under authors' custom permissive terms.
