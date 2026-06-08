@@ -32,6 +32,7 @@ extern "C" {
     void eupplugin_register();     // Euphony / FM Towns & PC-98 (.eup)
     void kssplugin_register();     // MGSDRV / MSX (.mgs) via libkss
     void quartetplugin_register(); // Microdeal Quartet / Atari ST (.4v, .4q)
+    void wsrplugin_register();     // Bandai WonderSwan (.wsr) via in_wsr
 }
 
 void register_plugins() {
@@ -64,4 +65,5 @@ void register_plugins() {
     eupplugin_register();
     kssplugin_register();
     quartetplugin_register();
+    wsrplugin_register();
 }

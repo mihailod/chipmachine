@@ -185,10 +185,36 @@ DONE 808 + 373 + 51 .bgm, .opx, .mpk — PSG/SCC/OPLL based, should work like MG
 .bgm + .opx + .mpk (1,232) are the safe wins — all PSG/SCC/OPLL-based, same chips MGS already uses, so they'd play like MGS does now.
 So the realistic "would actually sound right" addition is roughly ~1,232 solid plus an uncertain slice of the 2,128 MoonBlaster files.
 
+DONE 168	.wsr	WonderSwan sound	DONE	This vendored game-music-emu has no WonderSwan core. Only newer libgme/separate cores support .wsr; would need to vendor one.
+✦ I have investigated the feasibility of adding WonderSwan sound (.wsr) support to ChipMachine. Here are my findings:
+  1. Current State
+   * Vendored Library: The project currently vendors Game_Music_Emu (GME) 0.7.0 in
+     musicplayer/src/plugins/gmeplugin/gme/. 
+   * Missing Core: This version of GME does not natively support the WonderSwan format. WSR files require a NEC V30MZ
+     (x86-compatible) CPU emulator and a specialized 4-channel sound chip emulator, which are outside the scope of the
+     standard GME release.
+   * Metadata: Although chipmachine/src/formats.h lists "wonderswan", the GMEPlugin in
+     musicplayer/src/plugins/gmeplugin/GMEPlugin.cpp does not yet include wsr in its supported extensions.
+  2. Feasibility
+  Adding support is highly feasible by vendoring the WonderSwan core from a well-known community fork:
+   * Primary Source: kode54's GME fork (kode54/Game_Music_Emu) contains a complete WSR implementation.
+   * Required Files: You would need to vendor the following files from kode54's repository into the project's GME folder:
+       * Wsr_Emu.cpp / Wsr_Emu.h (The high-level emulator class)
+       * Wsr_Cpu.cpp / Wsr_Cpu.h (The NEC V30MZ core)
+       * Wsr_Apu.cpp / Wsr_Apu.h (The sound chip emulation)
+   * Integration Effort:
+       * GME Level: Add the new files to the GME CMakeLists.txt and register the Wsr_Emu type in the library's
+         file-loading logic.
+       * Plugin Level: Add wsr to the supported_ext set in GMEPlugin.cpp.
+       * Compatibility: Since the architecture is already GME-compliant, it would integrate seamlessly with the
+         existing GMEPlugin without requiring a new top-level plugin.
+  3. Conclusion
+  The most efficient path is to "backport" the WSR core from the kode54 fork into your existing gmeplugin. This avoids adding entirely new external dependencies while leveraging the existing console-music infrastructure in ChipMachine.
+
 *******************************
 
-DONE IN 1.2.1 (or 1.3?)
--------------
+DONE IN 1.3
+-----------
 
 DONE 240 .4v Quartet ST (Atari ST) DONE 4-voice sample tracker for Atari ST; .set is the companion sample file; UADE may be extensible to cover it
 Quartet ST (.4v) - Atari ST Tracker
@@ -262,34 +288,6 @@ NOT DONE:
    * Effort: Hard for a native port; Easy if routed through your existing UADEPlugin.
   Recommendation: 
   Do not attempt a native C implementation of Symphonie. Instead, focus on routing .symmod files to your UADE plugin. You will likely find that UADE already handles the heavy lifting of emulating the software mixer, giving you the "big sound" of Symphonie with minimal code changes.
-
----
-
-168	.wsr	WonderSwan sound	NEW EMU NEEDED	This vendored game-music-emu has no WonderSwan core. Only newer libgme/separate cores support .wsr; would need to vendor one.
-✦ I have investigated the feasibility of adding WonderSwan sound (.wsr) support to ChipMachine. Here are my findings:
-  1. Current State
-   * Vendored Library: The project currently vendors Game_Music_Emu (GME) 0.7.0 in
-     musicplayer/src/plugins/gmeplugin/gme/. 
-   * Missing Core: This version of GME does not natively support the WonderSwan format. WSR files require a NEC V30MZ
-     (x86-compatible) CPU emulator and a specialized 4-channel sound chip emulator, which are outside the scope of the
-     standard GME release.
-   * Metadata: Although chipmachine/src/formats.h lists "wonderswan", the GMEPlugin in
-     musicplayer/src/plugins/gmeplugin/GMEPlugin.cpp does not yet include wsr in its supported extensions.
-  2. Feasibility
-  Adding support is highly feasible by vendoring the WonderSwan core from a well-known community fork:
-   * Primary Source: kode54's GME fork (kode54/Game_Music_Emu) contains a complete WSR implementation.
-   * Required Files: You would need to vendor the following files from kode54's repository into the project's GME folder:
-       * Wsr_Emu.cpp / Wsr_Emu.h (The high-level emulator class)
-       * Wsr_Cpu.cpp / Wsr_Cpu.h (The NEC V30MZ core)
-       * Wsr_Apu.cpp / Wsr_Apu.h (The sound chip emulation)
-   * Integration Effort:
-       * GME Level: Add the new files to the GME CMakeLists.txt and register the Wsr_Emu type in the library's
-         file-loading logic.
-       * Plugin Level: Add wsr to the supported_ext set in GMEPlugin.cpp.
-       * Compatibility: Since the architecture is already GME-compliant, it would integrate seamlessly with the
-         existing GMEPlugin without requiring a new top-level plugin.
-  3. Conclusion
-  The most efficient path is to "backport" the WSR core from the kode54 fork into your existing gmeplugin. This avoids adding entirely new external dependencies while leveraging the existing console-music infrastructure in ChipMachine.
 
 ---
 

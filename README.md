@@ -79,6 +79,7 @@ git clone https://github.com/mihailod/organya.h.git organya
 git clone https://github.com/mihailod/eupmini.git
 git clone https://github.com/mihailod/zingzong.git
 git clone --recursive https://github.com/mihailod/libkss.git
+git clone https://github.com/mihailod/audiodecoder.wsr.git audiodecoderwsr
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
@@ -315,6 +316,12 @@ Support for MSX music
 
 Extensions: `.mgs` `.bgm` `.opx` `.mpk` `.mbm`
 
+### WonderSwan
+
+Support for Bandai WonderSwan / WonderSwan Color
+
+Extensions: `.wsr`
+
 ### S98
 
 Support for retro hardware Music, including OPNA hardware-rhythm drums
@@ -404,6 +411,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **Sol3 / Pybind11 / fmt (Core Infrastructure):** Developed by The Sol3/Pybind11/fmt Maintainers. Licensed under MIT.
 * **Freetype / Grappix (UI & Text):** Developed by The FreeType Project and Grappix contributors. Licensed under FTL / BSD-2-Clause.
 * **zingzong (Atari ST Quartet format):** Developed by Ben G. (benjihan). Licensed under MIT.
+* **in_wsr (Bandai WonderSwan):** WonderSwan replayer by Mamiya (NEC V30MZ core derived from MAME/Oswan), as packaged in Kodi's `audiodecoder.wsr`. Licensed under GPL-2.0-or-later.
 
 ---
 

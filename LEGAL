@@ -75,6 +75,11 @@ Component: Ayfly (ZX Spectrum AY-3-8910)
 Author: Developed by Sergey Vladimirov
 License: GNU General Public License v2.0 or later
 
+Component: in_wsr (Bandai WonderSwan / WonderSwan Color)
+Author: WonderSwan replayer by Mamiya; NEC V30MZ CPU core derived from
+        MAME/Oswan. Vendored as packaged in Kodi's audiodecoder.wsr addon.
+License: GNU General Public License v2.0 or later
+
 ===============================================================================
 3. LESSER COPYLEFT DEPENDENCIES
 ===============================================================================

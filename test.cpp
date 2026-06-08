@@ -707,6 +707,115 @@ TEST_CASE("MSX libkss formats play sound", "[music]")
     }
 }
 
+// Bandai WonderSwan / WonderSwan Color sound rips (.wsr) via the vendored,
+// self-contained in_wsr replayer (NEC V30MZ CPU + WonderSwan sound chip). A .wsr
+// is a ROM image capped with a 32-byte "WSRF" footer (magic at offset 0, first
+// subsong index at offset 5). We build a minimal synthetic rip in a temp file so
+// the whole detect -> load -> render path runs against the real core without
+// committing a copyrighted game rip. The synthetic ROM is all zeros so it stays
+// silent, but it must still construct and render the requested sample count
+// without throwing; a zero ROM is safe to execute because every out-of-cart read
+// returns 0xFF, the CPU only writes into the emulator's own RAM banks, and
+// Update_WSR runs a bounded cycle budget per call. If real rips are dropped into
+// testmus/wsr they are played too (informational; empty in a clean checkout).
+static std::vector<uint8_t> makeSyntheticWSR(uint8_t firstSong = 0)
+{
+    std::vector<uint8_t> rom(0x10000, 0);
+    uint8_t* footer = rom.data() + rom.size() - 0x20;
+    footer[0] = 'W';
+    footer[1] = 'S';
+    footer[2] = 'R';
+    footer[3] = 'F';
+    footer[5] = firstSong;
+    return rom;
+}
+
+static void writeWSRFile(const fs::path& p, const std::vector<uint8_t>& data)
+{
+    std::ofstream f(p, std::ios::binary);
+    REQUIRE(f.good());
+    if (!data.empty()) {
+        f.write(reinterpret_cast<const char*>(data.data()),
+                static_cast<std::streamsize>(data.size()));
+    }
+}
+
+TEST_CASE("WSR plays", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::WSRPlugin plugin;
+
+    auto tmp = fs::temp_directory_path();
+    auto good = tmp / "musix_wsr_good.wsr";
+    auto nofooter = tmp / "musix_wsr_nofooter.wsr";
+    auto wrongext = tmp / "musix_wsr_wrongext.bin";
+
+    writeWSRFile(good, makeSyntheticWSR());
+    writeWSRFile(nofooter, std::vector<uint8_t>(0x10000, 0)); // no WSRF magic
+    writeWSRFile(wrongext, makeSyntheticWSR());               // valid bytes, .bin
+
+    // Detection: only a .wsr file carrying the WSRF footer is accepted.
+    REQUIRE(plugin.canHandle(good.string()));
+    REQUIRE_FALSE(plugin.canHandle(nofooter.string()));
+    REQUIRE_FALSE(plugin.canHandle(wrongext.string()));
+    REQUIRE(plugin.getSupportedExtensions().count("wsr") == 1);
+
+    // Load + render: the synthetic rip constructs and yields the requested number
+    // of interleaved stereo samples without throwing or crashing.
+    auto* player = plugin.fromFile(good.string());
+    REQUIRE(player != nullptr);
+    std::array<int16_t, 8192> buffer{};
+    int rc = player->getSamples(buffer.data(), buffer.size());
+    REQUIRE(rc == static_cast<int>(buffer.size()));
+    delete player;
+
+    // A footerless file is rejected at construction time.
+    REQUIRE_THROWS_AS(plugin.fromFile(nofooter.string()),
+                      musix::player_exception);
+
+    fs::remove(good);
+    fs::remove(nofooter);
+    fs::remove(wrongext);
+}
+
+// WSR plays real sound. These are genuine WonderSwan rips from the Modland
+// collection (testmus/wsr). Each must be detected by canHandle and render
+// non-zero audio through the full V30MZ + sound-chip emulation -- a regression
+// in the vendored core, the symbol renaming, or the getSamples bridge would
+// drop them to silence or fail to load. "kaze no klonoa" also exercises a
+// non-trivial start subsong (its WSRF footer's first-song index is 26, above
+// the default browse window, so it checks the start-song handling too).
+TEST_CASE("WSR plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::WSRPlugin plugin;
+
+    for (auto const& f : {"testmus/wsr/final fantasy.wsr",
+                          "testmus/wsr/gunpey.wsr",
+                          "testmus/wsr/rockman & forte.wsr",
+                          "testmus/wsr/blue wing blitz.wsr",
+                          "testmus/wsr/kaze no klonoa - moonlight museum.wsr"}) {
+        std::string const path = f;
+        INFO(path);
+        REQUIRE(plugin.canHandle(path));
+
+        auto* player = plugin.fromFile(path);
+        REQUIRE(player != nullptr);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+        REQUIRE(energy != 0);
+    }
+}
+
 // OPNA hardware-rhythm drums. The OPNA rhythm sample ROM is embedded
 // (opna_rhythm_rom.cpp) and loaded by OPNA::Init via LoadEmbeddedRhythm(), so
 // FMP/S98 percussion plays with no runtime file. This keys on all six rhythm
@@ -882,7 +991,17 @@ TEST_CASE("coverage", "[music]")
         {"Organya Player", "testmus/org"},
         {"SunVox Player", "testmus/sunvox"},
         {"FMPPlugin", "testmus/fmp"},
-        {"Quartet", "testmus/4v"}
+        {"Quartet", "testmus/4v"},
+        {"Euphony", "testmus/eup"},
+        {"WonderSwan (in_wsr)", "testmus/wsr"}
+    };
+
+    // Plugins whose extensions are split across several testmus folders (one
+    // sample dir per format), so a single dir can't cover them. libkss handles
+    // five MSX formats, each filed under its own extension directory.
+    std::unordered_map<std::string, std::vector<std::string>> pluginDirsMulti = {
+        {"MSX (libkss)", {"testmus/mgs", "testmus/bgm", "testmus/opx",
+                          "testmus/mpk", "testmus/mbm"}}
     };
 
     for (auto const& plugin : plugins) {
@@ -890,26 +1009,34 @@ TEST_CASE("coverage", "[music]")
         auto exts = plugin->getSupportedExtensions();
         if (exts.empty()) continue;
 
-        std::string dir = "";
-        if (pluginDirs.count(name)) {
-            dir = pluginDirs[name];
+        std::vector<std::string> dirs;
+        if (pluginDirsMulti.count(name)) {
+            dirs = pluginDirsMulti[name];
+        } else if (pluginDirs.count(name)) {
+            dirs = {pluginDirs[name]};
         } else {
-            dir = "testmus/" + utils::toLower(name);
+            dirs = {"testmus/" + utils::toLower(name)};
         }
 
-        utils::File folderCheck{ dir };
+        // Aggregate the extensions present across every sample dir for this
+        // plugin. Compare case-insensitively: some rips carry upper-case
+        // extensions (e.g. Demosong.MBM) while getSupportedExtensions() is
+        // lower-case.
         std::set<std::string> existingExts;
-
-        if (!folderCheck.exists()) {
-            missingFolders.insert(dir);
-        } else {
-            auto files = folderCheck.listFiles();
-            for (auto const& f : files) {
-                existingExts.insert(utils::path_extension(f.getName()));
+        for (auto const& dir : dirs) {
+            utils::File folderCheck{ dir };
+            if (!folderCheck.exists()) {
+                missingFolders.insert(dir);
+            } else {
+                auto files = folderCheck.listFiles();
+                for (auto const& f : files) {
+                    existingExts.insert(
+                        utils::toLower(utils::path_extension(f.getName())));
+                }
             }
         }
 
-        std::string shortDir = dir;
+        std::string shortDir = dirs.front();
         std::string prefix = "testmus/";
         if (shortDir.rfind(prefix, 0) == 0) {
             shortDir = shortDir.substr(prefix.length());
@@ -918,7 +1045,8 @@ TEST_CASE("coverage", "[music]")
             if (existingExts.count(ext) == 0) {
                 missingByDir[shortDir].push_back(ext);
                 missingExtCount++;
-                allMissing.push_back(name + ":" + ext + " (Target Folder: " + dir + ")");
+                allMissing.push_back(name + ":" + ext + " (Target Folder: " +
+                                     dirs.front() + ")");
             }
         }
     }
