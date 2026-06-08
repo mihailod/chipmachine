@@ -213,16 +213,13 @@ Engineering Commentary:
   Quartet ST is a prime candidate for a native plugin. It represents the "missing link" between early beeper music and the ProTracker/MOD era on the Atari. By integrating the zingzong library, you could resolve the AyflyPlugin conflict properly by having a dedicated handler that actually plays the music instead of just blocking the path.
   Recommendation: Upgrade status to "Highly Feasible." The existence of a clean, portable C replayer (zingzong) removes 90% of the implementation risk.
 
-
 DONE 339 .mbm (MoonBlaster) — often OPL4/Moonsound, which libkss has no emulation for. Many .mbm files would load but sound wrong/silent. This is the one with real risk.
 .mbm	MoonBlaster (MBR143)	MoonBlaster (+edit mode)	2,128
 .mbm (2,128) is the big number but the weakest bet. MoonBlaster heavily uses OPL4/Moonsound, which libkss has no emulation for. A large fraction of those 2,128 would load but play wrong or silent. Hard to say exactly how many without testing a sample.
 
-
-NOT DONE:
-*********
-
-272	.bgm	MuSICA (PC-98)	Hard	Japanese PC-98 music driver; very niche; no known open-source decoder outside of full PC-98 emulators
+DONE / NOT NEEDED 272	.bgm	MuSICA (PC-98)	Hard	Japanese PC-98 music driver; very niche; no known open-source decoder outside of full PC-98 emulators
+THEY ALL PLAY? That's the expected result — all 808 of those are the MSX/KINROU5 variant, which is exactly what the KSSPlugin handles. So .bgm support is effectively complete for everything in your database.
+The "hard / unsupported" PC-98 MuSICA caveat from the research is real but academic for your collection: Modland only carries the MSX rips under MuSICA/, so you'd have to go out of your way to find a PC-98 .bgm to even hit that gap. Nothing to fix here.
 ✦ I have researched the MuSICA (.bgm) format and its feasibility for ChipMachine. Here are the findings:
   1. Current State: MSX Support is Already Present
   Surprisingly, ChipMachine already has support for the MSX version of MuSICA (.bgm) via the KSSPlugin:
@@ -242,7 +239,9 @@ NOT DONE:
   Conclusion: You can play MSX .bgm files right now. Support for the PC-98 variant remains "Hard" due to the
   requirement for x86 driver emulation.
 
----
+
+NOT DONE:
+*********
 
 174	.symmod	Symphonie (Amiga)	Moderate	Amiga tracker from ~1993; UADE has partial support for similar formats; some source floating around
   The research for Symphonie (.symmod) reveals a format that is much more sophisticated—and more difficult—than the "Moderate" rating suggests.
