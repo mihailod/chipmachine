@@ -279,7 +279,7 @@ Support for the Sharp X68000 Music Macro Language
 
 Extensions: `.mdx` (with optional `.pdx` sample banks)
 
-### FMP (98fmplayer)
+### FMP
 
 Support for NEC PC-98 FMP driver Including the OPNA hardware-rhythm drums
 
@@ -309,7 +309,7 @@ Support for Euphony music (FM Towns / PC-98)
 
 Extensions: `.eup`
 
-### MSX (libkss)
+### MSX
 
 Support for MSX music
 
