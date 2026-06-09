@@ -1108,7 +1108,8 @@ TEST_CASE("coverage", "[music]")
         {"FMPPlugin", "testmus/fmp"},
         {"Quartet", "testmus/4v"},
         {"Euphony", "testmus/eup"},
-        {"WonderSwan (in_wsr)", "testmus/wsr"}
+        {"WonderSwan (in_wsr)", "testmus/wsr"},
+        {"ZX Spectrum (ZXTune)", "testmus/st11"}
     };
 
     // Plugins whose extensions are split across several testmus folders (one

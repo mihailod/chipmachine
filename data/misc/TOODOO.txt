@@ -119,8 +119,6 @@ console errors:
 
 other:
 ======
-- update uade code? some it and xm don't play... The bundled UADE is v2.13 
-
 - also starquake scoopex after some time:
 [tls @ 0x6000038429a0] IO Error: -9806
 [in#0/mov,mp4,m4a,3gp,3g2,mj2 @ 0x1587048f0] stream 0, offset 0x2400c1: partial file
@@ -306,6 +304,12 @@ DONE 174 .symmod + 160 .dsym Symphonie (Amiga)	Moderate	Amiga tracker from ~1993
   Recommendation: 
   Do not attempt a native C implementation of Symphonie. Instead, focus on routing .symmod files to your UADE plugin. You will likely find that UADE already handles the heavy lifting of emulating the software mixer, giving you the "big sound" of Symphonie with minimal code changes.
 
+DONE VIA UADE UPGRADE 64	.prt	Pretracker (Amiga)	 
+"PreTracker's pre-calculated instruments are rather complex, and the calculations required to generate them are not publicly known. Without PreTracker becoming open-source, I don't see any chance in supporting this format."
+Chris Hodges (Platon42) took the official binary blob, reverse-engineered the assembly, and optimized it.
+The Catch: While it is highly optimized for performance (twice the speed and half the packed size of Pink's original implementation), it was still ultimately designed to drop into rePlayer (the UADE-based Amiga music player ecosystem).
+
+UADEUPGRADE: 2.13 -> 3.05 prt aps arp ash bye dm hot jb js kim lion mod3 mosh mus npp okta pat pn prt ptm rj sdata sfx20 sid smod tcb tits tmk ymst
 
 NOT DONE:
 *********
@@ -454,11 +458,6 @@ IMPOSSIBLE 120	.rns	Renoise old format	Hard	Explicitly blocked in OpenMPTPlugin 
    * The Only Real Fix: The standard community advice is to use a slightly older version of Renoise (around 1.8/1.9) to open the .rns files and resave them as .xrns. However, even .xrns is poorly supported by tracker libraries because it relies on Renoise's internal DSP engine to sound "correct."
   Conclusion
   Support for .rns is unlikely without a massive reverse-engineering effort or the release of the original Renoise 1.0 source code. The "Explicitly blocked" status in your plugin is correct; it prevents the engine from attempting to play a format it fundamentally does not understand.
-
-IMPOSSIBLE 64	.prt	Pretracker (Amiga)	 
-"PreTracker's pre-calculated instruments are rather complex, and the calculations required to generate them are not publicly known. Without PreTracker becoming open-source, I don't see any chance in supporting this format."
-Chris Hodges (Platon42) took the official binary blob, reverse-engineered the assembly, and optimized it.
-The Catch: While it is highly optimized for performance (twice the speed and half the packed size of Pink's original implementation), it was still ultimately designed to drop into rePlayer (the UADE-based Amiga music player ecosystem).
 
 IMPOSSIBLE - .dmf starry viper -- investigate why, dmf should be covered
 The actual failure: Deflemask .dmf and X-Tracker .dmf are two completely unrelated formats that happen to share an extension. OpenMPT (and modplug) only know X-Tracker DMF (magic: DDMF). Deflemask uses zlib-compressed binary data (magic: 0x78).
