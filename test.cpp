@@ -448,6 +448,38 @@ TEST_CASE("OpenMPT MMD3 plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// Symphonie / Symphonie Pro (.symmod) plays sound. This Amiga "pseudo-DAW"
+// format (software mixer + real-time echo DSP) has no portable replayer except
+// libopenmpt's Load_symmod.cpp, which only landed in libopenmpt 0.6 -- the
+// bundled 0.5 could not touch it. The 0.8.7 upgrade adds the loader plus the
+// SymMODEcho plugin (which is why NO_PLUGINS was dropped from the build). UADE
+// has no Symphonie player at all, so before this nothing decoded .symmod.
+// Fails if the libopenmpt upgrade regresses or SymMODEcho is dropped.
+TEST_CASE("OpenMPT Symphonie plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::OpenMPTPlugin plugin;
+
+    std::string const symmod = "testmus/openmpt/magnetize-feelings.symmod";
+    REQUIRE(plugin.canHandle(symmod));
+
+    auto* player = plugin.fromFile(symmod);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // Regression test for AdLib Tracker 2 "A2M version 11" files, played by the
 // newer a2m-v2 loader (Ca2mv2Player). The AdPlugin constructor calls
 // CPlayer::songlength(), which plays the whole tune to the end on a throwaway

@@ -119,7 +119,7 @@ console errors:
 
 other:
 ======
-- update uade code? some it and xm don't play...
+- update uade code? some it and xm don't play... The bundled UADE is v2.13 
 
 - also starquake scoopex after some time:
 [tls @ 0x6000038429a0] IO Error: -9806
@@ -284,12 +284,9 @@ DONE 59	.st11	Sound Tracker 1.1 (ZX Spectrum) *TRIVIAL configuration update* ZX 
    * Effort: Easy (Simple extension mapping update).
   Recommendation: Treat this as a configuration update rather than a new feature. You can confirm this by renaming a .st11 file to .stc and seeing if it plays in your current build. If it does, just update the extension map in the source code.
 
-
-
-NOT DONE:
-*********
-
-174	.symmod	Symphonie (Amiga)	Moderate	Amiga tracker from ~1993; UADE has partial support for similar formats; some source floating around
+OPENMPT UPGRADE 0.5 -> 0.8.7
+ OpenMPT-routed = 667 (1) cba (11) etx (8) fmt (10) ftm (1055) gt2 (60) ice (0) pt36 (0) rtm (3) tcb (24) xmf (9) symmod (174) dsym (160) gtk (55)
+DONE 174 .symmod + 160 .dsym Symphonie (Amiga)	Moderate	Amiga tracker from ~1993; UADE has partial support for similar formats; some source floating around
   The research for Symphonie (.symmod) reveals a format that is much more sophisticated—and more difficult—than the "Moderate" rating suggests.
   1. Technical Complexity: Hard (not Moderate)
    * The "Pseudo-DAW" Problem: Symphonie was essentially a precursor to modern DAWs on the Amiga. It didn't just play samples; it had a software-mixing engine with up to 256 channels and real-time software DSP (reverb, echo, resonant filters).
@@ -308,6 +305,10 @@ NOT DONE:
    * Effort: Hard for a native port; Easy if routed through your existing UADEPlugin.
   Recommendation: 
   Do not attempt a native C implementation of Symphonie. Instead, focus on routing .symmod files to your UADE plugin. You will likely find that UADE already handles the heavy lifting of emulating the software mixer, giving you the "big sound" of Symphonie with minimal code changes.
+
+
+NOT DONE:
+*********
 
 ---
 
