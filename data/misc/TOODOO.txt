@@ -119,6 +119,7 @@ console errors:
 
 other:
 ======
+- update uade code? some it and xm don't play...
 
 - also starquake scoopex after some time:
 [tls @ 0x6000038429a0] IO Error: -9806
@@ -261,6 +262,29 @@ The "hard / unsupported" PC-98 MuSICA caveat from the research is real but acade
   Conclusion: You can play MSX .bgm files right now. Support for the PC-98 variant remains "Hard" due to the
   requirement for x86 driver emulation.
 
+DONE 59	.st11	Sound Tracker 1.1 (ZX Spectrum) *TRIVIAL configuration update* ZX Spectrum AY tracker; AYFlyPlugin already handles related formats (stc, pt3, etc.); may be extensible
+  The research for Sound Tracker 1.1 (.st11 / .stc) indicates that this is a Low-to-Moderate effort task because the infrastructure is already largely in place.
+  1. Format Clarification: .stc is the key
+   * The Nuance: On the ZX Spectrum, files aren't usually named with extensions like .st11. They were often raw memory
+     dumps or stored in Tape/Disk images. However, in the PC "chiptune" world, the compiled output of Sound Tracker 1.1 is universally known as the .stc format.
+   * Mapping: If you have files ending in .st11, they are almost certainly just .stc files with a more specific
+     extension.
+  2. Existing Infrastructure: AyflyPlugin
+   * Current State: You already have an AyflyPlugin (likely based on libayfly). 
+   * Verification: libayfly natively supports .stc (Sound Tracker Compiled). 
+   * The "Extension" Problem: The only reason ChipMachine might not play a .st11 file right now is likely because the AyflyPlugin's canHandle method or the supported_extensions list doesn't include the string "st11".
+  3. Implementation Strategy: Extremely Easy
+  Instead of a "Moderate" implementation, this is actually a Surgical Fix:
+   1. Check AyflyPlugin.cpp: Look at the getSupportedExtensions or canHandle logic.
+   2. Add "st11" to the list: By simply telling the existing AyflyPlugin that it can handle .st11 files, they will be passed to the libayfly engine, which will recognize the .stc header/structure and play them immediately.
+  4. Summary of Findings:
+   * Format: Sound Tracker 1.1 Compiled (.stc).
+   * Sound Chip: AY-3-8910 (3 channels).
+   * Plugin: AyflyPlugin (already in project).
+   * Effort: Easy (Simple extension mapping update).
+  Recommendation: Treat this as a configuration update rather than a new feature. You can confirm this by renaming a .st11 file to .stc and seeing if it plays in your current build. If it does, just update the extension map in the source code.
+
+
 
 NOT DONE:
 *********
@@ -325,30 +349,6 @@ NOT DONE:
    * Existing Infrastructure: The project's libopna is a good starting point, but AdPlugin is irrelevant.
    * Source Code: Available (Shiru’s stuff is usually on GitHub or his website), but it is a "from scratch" plugin effort.
   Recommendation: Do not pursue native .tfe support under the assumption that it's "just another OPL format." It is a Sega-Genesis-class FM format. If you want these songs in ChipMachine, look for the VGM versions of them instead.
-
----
-
-59	.st11	Sound Tracker 1.1 (ZX Spectrum) *TRIVIAL configuration update* ZX Spectrum AY tracker; AYFlyPlugin already handles related formats (stc, pt3, etc.); may be extensible
-  The research for Sound Tracker 1.1 (.st11 / .stc) indicates that this is a Low-to-Moderate effort task because the infrastructure is already largely in place.
-  1. Format Clarification: .stc is the key
-   * The Nuance: On the ZX Spectrum, files aren't usually named with extensions like .st11. They were often raw memory
-     dumps or stored in Tape/Disk images. However, in the PC "chiptune" world, the compiled output of Sound Tracker 1.1 is universally known as the .stc format.
-   * Mapping: If you have files ending in .st11, they are almost certainly just .stc files with a more specific
-     extension.
-  2. Existing Infrastructure: AyflyPlugin
-   * Current State: You already have an AyflyPlugin (likely based on libayfly). 
-   * Verification: libayfly natively supports .stc (Sound Tracker Compiled). 
-   * The "Extension" Problem: The only reason ChipMachine might not play a .st11 file right now is likely because the AyflyPlugin's canHandle method or the supported_extensions list doesn't include the string "st11".
-  3. Implementation Strategy: Extremely Easy
-  Instead of a "Moderate" implementation, this is actually a Surgical Fix:
-   1. Check AyflyPlugin.cpp: Look at the getSupportedExtensions or canHandle logic.
-   2. Add "st11" to the list: By simply telling the existing AyflyPlugin that it can handle .st11 files, they will be passed to the libayfly engine, which will recognize the .stc header/structure and play them immediately.
-  4. Summary of Findings:
-   * Format: Sound Tracker 1.1 Compiled (.stc).
-   * Sound Chip: AY-3-8910 (3 channels).
-   * Plugin: AyflyPlugin (already in project).
-   * Effort: Easy (Simple extension mapping update).
-  Recommendation: Treat this as a configuration update rather than a new feature. You can confirm this by renaming a .st11 file to .stc and seeing if it plays in your current build. If it does, just update the extension map in the source code.
 
 ---
 

@@ -382,6 +382,39 @@ TEST_CASE("Org plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// ZX Spectrum Sound Tracker 1.1 (.st11) via the vendored ZXTune engine. Modland
+// stores these as a "ZXAYST11" container wrapping a raw uncompiled Sound Tracker
+// v1.x module at offset 0x38. libayfly only decodes the *compiled* STC variant,
+// so before ZXTune these 59 modland tunes played in nothing. ZXTune's raw
+// container scanner locates the embedded module and its ST1 player renders it.
+// This fails if the ZXTune engine vendoring/registration regresses, if the
+// raw+archive container set is trimmed too far (the raw scanner's lookahead
+// needs the other archive plugins registered), or if the AY device is dropped.
+TEST_CASE("ZXTune ST11 plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::ZXTunePlugin plugin;
+
+    std::string const st11 = "testmus/st11/agent1.st11";
+    REQUIRE(plugin.canHandle(st11));
+
+    auto* player = plugin.fromFile(st11);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // Regression test for OctaMED MMD3 routing. libopenmpt's MED loader decodes the
 // whole MMD0..MMD3 family by content, but Tables.cpp only advertises the "med"
 // extension, so openmpt_is_extension_supported("mmd3") is false. UADE already
@@ -580,6 +613,7 @@ TEST_CASE("GSF", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib")
 TEST_CASE("NDS", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib"); }
 TEST_CASE("HE", "[music]") { testPlugin<musix::HEPlugin>("testmus/psx", "lib", "data/hebios.bin"); }
 TEST_CASE("Ayfly", "[music]") { testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2"); }
+TEST_CASE("ZXTune", "[music]") { testPlugin<musix::ZXTunePlugin>("testmus/st11", ""); }
 TEST_CASE("FFMPEG", "[music]") { testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg", ""); }
 TEST_CASE("HT", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
 TEST_CASE("SC68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }

@@ -78,6 +78,7 @@ git clone https://github.com/mihailod/libpxtone.git
 git clone https://github.com/mihailod/organya.h.git organya
 git clone https://github.com/mihailod/eupmini.git
 git clone https://github.com/mihailod/zingzong.git
+git clone https://github.com/mihailod/zxtune.git
 git clone --recursive https://github.com/mihailod/libkss.git
 git clone https://github.com/mihailod/audiodecoder.wsr.git audiodecoderwsr
 mkdir build && cd build
@@ -274,6 +275,12 @@ Support for various ZX Spectrum formats
 
 Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2` `.pt3` `.ftc` `.vtx` `.vt2` `.zxs` `.st13`
 
+### ZXTune
+
+Support for ZX Spectrum **Sound Tracker 1.1** (the original AY-3-8910 tracker)
+
+Extensions: `.st11`
+
 ### MDX
 
 Support for the Sharp X68000 Music Macro Language
@@ -402,6 +409,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **HivelyTracker (AHX/HVL):** Developed by IRIS (Peter "Yohng" V, Curt Cool). Licensed under BSD-3-Clause.
 * **MDX / S98 (PC-98 & Sharp X68000):** Emulation engines adapted from OpenMSX/GME variants. Licensed under GPL-2.0-or-later.
 * **Ayfly (ZX Spectrum AY-3-8910):** Developed by Sergey Vladimirov. Licensed under GPL-2.0-or-later.
+* **ZXTune (ZX Spectrum Sound Tracker 1.1):** Developed by Vitamin/CAIG; CMake fork by djdron. Licensed under GPL-3.0-or-later.
 * **98fmplayer:** Developed by areis. Licensed under MIT.
 * **libkss (MSX KSS):** Developed by Mitsutaka Okazaki. Licensed under MIT.
 * **organya (Cave Story Organya format):** Developed by Studio Pixel (Daisuke Amaya). Portions adapted under MIT / Open Source.
