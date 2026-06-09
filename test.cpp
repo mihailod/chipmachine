@@ -659,6 +659,7 @@ TEST_CASE("NDS", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib")
 TEST_CASE("HE", "[music]") { testPlugin<musix::HEPlugin>("testmus/psx", "lib", "data/hebios.bin"); }
 TEST_CASE("Ayfly", "[music]") { testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2"); }
 TEST_CASE("ZXTune", "[music]") { testPlugin<musix::ZXTunePlugin>("testmus/st11", ""); }
+TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmus/pn", ""); }
 TEST_CASE("FFMPEG", "[music]") { testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg", ""); }
 TEST_CASE("HT", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
 TEST_CASE("SC68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
@@ -1109,7 +1110,8 @@ TEST_CASE("coverage", "[music]")
         {"Quartet", "testmus/4v"},
         {"Euphony", "testmus/eup"},
         {"WonderSwan (in_wsr)", "testmus/wsr"},
-        {"ZX Spectrum (ZXTune)", "testmus/st11"}
+        {"ZX Spectrum (ZXTune)", "testmus/st11"},
+        {"PokeyNoise", "testmus/pn"}
     };
 
     // Plugins whose extensions are split across several testmus folders (one

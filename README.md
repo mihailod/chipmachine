@@ -332,6 +332,12 @@ Support for Bandai WonderSwan / WonderSwan Color
 
 Extensions: `.wsr`
 
+### PokeyNoise
+
+Support for Atari XL/XE series POKEY chip PokeyNoise music
+
+Extensions: `.pn` (more often `<song>.pn`)
+
 ### S98
 
 Support for retro hardware Music, including OPNA hardware-rhythm drums
@@ -426,6 +432,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **Freetype / Grappix (UI & Text):** Developed by The FreeType Project and Grappix contributors. Licensed under FTL / BSD-2-Clause.
 * **zingzong (Atari ST Quartet format):** Developed by Ben G. (benjihan). Licensed under MIT.
 * **audiodecoder.wsr (Bandai WonderSwan):** WonderSwan replayer by Mamiya (NEC V30MZ core derived from MAME/Oswan), as packaged in Kodi's `audiodecoder.wsr`. Licensed under GPL-2.0-or-later.
+* **ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise `.pn`):** Developed by Piotr Fusik. Licensed under GPL-2.0-or-later.
 
 ---
 

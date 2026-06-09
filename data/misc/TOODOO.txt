@@ -1,10 +1,3 @@
-security
-========
-- go here and report what to do and is this happening in the files we use at all (for example python youtube support stuff was replaced with native yt library):
-   https://github.com/mihailod/chipmachine/security/secret-scanning
-   https://github.com/mihailod/chipmachine/security/code-scanning
-   https://github.com/mihailod/chipmachine/security/code-scanning?page=2
-
 data (in general need db version bump)
 ======================================
 - add zx beeper videos from youtube if beeper solution not good
@@ -309,12 +302,12 @@ DONE VIA UADE UPGRADE 64	.prt	Pretracker (Amiga)
 Chris Hodges (Platon42) took the official binary blob, reverse-engineered the assembly, and optimized it.
 The Catch: While it is highly optimized for performance (twice the speed and half the packed size of Pink's original implementation), it was still ultimately designed to drop into rePlayer (the UADE-based Amiga music player ecosystem).
 
-UADEUPGRADE: 2.13 -> 3.05 prt aps arp ash bye dm hot jb js kim lion mod3 mosh mus npp okta pat pn prt ptm rj sdata sfx20 sid smod tcb tits tmk ymst
+UADEUPGRADE: 2.13 -> 3.05 prt aps arp ash bye dm hot jb js kim lion mod3 mosh mus npp okta pat prt ptm rj sdata sfx20 sid smod tcb tits tmk ymst
+
+PokeyNoise 34 songs but some legendary
 
 NOT DONE:
 *********
-
----
 
 78	.bbsong	Beepola (ZX Spectrum beeper)	Moderate	Beepola is open-source (.NET); format is documented; would need a beeper synthesis engine
 ✦ This is a very insightful research snippet. Beepola (.bbsong) is a fascinating candidate because it represents a specific era of "1-bit" music that is often overlooked. 

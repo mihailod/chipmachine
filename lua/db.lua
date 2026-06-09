@@ -13,7 +13,9 @@
 --     downgraded to LOGV (a full reindex was unusably slow printing it)
 -- 28: secondary-extension exclusion now case-insensitive, so FMP's UPPERCASE
 --     .PVI bank files stop being indexed as ~1074 bogus standalone songs
-VERSION = 28;
+-- 29: Modland ".info" metadata siblings are no longer indexed as bogus songs,
+--     and PokeyNoise "pn.<song>" prefix files type/title correctly (PokeyNoise)
+VERSION = 29;
 
 DB = {
 {

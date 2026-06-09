@@ -324,6 +324,11 @@ bool MusicDatabase::parseModland(
             /* if(base == "mdat" || base == "jpn") { */
             /* std::swap(base, ext); */
             /* } */
+            // Modland ships a human-readable ".info" metadata sibling next to
+            // many modules (e.g. every PokeyNoise "pn.<song>.info"); it is never
+            // a playable song, so never index it as one.
+            if (endsWith(toLower(song.path), ".info")) { continue; }
+
             auto [ext, base] = getTypeAndBase(song.path);
 
             // Match the secondary-extension list case-insensitively: Modland

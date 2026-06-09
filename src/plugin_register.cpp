@@ -34,6 +34,7 @@ extern "C" {
     void quartetplugin_register(); // Microdeal Quartet / Atari ST (.4v, .4q)
     void wsrplugin_register();     // Bandai WonderSwan (.wsr) via in_wsr
     void zxtuneplugin_register();  // ZX Spectrum Sound Tracker 1.1 (.st11) via ZXTune
+    void pokeynoiseplugin_register(); // Atari 800 PokeyNoise (.pn) via ASAP (6502+POKEY)
 }
 
 void register_plugins() {
@@ -68,4 +69,5 @@ void register_plugins() {
     quartetplugin_register();
     wsrplugin_register();
     zxtuneplugin_register();
+    pokeynoiseplugin_register();
 }
