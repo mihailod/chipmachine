@@ -1,10 +1,20 @@
 import json
 import urllib.request
+import urllib.parse
 import re
 import gzip
 import lzma
 import os
 import sys
+
+
+def _is_youtube_url(link):
+    try:
+        host = (urllib.parse.urlparse(link).hostname or "").lower()
+    except ValueError:
+        return False
+    return host == "youtu.be" or host == "youtube.com" or host.endswith(".youtube.com")
+
 
 opener = urllib.request.build_opener()
 opener.addheaders = [('User-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36')]
@@ -85,7 +95,7 @@ try:
                                     all_candidate_urls.append(sub_val)
 
             all_candidate_urls = list(set(all_candidate_urls))
-            yt_url = next((link for link in all_candidate_urls if "youtube.com" in link or "youtu.be" in link), None)
+            yt_url = next((link for link in all_candidate_urls if _is_youtube_url(link)), None)
             
             if not yt_url:
                 continue
