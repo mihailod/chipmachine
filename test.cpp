@@ -458,6 +458,34 @@ TEST_CASE("Beepola Phaser1 plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// Beepola Music Box (.bbsong TMB) end-to-end. Unlike Phaser1, the Music Box
+// player calls ZX Spectrum ROM routines (KEY-SCAN), so this also exercises the
+// 48K ROM being mapped at 0x0000 -- without it the player froze on one note.
+TEST_CASE("Beepola Music Box plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::BBSongPlugin plugin;
+
+    std::string const bb = "testmus/bbsong/in the hall of the mountain king.bbsong";
+    REQUIRE(plugin.canHandle(bb));
+
+    auto* player = plugin.fromFile(bb);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // Regression test for OctaMED MMD3 routing. libopenmpt's MED loader decodes the
 // whole MMD0..MMD3 family by content, but Tables.cpp only advertises the "med"
 // extension, so openmpt_is_extension_supported("mmd3") is false. UADE already

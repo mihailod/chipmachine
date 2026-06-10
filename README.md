@@ -346,9 +346,9 @@ Extensions: `.s98`
 
 ### ZX Spectrum beeper music: Beepola
 
-Support for Beepola ZX Spectrum 1-bit beeper music. Currently the **Phaser1** engine is supported; the other Beepola engines are a work in progress.
+Support for Beepola ZX Spectrum 1-bit beeper music. Each `.bbsong` is packed into its engine's data layout and the original Z80 player is run on an in-process Z80 core (with the 48K ROM mapped) while the 1-bit speaker is sampled to PCM; engine players are assembled in-repo by a small vendored Z80 assembler. Supported engines: **Phaser1** (`P1D` `P1S`), **Music Box** (`TMB`), and **Music Studio** (`MSD`, partial — its low bass range and percussion aren't fully reproduced). Other Beepola engines (SFX, Savage, Tritone, …) are a work in progress.
 
-Extensions: `.bbsong` (Phaser1 / `P1D` `P1S`)
+Extensions: `.bbsong`
 
 ### AudioOverload
 
@@ -439,7 +439,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **zingzong (Atari ST Quartet format):** Developed by Ben G. (benjihan). Licensed under MIT.
 * **audiodecoder.wsr (Bandai WonderSwan):** WonderSwan replayer by Mamiya (NEC V30MZ core derived from MAME/Oswan), as packaged in Kodi's `audiodecoder.wsr`. Licensed under GPL-2.0-or-later.
 * **ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise `.pn`):** Developed by Piotr Fusik. Licensed under GPL-2.0-or-later.
-* **Beepola (ZX Spectrum beeper `.bbsong`):** The `.bbsong` format and the engines are by Chris Cowley (Beepola). The shipped **Phaser1** beeper engine Z80 player is by **Shiru** (released as public domain), with its source taken from Shiru's 1tracker. The in-repo Z80 assembler is ported from 1tracker's `z80ass` (also by Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1).
+* **Beepola (ZX Spectrum beeper `.bbsong`):** The `.bbsong` format and the Beepola tool are by Chris Cowley. The engine Z80 players are sourced from Shiru's 1tracker: **Phaser1** by Shiru (public domain); **Music Box** reverse-engineered from WHAM! The Music Box (original Z80 code by Mark Alexander, 1985); **Music Studio** reverse-engineered from The Music Studio (original Z80 code by Saša Pušica, 1988). The in-repo Z80 assembler is ported from 1tracker's `z80ass` (Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1); the ZX Spectrum 48K ROM is redistributed under Amstrad's emulation permission.
 
 ---
 

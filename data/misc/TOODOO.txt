@@ -61,6 +61,8 @@ What it is: Focuses heavily on Japanese PC-88, PC-98, Sharp X68000, and FM-towns
 URL: [http://www.mirsoft.info](http://www.mirsoft.info)
 What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.
 
+6. https://chipmusic.org -- zx spectrum beeper music, maybe more...
+
 Demo Databases & Trackers
 
 1. Kestra BitWorld
@@ -184,6 +186,8 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 [RemoteLoader.cpp:90] CODE 550
 [MusicPlayerList.cpp:568] Could not load secondary file modland::Nintendo DS Sound Format/Shinobu Tanaka/Mario Kart DS/ntr-amce-usa.2sflib
 MusicPlayer: Plugin 'NDSPlugin' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fNintendo DS Sound Format%2fShinobu Tanaka%2fMario Kart DS/ntr-amce-usa-0004.mini2sf'. Error: 
+
+- beepola music studio plays partially -- not sure if true implementation is possible. kept partial for now. (chris cowley songs, etc.)
 
 
 - soundtrekker -- .mus not supported?
