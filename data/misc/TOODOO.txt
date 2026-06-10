@@ -176,9 +176,43 @@ The plugin architecture of ChipMachineAS is designed around a core registration 
 
   Updating ZXTune would essentially turn it into a much more powerful "universal" chiptune and game music decoder for ChipMachineAS.
 
+NOTE: figure out net-gain and potential regressions... 
+
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-- Mario Kart DS -- NDSPlugin do we need an update of this plugin?
+- 1000s of songs impacted! Mario Kart DS -- NDSPlugin do we need an update of this plugin? -- the latest desmume is from 2022 -- use that! .2sflib 
+
+---- NDSPlugin ----
+Trying testmus/nds/001 title.mini2sf ... playback OK
+Trying testmus/nds/111 right there, ride on (blazy mix).2sf ... playback OK
+---- HEPlugin ----
+Skipping testmus/psx/Goldrunner.psf
+Trying testmus/psx/010.minipsf2 ... playback OK
+Trying testmus/psx/01 - main menu.minipsf ... playback OK
+Trying testmus/psx/102 revelation.psf ... playback OK
+Trying testmus/psx/01 curse of the bloody puppets.psf2 ... playback OK
+
+=========================
+what is psx?
+   * PSF / minipsf: PlayStation Sound Format (PS1)
+   * PSF2 / minipsf2: PlayStation 2 Sound Format (PS2)
+The version of HE (Highly Experimental) currently in the codebase is PSXCore0008, which corresponds to an older
+  iteration of the engine (likely around version 1.08/1.09).
+  There are indeed newer versions and modern alternatives:
+  1. Newer Versions of "Highly Experimental"
+   * Official Peak: The last official release by Neill Corlett was v2.09 (released around 2007).
+   * Community Maintenance: Developers like kode54 (Christopher Snowhill) have maintained and updated the HE source code for modern players (like foobar2000 and DeaDBeeF). These versions include bug fixes, better metadata handling, and support for newer 64-bit architectures.
+   * OpenPSF: There is a project called OpenPSF (https://github.com/myst6re/openpsf) which is a "tiny" C++ library based on Highly Experimental, designed specifically for easier integration into modern projects like this one.
+  2. Modern Alternatives
+   * vgmstream: This is currently the most active project for video game music playback. It has replaced Highly
+     Experimental in many modern players because it supports a massive variety of formats (including PSF/PSF2) and
+     receives frequent updates for accuracy and compatibility.
+   * sexypsf: Another PSF player engine (a fork of which is present in your plugins directory but not currently enabled in the main build). It was often considered a lighter alternative to HE.
+  Should you update?
+  If the current plugin is playing your PSF files without issues, an update might not be strictly necessary. However, if you encounter PSF files that don't play correctly or have metadata (tags) that aren't appearing, moving to the OpenPSF core or integrating vgmstream would be the modern way to "upgrade" this capability.
+=================
+
+
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Nintendo DS Sound Format/Shinobu Tanaka/Mario Kart DS/ntr-amce-usa.2sflib
 [web.h:307] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fNintendo DS Sound Format%2fShinobu Tanaka%2fMario Kart DS/ntr-amce-usa.2sflib
 [web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/Nintendo%20DS%20Sound%20Format/Shinobu%20Tanaka/Mario%20Kart%20DS/ntr-amce-usa.2sflib
@@ -188,6 +222,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 MusicPlayer: Plugin 'NDSPlugin' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fNintendo DS Sound Format%2fShinobu Tanaka%2fMario Kart DS/ntr-amce-usa-0004.mini2sf'. Error: 
 
 - beepola music studio plays partially -- not sure if true implementation is possible. kept partial for now. (chris cowley songs, etc.)
+
 
 
 - soundtrekker -- .mus not supported?
@@ -405,6 +440,14 @@ UADEUPGRADE: 2.13 -> 3.05 prt aps arp ash bye dm hot jb js kim lion mod3 mosh mu
 DONE PN. PokeyNoise 34 songs but some legendary
 
 IN PROGRESS 78	.bbsong	Beepola (ZX Spectrum beeper)	Moderate	Beepola is open-source (.NET); format is documented; would need a beeper synthesis engine
+lot of work but this is dear to me
+beepola has multiple engines:
+SFX (41 songs) -- in progress
+P1D Phaser1 digital (15 songs) -- DONE
+(Wham) Music Box (9 songs) -- DONE
+SVG Savage (6) -- TODO, trivial now
+MSD Music Studio (4) -- PARTIAL, TBD
+Tritone (0) -- ??
 ✦ This is a very insightful research snippet. Beepola (.bbsong) is a fascinating candidate because it represents a specific era of "1-bit" music that is often overlooked. 
   Refined Technical Assessment:
    1. Complexity: Moderate (with a catch).
@@ -422,6 +465,12 @@ IN PROGRESS 78	.bbsong	Beepola (ZX Spectrum beeper)	Moderate	Beepola is open-sou
   Verdict: Supporting it is definitely feasible and would add a very cool "ZX Spectrum Beeper" niche to ChipMachine. It’s significantly easier than Psycle because the "machines" being emulated are simple Z80 loops rather than complex VSTs.
   Engineering Recommendation:
   If you ever decide to tackle this, look at the 1tracker source code on GitHub/SourceForge. It has already solved the "how do I play Beepola engines in C++" problem.
+
+""""""""""What's left:::::::::
+- SFX percussion — decode the drum command stream (the 0x85+ perc bytecode) so drum-heavy SFX songs get their beats. Your cars/butterfly compiles already have the real perc data to crack it against.
+- Savage (SVG) — 6 files; Beepola-only, so it's the same playbook as SFX (extract player from a compiled .bin, reverse its format). Would need you to compile one Savage .bbsong in Beepola.
+- Music Studio polish — patch the player for 16-bit periods (fixes the low-bass buzz) + add its percussion.
+- Tritone/QChan — clean PD engines, trivial to add if we ever get .bbsong test files (none in your corpus).
 
 
 NOT DONE:

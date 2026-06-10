@@ -346,7 +346,7 @@ Extensions: `.s98`
 
 ### ZX Spectrum beeper music: Beepola
 
-Support for Beepola ZX Spectrum 1-bit beeper music. Each `.bbsong` is packed into its engine's data layout and the original Z80 player is run on an in-process Z80 core (with the 48K ROM mapped) while the 1-bit speaker is sampled to PCM; engine players are assembled in-repo by a small vendored Z80 assembler. Supported engines: **Phaser1** (`P1D` `P1S`), **Music Box** (`TMB`), and **Music Studio** (`MSD`, partial — its low bass range and percussion aren't fully reproduced). Other Beepola engines (SFX, Savage, Tritone, …) are a work in progress.
+Support for Beepola ZX Spectrum 1-bit beeper music. Each `.bbsong` is compiled into its engine's data format and the engine's original Z80 player is run on an in-process Z80 core (48K ROM mapped, IM2 interrupts) while the 1-bit speaker (port `0xFE`) is sampled to PCM. Supported engines: **SFX** (Special FX / Fuzz Click), **Phaser1** (`P1D` `P1S`), **Music Box** (`TMB`), and **Music Studio** (`MSD`). For the Shiru engines the player is assembled in-repo from vendored Z80 source by a small vendored Z80 assembler; for SFX the player and its compiled bytecode format are reproduced from Beepola itself (validated byte-for-byte). This covers ~92% of the Beepola songs on modland. Work in progress: SFX percussion (currently melody-only), the **Savage** engine, and Music Studio's low bass range/percussion.
 
 Extensions: `.bbsong`
 
@@ -439,7 +439,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **zingzong (Atari ST Quartet format):** Developed by Ben G. (benjihan). Licensed under MIT.
 * **audiodecoder.wsr (Bandai WonderSwan):** WonderSwan replayer by Mamiya (NEC V30MZ core derived from MAME/Oswan), as packaged in Kodi's `audiodecoder.wsr`. Licensed under GPL-2.0-or-later.
 * **ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise `.pn`):** Developed by Piotr Fusik. Licensed under GPL-2.0-or-later.
-* **Beepola (ZX Spectrum beeper `.bbsong`):** The `.bbsong` format and the Beepola tool are by Chris Cowley. The engine Z80 players are sourced from Shiru's 1tracker: **Phaser1** by Shiru (public domain); **Music Box** reverse-engineered from WHAM! The Music Box (original Z80 code by Mark Alexander, 1985); **Music Studio** reverse-engineered from The Music Studio (original Z80 code by Saša Pušica, 1988). The in-repo Z80 assembler is ported from 1tracker's `z80ass` (Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1); the ZX Spectrum 48K ROM is redistributed under Amstrad's emulation permission.
+* **Beepola (ZX Spectrum beeper `.bbsong`):** The `.bbsong` format and the Beepola tool are by Chris Cowley. Engine players: **Phaser1** by Shiru (public domain, from 1tracker); **Music Box** reverse-engineered from WHAM! The Music Box (original Z80 code by Mark Alexander, 1985); **Music Studio** reverse-engineered from The Music Studio (original Z80 code by Saša Pušica, 1988); **SFX** (Special FX / Fuzz Click) reverse-engineered from the game Firefly (original Z80 code by Jonathan Smith / Special FX Software Ltd) — its player and compiled data format reproduced from Beepola. The in-repo Z80 assembler is ported from 1tracker's `z80ass` (Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1); the ZX Spectrum 48K ROM is redistributed under Amstrad's emulation permission.
 
 ---
 

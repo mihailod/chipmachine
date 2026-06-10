@@ -486,6 +486,35 @@ TEST_CASE("Beepola Music Box plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// Beepola SFX (.bbsong SFX / "Special FX / Fuzz Click") end-to-end. The SFX
+// player came from Beepola (no source), runs via an IM2 50Hz interrupt, and its
+// compiled bytecode is reproduced by our packer (validated byte-exact). This
+// exercises the SFX path: parse -> buildSfxImage -> run with interrupts.
+TEST_CASE("Beepola SFX plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::BBSongPlugin plugin;
+
+    std::string const bb = "testmus/bbsong/malaguena.bbsong";
+    REQUIRE(plugin.canHandle(bb));
+
+    auto* player = plugin.fromFile(bb);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // Regression test for OctaMED MMD3 routing. libopenmpt's MED loader decodes the
 // whole MMD0..MMD3 family by content, but Tables.cpp only advertises the "med"
 // extension, so openmpt_is_extension_supported("mmd3") is false. UADE already
