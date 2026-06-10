@@ -428,6 +428,36 @@ TEST_CASE("ZXTune ST11 plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// Beepola Phaser1 (.bbsong P1D) end-to-end: parse -> pack into the Phaser1
+// player's data layout -> assemble the player with the in-repo Z80 assembler ->
+// run on the Z80 core sampling the 1-bit speaker. This exercises the whole
+// bbsong pipeline and fails if the parser, packer, vendored assembler, or Z80
+// speaker sampler regress.
+TEST_CASE("Beepola Phaser1 plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::BBSongPlugin plugin;
+
+    std::string const bb = "testmus/bbsong/mr. blue sky.bbsong";
+    REQUIRE(plugin.canHandle(bb));
+
+    auto* player = plugin.fromFile(bb);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // Regression test for OctaMED MMD3 routing. libopenmpt's MED loader decodes the
 // whole MMD0..MMD3 family by content, but Tables.cpp only advertises the "med"
 // extension, so openmpt_is_extension_supported("mmd3") is false. UADE already
@@ -660,6 +690,10 @@ TEST_CASE("HE", "[music]") { testPlugin<musix::HEPlugin>("testmus/psx", "lib", "
 TEST_CASE("Ayfly", "[music]") { testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2"); }
 TEST_CASE("ZXTune", "[music]") { testPlugin<musix::ZXTunePlugin>("testmus/st11", ""); }
 TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmus/pn", ""); }
+// Beepola .bbsong (ZX Spectrum beeper). Only the Phaser1 engine (P1D/P1S) is
+// decoded today; the other Beepola engines in this dir fast-fail as a graceful
+// skip ("unsupported"), so coverage exercises the 18 Phaser1 tunes.
+TEST_CASE("Beepola", "[music]") { testPlugin<musix::BBSongPlugin>("testmus/bbsong", ""); }
 TEST_CASE("FFMPEG", "[music]") { testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg", ""); }
 TEST_CASE("HT", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
 TEST_CASE("SC68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
@@ -1111,7 +1145,8 @@ TEST_CASE("coverage", "[music]")
         {"Euphony", "testmus/eup"},
         {"WonderSwan (in_wsr)", "testmus/wsr"},
         {"ZX Spectrum (ZXTune)", "testmus/st11"},
-        {"PokeyNoise", "testmus/pn"}
+        {"PokeyNoise", "testmus/pn"},
+        {"Beepola (Phaser1)", "testmus/bbsong"}
     };
 
     // Plugins whose extensions are split across several testmus folders (one

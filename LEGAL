@@ -153,6 +153,15 @@ Component: minimp3 (MP3 decoding)
 Author: Developed by Lieven van den Hauwe
 License: Creative Commons Zero v1.0 Universal (CC0-1.0 Public Domain)
 
+Component: Beepola Phaser1 beeper engine + z80ass assembler (ZX Spectrum .bbsong)
+Author: Shiru (Phaser1 Z80 player, and the 1tracker z80ass assembler it is
+        ported from). The .bbsong format and the Beepola tool are by Chris Cowley.
+License: Public Domain (the Phaser1 engine source states "Feel free to do
+         whatever you want with the code, it is PD"); assembler ported from
+         1tracker.
+Notice: Only the Phaser1 engine ships. The embedded Z80 CPU core is GME's (see
+        the LGPL-2.1 section).
+
 ===============================================================================
 5. CUSTOM / FREEWARE PERMISSIVE DEPENDENCIES
 ===============================================================================

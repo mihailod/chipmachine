@@ -344,6 +344,12 @@ Support for retro hardware Music, including OPNA hardware-rhythm drums
 
 Extensions: `.s98`
 
+### ZX Spectrum beeper music: Beepola
+
+Support for Beepola ZX Spectrum 1-bit beeper music. Currently the **Phaser1** engine is supported; the other Beepola engines are a work in progress.
+
+Extensions: `.bbsong` (Phaser1 / `P1D` `P1S`)
+
 ### AudioOverload
 
 Support for Sega Saturn and Capcom Q music
@@ -433,6 +439,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **zingzong (Atari ST Quartet format):** Developed by Ben G. (benjihan). Licensed under MIT.
 * **audiodecoder.wsr (Bandai WonderSwan):** WonderSwan replayer by Mamiya (NEC V30MZ core derived from MAME/Oswan), as packaged in Kodi's `audiodecoder.wsr`. Licensed under GPL-2.0-or-later.
 * **ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise `.pn`):** Developed by Piotr Fusik. Licensed under GPL-2.0-or-later.
+* **Beepola (ZX Spectrum beeper `.bbsong`):** The `.bbsong` format and the engines are by Chris Cowley (Beepola). The shipped **Phaser1** beeper engine Z80 player is by **Shiru** (released as public domain), with its source taken from Shiru's 1tracker. The in-repo Z80 assembler is ported from 1tracker's `z80ass` (also by Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1).
 
 ---
 
