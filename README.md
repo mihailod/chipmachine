@@ -282,8 +282,11 @@ Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2
 ### ZXTune
 
 Support for ZX Spectrum **Sound Tracker 1.1** (the original AY-3-8910 tracker)
+and Sam Coupe **E-Tracker** (`.cop`, SAA1099). Note that modland's "Sam Coupe
+COP" set is mixed: only genuine E-Tracker files (signature `ETracker (C) BY ESI.`)
+play; other `.cop` rips are unrelated raw Sam Coupe programs.
 
-Extensions: `.st11`
+Extensions: `.st11` `.cop`
 
 ### MDX
 

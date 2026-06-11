@@ -272,7 +272,11 @@ TEST_CASE("GME SGC plays sound", "[music]")
 
     REQUIRE(energy != 0);
 }
-TEST_CASE("AdPlug", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", ".rol", "data"); }
+// .rol (AdLib Visual Composer) was previously excluded because its player loads
+// instruments from a companion "standard.bnk" in the same dir (rol.cpp), which
+// was missing -> silent. The bank is now vendored (testmus/adlib/standard.bnk,
+// from modland's Ad Lib/Visual Composer set) so america2.rol renders for real.
+TEST_CASE("AdPlug", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", "", "data"); }
 
 // Render up to `buffers` blocks and return summed absolute sample energy.
 static int64_t adplugEnergy(musix::ChipPlayer* player, int buffers)
@@ -748,7 +752,11 @@ TEST_CASE("GSF", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib")
 TEST_CASE("NDS", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib"); }
 TEST_CASE("HE", "[music]") { testPlugin<musix::HEPlugin>("testmus/psx", "lib", "data/hebios.bin"); }
 TEST_CASE("Ayfly", "[music]") { testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2"); }
-TEST_CASE("ZXTune", "[music]") { testPlugin<musix::ZXTunePlugin>("testmus/st11", ""); }
+TEST_CASE("ZXTune", "[music]")
+{
+    testPlugin<musix::ZXTunePlugin>("testmus/st11", ""); // Sound Tracker 1.1
+    testPlugin<musix::ZXTunePlugin>("testmus/cop", "");  // Sam Coupe COP (SAA1099)
+}
 TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmus/pn", ""); }
 // Beepola .bbsong (ZX Spectrum beeper). Only the Phaser1 engine (P1D/P1S) is
 // decoded today; the other Beepola engines in this dir fast-fail as a graceful
@@ -1203,7 +1211,6 @@ TEST_CASE("coverage", "[music]")
         {"Quartet", "testmus/4v"},
         {"Euphony", "testmus/eup"},
         {"WonderSwan (in_wsr)", "testmus/wsr"},
-        {"ZX Spectrum (ZXTune)", "testmus/st11"},
         {"PokeyNoise", "testmus/pn"},
         {"Beepola (Phaser1)", "testmus/bbsong"}
     };
@@ -1217,7 +1224,10 @@ TEST_CASE("coverage", "[music]")
         // PxTone Collage handles two extensions (.ptcop and .pttune), each
         // filed under its own fixture dir -- the same dirs the PxTone/PxTune
         // playback tests read.
-        {"PxTone Collage Player", {"testmus/ptcop", "testmus/pttune"}}
+        {"PxTone Collage Player", {"testmus/ptcop", "testmus/pttune"}},
+        // ZXTune handles .st11 (Sound Tracker 1.1) and .cop (Sam Coupe COP),
+        // each under its own fixture dir.
+        {"ZX Spectrum (ZXTune)", {"testmus/st11", "testmus/cop"}}
     };
 
     for (auto const& plugin : plugins) {
