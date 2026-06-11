@@ -6,34 +6,25 @@
 
 **Port of ChipMachine for Apple Silicon.**
 
-![Annoying Popup](data/misc/argh.jpg)
-
-> ChipMachine is my favorite Mac retro chiptune player and I have been using it forever. However, when opening it on my Mac after a recent macOS update, I saw this annoying popup above. It upset me and I channeled that anger into this project.
-
----
-
 [![Screenshot](data/misc/screen.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
 
 ## Intro
 
 *A demoscene/retro Jukebox/spotify-like music player*
 
-* **Intructions are dead simple:**
-* **Start typing to incrementally search aggregated database**
+* **Simply start typing for incremental auto-complete search of the aggregated database**
 * **UP/DOWN keys = select a song from search results**
 * **ENTER key = play**
 * **TAB key = help screen**
 * **(Read the scrolling text for more info)**
 * **[Things in progress / to come](data/misc/TOODOO.txt)**
-* **Ultimate goal: every chiptune searchable and instantly playable!** 
+* **Ultimate goal: every chiptune ever made searchable and instantly playable!** 
 
 ## Binaries
 
-Binaries for macOS (tested on Tahoe) are available under *Releases*
+Binaries for macOS (tested on Tahoe) are available under [*Releases*](https://github.com/mihailod/chipmachine/releases)
 
-**NOTE it should work on pre-Tahoe macOS however I have no means to test it**
-
-https://github.com/mihailod/chipmachine/releases
+**NOTE although not formally tested, ChipMachineAS should work on pre-Tahoe macOS**
 
 ### Running on Mac (Gatekeeper Authorization)
 
@@ -346,7 +337,7 @@ Extensions: `.wsr`
 
 Support for Atari XL/XE series POKEY chip PokeyNoise music
 
-Extensions: `.pn` (more often `<song>.pn`)
+Extensions: `.pn` (more often `pn.<song>`)
 
 ### S98
 
@@ -412,6 +403,10 @@ Streams audio directly from YouTube links (`youtube.com/` / `youtu.be/`). The bu
 
 ## **Credits**
 
+![Annoying Popup](data/misc/argh.jpg)
+
+> ChipMachine is my favorite Mac retro chiptune player and I have been using it forever. However, when opening it on my Mac after a recent macOS update, I saw this annoying popup above. It upset me and I channeled that anger into this project.
+
 This is mostly a preservation effort. I am making this project for myself so I am able to continue enjoying listening to my favorite music in a clean and inspirational way the original Chipmachine was providing to me over many many years.
 
 My work here is mostly based around:
@@ -441,8 +436,8 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **98fmplayer:** Developed by areis. Licensed under MIT.
 * **libkss (MSX KSS):** Developed by Mitsutaka Okazaki. Licensed under MIT.
 * **organya (Cave Story Organya format):** Developed by Studio Pixel (Daisuke Amaya). Portions adapted under MIT / Open Source.
-* **ProTrekkr / NoiseTrekker (`.ptk` / `.ntk`):** Developed by Franck Charlet (Hitchhikr), based on NoiseTrekker by Juan Antonio Argüelles Rius. Licensed under BSD-2-Clause.
-* **SunVox (`.sunvox`):** Developed by Alexander Zolotov (NightRadio). The SunVox library is free for commercial and non-commercial use.
+* **ProTrekkr / NoiseTrekker:** Developed by Franck Charlet (Hitchhikr), based on NoiseTrekker by Juan Antonio Argüelles Rius. Licensed under BSD-2-Clause.
+* **SunVox:** Developed by Alexander Zolotov (NightRadio). The SunVox library is free for commercial and non-commercial use.
 * **libpxtone (PixelTone audio):** Developed by Studio Pixel (Daisuke Amaya). Licensed under MIT.
 * **eupmini (PC-98 EUP audio):** Developed by various retro-computing contributors. Licensed under MIT.
 * **minimp3 (MP3 decoding):** Developed by Lieven van den Hauwe. Licensed under CC0-1.0 (Public Domain).
@@ -450,8 +445,8 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **Freetype / Grappix (UI & Text):** Developed by The FreeType Project and Grappix contributors. Licensed under FTL / BSD-2-Clause.
 * **zingzong (Atari ST Quartet format):** Developed by Ben G. (benjihan). Licensed under MIT.
 * **audiodecoder.wsr (Bandai WonderSwan):** WonderSwan replayer by Mamiya (NEC V30MZ core derived from MAME/Oswan), as packaged in Kodi's `audiodecoder.wsr`. Licensed under GPL-2.0-or-later.
-* **ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise `.pn`):** Developed by Piotr Fusik. Licensed under GPL-2.0-or-later.
-* **Beepola (ZX Spectrum beeper `.bbsong`):** The `.bbsong` format and the Beepola tool are by Chris Cowley. Engine players: **Phaser1** by Shiru (public domain, from 1tracker); **Music Box** reverse-engineered from WHAM! The Music Box (original Z80 code by Mark Alexander, 1985); **Music Studio** reverse-engineered from The Music Studio (original Z80 code by Saša Pušica, 1988); **SFX** (Special FX / Fuzz Click) reverse-engineered from the game Firefly (original Z80 code by Jonathan Smith / Special FX Software Ltd) — its player and compiled data format reproduced from Beepola. The in-repo Z80 assembler is ported from 1tracker's `z80ass` (Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1); the ZX Spectrum 48K ROM is redistributed under Amstrad's emulation permission.
+* **ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise):** Developed by Piotr Fusik. Licensed under GPL-2.0-or-later.
+* **Beepola (ZX Spectrum beeper):** The `.bbsong` format and the Beepola tool are by Chris Cowley. Engine players: **Phaser1** by Shiru (public domain, from 1tracker); **Music Box** reverse-engineered from WHAM! The Music Box (original Z80 code by Mark Alexander, 1985); **Music Studio** reverse-engineered from The Music Studio (original Z80 code by Saša Pušica, 1988); **SFX** (Special FX / Fuzz Click) reverse-engineered from the game Firefly (original Z80 code by Jonathan Smith / Special FX Software Ltd) — its player and compiled data format reproduced from Beepola. The in-repo Z80 assembler is ported from 1tracker's `z80ass` (Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1); the ZX Spectrum 48K ROM is redistributed under Amstrad's emulation permission.
 
 ---
 
