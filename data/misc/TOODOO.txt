@@ -439,7 +439,7 @@ UADEUPGRADE: 2.13 -> 3.05 prt aps arp ash bye dm hot jb js kim lion mod3 mosh mu
 
 DONE PN. PokeyNoise 34 songs but some legendary
 
-IN PROGRESS 78	.bbsong	Beepola (ZX Spectrum beeper)	Moderate	Beepola is open-source (.NET); format is documented; would need a beeper synthesis engine
+DONE WITH CAVEATS (SEE DEFERRED) 78 .bbsong Beepola (ZX Spectrum beeper)	Moderate	Beepola is open-source (.NET); format is documented; would need a beeper synthesis engine
 lot of work but this is dear to me
 beepola has multiple engines:
 SFX (41 songs) -- in progress
@@ -465,13 +465,6 @@ Tritone (0) -- ??
   Verdict: Supporting it is definitely feasible and would add a very cool "ZX Spectrum Beeper" niche to ChipMachine. It’s significantly easier than Psycle because the "machines" being emulated are simple Z80 loops rather than complex VSTs.
   Engineering Recommendation:
   If you ever decide to tackle this, look at the 1tracker source code on GitHub/SourceForge. It has already solved the "how do I play Beepola engines in C++" problem.
-
-""""""""""What's left:::::::::
-- SFX percussion — decode the drum command stream (the 0x85+ perc bytecode) so drum-heavy SFX songs get their beats. Your cars/butterfly compiles already have the real perc data to crack it against.
-- Savage (SVG) — 6 files; Beepola-only, so it's the same playbook as SFX (extract player from a compiled .bin, reverse its format). Would need you to compile one Savage .bbsong in Beepola.
-- Music Studio polish — patch the player for 16-bit periods (fixes the low-bass buzz) + add its percussion.
-- Tritone/QChan — clean PD engines, trivial to add if we ever get .bbsong test files (none in your corpus).
-
 
 NOT DONE:
 *********
@@ -522,6 +515,10 @@ NOT DONE:
    * Existing Tooling: Official C replayer in hitchhikr/protrekkr.
    * Effort: Moderate. You just need to wrap the existing C replayer into your ChipPlayer interface.
   Recommendation: This is a top-tier candidate. It gives you a "professional" sounding 2000s-era tracker with synth capabilities that takes up almost no space. The implementation path is clear and well-documented by the official replayer.
+
+DEFERRED BEEPOLA FORMATS
+- HARD/LATER Savage (SVG) — 6 files; Beepola-only, so it's the same playbook as SFX (extract player from a compiled .bin, reverse its format). Would need you to compile one Savage .bbsong in Beepola.
+- NO SONGS Tritone/QChan — clean PD engines, trivial to add if we ever get .bbsong test files (none in your corpus).
 
 **********************************
 * FURTHER DEEPER RESEARCH NEEDED *
