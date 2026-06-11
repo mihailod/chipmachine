@@ -756,6 +756,31 @@ TEST_CASE("ZXTune", "[music]")
 {
     testPlugin<musix::ZXTunePlugin>("testmus/st11", ""); // Sound Tracker 1.1
     testPlugin<musix::ZXTunePlugin>("testmus/cop", "");  // Sam Coupe COP (SAA1099)
+    testPlugin<musix::ZXTunePlugin>("testmus/gtr", "");  // Global Tracker (AY)
+    testPlugin<musix::ZXTunePlugin>("testmus/chi", "");  // Chip Tracker (DAC)
+    testPlugin<musix::ZXTunePlugin>("testmus/tfe", "");  // TFM Music Maker (FM)
+    // ZX "Pro Sound Maker" .psm -- shares the extension with Epic MASI, which
+    // OpenMPT keeps. OpenMPT content-checks the MASI magic and declines these,
+    // so first-match routing lands them here (see OpenMPTPlugin::canHandle).
+    testPlugin<musix::ZXTunePlugin>("testmus/psm", "");
+}
+// The .psm extension is shared: Epic MegaGames MASI must keep routing to OpenMPT
+// (which plays it), while ZX "Pro Sound Maker" .psm must route to ZXTune (which
+// OpenMPT cannot play). Assert the live registry resolves each by content, so a
+// future libopenmpt/plugin-priority change can't silently re-misroute them.
+TEST_CASE("PSM routing", "[music]")
+{
+    musix::ChipPlugin::createPlugins("data");
+    auto winner = [](std::string const& file) -> std::string {
+        for (const auto& pl : musix::ChipPlugin::getPlugins()) {
+            if (pl->canHandle(file)) { return pl->name(); }
+        }
+        return "(none)";
+    };
+    // ZX Pro Sound Maker -> ZXTune
+    REQUIRE(winner("testmus/psm/a1.psm") == "ZX Spectrum (ZXTune)");
+    // Epic MASI -> OpenMPT (unchanged)
+    REQUIRE(winner("testmus/openmpt/one must fall! 1.psm") == "OpenMPT");
 }
 TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmus/pn", ""); }
 // Beepola .bbsong (ZX Spectrum beeper). Only the Phaser1 engine (P1D/P1S) is
@@ -1225,9 +1250,12 @@ TEST_CASE("coverage", "[music]")
         // filed under its own fixture dir -- the same dirs the PxTone/PxTune
         // playback tests read.
         {"PxTone Collage Player", {"testmus/ptcop", "testmus/pttune"}},
-        // ZXTune handles .st11 (Sound Tracker 1.1) and .cop (Sam Coupe COP),
-        // each under its own fixture dir.
-        {"ZX Spectrum (ZXTune)", {"testmus/st11", "testmus/cop"}}
+        // ZXTune handles several ZX/Sam Coupe formats, each under its own
+        // fixture dir: Sound Tracker 1.1, Sam Coupe COP, Global Tracker, Chip
+        // Tracker, TFM Music Maker, and ZX Pro Sound Maker (.psm, routed away
+        // from OpenMPT by content -- see OpenMPTPlugin::canHandle).
+        {"ZX Spectrum (ZXTune)", {"testmus/st11", "testmus/cop", "testmus/gtr",
+                                  "testmus/chi", "testmus/tfe", "testmus/psm"}}
     };
 
     for (auto const& plugin : plugins) {

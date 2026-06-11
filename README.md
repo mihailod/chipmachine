@@ -272,12 +272,23 @@ Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2
 
 ### ZXTune
 
-Support for ZX Spectrum **Sound Tracker 1.1** (the original AY-3-8910 tracker)
-and Sam Coupe **E-Tracker** (`.cop`, SAA1099). Note that modland's "Sam Coupe
-COP" set is mixed: only genuine E-Tracker files (signature `ETracker (C) BY ESI.`)
-play; other `.cop` rips are unrelated raw Sam Coupe programs.
+Support for several ZX Spectrum / Sam Coupe formats the other plugins don't
+cover, all decoded by ZXTune's content detection (the extension only gates which
+files reach the engine):
 
-Extensions: `.st11` `.cop`
+* **Sound Tracker 1.1** (`.st11`) — the original AY-3-8910 tracker.
+* Sam Coupe **E-Tracker** (`.cop`, SAA1099). modland's "Sam Coupe COP" set is
+  mixed: only genuine E-Tracker files (signature `ETracker (C) BY ESI.`) play;
+  other `.cop` rips are unrelated raw Sam Coupe programs.
+* **Global Tracker** (`.gtr`) — AY tracker.
+* **Chip Tracker** (`.chi`) — ZX Spectrum sample/DAC tracker.
+* **TFM Music Maker** (`.tfe`) — TurboSound-FM (Yamaha YM2203).
+* **Pro Sound Maker** (`.psm`) — AY tracker. `.psm` is shared with Epic
+  MegaGames MASI (an OpenMPT format); OpenMPT now content-checks the MASI magic
+  and declines the ZX variant so those tunes route here, where they actually
+  play, instead of failing in OpenMPT.
+
+Extensions: `.st11` `.cop` `.gtr` `.chi` `.tfe` `.psm`
 
 ### MDX
 
@@ -432,7 +443,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **HivelyTracker (AHX/HVL):** Developed by IRIS (Peter "Yohng" V, Curt Cool). Licensed under BSD-3-Clause.
 * **MDX / S98 (PC-98 & Sharp X68000):** Emulation engines adapted from OpenMSX/GME variants. Licensed under GPL-2.0-or-later.
 * **Ayfly (ZX Spectrum AY-3-8910):** Developed by Sergey Vladimirov. Licensed under GPL-2.0-or-later.
-* **ZXTune (ZX Spectrum Sound Tracker 1.1):** Developed by Vitamin/CAIG; CMake fork by djdron. Licensed under GPL-3.0-or-later.
+* **ZXTune (ZX Spectrum / Sam Coupe — Sound Tracker 1.1, Global Tracker, Chip Tracker, TFM Music Maker, Pro Sound Maker, E-Tracker):** Developed by Vitamin/CAIG; CMake fork by djdron. Licensed under GPL-3.0-or-later.
 * **98fmplayer:** Developed by areis. Licensed under MIT.
 * **libkss (MSX KSS):** Developed by Mitsutaka Okazaki. Licensed under MIT.
 * **organya (Cave Story Organya format):** Developed by Studio Pixel (Daisuke Amaya). Portions adapted under MIT / Open Source.

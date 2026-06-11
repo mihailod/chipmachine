@@ -105,7 +105,7 @@ The plugin architecture of ChipMachineAS is designed around a core registration 
   │                │                                              │             │ Version       │ e        │       │
   │                │                                              │             │               │ Version  │       │
   ├────────────────┼──────────────────────────────────────────────┼─────────────┼───────────────┼──────────┼───────┤
-  │ zxtuneplugin   │ ZXTune                                       │ Sibling     │ r2742         │ r5101    │ Needs │
+  │ DONE zxtune    │ ZXTune                                       │ Sibling     │ r2742         │ r5101    │ Needs │
   │                │ (https://github.com/vitamin-caig/zxtune)     │ (/zxtune)   │               │          │ Updat │
   │                │                                              │             │               │          │ e     │
   │ adplugin       │ AdPlug (https://github.com/adplug/adplug)    │ Vendored    │ 2.3.2-beta    │ 2.4      │ Needs │
@@ -141,8 +141,9 @@ The plugin architecture of ChipMachineAS is designed around a core registration 
   └────────────────┴──────────────────────────────────────────────┴─────────────┴───────────────┴──────────┴───────┘
   Key Findings & Recommendations
 
-   1. ZXTune (Urgent Update): The project is significantly behind the upstream ZXTune (r2742 vs r5101). Updating this
+DONE   1. ZXTune (Urgent Update): The project is significantly behind the upstream ZXTune (r2742 vs r5101). Updating this
       would provide support for many newer chiptune formats and critical performance improvements.
+
    2. AdPlug (Update Recommended): The move from 2.3.2-beta to 2.4 includes many bug fixes for OPL2/3 emulation and
       support for new tracker formats.
    3. libpxtone: The project uses an older version of the PxTone library. The ptcollaboration fork (v220910a) contains
