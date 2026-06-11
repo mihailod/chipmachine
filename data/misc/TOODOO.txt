@@ -98,10 +98,7 @@ could not play song:
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$ PLUGINS STATUS $$$$$$$$$$$$$$$$$$
   ┌────────────────┬──────────────────────────────────────────────┬─────────────┬───────────────┬──────────┬───────┐
-  │ Plugin         │ Dependency                                   │ Location    │ Current       │ Latest   │ Statu │
-  │                │                                              │             │ Project       │ Availabl │ s     │
-  │                │                                              │             │ Version       │ e        │       │
-  │                │                                              │             │               │ Version  │       │
+  │ Plugin         │ Dependency                                   │ Location    │ Current       │ Latest   │ Action│
   ├────────────────┼──────────────────────────────────────────────┼─────────────┼───────────────┼──────────┼───────┤
   │ adplugin       │ AdPlug (https://github.com/adplug/adplug)    │ Vendored    │ 2.3.2-beta    │ 2.4      │ Needs │
   │                │                                              │             │               │          │ Updat │
@@ -115,18 +112,11 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$ PLUGINS STATUS $$$$$$$$$$$$$$$$$$
   │ ndsplugin      │ desmume/vio2sf                               │ Vendored    │ zlib 1.2.3 /  │ -        │ Legac │
   │                │                                              │             │ desmume       │          │ y     │
   └────────────────┴──────────────────────────────────────────────┴─────────────┴───────────────┴──────────┴───────┘
-  Key Findings & Recommendations
 
-   2. AdPlug (Update Recommended): The move from 2.3.2-beta to 2.4 includes many bug fixes for OPL2/3 emulation and
-      support for new tracker formats.
-   3. libpxtone: The project uses an older version of the PxTone library. The ptcollaboration fork (v220910a) contains important fixes for modern compilers and expanded format support.
-   4. VICE: The vicepluginbridge is based on VICE 3.1.0. The current version of VICE is 3.8, which significantly
-      improves C64 cycle-exact emulation.
-   5. nds: 1000s of songs impacted! Mario Kart DS -- NDSPlugin do we need an update of this plugin?
-      -- the latest desmume is from 2022 -- use that! .2sflib 
-      ---- NDSPlugin ----
-      Trying testmus/nds/001 title.mini2sf ... playback OK
-      Trying testmus/nds/111 right there, ride on (blazy mix).2sf ... playback OK
+   * AdPlug (Update Recommended): The move from 2.3.2-beta to 2.4 includes many bug fixes for OPL2/3 emulation and support for new tracker formats.
+   * libpxtone: The project uses an older version of the PxTone library. The ptcollaboration fork (v220910a) contains important fixes for modern compilers and expanded format support.
+   * VICE: The vicepluginbridge is based on VICE 3.1.0. The current version of VICE is 3.8, which significantly improves C64 cycle-exact emulation.
+   * NDSPlugin do we need an update of this plugin?
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
@@ -155,15 +145,6 @@ The version of HE (Highly Experimental) currently in the codebase is PSXCore0008
   Should you update?
   If the current plugin is playing your PSF files without issues, an update might not be strictly necessary. However, if you encounter PSF files that don't play correctly or have metadata (tags) that aren't appearing, moving to the OpenPSF core or integrating vgmstream would be the modern way to "upgrade" this capability.
 =================
-
-
-[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Nintendo DS Sound Format/Shinobu Tanaka/Mario Kart DS/ntr-amce-usa.2sflib
-[web.h:307] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fNintendo DS Sound Format%2fShinobu Tanaka%2fMario Kart DS/ntr-amce-usa.2sflib
-[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/Nintendo%20DS%20Sound%20Format/Shinobu%20Tanaka/Mario%20Kart%20DS/ntr-amce-usa.2sflib
-[web.cpp:176] CODE 550
-[RemoteLoader.cpp:90] CODE 550
-[MusicPlayerList.cpp:568] Could not load secondary file modland::Nintendo DS Sound Format/Shinobu Tanaka/Mario Kart DS/ntr-amce-usa.2sflib
-MusicPlayer: Plugin 'NDSPlugin' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fNintendo DS Sound Format%2fShinobu Tanaka%2fMario Kart DS/ntr-amce-usa-0004.mini2sf'. Error: 
 
 - soundtrekker -- .mus not supported?
 
@@ -668,19 +649,16 @@ symmod	155
 amf	154
 OPX	153
 MBM	151
-
-------- all checked above --------
-
-set	147
-xrns	145
+set	147 -- not a standalone format; it's the Quartet voice-set companion for .4v files
+xrns	145 -- Renoise modern commercial tracker
 psm	140
 amd	127
 rad	126
 med	125
-minigsf	122
-gsf	120
+minigsf	122 -- fetch 2ndary file fix was needed -- all ok now
+gsf	120 -- fetch 2ndary file fix was needed -- all ok now
 d00	120
-rns	117
+rns	117 -- Renoise modern commercial tracker
 0.mod	116
 vgz	115
 dw	115
@@ -688,6 +666,9 @@ dtm	115
 bp3	114
 ptm	112
 mt2	104
+
+------- all checked above --------
+
 sid2	97
 soc	96
 dm2	94

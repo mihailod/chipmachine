@@ -749,6 +749,64 @@ TEST_CASE("UADE YMST secondary files", "[uade]")
 
 TEST_CASE("OpenMPT", "[music]") { testPlugin<musix::OpenMPTPlugin>("testmus/openmpt", ""); }
 TEST_CASE("GSF", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib"); }
+// On a clean machine, streaming a .gsf/.minigsf must also fetch its shared
+// .gsflib (named via the PSF "_lib" tag) or the VBA loader fails ("Could not
+// load gsf"). Verify the plugin surfaces that companion so MusicPlayerList
+// pulls it down alongside the stub.
+TEST_CASE("GSF secondary files", "[music]")
+{
+    musix::GSFPlugin plugin;
+    REQUIRE(plugin.getSecondaryFiles("testmus/gsf/01 yume wa owaranai.gsf") ==
+            std::vector<std::string>{ "AGB-AN8J-JPN.gsflib" });
+    REQUIRE(plugin.getSecondaryFiles(
+                "testmus/gsf/01 title screen (0003).minigsf") ==
+            std::vector<std::string>{ "zelda.gsflib" });
+    REQUIRE(plugin.getSecondaryFiles("/nonexistent/x.gsf").empty());
+}
+// Same clean-machine fix for the other PSF-family plugins: every mini* rip
+// references a shared library via the PSF "_lib" tag, and each plugin must
+// surface it from getSecondaryFiles() (all delegate to psfLibFiles()). The lib
+// name is returned verbatim from the tag -- its case matches the source server's
+// filename (the local lowercase fixtures coincide on a case-insensitive FS).
+TEST_CASE("PSF lib secondary files", "[music]")
+{
+    using V = std::vector<std::string>;
+    REQUIRE(musix::NDSPlugin{}.getSecondaryFiles(
+                "testmus/nds/001 title.mini2sf") == V{ "NTR-AZEE-USA.2sflib" });
+    REQUIRE(musix::AOPlugin{}.getSecondaryFiles(
+                "testmus/ao/01 - opening.miniqsf") ==
+            V{ "Mega Man 2 - The Power Fighters.qsflib" });
+    REQUIRE(musix::HTPlugin{}.getSecondaryFiles(
+                "testmus/ht/w00-00-25.minissf") == V{ "W00.ssflib" });
+    REQUIRE(musix::USFPlugin{}.getSecondaryFiles(
+                "testmus/usf/sparse01.miniusf") == V{ "quake2.usflib" });
+    REQUIRE(musix::HEPlugin{ "data/hebios.bin" }.getSecondaryFiles(
+                "testmus/psx/01 - main menu.minipsf") == V{ "driver.psflib" });
+    REQUIRE(musix::HEPlugin{ "data/hebios.bin" }.getSecondaryFiles(
+                "testmus/psx/010.minipsf2") ==
+            V{ "Pop'n Taisen Puzzle-dama Online.psf2lib" });
+    // A self-contained full PSF has no _lib companion.
+    REQUIRE(musix::HEPlugin{ "data/hebios.bin" }
+                .getSecondaryFiles("testmus/psx/Goldrunner.psf")
+                .empty());
+}
+// Regression for the real GUI entry point: MusicPlayer::getSecondaryFiles used
+// to parse PSF "_lib" inline and lower-case it, so an uppercase/mixed-case
+// companion (e.g. ZZZ_JNA1.psf2lib, W00.ssflib, "Mega Man - The Power
+// Battle.qsflib") 550'd on Modland's case-sensitive FTP and the tune streamed
+// silent. It now delegates to the plugin and must preserve the exact case.
+TEST_CASE("MusicPlayer secondary files preserve case", "[music]")
+{
+    auto ap = std::make_shared<AudioPlayerNull>();
+    musix::ChipPlugin::createPlugins("data");
+    chipmachine::MusicPlayer mp{ ap };
+    REQUIRE(mp.getSecondaryFiles("testmus/psx/010.minipsf2") ==
+            std::vector<std::string>{ "Pop'n Taisen Puzzle-dama Online.psf2lib" });
+    REQUIRE(mp.getSecondaryFiles("testmus/nds/001 title.mini2sf") ==
+            std::vector<std::string>{ "NTR-AZEE-USA.2sflib" });
+    REQUIRE(mp.getSecondaryFiles("testmus/gsf/01 yume wa owaranai.gsf") ==
+            std::vector<std::string>{ "AGB-AN8J-JPN.gsflib" });
+}
 TEST_CASE("NDS", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib"); }
 TEST_CASE("HE", "[music]") { testPlugin<musix::HEPlugin>("testmus/psx", "lib", "data/hebios.bin"); }
 TEST_CASE("Ayfly", "[music]") { testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2"); }

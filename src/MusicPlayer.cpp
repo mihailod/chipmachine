@@ -7,7 +7,6 @@
 #include <coreutils/format.h>
 #include <coreutils/utils.h>
 #include <musicplayer/src/plugins/plugins.h>
-#include <psf/PSFFile.h>
 
 #include <algorithm>
 #include <set>
@@ -350,25 +349,18 @@ float MusicPlayer::getVolume() const
 
 std::vector<std::string> MusicPlayer::getSecondaryFiles(const std::string& name)
 {
+    // Delegate to the plugin that handles the file. Each plugin reports its own
+    // companions (PSF "_lib" libraries, sample banks, voicesets, ...) with the
+    // EXACT names its loader expects -- in particular the original case. We must
+    // NOT lower-case them: Modland's FTP is case-sensitive, so a tag like
+    // "ZZZ_JNA1.psf2lib" lowered to "zzz_jna1.psf2lib" 550s and the tune plays
+    // silent (it only "worked" before for libs that happened to be lower-case or
+    // were already in a local mirror on a case-insensitive filesystem).
     utils::File file{ name };
     if (file.exists()) {
-        PSFFile f{ name };
-        if (f.valid()) {
-            std::array tag_names = { "_lib", "_lib2", "_lib3", "_lib4" };
-            std::vector<std::string> lib_files;
-            for (auto const& tag : tag_names) {
-                auto lib = f.tags()[tag];
-                if (lib != "") {
-                    utils::makeLower(lib);
-                    lib_files.push_back(lib);
-                }
-            }
-            return lib_files;
-        }
-
         for (auto& plugin : musix::ChipPlugin::getPlugins()) {
             if (plugin->canHandle(name)) {
-                return plugin->getSecondaryFiles(file);
+                return plugin->getSecondaryFiles(name);
             }
         }
     }
