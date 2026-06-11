@@ -759,6 +759,7 @@ TEST_CASE("ZXTune", "[music]")
     testPlugin<musix::ZXTunePlugin>("testmus/gtr", "");  // Global Tracker (AY)
     testPlugin<musix::ZXTunePlugin>("testmus/chi", "");  // Chip Tracker (DAC)
     testPlugin<musix::ZXTunePlugin>("testmus/tfe", "");  // TFM Music Maker (FM)
+    testPlugin<musix::ZXTunePlugin>("testmus/ftc", "");  // Fast Tracker (ex-ayfly)
     // ZX "Pro Sound Maker" .psm -- shares the extension with Epic MASI, which
     // OpenMPT keeps. OpenMPT content-checks the MASI magic and declines these,
     // so first-match routing lands them here (see OpenMPTPlugin::canHandle).
@@ -781,6 +782,19 @@ TEST_CASE("PSM routing", "[music]")
     REQUIRE(winner("testmus/psm/a1.psm") == "ZX Spectrum (ZXTune)");
     // Epic MASI -> OpenMPT (unchanged)
     REQUIRE(winner("testmus/openmpt/one must fall! 1.psm") == "OpenMPT");
+}
+// Fast Tracker .ftc was taken from Ayfly (which throws on every .ftc) and given
+// to ZXTune. Assert the live registry routes it there and that Ayfly no longer
+// claims it, so a future supported_ext edit can't silently steal it back.
+TEST_CASE("FTC routing", "[music]")
+{
+    musix::ChipPlugin::createPlugins("data");
+    std::string winner = "(none)";
+    for (const auto& pl : musix::ChipPlugin::getPlugins()) {
+        if (pl->canHandle("testmus/ftc/jam1.ftc")) { winner = pl->name(); break; }
+    }
+    REQUIRE(winner == "ZX Spectrum (ZXTune)");
+    REQUIRE(musix::AyflyPlugin().canHandle("x.ftc") == false);
 }
 TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmus/pn", ""); }
 // Beepola .bbsong (ZX Spectrum beeper). Only the Phaser1 engine (P1D/P1S) is
@@ -1255,7 +1269,8 @@ TEST_CASE("coverage", "[music]")
         // Tracker, TFM Music Maker, and ZX Pro Sound Maker (.psm, routed away
         // from OpenMPT by content -- see OpenMPTPlugin::canHandle).
         {"ZX Spectrum (ZXTune)", {"testmus/st11", "testmus/cop", "testmus/gtr",
-                                  "testmus/chi", "testmus/tfe", "testmus/psm"}}
+                                  "testmus/chi", "testmus/tfe", "testmus/psm",
+                                  "testmus/ftc"}}
     };
 
     for (auto const& plugin : plugins) {

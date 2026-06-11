@@ -77,7 +77,7 @@ License: GNU General Public License v2.0 or later
 
 Component: ZXTune (ZX Spectrum / Sam Coupe -- Sound Tracker 1.1 .st11,
            Global Tracker .gtr, Chip Tracker .chi, TFM Music Maker .tfe,
-           Pro Sound Maker .psm, E-Tracker / COP .cop)
+           Pro Sound Maker .psm, Fast Tracker .ftc, E-Tracker / COP .cop)
 Author: Developed by Vitamin/CAIG (vitamin.caig@gmail.com); CMake build fork
         by djdron. Only the AY/YM + DAC + SAA + FM tracker decoders + container
         scanner are vendored (see musicplayer/src/plugins/zxtuneplugin). Bundles
