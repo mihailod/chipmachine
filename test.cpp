@@ -752,6 +752,28 @@ TEST_CASE("GSF", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib")
 TEST_CASE("NDS", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib"); }
 TEST_CASE("HE", "[music]") { testPlugin<musix::HEPlugin>("testmus/psx", "lib", "data/hebios.bin"); }
 TEST_CASE("Ayfly", "[music]") { testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2"); }
+// Regression: a malformed / non-SQT file that reaches libayfly's SQT loader
+// (here a Quartet PSG module carrying a .sqt extension) used to SIGSEGV in
+// SQT_Play -- SQT_Init bailed out of SQT_PreInit without allocating info.data,
+// and SQT_Play then dereferenced null, taking down the whole host. The loader
+// now guards null info.data and renders silence. Feed it straight to fromFile
+// (bypassing canHandle, which would normally decline "/quartet" paths): the
+// test simply has to finish without crashing the process.
+TEST_CASE("Ayfly SQT malformed no crash", "[music]")
+{
+    logging::setLevel(logging::Level::Error);
+    musix::AyflyPlugin plugin;
+    std::string const f = "testmus/sqt/quartet-psg-as-sqt.sqt";
+    auto* player = plugin.fromFile(f);
+    if (player) {
+        std::array<int16_t, 8192> buf{};
+        for (int i = 0; i < 100; ++i) {
+            if (player->getSamples(buf.data(), buf.size()) <= 0) break;
+        }
+        delete player;
+    }
+    SUCCEED("SQT loader handled malformed input without crashing");
+}
 TEST_CASE("ZXTune", "[music]")
 {
     testPlugin<musix::ZXTunePlugin>("testmus/st11", ""); // Sound Tracker 1.1
