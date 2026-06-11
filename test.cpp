@@ -1197,7 +1197,6 @@ TEST_CASE("coverage", "[music]")
         {"Audio Overload", "testmus/ao"},
         {"Tedplay", "testmus/ted"},
         {"V2Plugin", "testmus/v2"},
-        {"PxTone Collage Player", "testmus/pxtone"},
         {"Organya Player", "testmus/org"},
         {"SunVox Player", "testmus/sunvox"},
         {"FMPPlugin", "testmus/fmp"},
@@ -1214,7 +1213,11 @@ TEST_CASE("coverage", "[music]")
     // five MSX formats, each filed under its own extension directory.
     std::unordered_map<std::string, std::vector<std::string>> pluginDirsMulti = {
         {"MSX (libkss)", {"testmus/mgs", "testmus/bgm", "testmus/opx",
-                          "testmus/mpk", "testmus/mbm"}}
+                          "testmus/mpk", "testmus/mbm"}},
+        // PxTone Collage handles two extensions (.ptcop and .pttune), each
+        // filed under its own fixture dir -- the same dirs the PxTone/PxTune
+        // playback tests read.
+        {"PxTone Collage Player", {"testmus/ptcop", "testmus/pttune"}}
     };
 
     for (auto const& plugin : plugins) {
