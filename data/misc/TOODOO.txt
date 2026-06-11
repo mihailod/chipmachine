@@ -100,9 +100,6 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$ PLUGINS STATUS $$$$$$$$$$$$$$$$$$
   ┌────────────────┬──────────────────────────────────────────────┬─────────────┬───────────────┬──────────┬───────┐
   │ Plugin         │ Dependency                                   │ Location    │ Current       │ Latest   │ Action│
   ├────────────────┼──────────────────────────────────────────────┼─────────────┼───────────────┼──────────┼───────┤
-  │ adplugin       │ AdPlug (https://github.com/adplug/adplug)    │ Vendored    │ 2.3.2-beta    │ 2.4      │ Needs │
-  │                │                                              │             │               │          │ Updat │
-  │                │                                              │             │               │          │ e     │
   │ pxtoneplugin   │ libpxtone                                    │ Sibling     │ ~2017         │ 220910a  │ Needs │
   │                │ (https://github.com/ptcollaboration/libpxton │ (/libpxtone │ (v1.0.0)      │ (2022+)  │ Updat │
   │                │ e)                                           │ )           │               │          │ e     │
@@ -113,7 +110,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$ PLUGINS STATUS $$$$$$$$$$$$$$$$$$
   │                │                                              │             │ desmume       │          │ y     │
   └────────────────┴──────────────────────────────────────────────┴─────────────┴───────────────┴──────────┴───────┘
 
-   * AdPlug (Update Recommended): The move from 2.3.2-beta to 2.4 includes many bug fixes for OPL2/3 emulation and support for new tracker formats.
+
    * libpxtone: The project uses an older version of the PxTone library. The ptcollaboration fork (v220910a) contains important fixes for modern compilers and expanded format support.
    * VICE: The vicepluginbridge is based on VICE 3.1.0. The current version of VICE is 3.8, which significantly improves C64 cycle-exact emulation.
    * NDSPlugin do we need an update of this plugin?
@@ -415,6 +412,17 @@ DONE 55 .ptk ProTrekkr 2.0 *top-tier candidate* Open-source on GitHub (hitchhikr
    * Effort: Moderate. You just need to wrap the existing C replayer into your ChipPlayer interface.
   Recommendation: This is a top-tier candidate. It gives you a "professional" sounding 2000s-era tracker with synth capabilities that takes up almost no space. The implementation path is clear and well-documented by the official replayer.
 
+DONE * AdPlug Update: The move from 2.3.2-beta to 2.4 includes many bug fixes for OPL2/3 emulation and support for new tracker formats.
+New format players (genuinely newly playable):
+.pis	Beni Tracker					28
+.mtr	Master Tracker (was a ghost ext — listed but no player)	19
+.plx	PALLADIX Sound System				15
+subtotal newly playable					62
+.rad	RAD2 (v2/0x21) now decodes — old player hard-rejected
+ it	127 total (v1+v2; the v2 subset previously failed silently, not sure how many say 50% = 65 songs)
+newly-enabled extensions .jbm (9)
+others: .got .sop .hsq .ha2 .wlf .mdi .rac .bmf
+
 NOT DONE:
 *********
 
@@ -505,7 +513,7 @@ Reasoning: NerdTracker 2 was a vital evolutionary step in the NES chiptune scene
 * RESEARCHED, MARKED "IMPOSSIBLE" *
 ***********************************
 
-IMPOSSIBLE 535	.psy	Psycle tracker	Hard	Open-source tracker (psycle.sf.net) but the file format is complex and there's no standalone decode library
+IMPOSSIBLE 535 .psy	 Psycle tracker Hard Open-source tracker (psycle.sf.net) but the file format is complex and there's no standalone decode library
 Psycle (.psy) - Modular Tracker
    * Status: Unsupported.
    * Research: Psycle is an open-source modular tracker, but the .psy format is essentially a dump of the internal state. 
@@ -518,13 +526,13 @@ here is the technical breakdown of why this is a "no-go" for a lightweight playe
    4. Lack of libopenmpt Support: Since libopenmpt (the industry standard for tracker playback) doesn't support it, there is no "easy win" for integration.
   Verdict: Keep it in the "Unsupported" category. Unless someone creates a standalone "Psycle-lite" rendering library, the ROI for manual implementation is nearly zero given the rarity of the format compared to the effort required.
 
-IMPOSSIBLE 152	.xrns	Renoise (modern)	Hard	Proprietary zipped XML format; no open-source decoder; Renoise SDK is closed
+IMPOSSIBLE 152 .xrns Renoise (modern)	Hard Proprietary zipped XML format; no open-source decoder; Renoise SDK is closed
    * Structure: While .xrns is just a ZIP of XML and samples (easy to parse), it is not a self-contained module like an .it or .xm file.
    * The Engine Problem: Renoise relies heavily on its internal DSP effects, complex routing, and VST plugins. A replayer would need to re-implement the entire Renoise audio engine (filters, compressors, LFOs, etc.) to sound remotely correct.
    * No Library: There is no open-source "librenoise" that can render these files. libopenmpt does not support them for the same reason—it's a DAW project file, not a portable music module.
   Verdict: Still Hard. You can extract the XML and samples easily, but you can't play the song without essentially rebuilding Renoise.
 
-IMPOSSIBLE 120	.rns	Renoise old format	Hard	Explicitly blocked in OpenMPTPlugin (if (ext == "rns") return false); likely undecodable without Renoise itself
+IMPOSSIBLE 120 .rns Renoise old format	Hard Explicitly blocked in OpenMPTPlugin (if (ext == "rns") return false); likely undecodable without Renoise itself
 ✦ The .rns format (Renoise versions 1.0–1.5) is indeed a "Hard" target. Here is the feasibility report:
   1. The Nature of the Format
    * Proprietary Binary: Unlike the modern .xrns format (which is a standard ZIP archive containing XML and audio samples), the old .rns format is a closed, proprietary binary structure.
@@ -538,8 +546,7 @@ IMPOSSIBLE 120	.rns	Renoise old format	Hard	Explicitly blocked in OpenMPTPlugin 
    * Open Source Decoders: There are no known standalone open-source decoders for the legacy binary .rns format.
    * Partial Path (NoiseTrekker): Renoise was the successor to NoiseTrekker (.ntk). While ProTrekkr is an open-source project that can play .ntk files, it does not support the expanded binary format used in Renoise 1.0+.
    * The Only Real Fix: The standard community advice is to use a slightly older version of Renoise (around 1.8/1.9) to open the .rns files and resave them as .xrns. However, even .xrns is poorly supported by tracker libraries because it relies on Renoise's internal DSP engine to sound "correct."
-  Conclusion
-  Support for .rns is unlikely without a massive reverse-engineering effort or the release of the original Renoise 1.0 source code. The "Explicitly blocked" status in your plugin is correct; it prevents the engine from attempting to play a format it fundamentally does not understand.
+  Conclusion: Support for .rns is unlikely without a massive reverse-engineering effort or the release of the original Renoise 1.0 source code. The "Explicitly blocked" status in your plugin is correct; it prevents the engine from attempting to play a format it fundamentally does not understand.
 
 IMPOSSIBLE - .dmf starry viper -- investigate why, dmf should be covered
 The actual failure: Deflemask .dmf and X-Tracker .dmf are two completely unrelated formats that happen to share an extension. OpenMPT (and modplug) only know X-Tracker DMF (magic: DDMF). Deflemask uses zlib-compressed binary data (magic: 0x78).
@@ -554,10 +561,10 @@ major new features
 - filter by platform (C64, Amiga... -- DONE) and format (mod, ym, mp3...) -- pesic
 - Separate db from code and auto-update db independently from code
 
+-------------------------------------------------------------------
 
-
-FORMATS PER COUNT
-
+FORMATS PER COUNT COVERAGE
+--------------------------
 mod	78289
 sid	61177
 xm	42771
