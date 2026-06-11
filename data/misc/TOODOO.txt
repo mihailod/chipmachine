@@ -1,6 +1,7 @@
 data (in general need db version bump)
 ======================================
-- add zx beeper videos from youtube if beeper solution not good
+- ability to manually add stuff to database. via a manual.txt file
+- add zx game music beeper videos from youtube?
 - (minor) radio screenshots missing for rainwave (favicon issue)
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
@@ -61,7 +62,7 @@ What it is: Focuses heavily on Japanese PC-88, PC-98, Sharp X68000, and FM-towns
 URL: [http://www.mirsoft.info](http://www.mirsoft.info)
 What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.
 
-6. https://chipmusic.org -- zx spectrum beeper music, maybe more...
+7. https://chipmusic.org -- zx spectrum beeper music, maybe more...
 
 Demo Databases & Trackers
 
@@ -180,19 +181,20 @@ NOTE: figure out net-gain and potential regressions...
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
+===============
 - 1000s of songs impacted! Mario Kart DS -- NDSPlugin do we need an update of this plugin? -- the latest desmume is from 2022 -- use that! .2sflib 
-
 ---- NDSPlugin ----
 Trying testmus/nds/001 title.mini2sf ... playback OK
 Trying testmus/nds/111 right there, ride on (blazy mix).2sf ... playback OK
+===============
+
+=========================
 ---- HEPlugin ----
 Skipping testmus/psx/Goldrunner.psf
 Trying testmus/psx/010.minipsf2 ... playback OK
 Trying testmus/psx/01 - main menu.minipsf ... playback OK
 Trying testmus/psx/102 revelation.psf ... playback OK
 Trying testmus/psx/01 curse of the bloody puppets.psf2 ... playback OK
-
-=========================
 what is psx?
    * PSF / minipsf: PlayStation Sound Format (PS1)
    * PSF2 / minipsf2: PlayStation 2 Sound Format (PS2)
@@ -220,10 +222,6 @@ The version of HE (Highly Experimental) currently in the codebase is PSXCore0008
 [RemoteLoader.cpp:90] CODE 550
 [MusicPlayerList.cpp:568] Could not load secondary file modland::Nintendo DS Sound Format/Shinobu Tanaka/Mario Kart DS/ntr-amce-usa.2sflib
 MusicPlayer: Plugin 'NDSPlugin' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fNintendo DS Sound Format%2fShinobu Tanaka%2fMario Kart DS/ntr-amce-usa-0004.mini2sf'. Error: 
-
-- beepola music studio plays partially -- not sure if true implementation is possible. kept partial for now. (chris cowley songs, etc.)
-
-
 
 - soundtrekker -- .mus not supported?
 
@@ -466,30 +464,8 @@ Tritone (0) -- ??
   Engineering Recommendation:
   If you ever decide to tackle this, look at the 1tracker source code on GitHub/SourceForge. It has already solved the "how do I play Beepola engines in C++" problem.
 
-NOT DONE:
-*********
-
-77	.tfe	TFM Music Maker (ZX Spectrum/PC, OPL2)	HARD	Uses OPL2 synthesis; source code of TFM Music Maker is available; AdPlugin already has OPL infrastructure
-  The research provided is mostly incorrect regarding the synthesis engine, which changes the feasibility profile significantly.
-  1. The "OPL2" Misconception
-   * Correction: TFM Music Maker (.tfe) does not use OPL2 (2-operator FM). It is designed for TurboSound FM, which uses dual YM2203 (OPN) chips.
-   * Synthesis Type: This is 4-operator FM synthesis, identical to the engine in the Sega Genesis (YM2612) but with the addition of SSG-EG (Software Sound Generator Envelope Generator).
-   * Impact on Feasibility: AdPlugin (the project's OPL infrastructure) is useless for this format. You cannot "reuse" OPL2/OPL3 code to play OPN music; they are entirely different architectures (2-op vs 4-op, different registers, different feedback algorithms).
-  2. Feasibility Re-assessment: Hard (not Moderate)
-   * Why Hard: To support .tfe, you would need to:
-       1. Integrate an OPN2/OPN emulator: You already have libopna in the project (from the 98fmplayer folder), which can emulate a YM2203. However, you'd need to instantiate two of them to support the 6 FM channels of a TFM module.
-       2. Port the Tracker Logic: Since there is no standalone C/C++ library for .tfe (like libopenmpt), you would have to manually port Shiru's original playback logic (which is likely in Delphi or Assembly) into your C++ MusicPlayer plugin.
-       3. Alternative (The "Easy" Way): Most .tfe files are often converted to .vgm or .tfd (register dumps). If the goal is just to "play the music," it is 100x easier to support .vgm (which you likely already do or can easily add via libvgm) than to natively parse and play a .tfe module.
-  3. Summary of Findings:
-   * Format: Native TFM Music Maker Module.
-   * Sound Chip: Dual Yamaha YM2203 (OPN).
-   * Existing Infrastructure: The project's libopna is a good starting point, but AdPlugin is irrelevant.
-   * Source Code: Available (Shiru’s stuff is usually on GitHub or his website), but it is a "from scratch" plugin effort.
-  Recommendation: Do not pursue native .tfe support under the assumption that it's "just another OPL format." It is a Sega-Genesis-class FM format. If you want these songs in ChipMachine, look for the VGM versions of them instead.
-
----
-
-55	.ptk	ProTrekkr 2.0 *top-tier candidate* Open-source on GitHub (hitchhikr/protrekkr); has a standalone replayer
+DONE 12 .ntk ProTrekkr
+DONE 55 .ptk ProTrekkr 2.0 *top-tier candidate* Open-source on GitHub (hitchhikr/protrekkr); has a standalone replayer
   The research for ProTrekkr 2.0 (.ptk) is highly accurate and presents a very strong candidate for ChipMachine.
   1. Repository Identification: Correct
    * Hitchhikr (Franck Charlet) is the primary author. The GitHub repository hitchhikr/protrekkr is the authoritative source.
@@ -516,9 +492,34 @@ NOT DONE:
    * Effort: Moderate. You just need to wrap the existing C replayer into your ChipPlayer interface.
   Recommendation: This is a top-tier candidate. It gives you a "professional" sounding 2000s-era tracker with synth capabilities that takes up almost no space. The implementation path is clear and well-documented by the official replayer.
 
-DEFERRED BEEPOLA FORMATS
-- HARD/LATER Savage (SVG) — 6 files; Beepola-only, so it's the same playbook as SFX (extract player from a compiled .bin, reverse its format). Would need you to compile one Savage .bbsong in Beepola.
-- NO SONGS Tritone/QChan — clean PD engines, trivial to add if we ever get .bbsong test files (none in your corpus).
+NOT DONE:
+*********
+
+77 .tfe TFM Music Maker (ZX Spectrum/PC, OPL2)	HARD Uses OPL2 synthesis; source code of TFM Music Maker is available; AdPlugin already has OPL infrastructure
+  The research provided is mostly incorrect regarding the synthesis engine, which changes the feasibility profile significantly.
+  1. The "OPL2" Misconception
+   * Correction: TFM Music Maker (.tfe) does not use OPL2 (2-operator FM). It is designed for TurboSound FM, which uses dual YM2203 (OPN) chips.
+   * Synthesis Type: This is 4-operator FM synthesis, identical to the engine in the Sega Genesis (YM2612) but with the addition of SSG-EG (Software Sound Generator Envelope Generator).
+   * Impact on Feasibility: AdPlugin (the project's OPL infrastructure) is useless for this format. You cannot "reuse" OPL2/OPL3 code to play OPN music; they are entirely different architectures (2-op vs 4-op, different registers, different feedback algorithms).
+  2. Feasibility Re-assessment: Hard (not Moderate)
+   * Why Hard: To support .tfe, you would need to:
+       1. Integrate an OPN2/OPN emulator: You already have libopna in the project (from the 98fmplayer folder), which can emulate a YM2203. However, you'd need to instantiate two of them to support the 6 FM channels of a TFM module.
+       2. Port the Tracker Logic: Since there is no standalone C/C++ library for .tfe (like libopenmpt), you would have to manually port Shiru's original playback logic (which is likely in Delphi or Assembly) into your C++ MusicPlayer plugin.
+       3. Alternative (The "Easy" Way): Most .tfe files are often converted to .vgm or .tfd (register dumps). If the goal is just to "play the music," it is 100x easier to support .vgm (which you likely already do or can easily add via libvgm) than to natively parse and play a .tfe module.
+  3. Summary of Findings:
+   * Format: Native TFM Music Maker Module.
+   * Sound Chip: Dual Yamaha YM2203 (OPN).
+   * Existing Infrastructure: The project's libopna is a good starting point, but AdPlugin is irrelevant.
+   * Source Code: Available (Shiru’s stuff is usually on GitHub or his website), but it is a "from scratch" plugin effort.
+  Recommendation: Do not pursue native .tfe support under the assumption that it's "just another OPL format." It is a Sega-Genesis-class FM format. If you want these songs in ChipMachine, look for the VGM versions of them instead.
+
+---
+
+DEFERRED BEEPOLA FORMATS / WORK
+* NO SONGS Tritone/QChan — clean PD engines, trivial to add if we ever get .bbsong test files (none in your corpus).
+Reversed but not cracked:
+* MSD-via-Beepola — player extracted, structure fully mapped, but the note+drum+slide→period encoding is a genuinely deep tangle I haven't solved. The existing partial MSD keeps working meanwhile.
+* Savage — 6 files - player runs; rich format mapped, not packed. (2 Chris Cowley titles)
 
 **********************************
 * FURTHER DEEPER RESEARCH NEEDED *

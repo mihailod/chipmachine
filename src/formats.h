@@ -399,5 +399,6 @@ static const char* other_formats[] = {
     "atari st",
     "atari 8bit",
     "mp3",
+    "ptk",
     "dreamcast sound format",
 };

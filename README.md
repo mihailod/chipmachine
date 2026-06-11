@@ -81,6 +81,7 @@ git clone https://github.com/mihailod/zingzong.git
 git clone https://github.com/mihailod/zxtune.git
 git clone --recursive https://github.com/mihailod/libkss.git
 git clone https://github.com/mihailod/audiodecoder.wsr.git audiodecoderwsr
+git clone https://github.com/mihailod/protrekkr.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
@@ -314,6 +315,12 @@ Support for SunVox music by Alexander Zolotov (NightRadio)
 
 Extensions: `.sunvox`
 
+### ProTrekkr / NoiseTrekker
+
+Support for ProTrekkr music by Franck Charlet (Hitchhikr) — a hybrid tracker combining sample channels, a built-in synth and a TB-303 emulation. The (zlib-compressed) module is decompressed and played by ProTrekkr's own in-memory replayer, built in its standalone integration mode. NoiseTrekker 1.6b modules (`.ntk`) load through the same loader.
+
+Extensions: `.ptk` `.ntk`
+
 ### Euphony
 
 Support for Euphony music (FM Towns / PC-98)
@@ -431,6 +438,8 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **98fmplayer:** Developed by areis. Licensed under MIT.
 * **libkss (MSX KSS):** Developed by Mitsutaka Okazaki. Licensed under MIT.
 * **organya (Cave Story Organya format):** Developed by Studio Pixel (Daisuke Amaya). Portions adapted under MIT / Open Source.
+* **ProTrekkr / NoiseTrekker (`.ptk` / `.ntk`):** Developed by Franck Charlet (Hitchhikr), based on NoiseTrekker by Juan Antonio Argüelles Rius. Licensed under BSD-2-Clause.
+* **SunVox (`.sunvox`):** Developed by Alexander Zolotov (NightRadio). The SunVox library is free for commercial and non-commercial use.
 * **libpxtone (PixelTone audio):** Developed by Studio Pixel (Daisuke Amaya). Licensed under MIT.
 * **eupmini (PC-98 EUP audio):** Developed by various retro-computing contributors. Licensed under MIT.
 * **minimp3 (MP3 decoding):** Developed by Lieven van den Hauwe. Licensed under CC0-1.0 (Public Domain).

@@ -14,6 +14,7 @@ namespace di = boost::di;
 #include <musicplayer/src/chipplugin.h>
 #include <musicplayer/src/plugins/plugins.h>
 #include <musicplayer/src/plugins/uadeplugin/UADEPlugin.h>
+#include <musicplayer/src/plugins/ptkplugin/PTKPlugin.h>
 #include <musicplayer/src/plugins/openmptplugin/OpenMPTPlugin.h>
 #include <musicplayer/src/plugins/quartetplugin/QuartetPlugin.h>
 
@@ -333,6 +334,8 @@ TEST_CASE("Westwood SND plays sound", "[music]")
 TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
 TEST_CASE("PxTone", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/ptcop", ""); }
 TEST_CASE("PxTune", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/pttune", ""); }
+TEST_CASE("PTK", "[music]") { testPlugin<musix::PTKPlugin>("testmus/ptk", ""); }
+TEST_CASE("NTK", "[music]") { testPlugin<musix::PTKPlugin>("testmus/ntk", ""); }
 TEST_CASE("Org", "[music]") { testPlugin<musix::OrgPlugin>("testmus/org", ""); }
 TEST_CASE("SunVox", "[music]") { testPlugin<musix::SunVoxPlugin>("testmus/sunvox", ""); }
 

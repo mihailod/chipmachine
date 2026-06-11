@@ -27,6 +27,7 @@ extern "C" {
     void ffmpegplugin_register();
     void uadeplugin_register();
     void pxtoneplugin_register();
+    void ptkplugin_register();
     void orgplugin_register();     // Organya / Cave Story (.org)
     void sunvoxplugin_register();  // SunVox modular synth (.sunvox)
     void eupplugin_register();     // Euphony / FM Towns & PC-98 (.eup)
@@ -63,6 +64,7 @@ void register_plugins() {
     ffmpegplugin_register();
     uadeplugin_register();
     pxtoneplugin_register();
+    ptkplugin_register();
     orgplugin_register();
     sunvoxplugin_register();
     eupplugin_register();

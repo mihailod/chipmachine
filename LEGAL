@@ -109,8 +109,8 @@ Component: HivelyTracker (AHX/HVL)
 Author: Developed by IRIS (Peter "Yohng" V, Curt Cool)
 License: BSD-3-Clause
 
-Component: FreeType
-Author: The FreeType Project
+Component: FreeType / Grappix (UI & Text)
+Author: The FreeType Project and Grappix contributors
 License: FreeType License (FTL) / BSD-2-Clause
 
 Component: StSound (Atari ST YM2149)
@@ -128,6 +128,14 @@ License: MIT License
 Component: organya (Cave Story Organya format)
 Author: Developed by Studio Pixel (Daisuke Amaya)
 License: MIT License / Open Source Portions
+
+Component: ProTrekkr (Hybrid Module Tracker)
+Author: Developed by Franck Charlet (Hitchhikr)
+License: BSD 2-Clause License
+
+Component: SunVox (Modular Synthesizer)
+Author: Developed by Alexander Zolotov (NightRadio)
+License: Proprietary freeware (SunVox library is free for commercial and non-commercial use)
 
 Component: libpxtone (PixelTone audio)
 Author: Developed by Studio Pixel (Daisuke Amaya)
@@ -152,6 +160,10 @@ License: zlib License
 Component: minimp3 (MP3 decoding)
 Author: Developed by Lieven van den Hauwe
 License: Creative Commons Zero v1.0 Universal (CC0-1.0 Public Domain)
+
+Component: ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise .pn)
+Author: Developed by Piotr Fusik
+License: GNU General Public License v2.0 or later
 
 Component: Beepola beeper engines + z80ass assembler (ZX Spectrum .bbsong)
 Author: Engine Z80 players: Phaser1 by Shiru (from 1tracker); Music Box
