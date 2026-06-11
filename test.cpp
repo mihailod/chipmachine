@@ -1295,19 +1295,39 @@ TEST_CASE("coverage", "[music]")
                                   "testmus/ftc"}}
     };
 
+    auto dirsFor = [&](std::string const& name) -> std::vector<std::string> {
+        if (pluginDirsMulti.count(name)) { return pluginDirsMulti[name]; }
+        if (pluginDirs.count(name)) { return {pluginDirs[name]}; }
+        return {"testmus/" + utils::toLower(name)};
+    };
+
+    // Build the set of every extension that has a fixture in ANY plugin's sample
+    // dir. An extension counts as covered if a test file for it exists somewhere,
+    // so a low-priority *fallback* claimer is not reported missing just because
+    // the primary handler owns the fixture in its own dir. Concretely: UADE also
+    // lists .ym (primary: StSound) and .mus (primary: libvice), and OpenMPT also
+    // lists .mus -- those fixtures live under testmus/stsound and testmus/libvice,
+    // so without this they'd show as missing under uade/openmpt despite being
+    // fully tested by their real owners.
+    std::set<std::string> globalExts;
+    for (auto const& plugin : plugins) {
+        if (plugin->getSupportedExtensions().empty()) { continue; }
+        for (auto const& dir : dirsFor(plugin->name())) {
+            utils::File folderCheck{ dir };
+            if (!folderCheck.exists()) { continue; }
+            for (auto const& f : folderCheck.listFiles()) {
+                globalExts.insert(
+                    utils::toLower(utils::path_extension(f.getName())));
+            }
+        }
+    }
+
     for (auto const& plugin : plugins) {
         std::string name = plugin->name();
         auto exts = plugin->getSupportedExtensions();
         if (exts.empty()) continue;
 
-        std::vector<std::string> dirs;
-        if (pluginDirsMulti.count(name)) {
-            dirs = pluginDirsMulti[name];
-        } else if (pluginDirs.count(name)) {
-            dirs = {pluginDirs[name]};
-        } else {
-            dirs = {"testmus/" + utils::toLower(name)};
-        }
+        std::vector<std::string> dirs = dirsFor(name);
 
         // Aggregate the extensions present across every sample dir for this
         // plugin. Compare case-insensitively: some rips carry upper-case
@@ -1334,7 +1354,10 @@ TEST_CASE("coverage", "[music]")
         }
         for (auto const& ext : exts) {
             if (notSupportedExts().count(utils::toLower(ext)) > 0) { continue; }
-            if (existingExts.count(ext) == 0) {
+            // Covered if this plugin's own dir has it, or any other plugin's dir
+            // does (the extension's primary owner holds the fixture elsewhere).
+            if (existingExts.count(ext) == 0 &&
+                globalExts.count(utils::toLower(ext)) == 0) {
                 missingByDir[shortDir].push_back(ext);
                 missingExtCount++;
                 allMissing.push_back(name + ":" + ext + " (Target Folder: " +

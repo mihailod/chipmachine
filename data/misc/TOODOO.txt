@@ -94,45 +94,21 @@ crashes:
 ========
 
 could not play song:
-===================
+====================
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$ PLUGINS STATUS $$$$$$$$$$$$$$$$$$
-The plugin architecture of ChipMachineAS is designed around a core registration system where each plugin encapsulates its own third-party decoding logic. Most plugins are vendored directly within the musicplayer/src/plugins/ directory, while others link against sibling repositories in the project root.
-  Plugin Dependency & Version Report
   ┌────────────────┬──────────────────────────────────────────────┬─────────────┬───────────────┬──────────┬───────┐
   │ Plugin         │ Dependency                                   │ Location    │ Current       │ Latest   │ Statu │
   │                │                                              │             │ Project       │ Availabl │ s     │
   │                │                                              │             │ Version       │ e        │       │
   │                │                                              │             │               │ Version  │       │
   ├────────────────┼──────────────────────────────────────────────┼─────────────┼───────────────┼──────────┼───────┤
-  │ DONE zxtune    │ ZXTune                                       │ Sibling     │ r2742         │ r5101    │ Needs │
-  │                │ (https://github.com/vitamin-caig/zxtune)     │ (/zxtune)   │               │          │ Updat │
-  │                │                                              │             │               │          │ e     │
   │ adplugin       │ AdPlug (https://github.com/adplug/adplug)    │ Vendored    │ 2.3.2-beta    │ 2.4      │ Needs │
   │                │                                              │             │               │          │ Updat │
   │                │                                              │             │               │          │ e     │
   │ pxtoneplugin   │ libpxtone                                    │ Sibling     │ ~2017         │ 220910a  │ Needs │
   │                │ (https://github.com/ptcollaboration/libpxton │ (/libpxtone │ (v1.0.0)      │ (2022+)  │ Updat │
   │                │ e)                                           │ )           │               │          │ e     │
-  │ openmptplugin  │ libopenmpt (https://lib.openmpt.org/)        │ Vendored    │ 0.8.7         │ 0.8.7    │ Up to │
-  │                │                                              │             │               │          │ Date  │
-  │ gmeplugin      │ Game Music Emu                               │ Vendored    │ 0.7.0         │ 0.7.0    │ Up to │
-  │                │ (https://github.com/libgme/game-music-emu)   │             │               │          │ Date  │
-  │ kssplugin      │ libkss                                       │ Sibling     │ 1.2.1         │ 1.2.1    │ Up to │
-  │                │ (https://github.com/digital-sound-antiques/l │ (/libkss)   │               │          │ Date  │
-  │                │ ibkss)                                       │             │               │          │       │
-  │ sc68plugin     │ libsc68 (http://sc68.atari.org/)             │ Vendored    │ 3.0.0a        │ 3.0.0    │ Stabl │
-  │                │                                              │             │               │          │ e     │
-  │ usfplugin      │ lazyusf2                                     │ Vendored    │ 2.0.0         │ 2.0.0    │ Stabl │
-  │                │ (https://github.com/vgmstream/vgmstream)     │             │               │          │ e     │
-  │                │ (Mupen64)                                    │             │               │          │       │
-  │ eupplugin      │ eupmini                                      │ Sibling     │ Internal/Mode │ -        │ Up to │
-  │                │                                              │ (/eupmini)  │ rn            │          │ Date  │
-  │ orgplugin      │ organya                                      │ Sibling     │ Modern C      │ 2.1.0    │ Up to │
-  │                │                                              │ (/organya)  │ impl.         │          │ Date  │
-  │ fmpplugin      │ 98fmplayer                                   │ Sibling     │ Internal/Mode │ -        │ Up to │
-  │                │                                              │ (/98fmplaye │ rn            │          │ Date  │
-  │                │                                              │ r)          │               │          │       │
   │ vicepluginbrid │ VICE                                         │ Sibling     │ 3.1.0         │ 3.8      │ Needs │
   │ ge             │                                              │ (/vice310)  │               │          │ Updat │
   │                │                                              │             │               │          │ e     │
@@ -141,53 +117,18 @@ The plugin architecture of ChipMachineAS is designed around a core registration 
   └────────────────┴──────────────────────────────────────────────┴─────────────┴───────────────┴──────────┴───────┘
   Key Findings & Recommendations
 
-DONE   1. ZXTune (Urgent Update): The project is significantly behind the upstream ZXTune (r2742 vs r5101). Updating this
-      would provide support for many newer chiptune formats and critical performance improvements.
-
    2. AdPlug (Update Recommended): The move from 2.3.2-beta to 2.4 includes many bug fixes for OPL2/3 emulation and
       support for new tracker formats.
-   3. libpxtone: The project uses an older version of the PxTone library. The ptcollaboration fork (v220910a) contains
-      important fixes for modern compilers and expanded format support.
+   3. libpxtone: The project uses an older version of the PxTone library. The ptcollaboration fork (v220910a) contains important fixes for modern compilers and expanded format support.
    4. VICE: The vicepluginbridge is based on VICE 3.1.0. The current version of VICE is 3.8, which significantly
       improves C64 cycle-exact emulation.
-   5. Vendored vs. Sibling: The project successfully manages a mix of vendored code and sibling repos. For sibling repos
-      like libkss and eupmini, the project appears to be tracking the latest commits closely.
-
-  Next Steps:
-  If you wish to proceed with updates, I recommend starting with ZXTune as it provides the largest feature jump,
-  followed by AdPlug and libpxtone.
-
- > which new formats zxtune update would bring?                                                                         
-
-✦ Updating ZXTune from r2742 to r5101 would bring support for a massive number of new formats, primarily through the
-  integration of modern decoding libraries like vgmstream and libopenmpt.
-  New Formats & Features Summary
-  ┌───────────────────────┬───────────────────────────────────────────────────────────────────────────────────────┐
-  │ Category              │ Formats Added / Improved                                                              │
-  ├───────────────────────┼───────────────────────────────────────────────────────────────────────────────────────┤
-  │ vgmstream Integration │ 150+ new formats from console and arcade systems (ADPCM, streaming game audio, etc.). │
-  │ New Tracker Formats   │ AMS, DSM, MT2, PLM, J2B, FMT, C67, MO3 (via libopenmpt integration).                  │
-  │ Console/Chiptune      │ S98 (PC-98 logging), NCSF (Nintendo DS), VGM (full support for all chips/versions).   │
-  │ Advanced Digital      │ DSYM (Digital Symphony), SYMMOD (Symphonie), OPUS (within samples).                   │
-  │ Container Formats     │ FSB (FMOD Sample Banks) containing FMADPCM tracks.                                    │
-  └───────────────────────┴───────────────────────────────────────────────────────────────────────────────────────┘
-  Key Improvements Beyond Formats
-   * Accuracy: The transition to libopenmpt (r4980) significantly improves playback accuracy for standard tracker formats like IT, S3M, and XM.
-   * Playback Features: Added support for fade-in/fade-out, preamp controls, and a completely rewritten seeking and duration logic.
-   * Stability: Massive fixes for modern C++ standards and OS-specific optimizations (especially for macOS and Linux).
-
-  Updating ZXTune would essentially turn it into a much more powerful "universal" chiptune and game music decoder for ChipMachineAS.
-
-NOTE: figure out net-gain and potential regressions... 
+   5. nds: 1000s of songs impacted! Mario Kart DS -- NDSPlugin do we need an update of this plugin?
+      -- the latest desmume is from 2022 -- use that! .2sflib 
+      ---- NDSPlugin ----
+      Trying testmus/nds/001 title.mini2sf ... playback OK
+      Trying testmus/nds/111 right there, ride on (blazy mix).2sf ... playback OK
 
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
-===============
-- 1000s of songs impacted! Mario Kart DS -- NDSPlugin do we need an update of this plugin? -- the latest desmume is from 2022 -- use that! .2sflib 
----- NDSPlugin ----
-Trying testmus/nds/001 title.mini2sf ... playback OK
-Trying testmus/nds/111 right there, ride on (blazy mix).2sf ... playback OK
-===============
 
 =========================
 ---- HEPlugin ----
@@ -514,6 +455,28 @@ NOT DONE:
    * Source Code: Available (Shiru’s stuff is usually on GitHub or his website), but it is a "from scratch" plugin effort.
   Recommendation: Do not pursue native .tfe support under the assumption that it's "just another OPL format." It is a Sega-Genesis-class FM format. If you want these songs in ChipMachine, look for the VGM versions of them instead.
 
+DONE ZX TUNE UPGRADE
+git commit -m "Enable more ZXTune formats: gtr (38) chi (21) tfe (77) psm[routed] (51)"
+git commit -m "Fix ftc: Move ftc (51) from ayfly to zxtune"
+238 new zx spectrum songs playable!
+ > which new formats zxtune update would bring?                                                                         
+✦ Updating ZXTune from r2742 to r5101 would bring support for a massive number of new formats, primarily through the
+  integration of modern decoding libraries like vgmstream and libopenmpt.
+  New Formats & Features Summary
+  ┌───────────────────────┬───────────────────────────────────────────────────────────────────────────────────────┐
+  │ Category              │ Formats Added / Improved                                                              │
+  ├───────────────────────┼───────────────────────────────────────────────────────────────────────────────────────┤
+  │ vgmstream Integration │ 150+ new formats from console and arcade systems (ADPCM, streaming game audio, etc.). │
+  │ New Tracker Formats   │ AMS, DSM, MT2, PLM, J2B, FMT, C67, MO3 (via libopenmpt integration).                  │
+  │ Console/Chiptune      │ S98 (PC-98 logging), NCSF (Nintendo DS), VGM (full support for all chips/versions).   │
+  │ Advanced Digital      │ DSYM (Digital Symphony), SYMMOD (Symphonie), OPUS (within samples).                   │
+  │ Container Formats     │ FSB (FMOD Sample Banks) containing FMADPCM tracks.                                    │
+  └───────────────────────┴───────────────────────────────────────────────────────────────────────────────────────┘
+  Key Improvements Beyond Formats
+   * Accuracy: The transition to libopenmpt (r4980) significantly improves playback accuracy for standard tracker formats like IT, S3M, and XM.
+   * Playback Features: Added support for fade-in/fade-out, preamp controls, and a completely rewritten seeking and duration logic.
+   * Stability: Massive fixes for modern C++ standards and OS-specific optimizations (especially for macOS and Linux).
+
 ---
 
 DEFERRED BEEPOLA FORMATS / WORK
@@ -657,7 +620,9 @@ stp2	625
 stp	614
 MGS	548
 prg	544
-psy	519 -- NO (see notes)
+
+psy	519 -- NO Psycle tracker Open-source tracker (psycle.sf.net) but the file format is complex and there's no standalone decode library
+
 ---------------------- all ok above
 cmf	458
 okta	419
@@ -683,20 +648,18 @@ stm	227
 sa	220
 bp	209
 aon	204
-cpc.emul	199 -- this is Amstrad CPC . emul, all good
+cpc.emul	199 -- this is Amstrad CPC .emul, all good
 cop	191 -- SAM COUPE, zxtune covers, fixed, all good
 lds	183
 edl	179
-1.mod	176 -- .mod, the name has .1 in it... all good
 4v	170
 
----------------all ok above
+sn	165 -- NO Sound Club (Amiga) — no handler
+.sn / Sound Club — an Amiga format, but it's not in UADE's supported extensions, and none of UADE's 175 vendored players is a Sound Club replayer (no club/sclub entry in eagleplayer.conf or players/). Not handled by OpenMPT/ZXTune either.
 
-not formally confirmed below
+W	163 -- NO SoundSmith — Apple IIgs format (Bret Victor's tracker), not Amiga. See below.
+.W / SoundSmith — this is an Apple IIgs format (modland paths like SoundSmith/Bret Victor/Bunny Tune.W, all the telltale fixed 66304-byte size). It's not an Amiga tune at all, so UADE can't touch it, and nothing else in the stack decodes it.
 
-2.mod	167
-sn	165
-W	163
 wsr	162
 dsym	160
 digi	160
@@ -705,6 +668,9 @@ symmod	155
 amf	154
 OPX	153
 MBM	151
+
+------- all checked above --------
+
 set	147
 xrns	145
 psm	140
@@ -737,7 +703,6 @@ bbsong	76
 short.mod	75
 smus	72
 hsc	69
-3.mod	69
 mptm	67
 fls	65
 prt	64
@@ -786,7 +751,6 @@ c67	36
 zxs	35
 mad	35
 alt.mod	35
-4.mod	35
 1.xm	35
 snd.mmd0	34
 mk2	34
@@ -1761,4 +1725,4 @@ yu-yu%20%28remix%29.gz	1
 ysm-fatal-error.gz	1
 yoyo13.gz	1
 
-garbage below...
+more garbage below...
