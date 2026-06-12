@@ -92,36 +92,6 @@ What it is: Run by the same crew behind BitWorld, they host a highly active stre
 URL: [https://www.kohina.com](https://www.kohina.com)
 What it is: One of the absolute oldest, purest retro audio streams still running. It plays exclusively 8-bit and 16-bit computer music (C64, Atari, Amiga, NES) directly simulated or sampled from original hardware.
 
-***********************************************
-* PLUGINS STATUS -- NEED ALL TO BE UP TO DATE *
-***********************************************
-
-IN PROGRESS: Swap ndsplugin to kode54 vio2sf
-
-   * HEPlugin 
-Skipping testmus/psx/Goldrunner.psf
-Trying testmus/psx/010.minipsf2 ... playback OK
-Trying testmus/psx/01 - main menu.minipsf ... playback OK
-Trying testmus/psx/102 revelation.psf ... playback OK
-Trying testmus/psx/01 curse of the bloody puppets.psf2 ... playback OK
-what is psx?
-   * PSF / minipsf: PlayStation Sound Format (PS1)
-   * PSF2 / minipsf2: PlayStation 2 Sound Format (PS2)
-The version of HE (Highly Experimental) currently in the codebase is PSXCore0008, which corresponds to an older
-  iteration of the engine (likely around version 1.08/1.09).
-  There are indeed newer versions and modern alternatives:
-  1. Newer Versions of "Highly Experimental"
-   * Official Peak: The last official release by Neill Corlett was v2.09 (released around 2007).
-   * Community Maintenance: Developers like kode54 (Christopher Snowhill) have maintained and updated the HE source code for modern players (like foobar2000 and DeaDBeeF). These versions include bug fixes, better metadata handling, and support for newer 64-bit architectures.
-   * OpenPSF: There is a project called OpenPSF (https://github.com/myst6re/openpsf) which is a "tiny" C++ library based on Highly Experimental, designed specifically for easier integration into modern projects like this one.
-  2. Modern Alternatives
-   * vgmstream: This is currently the most active project for video game music playback. It has replaced Highly
-     Experimental in many modern players because it supports a massive variety of formats (including PSF/PSF2) and
-     receives frequent updates for accuracy and compatibility.
-   * sexypsf: Another PSF player engine (a fork of which is present in your plugins directory but not currently enabled in the main build). It was often considered a lighter alternative to HE.
-  Should you update?
-  If the current plugin is playing your PSF files without issues, an update might not be strictly necessary. However, if you encounter PSF files that don't play correctly or have metadata (tags) that aren't appearing, moving to the OpenPSF core or integrating vgmstream would be the modern way to "upgrade" this capability.
-
 **************************
 * PLAYBACK BUGS / ISSUES *
 **************************

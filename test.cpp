@@ -785,10 +785,16 @@ TEST_CASE("PSF lib secondary files", "[music]")
     REQUIRE(musix::HEPlugin{ "data/hebios.bin" }.getSecondaryFiles(
                 "testmus/psx/010.minipsf2") ==
             V{ "Pop'n Taisen Puzzle-dama Online.psf2lib" });
-    // A self-contained full PSF has no _lib companion.
+    // A real self-contained full PSF (no minipsf _lib companion) -> no secondaries.
     REQUIRE(musix::HEPlugin{ "data/hebios.bin" }
-                .getSecondaryFiles("testmus/psx/Goldrunner.psf")
+                .getSecondaryFiles("testmus/psx/102 revelation.psf")
                 .empty());
+    // Negative fixture: bad-magic-not-a-psf.psf carries a .psf extension but lacks
+    // the "PSF" magic (a mislabeled non-PlayStation rip). canHandle must reject it
+    // on content, so the HE playback test gray-Skips it instead of feeding garbage
+    // to the emulator.
+    REQUIRE(!musix::HEPlugin{ "data/hebios.bin" }.canHandle(
+        "testmus/psx/bad-magic-not-a-psf.psf"));
 }
 // Regression for the real GUI entry point: MusicPlayer::getSecondaryFiles used
 // to parse PSF "_lib" inline and lower-case it, so an uppercase/mixed-case
