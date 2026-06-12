@@ -328,7 +328,6 @@ coldworld.it//Cold World We're Living In	IT	327	IT
 ilovecolumbo.it//I love Columbo	IT	328	IT
 comdeny.xm//Comunication Denied	XM	329	XM
 come2get.it//Sharky-X <> Come Together	IT	330	IT
-invalid//invalid	INVALID	331	INVALID
 compter.xm//Savez-vous compter ?	XM	332	XM
 conquest.xm//Conquest	XM	333	XM
 consume.it//Consume and Accept	IT	334	IT
