@@ -1,3 +1,9 @@
+# renoise commercial player
 .rns
 .xrns
+
+# no player
 .psy
+
+# acorn archimedes only
+.musx

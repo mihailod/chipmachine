@@ -110,7 +110,7 @@ SOLUTION: Add FAC SoundTracker support via libkss — write a fac2kss converter 
 [web.cpp:176] CODE 226
 [RemoteLoader.cpp:90] CODE 226
 
-- also starquake scoopex after some time:
+- also starquake scoopex after some time youtube playback fails:
 [tls @ 0x6000038429a0] IO Error: -9806
 [in#0/mov,mp4,m4a,3gp,3g2,mj2 @ 0x1587048f0] stream 0, offset 0x2400c1: partial file
 [in#0/mov,mp4,m4a,3gp,3g2,mj2 @ 0x1587047d0] Error during demuxing: Input/output error
@@ -124,6 +124,8 @@ SOLUTION: Add FAC SoundTracker support via libkss — write a fac2kss converter 
 - can we detect "video unavailable" for youtube and show / print that?
 - keep fixing red stuff in cmtest outpus
 - add a test file for EVERY supported extension
+- produce unique stats at the test end (ie 8 mod pass counts as 1)
+- do not treat extensions which are none in db as missing, only the present in db (currently none that missing are present so the test is 100% covering all but cmtest prints missing formats... once they appear maybe from new databases it should fire again)
 
 product/process
 ===============
@@ -145,24 +147,15 @@ DONE in 1.2
 ***********
 
 DONE 1,783 .ptcop 	PxTone Collage (Pixel/Cave Story)	Moderate	Official C++ library released by Pixel on GitHub (pxtone); needs a new plugin wrapping it
-
 DONE 315	.pttune PxTone (older format, same family)	Moderate	Same pxtone library handles both .ptcop and .pttune
-
 DONE 1,446 .str	Stereo Sidplayer (C64)	Moderate	Two SIDs playing in stereo; VICE can load them, VicePlugin would need extension
-
 DONE 657	.mmd3	OctaMED MMD3 (Amiga)	Moderate	MMD0/1/2 work via UADE; MMD3 is the enhanced version — UADE or libopenmpt may already decode it but the extension is simply not listed
-
 DONE 427	.sng Various (UADE disabled)	Easy	Deliberately commented out in UADEPlugin (/*"sng"*/); investigate why — likely a collision with another plugin — then either re-enable or route to the correct one
-
 DONE 385	.sgc	Sega Master System / Game Gear	NEW EMU NEEDED	This vendored game-music-emu has no SGC core (no Sgc_Emu, no SGC in gme_type_list/CMake). Newer libgme supports it; would need to vendor that core.
-
 DONE 377	.org	Organya / Cave Story OrgMaker	Moderate	Simple proprietary format; multiple open-source playback implementations on GitHub (organya, org-player)
-
 DONE 246	.sunvox	SunVox modular synth	Moderate	Official free SDK (sunvox_lib) with C API from warmplace.ru; well-documented
-
 DONE 501	.eup + .pmb Euphony (PC-98 OPL/ADPCM)	Moderate	FMPPlugin exists and handles .opi/.ovi/.ozi; Euphony (.eup) is a related but distinct PC-98 format — open-source players exist on Japanese sites
      .pmb is 	Euphony PCM sample bank (PC-98)	N/A	Auxiliary file for .eup songs, not standalone
-
 DONE 1388 .mgs	MGSDRV (MSX)	Hard	MSX music driver format; playback requires MSX hardware emulation; some open-source players exist (mgsdrv replayer) but no ready-made C library
 MGSDRV (.mgs) [610 files] & MoonBlaster (.mbm) [296 files]
    * Status: Unsupported.
@@ -170,14 +163,12 @@ MGSDRV (.mgs) [610 files] & MoonBlaster (.mbm) [296 files]
    * Feasibility: Hard. They require significant MSX hardware emulation (Z80, OPLL/OPL4, PSG). While source code for replayers exists (e.g., mgsplay), integrating them would mean bringing in a Z80 core and additional FM cores.
 "No existing plugin claims .mgs, and 1388 MGS songs are in database"
 296	.mbm	MoonBlaster (MSX)	HardER	MSX sample-based tracker; needs .mbk sample banks alongside; MSX emulation required; no ready C library found
-
 DONE 808 + 373 + 51 .bgm, .opx, .mpk — PSG/SCC/OPLL based, should work like MGS. Probably easy wins.
 .bgm	KINROU5	MuSICA	808
 .opx	OPX4KSS / OPLLDriver	OPLLDRV	373
 .mpk	MPK106/103	MPK	51
 .bgm + .opx + .mpk (1,232) are the safe wins — all PSG/SCC/OPLL-based, same chips MGS already uses, so they'd play like MGS does now.
 So the realistic "would actually sound right" addition is roughly ~1,232 solid plus an uncertain slice of the 2,128 MoonBlaster files.
-
 DONE 168	.wsr	WonderSwan sound	DONE	This vendored game-music-emu has no WonderSwan core. Only newer libgme/separate cores support .wsr; would need to vendor one.
 ✦ I have investigated the feasibility of adding WonderSwan sound (.wsr) support to ChipMachine. Here are my findings:
   1. Current State
@@ -397,28 +388,6 @@ git commit -m "Fix ftc: Move ftc (51) from ayfly to zxtune"
    * Playback Features: Added support for fade-in/fade-out, preamp controls, and a completely rewritten seeking and duration logic.
    * Stability: Massive fixes for modern C++ standards and OS-specific optimizations (especially for macOS and Linux).
 
-NOT ATTEMPTED YET
-*****************
-
-77 .tfe TFM Music Maker (ZX Spectrum/PC, OPL2)	HARD Uses OPL2 synthesis; source code of TFM Music Maker is available; AdPlugin already has OPL infrastructure
-  The research provided is mostly incorrect regarding the synthesis engine, which changes the feasibility profile significantly.
-  1. The "OPL2" Misconception
-   * Correction: TFM Music Maker (.tfe) does not use OPL2 (2-operator FM). It is designed for TurboSound FM, which uses dual YM2203 (OPN) chips.
-   * Synthesis Type: This is 4-operator FM synthesis, identical to the engine in the Sega Genesis (YM2612) but with the addition of SSG-EG (Software Sound Generator Envelope Generator).
-   * Impact on Feasibility: AdPlugin (the project's OPL infrastructure) is useless for this format. You cannot "reuse" OPL2/OPL3 code to play OPN music; they are entirely different architectures (2-op vs 4-op, different registers, different feedback algorithms).
-  2. Feasibility Re-assessment: Hard (not Moderate)
-   * Why Hard: To support .tfe, you would need to:
-       1. Integrate an OPN2/OPN emulator: You already have libopna in the project (from the 98fmplayer folder), which can emulate a YM2203. However, you'd need to instantiate two of them to support the 6 FM channels of a TFM module.
-       2. Port the Tracker Logic: Since there is no standalone C/C++ library for .tfe (like libopenmpt), you would have to manually port Shiru's original playback logic (which is likely in Delphi or Assembly) into your C++ MusicPlayer plugin.
-       3. Alternative (The "Easy" Way): Most .tfe files are often converted to .vgm or .tfd (register dumps). If the goal is just to "play the music," it is 100x easier to support .vgm (which you likely already do or can easily add via libvgm) than to natively parse and play a .tfe module.
-  3. Summary of Findings:
-   * Format: Native TFM Music Maker Module.
-   * Sound Chip: Dual Yamaha YM2203 (OPN).
-   * Existing Infrastructure: The project's libopna is a good starting point, but AdPlugin is irrelevant.
-   * Source Code: Available (Shiru’s stuff is usually on GitHub or his website), but it is a "from scratch" plugin effort.
-  Recommendation: Do not pursue native .tfe support under the assumption that it's "just another OPL format." It is a Sega-Genesis-class FM format. If you want these songs in ChipMachine, look for the VGM versions of them instead.
-
-
 DEFERRED BEEPOLA FORMATS / WORK
 *******************************
 
@@ -431,9 +400,6 @@ Reversed but not cracked:
 * FURTHER DEEPER RESEARCH NEEDED *
 **********************************
 
-208 .fmb	Euphony FM bank (PC-98) N/A	Auxiliary FM patch bank for .eup, not standalone
-
- 93 .musx	Archimedes Tracker (Acorn RISC OS) Hard RISC OS–specific format; no known portable C decoder
  82 .mxtx	MaxTrax (Amiga) Hard Commercial Amiga tracker format; no known open-source decoder
 
  66 .fls Flash Tracker (ZX Spectrum) Hard ZX Spectrum AY tracker; niche; no known C library
@@ -460,7 +426,6 @@ Value: Moderate (54 requests, but high historical relevance for NES chiptunes)
 Verdict: Approve for Implementation.
 Reasoning: NerdTracker 2 was a vital evolutionary step in the NES chiptune scene before NSF/Famitracker took over. The original MS-DOS C source code is publicly available. Because it maps directly to standard NES APU registers, it can be integrated into ChipMachine via a lightweight wrapper or by converting/subsuming the parsing logic into the existing NES emulation core.
 
- 53 .instr	IFF-SMUS instrument file N/A Auxiliary instrument file for .smus tracks, not standalone
  51 .bmx Unknown Hard No format info found matching this context
  48 .coco	Unknown Hard No format info found matching this context
 
@@ -616,25 +581,33 @@ dtm	115
 bp3	114
 ptm	112
 mt2	104
-
->>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
-
 sid2	97
-soc	96
+
+soc	96 -- fails playback
+soc = Hippel ST COSO (Atari ST). UADE's eagleplayer.conf routes it to the Amiga JochenHippel-CoSo player (prefixes=hipc,soc) — the same player that handles .hipc, which works. But the Atari-ST COSO data fails there: the fixture renders NO SOUND with a File not found error. Notably UADE does ship a separate Jochen_Hippel_ST player, but it's mapped only to .hst, not .soc. So this is a UADE ST-variant gap (the ST COSO data isn't handled by the Amiga CoSo player), not a missing fixture.
+This .soc failure is the one item counted as a real error in cmtest. Want me to:
+quarantine the non-playing .soc fixture (testmus/uade/nowork/, like daley.prg) so cmtest is clean, and/or
+investigate whether re-routing .soc to a different UADE player (or dropping it from UADE's supported_ext) is the right call?
+
 dm2	94
 hipc	92
 ult	90
 pt1	85
 mo3	85
-musx	84
+musx	84 -- NO Archimedes Tracker (Acorn), no replayer anywhere
+musx = Archimedes Tracker — an Acorn Archimedes format; no handler in UADE/OpenMPT/ZXTune and no fixture. Genuine "no engine exists" gap (same category as .sn/.W/.psy).
+
 dmu	84
-MUS	78
+
+MUS	78 -- unsupported
+MUS (uppercase) = FAC SoundTracker — an MSX BSAVE PSG format (magic 0xFE), not the lowercase libvice/SID .mus (which plays). It has no replayer in the stack; UADEPlugin::canHandle deliberately declines it via the isMsxBsave content-check (UADEPlugin.cpp:333) to stop UADE crash-claiming it. This matches the known "future = libkss fac2kss converter" item. In the GUI a FAC .MUS is safely skipped, not played.
+
 tfe	77
 bbsong	76
+smus	72 -- IN PROGRESS, should work!
 
-------------------------------- IN PROGRESS
+>>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
 
-smus	72
 hsc	69
 mptm	67
 fls	65

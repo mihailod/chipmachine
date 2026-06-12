@@ -1465,7 +1465,7 @@ TEST_CASE("coverage", "[music]")
     }
 
     if (!missingByDir.empty()) {
-        printf("\n\033[31m%zu missing folders with test files in testmus detected.\033[0m\n",
+        printf("\n\033[31m%zu testmus folders with missing test files detected.\033[0m\n",
                missingByDir.size());
         printf("\033[31m%zu extensions not covered.\033[0m\n", missingExtCount);
         for (auto const& [dir, exts] : missingByDir) {
@@ -1512,4 +1512,26 @@ TEST_CASE("coverage", "[music]")
         }
         printf("\n\n");
     }
+
+    // --- Regression gate -----------------------------------------------------
+    // Lock in today's playback results: every fixture that plays right now must
+    // keep playing. These tallies only ever GROW when something regresses -- a
+    // tune that renders sound today breaking tomorrow flips OK->error
+    // (g_errors++), and a format whose plugin stops claiming it flips OK->skip
+    // (g_skips++). Both are naturally 0 on an isolated/partial `cmtest` run, so
+    // the gate never false-fails there; it only trips on a real regression in a
+    // full run (CI). A new red line is a show-stopper.
+    //
+    // Maintenance: when you intentionally FIX a known-failing fixture (or delete
+    // a dead one), LOWER the matching baseline so the gate stays tight. Adding a
+    // new fixture that can't play (or isn't claimed) will also trip this -- by
+    // design: make it play, or bump the baseline on purpose.
+    //
+    // Baseline captured 2026-06 (deterministic across runs). The g_errors are
+    // known non-playing fixtures (e.g. Atari-ST .soc, mini* rips whose lib lives
+    // only on the remote source, intentionally-bad rips); g_skips are deliberate
+    // canHandle declines plus companion/lib files that aren't standalone tunes.
+    // Set tight to the exact current counts so ANY new failure trips the gate.
+    REQUIRE(g_errors <= 72);
+    REQUIRE(g_skips <= 45);
 }
