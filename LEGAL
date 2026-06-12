@@ -89,6 +89,15 @@ Author: WonderSwan replayer by Mamiya; NEC V30MZ CPU core derived from
         MAME/Oswan. Vendored as packaged in Kodi's audiodecoder.wsr addon.
 License: GNU General Public License v2.0 or later
 
+Component: vio2sf (Nintendo DS -- .2sf / .mini2sf)
+Author: NDS emulation core derived from DeSmuME (the DeSmuME Team). 2SF
+        playability layer ("vio2sf") by Christopher Snowhill (kode54), the
+        maintained reentrant fork used by foobar2000 / Cog; vendored from the
+        ZXTune 3rdparty tree. The PSF container / _lib loader glue lives in
+        musicplayer/src/plugins/ndsplugin. GPU emulation is stripped (audio
+        only); the portable C resampler path is used (NO_ASM).
+License: GNU General Public License v2.0 or later
+
 ===============================================================================
 3. LESSER COPYLEFT DEPENDENCIES
 ===============================================================================

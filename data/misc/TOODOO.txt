@@ -95,23 +95,8 @@ What it is: One of the absolute oldest, purest retro audio streams still running
 ***********************************************
 * PLUGINS STATUS -- NEED ALL TO BE UP TO DATE *
 ***********************************************
-Work remaining:
-  ┌────────────────┬──────────────────────────────────────────────┬─────────────┬───────────────┬──────────┬───────┐
-  │ Plugin         │ Dependency                                   │ Location    │ Current       │ Latest   │ Action│
-  ├────────────────┼──────────────────────────────────────────────┼─────────────┼───────────────┼──────────┼───────┤
-  │ pxtoneplugin   │ libpxtone                                    │ Sibling     │ ~2017         │ 220910a  │ Needs │
-  │                │ (https://github.com/ptcollaboration/libpxton │ (/libpxtone │ (v1.0.0)      │ (2022+)  │ Updat │
-  │                │ e)                                           │ )           │               │          │ e     │
-  │ vicepluginbrid │ VICE                                         │ Sibling     │ 3.1.0         │ 3.8      │ Needs │
-  │ ge             │                                              │ (/vice310)  │               │          │ Updat │
-  │                │                                              │             │               │          │ e     │
-  │ ndsplugin      │ desmume/vio2sf                               │ Vendored    │ zlib 1.2.3 /  │ -        │ Legac │
-  │                │                                              │             │ desmume       │          │ y     │
-  └────────────────┴──────────────────────────────────────────────┴─────────────┴───────────────┴──────────┴───────┘
-   * libpxtone: The project uses an older version of the PxTone library. The ptcollaboration fork (v220910a) contains important fixes for modern compilers and expanded format support.
-   * VICE: The vicepluginbridge is based on VICE 3.1.0. The current version of VICE is 3.8, which significantly improves C64 cycle-exact emulation.
-   * NDSPlugin do we need an update of this plugin?
 
+IN PROGRESS: Swap ndsplugin to kode54 vio2sf
 
    * HEPlugin 
 Skipping testmus/psx/Goldrunner.psf
