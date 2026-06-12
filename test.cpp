@@ -876,6 +876,40 @@ TEST_CASE("FTC routing", "[music]")
     REQUIRE(winner == "ZX Spectrum (ZXTune)");
     REQUIRE(musix::AyflyPlugin().canHandle("x.ftc") == false);
 }
+// .mus is overloaded on modland: UADE's UFO eagleplayer owns the Amiga variant,
+// but the extension is also used by FAC SoundTracker, an MSX PSG format the
+// vendored 68k engine cannot run (it feeds Z80 code to a 68k player and the
+// score dies). UADE must decline MSX BSAVE .mus files (marker 0xFE + LE
+// start/end addresses, start <= end) while still claiming the Amiga form.
+TEST_CASE("UADE mus routing", "[music]")
+{
+    musix::UADEPlugin plugin{"data"};
+    auto tmp = fs::temp_directory_path();
+
+    // MSX BSAVE header as written by FAC SoundTracker (start 0x8000, end 0xBFFF).
+    auto msxMus = tmp / "musix_fac.mus";
+    {
+        std::ofstream f(msxMus, std::ios::binary);
+        const unsigned char hdr[] = {0xFE, 0x00, 0x80, 0xFF, 0xBF, 0x00, 0x80, 0x00};
+        f.write(reinterpret_cast<const char*>(hdr), sizeof(hdr));
+    }
+    REQUIRE_FALSE(plugin.canHandle(msxMus.string()));
+    fs::remove(msxMus);
+
+    // A non-BSAVE .mus (no 0xFE marker) is an Amiga UFO tune and stays with UADE.
+    auto amigaMus = tmp / "musix_ufo.mus";
+    {
+        std::ofstream f(amigaMus, std::ios::binary);
+        const std::vector<char> zeros(64, 0);
+        f.write(zeros.data(), zeros.size());
+    }
+    REQUIRE(plugin.canHandle(amigaMus.string()));
+    fs::remove(amigaMus);
+
+    // Unreadable/virtual path: fall back to the extension match (claim it) so a
+    // dry canHandle probe on a not-yet-downloaded remote path doesn't regress.
+    REQUIRE(plugin.canHandle((tmp / "musix_no_such.mus").string()));
+}
 TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmus/pn", ""); }
 // Beepola .bbsong (ZX Spectrum beeper). Only the Phaser1 engine (P1D/P1S) is
 // decoded today; the other Beepola engines in this dir fast-fail as a graceful

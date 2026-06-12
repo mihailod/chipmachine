@@ -1,5 +1,7 @@
-data (in general need db version bump)
-======================================
+******************************************************
+* DATA BUGS / ISSUES (fix might need db version bump *
+******************************************************
+
 - ability to manually add stuff to database. via a manual.txt file
 - add zx game music beeper videos from youtube?
 - (minor) radio screenshots missing for rainwave (favicon issue)
@@ -90,13 +92,10 @@ What it is: Run by the same crew behind BitWorld, they host a highly active stre
 URL: [https://www.kohina.com](https://www.kohina.com)
 What it is: One of the absolute oldest, purest retro audio streams still running. It plays exclusively 8-bit and 16-bit computer music (C64, Atari, Amiga, NES) directly simulated or sampled from original hardware.
 
-crashes:
-========
-
-could not play song:
-====================
-
-$$$$$$$$$$$$$$$$$$$$$$$$$$$ PLUGINS STATUS $$$$$$$$$$$$$$$$$$
+***********************************************
+* PLUGINS STATUS -- NEED ALL TO BE UP TO DATE *
+***********************************************
+Work remaining:
   ┌────────────────┬──────────────────────────────────────────────┬─────────────┬───────────────┬──────────┬───────┐
   │ Plugin         │ Dependency                                   │ Location    │ Current       │ Latest   │ Action│
   ├────────────────┼──────────────────────────────────────────────┼─────────────┼───────────────┼──────────┼───────┤
@@ -109,16 +108,12 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$ PLUGINS STATUS $$$$$$$$$$$$$$$$$$
   │ ndsplugin      │ desmume/vio2sf                               │ Vendored    │ zlib 1.2.3 /  │ -        │ Legac │
   │                │                                              │             │ desmume       │          │ y     │
   └────────────────┴──────────────────────────────────────────────┴─────────────┴───────────────┴──────────┴───────┘
-
-
    * libpxtone: The project uses an older version of the PxTone library. The ptcollaboration fork (v220910a) contains important fixes for modern compilers and expanded format support.
    * VICE: The vicepluginbridge is based on VICE 3.1.0. The current version of VICE is 3.8, which significantly improves C64 cycle-exact emulation.
    * NDSPlugin do we need an update of this plugin?
 
-$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-=========================
----- HEPlugin ----
+   * HEPlugin 
 Skipping testmus/psx/Goldrunner.psf
 Trying testmus/psx/010.minipsf2 ... playback OK
 Trying testmus/psx/01 - main menu.minipsf ... playback OK
@@ -141,28 +136,41 @@ The version of HE (Highly Experimental) currently in the codebase is PSXCore0008
    * sexypsf: Another PSF player engine (a fork of which is present in your plugins directory but not currently enabled in the main build). It was often considered a lighter alternative to HE.
   Should you update?
   If the current plugin is playing your PSF files without issues, an update might not be strictly necessary. However, if you encounter PSF files that don't play correctly or have metadata (tags) that aren't appearing, moving to the OpenPSF core or integrating vgmstream would be the modern way to "upgrade" this capability.
-=================
 
-- soundtrekker -- .mus not supported?
+**************************
+* PLAYBACK BUGS / ISSUES *
+**************************
 
-- .sgc parlour
+- soundtrekker -- .mus (?)
+This is an MSX tune, not an Amiga module — and chipmachine has no FAC SoundTracker replayer.
+Look at the file header: 00000000: fe00 80ff bf00 8000 ...
+FE 00 80 FF BF 00 80 is an MSX BSAVE binary header: marker 0xFE, start 0x8000, end 0xBFFF, exec 0x8000. FAC SoundTracker is an MSX PSG music editor, and its .MUS files are raw Z80/MSX binaries — nothing to do with the Amiga.
+.mus is an overloaded modland extension — it's used by UFO (Amiga) and FAC SoundTracker (MSX), among others. canHandle only checks the extension, with no content sniffing, so UADE accepts this MSX file, hands the Z80 binary to the 68k UFO player, and the player immediately crashes.
+SOLUTION: Add FAC SoundTracker support via libkss — write a fac2kss converter (analogous to the existing bgm2kss/mgs2kss) wrapping the FAC replayer, and route .mus MSX files there. This is the only path to actually hearing the tune.
 
-- .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM).
+- .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM). (related to parlour? -- only some subsongs play):
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/SGC/Masatomo Miyamoto/Parlour Games [SMS].sgc
+[web.h:307] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSGC%2fMasatomo Miyamoto/Parlour Games [SMS].sgc
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/SGC/Masatomo%20Miyamoto/Parlour%20Games%20%5BSMS%5D.sgc
+[web.cpp:176] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+
+- why these errors with eup? kazeni, jingule
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Euphony/Baby Tanuki/JINGULE.eup
+[web.h:307] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fEuphony%2fBaby Tanuki/JINGULE.eup
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/Euphony/Baby%20Tanuki/JINGULE.eup
+[web.cpp:176] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Euphony/Baby Tanuki/fmp.fmb
+[web.h:307] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fEuphony%2fBaby Tanuki/fmp.fmb
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/Euphony/Baby%20Tanuki/fmp.fmb
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Euphony/Baby Tanuki/rym_all3.pmb
+[web.h:307] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fEuphony%2fBaby Tanuki/rym_all3.pmb
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/Euphony/Baby%20Tanuki/rym_all3.pmb
+[web.cpp:176] CODE 226
+[RemoteLoader.cpp:90] CODE 226
 
 
-could not load file
-===================
-
-
-silent playback
-===============
-
-
-console errors:
-===============
-
-other:
-======
 - also starquake scoopex after some time:
 [tls @ 0x6000038429a0] IO Error: -9806
 [in#0/mov,mp4,m4a,3gp,3g2,mj2 @ 0x1587048f0] stream 0, offset 0x2400c1: partial file
@@ -170,6 +178,9 @@ other:
 [aac @ 0x15860b340] decode_band_types: Input buffer exhausted before END element found
 [aist#0:0/aac @ 0x15860e770] [dec:aac @ 0x15860aea0] Error submitting packet to decoder: Invalid data found when processing input
 
+*********
+* OTHER *
+*********
 
 - can we detect "video unavailable" for youtube and show / print that?
 - keep fixing red stuff in cmtest outpus
@@ -180,14 +191,18 @@ product/process
 - use some IDE (with integrated AI?) for development?
 - cleanup cmtest
 
-extension support
-=================
+major new features
+==================
+- better matching and sourcing for screenshot, for example hybris should display hybris game art...
+- consolidate all db scripts into one unified
+- filter by platform (C64, Amiga... -- DONE) and format (mod, ym, mp3...) -- pesic
+- Separate db from code and auto-update db independently from code
 
-Unsupported extensions in the database (≥10 files, .gz excluded)
+****************************
+* FORMATS SUPPORT PROGRESS *
+****************************
 
-Count	Ext	Format	Difficulty	Notes
-
-DONE in 1.2
+DONE in 1.2 
 ***********
 
 DONE 1,783 .ptcop 	PxTone Collage (Pixel/Cave Story)	Moderate	Official C++ library released by Pixel on GitHub (pxtone); needs a new plugin wrapping it
@@ -250,10 +265,8 @@ DONE 168	.wsr	WonderSwan sound	DONE	This vendored game-music-emu has no WonderSw
   3. Conclusion
   The most efficient path is to "backport" the WSR core from the kode54 fork into your existing gmeplugin. This avoids adding entirely new external dependencies while leveraging the existing console-music infrastructure in ChipMachine.
 
-*******************************
-
 DONE IN 1.3
------------
+***********
 
 DONE 240 .4v Quartet ST (Atari ST) DONE 4-voice sample tracker for Atari ST; .set is the companion sample file; UADE may be extensible to cover it
 Quartet ST (.4v) - Atari ST Tracker
@@ -423,27 +436,6 @@ subtotal newly playable					62
 newly-enabled extensions .jbm (9)
 others: .got .sop .hsq .ha2 .wlf .mdi .rac .bmf
 
-NOT DONE:
-*********
-
-77 .tfe TFM Music Maker (ZX Spectrum/PC, OPL2)	HARD Uses OPL2 synthesis; source code of TFM Music Maker is available; AdPlugin already has OPL infrastructure
-  The research provided is mostly incorrect regarding the synthesis engine, which changes the feasibility profile significantly.
-  1. The "OPL2" Misconception
-   * Correction: TFM Music Maker (.tfe) does not use OPL2 (2-operator FM). It is designed for TurboSound FM, which uses dual YM2203 (OPN) chips.
-   * Synthesis Type: This is 4-operator FM synthesis, identical to the engine in the Sega Genesis (YM2612) but with the addition of SSG-EG (Software Sound Generator Envelope Generator).
-   * Impact on Feasibility: AdPlugin (the project's OPL infrastructure) is useless for this format. You cannot "reuse" OPL2/OPL3 code to play OPN music; they are entirely different architectures (2-op vs 4-op, different registers, different feedback algorithms).
-  2. Feasibility Re-assessment: Hard (not Moderate)
-   * Why Hard: To support .tfe, you would need to:
-       1. Integrate an OPN2/OPN emulator: You already have libopna in the project (from the 98fmplayer folder), which can emulate a YM2203. However, you'd need to instantiate two of them to support the 6 FM channels of a TFM module.
-       2. Port the Tracker Logic: Since there is no standalone C/C++ library for .tfe (like libopenmpt), you would have to manually port Shiru's original playback logic (which is likely in Delphi or Assembly) into your C++ MusicPlayer plugin.
-       3. Alternative (The "Easy" Way): Most .tfe files are often converted to .vgm or .tfd (register dumps). If the goal is just to "play the music," it is 100x easier to support .vgm (which you likely already do or can easily add via libvgm) than to natively parse and play a .tfe module.
-  3. Summary of Findings:
-   * Format: Native TFM Music Maker Module.
-   * Sound Chip: Dual Yamaha YM2203 (OPN).
-   * Existing Infrastructure: The project's libopna is a good starting point, but AdPlugin is irrelevant.
-   * Source Code: Available (Shiru’s stuff is usually on GitHub or his website), but it is a "from scratch" plugin effort.
-  Recommendation: Do not pursue native .tfe support under the assumption that it's "just another OPL format." It is a Sega-Genesis-class FM format. If you want these songs in ChipMachine, look for the VGM versions of them instead.
-
 DONE ZX TUNE UPGRADE
 git commit -m "Enable more ZXTune formats: gtr (38) chi (21) tfe (77) psm[routed] (51)"
 git commit -m "Fix ftc: Move ftc (51) from ayfly to zxtune"
@@ -466,9 +458,31 @@ git commit -m "Fix ftc: Move ftc (51) from ayfly to zxtune"
    * Playback Features: Added support for fade-in/fade-out, preamp controls, and a completely rewritten seeking and duration logic.
    * Stability: Massive fixes for modern C++ standards and OS-specific optimizations (especially for macOS and Linux).
 
----
+NOT ATTEMPTED YET
+*****************
+
+77 .tfe TFM Music Maker (ZX Spectrum/PC, OPL2)	HARD Uses OPL2 synthesis; source code of TFM Music Maker is available; AdPlugin already has OPL infrastructure
+  The research provided is mostly incorrect regarding the synthesis engine, which changes the feasibility profile significantly.
+  1. The "OPL2" Misconception
+   * Correction: TFM Music Maker (.tfe) does not use OPL2 (2-operator FM). It is designed for TurboSound FM, which uses dual YM2203 (OPN) chips.
+   * Synthesis Type: This is 4-operator FM synthesis, identical to the engine in the Sega Genesis (YM2612) but with the addition of SSG-EG (Software Sound Generator Envelope Generator).
+   * Impact on Feasibility: AdPlugin (the project's OPL infrastructure) is useless for this format. You cannot "reuse" OPL2/OPL3 code to play OPN music; they are entirely different architectures (2-op vs 4-op, different registers, different feedback algorithms).
+  2. Feasibility Re-assessment: Hard (not Moderate)
+   * Why Hard: To support .tfe, you would need to:
+       1. Integrate an OPN2/OPN emulator: You already have libopna in the project (from the 98fmplayer folder), which can emulate a YM2203. However, you'd need to instantiate two of them to support the 6 FM channels of a TFM module.
+       2. Port the Tracker Logic: Since there is no standalone C/C++ library for .tfe (like libopenmpt), you would have to manually port Shiru's original playback logic (which is likely in Delphi or Assembly) into your C++ MusicPlayer plugin.
+       3. Alternative (The "Easy" Way): Most .tfe files are often converted to .vgm or .tfd (register dumps). If the goal is just to "play the music," it is 100x easier to support .vgm (which you likely already do or can easily add via libvgm) than to natively parse and play a .tfe module.
+  3. Summary of Findings:
+   * Format: Native TFM Music Maker Module.
+   * Sound Chip: Dual Yamaha YM2203 (OPN).
+   * Existing Infrastructure: The project's libopna is a good starting point, but AdPlugin is irrelevant.
+   * Source Code: Available (Shiru’s stuff is usually on GitHub or his website), but it is a "from scratch" plugin effort.
+  Recommendation: Do not pursue native .tfe support under the assumption that it's "just another OPL format." It is a Sega-Genesis-class FM format. If you want these songs in ChipMachine, look for the VGM versions of them instead.
+
 
 DEFERRED BEEPOLA FORMATS / WORK
+*******************************
+
 * NO SONGS Tritone/QChan — clean PD engines, trivial to add if we ever get .bbsong test files (none in your corpus).
 Reversed but not cracked:
 * MSD-via-Beepola — player extracted, structure fully mapped, but the note+drum+slide→period encoding is a genuinely deep tangle I haven't solved. The existing partial MSD keeps working meanwhile.
@@ -479,14 +493,7 @@ Reversed but not cracked:
 **********************************
 
 208 .fmb	Euphony FM bank (PC-98) N/A	Auxiliary FM patch bank for .eup, not standalone
-192 .set	Quartet ST sample bank N/A	Companion sample bank for .4v, not standalone
-191 .cop	Sam Coupe COP Hard Z80-based UK computer music format; extremely niche; no known C playback library
 
-170 .sn Sound Club (Atari ST / ZX Spectrum) Hard Obscure Eastern European tracker format; no known decoder outside native players
-
-169 .opx	OPLLDRV (PC-98 OPL) Hard PC-98 OPL music driver; related to FMP ecosystem but distinct; no known standalone C library
-
-101 .mbk	MoonBlaster sample bank N/A Auxiliary bank for .mbm, not standalone
  93 .musx	Archimedes Tracker (Acorn RISC OS) Hard RISC OS–specific format; no known portable C decoder
  82 .mxtx	MaxTrax (Amiga) Hard Commercial Amiga tracker format; no known open-source decoder
 
@@ -496,7 +503,16 @@ Reasoning: This is a ZX Spectrum AY-3-8912 format. Sergey Bulba's Ay_Emul source
 
  65 .sks Starkos (Atari ST)	Hard Atari ST tracker; no known portable decoder
  63 .sho Shroom tracker Hard	Very obscure; no public documentation or decoder found
- 57 .am Ace Tracker (Amiga)	Hard Obscure Amiga format; not in UADE's list; no known decoder
+
+ 57 .am Ace Tracker -- This is Atari Falcon Ace Tracker -- would be awesome to add this!
+Research outcome: we cannot parse the data structures and mix them via standard portable C++. You have to go through CPU and DSP emulation. The only ctual path forward is to lift the cycle-accurate emulation code from Hatari (the open-source Atari ST/STE/TT/Falcon emulator), which has a fully-realized Motorola 56001 core emulation block.
+* Step 1: Secure the Original Falcon Replay Code. New Beat Developments released the complete source code for ACE Tracker 2.00 (which includes the assembly player routines and the 56k DSP binary files). You will need the 68030 assembly initialization/sequence code. You will need the .lod or compiled DSP binaries that execute on the 56k.
+* Step 2: Extract Hatari’s Core Components. You must compile a stripped-down, headless instance of Hatari's core as a static library for Chipmachine to link against. Specifically, you need to lift:
+ - The Motorolala 68030 CPU core (usually WinUAE or UAE core wrapper inside Hatari).
+ - The dsp.c (Motorola 56001 emulation layer).
+ - The Falcon DMA sound subsystem simulation.
+* Step 3: Implement an Emulated Wrapper: Instead of writing a standard tracker parser, your AcePlayer::getSamples routine inside Chipmachine will actually boot a mini-virtual Atari Falcon in memory, load the ACE file into the virtual RAM alongside the assembly player engine, and step the emulation frame-by-frame.
+
  55 .gtk Beaver Sweeper Hard	Extremely obscure; no public info or decoder found
 
  54 .ned NerdTracker 2 Moderate NES-style tracker for PC; some source code available; limited community
@@ -552,19 +568,9 @@ IMPOSSIBLE - .dmf starry viper -- investigate why, dmf should be covered
 The actual failure: Deflemask .dmf and X-Tracker .dmf are two completely unrelated formats that happen to share an extension. OpenMPT (and modplug) only know X-Tracker DMF (magic: DDMF). Deflemask uses zlib-compressed binary data (magic: 0x78).
 Deflemask playback — the fast-fail is in place, but Deflemask DMF files (Heavy Viper/SuPeHaRiMAIN-StarrySky.dmf and anything else under the Deflemask/ modland category) are now just silently skipped. If you ever want actual playback, you'd need a Deflemask-capable player library. No known C/C++ open-source Deflemask player exists currently, so this is a "revisit when one appears" item rather than something actionable right now.
 
-*****************************************************
-
-major new features
-==================
-- better matching and sourcing for screenshot, for example hybris should display hybris game art...
-- consolidate all db scripts into one unified
-- filter by platform (C64, Amiga... -- DONE) and format (mod, ym, mp3...) -- pesic
-- Separate db from code and auto-update db independently from code
-
--------------------------------------------------------------------
-
-FORMATS PER COUNT COVERAGE
---------------------------
+******************************
+* FORMATS PER COUNT COVERAGE *
+******************************
 mod	78289
 sid	61177
 xm	42771
@@ -594,7 +600,6 @@ OPI	1293
 nsfe	1214
 OZI	1152
 ftm	1041
------------------- all ok above
 emul	979
 gbs	894
 sqt	868
@@ -611,7 +616,6 @@ prg	544
 
 psy	519 -- NO Psycle tracker Open-source tracker (psycle.sf.net) but the file format is complex and there's no standalone decode library
 
----------------------- all ok above
 cmf	458
 okta	419
 hes	414
@@ -674,7 +678,7 @@ bp3	114
 ptm	112
 mt2	104
 
-------- all checked above --------
+>>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
 
 sid2	97
 soc	96
