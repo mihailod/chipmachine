@@ -549,6 +549,22 @@ void MusicPlayerList::playCurrent()
             files--;
             return;
         }
+        // The cached file has a URL-encoded name (e.g. "downloads.php%3fmoduleid=1")
+        // which may contain bogus extensions like ".php". Use the format field
+        // from the database (e.g. "XM") as the real extension.
+	LOGD("Detected ext: %s", currentInfo.ext);
+        if (!currentInfo.ext.empty()) {
+            auto fname = f0.getName();
+            auto wantExt = "." + utils::toLower(currentInfo.ext);
+            auto curExt = utils::path_extension(fname);
+            if (curExt != wantExt) {
+                auto newFile = fname + wantExt;
+		LOGD("Detected ext from Content-Disposition: %s", curExt.c_str());
+		LOGD("New ext from Content-Disposition: %s", wantExt.c_str());
+                rename(fname.c_str(), newFile.c_str());
+                f0 = File{ newFile };
+            }
+        }
         songFiles.push_back(f0);
         loadedFile = f0.getName();
         auto parentDir = File(path_directory(loadedFile));

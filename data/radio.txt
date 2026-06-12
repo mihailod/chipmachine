@@ -7,3 +7,4 @@ Rainwave		Shoutcast	M3U	http://chipstream.rainwave.cc:8000/chiptune.mp3.m3u	http
 The Sid Station		Shoutcast	PLS	https://solid24.streamupsolutions.com:2199/tunein/icfablwz.pls	https://c64radio.com/images/tsslogo.png
 Radio PARALAX		Shoutcast	MP3	https://ssl.radio-paralax.de:8443/stream	https://i3.radionomy.com/radios/400/53ce7a7d-ff16-4da1-a48d-394b927ba5dc.gif
 CVGM Radio		Shoutcast	MP3	http://radio.chapter3-it.io/cvgm128	https://radio.cvgm.net/favicon.ico
+Radio Karolina		Shoutcast	MP3	https://streaming.karolina.rs/karolinabezreklama.mp3	https://player.karolina.rs/wp-content/uploads/2026/04/cropped-karolina.png
