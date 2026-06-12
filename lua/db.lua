@@ -15,9 +15,18 @@
 --     .PVI bank files stop being indexed as ~1074 bogus standalone songs
 -- 29: Modland ".info" metadata siblings are no longer indexed as bogus songs,
 --     and PokeyNoise "pn.<song>" prefix files type/title correctly (PokeyNoise)
-VERSION = 29;
+-- 30: ext field added to SongInfo and DB; parseStandard now recognizes "ext" keyword
+VERSION = 30;
 
 DB = {
+{
+	name = "modarchive",
+	id =  "modarchive",
+	source = "https://api.modarchive.org/downloads.php?moduleid=",
+	song_list = "data/modarchive.txt",
+	song_template = "title ext path format",
+	color = 0xfffff
+},
 {
 	name = "Playlists",
 	id =  "pl",
