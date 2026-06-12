@@ -396,39 +396,6 @@ Reversed but not cracked:
 * MSD-via-Beepola — player extracted, structure fully mapped, but the note+drum+slide→period encoding is a genuinely deep tangle I haven't solved. The existing partial MSD keeps working meanwhile.
 * Savage — 6 files - player runs; rich format mapped, not packed. (2 Chris Cowley titles)
 
-**********************************
-* FURTHER DEEPER RESEARCH NEEDED *
-**********************************
-
- 82 .mxtx	MaxTrax (Amiga) Hard Commercial Amiga tracker format; no known open-source decoder
-
- 66 .fls Flash Tracker (ZX Spectrum) Hard ZX Spectrum AY tracker; niche; no known C library
-Feasibility: Moderate Value: Low (66 requests) Verdict: Low Priority.
-Reasoning: This is a ZX Spectrum AY-3-8912 format. Sergey Bulba's Ay_Emul source code (specifically ayfly / Ay_Emul.cpp) contains Z80 assembly/C routines to handle .fls playback. If ChipMachine already integrates Bulba's AY routines, adding the file extension pointer is feasible. However, given the low request volume, only pursue if it can be mapped directly to an existing backend engine.
-
- 65 .sks Starkos (Atari ST)	Hard Atari ST tracker; no known portable decoder
- 63 .sho Shroom tracker Hard	Very obscure; no public documentation or decoder found
-
- 57 .am Ace Tracker -- This is Atari Falcon Ace Tracker -- would be awesome to add this!
-Research outcome: we cannot parse the data structures and mix them via standard portable C++. You have to go through CPU and DSP emulation. The only ctual path forward is to lift the cycle-accurate emulation code from Hatari (the open-source Atari ST/STE/TT/Falcon emulator), which has a fully-realized Motorola 56001 core emulation block.
-* Step 1: Secure the Original Falcon Replay Code. New Beat Developments released the complete source code for ACE Tracker 2.00 (which includes the assembly player routines and the 56k DSP binary files). You will need the 68030 assembly initialization/sequence code. You will need the .lod or compiled DSP binaries that execute on the 56k.
-* Step 2: Extract Hatari’s Core Components. You must compile a stripped-down, headless instance of Hatari's core as a static library for Chipmachine to link against. Specifically, you need to lift:
- - The Motorolala 68030 CPU core (usually WinUAE or UAE core wrapper inside Hatari).
- - The dsp.c (Motorola 56001 emulation layer).
- - The Falcon DMA sound subsystem simulation.
-* Step 3: Implement an Emulated Wrapper: Instead of writing a standard tracker parser, your AcePlayer::getSamples routine inside Chipmachine will actually boot a mini-virtual Atari Falcon in memory, load the ACE file into the virtual RAM alongside the assembly player engine, and step the emulation frame-by-frame.
-
- 55 .gtk Beaver Sweeper Hard	Extremely obscure; no public info or decoder found
-
- 54 .ned NerdTracker 2 Moderate NES-style tracker for PC; some source code available; limited community
-Feasibility: High / Moderate
-Value: Moderate (54 requests, but high historical relevance for NES chiptunes)
-Verdict: Approve for Implementation.
-Reasoning: NerdTracker 2 was a vital evolutionary step in the NES chiptune scene before NSF/Famitracker took over. The original MS-DOS C source code is publicly available. Because it maps directly to standard NES APU registers, it can be integrated into ChipMachine via a lightweight wrapper or by converting/subsuming the parsing logic into the existing NES emulation core.
-
- 51 .bmx Unknown Hard No format info found matching this context
- 48 .coco	Unknown Hard No format info found matching this context
-
 ***********************************
 * RESEARCHED, MARKED "IMPOSSIBLE" *
 ***********************************
@@ -445,28 +412,6 @@ here is the technical breakdown of why this is a "no-go" for a lightweight playe
    3. State Dump vs. Data Format: As your research noted, .psy files are often closer to a memory snapshot of the application state than a structured music format. Recreating the audio path outside of the original Psycle environment would require a massive reverse-engineering effort or porting thousands of lines of GPL code, which would bloat the app significantly.
    4. Lack of libopenmpt Support: Since libopenmpt (the industry standard for tracker playback) doesn't support it, there is no "easy win" for integration.
   Verdict: Keep it in the "Unsupported" category. Unless someone creates a standalone "Psycle-lite" rendering library, the ROI for manual implementation is nearly zero given the rarity of the format compared to the effort required.
-
-IMPOSSIBLE 152 .xrns Renoise (modern)	Hard Proprietary zipped XML format; no open-source decoder; Renoise SDK is closed
-   * Structure: While .xrns is just a ZIP of XML and samples (easy to parse), it is not a self-contained module like an .it or .xm file.
-   * The Engine Problem: Renoise relies heavily on its internal DSP effects, complex routing, and VST plugins. A replayer would need to re-implement the entire Renoise audio engine (filters, compressors, LFOs, etc.) to sound remotely correct.
-   * No Library: There is no open-source "librenoise" that can render these files. libopenmpt does not support them for the same reason—it's a DAW project file, not a portable music module.
-  Verdict: Still Hard. You can extract the XML and samples easily, but you can't play the song without essentially rebuilding Renoise.
-
-IMPOSSIBLE 120 .rns Renoise old format	Hard Explicitly blocked in OpenMPTPlugin (if (ext == "rns") return false); likely undecodable without Renoise itself
-✦ The .rns format (Renoise versions 1.0–1.5) is indeed a "Hard" target. Here is the feasibility report:
-  1. The Nature of the Format
-   * Proprietary Binary: Unlike the modern .xrns format (which is a standard ZIP archive containing XML and audio samples), the old .rns format is a closed, proprietary binary structure.
-   * Header: It can be identified by the ASCII string RENOISE SONG V at the start of the file.
-   * Complexity: As a DAW-style format (rather than a simple module), it includes complex DSP chains, internal
-     synthesizer settings, and automation that are not easily mapped to standard tracker engines like OpenMPT.
-  2. Why it is Blocked
-   * No Native Loader: libopenmpt (the engine behind ChipMachine's OpenMPTPlugin) does not have a loader for .rns. It was never reverse-engineered by the OpenMPT team.
-   * Avoiding False Positives: The explicit block in OpenMPTPlugin.cpp (if (ext == "rns") return false;) exists because some .rns files might be misidentified by other generic loaders, leading to crashes or garbage audio output when the engine tries to force-parse them as something else (like an old NoiseTrekker file).
-  3. Feasibility of Support
-   * Open Source Decoders: There are no known standalone open-source decoders for the legacy binary .rns format.
-   * Partial Path (NoiseTrekker): Renoise was the successor to NoiseTrekker (.ntk). While ProTrekkr is an open-source project that can play .ntk files, it does not support the expanded binary format used in Renoise 1.0+.
-   * The Only Real Fix: The standard community advice is to use a slightly older version of Renoise (around 1.8/1.9) to open the .rns files and resave them as .xrns. However, even .xrns is poorly supported by tracker libraries because it relies on Renoise's internal DSP engine to sound "correct."
-  Conclusion: Support for .rns is unlikely without a massive reverse-engineering effort or the release of the original Renoise 1.0 source code. The "Explicitly blocked" status in your plugin is correct; it prevents the engine from attempting to play a format it fundamentally does not understand.
 
 IMPOSSIBLE - .dmf starry viper -- investigate why, dmf should be covered
 The actual failure: Deflemask .dmf and X-Tracker .dmf are two completely unrelated formats that happen to share an extension. OpenMPT (and modplug) only know X-Tracker DMF (magic: DDMF). Deflemask uses zlib-compressed binary data (magic: 0x78).
@@ -518,7 +463,18 @@ stp	614
 MGS	548
 prg	544
 
-psy	519 -- NO Psycle tracker Open-source tracker (psycle.sf.net) but the file format is complex and there's no standalone decode library
+psy	519 -- FURTHER RESEARCH NEEDED Psycle tracker Open-source tracker (psycle.sf.net) but the file format is complex and there's no standalone decode library. HOWEVER: https://psycle.fandom.com/wiki/Qpsycle
+The Linux port Qpsycle explicitly states that it uses the psycle-core audio engine, and that the playback engine was split out to be shared among projects. It also says it can load Psycle songs (“psy3 format”) and play most existing .psy files.  
+That means:
+Psycle
+ └── psycle-core
+      ├── song loader
+      ├── pattern engine
+      ├── machine graph
+      └── playback engine
+Qpsycle
+ └── reuses psycle-core
+The only practical implementation is embedded in the Psycle/Qpsycle source tree itself.  
 
 cmf	458
 okta	419
@@ -537,15 +493,15 @@ sgc	276
 mmd2	265
 a2m	263
 BGM	258
-rol	247 -- fixed, 2nd file logic was missing
+rol	247 -- FIXED, 2nd file logic was missing
 sunvox	244
 psc	238
 stm	227
 sa	220
 bp	209
 aon	204
-cpc.emul	199 -- this is Amstrad CPC .emul, all good
-cop	191 -- SAM COUPE, zxtune covers, fixed, all good
+cpc.emul	199 -- DONE this is Amstrad CPC .emul, all good
+cop	191 -- FIXED SAM COUPE, zxtune covers, fixed, all good
 lds	183
 edl	179
 4v	170
@@ -564,17 +520,44 @@ symmod	155
 amf	154
 OPX	153
 MBM	151
-set	147 -- not a standalone format; it's the Quartet voice-set companion for .4v files
-xrns	145 -- Renoise modern commercial tracker
+set	147 -- IGNORE not a standalone format; it's the Quartet voice-set companion for .4v files
+
+rns	117 -- old Renoise format (commercial tracker)
+xrns	145 -- new Renoise format
+rns/xrns Renoise modern commercial tracker INVESTIGATE
+.xrns is just a ZIP of XML and samples (easy to parse)
+There ARE open-source XRNS libraries. I found several. NRenoiseTools (.NET)
+One of the oldest dedicated libraries. It can read and manipulate XRNS and XRNI files directly and was explicitly designed as a reusable library. Capabilities include: * load XRNS * inspect song structure * manipulate patterns * export MIDI
+This is probably the closest thing to a true XRNS SDK.
+DETAILS:
+IMPOSSIBLE 152 .xrns Renoise (modern)	Hard Proprietary zipped XML format; no open-source decoder; Renoise SDK is closed
+   * Structure: While .xrns is just a ZIP of XML and samples (easy to parse), it is not a self-contained module like an .it or .xm file.
+   * The Engine Problem: Renoise relies heavily on its internal DSP effects, complex routing, and VST plugins. A replayer would need to re-implement the entire Renoise audio engine (filters, compressors, LFOs, etc.) to sound remotely correct.
+   * No Library: There is no open-source "librenoise" that can render these files. libopenmpt does not support them for the same reason—it's a DAW project file, not a portable music module.
+  Verdict: Still Hard. You can extract the XML and samples easily, but you can't play the song without essentially rebuilding Renoise.
+IMPOSSIBLE 120 .rns Renoise old format	Hard Explicitly blocked in OpenMPTPlugin (if (ext == "rns") return false); likely undecodable without Renoise itself
+✦ The .rns format (Renoise versions 1.0–1.5) is indeed a "Hard" target. Here is the feasibility report:
+  1. The Nature of the Format
+   * Proprietary Binary: Unlike the modern .xrns format (which is a standard ZIP archive containing XML and audio samples), the old .rns format is a closed, proprietary binary structure.
+   * Header: It can be identified by the ASCII string RENOISE SONG V at the start of the file.
+   * Complexity: As a DAW-style format (rather than a simple module), it includes complex DSP chains, internal
+     synthesizer settings, and automation that are not easily mapped to standard tracker engines like OpenMPT.
+  2. Why it is Blocked
+   * No Native Loader: libopenmpt (the engine behind ChipMachine's OpenMPTPlugin) does not have a loader for .rns. It was never reverse-engineered by the OpenMPT team.
+   * Avoiding False Positives: The explicit block in OpenMPTPlugin.cpp (if (ext == "rns") return false;) exists because some .rns files might be misidentified by other generic loaders, leading to crashes or garbage audio output when the engine tries to force-parse them as something else (like an old NoiseTrekker file).
+  3. Feasibility of Support
+   * Open Source Decoders: There are no known standalone open-source decoders for the legacy binary .rns format.
+   * Partial Path (NoiseTrekker): Renoise was the successor to NoiseTrekker (.ntk). While ProTrekkr is an open-source project that can play .ntk files, it does not support the expanded binary format used in Renoise 1.0+.
+   * The Only Real Fix: The standard community advice is to use a slightly older version of Renoise (around 1.8/1.9) to open the .rns files and resave them as .xrns. However, even .xrns is poorly supported by tracker libraries because it relies on Renoise's internal DSP engine to sound "correct."
+  Conclusion: Support for .rns is unlikely without a massive reverse-engineering effort or the release of the original Renoise 1.0 source code. The "Explicitly blocked" status in your plugin is correct; it prevents the engine from attempting to play a format it fundamentally does not understand.
+
 psm	140
 amd	127
 rad	126
 med	125
-minigsf	122 -- fetch 2ndary file fix was needed -- all ok now
-gsf	120 -- fetch 2ndary file fix was needed -- all ok now
+minigsf	122 -- FIXED fetch 2ndary file fix was needed -- all ok now
+gsf	120 -- FIXED fetch 2ndary file fix was needed -- all ok now
 d00	120
-rns	117 -- Renoise modern commercial tracker
-0.mod	116
 vgz	115
 dw	115
 dtm	115
@@ -583,7 +566,7 @@ ptm	112
 mt2	104
 sid2	97
 
-soc	96 -- fails playback
+soc	96 -- fails playback INVESTIGATE
 soc = Hippel ST COSO (Atari ST). UADE's eagleplayer.conf routes it to the Amiga JochenHippel-CoSo player (prefixes=hipc,soc) — the same player that handles .hipc, which works. But the Atari-ST COSO data fails there: the fixture renders NO SOUND with a File not found error. Notably UADE does ship a separate Jochen_Hippel_ST player, but it's mapped only to .hst, not .soc. So this is a UADE ST-variant gap (the ST COSO data isn't handled by the Amiga CoSo player), not a missing fixture.
 This .soc failure is the one item counted as a real error in cmtest. Want me to:
 quarantine the non-playing .soc fixture (testmus/uade/nowork/, like daley.prg) so cmtest is clean, and/or
@@ -596,39 +579,61 @@ pt1	85
 mo3	85
 musx	84 -- NO Archimedes Tracker (Acorn), no replayer anywhere
 musx = Archimedes Tracker — an Acorn Archimedes format; no handler in UADE/OpenMPT/ZXTune and no fixture. Genuine "no engine exists" gap (same category as .sn/.W/.psy).
+archimedes is arm -- INVESTIGATE
 
 dmu	84
 
-MUS	78 -- unsupported
+MUS	78 -- unsupported INVESTIGATE
 MUS (uppercase) = FAC SoundTracker — an MSX BSAVE PSG format (magic 0xFE), not the lowercase libvice/SID .mus (which plays). It has no replayer in the stack; UADEPlugin::canHandle deliberately declines it via the isMsxBsave content-check (UADEPlugin.cpp:333) to stop UADE crash-claiming it. This matches the known "future = libkss fac2kss converter" item. In the GUI a FAC .MUS is safely skipped, not played.
 
 tfe	77
 bbsong	76
-smus	72 -- IN PROGRESS, should work!
+smus	72 -- FIXED! (folder of instruments 2ndary fetch was needed) lots of work!
 
 >>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+>>>>>>>> deeper research needed for items below <<<<<<<<<<
 
 hsc	69
 mptm	67
-fls	65
+
+fls	65 -- Flash Tracker (ZX Spectrum) Hard ZX Spectrum AY tracker; niche; no known C library
+Feasibility: Moderate Value: Low (66 requests) Verdict: Low Priority.
+Reasoning: This is a ZX Spectrum AY-3-8912 format. Sergey Bulba's Ay_Emul source code (specifically ayfly / Ay_Emul.cpp) contains Z80 assembly/C routines to handle .fls playback. If ChipMachine already integrates Bulba's AY routines, adding the file extension pointer is feasible. However, given the low request volume, only pursue if it can be mapped directly to an existing backend engine.
+
 prt	64
-mxtx	63
+mxtx	63 -- MaxTrax Commercial Amiga tracker format; no known open-source decoder
 hip	63
 gdm	63
 mdl	61
 fred	59
 dss	58
-sho	57
+sho	57 -- Shroom tracker Very obscure; no public documentation or decoder found
 dum	57
-am	57
-gtk	55
+
+am	57 -- Atari Falcon Ace Tracker -- would be awesome to add this!
+Research outcome: we cannot parse the data structures and mix them via standard portable C++. You have to go through CPU and DSP emulation. The only ctual path forward is to lift the cycle-accurate emulation code from Hatari (the open-source Atari ST/STE/TT/Falcon emulator), which has a fully-realized Motorola 56001 core emulation block.
+* Step 1: Secure the Original Falcon Replay Code. New Beat Developments released the complete source code for ACE Tracker 2.00 (which includes the assembly player routines and the 56k DSP binary files). You will need the 68030 assembly initialization/sequence code. You will need the .lod or compiled DSP binaries that execute on the 56k.
+* Step 2: Extract Hatari’s Core Components. You must compile a stripped-down, headless instance of Hatari's core as a static library for Chipmachine to link against. Specifically, you need to lift:
+ - The Motorolala 68030 CPU core (usually WinUAE or UAE core wrapper inside Hatari).
+ - The dsp.c (Motorola 56001 emulation layer).
+ - The Falcon DMA sound subsystem simulation.
+* Step 3: Implement an Emulated Wrapper: Instead of writing a standard tracker parser, your AcePlayer::getSamples routine inside Chipmachine will actually boot a mini-virtual Atari Falcon in memory, load the ACE file into the virtual RAM alongside the assembly player engine, and step the emulation frame-by-frame.
+
+gtk	55 -- DONE via OPENMPT UPDATE!
 gmc	55
 gt2	53
-sks	52
+sks	52 -- Starkos (Atari ST) Hard Atari ST tracker; no known portable decoder
 mm8	52
-ned	51
-bmx	51
-SNG	51
+
+ned	51 -- NerdTracker 2 NES-style tracker for PC; some source code available; limited community
+Feasibility: High / Moderate
+Value: Moderate (54 requests, but high historical relevance for NES chiptunes)
+Verdict: Approve for Implementation.
+Reasoning: NerdTracker 2 was a vital evolutionary step in the NES chiptune scene before NSF/Famitracker took over. The original MS-DOS C source code is publicly available. Because it maps directly to standard NES APU registers, it can be integrated into ChipMachine via a lightweight wrapper or by converting/subsuming the parsing logic into the existing NES emulation core.
+
+bmx	51 -- Unknown / No format info found matching this context
+SNG	51 -- same as sng? some fail in cmtest
 ftc	50
 psf	49
 SM2	46
@@ -636,7 +641,7 @@ SM1	46
 dl	45
 jam	44
 hvl	44
-coco	44
+coco	44  -- Unknown / No format info found matching this context
 mms	43
 bd	43
 adl	43
@@ -717,7 +722,7 @@ dz	14
 tf	13
 kdm	13
 ims	13
-SKS	13
+SKS	13 -- same as sks abowe?
 A2M	13
 2sf	13
 tss	12
@@ -826,7 +831,7 @@ ssf	2
 sg	2
 sdata	2
 pt	2
-okt	2
+okt	2 -- works
 mxm	2
 mtk	2
 ms	2

@@ -552,33 +552,67 @@ void MusicPlayerList::playCurrent()
         songFiles.push_back(f0);
         loadedFile = f0.getName();
         auto parentDir = File(path_directory(loadedFile));
-        auto fileList = mp.getSecondaryFiles(f0);
-        for (const auto& s : fileList) {
-            File target = parentDir / s;
-            if (!target.exists()) {
+        auto songDirUrl = path_directory(currentInfo.path);
+        for (const auto& s : mp.getSecondaryFiles(f0)) {
+            if (!s.empty() && s.back() == '/') {
+                // A whole-directory companion (e.g. IFF-SMUS "Instruments/"):
+                // the member filenames are unpredictable, so list the remote
+                // folder and fetch each into the same subdirectory. A local
+                // mirror yields an empty list (members are read in place).
                 files++;
-                auto url = path_directory(currentInfo.path) + "/" + s;
-                remoteLoader.load(url, [=](File f) {
-                    // Secondary files are companions (sample banks, voicesets),
-                    // not the song itself. Treat a missing one as non-fatal: the
-                    // main file already loaded, so let the plugin play whatever
-                    // it can (e.g. MoonBlaster renders bankless without its .mbk)
-                    // rather than failing the whole song on an absent companion.
-                    if (!f) {
-                        LOGW("Could not load secondary file %s", url);
-                    } else {
-                        songFiles.push_back(f);
-                    }
-                    files--;
-                });
-            } else
-                songFiles.push_back(target);
+                auto dirUrl = songDirUrl + "/" + s;
+                remoteLoader.listDirectory(
+                    dirUrl, [=](std::vector<std::string> names) {
+                        for (const auto& n : names) {
+                            loadSecondaryFile(s + n, parentDir, songDirUrl);
+                        }
+                        files--;
+                    });
+            } else {
+                loadSecondaryFile(s, parentDir, songDirUrl);
+            }
         }
 
         files--;
-        
+
     });
-    
+
+}
+
+void MusicPlayerList::loadSecondaryFile(const std::string& s,
+                                        const utils::File& parentDir,
+                                        const std::string& songDirUrl)
+{
+    File target = parentDir / s;
+    if (target.exists()) {
+        songFiles.push_back(target);
+        return;
+    }
+    files++;
+    auto url = songDirUrl + "/" + s;
+    remoteLoader.load(url, [=](File f) {
+        // Secondary files are companions (sample banks, voicesets), not the song
+        // itself. Treat a missing one as non-fatal: the main file already
+        // loaded, so let the plugin play whatever it can (e.g. MoonBlaster
+        // renders bankless without its .mbk) rather than failing the whole song
+        // on an absent companion.
+        if (!f) {
+            LOGW("Could not load secondary file %s", url);
+        } else {
+            // The web cache flattens a companion's remote directory into a
+            // single encoded folder, so a companion in a SUBdirectory of the
+            // song (e.g. IFF-SMUS "Instruments/<name>") is not downloaded to
+            // parentDir/s where the player's file loader looks. Materialise a
+            // copy there. Same-directory companions already land in place
+            // (f == target), so this is a no-op for them.
+            if (f.getName() != target.getName() && !target.exists()) {
+                utils::makedirs(path_directory(target.getName()));
+                File::copy(f.getName(), target.getName());
+            }
+            songFiles.push_back(target.exists() ? target : f);
+        }
+        files--;
+    });
 }
 
 } // namespace chipmachine

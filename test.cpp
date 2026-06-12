@@ -20,11 +20,14 @@ namespace di = boost::di;
 
 #include <algorithm>
 #include <array>
+#include <atomic>
+#include <chrono>
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
 #include <numeric>
 #include <string>
+#include <thread>
 #include <unordered_map>
 #include <set>
 namespace fs = std::filesystem;
@@ -165,6 +168,12 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
         }
         
         for (auto f : files) {
+            // Skip subdirectories silently -- some corpora keep companion files
+            // in a subfolder (e.g. testmus/uade/Instruments/ for IFF-SMUS), which
+            // listFiles() returns as a plain entry. It isn't a playable fixture,
+            // so don't count it as a skip (would inflate the coverage gate).
+            if (f.isDir()) continue;
+
             if (exclude != "" && f.getName().find(exclude) != std::string::npos)
                 continue;
 
@@ -745,6 +754,192 @@ TEST_CASE("UADE YMST secondary files", "[uade]")
         auto files = plugin.getSecondaryFiles("/nonexistent/path/song.ymst");
         REQUIRE(files.empty());
     }
+}
+
+// Regression test for IFF-SMUS (Aegis Sonix) companion loading.
+// A SMUS score carries only sequence data; its instruments live in a sibling
+// "Instruments/" subdirectory whose member filenames are unpredictable (a
+// "<name>.instr" is either a self-contained "Synthesis" voice or a
+// "SampledSound" pointing at a raw "<sample>.ss" whose name need not match the
+// instrument and whose case is inconsistent on modland). So getSecondaryFiles()
+// surfaces the directory itself (trailing slash); MusicPlayerList lists the
+// remote folder and pulls every member down next to the score. Without this the
+// UADE SonixMusicDriver replay aborts ("score died") for lack of instruments.
+// Content-gated on FORM SMUS so it doesn't fire on unrelated ".smus"-named data.
+TEST_CASE("UADE SMUS instrument secondary files", "[uade]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::UADEPlugin plugin{ "data" };
+
+    auto write = [](fs::path const& p, std::string const& bytes) {
+        std::ofstream f(p, std::ios::binary);
+        f.write(bytes.data(), bytes.size());
+    };
+    auto tmp = fs::temp_directory_path();
+
+    SECTION("surfaces the Instruments/ directory for a real FORM SMUS")
+    {
+        auto files = plugin.getSecondaryFiles("testmus/uade/ACE II.smus");
+        REQUIRE(files == std::vector<std::string>{ "Instruments/" });
+    }
+
+    SECTION("returns empty for a non-SMUS file")
+    {
+        auto path = tmp / "not_smus.smus";
+        // A valid IFF, but FORM type "8SVX" not "SMUS" (12 bytes, embedded NULs).
+        write(path, std::string("FORM\0\0\0\x04" "8SVX", 12));
+        REQUIRE(plugin.getSecondaryFiles(path.string()).empty());
+        fs::remove(path);
+    }
+
+    SECTION("returns empty for a truncated header without crashing")
+    {
+        auto path = tmp / "trunc.smus";
+        write(path, std::string("FORM\0\0", 6));
+        REQUIRE(plugin.getSecondaryFiles(path.string()).empty());
+        fs::remove(path);
+    }
+
+    SECTION("returns empty for a nonexistent file")
+    {
+        REQUIRE(plugin.getSecondaryFiles("/nonexistent/x.smus").empty());
+    }
+}
+
+// IFF-SMUS end-to-end playback. "ACE II.smus" needs its companion instruments
+// (testmus/uade/Instruments/<name>.{instr,ss}) for any audio: the UADE
+// SonixMusicDriver replay loads them from the score's own directory. Non-silent
+// output means the whole two-tier instrument set was located and decoded.
+TEST_CASE("UADE SMUS plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::UADEPlugin plugin{ "data" };
+
+    std::string const smus = "testmus/uade/ACE II.smus";
+    REQUIRE(plugin.canHandle(smus));
+
+    auto* player = plugin.fromFile(smus);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
+// Manual probe: play an arbitrary local file through UADE and report energy.
+// Hidden ('.' tag). Run with: SMUS_TEST_FILE="/path/to/x.smus" cmtest "[.uadefile]"
+TEST_CASE("UADE plays local file from env", "[.uadefile]")
+{
+    logging::setLevel(logging::Level::Warning);
+    const char* path = std::getenv("SMUS_TEST_FILE");
+    REQUIRE(path != nullptr);
+    musix::UADEPlugin plugin{ "data" };
+    REQUIRE(plugin.canHandle(path));
+    auto* player = plugin.fromFile(path);
+    REQUIRE(player != nullptr);
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 400 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+    INFO("energy=" << energy);
+    REQUIRE(energy != 0);
+}
+
+// Network-gated end-to-end streaming test (hidden '.' tag; run with:
+// cmtest "[.smusnet]"). Reproduces the real GUI path for a streamed IFF-SMUS that
+// is NOT in any local mirror: list the remote "Instruments/" folder, fire ALL
+// member downloads concurrently (the case that used to overwhelm the FTP server
+// with response-code-0 failures before the connection cap), stage them next to
+// the score, then play through UADE. "Pet Shop Jus" references instruments whose
+// sample (.ss) filenames differ from the instrument names -- the exact case the
+// whole-directory fetch exists to handle.
+TEST_CASE("UADE SMUS streams and plays from modland", "[.smusnet]")
+{
+    logging::setLevel(logging::Level::Warning);
+    RemoteLoader rl;
+    // Bogus local_dir forces the FTP path (no local-mirror short-circuit).
+    rl.registerSource("modland", "ftp://ftp.modland.com/pub/modules/",
+                      "/nonexistent-mirror/");
+
+    auto pump = [&](std::atomic<int>& pending) {
+        for (int i = 0; i < 1200 && pending > 0; ++i) {
+            rl.update();
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        }
+    };
+
+    const std::string songRel = "IFF-SMUS/Juz.J/Pet Shop Jus (Juz.J).smus";
+    const std::string dirRel = "IFF-SMUS/Juz.J/Instruments/";
+
+    std::atomic<int> pending{ 1 };
+    std::vector<std::string> names;
+    rl.listDirectory("modland::" + dirRel, [&](std::vector<std::string> n) {
+        names = std::move(n);
+        pending--;
+    });
+    pump(pending);
+    REQUIRE(!names.empty());
+
+    auto stage = fs::temp_directory_path() / "smus_net_test";
+    fs::remove_all(stage);
+    fs::create_directories(stage / "Instruments");
+
+    // Fire the song + every Instruments/ member concurrently (no waiting between
+    // requests) -- this is what tripped the FTP connection storm.
+    pending = 1;
+    rl.load("modland::" + songRel, [&](utils::File f) {
+        if (f) { utils::File::copy(f.getName(), (stage / "Pet Shop Jus (Juz.J).smus").string()); }
+        pending--;
+    });
+    for (const auto& n : names) {
+        pending++;
+        auto dst = stage / "Instruments" / n;
+        rl.load("modland::" + dirRel + n, [&, dst](utils::File f) {
+            if (f) { utils::File::copy(f.getName(), dst.string()); }
+            pending--;
+        });
+    }
+    pump(pending);
+
+    // Every needed instrument and sample must have arrived intact.
+    for (const char* needed :
+         { "Bassguitar_AD.instr", "Bassguitar_AD.ss", "Clap.instr",
+           "Cameo Bassdrum.ss", "West_End_Girls.ss" }) {
+        auto p = stage / "Instruments" / needed;
+        INFO("missing/empty: " << needed);
+        REQUIRE(fs::exists(p));
+        REQUIRE(fs::file_size(p) > 0);
+    }
+
+    musix::UADEPlugin plugin{ "data" };
+    auto* player =
+        plugin.fromFile((stage / "Pet Shop Jus (Juz.J).smus").string());
+    REQUIRE(player != nullptr);
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 400 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) energy += std::abs(static_cast<int>(buffer[i]));
+    }
+    delete player;
+    fs::remove_all(stage);
+    REQUIRE(energy != 0);
 }
 
 TEST_CASE("OpenMPT", "[music]") { testPlugin<musix::OpenMPTPlugin>("testmus/openmpt", ""); }

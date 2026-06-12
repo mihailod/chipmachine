@@ -7,3 +7,8 @@
 
 # acorn archimedes only
 .musx
+
+# Apple II GS only
+.W
+
+

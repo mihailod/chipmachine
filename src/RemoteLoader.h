@@ -7,6 +7,7 @@
 #include <functional>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include <iostream>
 
@@ -20,6 +21,14 @@ public:
 
     bool load(const std::string& path,
               std::function<void(utils::File)> done_cb);
+
+    // Lists the files in a remote directory (e.g. an IFF-SMUS "Instruments/"
+    // folder whose member names are unpredictable). The callback receives the
+    // bare basenames. If the directory is already present in a local mirror, the
+    // callback receives an empty list -- the player reads those files in place,
+    // so nothing needs fetching.
+    void listDirectory(const std::string& path,
+                       std::function<void(std::vector<std::string>)> done_cb);
 
     std::shared_ptr<webutils::WebJob> stream(
         const std::string& path,

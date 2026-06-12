@@ -115,6 +115,49 @@ bool RemoteLoader::load(const std::string& p, function<void(File f)> done_cb)
     return true;
 }
 
+void RemoteLoader::listDirectory(
+    const std::string& p, function<void(vector<string>)> done_cb)
+{
+    Source source;
+    string path = p;
+
+    auto parts = split(path, "::");
+    if (parts.size() > 1) {
+        source = sources[parts[0]];
+        path = parts[1];
+    }
+
+    // If a local mirror already holds this directory, the song was loaded from
+    // it and the player reads the members in place -- nothing to fetch.
+    string local_path = source.local_dir + path;
+    if (File::exists(local_path)) {
+        LOGD("Directory present in local mirror: %s", local_path);
+        schedule_callback([=]() { done_cb({}); });
+        return;
+    }
+
+    string url = source.url + path;
+    if (!url.empty() && url.back() != '/') { url += "/"; }
+
+    webgetter.listDir(url, [=](const std::string& listing) {
+        vector<string> names;
+        for (auto& line : split(listing, "\n")) {
+            string l = line;
+            while (!l.empty() && (l.back() == '\r' || l.back() == '\n')) {
+                l.pop_back();
+            }
+            if (l.empty()) { continue; }
+            // With CURLFTPMETHOD_NOCWD the server echoes full paths; keep only
+            // the basename.
+            auto slash = l.find_last_of('/');
+            string base = (slash == string::npos) ? l : l.substr(slash + 1);
+            if (base.empty() || base == "." || base == "..") { continue; }
+            names.push_back(base);
+        }
+        done_cb(names);
+    });
+}
+
 // void RemoteLoader::preCache(const std::string &path) {}
 
 std::shared_ptr<webutils::WebJob> RemoteLoader::stream(

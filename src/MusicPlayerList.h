@@ -158,6 +158,12 @@ private:
     void playCurrent();
     bool playFile(utils::path fileName);
 
+    // Fetches one companion file `s` (relative to the song) into `parentDir`,
+    // materialising it where the player's loader expects it. Used for both the
+    // plugin's direct secondary files and the members of a directory companion.
+    void loadSecondaryFile(const std::string& s, const utils::File& parentDir,
+                           const std::string& songDirUrl);
+
     void update();
     void updateInfo();
 
