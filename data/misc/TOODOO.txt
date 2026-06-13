@@ -271,8 +271,12 @@ Park it unless a Flash Tracker Z80 player binary surfaces.
 
 prt	64
 
-mxtx	63 -- MaxTrax Commercial Amiga tracker format
+
+
+mxtx	63 -- *******. IN PROGRESS MaxTrax Commercial Amiga tracker format
 So MaxTrax is genuinely supportable, and a decent candidate (commercial game music, ~63 tunes). 
+
+
 
 hip	63
 gdm	63
@@ -280,9 +284,7 @@ mdl	61
 fred	59
 dss	58
 sho	57 -- NO Shroom tracker Very obscure; no public documentation or decoder found
-
-dum	57 -- UADE claims but no play -- INVESTIGATE DEEPER
-dum	UADE	⚠️ claimed (Infogrames) but bob4a.dum fails ("score died"), in baseline
+dum	57 -- all good, the test file was bad
 
 am	57 -- NO Atari Falcon Ace Tracker -- would be awesome to add this!
 Research outcome: we cannot parse the data structures and mix them via standard portable C++. You have to go through CPU and DSP emulation. The only ctual path forward is to lift the cycle-accurate emulation code from Hatari (the open-source Atari ST/STE/TT/Falcon emulator), which has a fully-realized Motorola 56001 core emulation block.
@@ -298,8 +300,6 @@ gtk	55 -- DONE via OPENMPT UPDATE!
 >>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 >>>>>>>> deeper research needed for items below <<<<<<<<<<
-
-
 
 gmc	55
 gt2	53

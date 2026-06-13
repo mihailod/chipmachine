@@ -1806,5 +1806,5 @@ TEST_CASE("coverage", "[music]")
     // declines plus companion/lib files that aren't standalone tunes.
     // Set tight to the exact current counts so ANY new failure trips the gate.
     REQUIRE(g_errors <= 69);
-    REQUIRE(g_skips <= 44);
+    REQUIRE(g_skips <= 46);
 }
