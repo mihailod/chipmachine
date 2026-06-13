@@ -57,6 +57,7 @@ void runConsole(std::shared_ptr<bbs::Console> console, ChipInterface& ci)
             { NOT_SET, Console::PURPLE },  { PLAYLIST, Console::GREY },
             { CONSOLE, Console::RED },     { C64, Console::BROWN },
             { ATARI, Console::YELLOW },    { MP3, Console::GREEN },
+            { APPLE, Console::CYAN },
             { M3U, Console::LIGHT_GREEN }, { YOUTUBE, Console::RED },
             { PC, Console::CYAN },         { AMIGA, Console::LIGHT_BLUE },
             { 255, Console::ORANGE }

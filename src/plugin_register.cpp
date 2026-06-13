@@ -37,6 +37,7 @@ extern "C" {
     void zxtuneplugin_register();  // ZX Spectrum Sound Tracker 1.1 (.st11) via ZXTune
     void pokeynoiseplugin_register(); // Atari 800 PokeyNoise (.pn) via ASAP (6502+POKEY)
     void bbsongplugin_register();  // Beepola .bbsong (ZX Spectrum beeper) via Z80 + speaker sampling
+    void soundsmithplugin_register(); // Apple IIgs SoundSmith (bare song + .W wavebank) via Ensoniq 5503
 }
 
 void register_plugins() {
@@ -74,4 +75,5 @@ void register_plugins() {
     zxtuneplugin_register();
     pokeynoiseplugin_register();
     bbsongplugin_register();
+    soundsmithplugin_register();
 }

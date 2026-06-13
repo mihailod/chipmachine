@@ -73,6 +73,7 @@ git clone https://github.com/mihailod/zxtune.git
 git clone --recursive https://github.com/mihailod/libkss.git
 git clone https://github.com/mihailod/audiodecoder.wsr.git audiodecoderwsr
 git clone https://github.com/mihailod/protrekkr.git
+git clone https://github.com/mihailod/soundsmith.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
@@ -360,6 +361,12 @@ Support for Beepola ZX Spectrum 1-bit beeper music. Each `.bbsong` is compiled i
 
 Extensions: `.bbsong`
 
+### SoundSmith
+
+Support for Apple IIgs SoundSmith music (Huibert Aalbers, 1989) — the dominant IIgs tracker, driving the Ensoniq 5503 "DOC" 32-oscillator chip. On modland each tune is a **pair**: a bare-named song file (patterns/orders) plus a `<song>.W` wavebank holding the 64KB of DOC sound RAM and the instrument table. The song is the playable entry (identified by its header structure, since the leading signature varies per editor build); the `.W` companion is fetched as a secondary file. The DOC is emulated in-process (a faithful port of Sean Kasun's BSD-licensed player, vendored at repo-root `soundsmith/`), rendering at the chip's native 26320 Hz — not routed through UADE.
+
+Extensions: bare song + `.W` (wavebank)
+
 ### AudioOverload
 
 Support for Sega Saturn and Capcom Q music
@@ -454,6 +461,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **vio2sf (Nintendo DS — .2sf / .mini2sf):** NDS emulation core derived from DeSmuME (the DeSmuME Team); maintained reentrant 2SF fork ("vio2sf") by Christopher Snowhill (kode54), as used by foobar2000 / Cog. Licensed under GPL-2.0-or-later.
 * **ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise):** Developed by Piotr Fusik. Licensed under GPL-2.0-or-later.
 * **Beepola (ZX Spectrum beeper):** The `.bbsong` format and the Beepola tool are by Chris Cowley. Engine players: **Phaser1** by Shiru (public domain, from 1tracker); **Music Box** reverse-engineered from WHAM! The Music Box (original Z80 code by Mark Alexander, 1985); **Music Studio** reverse-engineered from The Music Studio (original Z80 code by Saša Pušica, 1988); **SFX** (Special FX / Fuzz Click) reverse-engineered from the game Firefly (original Z80 code by Jonathan Smith / Special FX Software Ltd) — its player and compiled data format reproduced from Beepola. The in-repo Z80 assembler is ported from 1tracker's `z80ass` (Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1); the ZX Spectrum 48K ROM is redistributed under Amstrad's emulation permission.
+* **SoundSmith (Apple IIgs):** The original SoundSmith tracker is by Huibert Aalbers (1989). The Ensoniq 5503 "DOC" player is a faithful in-process port of the SoundSmith player by Sean Kasun (mrkite). Licensed under BSD-2-Clause.
 
 ---
 

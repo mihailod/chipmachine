@@ -351,6 +351,10 @@ TEST_CASE("PTK", "[music]") { testPlugin<musix::PTKPlugin>("testmus/ptk", ""); }
 TEST_CASE("NTK", "[music]") { testPlugin<musix::PTKPlugin>("testmus/ntk", ""); }
 TEST_CASE("Org", "[music]") { testPlugin<musix::OrgPlugin>("testmus/org", ""); }
 TEST_CASE("SunVox", "[music]") { testPlugin<musix::SunVoxPlugin>("testmus/sunvox", ""); }
+// Exclude the ".W" wavebank from the scan -- it's the song's companion, not a
+// playable fixture (canHandle rightly declines it); fromFile() picks it up next
+// to the bare song.
+TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmus/soundsmith", ".W"); }
 
 // SunVox (.sunvox, NightRadio's modular synth). The engine ships as a prebuilt,
 // dlopen()ed shared library (MIT licensed, copied next to the test binary by
@@ -515,6 +519,45 @@ TEST_CASE("Beepola SFX plays sound", "[music]")
     REQUIRE(plugin.canHandle(bb));
 
     auto* player = plugin.fromFile(bb);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
+// Apple IIgs SoundSmith. A tune is a PAIR: a bare-named song file (patterns/
+// orders) and a separate "<song>.W" wavebank holding the 64KB of Ensoniq 5503
+// sound RAM + instrument table. canHandle() identifies the song by its header
+// structure -- the leading signature varies per editor build ("SONGOK",
+// "IAN9OK", "IAN92a", ...) so it is not a magic; the .W is fetched as a
+// secondary file and may not be present at canHandle time.
+// getSecondaryFiles() must point at the "<song>.W" companion;
+// fromFile() loads both and the in-process DOC emulation renders at 26320 Hz.
+// This fails if the magic check regresses, the .W companion isn't resolved, or
+// the ported oscillator engine produces silence.
+TEST_CASE("SoundSmith plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::SoundSmithPlugin plugin;
+
+    std::string const song = "testmus/soundsmith/Soundsmith Intro";
+    REQUIRE(plugin.canHandle(song));
+
+    // The wavebank companion must be reported next to the song as "<song>.W".
+    auto secondary = plugin.getSecondaryFiles(song);
+    REQUIRE(secondary == std::vector<std::string>{"Soundsmith Intro.W"});
+
+    auto* player = plugin.fromFile(song);
     REQUIRE(player != nullptr);
 
     std::array<int16_t, 8192> buffer{};

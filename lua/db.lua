@@ -15,7 +15,10 @@
 --     .PVI bank files stop being indexed as ~1074 bogus standalone songs
 -- 29: Modland ".info" metadata siblings are no longer indexed as bogus songs,
 --     and PokeyNoise "pn.<song>" prefix files type/title correctly (PokeyNoise)
-VERSION = 29;
+-- 30: SoundSmith (Apple IIgs) support -- the ".W" wavebank is excluded as a song
+--     (parseModland secondary set) and fetched via getSecondaryFiles next to the
+--     bare-named song; "SoundSmith" maps to the Apple IIgs platform/format
+VERSION = 30;
 
 DB = {
 {
