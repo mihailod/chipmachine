@@ -240,7 +240,7 @@ gsf	120 -- FIXED fetch 2ndary file fix was needed -- all ok now
 
 psm (140), amd (127), rad (126), med (125), d00 (120), vgz (115), dw (115), dtm (115), bp3 (114), ptm (112), mt2 (104), sid2 (97)
 
-soc	96 -- fails playback INVESTIGATE
+soc	96 -- FIXED fails playback 
 soc = Hippel ST COSO (Atari ST). UADE's eagleplayer.conf routes it to the Amiga JochenHippel-CoSo player (prefixes=hipc,soc) — the same player that handles .hipc, which works. But the Atari-ST COSO data fails there: the fixture renders NO SOUND with a File not found error. Notably UADE does ship a separate Jochen_Hippel_ST player, but it's mapped only to .hst, not .soc. So this is a UADE ST-variant gap (the ST COSO data isn't handled by the Amiga CoSo player), not a missing fixture.
 This .soc failure is the one item counted as a real error in cmtest. Want me to:
 quarantine the non-playing .soc fixture (testmus/uade/nowork/, like daley.prg) so cmtest is clean, and/or

@@ -1766,10 +1766,10 @@ TEST_CASE("coverage", "[music]")
     // design: make it play, or bump the baseline on purpose.
     //
     // Baseline captured 2026-06 (deterministic across runs). The g_errors are
-    // known non-playing fixtures (e.g. Atari-ST .soc, mini* rips whose lib lives
-    // only on the remote source, intentionally-bad rips); g_skips are deliberate
-    // canHandle declines plus companion/lib files that aren't standalone tunes.
+    // known non-playing fixtures (e.g. mini* rips whose lib lives only on the
+    // remote source, intentionally-bad rips); g_skips are deliberate canHandle
+    // declines plus companion/lib files that aren't standalone tunes.
     // Set tight to the exact current counts so ANY new failure trips the gate.
-    REQUIRE(g_errors <= 72);
+    REQUIRE(g_errors <= 70);
     REQUIRE(g_skips <= 45);
 }
