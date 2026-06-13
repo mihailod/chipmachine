@@ -270,13 +270,16 @@ fls	65 -- NO The .fls test file is a raw Flash Tracker module
 Park it unless a Flash Tracker Z80 player binary surfaces.
 
 prt	64
-mxtx	63 -- MaxTrax Commercial Amiga tracker format; no known open-source decoder
+
+mxtx	63 -- MaxTrax Commercial Amiga tracker format
+So MaxTrax is genuinely supportable, and a decent candidate (commercial game music, ~63 tunes). 
+
 hip	63
 gdm	63
 mdl	61
 fred	59
 dss	58
-sho	57 -- Shroom tracker Very obscure; no public documentation or decoder found
+sho	57 -- NO Shroom tracker Very obscure; no public documentation or decoder found
 
 dum	57 -- UADE claims but no play -- INVESTIGATE DEEPER
 dum	UADE	⚠️ claimed (Infogrames) but bob4a.dum fails ("score died"), in baseline

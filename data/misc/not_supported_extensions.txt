@@ -17,3 +17,6 @@
 
 # atari falcon ace tracker -- only falcon or port whole emulator
 .am
+
+# shroom tracker -- no decoder
+.sho
