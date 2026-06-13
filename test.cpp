@@ -355,6 +355,40 @@ TEST_CASE("SunVox", "[music]") { testPlugin<musix::SunVoxPlugin>("testmus/sunvox
 // playable fixture (canHandle rightly declines it); fromFile() picks it up next
 // to the bare song.
 TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmus/soundsmith", ".W"); }
+TEST_CASE("Musx", "[music]") { testPlugin<musix::MusxPlugin>("testmus/musx", ""); }
+
+// Acorn Archimedes Tracker (.musx, 8-channel "!Tracker"). Played by libxmp's
+// arch_loader, compiled as a minimal single-loader slice into musxplugin (it
+// does NOT pull in the shared zxtune libxmp build). This guards the slice +
+// the MUSX magic gate; it fails if the libxmp source list / build defs /
+// arch_loader wiring regress, or if voltable.c (arch_vol_table) drops out.
+TEST_CASE("Musx plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::MusxPlugin plugin;
+
+    std::string const musx = "testmus/musx/paradox 1.1 8 tracks the works.musx";
+    REQUIRE(plugin.canHandle(musx));
+    // Right extension but wrong payload must be declined (the .musx extension is
+    // also used by Finale notation files etc.).
+    REQUIRE_FALSE(plugin.canHandle("testmus/org/access.org"));
+
+    auto* player = plugin.fromFile(musx);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
 
 // SunVox (.sunvox, NightRadio's modular synth). The engine ships as a prebuilt,
 // dlopen()ed shared library (MIT licensed, copied next to the test binary by
@@ -1609,7 +1643,8 @@ TEST_CASE("coverage", "[music]")
         {"Euphony", "testmus/eup"},
         {"WonderSwan (in_wsr)", "testmus/wsr"},
         {"PokeyNoise", "testmus/pn"},
-        {"Beepola (Phaser1)", "testmus/bbsong"}
+        {"Beepola (Phaser1)", "testmus/bbsong"},
+        {"Archimedes Tracker", "testmus/musx"}
     };
 
     // Plugins whose extensions are split across several testmus folders (one
@@ -1770,6 +1805,6 @@ TEST_CASE("coverage", "[music]")
     // remote source, intentionally-bad rips); g_skips are deliberate canHandle
     // declines plus companion/lib files that aren't standalone tunes.
     // Set tight to the exact current counts so ANY new failure trips the gate.
-    REQUIRE(g_errors <= 70);
-    REQUIRE(g_skips <= 45);
+    REQUIRE(g_errors <= 69);
+    REQUIRE(g_skips <= 44);
 }

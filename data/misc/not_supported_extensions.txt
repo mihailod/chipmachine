@@ -2,11 +2,18 @@
 .rns
 .xrns
 
-# no player
+# psycle tracker -- no decoder
 .psy
 
-# acorn archimedes only
-.musx
-
-# sound club (amiga) nothing exists
+# sound club (amiga) -- nothing exists to decode
 .sn
+
+# zx spectrum flash tracker -- nothing exists to decode
+.fls
+
+# .MUS upper case fcatrin/fstr (MIT), is x86 real-mode asm
+# targeting AdLib OPL2 (wrong chip, not portable C). 
+# commented but documented due to .mus lowercase clash
+
+# atari falcon ace tracker -- only falcon or port whole emulator
+.am

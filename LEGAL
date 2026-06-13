@@ -114,6 +114,14 @@ Component: HivelyTracker (AHX/HVL)
 Author: Developed by IRIS (Peter "Yohng" V, Curt Cool)
 License: BSD-3-Clause
 
+Component: libxmp (Acorn Archimedes Tracker .musx)
+Author: Developed by Claudio Matsuoka, Hipolito Carraro Jr and contributors
+License: MIT License
+Notice: Only the Archimedes Tracker loader (arch_load.c) plus the minimal libxmp
+        core needed to drive it are compiled in (vendored under
+        zxtune/3rdparty/xmp). The arch_load.c source file itself carries a GNU
+        Lesser General Public License v2.1 or later header.
+
 Component: FreeType / Grappix (UI & Text)
 Author: The FreeType Project and Grappix contributors
 License: FreeType License (FTL) / BSD-2-Clause
@@ -136,6 +144,12 @@ License: MIT License / Open Source Portions
 
 Component: ProTrekkr (Hybrid Module Tracker)
 Author: Developed by Franck Charlet (Hitchhikr)
+License: BSD 2-Clause License
+
+Component: SoundSmith (Apple IIgs Ensoniq 5503 player)
+Author: Original tracker by Huibert Aalbers (1989); Ensoniq 5503 "DOC" player
+        ported from the SoundSmith player by Sean Kasun (mrkite), vendored at
+        repo-root soundsmith/.
 License: BSD 2-Clause License
 
 Component: SunVox (Modular Synthesizer)

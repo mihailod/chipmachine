@@ -102,6 +102,7 @@ Look at the file header: 00000000: fe00 80ff bf00 8000 ...
 FE 00 80 FF BF 00 80 is an MSX BSAVE binary header: marker 0xFE, start 0x8000, end 0xBFFF, exec 0x8000. FAC SoundTracker is an MSX PSG music editor, and its .MUS files are raw Z80/MSX binaries — nothing to do with the Amiga.
 .mus is an overloaded modland extension — it's used by UFO (Amiga) and FAC SoundTracker (MSX), among others. canHandle only checks the extension, with no content sniffing, so UADE accepts this MSX file, hands the Z80 binary to the 68k UFO player, and the player immediately crashes.
 SOLUTION: Add FAC SoundTracker support via libkss — write a fac2kss converter (analogous to the existing bgm2kss/mgs2kss) wrapping the FAC replayer, and route .mus MSX files there. This is the only path to actually hearing the tune.
+The one open replayer, fcatrin/fstr (MIT), is unusable for porting — x86 real-mode asm targeting AdLib OPL2 (wrong chip, not portable C). 
 
 - .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM). (related to parlour? -- only some subsongs play):
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/SGC/Masatomo Miyamoto/Parlour Games [SMS].sgc
@@ -206,8 +207,8 @@ wsr (162), dsym (160), digi (160), 669 (160), symmod (155), amf (154), OPX (153)
 
 set	147 -- IGNORE not a standalone format; it's the Quartet voice-set companion for .4v files
 
-rns	117 -- old Renoise format (commercial tracker)
-xrns	145 -- new Renoise format
+rns	117 -- NO old Renoise format (commercial tracker)
+xrns	145 -- NO new Renoise format
 rns/xrns Renoise modern commercial tracker INVESTIGATE
 .xrns is just a ZIP of XML and samples (easy to parse)
 There ARE open-source XRNS libraries. I found several. NRenoiseTools (.NET)
@@ -248,28 +249,25 @@ investigate whether re-routing .soc to a different UADE player (or dropping it f
 
 dm2 (94), hipc (92), ult (90), pt1 (85), mo3 (85)
 
-musx	84 -- NO Archimedes Tracker (Acorn), no replayer anywhere
+musx	84 -- DONE!! UADE had it! Archimedes Tracker (Acorn), no replayer anywhere
 musx = Archimedes Tracker — an Acorn Archimedes format; no handler in UADE/OpenMPT/ZXTune and no fixture. Genuine "no engine exists" gap (same category as .sn/.W/.psy).
 archimedes is arm -- INVESTIGATE
 
 dmu	84
 
-MUS	78 -- unsupported INVESTIGATE
+MUS	78 -- NO unsupported
 MUS (uppercase) = FAC SoundTracker — an MSX BSAVE PSG format (magic 0xFE), not the lowercase libvice/SID .mus (which plays). It has no replayer in the stack; UADEPlugin::canHandle deliberately declines it via the isMsxBsave content-check (UADEPlugin.cpp:333) to stop UADE crash-claiming it. This matches the known "future = libkss fac2kss converter" item. In the GUI a FAC .MUS is safely skipped, not played.
+The one open replayer, fcatrin/fstr (MIT), is unusable for porting — x86 real-mode asm targeting AdLib OPL2 (wrong chip, not portable C). 
 
 tfe (77), bbsong (76)
 
 smus	72 -- FIXED! (folder of instruments 2ndary fetch was needed) lots of work!
 
->>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
->>>>>>>> deeper research needed for items below <<<<<<<<<<
-
 hsc	69
 mptm	67
 
-fls	65 -- Flash Tracker ZX Spectrum AY tracker
-This is a ZX Spectrum AY-3-8912 format. Sergey Bulba's Ay_Emul source code (specifically ayfly / Ay_Emul.cpp) contains Z80 assembly/C routines to handle .fls playback. We already incorporate Ayfly so adding the file extension pointer is feasible.
+fls	65 -- NO The .fls test file is a raw Flash Tracker module
+Park it unless a Flash Tracker Z80 player binary surfaces.
 
 prt	64
 mxtx	63 -- MaxTrax Commercial Amiga tracker format; no known open-source decoder
@@ -279,9 +277,11 @@ mdl	61
 fred	59
 dss	58
 sho	57 -- Shroom tracker Very obscure; no public documentation or decoder found
-dum	57
 
-am	57 -- Atari Falcon Ace Tracker -- would be awesome to add this!
+dum	57 -- UADE claims but no play -- INVESTIGATE DEEPER
+dum	UADE	⚠️ claimed (Infogrames) but bob4a.dum fails ("score died"), in baseline
+
+am	57 -- NO Atari Falcon Ace Tracker -- would be awesome to add this!
 Research outcome: we cannot parse the data structures and mix them via standard portable C++. You have to go through CPU and DSP emulation. The only ctual path forward is to lift the cycle-accurate emulation code from Hatari (the open-source Atari ST/STE/TT/Falcon emulator), which has a fully-realized Motorola 56001 core emulation block.
 * Step 1: Secure the Original Falcon Replay Code. New Beat Developments released the complete source code for ACE Tracker 2.00 (which includes the assembly player routines and the 56k DSP binary files). You will need the 68030 assembly initialization/sequence code. You will need the .lod or compiled DSP binaries that execute on the 56k.
 * Step 2: Extract Hatari’s Core Components. You must compile a stripped-down, headless instance of Hatari's core as a static library for Chipmachine to link against. Specifically, you need to lift:
@@ -291,6 +291,13 @@ Research outcome: we cannot parse the data structures and mix them via standard 
 * Step 3: Implement an Emulated Wrapper: Instead of writing a standard tracker parser, your AcePlayer::getSamples routine inside Chipmachine will actually boot a mini-virtual Atari Falcon in memory, load the ACE file into the virtual RAM alongside the assembly player engine, and step the emulation frame-by-frame.
 
 gtk	55 -- DONE via OPENMPT UPDATE!
+
+>>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+>>>>>>>> deeper research needed for items below <<<<<<<<<<
+
+
+
 gmc	55
 gt2	53
 sks	52 -- Starkos (Atari ST) Hard Atari ST tracker; no known portable decoder
@@ -305,7 +312,7 @@ Reasoning: NerdTracker 2 was a vital evolutionary step in the NES chiptune scene
 bmx	51 -- Unknown / No format info found matching this context
 SNG	51 -- same as sng? some fail in cmtest
 ftc	50
-psf	49
+psf	49 -- there is a test file...
 SM2	46
 SM1	46
 dl	45
@@ -321,7 +328,7 @@ dln	41
 dsm	38
 jo	37
 gtr	37
-fxm	37
+fxm	37 -- there is a test file...
 far	37
 pmd	36
 minipsf	36

@@ -38,6 +38,7 @@ extern "C" {
     void pokeynoiseplugin_register(); // Atari 800 PokeyNoise (.pn) via ASAP (6502+POKEY)
     void bbsongplugin_register();  // Beepola .bbsong (ZX Spectrum beeper) via Z80 + speaker sampling
     void soundsmithplugin_register(); // Apple IIgs SoundSmith (bare song + .W wavebank) via Ensoniq 5503
+    void musxplugin_register();    // Acorn Archimedes Tracker (.musx) via libxmp arch_loader
 }
 
 void register_plugins() {
@@ -76,4 +77,5 @@ void register_plugins() {
     pokeynoiseplugin_register();
     bbsongplugin_register();
     soundsmithplugin_register();
+    musxplugin_register();
 }
