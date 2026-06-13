@@ -58,7 +58,7 @@ void MusicPlayer::update()
 {
     static std::vector<int16_t> temp_buf(fifo.size());
 
-    if (!paused && player) {
+    if (!paused && player && !play_ended) {
         if(auto *s = std::get_if<std::string>(&player->meta("sub_title")))
             sub_title = *s;
         if(auto *u = std::get_if<uint32_t>(&player->meta("length")))
