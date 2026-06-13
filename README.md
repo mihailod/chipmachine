@@ -139,11 +139,11 @@ ninja
 * Radio PARALAX - https://www.radio-paralax.de
 * CVGM Radio - https://radio.cvgm.net
 
-## Music Plugins (Supported formats)
+## Music Plugins and supported formats and platforms
 
 ### OpenMPT
 
-Support for PC and Amiga tracker formats (libopenmpt 0.8.7)
+Support for PC and Amiga tracker formats
 
 * ProTracker, ScreamTracker III, FastTracker II, Impulse Tracker, OpenMPT, ScreamTracker II, NoiseTracker, Soundtracker, Mod's Grave, UltraTracker, Composer 669 / UNIS 669, MultiTracker, OctaMed, Farandole Composer, DigiTracker, Extreme's Tracker, Velvet Studio, DSIK Format, DSMI, ASYLUM, Oktalyzer, X-Tracker, PolyTracker, Epic Megagames, MASI, MadTracker 2, DigiBooster Pro, DigiBooster, Imago Orpheus, Galaxy Sound System
 * **New with the 0.8.7 upgrade:** Symphonie / Symphonie Pro (Amiga "pseudo-DAW" with software mixer + real-time echo DSP), Digital Symphony, Face The Music, Graoumf Tracker 1 & 2, TCB Tracker, Real Tracker, Astroidea XMF, Composer 667, EasyTrax, FM Tracker, CBA
@@ -260,7 +260,7 @@ Extensions: `.mp3`
 
 ### Vice
 
-Support for Commodore C64 music (mono and stereo SID)
+Support for Commodore C64 music (mono and stereo SID chip)
 
 Extensions: `.sid` `.mus` `.str`
 
@@ -282,30 +282,9 @@ Support for various ZX Spectrum formats
 
 Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2` `.pt3` `.vtx` `.vt2` `.zxs` `.st13`
 
-> Note: `.ftc` (Fast Tracker) is **not** handled here — libayfly throws on every
-> Fast Tracker module, so it is routed to the **ZXTune** plugin (below), which
-> plays it.
-
 ### ZXTune
 
-Support for several ZX Spectrum / Sam Coupe formats the other plugins don't
-cover, all decoded by ZXTune's content detection (the extension only gates which
-files reach the engine):
-
-* **Sound Tracker 1.1** (`.st11`) — the original AY-3-8910 tracker.
-* Sam Coupe **E-Tracker** (`.cop`, SAA1099). modland's "Sam Coupe COP" set is
-  mixed: only genuine E-Tracker files (signature `ETracker (C) BY ESI.`) play;
-  other `.cop` rips are unrelated raw Sam Coupe programs.
-* **Global Tracker** (`.gtr`) — AY tracker.
-* **Chip Tracker** (`.chi`) — ZX Spectrum sample/DAC tracker.
-* **TFM Music Maker** (`.tfe`) — TurboSound-FM (Yamaha YM2203).
-* **Fast Tracker** (`.ftc`) — AY tracker. Taken over from the Ayfly plugin,
-  which throws on every Fast Tracker module (verified 0/12 vs ZXTune's 12/12 on
-  spread modland samples); Ayfly no longer claims `.ftc`.
-* **Pro Sound Maker** (`.psm`) — AY tracker. `.psm` is shared with Epic
-  MegaGames MASI (an OpenMPT format); OpenMPT now content-checks the MASI magic
-  and declines the ZX variant so those tunes route here, where they actually
-  play, instead of failing in OpenMPT.
+Support for additional ZX Spectrum and Sam Coupe formats
 
 Extensions: `.st11` `.cop` `.gtr` `.chi` `.tfe` `.psm` `.ftc`
 
@@ -341,13 +320,13 @@ Extensions: `.sunvox`
 
 ### ProTrekkr / NoiseTrekker
 
-Support for ProTrekkr music by Franck Charlet (Hitchhikr) — a hybrid tracker combining sample channels, a built-in synth and a TB-303 emulation. The (zlib-compressed) module is decompressed and played by ProTrekkr's own in-memory replayer, built in its standalone integration mode. NoiseTrekker 1.6b modules (`.ntk`) load through the same loader.
+Support for ProTrekkr music by Franck Charlet (Hitchhikr)
 
 Extensions: `.ptk` `.ntk`
 
 ### Euphony
 
-Support for Euphony music (FM Towns / PC-98)
+Support for FM Towns / PC-98 Eupohony music
 
 Extensions: `.eup`
 
@@ -406,16 +385,13 @@ Extensions (matched as a filename prefix or suffix): `.smod` `.lion` `.okta` `.s
 
 ### TedPlay
 
-Support for Plus/4 music
+Support for Commodore 264 series (16 / 116 / Plus/4) TED chip music
 
 Extensions: `.prg`
 
 ### FFMpeg
 
-Support for streaming audio
-
-* AAC
-* Ogg/Vorbis
+Support for streaming audio (AAC and Ogg/Vorbis)
 
 Extensions: `.m4a` `.aac` `.mp3` `.mp4`
 
@@ -427,7 +403,7 @@ Extensions: `.v2` `.v2m`
 
 ### YouTube
 
-Streams audio directly from YouTube links (`youtube.com/` / `youtu.be/`). The bundled `yt-dlp` resolves the best audio stream, which is then played back via FFMpeg. This is how the Pouet database plays demoscene production soundtracks. `yt-dlp` ships with the app (`bin/ytdlp/`), so no extra setup is required.
+Streams audio directly from YouTube links (`youtube.com/` / `youtu.be/`). The bundled `yt-dlp` resolves the best audio stream, which is then played back via FFMpeg. This is how the Pouet database plays demoscene production soundtracks.
 
 ---
 
