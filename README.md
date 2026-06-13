@@ -361,15 +361,15 @@ Support for Beepola ZX Spectrum 1-bit beeper music. Each `.bbsong` is compiled i
 
 Extensions: `.bbsong`
 
-### SoundSmith
+### SoundSmith (Aooke IIgs)
 
-Support for Apple IIgs SoundSmith music (Huibert Aalbers, 1989) — the dominant IIgs tracker, driving the Ensoniq 5503 "DOC" 32-oscillator chip. On modland each tune is a **pair**: a bare-named song file (patterns/orders) plus a `<song>.W` wavebank holding the 64KB of DOC sound RAM and the instrument table. The song is the playable entry (identified by its header structure, since the leading signature varies per editor build); the `.W` companion is fetched as a secondary file. The DOC is emulated in-process (a faithful port of Sean Kasun's BSD-licensed player, vendored at repo-root `soundsmith/`), rendering at the chip's native 26320 Hz — not routed through UADE.
+Support for Apple IIgs SoundSmith music (Huibert Aalbers, 1989) — the dominant IIgs tracker, driving the legendary Ensoniq 5503 "DOC" 32-oscillator chip. The DOC is emulated in-process (a faithful port of Sean Kasun's BSD-licensed player, vendored at repo-root `soundsmith/`), rendering at the chip's native 26320 Hz.
 
-Extensions: bare song + `.W` (wavebank)
+Extensions: bare song name + `.W` (wavebank)
 
-### Archimedes Tracker
+### Acorn Archimedes Tracker
 
-Support for Acorn Archimedes Tracker music — the native **8-channel** format of Dan Wilson's *!Tracker* (1991), an Amiga-Soundtracker-style editor for the ARM-based Acorn Archimedes. Files carry the `MUSX` magic and store IFF-style chunks (title/author, channel count, patterns, up to 36 VIDC samples). Played via **libxmp**'s portable `arch_loader`, compiled as a minimal single-loader slice into the plugin (it does not pull in the shared ZXTune libxmp build). `canHandle` verifies the `MUSX` magic so the plugin never grabs the unrelated `.musx` used by music-notation software — not routed through UADE.
+Support for the native **8-channel** format of Dan Wilson's *!Tracker* (1991), an Amiga-Soundtracker-style editor for the original ARM computer.
 
 Extensions: `.musx`
 
