@@ -356,6 +356,95 @@ TEST_CASE("SunVox", "[music]") { testPlugin<musix::SunVoxPlugin>("testmus/sunvox
 // to the bare song.
 TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmus/soundsmith", ".W"); }
 TEST_CASE("Musx", "[music]") { testPlugin<musix::MusxPlugin>("testmus/musx", ""); }
+TEST_CASE("MaxTrax", "[music]") { testPlugin<musix::MaxTraxPlugin>("testmus/maxtrax", ""); }
+
+// MaxTrax (.mxtx, the Amiga sound engine behind Cyberdreams' Dark Seed et al).
+// Played by a vendored port of ScummVM's MaxTrax sequencer + Paula mixer; UADE
+// is NOT involved (it detects the MXTX magic but ships no eagleplayer). This
+// guards the ScummVM source slice + compat shim + the MXTX magic gate; it fails
+// if the vendored sources/compat.h regress or the loader/mixer goes silent.
+TEST_CASE("MaxTrax plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::MaxTraxPlugin plugin;
+
+    std::string const mxtx = "testmus/maxtrax/darkseed_00.mxtx";
+    REQUIRE(plugin.canHandle(mxtx));
+    // Right magic only -- an unrelated file with no MXTX header must be declined.
+    REQUIRE_FALSE(plugin.canHandle("testmus/org/access.org"));
+
+    auto* player = plugin.fromFile(mxtx);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
+// Split MaxTrax sets (Frank Klepacki's Kyrandia): the score ("...scr.mxtx") and
+// the sampled instruments ("...inst.mxtx") are separate files. Either half can
+// be the entry the user picks, so fromFile() must pair them up (loading scores
+// from one and samples from the other) and produce audio in both directions.
+// Fails if the scr/inst sibling resolution or the two-pass load() regresses.
+TEST_CASE("MaxTrax split set plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::MaxTraxPlugin plugin;
+
+    auto energyOf = [&](const std::string& f) {
+        REQUIRE(plugin.canHandle(f));
+        auto* player = plugin.fromFile(f);
+        REQUIRE(player != nullptr);
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+        return energy;
+    };
+
+    // Score half resolves its instrument sibling; instrument half resolves its
+    // score sibling. Both must render the same intro tune.
+    REQUIRE(energyOf("testmus/maxtrax/kyrandia introscr.mxtx") != 0);
+    REQUIRE(energyOf("testmus/maxtrax/kyrandia introinst.mxtx") != 0);
+
+    // Shared-bank set (Russell Lieblich's "a-train"): the parts carry no
+    // scr/inst marker -- they are score-only files that borrow samples from the
+    // set's bank ("a-train (intro).mxtx"), found by content + shared filename
+    // prefix. This also guards against cross-set contamination: even with the
+    // Kyrandia bank present in the same directory, an a-train part must pick the
+    // a-train bank, and vice versa, or these would be silent / wrong.
+    REQUIRE(energyOf("testmus/maxtrax/a-train (spring).mxtx") != 0);
+    REQUIRE(energyOf("testmus/maxtrax/a-train (goodinfo).mxtx") != 0);
+
+    // Secondary-file routing: when streaming (no local mirror), a split half
+    // must ask the host to fetch the rest of its directory ("./") so the bank
+    // lands next to it; a self-contained module asks for nothing. (The bank's
+    // own name can't be derived from a score part, hence the whole-dir request.)
+    auto secondaries = [&](const std::string& f) {
+        return plugin.getSecondaryFiles(f);
+    };
+    REQUIRE(secondaries("testmus/maxtrax/a-train (spring).mxtx") ==
+            std::vector<std::string>{"./"});           // score-only part
+    REQUIRE(secondaries("testmus/maxtrax/kyrandia introinst.mxtx") ==
+            std::vector<std::string>{"./"});           // instrument-only bank
+    REQUIRE(secondaries("testmus/maxtrax/darkseed_00.mxtx").empty()); // combined
+    REQUIRE(secondaries("testmus/maxtrax/a-train (intro).mxtx").empty()); // bank+score
+}
 
 // Acorn Archimedes Tracker (.musx, 8-channel "!Tracker"). Played by libxmp's
 // arch_loader, compiled as a minimal single-loader slice into musxplugin (it
@@ -1644,7 +1733,8 @@ TEST_CASE("coverage", "[music]")
         {"WonderSwan (in_wsr)", "testmus/wsr"},
         {"PokeyNoise", "testmus/pn"},
         {"Beepola (Phaser1)", "testmus/bbsong"},
-        {"Archimedes Tracker", "testmus/musx"}
+        {"Archimedes Tracker", "testmus/musx"},
+        {"MaxTrax", "testmus/maxtrax"}
     };
 
     // Plugins whose extensions are split across several testmus folders (one

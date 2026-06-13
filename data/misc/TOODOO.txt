@@ -3,7 +3,11 @@
 ******************************************************
 
 - ability to manually add stuff to database. via a manual.txt file
-- add zx game music beeper videos from youtube?
+
+- zx spectrum music from games dear to me: revrse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
+Your strategy of extracting the routine + data payload, indexing it, booting a minimal emulator stub, and jumping straight to the execution address works perfectly for 48K beeper engines. In fact, it avoids the timing sync issues plaguing AY emulation because the Z80 CPU is the sound synthesizer.
+Also look at the zx repositories below, maybe someone already did this.
+
 - (minor) radio screenshots missing for rainwave (favicon issue)
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
@@ -65,6 +69,15 @@ URL: [http://www.mirsoft.info](http://www.mirsoft.info)
 What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.
 
 7. https://chipmusic.org -- zx spectrum beeper music, maybe more...
+
+8. https://bulba.untergrund.net/music_e.htm
+Maintained by Sergey Bulba (author of Ay_Emul), this archive contains the historic Ironfist collection. Ironfist spent years manually ripping, disassembling, and packaging raw Z80 music engines directly from commercial 48K ZX Spectrum games into clean .ay file structures, complete with initialization addresses and entry vectors.
+
+9. https://zxtunes.com
+A massive historical repository of ZX Spectrum chiptunes. While heavily populated by standard AY tracking formats, its index includes extensive mappings of older, undocumented internal-beeper game routines that were ripped and isolated by early scene groups.
+
+10. https://zxart.ee/eng/music/top-100/beeper/
+This is the most comprehensive active repository for 1-bit audio tracking. It hosts isolated beeper variants for classic game soundtracks—including Tim Follin’s multi-channel drivers for Chronos and Agent X II, David Whittaker's Trantor and Tetris, and Ben Daglish's Deflektor. The modules are downloadable in community-standard formats ready for parsing.
 
 Demo Databases & Trackers
 
@@ -271,12 +284,8 @@ Park it unless a Flash Tracker Z80 player binary surfaces.
 
 prt	64
 
-
-
-mxtx	63 -- *******. IN PROGRESS MaxTrax Commercial Amiga tracker format
-So MaxTrax is genuinely supportable, and a decent candidate (commercial game music, ~63 tunes). 
-
-
+mxtx	63 -- DONE! MaxTrax (commercial Amiga sound engine, e.g. Dark Seed).
+new maxtraxplugin ports ScummVM's MaxTrax sequencer + Paula mixer. routes .mxtx -> MaxTrax.
 
 hip	63
 gdm	63

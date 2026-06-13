@@ -554,7 +554,21 @@ void MusicPlayerList::playCurrent()
         auto parentDir = File(path_directory(loadedFile));
         auto songDirUrl = path_directory(currentInfo.path);
         for (const auto& s : mp.getSecondaryFiles(f0)) {
-            if (!s.empty() && s.back() == '/') {
+            if (s == "./") {
+                // The song's OWN directory (e.g. a MaxTrax shared-bank set whose
+                // instrument file's name can't be predicted from a score part):
+                // list the song folder and fetch every sibling next to it. The
+                // prefix is empty so members land directly in parentDir. A local
+                // mirror yields an empty list (members are read in place).
+                files++;
+                remoteLoader.listDirectory(
+                    songDirUrl, [=](std::vector<std::string> names) {
+                        for (const auto& n : names) {
+                            loadSecondaryFile(n, parentDir, songDirUrl);
+                        }
+                        files--;
+                    });
+            } else if (!s.empty() && s.back() == '/') {
                 // A whole-directory companion (e.g. IFF-SMUS "Instruments/"):
                 // the member filenames are unpredictable, so list the remote
                 // folder and fetch each into the same subdirectory. A local

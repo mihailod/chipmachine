@@ -184,6 +184,13 @@ Component: ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise .pn)
 Author: Developed by Piotr Fusik
 License: GNU General Public License v2.0 or later
 
+Component: MaxTrax + Paula player (Amiga MaxTrax .mxtx)
+Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
+        audio/mods/paula.{h,cpp}), vendored under
+        musicplayer/src/plugins/maxtraxplugin/maxtrax/ with a small compat.h
+        shim replacing the ScummVM-internal dependencies.
+License: GNU General Public License v3.0 or later
+
 Component: Beepola beeper engines + z80ass assembler (ZX Spectrum .bbsong)
 Author: Engine Z80 players: Phaser1 by Shiru (from 1tracker); Music Box
         reverse-engineered from WHAM! The Music Box (orig. Mark Alexander,
