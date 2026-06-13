@@ -361,7 +361,7 @@ Support for Beepola ZX Spectrum 1-bit beeper music. Each `.bbsong` is compiled i
 
 Extensions: `.bbsong`
 
-### SoundSmith (Aooke IIgs)
+### SoundSmith (Apple IIgs)
 
 Support for Apple IIgs SoundSmith music (Huibert Aalbers, 1989) — the dominant IIgs tracker, driving the legendary Ensoniq 5503 "DOC" 32-oscillator chip. The DOC is emulated in-process (a faithful port of Sean Kasun's BSD-licensed player, vendored at repo-root `soundsmith/`), rendering at the chip's native 26320 Hz.
 
