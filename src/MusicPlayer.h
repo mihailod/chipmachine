@@ -27,6 +27,10 @@ public:
     ~MusicPlayer();
     bool playFile(const std::string& fileName);
     bool streamFile(const std::string& fileName);
+    // Stream a radio URL by letting ffmpeg fetch and decode it directly. This
+    // handles Shoutcast/ICY, redirects and any codec (mp3/ogg/aac) far more
+    // robustly than the curl->fifo->mpg123 path (e.g. bare ICY 200 mounts).
+    bool streamUrl(const std::string& url);
     [[nodiscard]] bool playing() const
     {
         return !play_ended && player != nullptr;

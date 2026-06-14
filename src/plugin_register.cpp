@@ -40,6 +40,7 @@ extern "C" {
     void soundsmithplugin_register(); // Apple IIgs SoundSmith (bare song + .W wavebank) via Ensoniq 5503
     void musxplugin_register();    // Acorn Archimedes Tracker (.musx) via libxmp arch_loader
     void maxtraxplugin_register(); // MaxTrax / Amiga (.mxtx) via ScummVM MaxTrax+Paula
+    void sksplugin_register();     // STarKos / Amstrad CPC (.sks) via Arkos Tracker 3
 }
 
 void register_plugins() {
@@ -80,4 +81,5 @@ void register_plugins() {
     soundsmithplugin_register();
     musxplugin_register();
     maxtraxplugin_register();
+    sksplugin_register();
 }

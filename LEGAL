@@ -191,6 +191,28 @@ Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
         shim replacing the ScummVM-internal dependencies.
 License: GNU General Public License v3.0 or later
 
+Component: Arkos Tracker 3 (STarKos .sks importer + AY/YM player/renderer)
+Author: Developed by Julien Névo (Targhan / Arkos). The non-GUI "BaseExport"
+        slice of the Arkos Tracker 3 source (song import, the SongPlayer engine
+        and the PsgStreamGenerator software AY/YM renderer) is vendored at
+        repo-root arkostracker3/ and driven by SksPlugin.cpp the same way as
+        AT3's headless SongToWav command-line tool (minus the WAV writer).
+        Version 3.6 (bitbucket.org/JulienNevo/arkostracker3, commit 55957b0,
+        2026-06-08). Also bundles the AT3 third-party rasm (Roudoudou) and
+        LzhStSound helpers it links.
+License: MIT License
+
+Component: JUCE
+Author: Developed by Raw Material Software / the JUCE team. Julien Névo's fork
+        (JUCE 7.0.1.2, patched for Xcode 16 / macOS Tahoe) is vendored, trimmed
+        to the modules and CMake/juceaide build infrastructure, at
+        arkostracker3/JUCE/. Only three non-GUI modules are compiled and linked:
+        juce_core, juce_events and juce_audio_basics.
+License: JUCE is dual-licensed (GPLv3 / commercial), but the three modules used
+        here -- juce_core, juce_events and juce_audio_basics -- are each
+        permissively licensed under the ISC License. See
+        arkostracker3/JUCE/LICENSE.md.
+
 Component: Beepola beeper engines + z80ass assembler (ZX Spectrum .bbsong)
 Author: Engine Z80 players: Phaser1 by Shiru (from 1tracker); Music Box
         reverse-engineered from WHAM! The Music Box (orig. Mark Alexander,

@@ -152,6 +152,29 @@ TEST_CASE("musicplayer", "")
     REQUIRE(sum != 0);
 }
 
+// Exercises the *registered-plugin* host path (createPlugins -> MusicPlayer::
+// fromFile -> getSamples -> fifo), not just the plugin in isolation. This is
+// what the GUI / cm use, and it would have caught sksplugin being absent from
+// chipmachine/src/plugin_register.cpp (it is registered in two places).
+TEST_CASE("STarKos host path plays sound", "[music]")
+{
+    auto ap = std::make_shared<AudioPlayerNull>();
+    const auto injector = di::make_injector(di::bind<utils::path>.to("."),
+                                            di::bind<AudioPlayer>.to(ap));
+    musix::ChipPlugin::createPlugins("data");
+    chipmachine::MusicPlayer mp{ ap };
+    bool ok = mp.playFile("testmus/sks/Targhan - Orion Prime - Introduction.sks");
+    REQUIRE(ok);
+    int64_t sum = 0;
+    for (int i = 0; i < 20 && sum == 0; ++i) {
+        mp.update();
+        std::vector<int16_t> data(8192);
+        ap->get(data);
+        sum = std::accumulate(data.begin(), data.end(), (int64_t)0);
+    }
+    REQUIRE(sum != 0);
+}
+
 template <typename PLUGIN, typename... ARGS>
 bool testPlugin(std::string const& dir, std::string const& exclude,
                 const ARGS&... args)
@@ -357,6 +380,7 @@ TEST_CASE("SunVox", "[music]") { testPlugin<musix::SunVoxPlugin>("testmus/sunvox
 TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmus/soundsmith", ".W"); }
 TEST_CASE("Musx", "[music]") { testPlugin<musix::MusxPlugin>("testmus/musx", ""); }
 TEST_CASE("MaxTrax", "[music]") { testPlugin<musix::MaxTraxPlugin>("testmus/maxtrax", ""); }
+TEST_CASE("STarKos", "[music]") { testPlugin<musix::SksPlugin>("testmus/sks", ""); }
 
 // MaxTrax (.mxtx, the Amiga sound engine behind Cyberdreams' Dark Seed et al).
 // Played by a vendored port of ScummVM's MaxTrax sequencer + Paula mixer; UADE
@@ -1287,6 +1311,9 @@ TEST_CASE("HT", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
 TEST_CASE("SC68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
 TEST_CASE("USF", "[music]") { testPlugin<musix::USFPlugin>("testmus/usf", ""); }
 TEST_CASE("StSound", "[music]") { testPlugin<musix::StSoundPlugin>("testmus/stsound", ""); }
+// Local .mp3 playback (mpg123). The SoundHelix fixtures guard that plain mp3
+// files keep decoding to non-zero audio; this is the decoder used for local mp3
+// files (radio/remote mp3 now go through ffmpeg, covered by the FFMPEG case).
 TEST_CASE("MP3", "[music]") { testPlugin<musix::MP3Plugin>("testmus/mp3", ""); }
 TEST_CASE("Hively", "[music]") { testPlugin<musix::HivelyPlugin>("testmus/hively", ""); }
 TEST_CASE("RSN", "[music]") { testPlugin<musix::RSNPlugin>("testmus/rsn", ""); }

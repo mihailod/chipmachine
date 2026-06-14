@@ -129,7 +129,7 @@ set(MUSICPLAYER_PLUGINS
     ayflyplugin mdxplugin s98plugin aoplugin gsfplugin tedplugin v2plugin
     ffmpegplugin uadeplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
     kssplugin quartetplugin wsrplugin zxtuneplugin pokeynoiseplugin bbsongplugin
-    soundsmithplugin musxplugin maxtraxplugin
+    soundsmithplugin musxplugin maxtraxplugin sksplugin
 )
 add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
 add_subdirectory(${MUSICPLAYER}/src/psf psf)

@@ -207,7 +207,14 @@ bool MusicPlayerList::playFile(utils::path fileName)
             if (startsWith(l, "File1=")) result.push_back(l.substr(6));
         }
         currentInfo.path = result[0];
-        currentInfo.format = "MP3";
+        if (!currentInfo.path.empty() && currentInfo.path.back() == '\r') {
+            currentInfo.path.pop_back();
+        }
+        // Tag the codec so playCurrent() streams it (Shoutcast .pls entries
+        // resolve to extension-less URLs like ".../stream"; without a format
+        // the stream gate fails and we'd try to download an endless stream).
+        currentInfo.format =
+            toLower(path_extension(currentInfo.path)) == "ogg" ? "OGG" : "MP3";
         playCurrent();
         return false;
 
@@ -222,7 +229,11 @@ bool MusicPlayerList::playFile(utils::path fileName)
                                    }),
                     lines.end());
         currentInfo.path = lines[0];
-        currentInfo.format = "MP3";
+        // Pick the codec from the resolved stream URL so non-mp3 radio streams
+        // (e.g. Kohina's .ogg) are tagged correctly; the actual decoder is
+        // chosen by extension in playCurrent().
+        currentInfo.format =
+            toLower(path_extension(currentInfo.path)) == "ogg" ? "OGG" : "MP3";
         playCurrent();
         return false;
 
@@ -505,36 +516,21 @@ void MusicPlayerList::playCurrent()
         return;
     }
 
+    // Radio streaming: let ffmpeg fetch and decode the resolved stream URL
+    // directly. It handles mp3/ogg/aac, redirects and Shoutcast/ICY mounts
+    // (including bare "ICY 200 OK" servers that the curl+mpg123 path rejected).
+    bool extStreamable = (ext == "mp3" || ext == "ogg" || ext == "aac" ||
+                          ext == "m4a" || ext == "mp4");
     if (currentInfo.format != "M3U" &&
-        (ext == "mp3" || toLower(currentInfo.format) == "mp3")) {
+        (extStreamable || toLower(currentInfo.format) == "mp3" ||
+         toLower(currentInfo.format) == "ogg")) {
 
-        if (mp.streamFile("dummy.mp3")) {
+        // Resolve "prefix::relpath" to the full URL (source.url + relpath) the
+        // way stream()/load() would, so ffmpeg gets a fetchable URL. Passing the
+        // raw currentInfo.path would feed ffmpeg the "radio::" prefix ("Protocol
+        // not found"), and the bare relpath would be a non-existent local file.
+        if (mp.streamUrl(remoteLoader.resolveUrl(currentInfo.path))) {
             SET_STATE(Playstarted);
-            auto sfifo = mp.getStreamFifo();
-            // Use weak_ptr instead of shared_ptr so the WebJob lambda does NOT
-            // keep MusicPlayerList alive. A shared_from_this() here would create
-            // a reference cycle: MusicPlayerList → RemoteLoader → Web → WebJob →
-            // lambda → shared_ptr<MusicPlayerList>. When the DI injector destroys
-            // MusicPlayerList the ref count would stay at 1 (owned by the lambda),
-            // so ~MusicPlayerList() would never run, stream_fifo would never be
-            // quit, the curl thread would stay blocked in sfifo->put() holding
-            // Web::m, and Web::~Web() (called next) would deadlock on that mutex.
-            auto weakSelf = weak_from_this();
-            remoteLoader.stream(
-                currentInfo.path,
-                [weakSelf, sfifo](int what, const uint8_t* ptr, int n) -> bool {
-                    if (sfifo->isQuitting()) return false;
-                    auto self = weakSelf.lock();
-                    if (!self) return false;
-                    if (what == RemoteLoader::PARAMETER) {
-                        self->mp.setParameter((char*)ptr, n);
-                    } else if (what == RemoteLoader::DATA) {
-                        sfifo->put(ptr, n);
-                    } else if (what == RemoteLoader::END) {
-                        sfifo->put(nullptr, 0);
-                    }
-                    return !sfifo->isQuitting();
-                });
         }
         return;
     }

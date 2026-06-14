@@ -18,7 +18,8 @@
 -- 30: SoundSmith (Apple IIgs) support -- the ".W" wavebank is excluded as a song
 --     (parseModland secondary set) and fetched via getSecondaryFiles next to the
 --     bare-named song; "SoundSmith" maps to the Apple IIgs platform/format
-VERSION = 30;
+-- 31: added Kohina radio station, removed .snd files
+VERSION = 31;
 
 DB = {
 {

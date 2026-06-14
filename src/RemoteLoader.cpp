@@ -160,6 +160,18 @@ void RemoteLoader::listDirectory(
 
 // void RemoteLoader::preCache(const std::string &path) {}
 
+std::string RemoteLoader::resolveUrl(const std::string& p)
+{
+    Source source;
+    string path = p;
+    auto parts = split(path, "::");
+    if (parts.size() > 1) {
+        source = sources[parts[0]];
+        path = parts[1];
+    }
+    return source.url + path;
+}
+
 std::shared_ptr<webutils::WebJob> RemoteLoader::stream(
     const std::string& p,
     std::function<bool(int what, const uint8_t* data, int size)> data_cb)

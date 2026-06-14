@@ -2,6 +2,8 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
+- i see some dupes in search, example: monkmusings (only 1 record in db), maybe there is more
+
 - ability to manually add stuff to database. via a manual.txt file
 
 - zx spectrum music from games dear to me: revrse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
@@ -12,7 +14,6 @@ Also look at the zx repositories below, maybe someone already did this.
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
 - in general genuinely bad or missing files should be removed from the index
-- [DB change] remove westwood .snd files from db -- all play as .adl, .snd is not complete, no instruments
 
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
@@ -97,11 +98,7 @@ Iterate through the paginated JSON responses to extract data fields natively ins
 
 Radio Streams & Streams Media
 
-1. BitFellas (Radio Bitworld)
-URL: [http://www.bitfellas.org](http://www.bitfellas.org)
-What it is: Run by the same crew behind BitWorld, they host a highly active streaming radio network featuring dedicated 24/7 channels for demoscene music, chiptunes, and tracker tracks.
-
-2. Kohina
+1. Kohina
 URL: [https://www.kohina.com](https://www.kohina.com)
 What it is: One of the absolute oldest, purest retro audio streams still running. It plays exclusively 8-bit and 16-bit computer music (C64, Atari, Amiga, NES) directly simulated or sampled from original hardware.
 
@@ -295,58 +292,98 @@ dss	58
 sho	57 -- NO Shroom tracker Very obscure; no public documentation or decoder found
 dum	57 -- all good, the test file was bad
 
-am	57 -- NO Atari Falcon Ace Tracker -- would be awesome to add this!
-Research outcome: we cannot parse the data structures and mix them via standard portable C++. You have to go through CPU and DSP emulation. The only ctual path forward is to lift the cycle-accurate emulation code from Hatari (the open-source Atari ST/STE/TT/Falcon emulator), which has a fully-realized Motorola 56001 core emulation block.
-* Step 1: Secure the Original Falcon Replay Code. New Beat Developments released the complete source code for ACE Tracker 2.00 (which includes the assembly player routines and the 56k DSP binary files). You will need the 68030 assembly initialization/sequence code. You will need the .lod or compiled DSP binaries that execute on the 56k.
-* Step 2: Extract Hatari’s Core Components. You must compile a stripped-down, headless instance of Hatari's core as a static library for Chipmachine to link against. Specifically, you need to lift:
- - The Motorolala 68030 CPU core (usually WinUAE or UAE core wrapper inside Hatari).
- - The dsp.c (Motorola 56001 emulation layer).
- - The Falcon DMA sound subsystem simulation.
-* Step 3: Implement an Emulated Wrapper: Instead of writing a standard tracker parser, your AcePlayer::getSamples routine inside Chipmachine will actually boot a mini-virtual Atari Falcon in memory, load the ACE file into the virtual RAM alongside the assembly player engine, and step the emulation frame-by-frame.
+am	57 -- NO Atari Falcon Ace Tracker
+Re-check trigger: only if (a) New Beat actually open-sources the ACE replay + DSP code, or (b) someone publishes a standalone portable am2wav/libace decoder. 
 
 gtk	55 -- DONE via OPENMPT UPDATE!
+
 
 >>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 >>>>>>>> deeper research needed for items below <<<<<<<<<<
 
-gmc	55
-gt2	53
-sks	52 -- Starkos (Atari ST) Hard Atari ST tracker; no known portable decoder
-mm8	52
 
-ned	51 -- NerdTracker 2 NES-style tracker for PC; some source code available; limited community
+gmc	55 -- OK
+gt2	53 -- OK
+
+sks	52 -- DONE STarKos is AMSTRAD CPC (not Atari ST), AY/YM tracker by Targhan/Arkos, predecessor of Arkos Tracker. New sksplugin compiles the MIT non-GUI "BaseExport" slice of Arkos Tracker 3 (vendored /arkostracker3) -- author's own .sks importer + SongPlayer + PsgStreamGenerator, streamed to PCM like AT3's headless SongToWav. Needs JUCE (vendored trimmed at /arkostracker3/JUCE, 3 ISC modules: juce_core/events/audio_basics). 4 fixtures play, cmtest STarKos green
+
+mm8	52 -- OK
+
+ned	51 -- INVESTIGATE NerdTracker 2 NES-style tracker for PC; some source code available; limited community
 Feasibility: High / Moderate
 Value: Moderate (54 requests, but high historical relevance for NES chiptunes)
 Verdict: Approve for Implementation.
 Reasoning: NerdTracker 2 was a vital evolutionary step in the NES chiptune scene before NSF/Famitracker took over. The original MS-DOS C source code is publicly available. Because it maps directly to standard NES APU registers, it can be integrated into ChipMachine via a lightweight wrapper or by converting/subsuming the parsing logic into the existing NES emulation core.
 
-bmx	51 -- Unknown / No format info found matching this context
-SNG	51 -- same as sng? some fail in cmtest
-ftc	50
-psf	49 -- there is a test file...
+bmx	51 -- INVESTIGATE Unknown / No format info found matching this context
+
+SNG	51 -- INVESTIGATE  1) NOT same as sng. Doesn't play. INVESTIGATE. 2) NOTE: some .sng fail in cmtest (different issue?)
+
+ftc	50 -- OK
+psf	49 -- OK
 SM2	46
 SM1	46
-dl	45
-jam	44
-hvl	44
-coco	44  -- Unknown / No format info found matching this context
-mms	43
-bd	43
-adl	43
-puma	42
-ksm	41
-dln	41
-dsm	38
-jo	37
-gtr	37
-fxm	37 -- there is a test file...
-far	37
-pmd	36
-minipsf	36
-doda	36
-c67	36
-zxs	35
+dl	45 -- OK
+jam	44 -- OK
+hvl	44 -- OK
+
+coco	44 -- INVESTIGATE Not handled, no tests
+
+mms	43 -- OK
+bd	43 -- OK
+
+adl	43 -- many adl files don't play -- INVESTIGATE
+
+puma	42 -- OK ... but just in case investigate testmus/uade/cyf-3-final-2.puma ... playback NO SOUND
+
+ksm	41 -- INVESTIGATE -- no playback, errors in cmtest and GUI attempt
+Trying testmus/uade/ken's labyrinth - begin.ksm ... playback NO SOUND
+Trying testmus/adlib/maxosong.ksm ... playback EXCEPTION ()
+[RemoteLoader.cpp:90] CODE 226
+MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fKen's AdLib Music%2fKen Silverman/ken's labyrinth - labsng01.ksm'. Error: 
+[UADEPlugin.cpp:511] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fKen's AdLib Music%2fKen Silverman/ken's labyrinth - labsng01.ksm
+[MusicPlayerList.h:91] META message
+
+dln	41 -- OK
+
+dsm	38 -- INVESTIGATE -- all except 1 tried in gui work (see below) and cmtests are bad:
+Trying testmus/openmpt/andante.dsm ... openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
+Trying testmus/openmpt/andante.dsm ... playback EXCEPTION (Could not load module)
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Digital Sound Interface Kit/Necros/atomic power.dsm
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Sound Interface Kit%2fNecros/atomic power.dsm
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/Digital%20Sound%20Interface%20Kit/Necros/atomic%20power.dsm
+[web.cpp:181] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
+MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Sound Interface Kit%2fNecros/atomic power.dsm'. Error: Could not load module
+
+jo	37 -- INVESTIGATE: could not play anything in GUI and cmtest errors:
+Trying testmus/uade/georgglaxo ingame.jo ... File not found ;=?ABBBA0???????????????<?BCCCCBBA@???????????:=?@8uade warning: Song ended prematurely due to error: score died
+Trying testmus/uade/georgglaxo ingame.jo ... playback FAILED
+
+gtr	37 -- OK
+
+fxm	37 -- INVESTIGATE no playback in gui and cmtest skipped it:
+---- Ayfly ZX ----
+Skipping testmus/zx/star3.fxm
+
+far	37 -- OK
+
+pmd	36 -- INVESTIGATE: no playback, no test files...
+
+minipsf	36 -- OK
+
+doda	36 -- INVESTIGATE PLAYBACK from GUI WORKS, but cmtest errors, weird:
+Trying testmus/uade/pushover greek.doda ... File not found ????????????%??????????????%????????????????%????????????8???????44?????m-???File not found ????????????%??????????????%????????????????%????????????8???????44?????m-???playback OK
+Trying testmus/uade/lethalweapon.doda ... File not found ??File not found ??playback OK
+Trying testmus/uade/navyseals.doda ... File not found ??????????"??????????? ?????0??? ?????(????????????7 7?78?????Cp?? C?5(?m-???File not found ??????????"??????????? ?????0??? ?????(????????????7 7?78?????Cp?? C?5(?m-???playback OK
+Trying testmus/uade/pushover aztec.doda ... File not found ????????????????????????????????????????????????????????????????????????m-???File not found ????????????????????????????????????????????????????????????????????????m-???playback OK
+
+c67	36 -- OK
+zxs	35 -- test ok
 mad	35
 mk2	34
 jxs	34
@@ -356,7 +393,9 @@ MPK	32
 sps	31
 spm	31
 jd	31
-amad	31
+
+amad	31 -- INVESTIGATE no playback from GUI, no test filese
+
 gbr	30
 bss	30
 bam	29
@@ -411,7 +450,7 @@ dz	14
 tf	13
 kdm	13
 ims	13
-SKS	13 -- same as sks above?
+SKS	13 -- SHIPPED same as sks above (STarKos, case-insensitive ext) -- sksplugin
 A2M	13
 2sf	13
 tss	12
@@ -464,7 +503,7 @@ fmk	7
 dux	7
 dsyn	7
 as3m	7
-670	7
+670	7 -- no gui playback on 1 tested song
 xms	6
 sqx	6
 sb	6

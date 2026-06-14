@@ -74,6 +74,7 @@ git clone --recursive https://github.com/mihailod/libkss.git
 git clone https://github.com/mihailod/audiodecoder.wsr.git audiodecoderwsr
 git clone https://github.com/mihailod/protrekkr.git
 git clone https://github.com/mihailod/soundsmith.git
+git clone https://github.com/mihailod/arkostracker3.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
@@ -139,6 +140,7 @@ ninja
 * The Sid Station - https://c64radio.com
 * Radio PARALAX - https://www.radio-paralax.de
 * CVGM Radio - https://radio.cvgm.net
+* Kohina - https://kohina.com
 
 ## Music Plugins and supported formats and platforms
 
@@ -379,6 +381,12 @@ Support for **MaxTrax**, a commercial custom Amiga sound engine (multiple packin
 
 Extensions: `.mxtx`
 
+### STarKos (Amstrad CPC)
+
+Support for **STarKos**, Targhan / Arkos' AY-3-8912 / YM2149 tracker for the Amstrad CPC (the predecessor of Arkos Tracker). Played by a vendored slice of the MIT-licensed **Arkos Tracker 3** source (repo-root `arkostracker3/`): the author's own STarKos importer feeds the AT3 `SongPlayer` engine and the `PsgStreamGenerator` software AY/YM renderer, rendered to PCM offline — the same code path as AT3's headless `SongToWav` tool. Built on a small in-repo (trimmed) slice of JUCE 7.
+
+Extensions: `.sks`
+
 ### AudioOverload
 
 Support for Sega Saturn and Capcom Q music
@@ -412,7 +420,7 @@ Extensions: `.prg`
 
 Support for streaming audio (AAC and Ogg/Vorbis)
 
-Extensions: `.m4a` `.aac` `.mp3` `.mp4`
+Extensions: `.m4a` `.aac` `.mp3` `.mp4` `.ogg`
 
 ### V2
 
@@ -476,6 +484,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **SoundSmith (Apple IIgs):** The original SoundSmith tracker is by Huibert Aalbers (1989). The Ensoniq 5503 "DOC" player is a faithful in-process port of the SoundSmith player by Sean Kasun (mrkite). Licensed under BSD-2-Clause.
 * **Archimedes Tracker (Acorn Archimedes):** The original 8-channel *!Tracker* is by Dan Wilson (1991). Playback uses the **libxmp** `arch_loader` by Claudio Matsuoka, Hipolito Carraro Jr and contributors. libxmp is licensed under MIT; the arch loader source file carries an LGPL-2.1-or-later header.
 * **MaxTrax (Amiga):** The MaxTrax sound engine drives games such as *Dark Seed* (music by David A. Bean). Playback uses a vendored port of the **ScummVM** MaxTrax sequencer and Paula mixer, by the ScummVM Team. Licensed under GPL-3.0-or-later.
+* **STarKos (Amstrad CPC):** STarKos is the AY-3-8912 / YM2149 CPC tracker by Targhan / Arkos, predecessor of Arkos Tracker. Playback uses a vendored non-GUI slice of the **Arkos Tracker 3** source by Julien Névo — the author's own `.sks` importer plus the `SongPlayer` engine and `PsgStreamGenerator` software AY/YM renderer (the same path as AT3's headless `SongToWav` tool). Arkos Tracker 3 is licensed under MIT; it is built on three ISC-licensed **JUCE** core modules (`juce_core`, `juce_events`, `juce_audio_basics`) by Raw Material Software / the JUCE team.
 
 ---
 
