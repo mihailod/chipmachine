@@ -110,6 +110,16 @@ Component: OpenMPT (Tracker Formats)
 Author: Developed by the OpenMPT Project Team (originally Olivier Lapicque)
 License: BSD-3-Clause
 
+Component: MilkyTracker (DSIK "old" Internal Format .dsm v1 loader)
+Author: The MilkyTracker Team
+License: BSD-3-Clause
+Notice: libopenmpt does not decode the original DSIK Internal Format (magic
+        "DSM"+0x10, e.g. the Necros tunes), only the newer DSIK "RIFF" and
+        Dynamic Studio variants. The loader for that v1 variant was adapted from
+        MilkyTracker's milkyplay/LoaderDSM.cpp (LoaderDSMv1) as a local patch to
+        the vendored libopenmpt soundlib/Load_dsm.cpp; playback reuses
+        libopenmpt's existing DSIK engine.
+
 Component: HivelyTracker (AHX/HVL)
 Author: Developed by IRIS (Peter "Yohng" V, Curt Cool)
 License: BSD-3-Clause

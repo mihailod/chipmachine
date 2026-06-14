@@ -779,6 +779,37 @@ TEST_CASE("OpenMPT MMD3 plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// DSIK "old" Internal Format (.dsm v1) plays sound. libopenmpt only ships the
+// newer RIFF/DSMF v2 loader; the v1 format ("DSM"+0x10 header, used by the
+// Necros et al. modland tunes) is decoded by a chipmachine-local branch in the
+// vendored Load_dsm.cpp ported from MilkyTracker's LoaderDSMv1. Before that,
+// openmpt_module_create_from_memory2 returned "error loading file". Fails if the
+// v1 branch regresses.
+TEST_CASE("OpenMPT DSM v1 plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::OpenMPTPlugin plugin;
+
+    std::string const dsm = "testmus/openmpt/andante.dsm";
+    REQUIRE(plugin.canHandle(dsm));
+
+    auto* player = plugin.fromFile(dsm);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // Symphonie / Symphonie Pro (.symmod) plays sound. This Amiga "pseudo-DAW"
 // format (software mixer + real-time echo DSP) has no portable replayer except
 // libopenmpt's Load_symmod.cpp, which only landed in libopenmpt 0.6 -- the

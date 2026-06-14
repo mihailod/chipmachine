@@ -323,21 +323,14 @@ bmx	51 -- NO This is Jeskola Buzz — the modular tracker.
 Playback requires native Win32 x86 machine DLLs — hundreds, almost all closed-source binaries that can't run on arm64 macOS and can't be ported.
 The one open engine (zzub/libzzub) parses .bmx but still needs the closed machine DLLs — its bundled machines cover ~none of these songs, so it renders silent/wrong.
 
-SNG	51 -- IN PROGRESS 1) NOT same as sng. Doesn't play. INVESTIGATE. 2) NOTE: some .sng fail in cmtest (different issue?)
+SNG	51 -- DONE 1) NOT same as sng. Doesn't play. INVESTIGATE. 2) NOTE: some .sng fail in cmtest (different issue?)
 97 uppercase .SNG, every one under SCC-Musixx/ — so this is unambiguously SCC-Musixx, an MSX format driving Konami's SCC chip. Nothing in the tree handles it (only modland-data hits). The "doesn't play" symptom fits: case-insensitive extension matching routes .SNG to the lowercase-sng AdLib/GoatTracker handlers, which choke on what is actually MSX SCC data.
 Bottom line: uppercase .SNG is SCC-Musixx (MSX/Konami SCC), it's a feasible port (SCC emu + Z80 core already in-tree, replayer source public), and it currently just mis-routes to the wrong AdLib/SID engines. I deliberately did not add it to not_supported_extensions.txt since it's not a dead-end. Tell me if you want the interim decline-gate or the full plugin.
 
 ftc	50 -- OK
 psf	49 -- OK
 
-SM2	46 -- INVESTIGATE -- no playback in GUI, cmtest failures:
-Trying testmus/uade/JARRE1.SM2 ... involuntary audio output start
-uade warning: uade_get_event returned UADE_EVENT_EAGAIN which is not handled before playloop.
-Trying testmus/uade/JARRE1.SM2 ... playback FAILED
-SM1	46 -- INVESTIGATE -- no playback in GUI, cmtest failures:
-Trying testmus/uade/JARRE1.SM1 ... involuntary audio output start
-uade warning: uade_get_event returned UADE_EVENT_EAGAIN which is not handled before playloop.
-Trying testmus/uade/JARRE1.SM1 ... playback FAILED
+SM1/SM2	46 -- NO (mislabeled fixtures removed) -- The UADE "SoundMaster" eagleplayer (Michiel Soede, .sm/.sm1/.sm2/.sm3/.smpro) genuinely works -- real modules are relocatable 68k code starting with BRA ($60xx); testmus/uade/"doofus 2.sm" and "doofus 1.sm3" still play OK. The two failing files (JARRE1.SM1/SM2) were NOT SoundMaster at all: MSX BSAVE dumps (0xFE header, load 0x8000-0xBFFF page 2, exec 0x8000; 16384+7 = 16391 bytes) mislabeled with the SoundMaster extension. Only the 7-byte BSAVE header was shared between them; the 16KB payloads were otherwise wholly different with no recognizable embedded replayer -> no open player to add. They were dropped from the corpus (not representative fixtures). UADEPlugin::canHandle also now declines sm/sm1/sm2/sm3/smpro when isMsxBsave() (defends the production DB against the same mislabeling); real SoundMaster carries no 0xFE marker, so doofus is safe.
 
 dl	45 -- OK
 jam	44 -- OK
@@ -369,7 +362,12 @@ MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chip
 
 dln	41 -- OK
 
-dsm	38 -- INVESTIGATE -- all except 1 tried in gui work (see below) and cmtests are bad:
+--- FIXER WATERMARK --------------------
+>>> all triaging doe for items above <<<
+
+
+
+dsm	38 -- IN PROGRESS -- all except 1 tried in gui work (see below) and cmtests are bad:
 Trying testmus/openmpt/andante.dsm ... openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
 Trying testmus/openmpt/andante.dsm ... playback EXCEPTION (Could not load module)
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Digital Sound Interface Kit/Necros/atomic power.dsm
@@ -379,6 +377,10 @@ Trying testmus/openmpt/andante.dsm ... playback EXCEPTION (Could not load module
 [RemoteLoader.cpp:90] CODE 226
 openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
 MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Sound Interface Kit%2fNecros/atomic power.dsm'. Error: Could not load module
+.dsm failures = DSIK v1 format — a real decoder gap, not a routing bug
+So OpenMPT is failing correctly; there is simply no v1 player in the tree. The "1 that works in the GUI" is almost certainly a stray genuine v2 DSMF file in your corpus — not a v1 Necros tune.
+MilkyTracker porting investigation...
+
 
 jo	37 -- INVESTIGATE: could not play anything in GUI and cmtest errors:
 Trying testmus/uade/georgglaxo ingame.jo ... File not found ;=?ABBBA0???????????????<?BCCCCBBA@???????????:=?@8uade warning: Song ended prematurely due to error: score died
@@ -406,11 +408,8 @@ c67	36 -- OK
 zxs	35 -- OK
 
 
-\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
->>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+--- CHECKER WATERMARK ------------------------------------
 >>>>>>>> deeper research needed for items below <<<<<<<<<<
-//////////////////////////////////////////////////////////
 
 
 mad	35 -- cmtest ok
