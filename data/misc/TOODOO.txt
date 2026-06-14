@@ -376,16 +376,14 @@ MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chi
 So OpenMPT is failing correctly; there is simply no v1 player in the tree. The "1 that works in the GUI" is almost certainly a stray genuine v2 DSMF file in your corpus — not a v1 Necros tune.
 MilkyTracker implementation via openMPT dispatcher -- DONE!
 
+jo	37 -- DONE, fixed! rerouting to eagle player in uade
+
+gtr	37 -- OK
+
 
 --- FIXER WATERMARK --------------------
 >>> all triaging doe for items above <<<
 
-
-jo	37 -- INVESTIGATE: could not play anything in GUI and cmtest errors:
-Trying testmus/uade/georgglaxo ingame.jo ... File not found ;=?ABBBA0???????????????<?BCCCCBBA@???????????:=?@8uade warning: Song ended prematurely due to error: score died
-Trying testmus/uade/georgglaxo ingame.jo ... playback FAILED
-
-gtr	37 -- OK
 
 fxm	37 -- INVESTIGATE no playback in gui and cmtest skipped it:
 ---- Ayfly ZX ----
@@ -393,7 +391,7 @@ Skipping testmus/zx/star3.fxm
 
 far	37 -- OK
 
-pmd	36 -- INVESTIGATE: no playback, no test files...
+pmd	36 -- no test
 
 minipsf	36 -- OK
 
@@ -406,46 +404,125 @@ Trying testmus/uade/pushover aztec.doda ... File not found ?????????????????????
 c67	36 -- OK
 zxs	35 -- OK
 
+mad	35 -- investigate... cmtest ok,  all tested in gui play except Benjamin Birney songs -- none of them plays!
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/PlayerPro/Benjamin Birney/mantra 08 final labyrinth.mad
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 08 final labyrinth.mad
+[RemoteLoader.cpp:90] CODE -1
+MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 08 final labyrinth.mad'. Error: 
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/PlayerPro/Benjamin Birney/mantra 09 final boss.mad
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 09 final boss.mad
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/PlayerPro/Benjamin%20Birney/mantra%2009%20final%20boss.mad
+[web.cpp:181] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 09 final boss.mad'. Error: 
+MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 02 forest.mad'. Error: 
+[SearchIndex.cpp:229] words: [[benjamin birn]}]
+[SearchIndex.cpp:271] ## OTHER PARTS
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/PlayerPro/Benjamin Birney/mantra 03 dungeon.mad
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 03 dungeon.mad
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/PlayerPro/Benjamin%20Birney/mantra%2003%20dungeon.mad
+[web.cpp:181] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 03 dungeon.mad'. Error: 
+[SearchIndex.cpp:229] words: [[benjamin birn]}]
+[SearchIndex.cpp:271] ## OTHER PARTS
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/PlayerPro/Benjamin Birney/mantra 06 labyrinth.mad
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 06 labyrinth.mad
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/PlayerPro/Benjamin%20Birney/mantra%2006%20labyrinth.mad
+[web.cpp:181] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 06 labyrinth.mad'. Error: 
+
+mk2	34 -- investigate-- cmtest ok, all other tried from gui play except this one is silence:
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Mark II/Andreas Starr/my way to the stars.mk2
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMark II%2fAndreas Starr/my way to the stars.mk2
+[RemoteLoader.cpp:90] CODE -1
+[UADEPlugin.cpp:512] FILENAME 'my way to the stars.mk2', PREFIX 'my way to the stars', EXT 'mk2', BASE 'my way to the stars'
+[UADEPlugin.cpp:556] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMark II%2fAndreas Starr/my way to the stars.mk2
+[MusicPlayerList.h:91] META message
+
+jxs	34 -- no test
+
+tw	33 -- OK
+
+mon	32 -- cmtest ok, all tested from GUI worked except:
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Monotone/Virt/rickroll.mon
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMonotone%2fVirt/rickroll.mon
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/Monotone/Virt/rickroll.mon
+[web.cpp:181] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+[UADEPlugin.cpp:512] FILENAME 'rickroll.mon', PREFIX 'rickroll', EXT 'mon', BASE 'rickroll'
+[UADEPlugin.cpp:556] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMonotone%2fVirt/rickroll.mon
+Illegal instruction: 084d at 0001f000
+uade warning: Song ended prematurely due to error: score crashed
+
+MPK	32 -- OK
+
+sps	31 -- Trying testmus/uade/teinteremix22.sps ... playback FAILED
+spm	31 -- Trying testmus/uade/teinteremix22.spm ... playback FAILED
+
+jd	31 -- OK
+
+amad	31 -- no test
+gbr	30 -- no test
+
+bss	30 -- all work except this one, could be bad file:
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Beathoven Synthesizer/Thomas Lopatic/katakis loading v1.bss
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss
+[RemoteLoader.cpp:90] CODE -1
+[UADEPlugin.cpp:512] FILENAME 'katakis loading v1.bss', PREFIX 'katakis loading v1', EXT 'bss', BASE 'katakis loading v1'
+[UADEPlugin.cpp:556] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss
+[UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
+[UADEPlugin.cpp:107] Restoring filename /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss back to '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss'
+[UADEPlugin.cpp:111] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss
+[MusicPlayerList.h:91] META message
+[UADEPlugin.cpp:281] Amiga message: Eagleplayer inserted 1 into aud0per.
+
+bam	29 -- OK
+
+skm	28 -- no test
+
+pis	28 -- OK
+sat	27 -- OK
+ams	27 -- OK
+dmo	26 -- OK
+
+ct	26 -- no test
+
+avp	26 -- OK
+
+uni	25 -- no playback in GUI and cmtest skips -- investigate
+Skipping testmus/openmpt/leroy - intro.uni
+
+sn2	25 -- no test
+mgb	25 -- no test
 
 --- CHECKER WATERMARK ------------------------------------
 >>>>>>>> deeper research needed for items below <<<<<<<<<<
 
+wb	24 -- cmtest ok
 
-mad	35 -- cmtest ok
-mk2	34 -- cmtest ok
-jxs	34 -- no test
-tw	33 -- cmtest ok
-mon	32 -- cmtest ok
-MPK	32 -- cmtest ok
-sps	31 -- Trying testmus/uade/teinteremix22.sps ... playback FAILED
-spm	31 -- Trying testmus/uade/teinteremix22.spm ... playback FAILED
-jd	31 -- cmtest ok
+tcb	24 -- cmtest passes for 2 plugins, investigate / tighten
+Trying testmus/uade/cannonfodder.tcb ... playback OK
+Trying testmus/openmpt/m-demo3-1.tcb ... playback OK
 
-amad	31 -- INVESTIGATE no playback from GUI, no test filese
+omf	24 -- no test
+ixs	23 -- no test
 
-gbr	30
-bss	30
-bam	29
-skm	28
-pis	28
-sat	27
-ams	27
-dmo	26
-ct	26
-avp	26
-uni	25
-sn2	25
-mgb	25
-wb	24
-tcb	24
-omf	24
-ixs	23
-ems	23
-snd	22
-axs	22
-dfm	21
-chi	21
-ast	21
+ems	23 -- cmtest ok
+snd	22 -- no test
+axs	22 -- no test
+dfm	21 -- cmtest ok
+chi	21 -- cmtest ok
+ast	21 -- cmtest ok
+
+
 smufi	19
 jb	19
 brt	19
