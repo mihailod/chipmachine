@@ -66,8 +66,13 @@ Author: Adapted from OpenMSX/GME variants
 License: GNU General Public License v2.0 or later
 
 Component: Ayfly (ZX Spectrum AY-3-8910)
-Author: Developed by Sergey Vladimirov
-License: GNU General Public License v2.0 or later
+Author: Developed by Sergey Vladimirov. The Fuxoft AY Language (.fxm / "FXSM")
+        player in players/FXMPlay.h is a C++ transliteration of the FXM
+        routines from AY_Emul by Sergey Bulba, whose sources are published with
+        the request that the author be credited. The Fuxoft AY Language format
+        itself is by Frantisek Fuka (Fuxoft), documented in his fxmasm project.
+License: GNU General Public License v2.0 or later (Ayfly engine); AY_Emul-derived
+         FXM code used under attribution as requested by its author
 
 Component: ZXTune (ZX Spectrum / Sam Coupe -- Sound Tracker 1.1 .st11,
            Global Tracker .gtr, Chip Tracker .chi, TFM Music Maker .tfe,

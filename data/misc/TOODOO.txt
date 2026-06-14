@@ -376,20 +376,20 @@ MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chi
 So OpenMPT is failing correctly; there is simply no v1 player in the tree. The "1 that works in the GUI" is almost certainly a stray genuine v2 DSMF file in your corpus — not a v1 Necros tune.
 MilkyTracker implementation via openMPT dispatcher -- DONE!
 
-jo	37 -- DONE, fixed! rerouting to eagle player in uade
+jo	37 -- DONE, OK fixed! rerouting to eagle player in uade
 
 gtr	37 -- OK
+
+fxm	37 -- DONE Fuxoft AY Language now plays via ayflyplugin. New players/FXMPlay.h is a C++ transliteration of the FXM routines from Bulba's
+AY_Emul (rebuilds a 64K image at the file's origin and interprets it like the original Z80 playroutine). Added ".fxm" to Players[] + supported_ext + FXM_Detect ("FXSM" magic). star3.fxm plays OK in cmtest; verified vs 6 modland Fuxoft tunes (varied lengths/loops, continuous audio). Credits in README/LEGAL/Credits.rtf.
+
+far	37 -- OK
 
 
 --- FIXER WATERMARK --------------------
 >>> all triaging doe for items above <<<
 
 
-fxm	37 -- INVESTIGATE no playback in gui and cmtest skipped it:
----- Ayfly ZX ----
-Skipping testmus/zx/star3.fxm
-
-far	37 -- OK
 
 pmd	36 -- no test
 
