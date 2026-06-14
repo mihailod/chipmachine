@@ -381,6 +381,7 @@ TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmu
 TEST_CASE("Musx", "[music]") { testPlugin<musix::MusxPlugin>("testmus/musx", ""); }
 TEST_CASE("MaxTrax", "[music]") { testPlugin<musix::MaxTraxPlugin>("testmus/maxtrax", ""); }
 TEST_CASE("STarKos", "[music]") { testPlugin<musix::SksPlugin>("testmus/sks", ""); }
+TEST_CASE("NerdTracker2", "[music]") { testPlugin<musix::NEDPlugin>("testmus/ned", ""); }
 
 // MaxTrax (.mxtx, the Amiga sound engine behind Cyberdreams' Dark Seed et al).
 // Played by a vendored port of ScummVM's MaxTrax sequencer + Paula mixer; UADE
@@ -1761,7 +1762,9 @@ TEST_CASE("coverage", "[music]")
         {"PokeyNoise", "testmus/pn"},
         {"Beepola (Phaser1)", "testmus/bbsong"},
         {"Archimedes Tracker", "testmus/musx"},
-        {"MaxTrax", "testmus/maxtrax"}
+        {"MaxTrax", "testmus/maxtrax"},
+        {"STarKos", "testmus/sks"},
+        {"NerdTracker2", "testmus/ned"}
     };
 
     // Plugins whose extensions are split across several testmus folders (one

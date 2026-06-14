@@ -41,6 +41,7 @@ extern "C" {
     void musxplugin_register();    // Acorn Archimedes Tracker (.musx) via libxmp arch_loader
     void maxtraxplugin_register(); // MaxTrax / Amiga (.mxtx) via ScummVM MaxTrax+Paula
     void sksplugin_register();     // STarKos / Amstrad CPC (.sks) via Arkos Tracker 3
+    void nedplugin_register();     // NerdTracker II / NES (.ned) via blargg Nes_Snd_Emu
 }
 
 void register_plugins() {
@@ -82,4 +83,5 @@ void register_plugins() {
     musxplugin_register();
     maxtraxplugin_register();
     sksplugin_register();
+    nedplugin_register();
 }

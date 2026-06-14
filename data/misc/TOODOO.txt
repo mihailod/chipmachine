@@ -310,7 +310,7 @@ sks	52 -- DONE STarKos is AMSTRAD CPC (not Atari ST), AY/YM tracker by Targhan/A
 
 mm8	52 -- OK
 
-ned	51 -- INVESTIGATE NerdTracker 2 NES-style tracker for PC; some source code available; limited community
+ned	51 -- DONE NerdTracker 2 NES-style tracker for PC; some source code available; limited community
 Feasibility: High / Moderate
 Value: Moderate (54 requests, but high historical relevance for NES chiptunes)
 Verdict: Approve for Implementation.

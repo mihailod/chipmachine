@@ -679,3 +679,24 @@ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
 CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 THE POSSIBILITY OF SUCH DAMAGE.
+
+-------------------------------------------------------------------------------
+NerdTracker II (.ned) playback attribution
+-------------------------------------------------------------------------------
+
+The NerdTracker II plugin (musicplayer/src/plugins/nedplugin) is built from
+three upstream components:
+
+* NerdTracker II -- the original MS-DOS NES/Famicom tracker and its .ned file
+  format, by Michel Iwaniec ("Bananmos"). Used with attribution.
+
+* "NerdTracker 2 SDL port" by thefox (Mika Keranen) -- the headless player and
+  loader core (ned/ned_engine.c, ned/apuwrap.c, ned/blarggAPU.cpp) is derived
+  from this port's nt2.c, with the editor UI / SDL / Win32 code removed. Used
+  with attribution.
+
+* Nes_Snd_Emu 0.1.7 -- the NES 2A03 (APU) sound emulation
+  (ned/Nes_Snd_Emu-0.1.7), Copyright (C) 2003-2005 Shay Green ("blargg"),
+  licensed under the GNU Lesser General Public License, version 2.1 or later.
+  The full LGPL text is included as ned/Nes_Snd_Emu-0.1.7/LGPL.txt. This is the
+  same emulation lineage used by Game Music Emulator (see README credits).
