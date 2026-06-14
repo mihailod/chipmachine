@@ -138,6 +138,12 @@ Component: libkss (MSX KSS)
 Author: Developed by Mitsutaka Okazaki
 License: MIT License
 
+Component: emu2212 (Konami SCC sound chip emulator)
+Author: Developed by Mitsutaka Okazaki
+License: MIT License
+Notice: Used both by libkss and by sccmusixxplugin (a private copy with the
+        public API renamed to avoid duplicate symbols at link time).
+
 Component: organya (Cave Story Organya format)
 Author: Developed by Studio Pixel (Daisuke Amaya)
 License: MIT License / Open Source Portions
@@ -241,3 +247,12 @@ Component: AudioOverload Backend / AOSDK
 Author: Developed by Richard Bannister and contributors
 License: Custom Permissive Freeware License
 Notice: Included non-commercially under authors' custom permissive terms.
+
+Component: SCC-Musixx replay routine (MSX, .SNG)
+Author: Tyfoon-Software (M. Spoor), 1990. "MUSIXX REPLAY ROUTINE v1.2".
+License: Freeware. The SCC-MUSIXX package (program, editor, replay routine and
+         songs) is distributed freely via the MSX Resource Center downloads
+         corner.
+Notice: The original ~1.5 KB Z80 replayer (REPLAY.BIN) is embedded verbatim and
+        executed on the GME Z80 core; the Konami SCC is emulated by emu2212
+        (MIT, see above). Shipped with attribution to Tyfoon-Software.

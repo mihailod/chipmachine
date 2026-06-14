@@ -393,6 +393,12 @@ Support for **NerdTracker II**, Michel Iwaniec's MS-DOS tracker for the Nintendo
 
 Extensions: `.ned`
 
+### SCC-Musixx (MSX)
+
+Support for **SCC-Musixx**, Tyfoon-Software's 1990 tracker for Konami's SCC wavetable sound chip on the MSX — the chip behind Konami classics like Nemesis/Gradius, Salamander and King's Valley II. The original SCC-MUSIXX replay routine runs on an embedded Z80 core, with its SCC register writes driving the emu2212 SCC emulator.
+
+Extensions: `.SNG`
+
 ### AudioOverload
 
 Support for Sega Saturn and Capcom Q music
@@ -492,6 +498,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **MaxTrax (Amiga):** The MaxTrax sound engine drives games such as *Dark Seed* (music by David A. Bean). Playback uses a vendored port of the **ScummVM** MaxTrax sequencer and Paula mixer, by the ScummVM Team. Licensed under GPL-3.0-or-later.
 * **STarKos (Amstrad CPC):** STarKos is the AY-3-8912 / YM2149 CPC tracker by Targhan / Arkos, predecessor of Arkos Tracker. Playback uses a vendored non-GUI slice of the **Arkos Tracker 3** source by Julien Névo — the author's own `.sks` importer plus the `SongPlayer` engine and `PsgStreamGenerator` software AY/YM renderer (the same path as AT3's headless `SongToWav` tool). Arkos Tracker 3 is licensed under MIT; it is built on three ISC-licensed **JUCE** core modules (`juce_core`, `juce_events`, `juce_audio_basics`) by Raw Material Software / the JUCE team.
 * **NerdTracker II (NES / Famicom):** The original NerdTracker II tracker is by Michel Iwaniec ("Bananmos"). Playback uses the player/loader core of the **NerdTracker 2 SDL port** by thefox (Mika Keränen), which drives blargg's (Shay Green) **Nes_Snd_Emu** 2A03 APU emulation — the same lineage as GME above. The vendored Nes_Snd_Emu (0.1.7) is licensed under LGPL-2.1; the NerdTracker II and SDL-port code is used with attribution. We clock the APU at NTSC speed (the port's bundled `Simple_Apu_PAL` used the PAL clock, which played notes ~a semitone flat).
+* **SCC-Musixx (MSX):** SCC-Musixx and its `.SNG` format are by **Tyfoon-Software** (M. Spoor, 1990); the original "MUSIXX REPLAY ROUTINE v1.2" (`REPLAY.BIN`, freeware, distributed via the MSX Resource Center) is embedded and run unmodified. The Konami **SCC** sound chip is emulated by **emu2212** by Mitsutaka Okazaki (MIT, the same vendored copy used by libkss). The Z80 CPU core is GME's (Shay Green, LGPL-2.1).
 
 ---
 

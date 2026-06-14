@@ -188,6 +188,16 @@ Deflemask playback — the fast-fail is in place, but Deflemask DMF files (Heavy
 ************************************
 No comment = works and regression test(s) in place
 
+---
+AUDIO OVERLOAD APP extensions NOT checked to be covered:
+* OGG — [add unit test] no .ogg file successfully played. -- we cover this, add regression test
+
+* GYM — [5 songs in db ] present in the log, but playback threw an exception (Packed GYM file not supported).
+
+* ORC — [no songs in db] no .orc file appears in the log.
+* QSF — [no songs in db] no .qsf file successfully played (only .miniqsf played successfully; .qsflib files were skipped).
+---
+
 mod (78289), sid (61177), xm (42771), it (24769), s3m (10908), pt3 (6525), sap (6335), pt2 (6060), sndh (5895), ym (4858), nsf (4858), mus (4583), stc (3567), mmd1 (2605), dmf (2138), OVI (1801), ptcop (1769), sc68 (1745), mp3 (1673), asc (1656), rsn (1513), str (1391), ymst (1378), ahx (1337), mmd0 (1316), OPI (1293), nsfe (1214), OZI (1152), ftm (1041), emul (979), gbs (894), sqt (868), vtx (833), dbm (798), ml (795), mtm (775), eup (684), mmd3 (638), stp2 (625), stp (614), MGS (548), prg (544)
 
 psy	519 -- NO Psycle tracker Open-source tracker (psycle.sf.net)
@@ -296,13 +306,6 @@ am	57 -- NO Atari Falcon Ace Tracker
 Re-check trigger: only if (a) New Beat actually open-sources the ACE replay + DSP code, or (b) someone publishes a standalone portable am2wav/libace decoder. 
 
 gtk	55 -- DONE via OPENMPT UPDATE!
-
-
->>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
->>>>>>>> deeper research needed for items below <<<<<<<<<<
-
-
 gmc	55 -- OK
 gt2	53 -- OK
 
@@ -316,14 +319,26 @@ Value: Moderate (54 requests, but high historical relevance for NES chiptunes)
 Verdict: Approve for Implementation.
 Reasoning: NerdTracker 2 was a vital evolutionary step in the NES chiptune scene before NSF/Famitracker took over. The original MS-DOS C source code is publicly available. Because it maps directly to standard NES APU registers, it can be integrated into ChipMachine via a lightweight wrapper or by converting/subsuming the parsing logic into the existing NES emulation core.
 
-bmx	51 -- INVESTIGATE Unknown / No format info found matching this context
+bmx	51 -- NO This is Jeskola Buzz — the modular tracker.
+Playback requires native Win32 x86 machine DLLs — hundreds, almost all closed-source binaries that can't run on arm64 macOS and can't be ported.
+The one open engine (zzub/libzzub) parses .bmx but still needs the closed machine DLLs — its bundled machines cover ~none of these songs, so it renders silent/wrong.
 
-SNG	51 -- INVESTIGATE  1) NOT same as sng. Doesn't play. INVESTIGATE. 2) NOTE: some .sng fail in cmtest (different issue?)
+SNG	51 -- IN PROGRESS 1) NOT same as sng. Doesn't play. INVESTIGATE. 2) NOTE: some .sng fail in cmtest (different issue?)
+97 uppercase .SNG, every one under SCC-Musixx/ — so this is unambiguously SCC-Musixx, an MSX format driving Konami's SCC chip. Nothing in the tree handles it (only modland-data hits). The "doesn't play" symptom fits: case-insensitive extension matching routes .SNG to the lowercase-sng AdLib/GoatTracker handlers, which choke on what is actually MSX SCC data.
+Bottom line: uppercase .SNG is SCC-Musixx (MSX/Konami SCC), it's a feasible port (SCC emu + Z80 core already in-tree, replayer source public), and it currently just mis-routes to the wrong AdLib/SID engines. I deliberately did not add it to not_supported_extensions.txt since it's not a dead-end. Tell me if you want the interim decline-gate or the full plugin.
 
 ftc	50 -- OK
 psf	49 -- OK
-SM2	46
-SM1	46
+
+SM2	46 -- INVESTIGATE -- no playback in GUI, cmtest failures:
+Trying testmus/uade/JARRE1.SM2 ... involuntary audio output start
+uade warning: uade_get_event returned UADE_EVENT_EAGAIN which is not handled before playloop.
+Trying testmus/uade/JARRE1.SM2 ... playback FAILED
+SM1	46 -- INVESTIGATE -- no playback in GUI, cmtest failures:
+Trying testmus/uade/JARRE1.SM1 ... involuntary audio output start
+uade warning: uade_get_event returned UADE_EVENT_EAGAIN which is not handled before playloop.
+Trying testmus/uade/JARRE1.SM1 ... playback FAILED
+
 dl	45 -- OK
 jam	44 -- OK
 hvl	44 -- OK
@@ -333,7 +348,12 @@ coco	44 -- INVESTIGATE Not handled, no tests
 mms	43 -- OK
 bd	43 -- OK
 
-adl	43 -- many adl files don't play -- INVESTIGATE
+adl	43 -- many adl files don't play from GUI but many also do -- INVESTIGATE
+Trying testmus/adlib/dune ii - 00.adl ... playback OK
+example: all songs are silent in this one:
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Ad Lib/ADL/Frank Klepacki/dune ii - 12.adl
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fADL%2fFrank Klepacki/dune ii - 12.adl
+maybe there is still some deeper .adl issue -- wider sample to test needed
 
 puma	42 -- OK ... but just in case investigate testmus/uade/cyf-3-final-2.puma ... playback NO SOUND
 
@@ -383,16 +403,25 @@ Trying testmus/uade/navyseals.doda ... File not found ??????????"??????????? ???
 Trying testmus/uade/pushover aztec.doda ... File not found ????????????????????????????????????????????????????????????????????????m-???File not found ????????????????????????????????????????????????????????????????????????m-???playback OK
 
 c67	36 -- OK
-zxs	35 -- test ok
-mad	35
-mk2	34
-jxs	34
-tw	33
-mon	32
-MPK	32
-sps	31
-spm	31
-jd	31
+zxs	35 -- OK
+
+
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+>>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+>>>>>>>> deeper research needed for items below <<<<<<<<<<
+//////////////////////////////////////////////////////////
+
+
+mad	35 -- cmtest ok
+mk2	34 -- cmtest ok
+jxs	34 -- no test
+tw	33 -- cmtest ok
+mon	32 -- cmtest ok
+MPK	32 -- cmtest ok
+sps	31 -- Trying testmus/uade/teinteremix22.sps ... playback FAILED
+spm	31 -- Trying testmus/uade/teinteremix22.spm ... playback FAILED
+jd	31 -- cmtest ok
 
 amad	31 -- INVESTIGATE no playback from GUI, no test filese
 

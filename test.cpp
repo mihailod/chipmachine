@@ -683,6 +683,55 @@ TEST_CASE("Beepola SFX plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// SCC-Musixx (.SNG) end-to-end: the original Tyfoon-Software SCC-MUSIXX replay
+// routine (embedded REPLAY.BIN) runs on the GME Z80 core, with its Konami SCC
+// register writes routed into emu2212. Exercises canHandle's content detection
+// (the "sng" extension is shared by several unrelated formats) and the whole
+// Z80 + SCC render path. Loops over the staged fixtures so a regression in the
+// replayer drive, SCC mapping, or detection fails the build.
+TEST_CASE("SCC-Musixx plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::SccMusixxPlugin plugin;
+
+    // ".sng" is shared with UADE's Amiga Richard Joseph player, which is tried
+    // first; it must decline these MSX SCC images so they reach us. Dispatch is
+    // by content, not extension case: "outrun_lower.sng" is the same image with
+    // a lowercase extension and must still be recognised.
+    musix::UADEPlugin uade{"data"};
+
+    // Inverse routing: a genuine (Amiga) Richard Joseph ".sng" must be claimed
+    // by UADE and declined by us -- proving detection is content-based, not just
+    // the extension.
+    std::string const rj = "testmus/uade/cannon fodder (intro).sng";
+    REQUIRE(uade.canHandle(rj));
+    REQUIRE_FALSE(plugin.canHandle(rj));
+
+    for (auto const* sng : {"testmus/sccmusixx/outrun.SNG",
+                            "testmus/sccmusixx/outrun_lower.sng",
+                            "testmus/sccmusixx/intro.SNG",
+                            "testmus/sccmusixx/nemesis.SNG"}) {
+        REQUIRE_FALSE(uade.canHandle(sng));
+        REQUIRE(plugin.canHandle(sng));
+
+        auto* player = plugin.fromFile(sng);
+        REQUIRE(player != nullptr);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+
+        REQUIRE(energy != 0);
+    }
+}
+
 // Apple IIgs SoundSmith. A tune is a PAIR: a bare-named song file (patterns/
 // orders) and a separate "<song>.W" wavebank holding the 64KB of Ensoniq 5503
 // sound RAM + instrument table. canHandle() identifies the song by its header

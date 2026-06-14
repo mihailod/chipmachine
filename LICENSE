@@ -700,3 +700,24 @@ three upstream components:
   licensed under the GNU Lesser General Public License, version 2.1 or later.
   The full LGPL text is included as ned/Nes_Snd_Emu-0.1.7/LGPL.txt. This is the
   same emulation lineage used by Game Music Emulator (see README credits).
+
+-------------------------------------------------------------------------------
+SCC-Musixx (.SNG) playback attribution
+-------------------------------------------------------------------------------
+
+The SCC-Musixx plugin (musicplayer/src/plugins/sccmusixxplugin) is built from
+three upstream components:
+
+* SCC-Musixx -- the MSX tracker for Konami's SCC sound chip and its .SNG file
+  format, by Tyfoon-Software (M. Spoor), 1990. Its original Z80 replay routine
+  ("MUSIXX REPLAY ROUTINE v1.2", REPLAY.BIN) is freeware, distributed via the
+  MSX Resource Center, and is embedded (replay_bin.h) and executed unmodified.
+  Used with attribution.
+
+* emu2212 -- the Konami SCC sound chip emulator, Copyright (C) Mitsutaka
+  Okazaki, licensed under the MIT License. A private copy is compiled with its
+  public API renamed to avoid duplicate symbols with libkss's copy.
+
+* Z80 CPU core -- GME's Z80_Cpu, Copyright (C) Shay Green ("blargg"), licensed
+  under the GNU Lesser General Public License, version 2.1 or later (shared with
+  the bbsong and GME plugins).

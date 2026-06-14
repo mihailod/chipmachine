@@ -20,3 +20,6 @@
 
 # shroom tracker -- no decoder
 .sho
+
+# jeskola buzz -- modular daw, needs closed win32 x86 machine dlls
+.bmx
