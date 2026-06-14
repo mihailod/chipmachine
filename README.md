@@ -383,7 +383,7 @@ Extensions: `.mxtx`
 
 ### STarKos (Amstrad CPC)
 
-Support for **STarKos**, Targhan / Arkos' AY-3-8912 / YM2149 tracker for the Amstrad CPC (the predecessor of Arkos Tracker). Played by a vendored slice of the MIT-licensed **Arkos Tracker 3** source (repo-root `arkostracker3/`): the author's own STarKos importer feeds the AT3 `SongPlayer` engine and the `PsgStreamGenerator` software AY/YM renderer, rendered to PCM offline — the same code path as AT3's headless `SongToWav` tool. Built on a small in-repo (trimmed) slice of JUCE 7.
+Support for **STarKos**, Targhan / Arkos' AY-3-8912 / YM2149 tracker for the Amstrad CPC (the predecessor of Arkos Tracker).
 
 Extensions: `.sks`
 
