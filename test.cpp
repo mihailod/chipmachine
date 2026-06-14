@@ -1819,7 +1819,8 @@ TEST_CASE("coverage", "[music]")
         {"Archimedes Tracker", "testmus/musx"},
         {"MaxTrax", "testmus/maxtrax"},
         {"STarKos", "testmus/sks"},
-        {"NerdTracker2", "testmus/ned"}
+        {"NerdTracker2", "testmus/ned"},
+        {"SCC-Musixx", "testmus/sccmusixx"}
     };
 
     // Plugins whose extensions are split across several testmus folders (one

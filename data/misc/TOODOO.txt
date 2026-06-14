@@ -362,12 +362,7 @@ MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chip
 
 dln	41 -- OK
 
---- FIXER WATERMARK --------------------
->>> all triaging doe for items above <<<
-
-
-
-dsm	38 -- IN PROGRESS -- all except 1 tried in gui work (see below) and cmtests are bad:
+dsm	38 -- DONE!! -- all except 1 tried in gui work (see below) and cmtests are bad:
 Trying testmus/openmpt/andante.dsm ... openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
 Trying testmus/openmpt/andante.dsm ... playback EXCEPTION (Could not load module)
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Digital Sound Interface Kit/Necros/atomic power.dsm
@@ -379,7 +374,11 @@ openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
 MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Sound Interface Kit%2fNecros/atomic power.dsm'. Error: Could not load module
 .dsm failures = DSIK v1 format — a real decoder gap, not a routing bug
 So OpenMPT is failing correctly; there is simply no v1 player in the tree. The "1 that works in the GUI" is almost certainly a stray genuine v2 DSMF file in your corpus — not a v1 Necros tune.
-MilkyTracker porting investigation...
+MilkyTracker implementation via openMPT dispatcher -- DONE!
+
+
+--- FIXER WATERMARK --------------------
+>>> all triaging doe for items above <<<
 
 
 jo	37 -- INVESTIGATE: could not play anything in GUI and cmtest errors:
