@@ -71,6 +71,9 @@ Author: Developed by Sergey Vladimirov. The Fuxoft AY Language (.fxm / "FXSM")
         routines from AY_Emul by Sergey Bulba, whose sources are published with
         the request that the author be credited. The Fuxoft AY Language format
         itself is by Frantisek Fuka (Fuxoft), documented in his fxmasm project.
+        The AY Amadeus (.amad) player in players/AMADPlay.h reuses that FXM
+        engine and transliterates AY_Emul's ZXAY/AMAD container loader; the
+        tunes are by Frantisek Fuka (Fuxoft) and Patrik Rak.
 License: GNU General Public License v2.0 or later (Ayfly engine); AY_Emul-derived
          FXM code used under attribution as requested by its author
 

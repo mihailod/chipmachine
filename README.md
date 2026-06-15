@@ -285,7 +285,9 @@ Extensions: `.rsn` `.rps` `.rdc` `.rds` `.rgs` `.r64`
 
 Support for various ZX Spectrum formats, including **Fuxoft AY Language** (`.fxm`) — František Fuka's compiled AY music format ("FXSM" files). The `.fxm` player is a C++ transliteration of the Fuxoft routines in Sergey Bulba's AY_Emul (the same lineage as the rest of the Ayfly engine); a 64K Spectrum image is rebuilt from the file's origin address and the interpreter runs over it exactly as the original Z80 playroutine does.
 
-Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2` `.pt3` `.vtx` `.vt2` `.zxs` `.st13` `.fxm`
+Also **AY Amadeus** (`.amad`) — ZX Spectrum AY tunes by František Fuka (Fuxoft) and Patrik Rak, stored in the `ZXAY` container with the `AMAD` type tag. Per AY_Emul, the `AMAD` type is the direct analog of FXM: the same playroutine drives both, so `.amad` reuses the `.fxm` engine. The container wrapper (`AMADPlay.h`) extracts the load origin, the per-file noise mask and the module body, builds the 64K image and plays it exactly as for `.fxm`.
+
+Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2` `.pt3` `.vtx` `.vt2` `.zxs` `.st13` `.fxm` `.amad`
 
 ### ZXTune
 
@@ -502,7 +504,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **AudioOverload Backend / AOSDK:** Developed by Richard Bannister and contributors. Licensed under Custom/Freeware permissive license.
 * **HivelyTracker (AHX/HVL):** Developed by IRIS (Peter "Yohng" V, Curt Cool). Licensed under BSD-3-Clause.
 * **MDX / S98 (PC-98 & Sharp X68000):** Emulation engines adapted from OpenMSX/GME variants. Licensed under GPL-2.0-or-later.
-* **Ayfly (ZX Spectrum AY-3-8910):** Developed by Sergey Vladimirov. Licensed under GPL-2.0-or-later. The **Fuxoft AY Language** (`.fxm`) player added here is a C++ transliteration of the FXM routines from **AY_Emul** by **Sergey Bulba** (sources made available with the request to credit the author); the format is **Frantisek Fuka's** (Fuxoft), documented in his `fxmasm` project.
+* **Ayfly (ZX Spectrum AY-3-8910):** Developed by Sergey Vladimirov. Licensed under GPL-2.0-or-later. The **Fuxoft AY Language** (`.fxm`) player added here is a C++ transliteration of the FXM routines from **AY_Emul** by **Sergey Bulba** (sources made available with the request to credit the author); the format is **Frantisek Fuka's** (Fuxoft), documented in his `fxmasm` project. The **AY Amadeus** (`.amad`) player added here reuses that FXM engine and transliterates AY_Emul's `ZXAY`/`AMAD` container loader (`OpenAYFile`); the tunes are by **Frantisek Fuka** (Fuxoft) and **Patrik Rak**.
 * **ZXTune (ZX Spectrum / Sam Coupe — Sound Tracker 1.1, Global Tracker, Chip Tracker, TFM Music Maker, Pro Sound Maker, Fast Tracker, E-Tracker):** Developed by Vitamin/CAIG; CMake fork by djdron. Licensed under GPL-3.0-or-later.
 * **98fmplayer:** Developed by areis. Licensed under MIT.
 * **libkss (MSX KSS):** Developed by Mitsutaka Okazaki. Licensed under MIT.

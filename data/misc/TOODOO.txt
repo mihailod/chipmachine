@@ -443,12 +443,14 @@ No open replayer exists anywhere to vendor:
 
 jd	31 -- OK
 
+amad	31 -- DONE ... "AY Amadeus" by Frantisek Fuka ... ZXAYAMAD container files (a variant of the standard ZXAYEMUL .ay chiptune format, with type tag AMAD instead of EMUL). same family as .fxm, 31+ tunes, clean reuse of FXMPlay.h, no Z80 emulation needed. 
+
+
 
 --- FIXER WATERMARK --------------------
 >>> all triaging doe for items above <<<
 
 
-amad	31 -- no test
 gbr	30 -- no test
 
 bss	30 -- all work except this one, could be bad file:

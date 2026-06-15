@@ -734,6 +734,12 @@ the rest of the Ayfly engine is ported.
 The Fuxoft AY Language file format itself is by Frantisek Fuka (Fuxoft) and is
 documented in his fxmasm project.
 
+The AY Amadeus player (players/AMADPlay.h) reuses that FXM engine and is a C++
+transliteration of AY_Emul's ZXAY/AMAD container loader (OpenAYFile /
+LoadTrackerModule); AY_Emul documents the AMAD type as the direct analog of
+FXM. It is used on the same attribution basis. The AY Amadeus tunes are by
+Frantisek Fuka (Fuxoft) and Patrik Rak.
+
 -------------------------------------------------------------------------------
 SCC-Musixx (.SNG) playback attribution
 -------------------------------------------------------------------------------
