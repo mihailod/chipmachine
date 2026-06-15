@@ -436,17 +436,17 @@ Full new player it is. Let me mark this as a new chapter and pull down the PTPla
 
 MPK	32 -- OK
 
+sps	31 -- NO Trying testmus/uade/teinteremix22.sps ... playback FAILED
+spm	31 -- NO Trying testmus/uade/teinteremix22.spm ... playback FAILED
+Stonetracker! The modland path is Stonetracker/Bosco/teinteremix22.sps. SPM = song module, SPS = sample set (pair). 
+No open replayer exists anywhere to vendor:
+
+jd	31 -- OK
 
 
 --- FIXER WATERMARK --------------------
 >>> all triaging doe for items above <<<
 
-
-
-sps	31 -- Trying testmus/uade/teinteremix22.sps ... playback FAILED
-spm	31 -- Trying testmus/uade/teinteremix22.spm ... playback FAILED
-
-jd	31 -- OK
 
 amad	31 -- no test
 gbr	30 -- no test

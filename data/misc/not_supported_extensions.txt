@@ -28,3 +28,12 @@
 # distinct custom opna driver, no open replayer exists (98fmplayer, pmdwin,
 # mdplayer, rePlayer all reject it). needs full driver RE.
 .pmd
+
+# stonetracker (amiga, 8-voice software mixer; .spm=song + .sps=sample bank
+# pair, magic SPM\x02 / SPS\x02; modland Stonetracker/). NO open replayer:
+# UADE ships no eagleplayer, not in rePlayer/libxmp/OpenMPT. Only source is
+# Marty's x86 DOS/GUS hardware-mixing player -- no portable software mixer to
+# lift. Needs full playroutine + format RE. Removed from UADE supported_ext so
+# they Skip instead of hard-FAIL.
+.spm
+.sps
