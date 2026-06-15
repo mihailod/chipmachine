@@ -702,6 +702,21 @@ three upstream components:
   same emulation lineage used by Game Music Emulator (see README credits).
 
 -------------------------------------------------------------------------------
+Fuxoft AY Language (.fxm) playback attribution
+-------------------------------------------------------------------------------
+
+The Fuxoft AY Language player in the Ayfly plugin (musicplayer/src/plugins/
+ayflyplugin/ayfly/src/libayfly/players/FXMPlay.h) is a C++ transliteration of
+the FXM (".fxm" / "FXSM") playback routines from AY_Emul by Sergey Bulba. Those
+sources are published by their author with the request that the author be
+credited when his sources, algorithms or ideas are used; they are used here on
+that basis (Used with attribution). This is the same AY_Emul lineage from which
+the rest of the Ayfly engine is ported.
+
+The Fuxoft AY Language file format itself is by Frantisek Fuka (Fuxoft) and is
+documented in his fxmasm project.
+
+-------------------------------------------------------------------------------
 SCC-Musixx (.SNG) playback attribution
 -------------------------------------------------------------------------------
 

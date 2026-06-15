@@ -23,3 +23,8 @@
 
 # jeskola buzz -- modular daw, needs closed win32 x86 machine dlls
 .bmx
+
+# piece music driver (pc-98, chemool) -- NOT kaja pmd (which is .m/.m2/.mz);
+# distinct custom opna driver, no open replayer exists (98fmplayer, pmdwin,
+# mdplayer, rePlayer all reject it). needs full driver RE.
+.pmd
