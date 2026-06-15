@@ -382,6 +382,47 @@ TEST_CASE("Musx", "[music]") { testPlugin<musix::MusxPlugin>("testmus/musx", "")
 TEST_CASE("MaxTrax", "[music]") { testPlugin<musix::MaxTraxPlugin>("testmus/maxtrax", ""); }
 TEST_CASE("STarKos", "[music]") { testPlugin<musix::SksPlugin>("testmus/sks", ""); }
 TEST_CASE("NerdTracker2", "[music]") { testPlugin<musix::NEDPlugin>("testmus/ned", ""); }
+TEST_CASE("PlayerPRO", "[music]") { testPlugin<musix::PlayerProPlugin>("testmus/playerpro", ""); }
+
+// PlayerPRO ".mad" (Macintosh tracker, "MADG"/"MADF"/"MADK") plays via the
+// vendored public-domain MADDriver. The ".mad" extension collides with AdPlug's
+// Mad Tracker 2 loader ("MAD+"), which used to claim these files and fail to
+// load them; AdPlug now content-declines them so they route here. This guards
+// both the engine slice and the AdPlug/PlayerPRO routing split.
+TEST_CASE("PlayerPRO routing", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::PlayerProPlugin pp;
+    musix::AdPlugin ad{""};
+
+    std::string const mad = "testmus/playerpro/mantra 03 dungeon.mad";
+    REQUIRE(pp.canHandle(mad));     // PlayerPRO claims the MADG module
+    REQUIRE_FALSE(ad.canHandle(mad)); // AdPlug declines (not "MAD+")
+
+    auto* player = pp.fromFile(mad);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    // Guard against the -funsigned-char regression: with unsigned char the 8-bit
+    // samples are misread and the mix clips hard (RMS pinned near full scale).
+    // A correct render of this tune sits well below that, so assert a sane level.
+    double sumSq = 0;
+    long nSamp = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(buffer[i]);
+            sumSq += double(buffer[i]) * buffer[i];
+            nSamp++;
+        }
+    }
+    delete player;
+    REQUIRE(energy > 0);
+    double rms = nSamp ? std::sqrt(sumSq / nSamp) : 0.0;
+    REQUIRE(rms < 9000.0); // correct ~3000-4000; the unsigned-char bug pushes it >13000
+}
 
 // MaxTrax (.mxtx, the Amiga sound engine behind Cyberdreams' Dark Seed et al).
 // Played by a vendored port of ScummVM's MaxTrax sequencer + Paula mixer; UADE

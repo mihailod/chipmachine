@@ -167,6 +167,11 @@ Component: ProTrekkr (Hybrid Module Tracker)
 Author: Developed by Franck Charlet (Hitchhikr)
 License: BSD 2-Clause License
 
+Component: PlayerPRO (Macintosh tracker / MADDriver)
+Author: Antoine Rosset. Minimal MADDriver slice (software synth + MAD-FG loader)
+        vendored at repo-root playerpro/; see playerpro/PROVENANCE.md.
+License: Public Domain
+
 Component: SoundSmith (Apple IIgs Ensoniq 5503 player)
 Author: Original tracker by Huibert Aalbers (1989); Ensoniq 5503 "DOC" player
         ported from the SoundSmith player by Sean Kasun (mrkite), vendored at

@@ -132,6 +132,8 @@ The one open replayer, fcatrin/fstr (MIT), is unusable for porting — x86 real-
 * OTHER *
 *********
 
+- packaging: the app should offer to os handling of all extensions it can play, package_app.sh should be augmented with plist writer for it. then the application needs to handle the file passed in (standard mac way exists)
+
 - can we detect "video unavailable" for youtube and show / print that?
 - keep fixing red stuff in cmtest outpus
 - add a test file for EVERY supported extension
@@ -394,42 +396,16 @@ doda	36 -- OK (cosmetic, not a real error). All 4 .doda fixtures play fine in bo
 c67	36 -- OK
 zxs	35 -- OK
 
-
-
 --- FIXER WATERMARK --------------------
 >>> all triaging doe for items above <<<
 
+mad	35 -- DONE new plugin ... cmtest ok, all tested in gui play except Benjamin Birney songs -- none of them plays!
+.mad files from MODLAND/PlayerPro/ are being routed to AdPlug, which is failing. .mad is an ambiguous extension — AdPlug has a MAD loader, but these are Macintosh PlayerPro modules.
+The magic is MADG — a PlayerPro (Macintosh tracker by Antoine Rosset) module. AdPlug's .mad loader is for Mad Tracker 2, a completely different format. 
 
+The engine is MaddTheSane/PlayerPRO (SourceForge mirror)
 
-mad	35 -- IN PROGRESS investigate... cmtest ok,  all tested in gui play except Benjamin Birney songs -- none of them plays!
-[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/PlayerPro/Benjamin Birney/mantra 08 final labyrinth.mad
-[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 08 final labyrinth.mad
-[RemoteLoader.cpp:90] CODE -1
-MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 08 final labyrinth.mad'. Error: 
-[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/PlayerPro/Benjamin Birney/mantra 09 final boss.mad
-[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 09 final boss.mad
-[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/PlayerPro/Benjamin%20Birney/mantra%2009%20final%20boss.mad
-[web.cpp:181] CODE 226
-[RemoteLoader.cpp:90] CODE 226
-MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 09 final boss.mad'. Error: 
-MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 02 forest.mad'. Error: 
-[SearchIndex.cpp:229] words: [[benjamin birn]}]
-[SearchIndex.cpp:271] ## OTHER PARTS
-[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/PlayerPro/Benjamin Birney/mantra 03 dungeon.mad
-[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 03 dungeon.mad
-[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/PlayerPro/Benjamin%20Birney/mantra%2003%20dungeon.mad
-[web.cpp:181] CODE 226
-[RemoteLoader.cpp:90] CODE 226
-MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 03 dungeon.mad'. Error: 
-[SearchIndex.cpp:229] words: [[benjamin birn]}]
-[SearchIndex.cpp:271] ## OTHER PARTS
-[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/PlayerPro/Benjamin Birney/mantra 06 labyrinth.mad
-[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 06 labyrinth.mad
-[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/PlayerPro/Benjamin%20Birney/mantra%2006%20labyrinth.mad
-[web.cpp:181] CODE 226
-[RemoteLoader.cpp:90] CODE 226
-MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPlayerPro%2fBenjamin Birney/mantra 06 labyrinth.mad'. Error: 
-The engine is MaddTheSane/PlayerPRO (SourceForge mirror),
+coco	44 -- INVESTIGATE Not handled, no tests
 
 mk2	34 -- investigate-- cmtest ok, all other tried from gui play except this one is silence:
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Mark II/Andreas Starr/my way to the stars.mk2
@@ -501,24 +477,46 @@ Skipping testmus/openmpt/leroy - intro.uni
 sn2	25 -- no test
 mgb	25 -- no test
 
---- CHECKER WATERMARK ------------------------------------
->>>>>>>> deeper research needed for items below <<<<<<<<<<
+wb	24 -- OK
 
-wb	24 -- cmtest ok
-
-tcb	24 -- cmtest passes for 2 plugins, investigate / tighten
+tcb	24 -- all play from GUI, but cmtest passes for 2 plugins, investigate / tighten
 Trying testmus/uade/cannonfodder.tcb ... playback OK
 Trying testmus/openmpt/m-demo3-1.tcb ... playback OK
 
 omf	24 -- no test
 ixs	23 -- no test
 
-ems	23 -- cmtest ok
+ems	23 -- OK
+
 snd	22 -- no test
 axs	22 -- no test
-dfm	21 -- cmtest ok
-chi	21 -- cmtest ok
-ast	21 -- cmtest ok
+
+dfm	21 -- OK
+chi	21 -- OK
+
+ast	21 -- cmtest ok but silent:
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/All Sound Tracker/Feilei/tiny opl3 demo.ast
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fFeilei/tiny opl3 demo.ast
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/All%20Sound%20Tracker/Feilei/tiny%20opl3%20demo.ast
+[web.cpp:181] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+[UADEPlugin.cpp:512] FILENAME 'tiny opl3 demo.ast', PREFIX 'tiny opl3 demo', EXT 'ast', BASE 'tiny opl3 demo'
+[UADEPlugin.cpp:556] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fFeilei/tiny opl3 demo.ast
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/All Sound Tracker/Cagliostro/thansong.ast
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fCagliostro/thansong.ast
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/All%20Sound%20Tracker/Cagliostro/thansong.ast
+[web.cpp:181] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+[UADEPlugin.cpp:512] FILENAME 'thansong.ast', PREFIX 'thansong', EXT 'ast', BASE 'thansong'
+[UADEPlugin.cpp:556] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fCagliostro/thansong.ast
+
+
+--- CHECKER WATERMARK ------------------------------------
+>>>>>>>> deeper research needed for items below <<<<<<<<<<
 
 
 smufi	19

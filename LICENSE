@@ -681,6 +681,24 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
 THE POSSIBILITY OF SUCH DAMAGE.
 
 -------------------------------------------------------------------------------
+PlayerPRO (.mad) playback attribution
+-------------------------------------------------------------------------------
+
+The PlayerPRO plugin (musicplayer/src/plugins/playerproplugin) plays Macintosh
+PlayerPRO modules ("MADG"/"MADF"/"MADK") using a minimal slice of the PlayerPRO
+"MADDriver" software-synth engine, vendored at repo-root playerpro/.
+
+PlayerPRO was written by Antoine Rosset and released by the author to the Public
+Domain (see playerpro/LICENSE.txt):
+
+    The code "PlayerPRO" has been released to the Public Domain by the original
+    author, Antoine ROSSET.
+
+The vendored slice (sourced from the MaddTheSane/PlayerPRO mirror) plus the
+chipmachine-specific glue (a static loader registry and inert Mac-audio stubs)
+and local build patches are documented in playerpro/PROVENANCE.md.
+
+-------------------------------------------------------------------------------
 NerdTracker II (.ned) playback attribution
 -------------------------------------------------------------------------------
 

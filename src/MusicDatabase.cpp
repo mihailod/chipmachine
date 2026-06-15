@@ -1029,6 +1029,7 @@ void initFormats()
     format_map["mp3"] = MP3;
     format_map["sc68"] = ATARI;
     format_map["soundsmith"] = APPLE; // Apple IIgs SoundSmith
+    format_map["playerpro"] = APPLE;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
     format_map["ultra64 sound format"] = NINTENDO64;
     format_map["nintendo ds sound format"] = NDS;
     format_map["nintendo sound format"] = NES;

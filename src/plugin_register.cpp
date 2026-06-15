@@ -43,6 +43,7 @@ extern "C" {
     void sksplugin_register();     // STarKos / Amstrad CPC (.sks) via Arkos Tracker 3
     void nedplugin_register();     // NerdTracker II / NES (.ned) via blargg Nes_Snd_Emu
     void sccmusixxplugin_register(); // SCC-Musixx / MSX Konami SCC (.SNG) via Z80 + emu2212
+    void playerproplugin_register(); // PlayerPRO / Macintosh tracker (.mad MADG/MADF/MADK) via vendored MADDriver
 }
 
 void register_plugins() {
@@ -86,4 +87,5 @@ void register_plugins() {
     sksplugin_register();
     nedplugin_register();
     sccmusixxplugin_register();
+    playerproplugin_register();
 }
