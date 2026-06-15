@@ -401,18 +401,7 @@ mad	35 -- DONE new plugin ... cmtest ok, all tested in gui play except Benjamin 
 The magic is MADG — a PlayerPro (Macintosh tracker by Antoine Rosset) module. AdPlug's .mad loader is for Mad Tracker 2, a completely different format. 
 The engine is MaddTheSane/PlayerPRO (SourceForge mirror)
 
---- FIXER WATERMARK --------------------
->>> all triaging doe for items above <<<
-
-
-
-
-coco	44 -- DONE!! Coconizer (Acorn Archimedes, NOT Amiga). Shipped via new cocoplugin (libxmp coco_loader, reusing musxplugin's libxmp slice). See full notes on the duplicate "coco 44" entry above the FIXER WATERMARK.
-
-
-
-
-mk2	34 -- investigate-- cmtest ok, all other tried from gui play except this one is silence:
+mk2	34 -- DONE, 1 file unsupported -- cmtest ok, all other tried from gui play except this one is silence:
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Mark II/Andreas Starr/my way to the stars.mk2
 [web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMark II%2fAndreas Starr/my way to the stars.mk2
 [RemoteLoader.cpp:90] CODE -1
@@ -421,6 +410,13 @@ mk2	34 -- investigate-- cmtest ok, all other tried from gui play except this one
 [UADEPlugin.cpp:25] Starting thread
 [UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMark II%2fAndreas Starr/my way to the stars.mk2
 [MusicPlayerList.h:91] META message
+this 1 file doesn't play: this one module is an unsupported replayer variant
+
+
+--- FIXER WATERMARK --------------------
+>>> all triaging doe for items above <<<
+
+
 
 jxs	34 -- no test
 
