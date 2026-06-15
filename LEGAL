@@ -129,13 +129,14 @@ Component: HivelyTracker (AHX/HVL)
 Author: Developed by IRIS (Peter "Yohng" V, Curt Cool)
 License: BSD-3-Clause
 
-Component: libxmp (Acorn Archimedes Tracker .musx)
+Component: libxmp (Acorn Archimedes Tracker .musx, Coconizer .coco)
 Author: Developed by Claudio Matsuoka, Hipolito Carraro Jr and contributors
 License: MIT License
-Notice: Only the Archimedes Tracker loader (arch_load.c) plus the minimal libxmp
-        core needed to drive it are compiled in (vendored under
-        zxtune/3rdparty/xmp). The arch_load.c source file itself carries a GNU
-        Lesser General Public License v2.1 or later header.
+Notice: Only the Archimedes Tracker (arch_load.c) and Coconizer (coco_load.c)
+        loaders plus the minimal libxmp core needed to drive them are compiled in
+        (vendored under zxtune/3rdparty/xmp). The cocoplugin reuses the same
+        libxmp slice as musxplugin. The arch_load.c and coco_load.c source files
+        themselves carry a GNU Lesser General Public License v2.1 or later header.
 
 Component: FreeType / Grappix (UI & Text)
 Author: The FreeType Project and Grappix contributors

@@ -39,6 +39,7 @@ extern "C" {
     void bbsongplugin_register();  // Beepola .bbsong (ZX Spectrum beeper) via Z80 + speaker sampling
     void soundsmithplugin_register(); // Apple IIgs SoundSmith (bare song + .W wavebank) via Ensoniq 5503
     void musxplugin_register();    // Acorn Archimedes Tracker (.musx) via libxmp arch_loader
+    void cocoplugin_register();    // Coconizer / Acorn Archimedes (.coco) via libxmp coco_loader
     void maxtraxplugin_register(); // MaxTrax / Amiga (.mxtx) via ScummVM MaxTrax+Paula
     void sksplugin_register();     // STarKos / Amstrad CPC (.sks) via Arkos Tracker 3
     void nedplugin_register();     // NerdTracker II / NES (.ned) via blargg Nes_Snd_Emu
@@ -83,6 +84,7 @@ void register_plugins() {
     bbsongplugin_register();
     soundsmithplugin_register();
     musxplugin_register();
+    cocoplugin_register();
     maxtraxplugin_register();
     sksplugin_register();
     nedplugin_register();

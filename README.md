@@ -377,6 +377,12 @@ Support for the native **8-channel** format of Dan Wilson's *!Tracker* (1991), a
 
 Extensions: `.musx`
 
+### Coconizer
+
+Support for **Coconizer**, a sample-based Acorn Archimedes music format (the same VIDC-era family as Archimedes Tracker), via the libxmp `coco_loader`. The plugin reuses the libxmp slice already compiled for Archimedes Tracker rather than building a second copy.
+
+Extensions: `.coco`
+
 ### MaxTrax (Amiga)
 
 Support for **MaxTrax**, a commercial custom Amiga sound engine (multiple packing subformats)

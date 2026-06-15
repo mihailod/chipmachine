@@ -338,7 +338,7 @@ dl	45 -- OK
 jam	44 -- OK
 hvl	44 -- OK
 
-coco	44 -- INVESTIGATE Not handled, no tests
+coco	44 -- DONE!! Coconizer (sample-based Acorn Archimedes format, modland Coconizer/, Neil Coffey et al). libxmp already had a full coco_loader (zxtune/3rdparty/xmp/src/loaders/coco_load.c) -- same Acorn family as .musx. New cocoplugin compiles ONLY coco_load.c + glue and links musxplugin for the shared libxmp slice (a second full slice would collide on every xmp symbol; zxtune's xmp is NOT in the chipmachine link, so musxplugin is the only copy). canHandle gates ext==coco + first byte 0x84(4ch)/0x88(8ch). Drives the single loader via xmp_load_typed_module_from_memory(&coco_loader), exactly like musx. 4 fixtures (Beethoven1/Walking in the Air/French Anthem/NRGCOM) all play, cmtest Coconizer + "plays sound" green, coverage gate unchanged. README/LEGAL/Credits.rtf synced.
 
 mms	43 -- OK
 bd	43 -- OK
@@ -396,16 +396,21 @@ doda	36 -- OK (cosmetic, not a real error). All 4 .doda fixtures play fine in bo
 c67	36 -- OK
 zxs	35 -- OK
 
---- FIXER WATERMARK --------------------
->>> all triaging doe for items above <<<
-
 mad	35 -- DONE new plugin ... cmtest ok, all tested in gui play except Benjamin Birney songs -- none of them plays!
 .mad files from MODLAND/PlayerPro/ are being routed to AdPlug, which is failing. .mad is an ambiguous extension — AdPlug has a MAD loader, but these are Macintosh PlayerPro modules.
 The magic is MADG — a PlayerPro (Macintosh tracker by Antoine Rosset) module. AdPlug's .mad loader is for Mad Tracker 2, a completely different format. 
-
 The engine is MaddTheSane/PlayerPRO (SourceForge mirror)
 
-coco	44 -- INVESTIGATE Not handled, no tests
+--- FIXER WATERMARK --------------------
+>>> all triaging doe for items above <<<
+
+
+
+
+coco	44 -- DONE!! Coconizer (Acorn Archimedes, NOT Amiga). Shipped via new cocoplugin (libxmp coco_loader, reusing musxplugin's libxmp slice). See full notes on the duplicate "coco 44" entry above the FIXER WATERMARK.
+
+
+
 
 mk2	34 -- investigate-- cmtest ok, all other tried from gui play except this one is silence:
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Mark II/Andreas Starr/my way to the stars.mk2

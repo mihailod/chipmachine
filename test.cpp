@@ -379,6 +379,7 @@ TEST_CASE("SunVox", "[music]") { testPlugin<musix::SunVoxPlugin>("testmus/sunvox
 // to the bare song.
 TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmus/soundsmith", ".W"); }
 TEST_CASE("Musx", "[music]") { testPlugin<musix::MusxPlugin>("testmus/musx", ""); }
+TEST_CASE("Coconizer", "[music]") { testPlugin<musix::CocoPlugin>("testmus/coco", ""); }
 TEST_CASE("MaxTrax", "[music]") { testPlugin<musix::MaxTraxPlugin>("testmus/maxtrax", ""); }
 TEST_CASE("STarKos", "[music]") { testPlugin<musix::SksPlugin>("testmus/sks", ""); }
 TEST_CASE("NerdTracker2", "[music]") { testPlugin<musix::NEDPlugin>("testmus/ned", ""); }
@@ -529,6 +530,37 @@ TEST_CASE("Musx plays sound", "[music]")
     REQUIRE_FALSE(plugin.canHandle("testmus/org/access.org"));
 
     auto* player = plugin.fromFile(musx);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
+// Coconizer (.coco) -- a sample-based Acorn Archimedes format played by libxmp's
+// coco_loader. cocoplugin compiles only coco_load.c and links musxplugin for
+// the shared libxmp slice (a second full slice would collide on every symbol).
+// This guards the loader wiring + the 0x84/0x88 first-byte gate.
+TEST_CASE("Coconizer plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::CocoPlugin plugin;
+
+    std::string const coco = "testmus/coco/Beethoven1.coco";
+    REQUIRE(plugin.canHandle(coco));
+    // Wrong payload on the same extension must be declined.
+    REQUIRE_FALSE(plugin.canHandle("testmus/org/access.org"));
+
+    auto* player = plugin.fromFile(coco);
     REQUIRE(player != nullptr);
 
     std::array<int16_t, 8192> buffer{};
@@ -1858,6 +1890,7 @@ TEST_CASE("coverage", "[music]")
         {"PokeyNoise", "testmus/pn"},
         {"Beepola (Phaser1)", "testmus/bbsong"},
         {"Archimedes Tracker", "testmus/musx"},
+        {"Coconizer", "testmus/coco"},
         {"MaxTrax", "testmus/maxtrax"},
         {"STarKos", "testmus/sks"},
         {"NerdTracker2", "testmus/ned"},
