@@ -413,6 +413,12 @@ Support for **PlayerPRO**, Antoine Rosset's classic Macintosh tracker — the do
 
 Extensions: `.mad` (`MADG`/`MADF`/`MADK`)
 
+### JayTrax
+
+Support for **JayTrax** (`.jxs`), Reinier "Rhino" van Vliet's cross-platform software synthesizer + tracker (the engine began as *Mugician*; the desktop/PocketPC apps were *JayTrax* and *Syntrax*). Instruments are samples or synth waveforms shaped by AM/FM/pan/arpeggio modulators, mixed across up to six stereo channels with a stereo echo. Played in-process by the public C port of Rhino's own replayer (vendored at repo-root `jaytrax/`), rendering at 44100 Hz — not via UADE. Detection is by the 16-bit `mugiversion` tag (3456/3457); the format has no string magic.
+
+Extensions: `.jxs`
+
 ### AudioOverload
 
 Support for Sega Saturn and Capcom Q music

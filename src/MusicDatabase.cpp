@@ -1030,6 +1030,7 @@ void initFormats()
     format_map["sc68"] = ATARI;
     format_map["soundsmith"] = APPLE; // Apple IIgs SoundSmith
     format_map["playerpro"] = APPLE;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
+    format_map["jaytrax"] = TRACKER;  // JayTrax (.jxs), cross-platform synth tracker -- not UADE/Amiga
     format_map["ultra64 sound format"] = NINTENDO64;
     format_map["nintendo ds sound format"] = NDS;
     format_map["nintendo sound format"] = NES;

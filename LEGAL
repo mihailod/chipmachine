@@ -173,6 +173,15 @@ Author: Antoine Rosset. Minimal MADDriver slice (software synth + MAD-FG loader)
         vendored at repo-root playerpro/; see playerpro/PROVENANCE.md.
 License: Public Domain
 
+Component: JayTrax (cross-platform synth tracker, .jxs)
+Author: Format and original replayer by Reinier "Rhino" van Vliet
+        (https://bitbucket.org/rhinoid/crossx). In-process playback uses the
+        public C port of that replayer by "pachuco"
+        (https://github.com/pachuco/jaytrax), vendored at repo-root jaytrax/;
+        see jaytrax/PROVENANCE.md.
+License: No explicit license stated upstream; source publicly released by the
+        author and reused by other players (kode54/foobar2000, rePlayer).
+
 Component: SoundSmith (Apple IIgs Ensoniq 5503 player)
 Author: Original tracker by Huibert Aalbers (1989); Ensoniq 5503 "DOC" player
         ported from the SoundSmith player by Sean Kasun (mrkite), vendored at

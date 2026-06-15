@@ -412,15 +412,15 @@ mk2	34 -- DONE, 1 file unsupported -- cmtest ok, all other tried from gui play e
 [MusicPlayerList.h:91] META message
 this 1 file doesn't play: this one module is an unsupported replayer variant
 
+jxs	34 -- DONE .jxs is JayTrax, Reinier "Rhino" van Vliet's cross-platform software-synth tracker (the engine started as Mugician; the apps were JayTrax / Syntrax). The modland JayTrax/ tree has 34 tunes across Philip Wood, Reinier van Vliet and Stefan Alfrink. It is not an Amiga format and has no UADE eagleplayer — but a clean, self-contained C port of Rhino's own replayer exists (pachuco/jaytrax), with an ideal offline API (jxsfile_readSongMem → jaytrax_renderChunk int16 stereo). Implemented new plugin.
+
+tw	33 -- OK
+
 
 --- FIXER WATERMARK --------------------
 >>> all triaging doe for items above <<<
 
 
-
-jxs	34 -- no test
-
-tw	33 -- OK
 
 mon	32 -- cmtest ok, all tested from GUI worked except:
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Monotone/Virt/rickroll.mon

@@ -384,6 +384,7 @@ TEST_CASE("MaxTrax", "[music]") { testPlugin<musix::MaxTraxPlugin>("testmus/maxt
 TEST_CASE("STarKos", "[music]") { testPlugin<musix::SksPlugin>("testmus/sks", ""); }
 TEST_CASE("NerdTracker2", "[music]") { testPlugin<musix::NEDPlugin>("testmus/ned", ""); }
 TEST_CASE("PlayerPRO", "[music]") { testPlugin<musix::PlayerProPlugin>("testmus/playerpro", ""); }
+TEST_CASE("JayTrax", "[music]") { testPlugin<musix::JxsPlugin>("testmus/jxs", ""); }
 
 // PlayerPRO ".mad" (Macintosh tracker, "MADG"/"MADF"/"MADK") plays via the
 // vendored public-domain MADDriver. The ".mad" extension collides with AdPlug's

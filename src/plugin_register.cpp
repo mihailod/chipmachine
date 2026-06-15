@@ -45,6 +45,7 @@ extern "C" {
     void nedplugin_register();     // NerdTracker II / NES (.ned) via blargg Nes_Snd_Emu
     void sccmusixxplugin_register(); // SCC-Musixx / MSX Konami SCC (.SNG) via Z80 + emu2212
     void playerproplugin_register(); // PlayerPRO / Macintosh tracker (.mad MADG/MADF/MADK) via vendored MADDriver
+    void jxsplugin_register();     // JayTrax / cross-platform synth tracker (.jxs) via Rhino's replayer (C port)
 }
 
 void register_plugins() {
@@ -90,4 +91,5 @@ void register_plugins() {
     nedplugin_register();
     sccmusixxplugin_register();
     playerproplugin_register();
+    jxsplugin_register();
 }
