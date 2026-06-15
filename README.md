@@ -419,6 +419,12 @@ Support for **JayTrax** (`.jxs`), Reinier "Rhino" van Vliet's cross-platform sof
 
 Extensions: `.jxs`
 
+### Monotone
+
+Support for **MONOTONE** (`.mon`), Jim "Trixter" Leonard / Hornet's PC-speaker tracker — up to a dozen square-wave tracks summed into the IBM PC's single 1-bit beeper. Played by the vendored **PTPlayer** library (prochazkaml), which unpacks the module and rebuilds each track's square wave at 44100 Hz; the related **Polytone** (`.pol`) format is read for free. The `.mon` extension is shared with UADE's Amiga *Maniacs of Noise* player, so both UADE and this plugin content-gate on the `\x08MONOTONE` magic — Amiga `.mon` modules stay with UADE, Monotone files route here. (Previously a Monotone file fed to the 68k Maniacs of Noise player crashed UADE with an illegal-instruction trap.)
+
+Extensions: `.mon`, `.pol`
+
 ### AudioOverload
 
 Support for Sega Saturn and Capcom Q music
@@ -521,6 +527,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **SCC-Musixx (MSX):** SCC-Musixx and its `.SNG` format are by **Tyfoon-Software** (M. Spoor, 1990); the original "MUSIXX REPLAY ROUTINE v1.2" (`REPLAY.BIN`, freeware, distributed via the MSX Resource Center) is embedded and run unmodified. The Konami **SCC** sound chip is emulated by **emu2212** by Mitsutaka Okazaki (MIT, the same vendored copy used by libkss). The Z80 CPU core is GME's (Shay Green, LGPL-2.1).
 * **PlayerPRO (Macintosh):** PlayerPRO and its `MADG`/`MADF`/`MADK` module formats are by **Antoine Rosset**, who released the source to the **Public Domain**. Playback uses a minimal slice of PlayerPRO's own "MADDriver" software-synth engine (from the MaddTheSane/PlayerPRO mirror), vendored at repo-root `playerpro/` and driven offline in its `NoHardwareDriver` mode. The chipmachine-specific glue — a static loader registry replacing the dlopen scanner, inert stubs for the Mac CoreAudio/Finder entry points, and two small header patches — is documented in `playerpro/PROVENANCE.md`.
 * **DSIK "old" Internal Format (`.dsm` v1):** libopenmpt decodes the newer DSIK "RIFF" and Dynamic Studio `.dsm` variants but not the original DSIK Internal Format (`DSM` + 0x10, e.g. the Necros demoscene tunes). Support for that variant is a local patch to the vendored libopenmpt `Load_dsm.cpp`, with the loader adapted from **MilkyTracker**'s `LoaderDSMv1` (`milkyplay/LoaderDSM.cpp`) by the MilkyTracker Team. Playback itself reuses libopenmpt's existing DSIK engine. Licensed under BSD-3-Clause.
+* **MONOTONE (IBM PC speaker):** MONOTONE and its `.mon` format are by Jim "Trixter" Leonard of Hornet. Playback uses **PTPlayer** by Michal Procházka — the player library for the modern *Polytone* tracker, which also loads legacy Monotone files (and the `.pol` format). Licensed under BSD-3-Clause.
 
 ---
 

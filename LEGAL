@@ -286,3 +286,12 @@ License: Freeware. The SCC-MUSIXX package (program, editor, replay routine and
 Notice: The original ~1.5 KB Z80 replayer (REPLAY.BIN) is embedded verbatim and
         executed on the GME Z80 core; the Konami SCC is emulated by emu2212
         (MIT, see above). Shipped with attribution to Tyfoon-Software.
+
+Component: PTPlayer (MONOTONE / Polytone PC-speaker tracker, .mon/.pol)
+Author: Michal Procházka (https://github.com/prochazkaml/PTPlayer); the player
+        library for the Polytone tracker, which also loads legacy MONOTONE files.
+        MONOTONE format and tracker by Jim "Trixter" Leonard / Hornet. Vendored
+        at musicplayer/src/plugins/monotoneplugin/ptplayer/.
+License: BSD 3-Clause License
+Notice: Local patch only makes four file-scope globals static to avoid full-link
+        symbol collisions; see the comment in ptplayer.c.

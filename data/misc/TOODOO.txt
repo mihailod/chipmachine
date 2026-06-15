@@ -6,7 +6,7 @@
 
 - ability to manually add stuff to database. via a manual.txt file
 
-- zx spectrum music from games dear to me: revrse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
+- ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
 Your strategy of extracting the routine + data payload, indexing it, booting a minimal emulator stub, and jumping straight to the execution address works perfectly for 48K beeper engines. In fact, it avoids the timing sync issues plaguing AY emulation because the Z80 CPU is the sound synthesizer.
 Also look at the zx repositories below, maybe someone already did this.
 
@@ -416,13 +416,8 @@ jxs	34 -- DONE .jxs is JayTrax, Reinier "Rhino" van Vliet's cross-platform softw
 
 tw	33 -- OK
 
-
---- FIXER WATERMARK --------------------
->>> all triaging doe for items above <<<
-
-
-
-mon	32 -- cmtest ok, all tested from GUI worked except:
+mon	32 -- DONE (shipped). MONOTONE (Trixter/Hornet PC-speaker tracker) collided with UADE's Amiga Maniacs of Noise on the .mon ext -> UADE ran the module header as 68k code and crashed ("Illegal instruction: 084d"). New monotoneplugin wraps vendored PTPlayer (BSD-3); UADE now content-declines the \x08MONOTONE magic so the two route apart. 4 fixtures green.
+Original report:
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Monotone/Virt/rickroll.mon
 [web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMonotone%2fVirt/rickroll.mon
 [web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/Monotone/Virt/rickroll.mon
@@ -434,8 +429,19 @@ mon	32 -- cmtest ok, all tested from GUI worked except:
 [UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMonotone%2fVirt/rickroll.mon
 Illegal instruction: 084d at 0001f000
 uade warning: Song ended prematurely due to error: score crashed
+Found it. MONOTONE is not an Amiga format at all — it's a PC-speaker tracker by Trixter/Hornet (single square wave, constant volume). That's why UADE's ManiacsOfNoise (an Amiga 68k player) crashes: it's the completely wrong engine. 
+rickroll.mon is a MONOTONE module (magic 08 "MONOTONE" at offset 0). MONOTONE is a PC-speaker tracker by Trixter/Hornet — single square wave, ≤4 mixed tracks. It has nothing to do with the Amiga.
+Full player: the decline plus a new monotoneplugin wrapping PTPlayer's MON loader + square synth → all 4 files actually play.
+Full new player it is. Let me mark this as a new chapter and pull down the PTPlayer source to understand its API.
 
 MPK	32 -- OK
+
+
+
+--- FIXER WATERMARK --------------------
+>>> all triaging doe for items above <<<
+
+
 
 sps	31 -- Trying testmus/uade/teinteremix22.sps ... playback FAILED
 spm	31 -- Trying testmus/uade/teinteremix22.spm ... playback FAILED

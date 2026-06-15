@@ -1432,6 +1432,10 @@ TEST_CASE("UADE mus routing", "[music]")
     REQUIRE(plugin.canHandle((tmp / "musix_no_such.mus").string()));
 }
 TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmus/pn", ""); }
+// Monotone (.mon) -- PC-speaker tracker by Trixter/Hornet, played by the
+// vendored PTPlayer. The extension collides with UADE's Maniacs of Noise; the
+// Monotone-magic gate keeps the two apart.
+TEST_CASE("Monotone", "[music]") { testPlugin<musix::MonotonePlugin>("testmus/monotone", ""); }
 // Beepola .bbsong (ZX Spectrum beeper). Only the Phaser1 engine (P1D/P1S) is
 // decoded today; the other Beepola engines in this dir fast-fail as a graceful
 // skip ("unsupported"), so coverage exercises the 18 Phaser1 tunes.
@@ -1889,13 +1893,15 @@ TEST_CASE("coverage", "[music]")
         {"Euphony", "testmus/eup"},
         {"WonderSwan (in_wsr)", "testmus/wsr"},
         {"PokeyNoise", "testmus/pn"},
+        {"Monotone", "testmus/monotone"},
         {"Beepola (Phaser1)", "testmus/bbsong"},
         {"Archimedes Tracker", "testmus/musx"},
         {"Coconizer", "testmus/coco"},
         {"MaxTrax", "testmus/maxtrax"},
         {"STarKos", "testmus/sks"},
         {"NerdTracker2", "testmus/ned"},
-        {"SCC-Musixx", "testmus/sccmusixx"}
+        {"SCC-Musixx", "testmus/sccmusixx"},
+        {"JayTrax", "testmus/jxs"}
     };
 
     // Plugins whose extensions are split across several testmus folders (one
