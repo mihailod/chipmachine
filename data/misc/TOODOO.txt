@@ -495,15 +495,17 @@ ixs	23 -- DONE Ixalance
 ems	23 -- OK
 
 
---- FIXER WATERMARK --------------------
->>> all triaging doe for items above <<<
+snd	22 -- It's already wired up. .snd routes to the vendored AdPlug Westwood CadlPlayer. AdPlugin::canHandle validates .snd via isWestwoodAdl()
 
-
-snd	22 -- no test
-axs	22 -- no test
+axs	22 -- NO closed commercial softsynth
 
 dfm	21 -- OK
 chi	21 -- OK
+
+
+--- FIXER WATERMARK --------------------
+>>> all triaging doe for items above <<<
+
 
 ast	21 -- cmtest ok but silent:
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/All Sound Tracker/Feilei/tiny opl3 demo.ast

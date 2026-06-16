@@ -22,6 +22,16 @@
 # targeting AdLib OPL2 (wrong chip, not portable C). 
 # commented but documented due to .mus lowercase clash
 
+# axs softsynth/tracker (resolution audio, www.resolutionaudio.nl; closed
+# commercial DOS 2.x + Win32 3.x, freeware since 2001). IFF container
+# "FORM <size> AXSF" with USER/SHDR/SONG/BLOK/TRAK/INST/INNM chunks. The
+# sequencer/pattern data is parseable, but the INST chunks are SYNTH PATCHES
+# (a Roland JP8000-style softsynth model) -- there is NO sample/PCM data in the
+# file, so voices come entirely from the closed built-in DSP engine. No open
+# replayer anywhere (UADE/OpenMPT/libxmp/ZXTune/rePlayer); playback needs full
+# RE of the win32/dos synth. Same dead-end as .psy/.sn. ~22 tunes on modland.
+.axs
+
 # atari falcon ace tracker -- only falcon or port whole emulator
 .am
 
