@@ -2,7 +2,7 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-- i see some dupes in search, example: monkmusings (only 1 record in db), maybe there is more
+- i see some dupes in search, example: monkmusings (only 1 record in db?), maybe there is more. my understanding is that the combo song name + author + format should be unique.
 
 - ability to manually add stuff to database. via a manual.txt file
 
@@ -10,7 +10,6 @@
 Your strategy of extracting the routine + data payload, indexing it, booting a minimal emulator stub, and jumping straight to the execution address works perfectly for 48K beeper engines. In fact, it avoids the timing sync issues plaguing AY emulation because the Z80 CPU is the sound synthesizer.
 Also look at the zx repositories below, maybe someone already did this.
 
-- (minor) radio screenshots missing for rainwave (favicon issue)
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
 - in general genuinely bad or missing files should be removed from the index -- use maybe filter for that?
