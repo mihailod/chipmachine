@@ -5,8 +5,15 @@
 # psycle tracker -- no decoder
 .psy
 
-# sound club (amiga) -- nothing exists to decode
+# sound club (bluemoon software; PC/DOS+Win, NOT amiga). .sn = DOS 1993,
+# .sn2 = win95/nt sequel "sound club 2" (magic SN2\xd2, little-endian IFF-like
+# chunks NAM/SEQ/PAT/pna/voi). pattern data is parseable but modules carry NO
+# sample/instrument data -- voices come from the closed built-in bluemoon synth,
+# so playback needs full RE of the win32 engine. no open replayer anywhere
+# (UADE/OpenMPT/libxmp/ZXTune/rePlayer/NostalgicPlayer/vgmstream). OpenMPT's
+# "Sound Club 2" string only labels S3M *exports*, it can't read native .sn/.sn2.
 .sn
+.sn2
 
 # zx spectrum flash tracker -- nothing exists to decode
 .fls

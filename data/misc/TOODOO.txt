@@ -482,12 +482,14 @@ Skipping testmus/openmpt/leroy - intro.uni
 MikMod UNIMOD on-disk format (version 5).
 The fix is clean and low-risk: libmikmod is the canonical reader (load_uni.c, LGPL, ~940 KB) and it decodes the test file to real audio.
 
+sn2	25 -- NO - Sound Club 2 (Bluemoon Software, Win95/NT; PC, NOT Amiga). Native magic SN2\xd2, little-endian IFF-like chunks (NAM/SEQ/PAT/pna/voi). Note/pattern data is parseable but the module contains NO sample/instrument data — voices are produced by Sound Club 2's closed built-in synth, so playback needs full RE of the Bluemoon Win32 engine. No open replayer anywhere (UADE/OpenMPT/libxmp/ZXTune/rePlayer/NostalgicPlayer/vgmstream all lack it). OpenMPT's "Sound Club 2" string (Load_s3m.cpp) only labels S3M *exports*, it does not read native .sn2. Same dead-end as sn/psy/skm. PARK.
+
 
 --- FIXER WATERMARK --------------------
 >>> all triaging doe for items above <<<
 
 
-sn2	25 -- no test
+
 mgb	25 -- no test
 
 wb	24 -- OK
