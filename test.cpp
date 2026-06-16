@@ -921,6 +921,42 @@ TEST_CASE("OpenMPT DSM v1 plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// Onyx Music File (.omf) plays sound. This MOD-like Amiga format from the 1993
+// "Jangle" musicdisk (modland "Onyx Music File/", 24 tunes) never had a
+// standalone replayer -- it was decoded only by the chipmachine-local
+// Load_omf.cpp, written from Martin Bazley's (swirlythingy's) 2009 format
+// specification. The format stores its sequence table, patterns and events
+// backwards, pads every pattern/sample block with three bytes, and uses
+// unsigned 8-bit samples. Fails if the loader or its Tables.cpp/Sndfile.cpp
+// registration regresses.
+TEST_CASE("OpenMPT OMF plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::OpenMPTPlugin plugin;
+
+    for (auto const& omf : {"testmus/openmpt/jangle intro.omf",
+                            "testmus/openmpt/laxity remix.omf",
+                            "testmus/openmpt/tal.omf"}) {
+        REQUIRE(plugin.canHandle(omf));
+
+        auto* player = plugin.fromFile(omf);
+        REQUIRE(player != nullptr);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+
+        REQUIRE(energy != 0);
+    }
+}
+
 // Symphonie / Symphonie Pro (.symmod) plays sound. This Amiga "pseudo-DAW"
 // format (software mixer + real-time echo DSP) has no portable replayer except
 // libopenmpt's Load_symmod.cpp, which only landed in libopenmpt 0.6 -- the

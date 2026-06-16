@@ -13,7 +13,7 @@ Also look at the zx repositories below, maybe someone already did this.
 - (minor) radio screenshots missing for rainwave (favicon issue)
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
-- in general genuinely bad or missing files should be removed from the index
+- in general genuinely bad or missing files should be removed from the index -- use maybe filter for that?
 
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
@@ -483,15 +483,22 @@ are decodable (plain binary, not compressed) but full support = leaf decode -> d
 
 wb	24 -- OK
 
+tcb	24 OK -- all play from GUI, but cmtest passes for 2 plugins, investigate / tighten
+Trying testmus/uade/cannonfodder.tcb ... playback OK
+Trying testmus/openmpt/m-demo3-1.tcb ... playback OK
+not a bug — routing is already deterministic and correct.
+.tcb is one format — TCB Tracker (Atari ST), magic AN COOL.. Both cmtest fixtures (cannonfodder.tcb, m-demo3-1.tcb) are the identical format; the UADE-folder one is just a legacy fixture from before libopenmpt gained a TCB loader.
+OpenMPT plays all 24 in the GUI. It's registered before UADE, advertises tcb, and its loader succeeds on every valid file → it always wins in MusicPlayer::fromFile. UADE's TCB_Tracker claim is a redundant, effectively-unreachable fallback for the same format.
+cmtest's "2 plugins" is a test artifact, not a runtime split — testPlugin<> exercises each engine in isolation against its own folder, so both prove they can decode TCB; the host path only uses OpenMPT.
+
+omf	24 -- DONE! Onyx Music File
+
+
 --- FIXER WATERMARK --------------------
 >>> all triaging doe for items above <<<
 
 
-tcb	24 -- all play from GUI, but cmtest passes for 2 plugins, investigate / tighten
-Trying testmus/uade/cannonfodder.tcb ... playback OK
-Trying testmus/openmpt/m-demo3-1.tcb ... playback OK
 
-omf	24 -- no test
 ixs	23 -- no test
 
 ems	23 -- OK
@@ -577,7 +584,10 @@ fmf	11
 cba	11
 scumm	10
 lion	10
-imf	10
+
+imf	10 -- Trying testmus/openmpt/antspant.imf ... openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
+Trying testmus/openmpt/antspant.imf ... playback EXCEPTION (Could not load module)
+
 cm	10
 xmf	9
 xad	9
