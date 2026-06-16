@@ -66,6 +66,10 @@ OpenMPT (Tracker Formats):
 \f4\b0  Developed by the OpenMPT Project Team (originally founded by Olivier Lapicque). Licensed under BSD-3-Clause.\
 \ls2\ilvl0
 \f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+MilkyTracker (DSIK "old" .dsm v1 loader):
+\f4\b0  The original DSIK Internal Format (magic "DSM"+0x10, e.g. the Necros tunes) is not decoded by libopenmpt; its loader is adapted from MilkyTracker's milkyplay/LoaderDSM.cpp by the MilkyTracker Team. Licensed under BSD-3-Clause.\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
 GME / Game Music Emulator (Console Formats):
 \f4\b0  Developed by Shay Green. Licensed under LGPL-2.1-or-later.\
 \ls2\ilvl0
@@ -107,7 +111,7 @@ MDX / S98 (PC-98 & Sharp X68000):
 \ls2\ilvl0
 \f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
 Ayfly (ZX Spectrum AY-3-8910):
-\f4\b0  Developed by Sergey Vladimirov. Licensed under GPL-2.0-or-later.\
+\f4\b0  Developed by Sergey Vladimirov. Licensed under GPL-2.0-or-later. The Fuxoft AY Language (.fxm) player is a C++ transliteration of the FXM routines from AY_Emul by Sergey Bulba (used with attribution, as the author requests); the format is Frantisek Fuka's (Fuxoft). The AY Amadeus (.amad) player reuses that FXM engine and transliterates AY_Emul's ZXAY/AMAD container loader; the tunes are by Frantisek Fuka (Fuxoft) and Patrik Rak.\
 \ls2\ilvl0
 \f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
 98fmplayer:
@@ -164,6 +168,50 @@ ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise .pn):
 \f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
 Beepola (ZX Spectrum beeper .bbsong):
 \f4\b0  Engine players: Phaser1 by Shiru (public domain, from 1tracker); Music Box (orig. Mark Alexander, 1985), Music Studio (orig. Sasa Pusica, 1988) and SFX/Fuzz Click (orig. Jonathan Smith / Special FX Software, from the game Firefly) reverse-engineered; SFX player/format reproduced from Beepola. z80ass assembler by Shiru; .bbsong format and Beepola tool by Chris Cowley. Z80 core from GME (Shay Green, LGPL-2.1); ZX Spectrum 48K ROM under Amstrad's emulation permission.\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+SoundSmith (Apple IIgs, bare song + .W wavebank):
+\f4\b0  Original tracker by Huibert Aalbers (1989). Ensoniq 5503 "DOC" player ported from the BSD-licensed JavaScript/C SoundSmith player by Sean Kasun (mrkite). Licensed under BSD-2-Clause.\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+Archimedes Tracker (Acorn Archimedes !Tracker, .musx):
+\f4\b0  Original 8-channel tracker by Dan Wilson (1991). Played via the libxmp arch_loader by Claudio Matsuoka, Hipolito Carraro Jr and contributors. libxmp licensed under MIT; the arch loader source under LGPL-2.1-or-later.\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+Coconizer (Acorn Archimedes, .coco):
+\f4\b0  Sample-based Archimedes music format. Played via the libxmp coco_loader by Claudio Matsuoka, Hipolito Carraro Jr and contributors, reusing the same libxmp slice as Archimedes Tracker. libxmp licensed under MIT; the coco loader source under LGPL-2.1-or-later.\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+MaxTrax (Amiga, .mxtx):
+\f4\b0  The Amiga MaxTrax sound engine (used by games such as Dark Seed, music by David A. Bean). Played via a vendored port of the ScummVM MaxTrax sequencer and Paula mixer. Licensed under GPL-3.0-or-later.\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+STarKos (Amstrad CPC, .sks):
+\f4\b0  Targhan / Arkos' AY-3-8912 / YM2149 CPC tracker, predecessor of Arkos Tracker. Played by a vendored non-GUI slice of the Arkos Tracker 3 source by Julien Nevo (importer + SongPlayer + PsgStreamGenerator), the same path as AT3's headless SongToWav tool. Arkos Tracker 3 licensed under MIT; built on three ISC-licensed JUCE core modules.\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+NerdTracker II (NES / Famicom, .ned):
+\f4\b0  Michel Iwaniec's ("Bananmos") MS-DOS NES/Famicom 2A03 tracker. Played by the headless player/loader core of the NerdTracker 2 SDL port by thefox (Mika Keranen), driving blargg's Nes_Snd_Emu 0.1.7 APU emulation (Shay Green) -- the same lineage as GME. Nes_Snd_Emu licensed under LGPL-2.1; NerdTracker II and the SDL port used with attribution. Clocked at NTSC speed (the port's PAL clock played notes about a semitone flat).\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+SCC-Musixx (MSX, .SNG):
+\f4\b0  Tyfoon-Software's 1990 tracker for Konami's SCC wavetable chip (M. Spoor). The original "MUSIXX REPLAY ROUTINE v1.2" (REPLAY.BIN, freeware, via the MSX Resource Center) is embedded and run unmodified on GME's Z80 core (Shay Green, LGPL-2.1); the SCC is emulated by emu2212 by Mitsutaka Okazaki (MIT, the same emulator used by libkss).\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+PlayerPRO (Macintosh, .mad):
+\f4\b0  Antoine Rosset's classic Mac tracker (MADG/MADF/MADK formats), released by the author to the Public Domain. Played by a minimal slice of PlayerPRO's own "MADDriver" software synth (from the MaddTheSane/PlayerPRO mirror), driven offline in NoHardwareDriver mode. See playerpro/PROVENANCE.md.\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+JayTrax (cross-platform synth tracker, .jxs):
+\f4\b0  Format and replayer by Reinier "Rhino" van Vliet. Played in-process by the public C port of Rhino's own JayTrax/CrossX replayer (pachuco/jaytrax), vendored at repo-root jaytrax/. Source publicly released by the author; see jaytrax/PROVENANCE.md.\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+Monotone (IBM PC speaker, .mon):
+\f4\b0  PC-speaker tracker by Jim "Trixter" Leonard / Hornet. Played by Michal Proch\'e1zka's PTPlayer library, which also loads the Polytone (.pol) format. Licensed under BSD-3-Clause.\
+\ls2\ilvl0
+\f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+MikMod UNITRK / UNIMOD (.uni):
+\f4\b0  MikMod's own on-disk module format (magic UN0x / APUN). Played by a minimal vendored slice of libmikmod 3.3.13 (player core, virtual mixer, UNI loader, depackers, null driver) by Jean-Paul Mikkers ("MikMak"), Jake Stine and the libmikmod team. Licensed under LGPL-2.1-or-later.\
 \ls2\ilvl0
 \f5\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
 Sol3 / Pybind11 / fmt (Core Infrastructure):

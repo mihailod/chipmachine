@@ -31,44 +31,13 @@ Format is set to be the same as the file extention.
 Current distinct file extentions
 ```
 XM
-IT
-S3M
-MOD
-MTM
-669
-STM
-MED
-AHX
-IMF
-DBM
-HVL
-MO3
-OKT
-MPTM
-DMF
-MDL
-FAR
-AMS
-PTM
-MT2
-DIGI
-PLM
-GDM
-DSM
 UMX
-AMF
-ULT
-C67
-DTM
-SFX
 ```
 
 data/modarchive.txt
 ```
 gauged.xm//(gauge) radio ver.	XM	1	XM
-ptectasy.xm//0 pt ecstasy	XM	2	XM
-1funk.xm//1000 Years Of Funk	XM	3	XM
-...
+unatco_music.umx//UNATCO	UMX	179345	UMX
 ``` 
 Current number of files tracked: 160065
 

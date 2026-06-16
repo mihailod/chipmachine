@@ -34,6 +34,11 @@ public:
         const std::string& path,
         std::function<bool(int what, const uint8_t* data, int size)> data_cb);
 
+    // Resolves a "prefix::relpath" song path to the full URL that stream()/load()
+    // would fetch (i.e. source.url + relpath). Used to hand radio/mp3 streams to
+    // ffmpeg, which does its own HTTP.
+    std::string resolveUrl(const std::string& path);
+
     void preCache(const std::string& path);
 
     bool inCache(const std::string& path) const;

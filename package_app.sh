@@ -323,7 +323,33 @@ echo "=== Success: ${APP_NAME} generated cleanly in workspace root! ==="
 echo "=== Making the final distribution package... ==="
 
 cd "${WORKSPACE_ROOT}"
+rm -f ./ChipMachineAS.zip
 zip -r -y ./ChipMachineAS.zip ./${APP_NAME}
+
+# 7b. Verify the SHIPPED ARTIFACT, not just the on-disk bundle.
+#
+# The codesign check in step 7 validates ${TARGET_DIR} as it sits on disk. That
+# is NOT enough: it cannot catch a desync where the .zip ends up containing files
+# that were never part of the sealed manifest (e.g. extra UADE player files that
+# appear in the bundle after signing). Such a zip passes step 7 yet ships a
+# bundle whose contents do not match its signature — and on macOS 13+ a
+# quarantined download with a mismatched seal is reported to the user as
+# "<App> is damaged and can't be opened", a hard block with no right-click
+# bypass. We therefore extract the real zip to a scratch dir and run the same
+# strict verification against THAT, failing the build on any mismatch.
+echo "-> Verifying the packaged zip artifact (extract + strict codesign)..."
+VERIFY_DIR="$(mktemp -d)"
+( cd "${VERIFY_DIR}" && unzip -q "${WORKSPACE_ROOT}/ChipMachineAS.zip" )
+if ! codesign --verify --deep --strict "${VERIFY_DIR}/${APP_NAME}" 2>/dev/null; then
+    echo "CRITICAL: the packaged zip's signature does not match its contents."
+    echo "          The shipped bundle would be reported as 'damaged' on download."
+    codesign --verify --deep --strict --verbose=2 "${VERIFY_DIR}/${APP_NAME}" 2>&1 | grep -E "file added|missing|invalid" | head
+    rm -rf "${VERIFY_DIR}"
+    exit 1
+fi
+rm -rf "${VERIFY_DIR}"
+echo "-> Packaged zip artifact verified (--deep --strict)."
+
 cd "${CHIPMACHINE_DIR}"
 
 echo "=== Done! ==="

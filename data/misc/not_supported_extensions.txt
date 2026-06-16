@@ -2,13 +2,54 @@
 .rns
 .xrns
 
-# no player
+# psycle tracker -- no decoder
 .psy
 
-# acorn archimedes only
-.musx
+# sound club (bluemoon software; PC/DOS+Win, NOT amiga). .sn = DOS 1993,
+# .sn2 = win95/nt sequel "sound club 2" (magic SN2\xd2, little-endian IFF-like
+# chunks NAM/SEQ/PAT/pna/voi). pattern data is parseable but modules carry NO
+# sample/instrument data -- voices come from the closed built-in bluemoon synth,
+# so playback needs full RE of the win32 engine. no open replayer anywhere
+# (UADE/OpenMPT/libxmp/ZXTune/rePlayer/NostalgicPlayer/vgmstream). OpenMPT's
+# "Sound Club 2" string only labels S3M *exports*, it can't read native .sn/.sn2.
+.sn
+.sn2
 
-# Apple II GS only
-.W
+# zx spectrum flash tracker -- nothing exists to decode
+.fls
 
+# .MUS upper case fcatrin/fstr (MIT), is x86 real-mode asm
+# targeting AdLib OPL2 (wrong chip, not portable C). 
+# commented but documented due to .mus lowercase clash
 
+# atari falcon ace tracker -- only falcon or port whole emulator
+.am
+
+# shroom tracker -- no decoder
+.sho
+
+# jeskola buzz -- modular daw, needs closed win32 x86 machine dlls
+.bmx
+
+# piece music driver (pc-98, chemool) -- NOT kaja pmd (which is .m/.m2/.mz);
+# distinct custom opna driver, no open replayer exists (98fmplayer, pmdwin,
+# mdplayer, rePlayer all reject it). needs full driver RE.
+.pmd
+
+# stonetracker (amiga, 8-voice software mixer; .spm=song + .sps=sample bank
+# pair, magic SPM\x02 / SPS\x02; modland Stonetracker/). NO open replayer:
+# UADE ships no eagleplayer, not in rePlayer/libxmp/OpenMPT. Only source is
+# Marty's x86 DOS/GUS hardware-mixing player -- no portable software mixer to
+# lift. Needs full playroutine + format RE. Removed from UADE supported_ext so
+# they Skip instead of hard-FAIL.
+.spm
+.sps
+
+# Skale Tracker for PC by Baktery: No open replayer and no public spec exist
+.skm
+
+# CyberTracker (C64 SID, CyberBrain/No Name; native magic NNTRKMZX, song PRG @
+# $0400). The only public converter (DOS ctpacker BETA) is broken (malloc/DPMI),
+# and a native plugin would need full RE of the .ct->SID packer. Low value: the
+# composers' own packed SIDs are already in HVSC and play via the sidplugin.
+.ct

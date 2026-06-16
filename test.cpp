@@ -152,6 +152,29 @@ TEST_CASE("musicplayer", "")
     REQUIRE(sum != 0);
 }
 
+// Exercises the *registered-plugin* host path (createPlugins -> MusicPlayer::
+// fromFile -> getSamples -> fifo), not just the plugin in isolation. This is
+// what the GUI / cm use, and it would have caught sksplugin being absent from
+// chipmachine/src/plugin_register.cpp (it is registered in two places).
+TEST_CASE("STarKos host path plays sound", "[music]")
+{
+    auto ap = std::make_shared<AudioPlayerNull>();
+    const auto injector = di::make_injector(di::bind<utils::path>.to("."),
+                                            di::bind<AudioPlayer>.to(ap));
+    musix::ChipPlugin::createPlugins("data");
+    chipmachine::MusicPlayer mp{ ap };
+    bool ok = mp.playFile("testmus/sks/Targhan - Orion Prime - Introduction.sks");
+    REQUIRE(ok);
+    int64_t sum = 0;
+    for (int i = 0; i < 20 && sum == 0; ++i) {
+        mp.update();
+        std::vector<int16_t> data(8192);
+        ap->get(data);
+        sum = std::accumulate(data.begin(), data.end(), (int64_t)0);
+    }
+    REQUIRE(sum != 0);
+}
+
 template <typename PLUGIN, typename... ARGS>
 bool testPlugin(std::string const& dir, std::string const& exclude,
                 const ARGS&... args)
@@ -281,6 +304,43 @@ TEST_CASE("GME SGC plays sound", "[music]")
 
     REQUIRE(energy != 0);
 }
+
+// Regression test for GBR (the older Game Boy rip format, predecessor of GBS).
+// The vendored Game_Music_Emu only handled GBS; GBR is now decoded by the same
+// Gbs_Emu by rewriting the 0x20-byte GBR header into the GBS header_t at load
+// time (gbr_mode_ in Gbs_Emu.cpp) and registering gme_gbr_type. This plays a
+// single-bank rip whose driver runs up in the 0x4000 mirror window (exercises
+// the GBR bank-wrap in set_bank) and a 10-bank rip (exercises MBC banking).
+// Note: GBR has no "first song" field and many rips keep a silent stop-track at
+// song 0, so these fixtures were chosen because their default song 0 plays.
+TEST_CASE("GME GBR plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::GMEPlugin plugin;
+
+    for (auto const& gbr : {"testmus/gme/mr driller.gbr",
+                            "testmus/gme/kung fu master.gbr",
+                            "testmus/gme/dragon quest 3.gbr"}) {
+        REQUIRE(plugin.canHandle(gbr));
+
+        auto* player = plugin.fromFile(gbr);
+        REQUIRE(player != nullptr);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+
+        INFO(gbr);
+        REQUIRE(energy != 0);
+    }
+}
 // .rol (AdLib Visual Composer) was previously excluded because its player loads
 // instruments from a companion "standard.bnk" in the same dir (rol.cpp), which
 // was missing -> silent. The bank is now vendored (testmus/adlib/standard.bnk,
@@ -351,6 +411,209 @@ TEST_CASE("PTK", "[music]") { testPlugin<musix::PTKPlugin>("testmus/ptk", ""); }
 TEST_CASE("NTK", "[music]") { testPlugin<musix::PTKPlugin>("testmus/ntk", ""); }
 TEST_CASE("Org", "[music]") { testPlugin<musix::OrgPlugin>("testmus/org", ""); }
 TEST_CASE("SunVox", "[music]") { testPlugin<musix::SunVoxPlugin>("testmus/sunvox", ""); }
+// Exclude the ".W" wavebank from the scan -- it's the song's companion, not a
+// playable fixture (canHandle rightly declines it); fromFile() picks it up next
+// to the bare song.
+TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmus/soundsmith", ".W"); }
+TEST_CASE("Musx", "[music]") { testPlugin<musix::MusxPlugin>("testmus/musx", ""); }
+TEST_CASE("Coconizer", "[music]") { testPlugin<musix::CocoPlugin>("testmus/coco", ""); }
+TEST_CASE("MaxTrax", "[music]") { testPlugin<musix::MaxTraxPlugin>("testmus/maxtrax", ""); }
+TEST_CASE("STarKos", "[music]") { testPlugin<musix::SksPlugin>("testmus/sks", ""); }
+TEST_CASE("NerdTracker2", "[music]") { testPlugin<musix::NEDPlugin>("testmus/ned", ""); }
+TEST_CASE("PlayerPRO", "[music]") { testPlugin<musix::PlayerProPlugin>("testmus/playerpro", ""); }
+TEST_CASE("JayTrax", "[music]") { testPlugin<musix::JxsPlugin>("testmus/jxs", ""); }
+
+// PlayerPRO ".mad" (Macintosh tracker, "MADG"/"MADF"/"MADK") plays via the
+// vendored public-domain MADDriver. The ".mad" extension collides with AdPlug's
+// Mad Tracker 2 loader ("MAD+"), which used to claim these files and fail to
+// load them; AdPlug now content-declines them so they route here. This guards
+// both the engine slice and the AdPlug/PlayerPRO routing split.
+TEST_CASE("PlayerPRO routing", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::PlayerProPlugin pp;
+    musix::AdPlugin ad{""};
+
+    std::string const mad = "testmus/playerpro/mantra 03 dungeon.mad";
+    REQUIRE(pp.canHandle(mad));     // PlayerPRO claims the MADG module
+    REQUIRE_FALSE(ad.canHandle(mad)); // AdPlug declines (not "MAD+")
+
+    auto* player = pp.fromFile(mad);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    // Guard against the -funsigned-char regression: with unsigned char the 8-bit
+    // samples are misread and the mix clips hard (RMS pinned near full scale).
+    // A correct render of this tune sits well below that, so assert a sane level.
+    double sumSq = 0;
+    long nSamp = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(buffer[i]);
+            sumSq += double(buffer[i]) * buffer[i];
+            nSamp++;
+        }
+    }
+    delete player;
+    REQUIRE(energy > 0);
+    double rms = nSamp ? std::sqrt(sumSq / nSamp) : 0.0;
+    REQUIRE(rms < 9000.0); // correct ~3000-4000; the unsigned-char bug pushes it >13000
+}
+
+// MaxTrax (.mxtx, the Amiga sound engine behind Cyberdreams' Dark Seed et al).
+// Played by a vendored port of ScummVM's MaxTrax sequencer + Paula mixer; UADE
+// is NOT involved (it detects the MXTX magic but ships no eagleplayer). This
+// guards the ScummVM source slice + compat shim + the MXTX magic gate; it fails
+// if the vendored sources/compat.h regress or the loader/mixer goes silent.
+TEST_CASE("MaxTrax plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::MaxTraxPlugin plugin;
+
+    std::string const mxtx = "testmus/maxtrax/darkseed_00.mxtx";
+    REQUIRE(plugin.canHandle(mxtx));
+    // Right magic only -- an unrelated file with no MXTX header must be declined.
+    REQUIRE_FALSE(plugin.canHandle("testmus/org/access.org"));
+
+    auto* player = plugin.fromFile(mxtx);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
+// Split MaxTrax sets (Frank Klepacki's Kyrandia): the score ("...scr.mxtx") and
+// the sampled instruments ("...inst.mxtx") are separate files. Either half can
+// be the entry the user picks, so fromFile() must pair them up (loading scores
+// from one and samples from the other) and produce audio in both directions.
+// Fails if the scr/inst sibling resolution or the two-pass load() regresses.
+TEST_CASE("MaxTrax split set plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::MaxTraxPlugin plugin;
+
+    auto energyOf = [&](const std::string& f) {
+        REQUIRE(plugin.canHandle(f));
+        auto* player = plugin.fromFile(f);
+        REQUIRE(player != nullptr);
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+        return energy;
+    };
+
+    // Score half resolves its instrument sibling; instrument half resolves its
+    // score sibling. Both must render the same intro tune.
+    REQUIRE(energyOf("testmus/maxtrax/kyrandia introscr.mxtx") != 0);
+    REQUIRE(energyOf("testmus/maxtrax/kyrandia introinst.mxtx") != 0);
+
+    // Shared-bank set (Russell Lieblich's "a-train"): the parts carry no
+    // scr/inst marker -- they are score-only files that borrow samples from the
+    // set's bank ("a-train (intro).mxtx"), found by content + shared filename
+    // prefix. This also guards against cross-set contamination: even with the
+    // Kyrandia bank present in the same directory, an a-train part must pick the
+    // a-train bank, and vice versa, or these would be silent / wrong.
+    REQUIRE(energyOf("testmus/maxtrax/a-train (spring).mxtx") != 0);
+    REQUIRE(energyOf("testmus/maxtrax/a-train (goodinfo).mxtx") != 0);
+
+    // Secondary-file routing: when streaming (no local mirror), a split half
+    // must ask the host to fetch the rest of its directory ("./") so the bank
+    // lands next to it; a self-contained module asks for nothing. (The bank's
+    // own name can't be derived from a score part, hence the whole-dir request.)
+    auto secondaries = [&](const std::string& f) {
+        return plugin.getSecondaryFiles(f);
+    };
+    REQUIRE(secondaries("testmus/maxtrax/a-train (spring).mxtx") ==
+            std::vector<std::string>{"./"});           // score-only part
+    REQUIRE(secondaries("testmus/maxtrax/kyrandia introinst.mxtx") ==
+            std::vector<std::string>{"./"});           // instrument-only bank
+    REQUIRE(secondaries("testmus/maxtrax/darkseed_00.mxtx").empty()); // combined
+    REQUIRE(secondaries("testmus/maxtrax/a-train (intro).mxtx").empty()); // bank+score
+}
+
+// Acorn Archimedes Tracker (.musx, 8-channel "!Tracker"). Played by libxmp's
+// arch_loader, compiled as a minimal single-loader slice into musxplugin (it
+// does NOT pull in the shared zxtune libxmp build). This guards the slice +
+// the MUSX magic gate; it fails if the libxmp source list / build defs /
+// arch_loader wiring regress, or if voltable.c (arch_vol_table) drops out.
+TEST_CASE("Musx plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::MusxPlugin plugin;
+
+    std::string const musx = "testmus/musx/paradox 1.1 8 tracks the works.musx";
+    REQUIRE(plugin.canHandle(musx));
+    // Right extension but wrong payload must be declined (the .musx extension is
+    // also used by Finale notation files etc.).
+    REQUIRE_FALSE(plugin.canHandle("testmus/org/access.org"));
+
+    auto* player = plugin.fromFile(musx);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
+// Coconizer (.coco) -- a sample-based Acorn Archimedes format played by libxmp's
+// coco_loader. cocoplugin compiles only coco_load.c and links musxplugin for
+// the shared libxmp slice (a second full slice would collide on every symbol).
+// This guards the loader wiring + the 0x84/0x88 first-byte gate.
+TEST_CASE("Coconizer plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::CocoPlugin plugin;
+
+    std::string const coco = "testmus/coco/Beethoven1.coco";
+    REQUIRE(plugin.canHandle(coco));
+    // Wrong payload on the same extension must be declined.
+    REQUIRE_FALSE(plugin.canHandle("testmus/org/access.org"));
+
+    auto* player = plugin.fromFile(coco);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
 
 // SunVox (.sunvox, NightRadio's modular synth). The engine ships as a prebuilt,
 // dlopen()ed shared library (MIT licensed, copied next to the test binary by
@@ -531,6 +794,69 @@ TEST_CASE("Beepola SFX plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// SCC-Musixx (.SNG): the original Tyfoon-Software SCC-MUSIXX replay routine
+// (embedded REPLAY.BIN) runs on the GME Z80 core, with its Konami SCC register
+// writes routed into emu2212. testPlugin prints the standard "---- SCC-Musixx
+// ----" header and a "Trying <file> ... playback OK" line per fixture (feeding
+// the coverage tally). The fixture set includes outrun_lower.sng -- the same
+// image with a lowercase extension -- so a pass also proves dispatch is by
+// content, not by extension case.
+TEST_CASE("SCC-Musixx", "[music]")
+{
+    testPlugin<musix::SccMusixxPlugin>("testmus/sccmusixx", "");
+
+    // Routing checks (not covered by testPlugin, which drives this plugin
+    // directly): ".sng" is also UADE's Amiga Richard Joseph extension and UADE
+    // is tried first, so it must decline MSX SCC images, and conversely a real
+    // Richard Joseph ".sng" must be claimed by UADE and declined here -- proving
+    // detection is content-based, independent of the extension or its case.
+    musix::SccMusixxPlugin scc;
+    musix::UADEPlugin uade{"data"};
+    REQUIRE(uade.canHandle("testmus/uade/cannon fodder (intro).sng"));
+    REQUIRE_FALSE(scc.canHandle("testmus/uade/cannon fodder (intro).sng"));
+    REQUIRE_FALSE(uade.canHandle("testmus/sccmusixx/outrun.SNG"));
+    REQUIRE_FALSE(uade.canHandle("testmus/sccmusixx/outrun_lower.sng"));
+}
+
+// Apple IIgs SoundSmith. A tune is a PAIR: a bare-named song file (patterns/
+// orders) and a separate "<song>.W" wavebank holding the 64KB of Ensoniq 5503
+// sound RAM + instrument table. canHandle() identifies the song by its header
+// structure -- the leading signature varies per editor build ("SONGOK",
+// "IAN9OK", "IAN92a", ...) so it is not a magic; the .W is fetched as a
+// secondary file and may not be present at canHandle time.
+// getSecondaryFiles() must point at the "<song>.W" companion;
+// fromFile() loads both and the in-process DOC emulation renders at 26320 Hz.
+// This fails if the magic check regresses, the .W companion isn't resolved, or
+// the ported oscillator engine produces silence.
+TEST_CASE("SoundSmith plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::SoundSmithPlugin plugin;
+
+    std::string const song = "testmus/soundsmith/Soundsmith Intro";
+    REQUIRE(plugin.canHandle(song));
+
+    // The wavebank companion must be reported next to the song as "<song>.W".
+    auto secondary = plugin.getSecondaryFiles(song);
+    REQUIRE(secondary == std::vector<std::string>{"Soundsmith Intro.W"});
+
+    auto* player = plugin.fromFile(song);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // Regression test for OctaMED MMD3 routing. libopenmpt's MED loader decodes the
 // whole MMD0..MMD3 family by content, but Tables.cpp only advertises the "med"
 // extension, so openmpt_is_extension_supported("mmd3") is false. UADE already
@@ -548,6 +874,37 @@ TEST_CASE("OpenMPT MMD3 plays sound", "[music]")
     REQUIRE(plugin.canHandle(mmd3));
 
     auto* player = plugin.fromFile(mmd3);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
+// DSIK "old" Internal Format (.dsm v1) plays sound. libopenmpt only ships the
+// newer RIFF/DSMF v2 loader; the v1 format ("DSM"+0x10 header, used by the
+// Necros et al. modland tunes) is decoded by a chipmachine-local branch in the
+// vendored Load_dsm.cpp ported from MilkyTracker's LoaderDSMv1. Before that,
+// openmpt_module_create_from_memory2 returned "error loading file". Fails if the
+// v1 branch regresses.
+TEST_CASE("OpenMPT DSM v1 plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::OpenMPTPlugin plugin;
+
+    std::string const dsm = "testmus/openmpt/andante.dsm";
+    REQUIRE(plugin.canHandle(dsm));
+
+    auto* player = plugin.fromFile(dsm);
     REQUIRE(player != nullptr);
 
     std::array<int16_t, 8192> buffer{};
@@ -1112,6 +1469,13 @@ TEST_CASE("UADE mus routing", "[music]")
     REQUIRE(plugin.canHandle((tmp / "musix_no_such.mus").string()));
 }
 TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmus/pn", ""); }
+// Monotone (.mon) -- PC-speaker tracker by Trixter/Hornet, played by the
+// vendored PTPlayer. The extension collides with UADE's Maniacs of Noise; the
+// Monotone-magic gate keeps the two apart.
+TEST_CASE("Monotone", "[music]") { testPlugin<musix::MonotonePlugin>("testmus/monotone", ""); }
+// MikMod UNITRK / UNIMOD (.uni, magic "UN0x"). Played via the vendored libmikmod
+// slice -- no other engine in the tree has a UNIMOD loader.
+TEST_CASE("MikMod", "[music]") { testPlugin<musix::MikModPlugin>("testmus/mikmod", ""); }
 // Beepola .bbsong (ZX Spectrum beeper). Only the Phaser1 engine (P1D/P1S) is
 // decoded today; the other Beepola engines in this dir fast-fail as a graceful
 // skip ("unsupported"), so coverage exercises the 18 Phaser1 tunes.
@@ -1121,6 +1485,9 @@ TEST_CASE("HT", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
 TEST_CASE("SC68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
 TEST_CASE("USF", "[music]") { testPlugin<musix::USFPlugin>("testmus/usf", ""); }
 TEST_CASE("StSound", "[music]") { testPlugin<musix::StSoundPlugin>("testmus/stsound", ""); }
+// Local .mp3 playback (mpg123). The SoundHelix fixtures guard that plain mp3
+// files keep decoding to non-zero audio; this is the decoder used for local mp3
+// files (radio/remote mp3 now go through ffmpeg, covered by the FFMPEG case).
 TEST_CASE("MP3", "[music]") { testPlugin<musix::MP3Plugin>("testmus/mp3", ""); }
 TEST_CASE("Hively", "[music]") { testPlugin<musix::HivelyPlugin>("testmus/hively", ""); }
 TEST_CASE("RSN", "[music]") { testPlugin<musix::RSNPlugin>("testmus/rsn", ""); }
@@ -1566,7 +1933,15 @@ TEST_CASE("coverage", "[music]")
         {"Euphony", "testmus/eup"},
         {"WonderSwan (in_wsr)", "testmus/wsr"},
         {"PokeyNoise", "testmus/pn"},
-        {"Beepola (Phaser1)", "testmus/bbsong"}
+        {"Monotone", "testmus/monotone"},
+        {"Beepola (Phaser1)", "testmus/bbsong"},
+        {"Archimedes Tracker", "testmus/musx"},
+        {"Coconizer", "testmus/coco"},
+        {"MaxTrax", "testmus/maxtrax"},
+        {"STarKos", "testmus/sks"},
+        {"NerdTracker2", "testmus/ned"},
+        {"SCC-Musixx", "testmus/sccmusixx"},
+        {"JayTrax", "testmus/jxs"}
     };
 
     // Plugins whose extensions are split across several testmus folders (one
@@ -1723,10 +2098,10 @@ TEST_CASE("coverage", "[music]")
     // design: make it play, or bump the baseline on purpose.
     //
     // Baseline captured 2026-06 (deterministic across runs). The g_errors are
-    // known non-playing fixtures (e.g. Atari-ST .soc, mini* rips whose lib lives
-    // only on the remote source, intentionally-bad rips); g_skips are deliberate
-    // canHandle declines plus companion/lib files that aren't standalone tunes.
+    // known non-playing fixtures (e.g. mini* rips whose lib lives only on the
+    // remote source, intentionally-bad rips); g_skips are deliberate canHandle
+    // declines plus companion/lib files that aren't standalone tunes.
     // Set tight to the exact current counts so ANY new failure trips the gate.
-    REQUIRE(g_errors <= 72);
-    REQUIRE(g_skips <= 45);
+    REQUIRE(g_errors <= 69);
+    REQUIRE(g_skips <= 46);
 }

@@ -37,6 +37,17 @@ extern "C" {
     void zxtuneplugin_register();  // ZX Spectrum Sound Tracker 1.1 (.st11) via ZXTune
     void pokeynoiseplugin_register(); // Atari 800 PokeyNoise (.pn) via ASAP (6502+POKEY)
     void bbsongplugin_register();  // Beepola .bbsong (ZX Spectrum beeper) via Z80 + speaker sampling
+    void soundsmithplugin_register(); // Apple IIgs SoundSmith (bare song + .W wavebank) via Ensoniq 5503
+    void musxplugin_register();    // Acorn Archimedes Tracker (.musx) via libxmp arch_loader
+    void cocoplugin_register();    // Coconizer / Acorn Archimedes (.coco) via libxmp coco_loader
+    void maxtraxplugin_register(); // MaxTrax / Amiga (.mxtx) via ScummVM MaxTrax+Paula
+    void sksplugin_register();     // STarKos / Amstrad CPC (.sks) via Arkos Tracker 3
+    void nedplugin_register();     // NerdTracker II / NES (.ned) via blargg Nes_Snd_Emu
+    void sccmusixxplugin_register(); // SCC-Musixx / MSX Konami SCC (.SNG) via Z80 + emu2212
+    void playerproplugin_register(); // PlayerPRO / Macintosh tracker (.mad MADG/MADF/MADK) via vendored MADDriver
+    void jxsplugin_register();     // JayTrax / cross-platform synth tracker (.jxs) via Rhino's replayer (C port)
+    void monotoneplugin_register(); // MONOTONE / PC-speaker tracker (.mon) via vendored PTPlayer (BSD-3)
+    void mikmodplugin_register();  // MikMod UNITRK / UNIMOD (.uni) via vendored libmikmod slice
 }
 
 void register_plugins() {
@@ -74,4 +85,15 @@ void register_plugins() {
     zxtuneplugin_register();
     pokeynoiseplugin_register();
     bbsongplugin_register();
+    soundsmithplugin_register();
+    musxplugin_register();
+    cocoplugin_register();
+    maxtraxplugin_register();
+    sksplugin_register();
+    nedplugin_register();
+    sccmusixxplugin_register();
+    playerproplugin_register();
+    jxsplugin_register();
+    monotoneplugin_register();
+    mikmodplugin_register();
 }

@@ -58,7 +58,7 @@ void MusicPlayer::update()
 {
     static std::vector<int16_t> temp_buf(fifo.size());
 
-    if (!paused && player) {
+    if (!paused && player && !play_ended) {
         if(auto *s = std::get_if<std::string>(&player->meta("sub_title")))
             sub_title = *s;
         if(auto *u = std::get_if<uint32_t>(&player->meta("length")))
@@ -181,6 +181,43 @@ bool MusicPlayer::streamFile(const std::string& fileName)
 
     if (player) {
 
+        clearStreamFifo();
+        fifo.clear();
+        fadeout_pos = 0;
+        pause(false);
+        play_pos = 0;
+        message = "";
+        length = 0;
+        sub_title = "";
+        currentTune = playing_info.starttune;
+        return true;
+    }
+    return false;
+}
+
+bool MusicPlayer::streamUrl(const std::string& url)
+{
+    dont_play = true;
+    silent_frames = 0;
+    playing_info = SongInfo();
+    player = nullptr;
+    check_silence = false; // live streams take a moment to buffer; don't cut
+
+    // Hand the URL straight to ffmpeg (fromFile spawns `ffmpeg -i <url>`), which
+    // does its own HTTP and container/codec handling.
+    for (auto& plugin : musix::ChipPlugin::getPlugins()) {
+        if (plugin->name() == "ffmpeg") {
+            auto newPlayer =
+                std::shared_ptr<musix::ChipPlayer>(plugin->fromFile(url));
+            if (newPlayer) player = newPlayer;
+            break;
+        }
+    }
+
+    dont_play = false;
+    play_ended = false;
+
+    if (player) {
         clearStreamFifo();
         fifo.clear();
         fadeout_pos = 0;

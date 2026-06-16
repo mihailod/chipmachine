@@ -73,6 +73,8 @@ git clone https://github.com/mihailod/zxtune.git
 git clone --recursive https://github.com/mihailod/libkss.git
 git clone https://github.com/mihailod/audiodecoder.wsr.git audiodecoderwsr
 git clone https://github.com/mihailod/protrekkr.git
+git clone https://github.com/mihailod/soundsmith.git
+git clone https://github.com/mihailod/arkostracker3.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
@@ -139,12 +141,13 @@ ninja
 * The Sid Station - https://c64radio.com
 * Radio PARALAX - https://www.radio-paralax.de
 * CVGM Radio - https://radio.cvgm.net
+* Kohina - https://kohina.com
 
-## Music Plugins (Supported formats)
+## Music Plugins and supported formats and platforms
 
 ### OpenMPT
 
-Support for PC and Amiga tracker formats (libopenmpt 0.8.7)
+Support for PC and Amiga tracker formats
 
 * ProTracker, ScreamTracker III, FastTracker II, Impulse Tracker, OpenMPT, ScreamTracker II, NoiseTracker, Soundtracker, Mod's Grave, UltraTracker, Composer 669 / UNIS 669, MultiTracker, OctaMed, Farandole Composer, DigiTracker, Extreme's Tracker, Velvet Studio, DSIK Format, DSMI, ASYLUM, Oktalyzer, X-Tracker, PolyTracker, Epic Megagames, MASI, MadTracker 2, DigiBooster Pro, DigiBooster, Imago Orpheus, Galaxy Sound System
 * **New with the 0.8.7 upgrade:** Symphonie / Symphonie Pro (Amiga "pseudo-DAW" with software mixer + real-time echo DSP), Digital Symphony, Face The Music, Graoumf Tracker 1 & 2, TCB Tracker, Real Tracker, Astroidea XMF, Composer 667, EasyTrax, FM Tracker, CBA
@@ -152,6 +155,8 @@ Support for PC and Amiga tracker formats (libopenmpt 0.8.7)
 Extensions: `.mod` `.xm` `.it` `.s3m` `.mptm` `.stm` `.nst` `.m15` `.stk` `.wow` `.ult` `.669` `.mtm` `.med` `.far` `.mdl` `.ams` `.dsm` `.amf` `.okt` `.dmf` `.mt2` `.dbm` `.digi` `.imf` `.j2b` `.gdm` `.umx` `.mo3` `.symmod` `.dsym` `.ftm` `.gt2` `.gtk` `.tcb` `.rtm` `.xmf` `.667` `.etx` `.fmt` `.cba` `.c67` `.fst` `.ice` `.mmcmp` `.mms` `.mus` `.oxm` `.plm` `.ppm` `.psm` `.pt36` `.ptm` `.sfx` `.sfx2` `.stp` `.stx` `.xpk`
 
 (`.mus`, `.psm` and `.stp` are shared extensions: libopenmpt claims them, but a SID `.mus` falls through to libvice, a ZX `.psm`/`.stp` to ZXTune/Ayfly — routing is by content.)
+
+> Note: `.dsm` covers three unrelated DSIK/Dynamic-Studio variants. libopenmpt natively plays the newer DSIK "RIFF" format (`RIFF…DSMF`) and Dynamic Studio (`DSm`), but not the original DSIK "old" Internal Format (`DSM` + 0x10, e.g. the Necros tunes). Support for that v1 variant was added in a local patch to the vendored libopenmpt `Load_dsm.cpp`, with the loader adapted from MilkyTracker's `LoaderDSMv1` (BSD-3-Clause).
 
 > Note: some Amiga formats libopenmpt can also decode (Future Composer, Puma, Game Music Creator, Images Music System, etc.) are intentionally routed to the **UADE** plugin instead, which uses the original 68k replayers — see the UADE section below.
 
@@ -179,7 +184,12 @@ Support for various 8 bit console music
 
 * ZX Spectrum, Amstrad CPC, Nintendo Game Boy, Sega Genesis, Mega Drive, NEC TurboGrafx-16, PC Engine, MSX Home Computer, other Z80 systems, Nintendo NES, Famicom (with VRC 6, Namco 106, and FME-7 sound), Atari systems using POKEY sound chip, Super Nintendo, Super Famicom, Sega Master System, Mark III, Sega Genesis, Mega Drive, BBC Micro
 
-Extensions: `.spc` `.nsf` `.nsfe` `.gbs` `.ay` `.gym` `.sap` `.vgm` `.vgz` `.hes` `.kss` `.sgc` `.emul`
+Extensions: `.spc` `.nsf` `.nsfe` `.gbs` `.gbr` `.ay` `.gym` `.sap` `.vgm` `.vgz` `.hes` `.kss` `.sgc` `.emul`
+
+> `.gbr` is the older Game Boy rip format (predecessor of `.gbs`); it is decoded
+> by the same Game Boy emulator after rewriting its 32-byte header into the GBS
+> form. GBR carries no "first song" field and many rips keep a silent stop-track
+> at song 0 — use the subsong controls if a tune starts silent.
 
 ### SC68
 
@@ -261,7 +271,7 @@ Extensions: `.mp3`
 
 ### Vice
 
-Support for Commodore C64 music (mono and stereo SID)
+Support for Commodore C64 music (mono and stereo SID chip)
 
 Extensions: `.sid` `.mus` `.str`
 
@@ -279,34 +289,15 @@ Extensions: `.rsn` `.rps` `.rdc` `.rds` `.rgs` `.r64`
 
 ### Ayfly
 
-Support for various ZX Spectrum formats
+Support for various ZX Spectrum formats, including **Fuxoft AY Language** (`.fxm`) — František Fuka's compiled AY music format ("FXSM" files). The `.fxm` player is a C++ transliteration of the Fuxoft routines in Sergey Bulba's AY_Emul (the same lineage as the rest of the Ayfly engine); a 64K Spectrum image is rebuilt from the file's origin address and the interpreter runs over it exactly as the original Z80 playroutine does.
 
-Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2` `.pt3` `.vtx` `.vt2` `.zxs` `.st13`
+Also **AY Amadeus** (`.amad`) — ZX Spectrum AY tunes by František Fuka (Fuxoft) and Patrik Rak, stored in the `ZXAY` container with the `AMAD` type tag. Per AY_Emul, the `AMAD` type is the direct analog of FXM: the same playroutine drives both, so `.amad` reuses the `.fxm` engine. The container wrapper (`AMADPlay.h`) extracts the load origin, the per-file noise mask and the module body, builds the 64K image and plays it exactly as for `.fxm`.
 
-> Note: `.ftc` (Fast Tracker) is **not** handled here — libayfly throws on every
-> Fast Tracker module, so it is routed to the **ZXTune** plugin (below), which
-> plays it.
+Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2` `.pt3` `.vtx` `.vt2` `.zxs` `.st13` `.fxm` `.amad`
 
 ### ZXTune
 
-Support for several ZX Spectrum / Sam Coupe formats the other plugins don't
-cover, all decoded by ZXTune's content detection (the extension only gates which
-files reach the engine):
-
-* **Sound Tracker 1.1** (`.st11`) — the original AY-3-8910 tracker.
-* Sam Coupe **E-Tracker** (`.cop`, SAA1099). modland's "Sam Coupe COP" set is
-  mixed: only genuine E-Tracker files (signature `ETracker (C) BY ESI.`) play;
-  other `.cop` rips are unrelated raw Sam Coupe programs.
-* **Global Tracker** (`.gtr`) — AY tracker.
-* **Chip Tracker** (`.chi`) — ZX Spectrum sample/DAC tracker.
-* **TFM Music Maker** (`.tfe`) — TurboSound-FM (Yamaha YM2203).
-* **Fast Tracker** (`.ftc`) — AY tracker. Taken over from the Ayfly plugin,
-  which throws on every Fast Tracker module (verified 0/12 vs ZXTune's 12/12 on
-  spread modland samples); Ayfly no longer claims `.ftc`.
-* **Pro Sound Maker** (`.psm`) — AY tracker. `.psm` is shared with Epic
-  MegaGames MASI (an OpenMPT format); OpenMPT now content-checks the MASI magic
-  and declines the ZX variant so those tunes route here, where they actually
-  play, instead of failing in OpenMPT.
+Support for additional ZX Spectrum and Sam Coupe formats
 
 Extensions: `.st11` `.cop` `.gtr` `.chi` `.tfe` `.psm` `.ftc`
 
@@ -342,13 +333,13 @@ Extensions: `.sunvox`
 
 ### ProTrekkr / NoiseTrekker
 
-Support for ProTrekkr music by Franck Charlet (Hitchhikr) — a hybrid tracker combining sample channels, a built-in synth and a TB-303 emulation. The (zlib-compressed) module is decompressed and played by ProTrekkr's own in-memory replayer, built in its standalone integration mode. NoiseTrekker 1.6b modules (`.ntk`) load through the same loader.
+Support for ProTrekkr music by Franck Charlet (Hitchhikr)
 
 Extensions: `.ptk` `.ntk`
 
 ### Euphony
 
-Support for Euphony music (FM Towns / PC-98)
+Support for FM Towns / PC-98 Eupohony music
 
 Extensions: `.eup`
 
@@ -382,6 +373,72 @@ Support for Beepola ZX Spectrum 1-bit beeper music. Each `.bbsong` is compiled i
 
 Extensions: `.bbsong`
 
+### SoundSmith (Apple IIgs)
+
+Support for Apple IIgs SoundSmith music (Huibert Aalbers, 1989) — the dominant IIgs tracker, driving the legendary Ensoniq 5503 "DOC" 32-oscillator chip. The DOC is emulated in-process (a faithful port of Sean Kasun's BSD-licensed player, vendored at repo-root `soundsmith/`), rendering at the chip's native 26320 Hz.
+
+Extensions: bare song name + `.W` (wavebank)
+
+### Acorn Archimedes Tracker
+
+Support for the native **8-channel** format of Dan Wilson's *!Tracker* (1991), an Amiga-Soundtracker-style editor for the original ARM computer.
+
+Extensions: `.musx`
+
+### Coconizer
+
+Support for **Coconizer**, a sample-based Acorn Archimedes music format (the same VIDC-era family as Archimedes Tracker), via the libxmp `coco_loader`. The plugin reuses the libxmp slice already compiled for Archimedes Tracker rather than building a second copy.
+
+Extensions: `.coco`
+
+### MaxTrax (Amiga)
+
+Support for **MaxTrax**, a commercial custom Amiga sound engine (multiple packing subformats)
+
+Extensions: `.mxtx`
+
+### STarKos (Amstrad CPC)
+
+Support for **STarKos**, Targhan / Arkos' AY-3-8912 / YM2149 tracker for the Amstrad CPC (the predecessor of Arkos Tracker).
+
+Extensions: `.sks`
+
+### NerdTracker II (NES / Famicom)
+
+Support for **NerdTracker II**, Michel Iwaniec's MS-DOS tracker for the Nintendo NES / Famicom 2A03 (RP2A03) sound chip — a staple of the early NES chiptune scene before FamiTracker. Played at NTSC speed via blargg's NES APU emulation.
+
+Extensions: `.ned`
+
+### SCC-Musixx (MSX)
+
+Support for **SCC-Musixx**, Tyfoon-Software's 1990 tracker for Konami's SCC wavetable sound chip on the MSX — the chip behind Konami classics like Nemesis/Gradius, Salamander and King's Valley II. The original SCC-MUSIXX replay routine runs on an embedded Z80 core, with its SCC register writes driving the emu2212 SCC emulator.
+
+Extensions: `.SNG`
+
+### PlayerPRO (Macintosh)
+
+Support for **PlayerPRO**, Antoine Rosset's classic Macintosh tracker — the dominant Mac module editor of the 1990s. On Modland the whole `PlayerPro/` collection is Benjamin Birney's "mantra" game score in the older `MADG`/`MADF` module format. Played by a minimal slice of PlayerPRO's own public-domain "MADDriver" software synth (vendored at repo-root `playerpro/`), driven offline at 44100 Hz. The `.mad` extension is shared with AdPlug's unrelated Mad Tracker 2 loader, which is content-gated (magic `MAD+`) so PlayerPRO tunes route here.
+
+Extensions: `.mad` (`MADG`/`MADF`/`MADK`)
+
+### JayTrax
+
+Support for **JayTrax** (`.jxs`), Reinier "Rhino" van Vliet's cross-platform software synthesizer + tracker (the engine began as *Mugician*; the desktop/PocketPC apps were *JayTrax* and *Syntrax*). Instruments are samples or synth waveforms shaped by AM/FM/pan/arpeggio modulators, mixed across up to six stereo channels with a stereo echo. Played in-process by the public C port of Rhino's own replayer (vendored at repo-root `jaytrax/`), rendering at 44100 Hz — not via UADE. Detection is by the 16-bit `mugiversion` tag (3456/3457); the format has no string magic. The replayer has no explicit upstream license; it was publicly released by the author and is reused by other players (kode54/foobar2000, rePlayer) — see `jaytrax/PROVENANCE.md`.
+
+Extensions: `.jxs`
+
+### Monotone
+
+Support for **MONOTONE** (`.mon`), Jim "Trixter" Leonard / Hornet's PC-speaker tracker — up to a dozen square-wave tracks summed into the IBM PC's single 1-bit beeper. Played by the vendored **PTPlayer** library (prochazkaml), which unpacks the module and rebuilds each track's square wave at 44100 Hz; the related **Polytone** (`.pol`) format is read for free. The `.mon` extension is shared with UADE's Amiga *Maniacs of Noise* player, so both UADE and this plugin content-gate on the `\x08MONOTONE` magic — Amiga `.mon` modules stay with UADE, Monotone files route here. (Previously a Monotone file fed to the 68k Maniacs of Noise player crashed UADE with an illegal-instruction trap.)
+
+Extensions: `.mon`, `.pol`
+
+### MikMod UNITRK / UNIMOD
+
+Support for **MikMod UNITRK** / **UNIMOD** modules (`.uni`) — MikMod's own on-disk module format (magic `UN0x`, e.g. `UN05`; legacy `APUN`), into which it could save any module it loaded (the modland `MikMod UNITRK/` corpus is mostly FastTracker 2 tunes converted this way). No other engine in the build has a UNIMOD loader (libopenmpt's superficially-similar `Load_unic` is the unrelated *UNIC Tracker*; libxmp and libmodplug have none), so these files previously had no decoder. Played by a vendored slice of **libmikmod** — just the player core, software mixer, UNI loader, depackers and null driver — pulling PCM through libmikmod's virtual mixer. Content-gated to the `UN0x`/`APUN` magic so it claims only `.uni` and never contests the mod-family extensions owned by the OpenMPT/ModPlug/UADE plugins.
+
+Extensions: `.uni`
+
 ### AudioOverload
 
 Support for Sega Saturn and Capcom Q music
@@ -403,22 +460,19 @@ TCB Tracker, AProSys, Delta Music 1.3, the Prowizard pack family and more).
 
 * ActionAmics AbyssHighestExperience ADPCM-mono AM-Composer AMOS ArtAndMagic Alcatraz-Packer ArtOfNoise-4V ArtOfNoise-8V AudioSculpture BeathovenSynthesizer BenDaglish BenDaglish-SID BladePacker ChipTracker Cinemaware CoreDesign custom CustomMade DariusZendeh DaveLowe DaveLowe-Deli DaveLoweNew DavidHanney DavidWhittaker DeltaMusic2.0 DeltaMusic1.3 Desire DIGI-Booster DigitalSonixChrome DigitalSoundStudio DynamicSynthesizer EMS EMS-6 FashionTracker FutureComposer1.3 FutureComposer1.4 Fred FredGray FutureComposer-BSI FuturePlayer ForgottenWorlds-Game GlueMon EarAche HowieDavies JochenHippel-CoSo QuadraComposer ImagesMusicSystem Infogrames InStereo InStereo2.0 JamCracker JankoMrsicFlogel JasonBrooke JasonPage JeroenTel JesperOlsen JochenHippel JochenHippel-7V Jochen-Hippel-ST KrisHatlelid Laxity LegglessMusicEditor ManiacsOfNoise MagneticFieldsPacker MajorTom Mark-Cooksey Mark-Cooksey-Old MarkII MartinWalker Maximum-Effect MCMD MED Medley MIDI-Loriciel MikeDavies MMDC Mugician MugicianII MusicAssembler MusicMaker-4V MusicMaker-8V MultiMedia-Sound NovoTradePacker NTSP-system Octa-MED Oktalyzer onEscapee PaulRobotham PaulShields PaulSummers PeterVerswyvelen PierreAdane ProfessionalSoundArtists PTK-Prowiz PumaTracker RichardJoseph RiffRaff RobHubbard SCUMM SeanConnolly SeanConran SIDMon1.0 SIDMon2.0 Silmarils SonicArranger SonicArranger-pc-all SonixMusicDriver SoundProgrammingLanguage SoundControl SoundFactory Sound-FX SoundImages SoundMaster SoundMon2.0 SoundMon2.2 SoundPlayer Special-FX Special-FX-ST SpeedyA1System SpeedySystem SteveBarrett SteveTurner SUN-Tronic Synth SynthDream SynthPack SynTracker TFMX TFMX-1.5-TFHD TFMX-7V TFMX-7V-TFHD TFMX-Pro TFMX-Pro-TFHD TFMX-ST ThomasHermann TimFollin TheMusicalEnlightenment TomyTracker Tronic UFO UltimateSoundtracker VoodooSupremeSynthesizer WallyBeben YM-2149 MusiclineEditor Soundtracker-IV Sierra-AGI DirkBialluch Quartet Quartet-PSG Quartet-ST AProSys Anders-Oland Andrew-Parton Ashley-Hogg GMC Janne-Salmijarvi-Optimizer Kim-Christensen Mosh-Packer Nick-Pelling-Packer Paul-Tonge PreTracker Protracker4 RichardJoseph-Player RobHubbard-ST TCB-Tracker TimeTracker Titanics-Packer ZoundMonitor 
 
-Extensions (matched as a filename prefix or suffix): `.smod` `.lion` `.okta` `.sid` `.ymst` `.sps` `.spm` `.jb` `.ast` `.ahx` `.thx` `.adpcm` `.amc` `.nt` `.abk` `.aam` `.alp` `.aon` `.aon4` `.aon8` `.adsc` `.mod_adsc4` `.bss` `.bd` `.BDS` `.uds` `.kris` `.cin` `.core` `.cus` `.cust` `.custom` `.cm` `.rk` `.rkb` `.dz` `.mkiio` `.dl` `.dl_deli` `.dln` `.dh` `.dw` `.dwold` `.dlm2` `.dm2` `.dlm1` `.dm1` `.dsr` `.db` `.digi` `.dsc` `.dss` `.dns` `.ems` `.emsv6` `.ex` `.fc13` `.fc3` `.fc` `.fc14` `.fc4` `.fred` `.gray` `.bfc` `.bsi` `.fc-bsi` `.fp` `.fw` `.glue` `.gm` `.ea` `.mg` `.hd` `.hipc` `.soc` `.emod` `.qc` `.ims` `.dum` `.is` `.is20` `.jam` `.jc` `.jmf` `.jcb` `.jcbo` `.jpn` `.jpnd` `.jp` `.jt` `.mon_old` `.jo` `.hip` `.mcmd` `.sog` `.hip7` `.s7g` `.hst` `.kh` `.powt` `.pt` `.lme` `.mon` `.mfp` `.hn` `.mtp2` `.thn` `.mc` `.mcr` `.mco` `.mk2` `.mkii` `.avp` `.mw` `.max` `.mcmd_org` `.med` `.mmd0` `.mmd1` `.mmd2` `.mso` `.midi` `.md` `.mmdc` `.dmu` `.mug` `.dmu2` `.mug2` `.ma` `.mm4` `.mm8` `.mms` `.ntp` `.two` `.octamed` `.okt` `.one` `.dat` `.ps` `.snk` `.pvp` `.pap` `.psa` `.mod_doc` `.mod15` `.mod15_mst` `.mod_ntk` `.mod_ntk1` `.mod_ntk2` `.mod_ntkamp` `.mod_flt4` `.mod` `.mod_comp` `.!pm!` `.40a` `.40b` `.41a` `.50a` `.60a` `.61a` `.ac1` `.ac1d` `.aval` `.chan` `.cp` `.cplx` `.crb` `.di` `.eu` `.fc-m` `.fcm` `.ft` `.fuz` `.fuzz` `.gmc` `.gv` `.hmc` `.hrt` `.hrt!` `.ice` `.it1` `.kef` `.kef7` `.krs` `.ksm` `.lax` `.mexxmp` `.mpro` `.np` `.np1` `.np2` `.noisepacker2` `.np3` `.noisepacker3` `.nr` `.nru` `.ntpk` `.p10` `.p21` `.p30` `.p40a` `.p40b` `.p41a` `.p4x` `.p50a` `.p5a` `.p5x` `.p60` `.p60a` `.p61` `.p61a` `.p6x` `.pha` `.pin` `.pm` `.pm0` `.pm01` `.pm1` `.pm10c` `.pm18a` `.pm2` `.pm20` `.pm4` `.pm40` `.pmz` `.polk` `.pp10` `.pp20` `.pp21` `.pp30` `.ppk` `.pr1` `.pr2` `.prom` `.pru` `.pru1` `.pru2` `.prun` `.prun1` `.prun2` `.pwr` `.pyg` `.pygm` `.pygmy` `.skt` `.skyt` `.snt` `.snt!` `.st2` `.st26` `.st30` `.star` `.stpk` `.tp` `.tp1` `.tp2` `.tp3` `.un2` `.unic` `.unic2` `.wn` `.xan` `.xann` `.zen` `.puma` `.rjp` `.sng` `.riff` `.rh` `.rho` `.sa-p` `.scumm` `.s-c` `.scn` `.scr` `.sid1` `.smn` `.sid2` `.mok` `.sa` `.sonic` `.sa_old` `.smus` `.snx` `.tiny` `.spl` `.sc` `.sct` `.psf` `.sfx` `.sfx13` `.tw` `.sm` `.sm1` `.sm2` `.sm3` `.smpro` `.bp` `.sndmon` `.bp3` `.sjs` `.jd` `.doda` `.sas` `.ss` `.sb` `.jpo` `.jpold` `.sun` `.syn` `.sdr` `.osp` `.st` `.synmod` `.tfmx1.5` `.tfhd1.5` `.tfmx7V` `.tfhd7V` `.mdat` `.tfmxpro` `.tfhdpro` `.tfmx` `.mdst` `.thm` `.tf` `.tme` `.sg` `.dp` `.trc` `.tro` `.tronic` `.ufo` `.mod15_ust` `.vss` `.wb` `.ym` `.ml` `.mod15_st-iv` `.agi` `.tpu` `.qpa` `.sqt` `.qts` `.ftm` `.sdata` `.dux` `.aps` `.arp` `.ash` `.bye` `.dm` `.hot` `.js` `.kim` `.mod3` `.mosh` `.mus` `.npp` `.pat` `.prt` `.ptm` `.rj` `.sfx20` `.tcb` `.tits` `.tmk`
+Extensions (matched as a filename prefix or suffix): `.smod` `.lion` `.okta` `.sid` `.ymst` `.jb` `.ast` `.ahx` `.thx` `.adpcm` `.amc` `.nt` `.abk` `.aam` `.alp` `.aon` `.aon4` `.aon8` `.adsc` `.mod_adsc4` `.bss` `.bd` `.BDS` `.uds` `.kris` `.cin` `.core` `.cus` `.cust` `.custom` `.cm` `.rk` `.rkb` `.dz` `.mkiio` `.dl` `.dl_deli` `.dln` `.dh` `.dw` `.dwold` `.dlm2` `.dm2` `.dlm1` `.dm1` `.dsr` `.db` `.digi` `.dsc` `.dss` `.dns` `.ems` `.emsv6` `.ex` `.fc13` `.fc3` `.fc` `.fc14` `.fc4` `.fred` `.gray` `.bfc` `.bsi` `.fc-bsi` `.fp` `.fw` `.glue` `.gm` `.ea` `.mg` `.hd` `.hipc` `.soc` `.emod` `.qc` `.ims` `.dum` `.is` `.is20` `.jam` `.jc` `.jmf` `.jcb` `.jcbo` `.jpn` `.jpnd` `.jp` `.jt` `.mon_old` `.jo` `.hip` `.mcmd` `.sog` `.hip7` `.s7g` `.hst` `.kh` `.powt` `.pt` `.lme` `.mon` `.mfp` `.hn` `.mtp2` `.thn` `.mc` `.mcr` `.mco` `.mk2` `.mkii` `.avp` `.mw` `.max` `.mcmd_org` `.med` `.mmd0` `.mmd1` `.mmd2` `.mso` `.midi` `.md` `.mmdc` `.dmu` `.mug` `.dmu2` `.mug2` `.ma` `.mm4` `.mm8` `.mms` `.ntp` `.two` `.octamed` `.okt` `.one` `.dat` `.ps` `.snk` `.pvp` `.pap` `.psa` `.mod_doc` `.mod15` `.mod15_mst` `.mod_ntk` `.mod_ntk1` `.mod_ntk2` `.mod_ntkamp` `.mod_flt4` `.mod` `.mod_comp` `.!pm!` `.40a` `.40b` `.41a` `.50a` `.60a` `.61a` `.ac1` `.ac1d` `.aval` `.chan` `.cp` `.cplx` `.crb` `.di` `.eu` `.fc-m` `.fcm` `.ft` `.fuz` `.fuzz` `.gmc` `.gv` `.hmc` `.hrt` `.hrt!` `.ice` `.it1` `.kef` `.kef7` `.krs` `.ksm` `.lax` `.mexxmp` `.mpro` `.np` `.np1` `.np2` `.noisepacker2` `.np3` `.noisepacker3` `.nr` `.nru` `.ntpk` `.p10` `.p21` `.p30` `.p40a` `.p40b` `.p41a` `.p4x` `.p50a` `.p5a` `.p5x` `.p60` `.p60a` `.p61` `.p61a` `.p6x` `.pha` `.pin` `.pm` `.pm0` `.pm01` `.pm1` `.pm10c` `.pm18a` `.pm2` `.pm20` `.pm4` `.pm40` `.pmz` `.polk` `.pp10` `.pp20` `.pp21` `.pp30` `.ppk` `.pr1` `.pr2` `.prom` `.pru` `.pru1` `.pru2` `.prun` `.prun1` `.prun2` `.pwr` `.pyg` `.pygm` `.pygmy` `.skt` `.skyt` `.snt` `.snt!` `.st2` `.st26` `.st30` `.star` `.stpk` `.tp` `.tp1` `.tp2` `.tp3` `.un2` `.unic` `.unic2` `.wn` `.xan` `.xann` `.zen` `.puma` `.rjp` `.sng` `.riff` `.rh` `.rho` `.sa-p` `.scumm` `.s-c` `.scn` `.scr` `.sid1` `.smn` `.sid2` `.mok` `.sa` `.sonic` `.sa_old` `.smus` `.snx` `.tiny` `.spl` `.sc` `.sct` `.psf` `.sfx` `.sfx13` `.tw` `.sm` `.sm1` `.sm2` `.sm3` `.smpro` `.bp` `.sndmon` `.bp3` `.sjs` `.jd` `.doda` `.sas` `.ss` `.sb` `.jpo` `.jpold` `.sun` `.syn` `.sdr` `.osp` `.st` `.synmod` `.tfmx1.5` `.tfhd1.5` `.tfmx7V` `.tfhd7V` `.mdat` `.tfmxpro` `.tfhdpro` `.tfmx` `.mdst` `.thm` `.tf` `.tme` `.sg` `.dp` `.trc` `.tro` `.tronic` `.ufo` `.mod15_ust` `.vss` `.wb` `.ym` `.ml` `.mod15_st-iv` `.agi` `.tpu` `.qpa` `.sqt` `.qts` `.ftm` `.sdata` `.dux` `.aps` `.arp` `.ash` `.bye` `.dm` `.hot` `.js` `.kim` `.mod3` `.mosh` `.mus` `.npp` `.pat` `.prt` `.ptm` `.rj` `.sfx20` `.tcb` `.tits` `.tmk`
 
 ### TedPlay
 
-Support for Plus/4 music
+Support for Commodore 264 series (16 / 116 / Plus/4) TED chip music
 
 Extensions: `.prg`
 
 ### FFMpeg
 
-Support for streaming audio
+Support for streaming audio (AAC and Ogg/Vorbis)
 
-* AAC
-* Ogg/Vorbis
-
-Extensions: `.m4a` `.aac` `.mp3` `.mp4`
+Extensions: `.m4a` `.aac` `.mp3` `.mp4` `.ogg`
 
 ### V2
 
@@ -428,7 +482,7 @@ Extensions: `.v2` `.v2m`
 
 ### YouTube
 
-Streams audio directly from YouTube links (`youtube.com/` / `youtu.be/`). The bundled `yt-dlp` resolves the best audio stream, which is then played back via FFMpeg. This is how the Pouet database plays demoscene production soundtracks. `yt-dlp` ships with the app (`bin/ytdlp/`), so no extra setup is required.
+Streams audio directly from YouTube links (`youtube.com/` / `youtu.be/`). The bundled `yt-dlp` resolves the best audio stream, which is then played back via FFMpeg. This is how the Pouet database plays demoscene production soundtracks.
 
 ---
 
@@ -452,7 +506,7 @@ My work here is mostly based around:
 Here is the attribution for the individual emulators, audio players, plugins, and core sub-routines utilized across this project sofar:
 
 * **OpenMPT (Tracker Formats):** Developed by the OpenMPT Project Team (originally founded by Olivier Lapicque). Licensed under BSD-3-Clause.
-* **GME / Game Music Emulator (Console Formats):** Developed by Shay Green. Licensed under LGPL-2.1-or-later.
+* **GME / Game Music Emulator (Console Formats):** Developed by Shay Green. Licensed under LGPL-2.1-or-later. The `.gbr` (Game Boy rip) loader added on top of GME maps the GBR header onto GME's Game Boy emulator; the GBR header format was referenced from **gbsplay** by Tobias Diedrich, Christian Garbs et al. (GPL-2.0-or-later, <https://github.com/mmitch/gbsplay>).
 * **VICE (C64/SID emulation):** Developed by the VICE Core Team. Licensed under GPL-2.0-or-later.
 * **UADE (Amiga Exotic formats):** Developed by Heikki Orsila and the UADE Team (eagleplayers/format DB vendored from UADE 3.05). Licensed under GPL-2.0-or-later.
 * **StSound (Atari ST YM2149):** Developed by Arnaud Carré (Leonard/Oxygene). Licensed under MIT.
@@ -462,7 +516,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **AudioOverload Backend / AOSDK:** Developed by Richard Bannister and contributors. Licensed under Custom/Freeware permissive license.
 * **HivelyTracker (AHX/HVL):** Developed by IRIS (Peter "Yohng" V, Curt Cool). Licensed under BSD-3-Clause.
 * **MDX / S98 (PC-98 & Sharp X68000):** Emulation engines adapted from OpenMSX/GME variants. Licensed under GPL-2.0-or-later.
-* **Ayfly (ZX Spectrum AY-3-8910):** Developed by Sergey Vladimirov. Licensed under GPL-2.0-or-later.
+* **Ayfly (ZX Spectrum AY-3-8910):** Developed by Sergey Vladimirov. Licensed under GPL-2.0-or-later. The **Fuxoft AY Language** (`.fxm`) player added here is a C++ transliteration of the FXM routines from **AY_Emul** by **Sergey Bulba** (sources made available with the request to credit the author); the format is **Frantisek Fuka's** (Fuxoft), documented in his `fxmasm` project. The **AY Amadeus** (`.amad`) player added here reuses that FXM engine and transliterates AY_Emul's `ZXAY`/`AMAD` container loader (`OpenAYFile`); the tunes are by **Frantisek Fuka** (Fuxoft) and **Patrik Rak**.
 * **ZXTune (ZX Spectrum / Sam Coupe — Sound Tracker 1.1, Global Tracker, Chip Tracker, TFM Music Maker, Pro Sound Maker, Fast Tracker, E-Tracker):** Developed by Vitamin/CAIG; CMake fork by djdron. Licensed under GPL-3.0-or-later.
 * **98fmplayer:** Developed by areis. Licensed under MIT.
 * **libkss (MSX KSS):** Developed by Mitsutaka Okazaki. Licensed under MIT.
@@ -479,6 +533,16 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **vio2sf (Nintendo DS — .2sf / .mini2sf):** NDS emulation core derived from DeSmuME (the DeSmuME Team); maintained reentrant 2SF fork ("vio2sf") by Christopher Snowhill (kode54), as used by foobar2000 / Cog. Licensed under GPL-2.0-or-later.
 * **ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise):** Developed by Piotr Fusik. Licensed under GPL-2.0-or-later.
 * **Beepola (ZX Spectrum beeper):** The `.bbsong` format and the Beepola tool are by Chris Cowley. Engine players: **Phaser1** by Shiru (public domain, from 1tracker); **Music Box** reverse-engineered from WHAM! The Music Box (original Z80 code by Mark Alexander, 1985); **Music Studio** reverse-engineered from The Music Studio (original Z80 code by Saša Pušica, 1988); **SFX** (Special FX / Fuzz Click) reverse-engineered from the game Firefly (original Z80 code by Jonathan Smith / Special FX Software Ltd) — its player and compiled data format reproduced from Beepola. The in-repo Z80 assembler is ported from 1tracker's `z80ass` (Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1); the ZX Spectrum 48K ROM is redistributed under Amstrad's emulation permission.
+* **SoundSmith (Apple IIgs):** The original SoundSmith tracker is by Huibert Aalbers (1989). The Ensoniq 5503 "DOC" player is a faithful in-process port of the SoundSmith player by Sean Kasun (mrkite). Licensed under BSD-2-Clause.
+* **Archimedes Tracker (Acorn Archimedes):** The original 8-channel *!Tracker* is by Dan Wilson (1991). Playback uses the **libxmp** `arch_loader` by Claudio Matsuoka, Hipolito Carraro Jr and contributors. libxmp is licensed under MIT; the arch loader source file carries an LGPL-2.1-or-later header.
+* **MaxTrax (Amiga):** The MaxTrax sound engine drives games such as *Dark Seed* (music by David A. Bean). Playback uses a vendored port of the **ScummVM** MaxTrax sequencer and Paula mixer, by the ScummVM Team. Licensed under GPL-3.0-or-later.
+* **STarKos (Amstrad CPC):** STarKos is the AY-3-8912 / YM2149 CPC tracker by Targhan / Arkos, predecessor of Arkos Tracker. Playback uses a vendored non-GUI slice of the **Arkos Tracker 3** source by Julien Névo — the author's own `.sks` importer plus the `SongPlayer` engine and `PsgStreamGenerator` software AY/YM renderer (the same path as AT3's headless `SongToWav` tool). Arkos Tracker 3 is licensed under MIT; it is built on three ISC-licensed **JUCE** core modules (`juce_core`, `juce_events`, `juce_audio_basics`) by Raw Material Software / the JUCE team.
+* **NerdTracker II (NES / Famicom):** The original NerdTracker II tracker is by Michel Iwaniec ("Bananmos"). Playback uses the player/loader core of the **NerdTracker 2 SDL port** by thefox (Mika Keränen), which drives blargg's (Shay Green) **Nes_Snd_Emu** 2A03 APU emulation — the same lineage as GME above. The vendored Nes_Snd_Emu (0.1.7) is licensed under LGPL-2.1; the NerdTracker II and SDL-port code is used with attribution. We clock the APU at NTSC speed (the port's bundled `Simple_Apu_PAL` used the PAL clock, which played notes ~a semitone flat).
+* **SCC-Musixx (MSX):** SCC-Musixx and its `.SNG` format are by **Tyfoon-Software** (M. Spoor, 1990); the original "MUSIXX REPLAY ROUTINE v1.2" (`REPLAY.BIN`, freeware, distributed via the MSX Resource Center) is embedded and run unmodified. The Konami **SCC** sound chip is emulated by **emu2212** by Mitsutaka Okazaki (MIT, the same vendored copy used by libkss). The Z80 CPU core is GME's (Shay Green, LGPL-2.1).
+* **PlayerPRO (Macintosh):** PlayerPRO and its `MADG`/`MADF`/`MADK` module formats are by **Antoine Rosset**, who released the source to the **Public Domain**. Playback uses a minimal slice of PlayerPRO's own "MADDriver" software-synth engine (from the MaddTheSane/PlayerPRO mirror), vendored at repo-root `playerpro/` and driven offline in its `NoHardwareDriver` mode. The chipmachine-specific glue — a static loader registry replacing the dlopen scanner, inert stubs for the Mac CoreAudio/Finder entry points, and two small header patches — is documented in `playerpro/PROVENANCE.md`.
+* **DSIK "old" Internal Format (`.dsm` v1):** libopenmpt decodes the newer DSIK "RIFF" and Dynamic Studio `.dsm` variants but not the original DSIK Internal Format (`DSM` + 0x10, e.g. the Necros demoscene tunes). Support for that variant is a local patch to the vendored libopenmpt `Load_dsm.cpp`, with the loader adapted from **MilkyTracker**'s `LoaderDSMv1` (`milkyplay/LoaderDSM.cpp`) by the MilkyTracker Team. Playback itself reuses libopenmpt's existing DSIK engine. Licensed under BSD-3-Clause.
+* **MONOTONE (IBM PC speaker):** MONOTONE and its `.mon` format are by Jim "Trixter" Leonard of Hornet. Playback uses **PTPlayer** by Michal Procházka — the player library for the modern *Polytone* tracker, which also loads legacy Monotone files (and the `.pol` format). Licensed under BSD-3-Clause.
+* **MikMod UNITRK / UNIMOD (`.uni`):** the UNIMOD on-disk format and its reader are part of **libmikmod**, originally by Jean-Paul Mikkers ("MikMak") and Jake Stine, maintained by the libmikmod team (Raphaël Assenat, Ozkan Sezer and others). A minimal slice of libmikmod 3.3.13 is vendored at `musicplayer/src/plugins/mikmodplugin/libmikmod/` (player core + virtual mixer + `load_uni` + depackers + null driver only). Licensed under LGPL-2.1-or-later. The vendored sources are unmodified; the chipmachine glue registers only the UNI loader and null driver and pulls PCM via the virtual mixer.
 
 ---
 
@@ -488,7 +552,7 @@ Chipmachine is a combined work distributed under the [`GNU General Public Licens
 (or at your option, any later version) due to its underlying emulation dependencies.
 
 * **Original Program, Core Architecture:** Copyright (c) 2022 Jonas Minnberg. Licensed under the MIT License.
-* **Apple Silicon Port, Additional Plugins, Database Enhancements:** Copyright (c) 2026 Mihailo Despotović. Licensed under the MIT License.
+* **Apple Silicon Port, Additional Plugins, Database Enhancements:** Copyright (c) 2026 Mihailo Despotović. Licensed under GPL-3.0.
 * **Atari ST/Amiga Emulation (SC68):** Licensed under GPL-3.0-or-later (forces overall project license).
 * **C64/A500 Emulation (VICE, UADE):** Licensed under GPL-2.0-or-later.
 * **Other Components:** See the [`LEGAL`](./LEGAL) file for a complete matrix of MIT, BSD, and LGPL dependencies.

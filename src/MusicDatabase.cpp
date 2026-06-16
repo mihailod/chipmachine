@@ -301,7 +301,14 @@ bool MusicDatabase::parseModland(
                                                      // MoonBlaster ADPCM sample
                                                      // banks (.mbk) -- companions
                                                      // of .mbm, not standalone
-                                                     "mbk" };
+                                                     "mbk",
+                                                     // SoundSmith wavebanks (.W)
+                                                     // -- the 64KB DOC sound RAM
+                                                     // companion of the bare-named
+                                                     // song, fetched via
+                                                     // getSecondaryFiles, never a
+                                                     // standalone tune
+                                                     "w" };
     static const std::set<std::string> secondary_pref = { "smpl", "smp" };
     static const std::set<std::string> hasSubFormats = { "Spectrum", "Ad Lib",
                                                          "Video Game Music" };
@@ -1033,6 +1040,9 @@ void initFormats()
     format_map["hes"] = HES;
     format_map["mp3"] = MP3;
     format_map["sc68"] = ATARI;
+    format_map["soundsmith"] = APPLE; // Apple IIgs SoundSmith
+    format_map["playerpro"] = APPLE;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
+    format_map["jaytrax"] = TRACKER;  // JayTrax (.jxs), cross-platform synth tracker -- not UADE/Amiga
     format_map["ultra64 sound format"] = NINTENDO64;
     format_map["nintendo ds sound format"] = NDS;
     format_map["nintendo sound format"] = NES;

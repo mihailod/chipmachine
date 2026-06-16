@@ -2,13 +2,18 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
+- i see some dupes in search, example: monkmusings (only 1 record in db), maybe there is more
+
 - ability to manually add stuff to database. via a manual.txt file
-- add zx game music beeper videos from youtube?
+
+- ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
+Your strategy of extracting the routine + data payload, indexing it, booting a minimal emulator stub, and jumping straight to the execution address works perfectly for 48K beeper engines. In fact, it avoids the timing sync issues plaguing AY emulation because the Z80 CPU is the sound synthesizer.
+Also look at the zx repositories below, maybe someone already did this.
+
 - (minor) radio screenshots missing for rainwave (favicon issue)
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
 - in general genuinely bad or missing files should be removed from the index
-- [DB change] remove westwood .snd files from db -- all play as .adl, .snd is not complete, no instruments
 
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
@@ -66,6 +71,15 @@ What it is: A massive database specifically tracking down original game tracker 
 
 7. https://chipmusic.org -- zx spectrum beeper music, maybe more...
 
+8. https://bulba.untergrund.net/music_e.htm
+Maintained by Sergey Bulba (author of Ay_Emul), this archive contains the historic Ironfist collection. Ironfist spent years manually ripping, disassembling, and packaging raw Z80 music engines directly from commercial 48K ZX Spectrum games into clean .ay file structures, complete with initialization addresses and entry vectors.
+
+9. https://zxtunes.com
+A massive historical repository of ZX Spectrum chiptunes. While heavily populated by standard AY tracking formats, its index includes extensive mappings of older, undocumented internal-beeper game routines that were ripped and isolated by early scene groups.
+
+10. https://zxart.ee/eng/music/top-100/beeper/
+This is the most comprehensive active repository for 1-bit audio tracking. It hosts isolated beeper variants for classic game soundtracks—including Tim Follin’s multi-channel drivers for Chronos and Agent X II, David Whittaker's Trantor and Tetris, and Ben Daglish's Deflektor. The modules are downloadable in community-standard formats ready for parsing.
+
 Demo Databases & Trackers
 
 1. Kestra BitWorld
@@ -84,11 +98,7 @@ Iterate through the paginated JSON responses to extract data fields natively ins
 
 Radio Streams & Streams Media
 
-1. BitFellas (Radio Bitworld)
-URL: [http://www.bitfellas.org](http://www.bitfellas.org)
-What it is: Run by the same crew behind BitWorld, they host a highly active streaming radio network featuring dedicated 24/7 channels for demoscene music, chiptunes, and tracker tracks.
-
-2. Kohina
+1. Kohina
 URL: [https://www.kohina.com](https://www.kohina.com)
 What it is: One of the absolute oldest, purest retro audio streams still running. It plays exclusively 8-bit and 16-bit computer music (C64, Atari, Amiga, NES) directly simulated or sampled from original hardware.
 
@@ -102,6 +112,7 @@ Look at the file header: 00000000: fe00 80ff bf00 8000 ...
 FE 00 80 FF BF 00 80 is an MSX BSAVE binary header: marker 0xFE, start 0x8000, end 0xBFFF, exec 0x8000. FAC SoundTracker is an MSX PSG music editor, and its .MUS files are raw Z80/MSX binaries — nothing to do with the Amiga.
 .mus is an overloaded modland extension — it's used by UFO (Amiga) and FAC SoundTracker (MSX), among others. canHandle only checks the extension, with no content sniffing, so UADE accepts this MSX file, hands the Z80 binary to the 68k UFO player, and the player immediately crashes.
 SOLUTION: Add FAC SoundTracker support via libkss — write a fac2kss converter (analogous to the existing bgm2kss/mgs2kss) wrapping the FAC replayer, and route .mus MSX files there. This is the only path to actually hearing the tune.
+The one open replayer, fcatrin/fstr (MIT), is unusable for porting — x86 real-mode asm targeting AdLib OPL2 (wrong chip, not portable C). 
 
 - .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM). (related to parlour? -- only some subsongs play):
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/SGC/Masatomo Miyamoto/Parlour Games [SMS].sgc
@@ -121,6 +132,8 @@ SOLUTION: Add FAC SoundTracker support via libkss — write a fac2kss converter 
 * OTHER *
 *********
 
+- packaging: the app should offer to os handling of all extensions it can play, package_app.sh should be augmented with plist writer for it. then the application needs to handle the file passed in (standard mac way exists)
+
 - can we detect "video unavailable" for youtube and show / print that?
 - keep fixing red stuff in cmtest outpus
 - add a test file for EVERY supported extension
@@ -136,257 +149,12 @@ major new features
 ==================
 - better matching and sourcing for screenshot, for example hybris should display hybris game art...
 - consolidate all db scripts into one unified
-- filter by platform (C64, Amiga... -- DONE) and format (mod, ym, mp3...) -- pesic
+- filter by platform (C64, Amiga... -- something done but needs discussion) and format (mod, ym, mp3...) -- Pesic
 - Separate db from code and auto-update db independently from code
 
 ****************************
 * FORMATS SUPPORT PROGRESS *
 ****************************
-
-DONE in 1.2 
-***********
-
-DONE 1,783 .ptcop 	PxTone Collage (Pixel/Cave Story)	Moderate	Official C++ library released by Pixel on GitHub (pxtone); needs a new plugin wrapping it
-DONE 315	.pttune PxTone (older format, same family)	Moderate	Same pxtone library handles both .ptcop and .pttune
-DONE 1,446 .str	Stereo Sidplayer (C64)	Moderate	Two SIDs playing in stereo; VICE can load them, VicePlugin would need extension
-DONE 657	.mmd3	OctaMED MMD3 (Amiga)	Moderate	MMD0/1/2 work via UADE; MMD3 is the enhanced version — UADE or libopenmpt may already decode it but the extension is simply not listed
-DONE 427	.sng Various (UADE disabled)	Easy	Deliberately commented out in UADEPlugin (/*"sng"*/); investigate why — likely a collision with another plugin — then either re-enable or route to the correct one
-DONE 385	.sgc	Sega Master System / Game Gear	NEW EMU NEEDED	This vendored game-music-emu has no SGC core (no Sgc_Emu, no SGC in gme_type_list/CMake). Newer libgme supports it; would need to vendor that core.
-DONE 377	.org	Organya / Cave Story OrgMaker	Moderate	Simple proprietary format; multiple open-source playback implementations on GitHub (organya, org-player)
-DONE 246	.sunvox	SunVox modular synth	Moderate	Official free SDK (sunvox_lib) with C API from warmplace.ru; well-documented
-DONE 501	.eup + .pmb Euphony (PC-98 OPL/ADPCM)	Moderate	FMPPlugin exists and handles .opi/.ovi/.ozi; Euphony (.eup) is a related but distinct PC-98 format — open-source players exist on Japanese sites
-     .pmb is 	Euphony PCM sample bank (PC-98)	N/A	Auxiliary file for .eup songs, not standalone
-DONE 1388 .mgs	MGSDRV (MSX)	Hard	MSX music driver format; playback requires MSX hardware emulation; some open-source players exist (mgsdrv replayer) but no ready-made C library
-MGSDRV (.mgs) [610 files] & MoonBlaster (.mbm) [296 files]
-   * Status: Unsupported.
-   * Research: These are MSX music formats. MGS is Z80-based and MoonBlaster is sample-based. 
-   * Feasibility: Hard. They require significant MSX hardware emulation (Z80, OPLL/OPL4, PSG). While source code for replayers exists (e.g., mgsplay), integrating them would mean bringing in a Z80 core and additional FM cores.
-"No existing plugin claims .mgs, and 1388 MGS songs are in database"
-296	.mbm	MoonBlaster (MSX)	HardER	MSX sample-based tracker; needs .mbk sample banks alongside; MSX emulation required; no ready C library found
-DONE 808 + 373 + 51 .bgm, .opx, .mpk — PSG/SCC/OPLL based, should work like MGS. Probably easy wins.
-.bgm	KINROU5	MuSICA	808
-.opx	OPX4KSS / OPLLDriver	OPLLDRV	373
-.mpk	MPK106/103	MPK	51
-.bgm + .opx + .mpk (1,232) are the safe wins — all PSG/SCC/OPLL-based, same chips MGS already uses, so they'd play like MGS does now.
-So the realistic "would actually sound right" addition is roughly ~1,232 solid plus an uncertain slice of the 2,128 MoonBlaster files.
-DONE 168	.wsr	WonderSwan sound	DONE	This vendored game-music-emu has no WonderSwan core. Only newer libgme/separate cores support .wsr; would need to vendor one.
-✦ I have investigated the feasibility of adding WonderSwan sound (.wsr) support to ChipMachine. Here are my findings:
-  1. Current State
-   * Vendored Library: The project currently vendors Game_Music_Emu (GME) 0.7.0 in
-     musicplayer/src/plugins/gmeplugin/gme/. 
-   * Missing Core: This version of GME does not natively support the WonderSwan format. WSR files require a NEC V30MZ
-     (x86-compatible) CPU emulator and a specialized 4-channel sound chip emulator, which are outside the scope of the
-     standard GME release.
-   * Metadata: Although chipmachine/src/formats.h lists "wonderswan", the GMEPlugin in
-     musicplayer/src/plugins/gmeplugin/GMEPlugin.cpp does not yet include wsr in its supported extensions.
-  2. Feasibility
-  Adding support is highly feasible by vendoring the WonderSwan core from a well-known community fork:
-   * Primary Source: kode54's GME fork (kode54/Game_Music_Emu) contains a complete WSR implementation.
-   * Required Files: You would need to vendor the following files from kode54's repository into the project's GME folder:
-       * Wsr_Emu.cpp / Wsr_Emu.h (The high-level emulator class)
-       * Wsr_Cpu.cpp / Wsr_Cpu.h (The NEC V30MZ core)
-       * Wsr_Apu.cpp / Wsr_Apu.h (The sound chip emulation)
-   * Integration Effort:
-       * GME Level: Add the new files to the GME CMakeLists.txt and register the Wsr_Emu type in the library's
-         file-loading logic.
-       * Plugin Level: Add wsr to the supported_ext set in GMEPlugin.cpp.
-       * Compatibility: Since the architecture is already GME-compliant, it would integrate seamlessly with the
-         existing GMEPlugin without requiring a new top-level plugin.
-  3. Conclusion
-  The most efficient path is to "backport" the WSR core from the kode54 fork into your existing gmeplugin. This avoids adding entirely new external dependencies while leveraging the existing console-music infrastructure in ChipMachine.
-
-DONE IN 1.3
-***********
-
-DONE 240 .4v Quartet ST (Atari ST) DONE 4-voice sample tracker for Atari ST; .set is the companion sample file; UADE may be extensible to cover it
-Quartet ST (.4v) - Atari ST Tracker
-   * Status: Unsupported.
-   * Research: A 4-voice sample-based format for the Atari ST.
-   * Feasibility: Moderate. There are C replayers available. Interestingly, the AyflyPlugin explicitly blocks files with /quartet in the path, likely because they often use the .ay extension but aren't Spectrum-compatible.
-✦ The research on Quartet ST (.4v) is remarkably accurate, and the discovery regarding the AyflyPlugin blocking
-  /quartet paths is a high-signal technical observation.
-Engineering Commentary:
-   1. The "Blocking" Logic in AyflyPlugin:
-       * Your hunch is correct. Many legacy chiptune archives (like the old Project AY) bundled Quartet files under the .ay extension. 
-       * libayfly is a specialized emulator for AY-chip register dumps (like Spectrum or Amstrad CPC music). Quartet, however, is a software-mixing sample tracker for the Atari ST. 
-       * If Ayfly tried to "play" a Quartet file, it would be interpreting 68000 machine code as AY register writes, leading to catastrophic noise. The block in AyflyPlugin.cpp is a safety guard against this common mislabeling in music databases.
-   2. Implementation Feasibility: Moderate (leaning towards Easy)
-       * The "Gold Standard" Library: You should look at zingzong by Benjamin Gerard (Ben/OVR). It is a portable, MIT-licensed C library specifically designed to play Microdeal Quartet files (.4v, .set, .4q).
-       * Multi-file Challenge: The primary engineering hurdle is that Quartet is often split into two files: the song data (.4v) and the voice set (.set). 
-       * ChipMachine Advantage: ChipMachine already has an infrastructure for "secondary files" (used for Richard Joseph Amiga songs and .ins files). Implementing a QuartetPlugin would simply mean using the
-         getSecondaryFiles() hook to tell the player to look for the matching .set file in the same directory.
-   3. The .4q Variant:
-       * In the Atari ST scene, .4q is a "packed" version that bundles both the .4v and .set into one file. Supporting .4q would be even easier as it is self-contained.
-  Technical Verdict:
-  Quartet ST is a prime candidate for a native plugin. It represents the "missing link" between early beeper music and the ProTracker/MOD era on the Atari. By integrating the zingzong library, you could resolve the AyflyPlugin conflict properly by having a dedicated handler that actually plays the music instead of just blocking the path.
-  Recommendation: Upgrade status to "Highly Feasible." The existence of a clean, portable C replayer (zingzong) removes 90% of the implementation risk.
-
-DONE 339 .mbm (MoonBlaster) — often OPL4/Moonsound, which libkss has no emulation for. Many .mbm files would load but sound wrong/silent. This is the one with real risk.
-.mbm	MoonBlaster (MBR143)	MoonBlaster (+edit mode)	2,128
-.mbm (2,128) is the big number but the weakest bet. MoonBlaster heavily uses OPL4/Moonsound, which libkss has no emulation for. A large fraction of those 2,128 would load but play wrong or silent. Hard to say exactly how many without testing a sample.
-
-DONE / NOT NEEDED 272	.bgm	MuSICA (PC-98)	Hard	Japanese PC-98 music driver; very niche; no known open-source decoder outside of full PC-98 emulators
-THEY ALL PLAY? That's the expected result — all 808 of those are the MSX/KINROU5 variant, which is exactly what the KSSPlugin handles. So .bgm support is effectively complete for everything in your database.
-The "hard / unsupported" PC-98 MuSICA caveat from the research is real but academic for your collection: Modland only carries the MSX rips under MuSICA/, so you'd have to go out of your way to find a PC-98 .bgm to even hit that gap. Nothing to fix here.
-✦ I have researched the MuSICA (.bgm) format and its feasibility for ChipMachine. Here are the findings:
-  1. Current State: MSX Support is Already Present
-  Surprisingly, ChipMachine already has support for the MSX version of MuSICA (.bgm) via the KSSPlugin:
-   * Decoder found: The vendored libkss library includes bgm2kss.c, which specifically handles MuSICA files.
-   * How it works: It embeds a Z80 binary blob of the famous KINROU5.DRV (Kinrou 5th) driver and runs it inside a Z80 emulator to generate the sound register writes.
-   * Extensions: The KSSPlugin is already configured to claim .bgm files and correctly identifies them as "MuSICA".
-  2. The "Hard" Part: PC-98 MuSICA
-  The user's note about this being "Hard" and "Japanese PC-98" refers to the PC-98 port of the MuSICA driver. While the MSX and PC-98 share the same .bgm extension and sequence logic, they are fundamentally different at the architectural
-  level:
-   * CPU: MSX uses a Z80 (8-bit); PC-98 uses an x86 (16-bit).
-   * Sound Chips: MSX targets the YM2413 (OPLL); PC-98 targets the YM2608 (OPNA).
-   * Implementation Difficulty: To support the PC-98 version of MuSICA, you would need an x86 CPU emulator to run the PC-98 version of KINROU5.DRV, which is a significantly larger undertaking than the Z80 approach used for MSX.
-  3. Feasibility Summary
-   * MSX MuSICA: Supported. If a .bgm file doesn't play, it is likely because it's a PC-98 version that the current Z80-based libkss cannot execute.
-   * PC-98 MuSICA: Hard. There is no "clean" C++ native decoder for the PC-98 variant. The only existing solutions are full PC-98 emulators (like Neko Project II) or multi-format players like MDPlayer (C#) or 98fmplayer (C). 
-   * Recommendation: Since you already have 98fmplayer source code in the repository (which focuses on PC-98 FM music), that would be the natural place to integrate a PC-98 MuSICA decoder if one were to be added. However, it currently only implements PMD and FMP drivers, confirming the niche status of MuSICA on that platform.
-  Conclusion: You can play MSX .bgm files right now. Support for the PC-98 variant remains "Hard" due to the
-  requirement for x86 driver emulation.
-
-DONE 59	.st11	Sound Tracker 1.1 (ZX Spectrum) *TRIVIAL configuration update* ZX Spectrum AY tracker; AYFlyPlugin already handles related formats (stc, pt3, etc.); may be extensible
-  The research for Sound Tracker 1.1 (.st11 / .stc) indicates that this is a Low-to-Moderate effort task because the infrastructure is already largely in place.
-  1. Format Clarification: .stc is the key
-   * The Nuance: On the ZX Spectrum, files aren't usually named with extensions like .st11. They were often raw memory
-     dumps or stored in Tape/Disk images. However, in the PC "chiptune" world, the compiled output of Sound Tracker 1.1 is universally known as the .stc format.
-   * Mapping: If you have files ending in .st11, they are almost certainly just .stc files with a more specific
-     extension.
-  2. Existing Infrastructure: AyflyPlugin
-   * Current State: You already have an AyflyPlugin (likely based on libayfly). 
-   * Verification: libayfly natively supports .stc (Sound Tracker Compiled). 
-   * The "Extension" Problem: The only reason ChipMachine might not play a .st11 file right now is likely because the AyflyPlugin's canHandle method or the supported_extensions list doesn't include the string "st11".
-  3. Implementation Strategy: Extremely Easy
-  Instead of a "Moderate" implementation, this is actually a Surgical Fix:
-   1. Check AyflyPlugin.cpp: Look at the getSupportedExtensions or canHandle logic.
-   2. Add "st11" to the list: By simply telling the existing AyflyPlugin that it can handle .st11 files, they will be passed to the libayfly engine, which will recognize the .stc header/structure and play them immediately.
-  4. Summary of Findings:
-   * Format: Sound Tracker 1.1 Compiled (.stc).
-   * Sound Chip: AY-3-8910 (3 channels).
-   * Plugin: AyflyPlugin (already in project).
-   * Effort: Easy (Simple extension mapping update).
-  Recommendation: Treat this as a configuration update rather than a new feature. You can confirm this by renaming a .st11 file to .stc and seeing if it plays in your current build. If it does, just update the extension map in the source code.
-
-OPENMPT UPGRADE 0.5 -> 0.8.7
- OpenMPT-routed = 667 (1) cba (11) etx (8) fmt (10) ftm (1055) gt2 (60) ice (0) pt36 (0) rtm (3) tcb (24) xmf (9) symmod (174) dsym (160) gtk (55)
-DONE 174 .symmod + 160 .dsym Symphonie (Amiga)	Moderate	Amiga tracker from ~1993; UADE has partial support for similar formats; some source floating around
-  The research for Symphonie (.symmod) reveals a format that is much more sophisticated—and more difficult—than the "Moderate" rating suggests.
-  1. Technical Complexity: Hard (not Moderate)
-   * The "Pseudo-DAW" Problem: Symphonie was essentially a precursor to modern DAWs on the Amiga. It didn't just play samples; it had a software-mixing engine with up to 256 channels and real-time software DSP (reverb, echo, resonant filters).
-   * Assembly Dependency: The authoritative source code and replayers are written in 68k Assembly (optimized for 68030/040/060). There is no "clean" portable C replayer that accurately reproduces the software filters and effects.
-  2. Re-evaluating Implementation Options:
-   * Option A: Native Port (Very Hard): You would have to manually translate thousands of lines of 68k Assembly into C or a modern synthesis engine. Given the complexity of its software mixer, this is a massive undertaking.
-   * Option B: UADE (The Path of Least Resistance): You mentioned UADE has partial support. Actually, UADE's support for Symphonie is quite robust because it runs the original Amiga player binary in a 68k emulator. 
-       * Strategic Win: Since ChipMachine already integrates UADEPlugin, the most efficient way to support .symmod is to verify and enable it within your UADE infrastructure rather than writing a new plugin.
-  3. Why it matters:
-   * History: Symphonie was the "high-end" choice for Amiga musicians (like Muffler) who wanted to escape the 4-channel limitations of Protracker. The music is often lush, atmospheric, and technically impressive.
-   * The Catch: Because it was so CPU-intensive, many .symmod files won't even play correctly on a base Amiga 500; they require the power of the replayer's software mixer.
-  4. Summary of Findings:
-   * Format: Symphonie Pro Module (.symmod).
-   * Sound Engine: 256-channel Software Mixer + Real-time DSP effects.
-   * Source Availability: Open source (68k Assembly) on Aminet and GitHub (MastaTabs).
-   * Effort: Hard for a native port; Easy if routed through your existing UADEPlugin.
-  Recommendation: 
-  Do not attempt a native C implementation of Symphonie. Instead, focus on routing .symmod files to your UADE plugin. You will likely find that UADE already handles the heavy lifting of emulating the software mixer, giving you the "big sound" of Symphonie with minimal code changes.
-
-DONE VIA UADE UPGRADE 64	.prt	Pretracker (Amiga)	 
-"PreTracker's pre-calculated instruments are rather complex, and the calculations required to generate them are not publicly known. Without PreTracker becoming open-source, I don't see any chance in supporting this format."
-Chris Hodges (Platon42) took the official binary blob, reverse-engineered the assembly, and optimized it.
-The Catch: While it is highly optimized for performance (twice the speed and half the packed size of Pink's original implementation), it was still ultimately designed to drop into rePlayer (the UADE-based Amiga music player ecosystem).
-
-UADEUPGRADE: 2.13 -> 3.05 prt aps arp ash bye dm hot jb js kim lion mod3 mosh mus npp okta pat prt ptm rj sdata sfx20 sid smod tcb tits tmk ymst
-
-DONE PN. PokeyNoise 34 songs but some legendary
-
-DONE WITH CAVEATS (SEE DEFERRED) 78 .bbsong Beepola (ZX Spectrum beeper)	Moderate	Beepola is open-source (.NET); format is documented; would need a beeper synthesis engine
-lot of work but this is dear to me
-beepola has multiple engines:
-SFX (41 songs) -- in progress
-P1D Phaser1 digital (15 songs) -- DONE
-(Wham) Music Box (9 songs) -- DONE
-SVG Savage (6) -- TODO, trivial now
-MSD Music Studio (4) -- PARTIAL, TBD
-Tritone (0) -- ??
-✦ This is a very insightful research snippet. Beepola (.bbsong) is a fascinating candidate because it represents a specific era of "1-bit" music that is often overlooked. 
-  Refined Technical Assessment:
-   1. Complexity: Moderate (with a catch).
-       * The .bbsong format itself is relatively straightforward (it’s a pattern-based tracker format).
-       * The real challenge: Beepola is not just one player; it is an orchestrator for many different Z80 beeper engines (like Phaser1, Special FX, Savage, Tritone). 
-       * To play a .bbsong correctly, you don't just need one "beeper engine"; you need to know which of the ~10 specific Z80 engines the song was composed for and then emulate that engine's specific synthesis logic.
-   2. Implementation Strategy:
-       * Don't write a synthesis engine from scratch. Instead, leverage the fact that you already have a Z80 emulator in the project (via the libkss / MSX plugin).
-       * The most robust way to support .bbsong would be to use a Z80-to-WAV approach. Since Beepola can export to a Spectrum-ready binary (incorporating the player code and data), the "cleanest" implementation would be to:
-           1. Parse the .bbsong to determine the engine and data.
-           2. Inject the corresponding Z80 player routine and the music data into a virtual Z80 memory space.
-           3. Emulate the Spectrum's 1-bit speaker (writing to port 0xFE) and sample that output.
-   3. Standalone Library Check:
-       * There is no "libbeepola," but there is 1tracker (open-source), which supports importing .bbsong and handles the synthesis for all those engines in C++. This would be the "gold mine" source code to look at for a port.
-  Verdict: Supporting it is definitely feasible and would add a very cool "ZX Spectrum Beeper" niche to ChipMachine. It’s significantly easier than Psycle because the "machines" being emulated are simple Z80 loops rather than complex VSTs.
-  Engineering Recommendation:
-  If you ever decide to tackle this, look at the 1tracker source code on GitHub/SourceForge. It has already solved the "how do I play Beepola engines in C++" problem.
-
-DONE 12 .ntk ProTrekkr
-DONE 55 .ptk ProTrekkr 2.0 *top-tier candidate* Open-source on GitHub (hitchhikr/protrekkr); has a standalone replayer
-  The research for ProTrekkr 2.0 (.ptk) is highly accurate and presents a very strong candidate for ChipMachine.
-  1. Repository Identification: Correct
-   * Hitchhikr (Franck Charlet) is the primary author. The GitHub repository hitchhikr/protrekkr is the authoritative source.
-   * Standalone Replayer: This is the "killer feature" for your implementation. The repo contains a dedicated subfolder (usually src/extlib/ptkreplayer) containing a C99 replayer designed specifically for third-party integration without the overhead of the GUI or SDL.
-  2. Feasibility Re-assessment: Moderate to Easy
-   * Why it's favorable:
-       1. High-Quality Portable C: The replayer is extremely clean. It’s designed for 64kb intros, so it has zero external dependencies and a very small memory footprint.
-       2. Modern Architecture: Unlike 1990s tracker code, ProTrekkr was written with portability in mind. It handles endianness and 32/64-bit issues better than older trackers.
-       3. Hybrid Engine: It supports both samples and synthesized instruments (including a virtual TB-303 and a
-          distortion unit). This makes it sonically richer than a pure sample-based tracker.
-   * The Challenge: The .ptk format is quite "dense" because it packs a lot of synth parameters and potentially
-     compressed samples (ADPCM/GSM). However, since you have the official replayer source, you don't have to write the parser yourself.
-  3. Integration into ChipMachine:
-   * Plugin Strategy: You would create a ProTrekkrPlugin. 
-   * UADE/libopenmpt Status:
-       * libopenmpt: Does not support .ptk.
-       * UADE: Does not support .ptk (it's a PC-native format).
-       * Result: This would be a unique and valuable addition to ChipMachine that many other players lack.
-   * Licensing: ProTrekkr is BSD-licensed, which is very permissive and easy to integrate into your project.
-  4. Summary of Findings:
-   * Format: ProTrekkr Module (.ptk).
-   * Sound Engine: 16-channel Hybrid (PCM Samples + FM/Subtractive Synth + dual 303s).
-   * Existing Tooling: Official C replayer in hitchhikr/protrekkr.
-   * Effort: Moderate. You just need to wrap the existing C replayer into your ChipPlayer interface.
-  Recommendation: This is a top-tier candidate. It gives you a "professional" sounding 2000s-era tracker with synth capabilities that takes up almost no space. The implementation path is clear and well-documented by the official replayer.
-
-DONE * AdPlug Update: The move from 2.3.2-beta to 2.4 includes many bug fixes for OPL2/3 emulation and support for new tracker formats.
-New format players (genuinely newly playable):
-.pis	Beni Tracker					28
-.mtr	Master Tracker (was a ghost ext — listed but no player)	19
-.plx	PALLADIX Sound System				15
-subtotal newly playable					62
-.rad	RAD2 (v2/0x21) now decodes — old player hard-rejected
- it	127 total (v1+v2; the v2 subset previously failed silently, not sure how many say 50% = 65 songs)
-newly-enabled extensions .jbm (9)
-others: .got .sop .hsq .ha2 .wlf .mdi .rac .bmf
-
-DONE ZX TUNE UPGRADE
-git commit -m "Enable more ZXTune formats: gtr (38) chi (21) tfe (77) psm[routed] (51)"
-git commit -m "Fix ftc: Move ftc (51) from ayfly to zxtune"
-238 new zx spectrum songs playable!
- > which new formats zxtune update would bring?                                                                         
-✦ Updating ZXTune from r2742 to r5101 would bring support for a massive number of new formats, primarily through the
-  integration of modern decoding libraries like vgmstream and libopenmpt.
-  New Formats & Features Summary
-  ┌───────────────────────┬───────────────────────────────────────────────────────────────────────────────────────┐
-  │ Category              │ Formats Added / Improved                                                              │
-  ├───────────────────────┼───────────────────────────────────────────────────────────────────────────────────────┤
-  │ vgmstream Integration │ 150+ new formats from console and arcade systems (ADPCM, streaming game audio, etc.). │
-  │ New Tracker Formats   │ AMS, DSM, MT2, PLM, J2B, FMT, C67, MO3 (via libopenmpt integration).                  │
-  │ Console/Chiptune      │ S98 (PC-98 logging), NCSF (Nintendo DS), VGM (full support for all chips/versions).   │
-  │ Advanced Digital      │ DSYM (Digital Symphony), SYMMOD (Symphonie), OPUS (within samples).                   │
-  │ Container Formats     │ FSB (FMOD Sample Banks) containing FMADPCM tracks.                                    │
-  └───────────────────────┴───────────────────────────────────────────────────────────────────────────────────────┘
-  Key Improvements Beyond Formats
-   * Accuracy: The transition to libopenmpt (r4980) significantly improves playback accuracy for standard tracker formats like IT, S3M, and XM.
-   * Playback Features: Added support for fade-in/fade-out, preamp controls, and a completely rewritten seeking and duration logic.
-   * Stability: Massive fixes for modern C++ standards and OS-specific optimizations (especially for macOS and Linux).
 
 DEFERRED BEEPOLA FORMATS / WORK
 *******************************
@@ -417,113 +185,52 @@ IMPOSSIBLE - .dmf starry viper -- investigate why, dmf should be covered
 The actual failure: Deflemask .dmf and X-Tracker .dmf are two completely unrelated formats that happen to share an extension. OpenMPT (and modplug) only know X-Tracker DMF (magic: DDMF). Deflemask uses zlib-compressed binary data (magic: 0x78).
 Deflemask playback — the fast-fail is in place, but Deflemask DMF files (Heavy Viper/SuPeHaRiMAIN-StarrySky.dmf and anything else under the Deflemask/ modland category) are now just silently skipped. If you ever want actual playback, you'd need a Deflemask-capable player library. No known C/C++ open-source Deflemask player exists currently, so this is a "revisit when one appears" item rather than something actionable right now.
 
-******************************
-* FORMATS PER COUNT COVERAGE *
-******************************
-mod	78289
-sid	61177
-xm	42771
-it	24769
-s3m	10908
-pt3	6525
-sap	6335
-pt2	6060
-sndh	5895
-ym	4858
-nsf	4858
-mus	4583
-stc	3567
-mmd1	2605
-dmf	2138
-OVI	1801
-ptcop	1769
-sc68	1745
-mp3	1673
-asc	1656
-rsn	1513
-str	1391
-ymst	1378
-ahx	1337
-mmd0	1316
-OPI	1293
-nsfe	1214
-OZI	1152
-ftm	1041
-emul	979
-gbs	894
-sqt	868
-vtx	833
-dbm	798
-ml	795
-mtm	775
-eup	684
-mmd3	638
-stp2	625
-stp	614
-MGS	548
-prg	544
+************************************
+* FORMATS SORTED BY COUNT COVERAGE *
+************************************
+No comment = works and regression test(s) in place
 
-psy	519 -- FURTHER RESEARCH NEEDED Psycle tracker Open-source tracker (psycle.sf.net) but the file format is complex and there's no standalone decode library. HOWEVER: https://psycle.fandom.com/wiki/Qpsycle
-The Linux port Qpsycle explicitly states that it uses the psycle-core audio engine, and that the playback engine was split out to be shared among projects. It also says it can load Psycle songs (“psy3 format”) and play most existing .psy files.  
-That means:
-Psycle
- └── psycle-core
-      ├── song loader
-      ├── pattern engine
-      ├── machine graph
-      └── playback engine
-Qpsycle
- └── reuses psycle-core
-The only practical implementation is embedded in the Psycle/Qpsycle source tree itself.  
+---
+AUDIO OVERLOAD APP extensions NOT checked to be covered:
+* OGG — [add unit test] no .ogg file successfully played. -- we cover this, add regression test
 
-cmf	458
-okta	419
-hes	414
-cus	401
-vt2	386
-kss	384
-sng	355
-org	354
-sfx	351
-v2m	349
-raw	316
-pttune	315
-laa	277
-sgc	276
-mmd2	265
-a2m	263
-BGM	258
+* GYM — [5 songs in db ] present in the log, but playback threw an exception (Packed GYM file not supported).
+
+* ORC — [no songs in db] no .orc file appears in the log.
+* QSF — [no songs in db] no .qsf file successfully played (only .miniqsf played successfully; .qsflib files were skipped).
+---
+
+mod (78289), sid (61177), xm (42771), it (24769), s3m (10908), pt3 (6525), sap (6335), pt2 (6060), sndh (5895), ym (4858), nsf (4858), mus (4583), stc (3567), mmd1 (2605), dmf (2138), OVI (1801), ptcop (1769), sc68 (1745), mp3 (1673), asc (1656), rsn (1513), str (1391), ymst (1378), ahx (1337), mmd0 (1316), OPI (1293), nsfe (1214), OZI (1152), ftm (1041), emul (979), gbs (894), sqt (868), vtx (833), dbm (798), ml (795), mtm (775), eup (684), mmd3 (638), stp2 (625), stp (614), MGS (548), prg (544)
+
+psy	519 -- NO Psycle tracker Open-source tracker (psycle.sf.net)
+Don't add .psy as a general format. It's the highest-effort / lowest-coverage candidate you've looked at — the engine port is far bigger than anything in the repo, and even completed it would silently fail on most real-world songs (native/VST machines). That's a bad user experience: "supported" but plays a fraction.
+
+cmf (458), okta (419), hes (414), cus (401), vt2 (386), kss (384), sng (355), org (354), sfx (351), v2m (349), raw (316), pttune (315), laa (277), sgc (276), mmd2 (265), a2m (263), BGM (258)
+
 rol	247 -- FIXED, 2nd file logic was missing
-sunvox	244
-psc	238
-stm	227
-sa	220
-bp	209
-aon	204
+
+sunvox (244), psc (238), stm (227), sa (220), bp (209), aon (204)
+
 cpc.emul	199 -- DONE this is Amstrad CPC .emul, all good
 cop	191 -- FIXED SAM COUPE, zxtune covers, fixed, all good
-lds	183
-edl	179
-4v	170
+
+lds (183), edl (179), 4v (170)
 
 sn	165 -- NO Sound Club (Amiga) — no handler
 .sn / Sound Club — an Amiga format, but it's not in UADE's supported extensions, and none of UADE's 175 vendored players is a Sound Club replayer (no club/sclub entry in eagleplayer.conf or players/). Not handled by OpenMPT/ZXTune either.
+No replayer source exists publicly and the binary format isn't documented anywhere I can find. 
 
-W	163 -- NO SoundSmith — Apple IIgs format (Bret Victor's tracker), not Amiga. See below.
+W	163 (243 songs) -- DONE SoundSmith — Apple IIgs format (Bret Victor's tracker), not Amiga. See below.
 .W / SoundSmith — this is an Apple IIgs format (modland paths like SoundSmith/Bret Victor/Bunny Tune.W, all the telltale fixed 66304-byte size). It's not an Amiga tune at all, so UADE can't touch it, and nothing else in the stack decodes it.
+.W = instruments (the wavebank / sample data) it's not the song.
+The song itself has no extension in modland. It's the bare filename (Bunny Tune, Coconut Champagne, etc.),
 
-wsr	162
-dsym	160
-digi	160
-669	160
-symmod	155
-amf	154
-OPX	153
-MBM	151
+wsr (162), dsym (160), digi (160), 669 (160), symmod (155), amf (154), OPX (153), MBM (151)
+
 set	147 -- IGNORE not a standalone format; it's the Quartet voice-set companion for .4v files
 
-rns	117 -- old Renoise format (commercial tracker)
-xrns	145 -- new Renoise format
+rns	117 -- NO old Renoise format (commercial tracker)
+xrns	145 -- NO new Renoise format
 rns/xrns Renoise modern commercial tracker INVESTIGATE
 .xrns is just a ZIP of XML and samples (easy to parse)
 There ARE open-source XRNS libraries. I found several. NRenoiseTools (.NET)
@@ -551,146 +258,282 @@ IMPOSSIBLE 120 .rns Renoise old format	Hard Explicitly blocked in OpenMPTPlugin 
    * The Only Real Fix: The standard community advice is to use a slightly older version of Renoise (around 1.8/1.9) to open the .rns files and resave them as .xrns. However, even .xrns is poorly supported by tracker libraries because it relies on Renoise's internal DSP engine to sound "correct."
   Conclusion: Support for .rns is unlikely without a massive reverse-engineering effort or the release of the original Renoise 1.0 source code. The "Explicitly blocked" status in your plugin is correct; it prevents the engine from attempting to play a format it fundamentally does not understand.
 
-psm	140
-amd	127
-rad	126
-med	125
 minigsf	122 -- FIXED fetch 2ndary file fix was needed -- all ok now
 gsf	120 -- FIXED fetch 2ndary file fix was needed -- all ok now
-d00	120
-vgz	115
-dw	115
-dtm	115
-bp3	114
-ptm	112
-mt2	104
-sid2	97
 
-soc	96 -- fails playback INVESTIGATE
+psm (140), amd (127), rad (126), med (125), d00 (120), vgz (115), dw (115), dtm (115), bp3 (114), ptm (112), mt2 (104), sid2 (97)
+
+soc	96 -- FIXED fails playback 
 soc = Hippel ST COSO (Atari ST). UADE's eagleplayer.conf routes it to the Amiga JochenHippel-CoSo player (prefixes=hipc,soc) — the same player that handles .hipc, which works. But the Atari-ST COSO data fails there: the fixture renders NO SOUND with a File not found error. Notably UADE does ship a separate Jochen_Hippel_ST player, but it's mapped only to .hst, not .soc. So this is a UADE ST-variant gap (the ST COSO data isn't handled by the Amiga CoSo player), not a missing fixture.
 This .soc failure is the one item counted as a real error in cmtest. Want me to:
 quarantine the non-playing .soc fixture (testmus/uade/nowork/, like daley.prg) so cmtest is clean, and/or
 investigate whether re-routing .soc to a different UADE player (or dropping it from UADE's supported_ext) is the right call?
 
-dm2	94
-hipc	92
-ult	90
-pt1	85
-mo3	85
-musx	84 -- NO Archimedes Tracker (Acorn), no replayer anywhere
+dm2 (94), hipc (92), ult (90), pt1 (85), mo3 (85)
+
+musx	84 -- DONE!! UADE had it! Archimedes Tracker (Acorn), no replayer anywhere
 musx = Archimedes Tracker — an Acorn Archimedes format; no handler in UADE/OpenMPT/ZXTune and no fixture. Genuine "no engine exists" gap (same category as .sn/.W/.psy).
 archimedes is arm -- INVESTIGATE
 
 dmu	84
 
-MUS	78 -- unsupported INVESTIGATE
+MUS	78 -- NO unsupported
 MUS (uppercase) = FAC SoundTracker — an MSX BSAVE PSG format (magic 0xFE), not the lowercase libvice/SID .mus (which plays). It has no replayer in the stack; UADEPlugin::canHandle deliberately declines it via the isMsxBsave content-check (UADEPlugin.cpp:333) to stop UADE crash-claiming it. This matches the known "future = libkss fac2kss converter" item. In the GUI a FAC .MUS is safely skipped, not played.
+The one open replayer, fcatrin/fstr (MIT), is unusable for porting — x86 real-mode asm targeting AdLib OPL2 (wrong chip, not portable C). 
 
-tfe	77
-bbsong	76
+tfe (77), bbsong (76)
+
 smus	72 -- FIXED! (folder of instruments 2ndary fetch was needed) lots of work!
-
->>>>>>>>>>>>> all checked / annotated above <<<<<<<<<<<<<<
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
->>>>>>>> deeper research needed for items below <<<<<<<<<<
 
 hsc	69
 mptm	67
 
-fls	65 -- Flash Tracker (ZX Spectrum) Hard ZX Spectrum AY tracker; niche; no known C library
-Feasibility: Moderate Value: Low (66 requests) Verdict: Low Priority.
-Reasoning: This is a ZX Spectrum AY-3-8912 format. Sergey Bulba's Ay_Emul source code (specifically ayfly / Ay_Emul.cpp) contains Z80 assembly/C routines to handle .fls playback. If ChipMachine already integrates Bulba's AY routines, adding the file extension pointer is feasible. However, given the low request volume, only pursue if it can be mapped directly to an existing backend engine.
+fls	65 -- NO The .fls test file is a raw Flash Tracker module
+Park it unless a Flash Tracker Z80 player binary surfaces.
 
 prt	64
-mxtx	63 -- MaxTrax Commercial Amiga tracker format; no known open-source decoder
+
+mxtx	63 -- DONE! MaxTrax (commercial Amiga sound engine, e.g. Dark Seed).
+new maxtraxplugin ports ScummVM's MaxTrax sequencer + Paula mixer. routes .mxtx -> MaxTrax.
+
 hip	63
 gdm	63
 mdl	61
 fred	59
 dss	58
-sho	57 -- Shroom tracker Very obscure; no public documentation or decoder found
-dum	57
+sho	57 -- NO Shroom tracker Very obscure; no public documentation or decoder found
+dum	57 -- all good, the test file was bad
 
-am	57 -- Atari Falcon Ace Tracker -- would be awesome to add this!
-Research outcome: we cannot parse the data structures and mix them via standard portable C++. You have to go through CPU and DSP emulation. The only ctual path forward is to lift the cycle-accurate emulation code from Hatari (the open-source Atari ST/STE/TT/Falcon emulator), which has a fully-realized Motorola 56001 core emulation block.
-* Step 1: Secure the Original Falcon Replay Code. New Beat Developments released the complete source code for ACE Tracker 2.00 (which includes the assembly player routines and the 56k DSP binary files). You will need the 68030 assembly initialization/sequence code. You will need the .lod or compiled DSP binaries that execute on the 56k.
-* Step 2: Extract Hatari’s Core Components. You must compile a stripped-down, headless instance of Hatari's core as a static library for Chipmachine to link against. Specifically, you need to lift:
- - The Motorolala 68030 CPU core (usually WinUAE or UAE core wrapper inside Hatari).
- - The dsp.c (Motorola 56001 emulation layer).
- - The Falcon DMA sound subsystem simulation.
-* Step 3: Implement an Emulated Wrapper: Instead of writing a standard tracker parser, your AcePlayer::getSamples routine inside Chipmachine will actually boot a mini-virtual Atari Falcon in memory, load the ACE file into the virtual RAM alongside the assembly player engine, and step the emulation frame-by-frame.
+am	57 -- NO Atari Falcon Ace Tracker
+Re-check trigger: only if (a) New Beat actually open-sources the ACE replay + DSP code, or (b) someone publishes a standalone portable am2wav/libace decoder. 
 
 gtk	55 -- DONE via OPENMPT UPDATE!
-gmc	55
-gt2	53
-sks	52 -- Starkos (Atari ST) Hard Atari ST tracker; no known portable decoder
-mm8	52
+gmc	55 -- OK
+gt2	53 -- OK
 
-ned	51 -- NerdTracker 2 NES-style tracker for PC; some source code available; limited community
+sks	52 -- DONE STarKos is AMSTRAD CPC (not Atari ST), AY/YM tracker by Targhan/Arkos, predecessor of Arkos Tracker. New sksplugin compiles the MIT non-GUI "BaseExport" slice of Arkos Tracker 3 (vendored /arkostracker3) -- author's own .sks importer + SongPlayer + PsgStreamGenerator, streamed to PCM like AT3's headless SongToWav. Needs JUCE (vendored trimmed at /arkostracker3/JUCE, 3 ISC modules: juce_core/events/audio_basics). 4 fixtures play, cmtest STarKos green
+
+mm8	52 -- OK
+
+ned	51 -- DONE NerdTracker 2 NES-style tracker for PC; some source code available; limited community
 Feasibility: High / Moderate
 Value: Moderate (54 requests, but high historical relevance for NES chiptunes)
 Verdict: Approve for Implementation.
 Reasoning: NerdTracker 2 was a vital evolutionary step in the NES chiptune scene before NSF/Famitracker took over. The original MS-DOS C source code is publicly available. Because it maps directly to standard NES APU registers, it can be integrated into ChipMachine via a lightweight wrapper or by converting/subsuming the parsing logic into the existing NES emulation core.
 
-bmx	51 -- Unknown / No format info found matching this context
-SNG	51 -- same as sng? some fail in cmtest
-ftc	50
-psf	49
-SM2	46
-SM1	46
-dl	45
-jam	44
-hvl	44
-coco	44  -- Unknown / No format info found matching this context
-mms	43
-bd	43
-adl	43
-puma	42
-ksm	41
-dln	41
-dsm	38
-jo	37
-gtr	37
-fxm	37
-far	37
-pmd	36
-minipsf	36
-doda	36
-c67	36
-zxs	35
-mad	35
-mk2	34
-jxs	34
-tw	33
-mon	32
-MPK	32
-sps	31
-spm	31
-jd	31
-amad	31
-gbr	30
-bss	30
-bam	29
-skm	28
-pis	28
-sat	27
-ams	27
-dmo	26
-ct	26
-avp	26
-uni	25
-sn2	25
-mgb	25
-wb	24
-tcb	24
-omf	24
-ixs	23
-ems	23
-snd	22
-axs	22
-dfm	21
-chi	21
-ast	21
+bmx	51 -- NO This is Jeskola Buzz — the modular tracker.
+Playback requires native Win32 x86 machine DLLs — hundreds, almost all closed-source binaries that can't run on arm64 macOS and can't be ported.
+The one open engine (zzub/libzzub) parses .bmx but still needs the closed machine DLLs — its bundled machines cover ~none of these songs, so it renders silent/wrong.
+
+SNG	51 -- DONE 1) NOT same as sng. Doesn't play. INVESTIGATE. 2) NOTE: some .sng fail in cmtest (different issue?)
+97 uppercase .SNG, every one under SCC-Musixx/ — so this is unambiguously SCC-Musixx, an MSX format driving Konami's SCC chip. Nothing in the tree handles it (only modland-data hits). The "doesn't play" symptom fits: case-insensitive extension matching routes .SNG to the lowercase-sng AdLib/GoatTracker handlers, which choke on what is actually MSX SCC data.
+Bottom line: uppercase .SNG is SCC-Musixx (MSX/Konami SCC), it's a feasible port (SCC emu + Z80 core already in-tree, replayer source public), and it currently just mis-routes to the wrong AdLib/SID engines. I deliberately did not add it to not_supported_extensions.txt since it's not a dead-end. Tell me if you want the interim decline-gate or the full plugin.
+
+ftc	50 -- OK
+psf	49 -- OK
+
+SM1/SM2	46 -- NO (mislabeled fixtures removed) -- The UADE "SoundMaster" eagleplayer (Michiel Soede, .sm/.sm1/.sm2/.sm3/.smpro) genuinely works -- real modules are relocatable 68k code starting with BRA ($60xx); testmus/uade/"doofus 2.sm" and "doofus 1.sm3" still play OK. The two failing files (JARRE1.SM1/SM2) were NOT SoundMaster at all: MSX BSAVE dumps (0xFE header, load 0x8000-0xBFFF page 2, exec 0x8000; 16384+7 = 16391 bytes) mislabeled with the SoundMaster extension. Only the 7-byte BSAVE header was shared between them; the 16KB payloads were otherwise wholly different with no recognizable embedded replayer -> no open player to add. They were dropped from the corpus (not representative fixtures). UADEPlugin::canHandle also now declines sm/sm1/sm2/sm3/smpro when isMsxBsave() (defends the production DB against the same mislabeling); real SoundMaster carries no 0xFE marker, so doofus is safe.
+
+dl	45 -- OK
+jam	44 -- OK
+hvl	44 -- OK
+
+coco	44 -- DONE!! Coconizer (sample-based Acorn Archimedes format, modland Coconizer/, Neil Coffey et al). libxmp already had a full coco_loader (zxtune/3rdparty/xmp/src/loaders/coco_load.c) -- same Acorn family as .musx. New cocoplugin compiles ONLY coco_load.c + glue and links musxplugin for the shared libxmp slice (a second full slice would collide on every xmp symbol; zxtune's xmp is NOT in the chipmachine link, so musxplugin is the only copy). canHandle gates ext==coco + first byte 0x84(4ch)/0x88(8ch). Drives the single loader via xmp_load_typed_module_from_memory(&coco_loader), exactly like musx. 4 fixtures (Beethoven1/Walking in the Air/French Anthem/NRGCOM) all play, cmtest Coconizer + "plays sound" green, coverage gate unchanged. README/LEGAL/Credits.rtf synced.
+
+mms	43 -- OK
+bd	43 -- OK
+
+adl	43 -- many adl files don't play from GUI but many also do -- INVESTIGATE
+Trying testmus/adlib/dune ii - 00.adl ... playback OK
+example: all songs are silent in this one:
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Ad Lib/ADL/Frank Klepacki/dune ii - 12.adl
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fADL%2fFrank Klepacki/dune ii - 12.adl
+maybe there is still some deeper .adl issue -- wider sample to test needed
+
+puma	42 -- OK ... but just in case investigate testmus/uade/cyf-3-final-2.puma ... playback NO SOUND
+
+ksm	41 -- INVESTIGATE -- no playback, errors in cmtest and GUI attempt
+Trying testmus/uade/ken's labyrinth - begin.ksm ... playback NO SOUND
+Trying testmus/adlib/maxosong.ksm ... playback EXCEPTION ()
+[RemoteLoader.cpp:90] CODE 226
+MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fKen's AdLib Music%2fKen Silverman/ken's labyrinth - labsng01.ksm'. Error: 
+[UADEPlugin.cpp:511] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fKen's AdLib Music%2fKen Silverman/ken's labyrinth - labsng01.ksm
+[MusicPlayerList.h:91] META message
+
+dln	41 -- OK
+
+dsm	38 -- DONE!! -- all except 1 tried in gui work (see below) and cmtests are bad:
+Trying testmus/openmpt/andante.dsm ... openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
+Trying testmus/openmpt/andante.dsm ... playback EXCEPTION (Could not load module)
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Digital Sound Interface Kit/Necros/atomic power.dsm
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Sound Interface Kit%2fNecros/atomic power.dsm
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/Digital%20Sound%20Interface%20Kit/Necros/atomic%20power.dsm
+[web.cpp:181] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
+MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Sound Interface Kit%2fNecros/atomic power.dsm'. Error: Could not load module
+.dsm failures = DSIK v1 format — a real decoder gap, not a routing bug
+So OpenMPT is failing correctly; there is simply no v1 player in the tree. The "1 that works in the GUI" is almost certainly a stray genuine v2 DSMF file in your corpus — not a v1 Necros tune.
+MilkyTracker implementation via openMPT dispatcher -- DONE!
+
+jo	37 -- DONE, OK fixed! rerouting to eagle player in uade
+
+gtr	37 -- OK
+
+fxm	37 -- DONE Fuxoft AY Language now plays via ayflyplugin. New players/FXMPlay.h is a C++ transliteration of the FXM routines from Bulba's
+AY_Emul (rebuilds a 64K image at the file's origin and interprets it like the original Z80 playroutine). Added ".fxm" to Players[] + supported_ext + FXM_Detect ("FXSM" magic). star3.fxm plays OK in cmtest; verified vs 6 modland Fuxoft tunes (varied lengths/loops, continuous audio). Credits in README/LEGAL/Credits.rtf.
+
+far	37 -- OK
+
+pmd	36 -- NO I hunted hard, and it confirms the park verdict: there is no open replayer for PiECE music driver .pmd anywhere. 
+
+minipsf	36 -- OK
+
+doda	36 -- OK (cosmetic, not a real error). All 4 .doda fixtures play fine in both GUI and cmtest (each ends "playback OK", counted as g_ok, never g_errors). The scary "File not found ???..." was benign stderr noise: the UADE Special-FX_ST player (eagleplayer.conf prefixes=doda) probes for optional auxiliary files using binary-garbage filenames; the lookup misses and the player falls back and plays. uade_load_amiga_file() in uadestate.c printed "File not found <sanitized-garbage>" to stderr, which interleaved with cmtest's \r-rewritten stdout line and made passing fixtures LOOK like errors. Fixed by silencing that stderr block (return NULL on probe-miss). doda now prints a clean "playback OK"; ERRORS unchanged at 62. Local UADE patch -- re-apply on revendor.
+
+c67	36 -- OK
+zxs	35 -- OK
+
+mad	35 -- DONE new plugin ... cmtest ok, all tested in gui play except Benjamin Birney songs -- none of them plays!
+.mad files from MODLAND/PlayerPro/ are being routed to AdPlug, which is failing. .mad is an ambiguous extension — AdPlug has a MAD loader, but these are Macintosh PlayerPro modules.
+The magic is MADG — a PlayerPro (Macintosh tracker by Antoine Rosset) module. AdPlug's .mad loader is for Mad Tracker 2, a completely different format. 
+The engine is MaddTheSane/PlayerPRO (SourceForge mirror)
+
+mk2	34 -- DONE, 1 file unsupported -- cmtest ok, all other tried from gui play except this one is silence:
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Mark II/Andreas Starr/my way to the stars.mk2
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMark II%2fAndreas Starr/my way to the stars.mk2
+[RemoteLoader.cpp:90] CODE -1
+[UADEPlugin.cpp:512] FILENAME 'my way to the stars.mk2', PREFIX 'my way to the stars', EXT 'mk2', BASE 'my way to the stars'
+[UADEPlugin.cpp:556] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMark II%2fAndreas Starr/my way to the stars.mk2
+[MusicPlayerList.h:91] META message
+this 1 file doesn't play: this one module is an unsupported replayer variant
+
+jxs	34 -- DONE .jxs is JayTrax, Reinier "Rhino" van Vliet's cross-platform software-synth tracker (the engine started as Mugician; the apps were JayTrax / Syntrax). The modland JayTrax/ tree has 34 tunes across Philip Wood, Reinier van Vliet and Stefan Alfrink. It is not an Amiga format and has no UADE eagleplayer — but a clean, self-contained C port of Rhino's own replayer exists (pachuco/jaytrax), with an ideal offline API (jxsfile_readSongMem → jaytrax_renderChunk int16 stereo). Implemented new plugin.
+
+tw	33 -- OK
+
+mon	32 -- DONE (shipped). MONOTONE (Trixter/Hornet PC-speaker tracker) collided with UADE's Amiga Maniacs of Noise on the .mon ext -> UADE ran the module header as 68k code and crashed ("Illegal instruction: 084d"). New monotoneplugin wraps vendored PTPlayer (BSD-3); UADE now content-declines the \x08MONOTONE magic so the two route apart. 4 fixtures green.
+Original report:
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Monotone/Virt/rickroll.mon
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMonotone%2fVirt/rickroll.mon
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/Monotone/Virt/rickroll.mon
+[web.cpp:181] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+[UADEPlugin.cpp:512] FILENAME 'rickroll.mon', PREFIX 'rickroll', EXT 'mon', BASE 'rickroll'
+[UADEPlugin.cpp:556] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMonotone%2fVirt/rickroll.mon
+Illegal instruction: 084d at 0001f000
+uade warning: Song ended prematurely due to error: score crashed
+Found it. MONOTONE is not an Amiga format at all — it's a PC-speaker tracker by Trixter/Hornet (single square wave, constant volume). That's why UADE's ManiacsOfNoise (an Amiga 68k player) crashes: it's the completely wrong engine. 
+rickroll.mon is a MONOTONE module (magic 08 "MONOTONE" at offset 0). MONOTONE is a PC-speaker tracker by Trixter/Hornet — single square wave, ≤4 mixed tracks. It has nothing to do with the Amiga.
+Full player: the decline plus a new monotoneplugin wrapping PTPlayer's MON loader + square synth → all 4 files actually play.
+Full new player it is. Let me mark this as a new chapter and pull down the PTPlayer source to understand its API.
+
+MPK	32 -- OK
+
+sps	31 -- NO Trying testmus/uade/teinteremix22.sps ... playback FAILED
+spm	31 -- NO Trying testmus/uade/teinteremix22.spm ... playback FAILED
+Stonetracker! The modland path is Stonetracker/Bosco/teinteremix22.sps. SPM = song module, SPS = sample set (pair). 
+No open replayer exists anywhere to vendor:
+
+jd	31 -- OK
+
+amad	31 -- DONE ... "AY Amadeus" by Frantisek Fuka ... ZXAYAMAD container files (a variant of the standard ZXAYEMUL .ay chiptune format, with type tag AMAD instead of EMUL). same family as .fxm, 31+ tunes, clean reuse of FXMPlay.h, no Z80 emulation needed. 
+
+gbr	30 -- DONE GBR = "Gameboy Sound System GBR" (a Game Boy music rip format, sibling to GBS).
+gbsplay plays both GBR and GBS, and GBS "superseded GBR, essentially the same format with a fuller header." 
+
+bss	30 OK, one bad v1 song -- all songs in this format i tried from gui (including the cmtest one) work except this one below, could be a bad file:
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Beathoven Synthesizer/Thomas Lopatic/katakis loading v1.bss
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss
+[RemoteLoader.cpp:90] CODE -1
+[UADEPlugin.cpp:512] FILENAME 'katakis loading v1.bss', PREFIX 'katakis loading v1', EXT 'bss', BASE 'katakis loading v1'
+[UADEPlugin.cpp:556] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss
+[UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
+[UADEPlugin.cpp:107] Restoring filename /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss back to '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss'
+[UADEPlugin.cpp:111] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss
+[MusicPlayerList.h:91] META message
+[UADEPlugin.cpp:281] Amiga message: Eagleplayer inserted 1 into aud0per.
+Fixing it would mean reverse-engineering the Beathoven 68k replayer for this one booter variant — near-zero ROI for a single file, especially since the same tune already plays fine as katakis loading.bss (the v1.09 rip); ...v1.bss is just the obsolete early rip.
+
+bam	29 -- OK
+
+skm	28 -- NO - Skale Tracker (PC tracker by Baktery). No open replayer and no public spec exist — native .skm is only readable by closed, x86-only software (Skale Tracker itself, the Win32 XMPlay plugin).
+
+pis	28 -- OK
+sat	27 -- OK
+ams	27 -- OK
+dmo	26 -- OK
+
+ct	26 -- NO - Cybertracker C64 (china.ct, ~13KB, magic NNTRKMZX) — a C64/SID tracker project format.
+CyberTracker (C64 SID, CyberBrain/No Name; native magic NNTRKMZX, song PRG @ $0400). The only public converter (DOS ctpacker BETA) is broken (malloc/DPMI), and a native plugin would need full RE of the .ct->SID packer. Low value: the composers' own packed SIDs are already in HVSC and play via the sidplugin.
+
+avp	26 -- OK
+
+uni	25 DONE -- no playback in GUI and cmtest skips -- investigate
+Skipping testmus/openmpt/leroy - intro.uni
+MikMod UNIMOD on-disk format (version 5).
+The fix is clean and low-risk: libmikmod is the canonical reader (load_uni.c, LGPL, ~940 KB) and it decodes the test file to real audio.
+
+sn2	25 -- NO - Sound Club 2 (Bluemoon Software, Win95/NT; PC, NOT Amiga). Native magic SN2\xd2, little-endian IFF-like chunks (NAM/SEQ/PAT/pna/voi). Note/pattern data is parseable but the module contains NO sample/instrument data — voices are produced by Sound Club 2's closed built-in synth, so playback needs full RE of the Bluemoon Win32 engine. No open replayer anywhere (UADE/OpenMPT/libxmp/ZXTune/rePlayer/NostalgicPlayer/vgmstream all lack it). OpenMPT's "Sound Club 2" string (Load_s3m.cpp) only labels S3M *exports*, it does not read native .sn2. Same dead-end as sn/psy/skm. PARK.
+
+
+--- FIXER WATERMARK --------------------
+>>> all triaging doe for items above <<<
+
+
+
+mgb	25 -- no test
+
+wb	24 -- OK
+
+tcb	24 -- all play from GUI, but cmtest passes for 2 plugins, investigate / tighten
+Trying testmus/uade/cannonfodder.tcb ... playback OK
+Trying testmus/openmpt/m-demo3-1.tcb ... playback OK
+
+omf	24 -- no test
+ixs	23 -- no test
+
+ems	23 -- OK
+
+snd	22 -- no test
+axs	22 -- no test
+
+dfm	21 -- OK
+chi	21 -- OK
+
+ast	21 -- cmtest ok but silent:
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/All Sound Tracker/Feilei/tiny opl3 demo.ast
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fFeilei/tiny opl3 demo.ast
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/All%20Sound%20Tracker/Feilei/tiny%20opl3%20demo.ast
+[web.cpp:181] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+[UADEPlugin.cpp:512] FILENAME 'tiny opl3 demo.ast', PREFIX 'tiny opl3 demo', EXT 'ast', BASE 'tiny opl3 demo'
+[UADEPlugin.cpp:556] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fFeilei/tiny opl3 demo.ast
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/All Sound Tracker/Cagliostro/thansong.ast
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fCagliostro/thansong.ast
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/All%20Sound%20Tracker/Cagliostro/thansong.ast
+[web.cpp:181] CODE 226
+[RemoteLoader.cpp:90] CODE 226
+[UADEPlugin.cpp:512] FILENAME 'thansong.ast', PREFIX 'thansong', EXT 'ast', BASE 'thansong'
+[UADEPlugin.cpp:556] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fCagliostro/thansong.ast
+
+
+--- CHECKER WATERMARK ------------------------------------
+>>>>>>>> deeper research needed for items below <<<<<<<<<<
+
+
 smufi	19
 jb	19
 brt	19
@@ -722,7 +565,7 @@ dz	14
 tf	13
 kdm	13
 ims	13
-SKS	13 -- same as sks abowe?
+SKS	13 -- SHIPPED same as sks above (STarKos, case-insensitive ext) -- sksplugin
 A2M	13
 2sf	13
 tss	12
@@ -775,7 +618,7 @@ fmk	7
 dux	7
 dsyn	7
 as3m	7
-670	7
+670	7 -- no gui playback on 1 tested song
 xms	6
 sqx	6
 sb	6
@@ -841,7 +684,5 @@ fuchs	2
 bsi	2
 aquablast	2
 aks	2
-
-
 
 more garbage below...

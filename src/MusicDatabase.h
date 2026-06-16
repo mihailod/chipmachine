@@ -67,6 +67,8 @@ enum Formats
 
     SPECTRUM,
 
+    APPLE,
+
     ATARI,
 
     MP3,

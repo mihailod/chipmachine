@@ -32,25 +32,19 @@ THE SOFTWARE.
 
 Component: Apple Silicon Port, Additional Plugins, Database Enhancements
 Copyright: Copyright (c) 2026 Mihailo Despotović
-License: MIT License
+License: GNU General Public License v3.0 or later
 
-Permission is hereby granted, free of charge, to any person obtaining a copy 
-of this software and associated documentation files (the "Software"), to deal 
-in the Software without restriction, including without limitation the rights 
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
-copies of the Software, and to permit persons to whom the Software is 
-furnished to do so, subject to the following conditions:
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.
 
-The above copyright notice and this permission notice shall be included in 
-all copies or substantial portions of the Software.
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
-THE SOFTWARE.
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <https://www.gnu.org/licenses/>.
 
 ===============================================================================
 2. COPYLEFT DEPENDENCIES (FORCING COMBINED WORK TO GPL-3.0-OR-LATER)
@@ -72,8 +66,16 @@ Author: Adapted from OpenMSX/GME variants
 License: GNU General Public License v2.0 or later
 
 Component: Ayfly (ZX Spectrum AY-3-8910)
-Author: Developed by Sergey Vladimirov
-License: GNU General Public License v2.0 or later
+Author: Developed by Sergey Vladimirov. The Fuxoft AY Language (.fxm / "FXSM")
+        player in players/FXMPlay.h is a C++ transliteration of the FXM
+        routines from AY_Emul by Sergey Bulba, whose sources are published with
+        the request that the author be credited. The Fuxoft AY Language format
+        itself is by Frantisek Fuka (Fuxoft), documented in his fxmasm project.
+        The AY Amadeus (.amad) player in players/AMADPlay.h reuses that FXM
+        engine and transliterates AY_Emul's ZXAY/AMAD container loader; the
+        tunes are by Frantisek Fuka (Fuxoft) and Patrik Rak.
+License: GNU General Public License v2.0 or later (Ayfly engine); AY_Emul-derived
+         FXM code used under attribution as requested by its author
 
 Component: ZXTune (ZX Spectrum / Sam Coupe -- Sound Tracker 1.1 .st11,
            Global Tracker .gtr, Chip Tracker .chi, TFM Music Maker .tfe,
@@ -104,6 +106,11 @@ License: GNU General Public License v2.0 or later
 Component: GME / Game Music Emulator (Console Formats)
 Author: Developed by Shay Green
 License: GNU Lesser General Public License v2.1 or later
+Notice: The .gbr (Game Boy rip) loader built on top of GME rewrites the GBR
+        header into GME's GBS form and reuses GME's Game Boy emulator. The GBR
+        header layout was referenced from gbsplay (Tobias Diedrich,
+        Christian Garbs et al., GPL-2.0-or-later,
+        https://github.com/mmitch/gbsplay); no gbsplay code is included.
 
 Component: AdPlug (PC AdLib/OPL)
 Author: Developed by Simon Peter and the AdPlug Team
@@ -116,9 +123,28 @@ Component: OpenMPT (Tracker Formats)
 Author: Developed by the OpenMPT Project Team (originally Olivier Lapicque)
 License: BSD-3-Clause
 
+Component: MilkyTracker (DSIK "old" Internal Format .dsm v1 loader)
+Author: The MilkyTracker Team
+License: BSD-3-Clause
+Notice: libopenmpt does not decode the original DSIK Internal Format (magic
+        "DSM"+0x10, e.g. the Necros tunes), only the newer DSIK "RIFF" and
+        Dynamic Studio variants. The loader for that v1 variant was adapted from
+        MilkyTracker's milkyplay/LoaderDSM.cpp (LoaderDSMv1) as a local patch to
+        the vendored libopenmpt soundlib/Load_dsm.cpp; playback reuses
+        libopenmpt's existing DSIK engine.
+
 Component: HivelyTracker (AHX/HVL)
 Author: Developed by IRIS (Peter "Yohng" V, Curt Cool)
 License: BSD-3-Clause
+
+Component: libxmp (Acorn Archimedes Tracker .musx, Coconizer .coco)
+Author: Developed by Claudio Matsuoka, Hipolito Carraro Jr and contributors
+License: MIT License
+Notice: Only the Archimedes Tracker (arch_load.c) and Coconizer (coco_load.c)
+        loaders plus the minimal libxmp core needed to drive them are compiled in
+        (vendored under zxtune/3rdparty/xmp). The cocoplugin reuses the same
+        libxmp slice as musxplugin. The arch_load.c and coco_load.c source files
+        themselves carry a GNU Lesser General Public License v2.1 or later header.
 
 Component: FreeType / Grappix (UI & Text)
 Author: The FreeType Project and Grappix contributors
@@ -136,12 +162,38 @@ Component: libkss (MSX KSS)
 Author: Developed by Mitsutaka Okazaki
 License: MIT License
 
+Component: emu2212 (Konami SCC sound chip emulator)
+Author: Developed by Mitsutaka Okazaki
+License: MIT License
+Notice: Used both by libkss and by sccmusixxplugin (a private copy with the
+        public API renamed to avoid duplicate symbols at link time).
+
 Component: organya (Cave Story Organya format)
 Author: Developed by Studio Pixel (Daisuke Amaya)
 License: MIT License / Open Source Portions
 
 Component: ProTrekkr (Hybrid Module Tracker)
 Author: Developed by Franck Charlet (Hitchhikr)
+License: BSD 2-Clause License
+
+Component: PlayerPRO (Macintosh tracker / MADDriver)
+Author: Antoine Rosset. Minimal MADDriver slice (software synth + MAD-FG loader)
+        vendored at repo-root playerpro/; see playerpro/PROVENANCE.md.
+License: Public Domain
+
+Component: JayTrax (cross-platform synth tracker, .jxs)
+Author: Format and original replayer by Reinier "Rhino" van Vliet
+        (https://bitbucket.org/rhinoid/crossx). In-process playback uses the
+        public C port of that replayer by "pachuco"
+        (https://github.com/pachuco/jaytrax), vendored at repo-root jaytrax/;
+        see jaytrax/PROVENANCE.md.
+License: No explicit license stated upstream; source publicly released by the
+        author and reused by other players (kode54/foobar2000, rePlayer).
+
+Component: SoundSmith (Apple IIgs Ensoniq 5503 player)
+Author: Original tracker by Huibert Aalbers (1989); Ensoniq 5503 "DOC" player
+        ported from the SoundSmith player by Sean Kasun (mrkite), vendored at
+        repo-root soundsmith/.
 License: BSD 2-Clause License
 
 Component: SunVox (Modular Synthesizer)
@@ -176,6 +228,35 @@ Component: ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise .pn)
 Author: Developed by Piotr Fusik
 License: GNU General Public License v2.0 or later
 
+Component: MaxTrax + Paula player (Amiga MaxTrax .mxtx)
+Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
+        audio/mods/paula.{h,cpp}), vendored under
+        musicplayer/src/plugins/maxtraxplugin/maxtrax/ with a small compat.h
+        shim replacing the ScummVM-internal dependencies.
+License: GNU General Public License v3.0 or later
+
+Component: Arkos Tracker 3 (STarKos .sks importer + AY/YM player/renderer)
+Author: Developed by Julien Névo (Targhan / Arkos). The non-GUI "BaseExport"
+        slice of the Arkos Tracker 3 source (song import, the SongPlayer engine
+        and the PsgStreamGenerator software AY/YM renderer) is vendored at
+        repo-root arkostracker3/ and driven by SksPlugin.cpp the same way as
+        AT3's headless SongToWav command-line tool (minus the WAV writer).
+        Version 3.6 (bitbucket.org/JulienNevo/arkostracker3, commit 55957b0,
+        2026-06-08). Also bundles the AT3 third-party rasm (Roudoudou) and
+        LzhStSound helpers it links.
+License: MIT License
+
+Component: JUCE
+Author: Developed by Raw Material Software / the JUCE team. Julien Névo's fork
+        (JUCE 7.0.1.2, patched for Xcode 16 / macOS Tahoe) is vendored, trimmed
+        to the modules and CMake/juceaide build infrastructure, at
+        arkostracker3/JUCE/. Only three non-GUI modules are compiled and linked:
+        juce_core, juce_events and juce_audio_basics.
+License: JUCE is dual-licensed (GPLv3 / commercial), but the three modules used
+        here -- juce_core, juce_events and juce_audio_basics -- are each
+        permissively licensed under the ISC License. See
+        arkostracker3/JUCE/LICENSE.md.
+
 Component: Beepola beeper engines + z80ass assembler (ZX Spectrum .bbsong)
 Author: Engine Z80 players: Phaser1 by Shiru (from 1tracker); Music Box
         reverse-engineered from WHAM! The Music Box (orig. Mark Alexander,
@@ -204,3 +285,35 @@ Component: AudioOverload Backend / AOSDK
 Author: Developed by Richard Bannister and contributors
 License: Custom Permissive Freeware License
 Notice: Included non-commercially under authors' custom permissive terms.
+
+Component: SCC-Musixx replay routine (MSX, .SNG)
+Author: Tyfoon-Software (M. Spoor), 1990. "MUSIXX REPLAY ROUTINE v1.2".
+License: Freeware. The SCC-MUSIXX package (program, editor, replay routine and
+         songs) is distributed freely via the MSX Resource Center downloads
+         corner.
+Notice: The original ~1.5 KB Z80 replayer (REPLAY.BIN) is embedded verbatim and
+        executed on the GME Z80 core; the Konami SCC is emulated by emu2212
+        (MIT, see above). Shipped with attribution to Tyfoon-Software.
+
+Component: PTPlayer (MONOTONE / Polytone PC-speaker tracker, .mon/.pol)
+Author: Michal Procházka (https://github.com/prochazkaml/PTPlayer); the player
+        library for the Polytone tracker, which also loads legacy MONOTONE files.
+        MONOTONE format and tracker by Jim "Trixter" Leonard / Hornet. Vendored
+        at musicplayer/src/plugins/monotoneplugin/ptplayer/.
+License: BSD 3-Clause License
+Notice: Local patch only makes four file-scope globals static to avoid full-link
+        symbol collisions; see the comment in ptplayer.c.
+
+Component: libmikmod (MikMod UNITRK / UNIMOD module playback, .uni)
+Author: Jean-Paul Mikkers ("MikMak") and Jake Stine, maintained by the libmikmod
+        team (Raphaël Assenat, Ozkan Sezer et al., https://mikmod.sourceforge.net/).
+        A minimal slice of libmikmod 3.3.13 (player core, virtual mixer, the UNI
+        loader, the generic depackers and the null driver) is vendored at
+        musicplayer/src/plugins/mikmodplugin/libmikmod/. The OS sound drivers and
+        the other format loaders are omitted.
+License: GNU Lesser General Public License v2.1 or later (see
+        musicplayer/src/plugins/mikmodplugin/libmikmod/COPYING.LESSER).
+Notice: Vendored sources are unmodified. The plugin compiles them at hidden
+        visibility and partial-links (ld -r) so libmikmod's generic internal
+        symbols (getfrequency, getlinearperiod, ...) are localized and do not
+        collide with other vendored trackers.
