@@ -183,7 +183,12 @@ Support for various 8 bit console music
 
 * ZX Spectrum, Amstrad CPC, Nintendo Game Boy, Sega Genesis, Mega Drive, NEC TurboGrafx-16, PC Engine, MSX Home Computer, other Z80 systems, Nintendo NES, Famicom (with VRC 6, Namco 106, and FME-7 sound), Atari systems using POKEY sound chip, Super Nintendo, Super Famicom, Sega Master System, Mark III, Sega Genesis, Mega Drive, BBC Micro
 
-Extensions: `.spc` `.nsf` `.nsfe` `.gbs` `.ay` `.gym` `.sap` `.vgm` `.vgz` `.hes` `.kss` `.sgc` `.emul`
+Extensions: `.spc` `.nsf` `.nsfe` `.gbs` `.gbr` `.ay` `.gym` `.sap` `.vgm` `.vgz` `.hes` `.kss` `.sgc` `.emul`
+
+> `.gbr` is the older Game Boy rip format (predecessor of `.gbs`); it is decoded
+> by the same Game Boy emulator after rewriting its 32-byte header into the GBS
+> form. GBR carries no "first song" field and many rips keep a silent stop-track
+> at song 0 — use the subsong controls if a tune starts silent.
 
 ### SC68
 
@@ -494,7 +499,7 @@ My work here is mostly based around:
 Here is the attribution for the individual emulators, audio players, plugins, and core sub-routines utilized across this project sofar:
 
 * **OpenMPT (Tracker Formats):** Developed by the OpenMPT Project Team (originally founded by Olivier Lapicque). Licensed under BSD-3-Clause.
-* **GME / Game Music Emulator (Console Formats):** Developed by Shay Green. Licensed under LGPL-2.1-or-later.
+* **GME / Game Music Emulator (Console Formats):** Developed by Shay Green. Licensed under LGPL-2.1-or-later. The `.gbr` (Game Boy rip) loader added on top of GME maps the GBR header onto GME's Game Boy emulator; the GBR header format was referenced from **gbsplay** by Tobias Diedrich, Christian Garbs et al. (GPL-2.0-or-later, <https://github.com/mmitch/gbsplay>).
 * **VICE (C64/SID emulation):** Developed by the VICE Core Team. Licensed under GPL-2.0-or-later.
 * **UADE (Amiga Exotic formats):** Developed by Heikki Orsila and the UADE Team (eagleplayers/format DB vendored from UADE 3.05). Licensed under GPL-2.0-or-later.
 * **StSound (Atari ST YM2149):** Developed by Arnaud Carré (Leonard/Oxygene). Licensed under MIT.

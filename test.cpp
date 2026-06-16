@@ -304,6 +304,43 @@ TEST_CASE("GME SGC plays sound", "[music]")
 
     REQUIRE(energy != 0);
 }
+
+// Regression test for GBR (the older Game Boy rip format, predecessor of GBS).
+// The vendored Game_Music_Emu only handled GBS; GBR is now decoded by the same
+// Gbs_Emu by rewriting the 0x20-byte GBR header into the GBS header_t at load
+// time (gbr_mode_ in Gbs_Emu.cpp) and registering gme_gbr_type. This plays a
+// single-bank rip whose driver runs up in the 0x4000 mirror window (exercises
+// the GBR bank-wrap in set_bank) and a 10-bank rip (exercises MBC banking).
+// Note: GBR has no "first song" field and many rips keep a silent stop-track at
+// song 0, so these fixtures were chosen because their default song 0 plays.
+TEST_CASE("GME GBR plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::GMEPlugin plugin;
+
+    for (auto const& gbr : {"testmus/gme/mr driller.gbr",
+                            "testmus/gme/kung fu master.gbr",
+                            "testmus/gme/dragon quest 3.gbr"}) {
+        REQUIRE(plugin.canHandle(gbr));
+
+        auto* player = plugin.fromFile(gbr);
+        REQUIRE(player != nullptr);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+
+        INFO(gbr);
+        REQUIRE(energy != 0);
+    }
+}
 // .rol (AdLib Visual Composer) was previously excluded because its player loads
 // instruments from a companion "standard.bnk" in the same dir (rol.cpp), which
 // was missing -> silent. The bank is now vendored (testmus/adlib/standard.bnk,

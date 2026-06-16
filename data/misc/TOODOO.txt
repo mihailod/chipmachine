@@ -451,9 +451,15 @@ amad	31 -- DONE ... "AY Amadeus" by Frantisek Fuka ... ZXAYAMAD container files 
 >>> all triaging doe for items above <<<
 
 
-gbr	30 -- no test
+gbr	30 -- DONE .. GBR = "Gameboy Sound System GBR", the older Game Boy rip format (sibling/predecessor of GBS).
+Decoded by the existing GME Game Boy emulator: a new gme_gbr_type rewrites GBR's 0x20-byte header into the GBS
+header_t at load time (gbr_mode_ in Gbs_Emu.cpp, load_addr=0 raw ROM banks, TMA/TAC -> GBS timer fields) and
+set_bank wraps to the bank count so single-bank rips mirror bank 0 into the 0x4000 window. "gbr" added to
+GMEPlugin supported_ext + GBRF magic in gme_identify_header. GBR has no first-song field (many rips keep a
+silent stop-track at song 0); 3 fixtures whose song 0 plays (mr driller, kung fu master, dragon quest 3 multibank).
+gbsplay was the header-format reference (no code copied). cmtest green.
 
-bss	30 -- all work except this one, could be bad file:
+bss	30 -- all songs in this format i tried from gui (including the cmtest one) work except this one below, could be a bad file:
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Beathoven Synthesizer/Thomas Lopatic/katakis loading v1.bss
 [web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss
 [RemoteLoader.cpp:90] CODE -1
