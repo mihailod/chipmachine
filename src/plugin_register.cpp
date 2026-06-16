@@ -38,6 +38,7 @@ extern "C" {
     void pokeynoiseplugin_register(); // Atari 800 PokeyNoise (.pn) via ASAP (6502+POKEY)
     void bbsongplugin_register();  // Beepola .bbsong (ZX Spectrum beeper) via Z80 + speaker sampling
     void soundsmithplugin_register(); // Apple IIgs SoundSmith (bare song + .W wavebank) via Ensoniq 5503
+    void ixsplugin_register();     // Ixalance (.ixs) via webixs (RE'd Shortcut Software synth tracker)
     void musxplugin_register();    // Acorn Archimedes Tracker (.musx) via libxmp arch_loader
     void cocoplugin_register();    // Coconizer / Acorn Archimedes (.coco) via libxmp coco_loader
     void maxtraxplugin_register(); // MaxTrax / Amiga (.mxtx) via ScummVM MaxTrax+Paula
@@ -86,6 +87,7 @@ void register_plugins() {
     pokeynoiseplugin_register();
     bbsongplugin_register();
     soundsmithplugin_register();
+    ixsplugin_register();
     musxplugin_register();
     cocoplugin_register();
     maxtraxplugin_register();

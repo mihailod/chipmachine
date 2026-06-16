@@ -422,6 +422,7 @@ TEST_CASE("STarKos", "[music]") { testPlugin<musix::SksPlugin>("testmus/sks", ""
 TEST_CASE("NerdTracker2", "[music]") { testPlugin<musix::NEDPlugin>("testmus/ned", ""); }
 TEST_CASE("PlayerPRO", "[music]") { testPlugin<musix::PlayerProPlugin>("testmus/playerpro", ""); }
 TEST_CASE("JayTrax", "[music]") { testPlugin<musix::JxsPlugin>("testmus/jxs", ""); }
+TEST_CASE("IXS", "[music]") { testPlugin<musix::IXSPlugin>("testmus/ixs", ""); }
 
 // PlayerPRO ".mad" (Macintosh tracker, "MADG"/"MADF"/"MADK") plays via the
 // vendored public-domain MADDriver. The ".mad" extension collides with AdPlug's
@@ -841,6 +842,37 @@ TEST_CASE("SoundSmith plays sound", "[music]")
     REQUIRE(secondary == std::vector<std::string>{"Soundsmith Intro.W"});
 
     auto* player = plugin.fromFile(song);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
+// Ixalance (.ixs). A synth tracker from the defunct Shortcut Software: it stores
+// no PCM, instead synthesizing + zlib-compressing its own wavetables (songs are
+// only a few KB). Played via the vendored webixs core (Wothke's RE of the lost
+// Win32 player). Routing is by the "IXS!" magic. This fails if the magic check
+// regresses, the zlib-dependent wavetable build breaks, or the pull-style render
+// API (genAudio/getAudioBuffer) produces silence.
+TEST_CASE("IXS plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::IXSPlugin plugin;
+
+    std::string const ixs = "testmus/ixs/ixalance_theme.ixs";
+    REQUIRE(plugin.canHandle(ixs));
+
+    auto* player = plugin.fromFile(ixs);
     REQUIRE(player != nullptr);
 
     std::array<int16_t, 8192> buffer{};

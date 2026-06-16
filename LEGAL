@@ -208,6 +208,17 @@ Author: Original tracker by Huibert Aalbers (1989); Ensoniq 5503 "DOC" player
         repo-root soundsmith/.
 License: BSD 2-Clause License
 
+Component: Ixalance (.ixs synth tracker)
+Author: Original Win32 player and format by Shortcut Software Development BV
+        (~2000); music by Maarten van Strien. Played via "webixs", Juergen
+        Wothke's native C++ reimplementation reverse-engineered (Ghidra) from
+        the lost original (https://bitbucket.org/wothke/webixs), vendored at
+        repo-root webixs/.
+License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+        (CC BY-NC-SA 4.0) -- see webixs/LICENSE. NOTE: this is the only
+        NonCommercial-licensed component; the player may not be used for
+        commercial purposes.
+
 Component: SunVox (Modular Synthesizer)
 Author: Developed by Alexander Zolotov (NightRadio)
 License: Proprietary freeware (SunVox library is free for commercial and non-commercial use)

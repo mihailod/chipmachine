@@ -440,6 +440,12 @@ Support for **JayTrax** (`.jxs`), Reinier "Rhino" van Vliet's cross-platform sof
 
 Extensions: `.jxs`
 
+### Ixalance
+
+Support for **Ixalance** (`.ixs`), an Impulse-Tracker-family format from the (defunct) Shortcut Software Development BV (~2000).
+
+Extensions: `.ixs`
+
 ### Monotone
 
 Support for **MONOTONE** (`.mon`), Jim "Trixter" Leonard / Hornet's PC-speaker tracker — up to a dozen square-wave tracks summed into the IBM PC's single 1-bit beeper. Played by the vendored **PTPlayer** library (prochazkaml), which unpacks the module and rebuilds each track's square wave at 44100 Hz. The `.mon` extension is shared with UADE's Amiga *Maniacs of Noise* player, so both UADE and this plugin content-gate on the `\x08MONOTONE` magic — Amiga `.mon` modules stay with UADE, Monotone files route here.
@@ -557,6 +563,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **Onyx Music File (`.omf`):** the MOD-like Amiga format of the 1993 Onyx musicdisk *Jangle* (modland `Onyx Music File/`, 24 tunes). No standalone replayer ever existed. Support is a chipmachine-local loader, `soundlib/Load_omf.cpp`, added to the vendored libopenmpt and written from the byte-level format specification reverse-engineered by **Martin Bazley** (*swirlythingy*) on 6 December 2009 (archived in modland's `documents/format_documentation/`). Playback reuses libopenmpt's existing MOD engine. Licensed under BSD-3-Clause (consistent with the surrounding libopenmpt soundlib).
 * **MONOTONE (IBM PC speaker):** MONOTONE and its `.mon` format are by Jim "Trixter" Leonard of Hornet. Playback uses **PTPlayer** by Michal Procházka — the player library for the modern *Polytone* tracker, which also loads legacy Monotone files (and the `.pol` format). Licensed under BSD-3-Clause.
 * **MikMod UNITRK / UNIMOD (`.uni`):** the UNIMOD on-disk format and its reader are part of **libmikmod**, originally by Jean-Paul Mikkers ("MikMak") and Jake Stine, maintained by the libmikmod team (Raphaël Assenat, Ozkan Sezer and others). A minimal slice of libmikmod 3.3.13 is vendored at `musicplayer/src/plugins/mikmodplugin/libmikmod/` (player core + virtual mixer + `load_uni` + depackers + null driver only). Licensed under LGPL-2.1-or-later. The vendored sources are unmodified; the chipmachine glue registers only the UNI loader and null driver and pulls PCM via the virtual mixer.
+* **Ixalance (`.ixs`):** the format and its original Win32 player are by **Shortcut Software Development BV** (~2000); the music is by **Maarten van Strien**. The original sources are lost, so playback uses **webixs** — Juergen Wothke's native C++ reimplementation reverse-engineered with Ghidra from the surviving Win32 player (`https://bitbucket.org/wothke/webixs`), vendored at repo-root `webixs/` and built with `-DLINUX` (the non-Win32 path) so its pull-style render API is exposed. The format synthesizes and zlib-compresses its own wavetables, hence the zlib dependency. **Licensed CC BY-NC-SA 4.0 (NonCommercial)** — the only NonCommercial component in the project; see `webixs/LICENSE`. (Built with `-fsigned-char`, like PlayerPRO, since the decompiled code relies on signed-char semantics.)
 
 ---
 

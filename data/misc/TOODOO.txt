@@ -2,8 +2,6 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-- i see some dupes in search, example: monkmusings (only 1 record in db?), maybe there is more. my understanding is that the combo song name + author + format should be unique.
-
 - ability to manually add stuff to database. via a manual.txt file
 
 - ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
@@ -143,7 +141,7 @@ product/process
 major new features
 ==================
 - better matching and sourcing for screenshot, for example hybris should display hybris game art... idea: do google search for images (name + format) and maybe some fuzzy pull from web if matches...
-- consolidate all db scripts into one unified
+- consolidate all db scripts into one unified?
 - filter by platform (C64, Amiga... -- something done but needs discussion) and format (mod, ym, mp3...) -- Pesic
 - Separate db from code and auto-update db independently from code
 
@@ -492,15 +490,14 @@ cmtest's "2 plugins" is a test artifact, not a runtime split — testPlugin<> ex
 
 omf	24 -- DONE! Onyx Music File
 
+ixs	23 -- DONE Ixalance
+
+ems	23 -- OK
+
 
 --- FIXER WATERMARK --------------------
 >>> all triaging doe for items above <<<
 
-
-
-ixs	23 -- no test
-
-ems	23 -- OK
 
 snd	22 -- no test
 axs	22 -- no test
