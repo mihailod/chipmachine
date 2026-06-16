@@ -96,12 +96,6 @@ Bash
 curl -H "Accept: application/json" "https://demozoo.org/api/v1/productions/?production_type=music"
 Iterate through the paginated JSON responses to extract data fields natively instead of writing brittle regex scrapers.
 
-Radio Streams & Streams Media
-
-1. Kohina
-URL: [https://www.kohina.com](https://www.kohina.com)
-What it is: One of the absolute oldest, purest retro audio streams still running. It plays exclusively 8-bit and 16-bit computer music (C64, Atari, Amiga, NES) directly simulated or sampled from original hardware.
-
 **************************
 * PLAYBACK BUGS / ISSUES *
 **************************
@@ -128,6 +122,8 @@ The one open replayer, fcatrin/fstr (MIT), is unusable for porting — x86 real-
 [aac @ 0x15860b340] decode_band_types: Input buffer exhausted before END element found
 [aist#0:0/aac @ 0x15860e770] [dec:aac @ 0x15860aea0] Error submitting packet to decoder: Invalid data found when processing input
 
+- search for sll, scroll down, manu smus (magenta) files don't play but one does, seems the ones that don't miss instruments?
+
 *********
 * OTHER *
 *********
@@ -147,7 +143,7 @@ product/process
 
 major new features
 ==================
-- better matching and sourcing for screenshot, for example hybris should display hybris game art...
+- better matching and sourcing for screenshot, for example hybris should display hybris game art... idea: do google search for images (name + format) and maybe some fuzzy pull from web if matches...
 - consolidate all db scripts into one unified
 - filter by platform (C64, Amiga... -- something done but needs discussion) and format (mod, ym, mp3...) -- Pesic
 - Separate db from code and auto-update db independently from code
@@ -192,10 +188,7 @@ No comment = works and regression test(s) in place
 
 ---
 AUDIO OVERLOAD APP extensions NOT checked to be covered:
-* OGG — [add unit test] no .ogg file successfully played. -- we cover this, add regression test
-
 * GYM — [5 songs in db ] present in the log, but playback threw an exception (Packed GYM file not supported).
-
 * ORC — [no songs in db] no .orc file appears in the log.
 * QSF — [no songs in db] no .qsf file successfully played (only .miniqsf played successfully; .qsflib files were skipped).
 ---
@@ -484,15 +477,15 @@ The fix is clean and low-risk: libmikmod is the canonical reader (load_uni.c, LG
 
 sn2	25 -- NO - Sound Club 2 (Bluemoon Software, Win95/NT; PC, NOT Amiga). Native magic SN2\xd2, little-endian IFF-like chunks (NAM/SEQ/PAT/pna/voi). Note/pattern data is parseable but the module contains NO sample/instrument data — voices are produced by Sound Club 2's closed built-in synth, so playback needs full RE of the Bluemoon Win32 engine. No open replayer anywhere (UADE/OpenMPT/libxmp/ZXTune/rePlayer/NostalgicPlayer/vgmstream all lack it). OpenMPT's "Sound Club 2" string (Load_s3m.cpp) only labels S3M *exports*, it does not read native .sn2. Same dead-end as sn/psy/skm. PARK.
 
+mgb	25 -- NO Gameboy Tracker format 
+game boy tracker / paragon 5 (s.hockenhull). .mgb = the editor's serialized project file ("GameBoy Music Module" tagged tree), NOT a gb rom -- so GME's game boy emu can't run it directly. Only the closed pt.exe reads .mgb; the open replayer (gbdev/GBSoundSystem) consumes the tracker's EXPORTED .z80/.inc driver data, not raw .mgb. No portable open parser anywhere (UADE/OpenMPT/libxmp/ZXTune/rePlayer/GME/vgmstream). RE-prototyped: container + note stream
+are decodable (plain binary, not compressed) but full support = leaf decode -> driver data -> RGBDS harness rom -> GME, with no headless reference to validate against the closed gui. Parked. Re-open if a portable .mgb player lands.
+
+wb	24 -- OK
 
 --- FIXER WATERMARK --------------------
 >>> all triaging doe for items above <<<
 
-
-
-mgb	25 -- no test
-
-wb	24 -- OK
 
 tcb	24 -- all play from GUI, but cmtest passes for 2 plugins, investigate / tighten
 Trying testmus/uade/cannonfodder.tcb ... playback OK
@@ -634,7 +627,7 @@ syn	5
 msm	5
 kh	5
 hst	5
-gym	5
+gym	5 -- * GYM — [5 songs in db ] present in the log, but playback threw an exception (Packed GYM file not supported).
 fw	5
 dm	5
 amc	5

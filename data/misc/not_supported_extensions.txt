@@ -53,3 +53,22 @@
 # and a native plugin would need full RE of the .ct->SID packer. Low value: the
 # composers' own packed SIDs are already in HVSC and play via the sidplugin.
 .ct
+
+# POLYTONE (.pol, prochazkaml) -- the PC-speaker sibling of MONOTONE played by
+# the same PTPlayer. Support was dropped from the monotone plugin: the only
+# public sample (PTPlayer's jakim.pol) is format version 2, while both our
+# vendored engine and current upstream PTPlayer only parse version 1
+# ("\x08POLYTONE\x01"). With no playable v1 fixture, .pol is documented here
+# rather than advertised. Re-add to monotoneplugin supported_ext if v2 lands.
+.pol
+
+# game boy tracker / paragon 5 (s.hockenhull). .mgb = the editor's serialized
+# project file ("GameBoy Music Module" tagged tree), NOT a gb rom -- so GME's
+# game boy emu can't run it directly. Only the closed pt.exe reads .mgb; the
+# open replayer (gbdev/GBSoundSystem) consumes the tracker's EXPORTED .z80/.inc
+# driver data, not raw .mgb. No portable open parser anywhere (UADE/OpenMPT/
+# libxmp/ZXTune/rePlayer/GME/vgmstream). RE-prototyped: container + note stream
+# are decodable (plain binary, not compressed) but full support = leaf decode ->
+# driver data -> RGBDS harness rom -> GME, with no headless reference to validate
+# against the closed gui. Parked. Re-open if a portable .mgb player lands.
+.mgb
