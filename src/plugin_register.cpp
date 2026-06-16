@@ -47,6 +47,7 @@ extern "C" {
     void playerproplugin_register(); // PlayerPRO / Macintosh tracker (.mad MADG/MADF/MADK) via vendored MADDriver
     void jxsplugin_register();     // JayTrax / cross-platform synth tracker (.jxs) via Rhino's replayer (C port)
     void monotoneplugin_register(); // MONOTONE / PC-speaker tracker (.mon) via vendored PTPlayer (BSD-3)
+    void mikmodplugin_register();  // MikMod UNITRK / UNIMOD (.uni) via vendored libmikmod slice
 }
 
 void register_plugins() {
@@ -94,4 +95,5 @@ void register_plugins() {
     playerproplugin_register();
     jxsplugin_register();
     monotoneplugin_register();
+    mikmodplugin_register();
 }

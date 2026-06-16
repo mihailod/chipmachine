@@ -445,21 +445,10 @@ jd	31 -- OK
 
 amad	31 -- DONE ... "AY Amadeus" by Frantisek Fuka ... ZXAYAMAD container files (a variant of the standard ZXAYEMUL .ay chiptune format, with type tag AMAD instead of EMUL). same family as .fxm, 31+ tunes, clean reuse of FXMPlay.h, no Z80 emulation needed. 
 
+gbr	30 -- DONE GBR = "Gameboy Sound System GBR" (a Game Boy music rip format, sibling to GBS).
+gbsplay plays both GBR and GBS, and GBS "superseded GBR, essentially the same format with a fuller header." 
 
-
---- FIXER WATERMARK --------------------
->>> all triaging doe for items above <<<
-
-
-gbr	30 -- DONE .. GBR = "Gameboy Sound System GBR", the older Game Boy rip format (sibling/predecessor of GBS).
-Decoded by the existing GME Game Boy emulator: a new gme_gbr_type rewrites GBR's 0x20-byte header into the GBS
-header_t at load time (gbr_mode_ in Gbs_Emu.cpp, load_addr=0 raw ROM banks, TMA/TAC -> GBS timer fields) and
-set_bank wraps to the bank count so single-bank rips mirror bank 0 into the 0x4000 window. "gbr" added to
-GMEPlugin supported_ext + GBRF magic in gme_identify_header. GBR has no first-song field (many rips keep a
-silent stop-track at song 0); 3 fixtures whose song 0 plays (mr driller, kung fu master, dragon quest 3 multibank).
-gbsplay was the header-format reference (no code copied). cmtest green.
-
-bss	30 -- all songs in this format i tried from gui (including the cmtest one) work except this one below, could be a bad file:
+bss	30 OK, one bad v1 song -- all songs in this format i tried from gui (including the cmtest one) work except this one below, could be a bad file:
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/Beathoven Synthesizer/Thomas Lopatic/katakis loading v1.bss
 [web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss
 [RemoteLoader.cpp:90] CODE -1
@@ -472,22 +461,31 @@ bss	30 -- all songs in this format i tried from gui (including the cmtest one) w
 [UADEPlugin.cpp:111] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeathoven Synthesizer%2fThomas Lopatic/katakis loading v1.bss
 [MusicPlayerList.h:91] META message
 [UADEPlugin.cpp:281] Amiga message: Eagleplayer inserted 1 into aud0per.
+Fixing it would mean reverse-engineering the Beathoven 68k replayer for this one booter variant — near-zero ROI for a single file, especially since the same tune already plays fine as katakis loading.bss (the v1.09 rip); ...v1.bss is just the obsolete early rip.
 
 bam	29 -- OK
 
-skm	28 -- no test
+skm	28 -- NO - Skale Tracker (PC tracker by Baktery). No open replayer and no public spec exist — native .skm is only readable by closed, x86-only software (Skale Tracker itself, the Win32 XMPlay plugin).
 
 pis	28 -- OK
 sat	27 -- OK
 ams	27 -- OK
 dmo	26 -- OK
 
-ct	26 -- no test
+ct	26 -- NO - Cybertracker C64 (china.ct, ~13KB, magic NNTRKMZX) — a C64/SID tracker project format.
+CyberTracker (C64 SID, CyberBrain/No Name; native magic NNTRKMZX, song PRG @ $0400). The only public converter (DOS ctpacker BETA) is broken (malloc/DPMI), and a native plugin would need full RE of the .ct->SID packer. Low value: the composers' own packed SIDs are already in HVSC and play via the sidplugin.
 
 avp	26 -- OK
 
-uni	25 -- no playback in GUI and cmtest skips -- investigate
+uni	25 DONE -- no playback in GUI and cmtest skips -- investigate
 Skipping testmus/openmpt/leroy - intro.uni
+MikMod UNIMOD on-disk format (version 5).
+The fix is clean and low-risk: libmikmod is the canonical reader (load_uni.c, LGPL, ~940 KB) and it decodes the test file to real audio.
+
+
+--- FIXER WATERMARK --------------------
+>>> all triaging doe for items above <<<
+
 
 sn2	25 -- no test
 mgb	25 -- no test

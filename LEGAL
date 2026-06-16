@@ -303,3 +303,17 @@ Author: Michal Procházka (https://github.com/prochazkaml/PTPlayer); the player
 License: BSD 3-Clause License
 Notice: Local patch only makes four file-scope globals static to avoid full-link
         symbol collisions; see the comment in ptplayer.c.
+
+Component: libmikmod (MikMod UNITRK / UNIMOD module playback, .uni)
+Author: Jean-Paul Mikkers ("MikMak") and Jake Stine, maintained by the libmikmod
+        team (Raphaël Assenat, Ozkan Sezer et al., https://mikmod.sourceforge.net/).
+        A minimal slice of libmikmod 3.3.13 (player core, virtual mixer, the UNI
+        loader, the generic depackers and the null driver) is vendored at
+        musicplayer/src/plugins/mikmodplugin/libmikmod/. The OS sound drivers and
+        the other format loaders are omitted.
+License: GNU Lesser General Public License v2.1 or later (see
+        musicplayer/src/plugins/mikmodplugin/libmikmod/COPYING.LESSER).
+Notice: Vendored sources are unmodified. The plugin compiles them at hidden
+        visibility and partial-links (ld -r) so libmikmod's generic internal
+        symbols (getfrequency, getlinearperiod, ...) are localized and do not
+        collide with other vendored trackers.

@@ -1473,6 +1473,9 @@ TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmu
 // vendored PTPlayer. The extension collides with UADE's Maniacs of Noise; the
 // Monotone-magic gate keeps the two apart.
 TEST_CASE("Monotone", "[music]") { testPlugin<musix::MonotonePlugin>("testmus/monotone", ""); }
+// MikMod UNITRK / UNIMOD (.uni, magic "UN0x"). Played via the vendored libmikmod
+// slice -- no other engine in the tree has a UNIMOD loader.
+TEST_CASE("MikMod", "[music]") { testPlugin<musix::MikModPlugin>("testmus/mikmod", ""); }
 // Beepola .bbsong (ZX Spectrum beeper). Only the Phaser1 engine (P1D/P1S) is
 // decoded today; the other Beepola engines in this dir fast-fail as a graceful
 // skip ("unsupported"), so coverage exercises the 18 Phaser1 tunes.

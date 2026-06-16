@@ -130,7 +130,7 @@ set(MUSICPLAYER_PLUGINS
     ffmpegplugin uadeplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
     kssplugin quartetplugin wsrplugin zxtuneplugin pokeynoiseplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
-    playerproplugin jxsplugin monotoneplugin
+    playerproplugin jxsplugin monotoneplugin mikmodplugin
 )
 add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
 add_subdirectory(${MUSICPLAYER}/src/psf psf)
