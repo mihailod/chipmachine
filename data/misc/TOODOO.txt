@@ -534,7 +534,11 @@ FIXED: content-routed Hippel-ST modules to the correct player. FAILED 28→27.
 
 ss	15 -- DONE UADE lists "ss" in supported_ext, but deeptrumpet1.ss → playback FAILED. These .ss files are actually IFF-SMUS instrument samples (see [smus-iff-support](memory note)), not standalone songs — they only play as companions of a .smus. The top-level fixture fails when probed alone.
 
-These are checked by unit tests only, not by me in GUI (todo)
+A2M	13 -- FIXED Genuine AdLib Tracker 2 file (_A2module_ magic) misfiled in testmus/uade/. UADE's canHandle matches the modland-style filename prefix "sonic" → claimed it as Sonic Arranger and FAILED. Fixed: moved fixture to testmus/adlib/ where AdPlug owns .a2m and plays it. No code change. (ERRORS 58→57.)
+
+SKS	13 -- OK.. SHIPPED same as sks above (STarKos, case-insensitive ext) -- sksplugin
+
+These are checked by unit tests only, not by me in GUI (todo for sanity)
 
 jb	19
 sm3	18
@@ -549,17 +553,6 @@ psf2	16
 glue	16
 aero	16
 plx	15
-
-
-smufi	19 -- ???
-
-brt	19 -- ???
-
-dtl	15 -- Fixture bass beat.dtl exists in the AdPlug corpus but every plugin declines it → Skipping. No plugin's canHandle claims .dtl.
-
-------------
-
-
 scr	14
 rh	14
 ptk	14
@@ -568,14 +561,28 @@ ntp	14
 mok	14
 mmdc	14
 mix	14
-kt	14
 dz	14
 tf	13
-kdm	13
 ims	13
-SKS	13 -- SHIPPED same as sks above (STarKos, case-insensitive ext) -- sksplugin
-A2M	13
 2sf	13
+
+- - - - -
+
+STILL UNSUPPORTED:
+
+smufi	19 -- ???
+
+brt	19 -- ???
+
+dtl	15 -- Fixture bass beat.dtl exists in the AdPlug corpus but every plugin declines it → Skipping. No plugin's canHandle claims .dtl.
+
+kt	14 -- No fixture, no supported_ext, no conf entry, not in not_supported list. Unhandled. (Likely Klystrack — no open replayer here.)
+
+kdm	13 -- claimed by nothing, no fixture. Unhandled.
+
+
+-- not triaged below ----------
+
 tss	12
 pvp	12
 mkj	12
