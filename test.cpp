@@ -37,6 +37,12 @@ static int g_errors = 0; // red lines: FAILED / NO SOUND / EXCEPTION
 static int g_skips = 0;   // gray lines: Skipping (plugin can't handle)
 static int g_ok = 0;     // playback OK
 
+// Same tallies de-duplicated by extension: 5 .mod OKs count as one unique OK.
+// An extension can appear in more than one set (e.g. some .hsc play, some don't).
+static std::set<std::string> g_errorExts;
+static std::set<std::string> g_skipExts;
+static std::set<std::string> g_okExts;
+
 // Extensions that are truly impossible to support (per data/misc/
 // not_supported_extensions.txt). These are silently ignored everywhere -- no
 // testing, no Skipping warning, no missing-coverage report -- and listed once
@@ -213,15 +219,15 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
                 if (excluded) continue;
             }
 
+            auto ext = utils::toLower(utils::path_extension(f.getName()));
             // silently ignore extensions flagged impossible-to-support
-            if (notSupportedExts().count(
-                    utils::toLower(utils::path_extension(f.getName()))) > 0)
-                continue;
+            if (notSupportedExts().count(ext) > 0) continue;
 
             int64_t sum = 0;
             if (!plugin.canHandle(f.getName())) {
                 printf("\033[90mSkipping %s\033[0m\n", f.getName().c_str());
                 g_skips++;
+                g_skipExts.insert(ext);
                 continue;
             }
             printf("Trying %s ... ", f.getName().c_str());
@@ -254,9 +260,11 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
                     printf("\r\033[31mTrying %s ... playback %s\033[0m\n",
                            f.getName().c_str(), status);
                     g_errors++;
+                    g_errorExts.insert(ext);
                 } else {
                     printf("playback %s\n", status);
                     g_ok++;
+                    g_okExts.insert(ext);
                 }
             } catch (std::exception& e) {
                 // A plugin may deliberately fast-fail a known sibling format
@@ -270,10 +278,12 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
                     printf("\r\033[90mSkipping %s (%s)\033[0m\n",
                            f.getName().c_str(), e.what());
                     g_skips++;
+                    g_skipExts.insert(ext);
                 } else {
                     printf("\r\033[31mTrying %s ... playback EXCEPTION (%s)\033[0m\n",
                            f.getName().c_str(), e.what());
                     g_errors++;
+                    g_errorExts.insert(ext);
                 }
             }
         }
@@ -2029,8 +2039,10 @@ TEST_CASE("priority_map", "[.]")
 TEST_CASE("coverage", "[music]")
 {
     printf("===========================================\n");
-    printf("\033[31mERRORS: %d\033[0m, \033[90mSKIPS: %d\033[0m, \033[32mOK: %d\033[0m\n",
+    printf("TOTAL EXTENSION STATS:  \033[31mERRORS: %d\033[0m, \033[90mSKIPS: %d\033[0m, \033[32mOK: %d\033[0m\n",
            g_errors, g_skips, g_ok);
+    printf("UNIQUE EXTENSION STATS: \033[31mERRORS: %zu\033[0m, \033[90mSKIPS: %zu\033[0m, \033[32mOK: %zu\033[0m\n",
+           g_errorExts.size(), g_skipExts.size(), g_okExts.size());
     printf("===========================================\n");
     musix::ChipPlugin::createPlugins("data");
     auto& plugins = musix::ChipPlugin::getPlugins();
