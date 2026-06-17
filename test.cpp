@@ -2249,6 +2249,11 @@ TEST_CASE("coverage", "[music]")
     // .mdx->mdx, .dsf->ht, .pt2->zx, .bbsong->bbsong, .sid->libvice) where they
     // play, moving an orphan pm.psf2lib to psx, and bundling smpl.kraft so the
     // TFMX mdat.kraft plays. skips 47->48 from the shuffle (all legitimate).
-    REQUIRE(g_errors <= 30);
-    REQUIRE(g_skips <= 48);
+    //
+    // 2026-06-17 (c): errors 30->27 after bundling the missing companion files
+    // for three "score died" UADE tunes -- daisy.adsc.as (Audio Sculpture) and
+    // smpl.avalon2-ongame / smpl.hexuma-ice (TFMX). skips 48->51: those three
+    // companions aren't standalone tunes and correctly skip.
+    REQUIRE(g_errors <= 27);
+    REQUIRE(g_skips <= 51);
 }
