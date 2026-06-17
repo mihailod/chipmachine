@@ -527,14 +527,16 @@ Two different formats share the .ast extension
 2. The modland "All Sound Tracker" corpus (loads → silent) — every file I fetched starts with a Pascal-string magic \x08"AST 00xx":
 There's no open replayer for the "AST 00xx" native format that I can find (UADE 3.05 ships only the V0.1 ActionAmics player; web search turned up nothing). So no support.
 
---- FIXER WATERMARK --------------------
->>> all triaging doe for items above <<<
---- CHECKER WATERMARK ------------------------------------
->>>>>>>> deeper research needed for items below <<<<<<<<<<
+- - - - - formats with <20 songs - - - - -
 
-smufi	19
+sog	16 -- DONE UADE conf routes sog→JochenHippel + it's in supported_ext, but airballtest.sog → playback FAILED (starts then drops out). No playback from GUI.
+FIXED: content-routed Hippel-ST modules to the correct player. FAILED 28→27.
+
+ss	15 -- DONE UADE lists "ss" in supported_ext, but deeptrumpet1.ss → playback FAILED. These .ss files are actually IFF-SMUS instrument samples (see [smus-iff-support](memory note)), not standalone songs — they only play as companions of a .smus. The top-level fixture fails when probed alone.
+
+These are checked by unit tests only, not by me in GUI (todo)
+
 jb	19
-brt	19
 sm3	18
 sc	18
 mtr	18
@@ -542,14 +544,22 @@ mm4	17
 hot	17
 emod	17
 synmod	16
-sog	16
 sm	16
 psf2	16
 glue	16
 aero	16
-ss	15
 plx	15
-dtl	15
+
+
+smufi	19 -- ???
+
+brt	19 -- ???
+
+dtl	15 -- Fixture bass beat.dtl exists in the AdPlug corpus but every plugin declines it → Skipping. No plugin's canHandle claims .dtl.
+
+------------
+
+
 scr	14
 rh	14
 ptk	14
