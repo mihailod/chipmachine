@@ -453,7 +453,54 @@ TEST_CASE("Westwood SND plays sound", "[music]")
 // Exclude the TFMX/SoundMaster sample banks (turrican2.smpl, smp.starball) which
 // are companion files, not standalone songs -- but NOT ".smpro" SoundMaster songs
 // (futureshock-gameover.smpro), which the old broad "smp" substring wrongly hid.
-TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", ".smpl,smp.", "data"); }
+TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", ".smpl,smp.,.mod.nt", "data"); }
+
+// GUI sanity check for every multi-file fixture whose companion we bundled.
+// cmtest plays from local files, so a song would render fine here even if the
+// plugin couldn't NAME its companion -- but the GUI streams the song and fetches
+// secondaries by the names getSecondaryFiles() returns. So for each bundled
+// companion we assert (a) getSecondaryFiles() returns exactly that name and
+// (b) the named file actually sits next to the song. If either breaks, the tune
+// plays in cmtest but FAILS in the app. Locks the companion-fix work end-to-end.
+TEST_CASE("secondary files resolve for multi-file fixtures", "[music]")
+{
+    auto check = [](musix::ChipPlugin& plugin, std::string const& song,
+                    std::string const& companion) {
+        INFO(song << "  ->  " << companion);
+        auto sec = plugin.getSecondaryFiles(song);
+        REQUIRE(std::find(sec.begin(), sec.end(), companion) != sec.end());
+        auto dir = utils::path_directory(song);
+        REQUIRE(utils::File{ dir + "/" + companion }.exists());
+    };
+
+    musix::UADEPlugin uade{ "data" };
+    check(uade, "testmus/uade/mdat.kraft", "smpl.kraft");                 // TFMX
+    check(uade, "testmus/uade/mdat.avalon2-ongame", "smpl.avalon2-ongame");
+    check(uade, "testmus/uade/mdat.hexuma-ice", "smpl.hexuma-ice");
+    check(uade, "testmus/uade/daisy.adsc", "daisy.adsc.as");             // AudioSculpture
+    check(uade, "testmus/uade/jpn.empiresoccer94", "smp.empiresoccer94"); // Jason Page
+    check(uade, "testmus/uade/dns.hollywoodpokerpro ingame",
+          "smp.hollywoodpokerpro ingame");                               // DynamicSynth
+    check(uade, "testmus/uade/mcr.aquablast", "mcs.aquablast");          // Mark Cooksey
+    check(uade, "testmus/uade/uds.obsession menu", "smp.obsession menu"); // BladePacker
+    check(uade, "testmus/uade/tpu.timelock ingame", "smp.timelock ingame"); // DirkBialluch
+    check(uade, "testmus/uade/mfp.crystaldragon ingame",
+          "smp.crystaldragon ingame");                                    // MagneticFields
+    check(uade, "testmus/uade/MIDI.Entity high", "SMPL.Entity high");     // MIDI-Loriciel
+
+    musix::HTPlugin ht; // PSF "_lib" tag
+    check(ht, "testmus/ht/ggx-66-00-01.minidsf", "ggx_66.dsflib");
+    check(ht, "testmus/ht/w00-00-25.minissf", "W00.ssflib");
+
+    musix::USFPlugin usf;
+    check(usf, "testmus/usf/sparse01.miniusf", "quake2.usflib");
+
+    musix::AdPlugin adp{ "data" };
+    check(adp, "testmus/adlib/kq1 flutey.sci", "kq1patch.003");
+    check(adp, "testmus/adlib/maxosong.ksm", "insts.dat");
+    check(adp, "testmus/adlib/song1.sng", "song1.ins"); // AdLib Tracker
+}
+
 TEST_CASE("PxTone", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/ptcop", ""); }
 TEST_CASE("PxTune", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/pttune", ""); }
 TEST_CASE("PTK", "[music]") { testPlugin<musix::PTKPlugin>("testmus/ptk", ""); }
@@ -2038,12 +2085,12 @@ TEST_CASE("priority_map", "[.]")
 
 TEST_CASE("coverage", "[music]")
 {
-    printf("===========================================\n");
+    printf("======================================================\n");
     printf("TOTAL EXTENSION STATS:  \033[31mERRORS: %d\033[0m, \033[90mSKIPS: %d\033[0m, \033[32mOK: %d\033[0m\n",
            g_errors, g_skips, g_ok);
     printf("UNIQUE EXTENSION STATS: \033[31mERRORS: %zu\033[0m, \033[90mSKIPS: %zu\033[0m, \033[32mOK: %zu\033[0m\n",
            g_errorExts.size(), g_skipExts.size(), g_okExts.size());
-    printf("===========================================\n");
+    printf("======================================================\n");
     musix::ChipPlugin::createPlugins("data");
     auto& plugins = musix::ChipPlugin::getPlugins();
 
@@ -2198,9 +2245,9 @@ TEST_CASE("coverage", "[music]")
         for (auto const& m : allMissing) {
             //printf("  %s\n", m.c_str());
         }
-        printf("--------------------------------------\n");
+        printf("-------------------------------------\n");
         printf("TOTAL MISSING EXTENSIONS SKIPPED: %zu\n", allMissing.size());
-        printf("--------------------------------------\n");
+        printf("-------------------------------------\n");
     } else {
         printf("\n--- COVERAGE METRIC: 100%% COMPLIANT (0 MISSING EXTENSIONS) ---\n");
     }
@@ -2266,6 +2313,28 @@ TEST_CASE("coverage", "[music]")
     // for three "score died" UADE tunes -- daisy.adsc.as (Audio Sculpture) and
     // smpl.avalon2-ongame / smpl.hexuma-ice (TFMX). skips 48->51: those three
     // companions aren't standalone tunes and correctly skip.
-    REQUIRE(g_errors <= 27);
-    REQUIRE(g_skips <= 51);
+    //
+    // 2026-06-17 (d): errors 27->17. Bundled 5 more UADE companions (jpn->smp,
+    // dns->smp, mcr->mcs, uds->smp, tpu->smp; latter 3 added to fmt_2files) so
+    // those score-died tunes play; relocated misrouted fixtures -- prom.asc /
+    // pr2.asc are ZX ASC Sound Master (->zx, now play), alp.pdx/pha.pdx are MDX
+    // PCM banks (->mdx) and TP.PVI an FMP PCM bank (->fmp), all non-standalone
+    // and correctly skipping. skips 51->55 from the bundled smp.* companions.
+    //
+    // 2026-06-17 (e): errors 17->14. Three .sng files misrouted to UADE are
+    // really AdLib formats AdPlug 2.4 decodes -- sanxion.sng (FMC!), playmus1.sng
+    // (ObsM), song1.sng (AdLib Tracker + song1.ins). Added a content-gated .sng
+    // claim to AdPlug.canHandle (FMC!/ObsM magic or 36000B AdLib Tracker) so it
+    // doesn't steal SCC-Musixx/Richard Joseph .sng, plus .sng->.ins secondary;
+    // moved the three fixtures to testmus/adlib. (aquatic games.sng = Amiga
+    // Richard Joseph "RJP1SMOD" stays in UADE.)
+    //
+    // 2026-06-17 (f): errors 14->11. Bundled companions mfp->smp (Magnetic
+    // Fields Packer) and MIDI->SMPL (MIDI-Loriciel; added both to fmt_2files);
+    // and the "war hawk.st1.3.mod.nt" fixture was actually the StarTrekker AM
+    // .nt companion -- fetched the real 29756B "war hawk.st1.3.mod" (now plays,
+    // finds its .nt sibling) and excluded the standalone ".mod.nt" companion
+    // from the UADE folder scan. skips 55->56 (SMPL.Entity high companion).
+    REQUIRE(g_errors <= 11);
+    REQUIRE(g_skips <= 56);
 }
