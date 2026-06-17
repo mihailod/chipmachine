@@ -2243,6 +2243,12 @@ TEST_CASE("coverage", "[music]")
     // fixtures (bundled their companion banks/libs). skips 46->47: those bundled
     // companion files (insts.dat, *patch.003, *.dsflib/.ssflib/.usflib) are not
     // standalone tunes and correctly skip.
-    REQUIRE(g_errors <= 44);
-    REQUIRE(g_skips <= 47);
+    //
+    // 2026-06-17 (b): errors 44->30 after relocating misfiled fixtures out of
+    // testmus/uade to their owning, higher-priority plugins (.it/.xm->openmpt,
+    // .mdx->mdx, .dsf->ht, .pt2->zx, .bbsong->bbsong, .sid->libvice) where they
+    // play, moving an orphan pm.psf2lib to psx, and bundling smpl.kraft so the
+    // TFMX mdat.kraft plays. skips 47->48 from the shuffle (all legitimate).
+    REQUIRE(g_errors <= 30);
+    REQUIRE(g_skips <= 48);
 }
