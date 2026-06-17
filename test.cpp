@@ -67,6 +67,26 @@ static const std::set<std::string>& notSupportedExts()
     return exts;
 }
 
+// Category A: Companion/Support files that are correctly skipped and shouldn't
+// count toward coverage tallies.
+static bool isAuxFile(const std::string& name)
+{
+    static const std::set<std::string> auxExts = {
+        "ins", "bnk", "dat", "dtl", "edl", "fmf", "cal", "d01", "vib", "003",
+        "fmb", "pmb", "pvi", "mbk", "pdx", "gsflib", "2sflib", "qsflib",
+        "ssflib", "usflib", "psflib", "psf2lib", "opm", "ss", "instr", "inst",
+        "dsflib"
+    };
+    auto ext = utils::toLower(utils::path_extension(name));
+    if (auxExts.count(ext) > 0) return true;
+
+    // UADE specific cases
+    if (name.find("smpl.") != std::string::npos) return true;
+    if (name.find(".adsc.as") != std::string::npos) return true;
+
+    return false;
+}
+
 TEST_CASE("modutils", "[machine]")
 {
     auto x = getTypeAndBase("/blaj/mdat.gurgle%tjosan");
@@ -222,6 +242,11 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
             auto ext = utils::toLower(utils::path_extension(f.getName()));
             // silently ignore extensions flagged impossible-to-support
             if (notSupportedExts().count(ext) > 0) continue;
+
+            if (isAuxFile(f.getName())) {
+                printf("\033[90mIgnored (aux file) %s\033[0m\n", f.getName().c_str());
+                continue;
+            }
 
             int64_t sum = 0;
             if (!plugin.canHandle(f.getName())) {
