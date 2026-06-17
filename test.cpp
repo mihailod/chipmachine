@@ -375,7 +375,11 @@ TEST_CASE("AdPlug SCI secondary patch", "[music]")
     REQUIRE(plugin.getSecondaryFiles(
                 "ftp://x/Ad Lib/Sierra/Kings Quest 1/kq1 flutey.sci")
                 .at(0) == "kq1patch.003");
-    // non-SCI AdLib formats request no secondary files
+    // .ksm (Ken Silverman) needs the fixed-name "insts.dat" instrument bank
+    auto ksm = plugin.getSecondaryFiles("testmus/adlib/maxosong.ksm");
+    REQUIRE(ksm.size() == 1);
+    REQUIRE(ksm[0] == "insts.dat");
+    // non-SCI/KSM AdLib formats request no secondary files
     REQUIRE(plugin.getSecondaryFiles("song.laa").empty());
 }
 

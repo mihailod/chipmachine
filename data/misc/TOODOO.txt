@@ -10,7 +10,10 @@ Also look at the zx repositories below, maybe someone already did this.
 
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
-- in general genuinely bad or missing files should be removed from the index -- use maybe filter for that?
+- in general genuinely bad or missing files should not be surfacing:
+ - option a: remove from index
+ - option b: use filter
+ - option c (i think the best): augment search deduping to also remove the non-supported results from the search
 
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
