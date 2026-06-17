@@ -15,6 +15,11 @@ Also look at the zx repositories below, maybe someone already did this.
  - option b: use filter
  - option c (i think the best): augment search deduping to also remove the non-supported results from the search
 
+- investigate content and status of these, there should be none:
+	chipmachine/testmus/gme/nowork
+	chipmachine/testmus/ted/nowork
+	musicplayer/testmus/gme/nowork
+
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
@@ -346,7 +351,7 @@ maybe there is still some deeper .adl issue -- wider sample to test needed
 
 puma	42 -- OK ... but just in case investigate testmus/uade/cyf-3-final-2.puma ... playback NO SOUND
 
-ksm	41 -- INVESTIGATE -- no playback, errors in cmtest and GUI attempt
+ksm	41 -- OK -- FIXED! no playback, errors in cmtest and GUI attempt
 Trying testmus/uade/ken's labyrinth - begin.ksm ... playback NO SOUND
 Trying testmus/adlib/maxosong.ksm ... playback EXCEPTION ()
 [RemoteLoader.cpp:90] CODE 226
