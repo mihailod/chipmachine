@@ -82,3 +82,14 @@
 # driver data -> RGBDS harness rom -> GME, with no headless reference to validate
 # against the closed gui. Parked. Re-open if a portable .mgb player lands.
 .mgb
+
+# all sound tracker (.ast, modland "All Sound Tracker"). NOTE: .ast is shared and
+# NOT fully unsupported -- UADE's "ActionAmics" eagleplayer plays the V0.1 binary
+# replay dumps (pointer table + "ACTIONAMICS SOUND TOOL V0.1", e.g. dynablaster.ast),
+# so no bare ".ast" line here. But the modland corpus is the tracker's NATIVE
+# versioned save format (Pascal-string magic \x08"AST 00xx": "AST 0001","AST 0032"
+# ...), a different layout the V0.1 testversion player cannot parse -- it loads,
+# runs and emits silence while UADE reports success. No open replayer exists for
+# the native format. UADEPlugin::canHandle declines it (isAllSoundTrackerNative)
+# so those files Skip cleanly instead of false-positiving as a silent "ok". Re-open
+# if a player for the "AST 00xx" native format lands.

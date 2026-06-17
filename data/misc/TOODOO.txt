@@ -502,12 +502,7 @@ axs	22 -- NO closed commercial softsynth
 dfm	21 -- OK
 chi	21 -- OK
 
-
---- FIXER WATERMARK --------------------
->>> all triaging doe for items above <<<
-
-
-ast	21 -- cmtest ok but silent:
+ast	21 -- NO All Sound Tracker.. cmtest ok but silent:
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/All Sound Tracker/Feilei/tiny opl3 demo.ast
 [web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fFeilei/tiny opl3 demo.ast
 [web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/All%20Sound%20Tracker/Feilei/tiny%20opl3%20demo.ast
@@ -527,10 +522,15 @@ ast	21 -- cmtest ok but silent:
 [UADEPlugin.cpp:25] Starting thread
 [UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fCagliostro/thansong.ast
 
+Two different formats share the .ast extension
+1. Genuine Action Amics Sound Tool (plays fine) — e.g. dynablaster.ast
+2. The modland "All Sound Tracker" corpus (loads → silent) — every file I fetched starts with a Pascal-string magic \x08"AST 00xx":
+There's no open replayer for the "AST 00xx" native format that I can find (UADE 3.05 ships only the V0.1 ActionAmics player; web search turned up nothing). So no support.
 
+--- FIXER WATERMARK --------------------
+>>> all triaging doe for items above <<<
 --- CHECKER WATERMARK ------------------------------------
 >>>>>>>> deeper research needed for items below <<<<<<<<<<
-
 
 smufi	19
 jb	19

@@ -1536,6 +1536,34 @@ TEST_CASE("UADE mus routing", "[music]")
     // dry canHandle probe on a not-yet-downloaded remote path doesn't regress.
     REQUIRE(plugin.canHandle((tmp / "musix_no_such.mus").string()));
 }
+// ".ast" is shared. UADE's V0.1 "ActionAmics" eagleplayer plays the genuine
+// binary replay dumps (no "AST" magic), but the modland "All Sound Tracker"
+// corpus is the tracker's native versioned save format (Pascal-string magic
+// \x08"AST 00xx") the V0.1 player cannot parse -- it loads and emits silence
+// while UADE reports "ok". canHandle must decline the native saves (so they Skip)
+// while still claiming the V0.1 binary form.
+TEST_CASE("UADE ast routing", "[music]")
+{
+    musix::UADEPlugin plugin{"data"};
+    auto tmp = fs::temp_directory_path();
+
+    // Native "All Sound Tracker" save: \x08"AST 00xx" magic -> declined.
+    auto nativeAst = tmp / "astrt_native.ast";
+    {
+        std::ofstream f(nativeAst, std::ios::binary);
+        const unsigned char hdr[] = {0x08, 'A', 'S', 'T', ' ', '0', '0', '3', '2'};
+        f.write(reinterpret_cast<const char*>(hdr), sizeof(hdr));
+    }
+    REQUIRE_FALSE(plugin.canHandle(nativeAst.string()));
+    fs::remove(nativeAst);
+
+    // The genuine V0.1 binary dump carries no "AST" magic and stays with UADE.
+    REQUIRE(plugin.canHandle("testmus/uade/dynablaster.ast"));
+
+    // Unreadable/virtual path: fall back to the extension match so a dry probe on
+    // a not-yet-downloaded remote .ast doesn't regress.
+    REQUIRE(plugin.canHandle((tmp / "astrt_no_such.ast").string()));
+}
 TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmus/pn", ""); }
 // Monotone (.mon) -- PC-speaker tracker by Trixter/Hornet, played by the
 // vendored PTPlayer. The extension collides with UADE's Maniacs of Noise; the
