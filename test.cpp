@@ -197,8 +197,21 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
             // so don't count it as a skip (would inflate the coverage gate).
             if (f.isDir()) continue;
 
-            if (exclude != "" && f.getName().find(exclude) != std::string::npos)
-                continue;
+            // `exclude` is a comma-separated list of substrings; skip the file if
+            // it matches ANY of them. (Lets a corpus exclude companion/sample
+            // files precisely -- e.g. ".smpl,smp." drops the TFMX/SoundMaster
+            // sample banks in testmus/uade without also hiding ".smpro" songs.)
+            if (exclude != "") {
+                bool excluded = false;
+                for (std::string pat : utils::split(exclude, ",")) {
+                    if (!pat.empty() &&
+                        f.getName().find(pat) != std::string::npos) {
+                        excluded = true;
+                        break;
+                    }
+                }
+                if (excluded) continue;
+            }
 
             // silently ignore extensions flagged impossible-to-support
             if (notSupportedExts().count(
@@ -404,7 +417,10 @@ TEST_CASE("Westwood SND plays sound", "[music]")
 
     delete player;
 }
-TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
+// Exclude the TFMX/SoundMaster sample banks (turrican2.smpl, smp.starball) which
+// are companion files, not standalone songs -- but NOT ".smpro" SoundMaster songs
+// (futureshock-gameover.smpro), which the old broad "smp" substring wrongly hid.
+TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", ".smpl,smp.", "data"); }
 TEST_CASE("PxTone", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/ptcop", ""); }
 TEST_CASE("PxTune", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/pttune", ""); }
 TEST_CASE("PTK", "[music]") { testPlugin<musix::PTKPlugin>("testmus/ptk", ""); }

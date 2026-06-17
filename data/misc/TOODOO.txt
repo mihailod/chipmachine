@@ -137,6 +137,7 @@ product/process
 ===============
 - use some IDE (with integrated AI?) for development?
 - cleanup cmtest
+- move all plugins into musicplayer/src/plugins and unify into one repo, it is becoming silly with clones... and we don't ship anything independently anyway so it is pointless 
 
 major new features
 ==================
@@ -527,7 +528,15 @@ Two different formats share the .ast extension
 2. The modland "All Sound Tracker" corpus (loads → silent) — every file I fetched starts with a Pascal-string magic \x08"AST 00xx":
 There's no open replayer for the "AST 00xx" native format that I can find (UADE 3.05 ships only the V0.1 ActionAmics player; web search turned up nothing). So no support.
 
+Tested from GUI with <20:
+
+smpro	9 -- OK Supported — SoundMaster module (magic 0x60, Michiel Soede eagleplayer; confirmed working in memory). But the UADE test's over-broad "smp" substring exclude silently filters futureshock-gameover.smpro (alongside the real sample files turrican2.smpl, smp.starball). No single substring can exclude the samples while keeping .smpro, so I left the test infra alone — it's not a failure, just untested. Flag if you want me to make the exclude extension-precise so it's actually exercised.
+
 - - - - - formats with <20 songs - - - - -
+
+NONE TESTED FROM GUI (FOR NOW), ONLY CMTEST
+
+cmtest etc. with issues but fixed:
 
 sog	16 -- DONE UADE conf routes sog→JochenHippel + it's in supported_ext, but airballtest.sog → playback FAILED (starts then drops out). No playback from GUI.
 FIXED: content-routed Hippel-ST modules to the correct player. FAILED 28→27.
@@ -538,7 +547,14 @@ A2M	13 -- FIXED Genuine AdLib Tracker 2 file (_A2module_ magic) misfiled in test
 
 SKS	13 -- OK.. SHIPPED same as sks above (STarKos, case-insensitive ext) -- sksplugin
 
-These are checked by unit tests only, not by me in GUI (todo for sanity)
+imf	10 -- OK Trying testmus/openmpt/antspant.imf ... openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
+Trying testmus/openmpt/antspant.imf ... playback EXCEPTION (Could not load module)
+imf fixed (OpenMPT no longer errors, AdPlug plays it). 
+The file is an Apogee/id AdLib IMF (its bytes after a 2-byte f0 31 size word are identical to roster.imf), but it was misfiled in testmus/openmpt/. Since testPlugin runs each plugin in isolation, OpenMPT's Imago Orpheus loader was handed an Apogee file and threw — a corpus-placement artifact, not a routing bug (in the app, .imf is AdPlug-first). Fixed: moved to testmus/adlib/; AdPlug plays it.
+
+xmf	9 -- OK Genuine OpenMPT XMF (.xmf routes OpenMPT-only), but misfiled in testmus/uade/ where UADE grabbed it via the path_prefix quirk ("max" = MaxTrax) and FAILED "score died". Fixed: moved to testmus/openmpt/; plays. Third instance of this collision class (after sonic.a2m, and conceptually the .ss/imf misfiles). 
+
+These are all covered by cmtests, no issues:
 
 jb	19
 sm3	18
@@ -565,10 +581,30 @@ dz	14
 tf	13
 ims	13
 2sf	13
+pvp	12
+mkj	12
+m	12
+ex	12
+dsc	12
+ntk	11
+cba	11
+scumm	10
+lion	10
+cm	10
+xad	9
+tme	9
+spl	9
+sdb	9
+rk	9
+md	9
+ma	9
+jbm	9
+fmt	9
+agd	9
 
 - - - - -
 
-STILL UNSUPPORTED:
+STILL UNSUPPORTED / NOT COVERED:
 
 smufi	19 -- ???
 
@@ -580,43 +616,20 @@ kt	14 -- No fixture, no supported_ext, no conf entry, not in not_supported list.
 
 kdm	13 -- claimed by nothing, no fixture. Unhandled.
 
+liq	12 -- liq (Liquid Tracker) is a libopenmpt format upstream, but this trimmed openmpt build omits the Liquid loader (no Load_liq), and it isn't rerouted — so genuinely unsupported here.
+liq is the one possibly-worth-adding gap (libopenmpt already has the loader — it's just not compiled into this slice). Want me to look at enabling the Liquid Tracker loader, or move to the next batch?
 
--- not triaged below ----------
+fmf	11 -- Fixture sb main.fmf exists in testmus/adlib/ but no plugin claims .fmf (not in adplug.cpp) → skipped gracefully. Unsupported.
 
 tss	12
-pvp	12
-mkj	12
-m	12
-liq	12
-ex	12
-dsc	12
 buz2	12
 bsf	12
 vt	11
-ntk	11
 mvm	11
-fmf	11
-cba	11
-scumm	10
-lion	10
+plist	9 -- !??!
 
-imf	10 -- Trying testmus/openmpt/antspant.imf ... openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
-Trying testmus/openmpt/antspant.imf ... playback EXCEPTION (Could not load module)
+-- not triaged below ----------
 
-cm	10
-xmf	9
-xad	9
-tme	9
-spl	9
-smpro	9
-sdb	9
-rk	9
-plist	9
-md	9
-ma	9
-jbm	9
-fmt	9
-agd	9
 trk	8
 t0ast	8
 mc	8
