@@ -88,6 +88,9 @@ git clone https://github.com/mihailod/audiodecoder.wsr.git audiodecoderwsr
 git clone https://github.com/mihailod/protrekkr.git
 git clone https://github.com/mihailod/soundsmith.git
 git clone https://github.com/mihailod/arkostracker3.git
+git clone https://github.com/mihailod/playerpro.git
+git clone https://github.com/mihailod/jaytrax.git
+git clone https://github.com/mihailod/webixs.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
