@@ -2237,6 +2237,12 @@ TEST_CASE("coverage", "[music]")
     // remote source, intentionally-bad rips); g_skips are deliberate canHandle
     // declines plus companion/lib files that aren't standalone tunes.
     // Set tight to the exact current counts so ANY new failure trips the gate.
-    REQUIRE(g_errors <= 69);
-    REQUIRE(g_skips <= 46);
+    //
+    // 2026-06-17: errors 69->44 after fixing dune1.dro (DRO v0), 2.hsc (HSC
+    // half-pattern bug), the .sci/.ksm/.minidsf/.minissf/.miniusf multi-file
+    // fixtures (bundled their companion banks/libs). skips 46->47: those bundled
+    // companion files (insts.dat, *patch.003, *.dsflib/.ssflib/.usflib) are not
+    // standalone tunes and correctly skip.
+    REQUIRE(g_errors <= 44);
+    REQUIRE(g_skips <= 47);
 }
