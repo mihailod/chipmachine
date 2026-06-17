@@ -55,6 +55,27 @@
 .spm
 .sps
 
+# dux (amiga). Was listed in UADE supported_ext but UADE has NO player for it --
+# no eagleplayer.conf prefix, no amifilemagic content detection, no player binary
+# anywhere in the vendored 3.05 tree. Every .dux module therefore just FAILED
+# ("score died"). No open replayer found (UADE/rePlayer/libxmp/OpenMPT none).
+# Removed from supported_ext so they Skip instead of hard-FAIL. Re-open if a dux
+# eagleplayer lands upstream.
+.dux
+
+# 670 (modland "Composer 670 (CDFM)", 7 tunes). Looks like it should map to
+# libopenmpt's c67 loader ("CDFM / Composer 670"), but the modland .670 files are
+# a DIFFERENT on-disk layout (tiny header byte0=speed 1-15, then a 32-bit
+# pattern-offset table) that Load_c67's ValidateHeader rejects -- it expects the
+# unpacked 1954-byte named header (32 sample names + 32 FM-instr names + 256
+# orders). Verified: all 3 sampled tunes (amnesia - intro / black glass ][ -
+# muzik1 / amnesia - shaded vectors) fail openmpt_module_create_from_memory ->
+# "error loading file". No vendored engine decodes this packed CDFM variant
+# (AdPlug's CdfmLoader is the unrelated "Digital-FM" .dfm). NOT claimed by OpenMPT
+# so it Skips instead of throwing a load EXCEPTION. Re-open if a CDFM/Composer 670
+# depacker or matching loader lands.
+.670
+
 # Skale Tracker for PC by Baktery: No open replayer and no public spec exist
 .skm
 

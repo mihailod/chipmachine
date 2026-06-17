@@ -601,10 +601,21 @@ ma	9
 jbm	9
 fmt	9
 agd	9
+mc	8
+jt	8
+etx	8
+dh	8
+arp	8
+vss	7
+sun	7
+mug	7
+jpo	7
+plm	7
+as3m	7
 
 - - - - -
 
-STILL UNSUPPORTED / NOT COVERED:
+UNSUPPORTED BUT NOT OFFICIALLY REMOVED YET:
 
 smufi	19 -- ???
 
@@ -621,35 +632,25 @@ liq is the one possibly-worth-adding gap (libopenmpt already has the loader — 
 
 fmf	11 -- Fixture sb main.fmf exists in testmus/adlib/ but no plugin claims .fmf (not in adplug.cpp) → skipped gracefully. Unsupported.
 
+vge	7
+fnk	7
+fmk	7 -- NO cruisin'...fmk (magic FMK!) — claimed by nothing, AdPlug skips it gracefully. Unsupported.
+dsyn	7
+
 tss	12
 buz2	12
 bsf	12
 vt	11
 mvm	11
-plist	9 -- !??!
-
--- not triaged below ----------
-
-trk	8
+plist	9 -- !??! mac plist!?
 t0ast	8
-mc	8
-jt	8
 ftf	8
-etx	8
-dh	8
-arp	8
-vss	7
-vge	7
-sun	7
-plm	7
-mug	7
-jpo	7
-fnk	7
-fmk	7
-dux	7
-dsyn	7
-as3m	7
-670	7 -- no gui playback on 1 tested song
+trk	8
+
+-------------------------------
+-- not triaged below ----------
+-------------------------------
+
 xms	6
 sqx	6
 sb	6
@@ -660,6 +661,10 @@ hip7	6
 fp	6
 core	6
 cff	6
+
+---------------
+
+
 zip	5
 syn	5
 msm	5
@@ -717,3 +722,13 @@ aquablast	2
 aks	2
 
 more garbage below...
+
+
+CONFIRMED NO AND REMOVED:
+
+dux	7 -- NO... in UADE supported_ext (UADEPlugin.cpp:416) but has no eagleplayer.conf entry and no amifilemagic detection — UADE claims the extension but has no player → FAILED. Same pattern as the removed .spm/.sps.
+zero dux players in the UADE tree, no conf routing, no magic.
+Listed in UADE supported_ext but UADE has no player at all (no conf prefix, no amifilemagic, no binary) → carver 1.dux always FAILED "score died". No open replayer anywhere. Fixed: removed from supported_ext + documented in not_supported_extensions.txt → now Skips cleanly. Same pattern as .spm/.sps/.pmd.
+
+670	7 -- NO.. The modland .670 files have a completely different on-disk layout: a tiny header (byte0 = speed, a few bytes) followed by a 32-bit pattern-offset table at ~0x24. sampleNames[0][12] is non-zero binary, so c67's ValidateHeader bails instantly.
+So these modland files are a different (packed?) CDFM variant than the one OpenMPT supports — and upstream OpenMPT 0.8.7 would reject them too (the c67 spec hasn't changed). No other vendored engine handles it either (AdPlug's CdfmLoader is the unrelated "Digital-FM" .dfm).

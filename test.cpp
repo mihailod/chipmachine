@@ -360,6 +360,25 @@ TEST_CASE("GME GBR plays sound", "[music]")
 // from modland's Ad Lib/Visual Composer set) so america2.rol renders for real.
 TEST_CASE("AdPlug", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", "", "data"); }
 
+// Sierra SCI (.sci) is a multi-file AdLib format: AdPlug's mid.cpp loader needs
+// the "<prefix>patch.003" OPL2 instrument bank alongside the song. AdPlugin must
+// name it via getSecondaryFiles so the host fetches it (modland co-hosts it in
+// the same dir, e.g. "kq1 flutey.sci" + "kq1patch.003"). Without it the load
+// throws and the song can't play from the GUI.
+TEST_CASE("AdPlug SCI secondary patch", "[music]")
+{
+    musix::AdPlugin plugin{ "data" };
+    auto sec = plugin.getSecondaryFiles("testmus/adlib/kq1 flutey.sci");
+    REQUIRE(sec.size() == 1);
+    REQUIRE(sec[0] == "kq1patch.003");
+    // full paths/URLs resolve to just the companion file name
+    REQUIRE(plugin.getSecondaryFiles(
+                "ftp://x/Ad Lib/Sierra/Kings Quest 1/kq1 flutey.sci")
+                .at(0) == "kq1patch.003");
+    // non-SCI AdLib formats request no secondary files
+    REQUIRE(plugin.getSecondaryFiles("song.laa").empty());
+}
+
 // Render up to `buffers` blocks and return summed absolute sample energy.
 static int64_t adplugEnergy(musix::ChipPlayer* player, int buffers)
 {
