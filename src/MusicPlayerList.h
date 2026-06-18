@@ -164,6 +164,11 @@ private:
     void loadSecondaryFile(const std::string& s, const utils::File& parentDir,
                            const std::string& songDirUrl);
 
+    // Handles an LHA-packed song path ("<archive>.lha/<member>", used by the
+    // UnExoticA collection): downloads the archive into the cache, extracts its
+    // members and queues the requested member for playback.
+    void loadLhaSong(const std::string& prefix, const std::string& path);
+
     void update();
     void updateInfo();
 

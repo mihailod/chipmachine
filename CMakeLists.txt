@@ -137,6 +137,12 @@ add_subdirectory(${MUSICPLAYER}/src/psf psf)
 
 include_directories(${AP1_ROOT}/mods/grappix ${MUSICPLAYER}/plugins)
 
+# liblhasa (vendored under zxtune) decompresses the .lha archives that the
+# UnExoticA collection ships its tunes in. The `lhasa` static-lib target is
+# created by the zxtuneplugin subproject above.
+get_filename_component(ZXTUNE_ROOT "${CMAKE_SOURCE_DIR}/../zxtune" ABSOLUTE)
+include_directories(${ZXTUNE_ROOT}/3rdparty/lhasa/lib/public)
+
 if(WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
 endif()
@@ -166,6 +172,7 @@ endif()
 set(MAIN_FILES
     src/MusicDatabase.cpp
     src/GZPlugin.cpp
+    src/LhaArchive.cpp
     src/MusicPlayer.cpp
     src/MusicPlayerList.cpp
     src/RemoteLoader.cpp
@@ -217,14 +224,15 @@ else()
     add_executable(chipmachine ${MAIN_FILES} ${GUI_FILES} src/main.cpp)
 endif()
 
-target_link_libraries(chipmachine PRIVATE 
-    musicplayer 
+target_link_libraries(chipmachine PRIVATE
+    musicplayer
     plugin_register
-    ${CORE_MODULES} 
-    ${GUI_MODULES} 
-    ${MUSICPLAYER_PLUGINS} 
-    vicepluginbridge 
-    sol 
+    ${CORE_MODULES}
+    ${GUI_MODULES}
+    ${MUSICPLAYER_PLUGINS}
+    lhasa
+    vicepluginbridge
+    sol
     ${APPLE_FRAMEWORKS}
     avcodec
     avformat
@@ -237,11 +245,12 @@ if(NOT WIN32)
     add_executable(cm ${MAIN_FILES} src/textmode.cpp src/main.cpp)
     target_compile_definitions(cm PUBLIC TEXTMODE_ONLY)
     target_link_libraries(cm PRIVATE
-        musicplayer 
-        ${CORE_MODULES} 
-        ${MUSICPLAYER_PLUGINS} 
-        vicepluginbridge 
-        sol 
+        musicplayer
+        ${CORE_MODULES}
+        ${MUSICPLAYER_PLUGINS}
+        lhasa
+        vicepluginbridge
+        sol
         ${APPLE_FRAMEWORKS}
         avcodec
         avformat
@@ -254,13 +263,14 @@ add_executable(mksonglist scripts/mksonglist/mksonglist.cpp src/SongFileIdentifi
 target_link_libraries(mksonglist PRIVATE coreutils archive sc68plugin mp3plugin)
 
 add_executable(cmtest testmain.cpp test.cpp test_opna_rhythm.cpp ${MAIN_FILES})
-target_link_libraries(cmtest PRIVATE 
-    plugin_register 
-    ${CORE_MODULES} 
-    ${MUSICPLAYER_PLUGINS} 
-    vicepluginbridge 
-    musicplayer 
-    sol 
+target_link_libraries(cmtest PRIVATE
+    plugin_register
+    ${CORE_MODULES}
+    ${MUSICPLAYER_PLUGINS}
+    lhasa
+    vicepluginbridge
+    musicplayer
+    sol
     ${APPLE_FRAMEWORKS}
     avcodec
     avformat
