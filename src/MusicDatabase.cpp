@@ -787,7 +787,7 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
         while (composerToTitle[offset] != -1) {
             int songindex = composerToTitle[offset++];
 
-            if (seen.find(songindex) != seen.end()) continue;
+            //if (seen.find(songindex) != seen.end()) continue;
 
             if (collectionFilter == -1 ||
                 (formats[songindex] >> 8) == collectionFilter) {
