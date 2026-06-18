@@ -1523,7 +1523,8 @@ TEST_CASE("UADE two-file formats stream and play via MusicPlayerList",
          { "Richard Joseph/Richard Joseph/aquatic games.sng",
            "MusicMaker V8 Old/- unknown/best of guitars.sdata",
            "SoundPlayer/Scott Johnston/sjs.rudi",
-           "Synth Dream/Laurens Tummers/sdr.monsterbusiness 1" }) {
+           "Synth Dream/Laurens Tummers/sdr.monsterbusiness 1",
+           "Kris Hatlelid/Kris Hatlelid/The Cycles/the cycles.kh" }) {
         INFO("streaming " << rel);
         mpl.playSong(SongInfo{ std::string("modland::") + rel });
 
@@ -1629,6 +1630,9 @@ TEST_CASE("MusicPlayer secondary files preserve case", "[music]")
             (std::vector<std::string>{ "best of guitars.ip",
                                        "best of guitars.ip.l",
                                        "best of guitars.ip.n" }));
+    // Kris Hatlelid: "<name>.kh" song + a fixed-name "songplay" replay file.
+    REQUIRE(mp.getSecondaryFiles("testmus/uade/the cycles.kh") ==
+            std::vector<std::string>{ "songplay" });
 }
 TEST_CASE("NDS", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib"); }
 TEST_CASE("HE", "[music]") { testPlugin<musix::HEPlugin>("testmus/psx", "lib", "data/hebios.bin"); }

@@ -337,6 +337,14 @@ bool MusicDatabase::parseModland(
             // a playable song, so never index it as one.
             if (endsWith(toLower(song.path), ".info")) { continue; }
 
+            // KrisHatlelid (.kh) songs pair with a fixed-name "songplay" driver
+            // file in the same game dir; it is a companion (fetched via
+            // UADEPlugin::getSecondaryFiles), never a standalone tune. It has no
+            // extension and sorts alphabetically before the ".kh", so without
+            // this it becomes the primary of the game's MULTI: group and the
+            // game "plays" the silent driver instead of the song.
+            if (endsWith(toLower(song.path), "/songplay")) { continue; }
+
             auto [ext, base] = getTypeAndBase(song.path);
 
             // Match the secondary-extension list case-insensitively: Modland

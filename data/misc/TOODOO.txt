@@ -3,11 +3,14 @@
 ******************************************************
 
 - UADE errors left to investigate:
-* batmanreturns.dsr	Desire	Self-contained, player runs but silent.
-cyf-3-final-2.puma	PumaTracker	Self-contained tracker; player runs silent (not a missing-companion issue).
+
+What's left — just 2, both genuine dead-ends
 * andreab.ftm	Face The Music (FTMN)	No UADE player exists for it (Atari ST format) → hard FAILED. Would need a separate decoder.
+andreab.ftm — Face The Music, no UADE replayer exists at all (FAILED).
+
 * qts.Big Pro	Quartet ST	Needs a set.Big Pro sample bank that isn't on modland anywhere — unsourceable companion.
-* fiendish freddys - songs.kh	KrisHatlelid (Amiga hunk-exe rip, 0x000003f3)	Self-contained exe rip, player runs silent.
+qts.Big Pro — Quartet ST, sample bank not on modland anywhere (NO SOUND).
+
 
 - ability to manually add stuff to database. via a manual.txt file
 
@@ -31,7 +34,7 @@ Also look at the zx repositories below, maybe someone already did this.
 	* sjs.rudi (SoundPlayer) — SoundPlayer is single-file (dir has only sjs.*). Same.
 	* qts.Big Pro (Quartet ST) — single file; our QuartetPlugin handles Amiga .4v, not Atari-ST .qts, so no reroute. Bad rip or eagleplayer bug.
 	
-	-- NO SOUND: batmanreturns.dsr, bombjack.jmf, cyf-3-final-2.puma, forgotten worlds intro.fw, fiendish freddys - songs.kh (maxsubsong=-1).
+	-- NO SOUND: batmanreturns.dsr, bombjack.jmf, cyf-3-final-2.puma
 
 	-- best of guitars.sdata (MusicMaker V8): multi-companion (.ip + .ip.l + .ip.n) with a naming scheme the current fmt_2files prefix logic doesn't fit — needs a small loader/secondary-file extension.
 Recommendation: leave best of guitars.sdata in the needs-research bucket. If you want, I can do the focused experiment next (temporarily route .sdata→8V and A/B it, and check whether it's the lone V8 .sdata outlier) — but that's a deliberate eagleplayer investigation

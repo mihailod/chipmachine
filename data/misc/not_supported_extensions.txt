@@ -124,3 +124,4 @@
 # and is unfixable without RE-patching the player binary. UADEPlugin::canHandle
 # declines the FWMP magic (isForgottenWorlds) so they Skip cleanly instead of
 # reporting NO SOUND. Re-open if a working ForgottenWorlds player lands upstream.
+.fw

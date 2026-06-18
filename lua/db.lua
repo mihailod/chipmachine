@@ -21,7 +21,9 @@
 -- 31: added Kohina radio station, removed .snd files
 -- 32: ext field added to SongInfo and DB; parseStandard now recognizes "ext" keyword
 -- 33: added Karolina radio station
-VERSION = 33;
+-- 34: skip KrisHatlelid "songplay" driver files (companion, not a standalone
+--     song; it sorted before the .kh and became the MULTI: primary -> silent)
+VERSION = 34;
 
 DB = {
 {
