@@ -1498,6 +1498,51 @@ TEST_CASE("UADE SMUS streams and plays from modland", "[.smusnet]")
     REQUIRE(energy != 0);
 }
 
+// End-to-end GUI streaming for UADE two-file formats whose player derives the
+// companion name from the song's ON-DISK basename (Richard Joseph .sng->.INS,
+// MusicMaker V8 .sdata->.ip) or from a fixed sibling (SoundPlayer SMP.<name>,
+// Synth Dream SMP.set). Drives the real MusicPlayerList over Modland FTP with a
+// bogus local mirror so the song lands in the URL-encoded web cache -- the exact
+// case where, before the clean-name re-materialisation in playCurrent(), UADE
+// looked for "<encoded-name>.INS" while loadSecondaryFile() had staged the clean
+// "<song>.ins", so the tune streamed silent. Each must now produce audio.
+TEST_CASE("UADE two-file formats stream and play via MusicPlayerList",
+          "[.uadestream]")
+{
+    using namespace chipmachine;
+    logging::setLevel(logging::Level::Warning);
+    auto ap = std::make_shared<AudioPlayerNull>();
+    RemoteLoader rl;
+    rl.registerSource("modland", "ftp://ftp.modland.com/pub/modules/",
+                      "/nonexistent-mirror/");
+    MusicDatabase mdb{ rl };
+    musix::ChipPlugin::createPlugins("data");
+    MusicPlayerList mpl{ mdb, rl, ap };
+
+    for (const char* rel :
+         { "Richard Joseph/Richard Joseph/aquatic games.sng",
+           "MusicMaker V8 Old/- unknown/best of guitars.sdata",
+           "SoundPlayer/Scott Johnston/sjs.rudi",
+           "Synth Dream/Laurens Tummers/sdr.monsterbusiness 1" }) {
+        INFO("streaming " << rel);
+        mpl.playSong(SongInfo{ std::string("modland::") + rel });
+
+        int64_t energy = 0;
+        std::vector<int16_t> buf(8192);
+        // ~60s budget: FTP fetch of the song + its companion(s), then decode.
+        for (int i = 0; i < 3000 && energy == 0; ++i) {
+            REQUIRE_FALSE(mpl.hasError());
+            auto st = mpl.getState();
+            if (st == MusicPlayerList::Playing) {
+                ap->get(buf);
+                for (auto v : buf) { energy += std::abs(static_cast<int>(v)); }
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(20));
+        }
+        REQUIRE(energy != 0);
+    }
+}
+
 TEST_CASE("OpenMPT", "[music]") { testPlugin<musix::OpenMPTPlugin>("testmus/openmpt", ""); }
 TEST_CASE("GSF", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib"); }
 // On a clean machine, streaming a .gsf/.minigsf must also fetch its shared
@@ -1563,6 +1608,27 @@ TEST_CASE("MusicPlayer secondary files preserve case", "[music]")
             std::vector<std::string>{ "NTR-AZEE-USA.2sflib" });
     REQUIRE(mp.getSecondaryFiles("testmus/gsf/01 yume wa owaranai.gsf") ==
             std::vector<std::string>{ "AGB-AN8J-JPN.gsflib" });
+    // TFMX: the mdat.<name> song streams alongside its smpl.<name> sample bank;
+    // UADE's getSecondaryFiles maps the mdat->smpl prefix so the GUI fetches it.
+    REQUIRE(mp.getSecondaryFiles("testmus/uade/mdat.melovatrix") ==
+            std::vector<std::string>{ "smpl.melovatrix" });
+    // Richard Joseph: "<name>.sng" song + "<name>.ins" sample file (the Amiga
+    // player swaps .sng->.INS in the same dir); the GUI must fetch the .ins.
+    REQUIRE(mp.getSecondaryFiles("testmus/uade/aquatic games.sng") ==
+            std::vector<std::string>{ "aquatic games.ins" });
+    // SoundPlayer (Scott Johnston): "sjs.<name>" song + "smp.<name>" samples.
+    REQUIRE(mp.getSecondaryFiles("testmus/uade/sjs.rudi") ==
+            std::vector<std::string>{ "smp.rudi" });
+    // Synth Dream: "sdr.<name>" song; samples are either a per-tune "smp.<name>"
+    // or a shared "smp.set" bank. Surface both (missing companion is non-fatal).
+    REQUIRE(mp.getSecondaryFiles("testmus/uade/sdr.monsterbusiness 1") ==
+            (std::vector<std::string>{ "smp.monsterbusiness 1", "smp.set" }));
+    // MusicMaker V8: "<name>.sdata" song + a 3-part ".ip"/".ip.l"/".ip.n"
+    // instrument pack; all three must be fetched or the tune renders silent.
+    REQUIRE(mp.getSecondaryFiles("testmus/uade/best of guitars.sdata") ==
+            (std::vector<std::string>{ "best of guitars.ip",
+                                       "best of guitars.ip.l",
+                                       "best of guitars.ip.n" }));
 }
 TEST_CASE("NDS", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib"); }
 TEST_CASE("HE", "[music]") { testPlugin<musix::HEPlugin>("testmus/psx", "lib", "data/hebios.bin"); }

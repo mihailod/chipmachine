@@ -561,10 +561,30 @@ void MusicPlayerList::playCurrent()
                 f0 = File{ newFile };
             }
         }
+        auto parentDir = File(path_directory(f0.getName()));
+        auto songDirUrl = path_directory(currentInfo.path);
+
+        // Pure-streaming companion-name alignment: the web cache stores the song
+        // under a URL-encoded name (e.g. "ftp%3A%2F...%2Faquatic games.sng"), but
+        // several UADE multi-file players derive a companion's name from the
+        // song's ON-DISK basename -- Richard Joseph swaps .sng->.INS, MusicMaker
+        // .sdata->.ip, etc. loadSecondaryFile() materialises those companions
+        // under their clean Modland names next to the song, so unless the song
+        // ALSO carries its clean basename the derivation can never match and the
+        // tune streams silent. Re-materialise the song under its own clean
+        // filename beside the companions. In a local mirror the cached name is
+        // already the real name, so this is a no-op.
+        auto cleanName = path_filename(currentInfo.path);
+        if (!cleanName.empty() && path_filename(f0.getName()) != cleanName) {
+            File cleanSong = parentDir / cleanName;
+            if (!cleanSong.exists()) {
+                File::copy(f0.getName(), cleanSong.getName());
+            }
+            f0 = cleanSong;
+        }
+
         songFiles.push_back(f0);
         loadedFile = f0.getName();
-        auto parentDir = File(path_directory(loadedFile));
-        auto songDirUrl = path_directory(currentInfo.path);
         for (const auto& s : mp.getSecondaryFiles(f0)) {
             if (s == "./") {
                 // The song's OWN directory (e.g. a MaxTrax shared-bank set whose

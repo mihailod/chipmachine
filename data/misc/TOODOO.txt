@@ -2,6 +2,13 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
+- is this expected:
+[RemoteLoader.cpp:77] Local path: /opt/Music/asma/Games/Zone_X.sap
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/http%3a%2f%2fasma.atari.org%2fasma%2fGames/Zone_X.sap
+[RemoteLoader.cpp:90] CODE -1
+[MusicPlayerList.cpp:551] Detected ext: 
+MusicPlayer: Plugin 'Game Music Engine' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/http%3a%2f%2fasma.atari.org%2fasma%2fGames/Zone_X.sap'. Error: Could not load GME music: Digimusic not supported
+
 - ability to manually add stuff to database. via a manual.txt file
 
 - ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
@@ -9,7 +16,9 @@ Your strategy of extracting the routine + data payload, indexing it, booting a m
 Also look at the zx repositories below, maybe someone already did this.
 
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
+
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
+
 - in general genuinely bad or missing files should not be surfacing:
  - option a: remove from index
  - option b: use filter
@@ -28,6 +37,11 @@ Also look at the zx repositories below, maybe someone already did this.
 Recommendation: leave best of guitars.sdata in the needs-research bucket. If you want, I can do the focused experiment next (temporarily route .sdata→8V and A/B it, and check whether it's the lone V8 .sdata outlier) — but that's a deliberate eagleplayer investigation
 
 	-- aquatic games.sng remains in the needs-research bucket (Amiga RJP — likely a missing .ins companion that may not be on modland, or a bad rip).
+
+** ALL SKIPS were investigated and here is the outcome:
+
+.lem, .fmk, .sig, AdLib .fmt (+cal/dtl/d01/edl/fmf/vib): Not fixable via AdPlug. Tested by claiming the extensions — AdPlug's factory throws/ignores them. They're modland "Ad Lib" formats genuinely outside AdPlug's repertoire. Correct skips.
+.dmw "Perfume": Not UADE — it's Deflemask (modland Deflemask/DevEd/perfume.dmw). No open decoder, correct skip.
 
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
@@ -145,15 +159,13 @@ The one open replayer, fcatrin/fstr (MIT), is unusable for porting — x86 real-
 - packaging: the app should offer to os handling of all extensions it can play, package_app.sh should be augmented with plist writer for it. then the application needs to handle the file passed in (standard mac way exists)
 
 - can we detect "video unavailable" for youtube and show / print that?
-- keep fixing red stuff in cmtest outpus
-- add a test file for EVERY supported extension
-- produce unique stats at the test end (ie 8 mod pass counts as 1)
+
 - do not treat extensions which are none in db as missing, only the present in db (currently none that missing are present so the test is 100% covering all but cmtest prints missing formats... once they appear maybe from new databases it should fire again)
 
 product/process
 ===============
 - use some IDE (with integrated AI?) for development?
-- cleanup cmtest
+- cleanup cmtest 100%
 - move all plugins into musicplayer/src/plugins and unify into one repo, it is becoming silly with clones... and we don't ship anything independently anyway so it is pointless 
 
 major new features
@@ -667,6 +679,7 @@ trk	8
 -------------------------------
 -- not triaged below ----------
 -------------------------------
+the counts are too small, opportunistic fixes...
 
 xms	6
 sqx	6
