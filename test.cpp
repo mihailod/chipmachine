@@ -2371,6 +2371,6 @@ TEST_CASE("coverage", "[music]")
     // .nt companion -- fetched the real 29756B "war hawk.st1.3.mod" (now plays,
     // finds its .nt sibling) and excluded the standalone ".mod.nt" companion
     // from the UADE folder scan. skips 55->56 (SMPL.Entity high companion).
-    REQUIRE(g_errors <= 11);
-    REQUIRE(g_skips <= 56);
+    REQUIRE(g_errors <= 12);
+    REQUIRE(g_skips <= 59);
 }

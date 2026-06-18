@@ -15,11 +15,6 @@ Also look at the zx repositories below, maybe someone already did this.
  - option b: use filter
  - option c (i think the best): augment search deduping to also remove the non-supported results from the search
 
-- investigate content and status of these, there should be none:
-	chipmachine/testmus/gme/nowork
-	chipmachine/testmus/ted/nowork
-	musicplayer/testmus/gme/nowork
-
 - These are single-file "score died" or odd cases with no companion to bundle — need real eagleplayer A/B debugging:
 	
 	-- Deferred (genuine single-file "score died" — no companion, no routing fix)
@@ -33,20 +28,6 @@ Also look at the zx repositories below, maybe someone already did this.
 Recommendation: leave best of guitars.sdata in the needs-research bucket. If you want, I can do the focused experiment next (temporarily route .sdata→8V and A/B it, and check whether it's the lone V8 .sdata outlier) — but that's a deliberate eagleplayer investigation
 
 	-- aquatic games.sng remains in the needs-research bucket (Amiga RJP — likely a missing .ins companion that may not be on modland, or a bad rip).
-
-SKIPPED:
-
-  Category 1: Intentionally Unsupported or Negative Tests
-   * OpenMPT: .dmf (Deflemask is explicitly unsupported by libopenmpt; only X-Tracker .dmf works).
-   * HEPlugin: bad-magic-not-a-psf.psf (Negative test case to ensure magic validation works).
-
-  Category 2: Potential "Low-Hanging Fruit" (Easy Fixes)
-  A few files might be playable if we update the plugin's extension list or fix minor identification issues:
-   * AdPlug: .lem (Xmas Lemmings), .fmt (Lassie Come Home), .fmk (Pimpmobile), .sig, .melovatrix. These are obscure
-     AdLib formats that AdPlug might support if we claim the extensions.
-   * UADE: .BGM (Allegro Amadeus), .dmw (Perfume), .bds (Chubby Gristle). These Amiga formats might need a specific
-     "prefix" or eagleplayer mapping that is currently missing.
-   * Euphony: BARRY3_3.PMB was skipped but BARRY.EUP (from previous list) should play it. I'll check if any .eup files are missing their companions.
 
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
