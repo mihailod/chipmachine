@@ -19,9 +19,19 @@
 --     (parseModland secondary set) and fetched via getSecondaryFiles next to the
 --     bare-named song; "SoundSmith" maps to the Apple IIgs platform/format
 -- 31: added Kohina radio station, removed .snd files
-VERSION = 31;
+-- 32: ext field added to SongInfo and DB; parseStandard now recognizes "ext" keyword
+-- 33: added Karolina radio station
+VERSION = 33;
 
 DB = {
+{
+	name = "modarchive",
+	id =  "modarchive",
+	source = "https://api.modarchive.org/downloads.php?moduleid=",
+	song_list = "data/modarchive.txt",
+	song_template = "title ext path format",
+	color = 0xfffff
+},
 {
 	name = "Playlists",
 	id =  "pl",
