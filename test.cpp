@@ -67,22 +67,32 @@ static const std::set<std::string>& notSupportedExts()
     return exts;
 }
 
-// Category A: Companion/Support files that are correctly skipped and shouldn't
-// count toward coverage tallies.
-static bool isAuxFile(const std::string& name)
+// Classification for files that are correctly skipped and shouldn't count
+// toward coverage tallies.
+// Category A: Companion/Support files (instruments, banks, libs).
+// Category B: Intentionally Unsupported or Negative Tests (Deflemask DMF, bad PSF).
+static bool shouldIgnoreFile(const std::string& name)
 {
-    static const std::set<std::string> auxExts = {
+    static const std::set<std::string> ignoredExts = {
         "ins", "bnk", "dat", "dtl", "edl", "fmf", "cal", "d01", "vib", "003",
         "fmb", "pmb", "pvi", "mbk", "pdx", "gsflib", "2sflib", "qsflib",
         "ssflib", "usflib", "psflib", "psf2lib", "opm", "ss", "instr", "inst",
         "dsflib"
     };
     auto ext = utils::toLower(utils::path_extension(name));
-    if (auxExts.count(ext) > 0) return true;
+    if (ignoredExts.count(ext) > 0) return true;
 
-    // UADE specific cases
+    // Specific patterns for Category B or multi-part extensions
     if (name.find("smpl.") != std::string::npos) return true;
+    if (name.find("smp.") != std::string::npos) return true;
     if (name.find(".adsc.as") != std::string::npos) return true;
+    if (name.find("sfx2.dmf") != std::string::npos) return true;
+    if (name.find("bad-magic-not-a-psf.psf") != std::string::npos) return true;
+
+    static const std::set<std::string> auxExts = {
+        "w", "md", "set"
+    };
+    if (auxExts.count(ext) > 0) return true;
 
     return false;
 }
@@ -243,14 +253,14 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
             // silently ignore extensions flagged impossible-to-support
             if (notSupportedExts().count(ext) > 0) continue;
 
-            if (isAuxFile(f.getName())) {
-                printf("\033[90mIgnored (aux file) %s\033[0m\n", f.getName().c_str());
+            if (shouldIgnoreFile(f.getName())) {
+                printf("\033[90mIgnored %s\033[0m\n", f.getName().c_str());
                 continue;
             }
 
             int64_t sum = 0;
             if (!plugin.canHandle(f.getName())) {
-                printf("\033[90mSkipping %s\033[0m\n", f.getName().c_str());
+                printf("\033[33mSkipping %s\033[0m\n", f.getName().c_str());
                 g_skips++;
                 g_skipExts.insert(ext);
                 continue;
@@ -300,7 +310,7 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
                 // playback error that should fail coverage.
                 std::string msg = e.what();
                 if (msg.find("unsupported") != std::string::npos) {
-                    printf("\r\033[90mSkipping %s (%s)\033[0m\n",
+                    printf("\r\033[33mSkipping %s (%s)\033[0m\n",
                            f.getName().c_str(), e.what());
                     g_skips++;
                     g_skipExts.insert(ext);
@@ -478,7 +488,7 @@ TEST_CASE("Westwood SND plays sound", "[music]")
 // Exclude the TFMX/SoundMaster sample banks (turrican2.smpl, smp.starball) which
 // are companion files, not standalone songs -- but NOT ".smpro" SoundMaster songs
 // (futureshock-gameover.smpro), which the old broad "smp" substring wrongly hid.
-TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", ".smpl,smp.,.mod.nt", "data"); }
+TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", ".mod.nt", "data"); }
 
 // GUI sanity check for every multi-file fixture whose companion we bundled.
 // cmtest plays from local files, so a song would render fine here even if the
@@ -535,7 +545,7 @@ TEST_CASE("SunVox", "[music]") { testPlugin<musix::SunVoxPlugin>("testmus/sunvox
 // Exclude the ".W" wavebank from the scan -- it's the song's companion, not a
 // playable fixture (canHandle rightly declines it); fromFile() picks it up next
 // to the bare song.
-TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmus/soundsmith", ".W"); }
+TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmus/soundsmith", ""); }
 TEST_CASE("Musx", "[music]") { testPlugin<musix::MusxPlugin>("testmus/musx", ""); }
 TEST_CASE("Coconizer", "[music]") { testPlugin<musix::CocoPlugin>("testmus/coco", ""); }
 TEST_CASE("MaxTrax", "[music]") { testPlugin<musix::MaxTraxPlugin>("testmus/maxtrax", ""); }
@@ -1987,7 +1997,7 @@ TEST_CASE("V2", "[music]") { testPlugin<musix::V2Plugin>("testmus/v2", ""); }
 // basename in the same directory. QuartetPlugin locates that sibling (trying
 // both ".set" and ".SET") and declares it via getSecondaryFiles so the loader
 // fetches it. The ".set" itself is not a playable song, so it's excluded here.
-TEST_CASE("Quartet", "[music]") { testPlugin<musix::QuartetPlugin>("testmus/4v", ".set"); }
+TEST_CASE("Quartet", "[music]") { testPlugin<musix::QuartetPlugin>("testmus/4v", ""); }
 
 // Quartet plays sound. "Bangkok.4v" needs its "Bangkok.set" voiceset for any
 // audio; the plugin must pair the two, hand both to zingzong, and render
@@ -2111,10 +2121,11 @@ TEST_CASE("priority_map", "[.]")
 TEST_CASE("coverage", "[music]")
 {
     printf("======================================================\n");
-    printf("TOTAL EXTENSION STATS:  \033[31mERRORS: %d\033[0m, \033[90mSKIPS: %d\033[0m, \033[32mOK: %d\033[0m\n",
+    printf("TOTAL EXTENSION STATS:  \033[31mERRORS: %d\033[0m, \033[33mSKIPS: %d\033[0m, \033[32mOK: %d\033[0m\n",
            g_errors, g_skips, g_ok);
-    printf("UNIQUE EXTENSION STATS: \033[31mERRORS: %zu\033[0m, \033[90mSKIPS: %zu\033[0m, \033[32mOK: %zu\033[0m\n",
+    printf("UNIQUE EXTENSION STATS: \033[31mERRORS: %zu\033[0m, \033[33mSKIPS: %zu\033[0m, \033[32mOK: %zu\033[0m\n",
            g_errorExts.size(), g_skipExts.size(), g_okExts.size());
+    printf("(note: auxilarry files are ignored for the stats)\n");
     printf("======================================================\n");
     musix::ChipPlugin::createPlugins("data");
     auto& plugins = musix::ChipPlugin::getPlugins();
