@@ -19,10 +19,7 @@ Also look at the zx repositories below, maybe someone already did this.
 
 CMTEST FALLOUT:
 
-- UADE errors left to investigate:
-What's left — just 2, both genuine dead-ends
-*** andreab.ftm	Face The Music (FTMN)	No UADE player exists for it (Atari ST format) → hard FAILED. Would need a separate decoder.
-andreab.ftm — Face The Music, no UADE replayer exists at all (FAILED).
+- cmtest/UADE error left to investigate, only 1:
 *** qts.Big Pro	Quartet ST	Needs a set.Big Pro sample bank that isn't on modland anywhere — unsourceable companion.
 qts.Big Pro — Quartet ST, sample bank not on modland anywhere (NO SOUND). our QuartetPlugin handles Amiga .4v, not Atari-ST .qts, so no reroute. Bad rip or eagleplayer bug.
 
