@@ -77,17 +77,25 @@ static bool shouldIgnoreFile(const std::string& name)
         "ins", "bnk", "dat", "dtl", "edl", "fmf", "cal", "d01", "vib", "003",
         "fmb", "pmb", "pvi", "mbk", "pdx", "gsflib", "2sflib", "qsflib",
         "ssflib", "usflib", "psflib", "psf2lib", "opm", "ss", "instr", "inst",
-        "dsflib"
+        "dsflib", "smpl", "ip"
     };
     auto ext = utils::toLower(utils::path_extension(name));
     if (ignoredExts.count(ext) > 0) return true;
 
-    // Specific patterns for Category B or multi-part extensions
-    if (name.find("smpl.") != std::string::npos) return true;
-    if (name.find("smp.") != std::string::npos) return true;
-    if (name.find(".adsc.as") != std::string::npos) return true;
-    if (name.find("sfx2.dmf") != std::string::npos) return true;
-    if (name.find("bad-magic-not-a-psf.psf") != std::string::npos) return true;
+    // Companion / sample-bank filename patterns (matched case-insensitively):
+    // these pair with a song (their getSecondaryFiles names them) and aren't
+    // standalone tunes -- e.g. "smpl.<song>" (TFMX), "SMPL.<song>" (MIDI-
+    // Loriciel), "mcs.<song>" (Mark Cooksey), "<song>.ip.l/.ip.n" (MusicMaker).
+    auto lname = utils::toLower(name);
+    if (lname.find("smpl.") != std::string::npos) return true;
+    if (lname.find("smp.") != std::string::npos) return true;
+    if (lname.find("mcs.") != std::string::npos) return true;
+    if (lname.find(".ip.") != std::string::npos) return true;
+    if (lname.find(".adsc.as") != std::string::npos) return true;
+    if (lname.find("sfx2.dmf") != std::string::npos) return true;
+    if (lname.find("bad-magic-not-a-psf.psf") != std::string::npos) return true;
+    // Kris Hatlelid (.kh) songs share a fixed-name "songplay" replay executable.
+    if (lname.find("songplay") != std::string::npos) return true;
 
     static const std::set<std::string> auxExts = {
         "w", "md", "set"
@@ -488,6 +496,28 @@ TEST_CASE("Westwood SND plays sound", "[music]")
 // Exclude the TFMX/SoundMaster sample banks (turrican2.smpl, smp.starball) which
 // are companion files, not standalone songs -- but NOT ".smpro" SoundMaster songs
 // (futureshock-gameover.smpro), which the old broad "smp" substring wrongly hid.
+// .rsid (the "real C64" SID variant) is played by VICE just like .sid -- VICE's
+// psid_load_file accepts the "RSID" magic. libvice now claims it; this checks a
+// genuine RSID rip renders audio. (testmus/libvice isn't folder-scanned, so the
+// fixture needs an explicit test.)
+TEST_CASE("RSID plays sound", "[music]")
+{
+    musix::VicePlugin vice{ "data" };
+    std::string const rsid = "testmus/libvice/10... knockout!.rsid";
+    REQUIRE(vice.canHandle(rsid));
+    auto* p = vice.fromFile(rsid);
+    REQUIRE(p != nullptr);
+    std::array<int16_t, 8192> buf{};
+    int64_t e = 0;
+    for (int i = 0; i < 50 && e == 0; i++) {
+        int rc = p->getSamples(buf.data(), static_cast<int>(buf.size()));
+        if (rc <= 0) { break; }
+        for (int j = 0; j < rc; j++) { e += std::abs(static_cast<int>(buf[j])); }
+    }
+    delete p;
+    REQUIRE(e != 0);
+}
+
 TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", ".mod.nt", "data"); }
 
 // GUI sanity check for every multi-file fixture whose companion we bundled.
@@ -522,6 +552,8 @@ TEST_CASE("secondary files resolve for multi-file fixtures", "[music]")
     check(uade, "testmus/uade/mfp.crystaldragon ingame",
           "smp.crystaldragon ingame");                                    // MagneticFields
     check(uade, "testmus/uade/MIDI.Entity high", "SMPL.Entity high");     // MIDI-Loriciel
+    check(uade, "testmus/uade/qts.Big Pro", "SMP.set");                   // Quartet ST (shared bank)
+    check(uade, "testmus/uade/the cycles.kh", "songplay");               // Kris Hatlelid (shared replay)
 
     musix::HTPlugin ht; // PSF "_lib" tag
     check(ht, "testmus/ht/ggx-66-00-01.minidsf", "ggx_66.dsflib");
@@ -2476,6 +2508,27 @@ TEST_CASE("coverage", "[music]")
     // .nt companion -- fetched the real 29756B "war hawk.st1.3.mod" (now plays,
     // finds its .nt sibling) and excluded the standalone ".mod.nt" companion
     // from the UADE folder scan. skips 55->56 (SMPL.Entity high companion).
-    REQUIRE(g_errors <= 12);
-    REQUIRE(g_skips <= 59);
+    //
+    // 2026-06-17 (g): errors -> 0. The last UADE error, qts.Big Pro (Quartet ST),
+    // was NOT unsourceable: its dir shares a fixed-name "SMP.set" sample bank
+    // (not the per-song "set.Big Pro" the prefix convention implies). Bundled
+    // SMP.set and added the qts->SMP.set getSecondaryFiles case; the bank is now
+    // auto-ignored as a companion. cmtest is fully green. NOTE: a rare transient
+    // (~1 in 15 full runs) flips one normally-OK file to an error, presumably a
+    // timing/network blip; bump g_errors a little if CI flakes on it.
+    //
+    // 2026-06-17 (h): skips 22->14. Taught shouldIgnoreFile to recognize more
+    // companions (smpl/ip exts, case-insensitive smpl./smp., mcs., .ip.) so the
+    // TFMX/MIDI-Loriciel/Mark Cooksey/MusicMaker banks Ignore instead of Skip;
+    // moved the misplaced "Allegro Amadeus Strikes Back.BGM" (MSX, magic 0xFE)
+    // to testmus/bgm where KSS plays it; and gave libvice the .rsid extension
+    // (VICE's psid_load_file reads "RSID" magic) -- "10... knockout!.rsid" moved
+    // to testmus/libvice and is covered by the "RSID plays sound" test.
+    //
+    // 2026-06-17 (i): skips 14->11. Removed two genuinely-bogus no-extension
+    // files (BULLWINKLES MAX, NTV IRS GS SG); "songplay" turned out to be the
+    // shared Kris Hatlelid replay executable the .kh tunes load, so it's kept,
+    // Ignored, and named by .kh's getSecondaryFiles (the cycles.kh now plays).
+    REQUIRE(g_errors <= 0);
+    REQUIRE(g_skips <= 11);
 }

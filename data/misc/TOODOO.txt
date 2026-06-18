@@ -17,29 +17,9 @@ Also look at the zx repositories below, maybe someone already did this.
  - option b: use filter
  - option c (i think the best): augment search deduping to also remove the non-supported results from the search
 
-CMTEST FALLOUT:
-
-- cmtest/UADE error left to investigate, only 1:
-*** qts.Big Pro	Quartet ST	Needs a set.Big Pro sample bank that isn't on modland anywhere — unsourceable companion.
-qts.Big Pro — Quartet ST, sample bank not on modland anywhere (NO SOUND). our QuartetPlugin handles Amiga .4v, not Atari-ST .qts, so no reroute. Bad rip or eagleplayer bug.
-
-- These are single-file "score died" or odd cases with no companion to bundle — need real eagleplayer A/B debugging:
-	
-	-- Deferred (genuine single-file "score died" — no companion, no routing fix)
-	* sdr.monsterbusiness 1 (Synth Dream) — modland dir has only sdr.*, no companion. Bad rip or eagleplayer bug.
-	* sjs.rudi (SoundPlayer) — SoundPlayer is single-file (dir has only sjs.*). Same.
-	
-	-- NO SOUND: batmanreturns.dsr
-
-	-- best of guitars.sdata (MusicMaker V8): multi-companion (.ip + .ip.l + .ip.n) with a naming scheme the current fmt_2files prefix logic doesn't fit — needs a small loader/secondary-file extension.
-Recommendation: leave best of guitars.sdata in the needs-research bucket. If you want, I can do the focused experiment next (temporarily route .sdata→8V and A/B it, and check whether it's the lone V8 .sdata outlier) — but that's a deliberate eagleplayer investigation
-
-	-- aquatic games.sng remains in the needs-research bucket (Amiga RJP — likely a missing .ins companion that may not be on modland, or a bad rip).
-
-** ALL SKIPS were investigated and here is the outcome:
-
-.lem, .fmk, .sig, AdLib .fmt (+cal/dtl/d01/edl/fmf/vib): Not fixable via AdPlug. Tested by claiming the extensions — AdPlug's factory throws/ignores them. They're modland "Ad Lib" formats genuinely outside AdPlug's repertoire. Correct skips.
-.dmw "Perfume": Not UADE — it's Deflemask (modland Deflemask/DevEd/perfume.dmw). No open decoder, correct skip.
+- additional unsupported AD-LIB formats:
+  .fmt (? songs 10 in UNION so less than 10) -- overlapping format, openmpt version works, the adlib one doesn't
+  .dmw (1 song: perfume.dmw which is the test song as well)
 
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
@@ -299,7 +279,7 @@ MUS	78 -- NO unsupported
 MUS (uppercase) = FAC SoundTracker — an MSX BSAVE PSG format (magic 0xFE), not the lowercase libvice/SID .mus (which plays). It has no replayer in the stack; UADEPlugin::canHandle deliberately declines it via the isMsxBsave content-check (UADEPlugin.cpp:333) to stop UADE crash-claiming it. This matches the known "future = libkss fac2kss converter" item. In the GUI a FAC .MUS is safely skipped, not played.
 The one open replayer, fcatrin/fstr (MIT), is unusable for porting — x86 real-mode asm targeting AdLib OPL2 (wrong chip, not portable C). 
 
-tfe (77), bbsong (76)
+tfe (77), bbsong (76, engine 'SVG' not supported, the others are)
 
 smus	72 -- FIXED! (folder of instruments 2ndary fetch was needed) lots of work!
 
@@ -674,10 +654,9 @@ t0ast	8
 ftf	8
 trk	8
 
--------------------------------
--- not triaged below ----------
--------------------------------
-the counts are too small, opportunistic fixes...
+
+
+---in progress:---
 
 xms	6
 sqx	6
@@ -690,8 +669,12 @@ fp	6
 core	6
 cff	6
 
----------------
 
+
+--------------------------------------
+----- mostly not triaged below -------
+--------------------------------------
+the counts are too small, opportunistic fixes...
 
 zip	5
 syn	5
@@ -708,7 +691,7 @@ xsm	4
 tf2m	4
 tf2i	4
 snk	4
-sig	4
+sig	4 -- fails in cmtest, unsupported adlib format
 riff	4
 mso	4
 mini2sf	4
@@ -720,7 +703,7 @@ aam	4
 svar	3
 psa	3
 lme	3
-lem	3
+lem	3 -- fails in cmtest, unsupported adlib format
 is	3
 hd	3
 ea	3
