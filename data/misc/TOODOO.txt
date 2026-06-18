@@ -3,7 +3,6 @@
 ******************************************************
 
 - UADE errors left to investigate:
-* forgotten worlds intro.fw	ForgottenWorlds_Game (FWMP magic)	Player exists, file is self-contained — runs but emits silence.
 * batmanreturns.dsr	Desire	Self-contained, player runs but silent.
 cyf-3-final-2.puma	PumaTracker	Self-contained tracker; player runs silent (not a missing-companion issue).
 * andreab.ftm	Face The Music (FTMN)	No UADE player exists for it (Atari ST format) → hard FAILED. Would need a separate decoder.
@@ -763,3 +762,5 @@ Listed in UADE supported_ext but UADE has no player at all (no conf prefix, no a
 
 670	7 -- NO.. The modland .670 files have a completely different on-disk layout: a tiny header (byte0 = speed, a few bytes) followed by a 32-bit pattern-offset table at ~0x24. sampleNames[0][12] is non-zero binary, so c67's ValidateHeader bails instantly.
 So these modland files are a different (packed?) CDFM variant than the one OpenMPT supports — and upstream OpenMPT 0.8.7 would reject them too (the c67 spec hasn't changed). No other vendored engine handles it either (AdPlug's CdfmLoader is the unrelated "Digital-FM" .dfm).
+
+5 .fw	NO ForgottenWorlds_Game (FWMP magic)	Player exists, file is self-contained — runs but emits silence.

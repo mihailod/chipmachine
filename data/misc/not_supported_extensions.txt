@@ -114,3 +114,13 @@
 # the native format. UADEPlugin::canHandle declines it (isAllSoundTrackerNative)
 # so those files Skip cleanly instead of false-positiving as a silent "ok". Re-open
 # if a player for the "AST 00xx" native format lands.
+
+# forgotten worlds game music (.fw, magic "FWMP", modland "Forgotten Worlds/
+# Mark Cooksey", ARC Developments / adapted by Psygore). NOTE: no bare ".fw"
+# line -- UADE has a ForgottenWorlds_Game eagleplayer (prefix fw) that LOADS and
+# runs, but it emits pure silence on all five modland tunes. Verified against
+# upstream uade123 3.05: every .fw renders as silence (peak 0/0) while a TFMX
+# module renders loud, so this is a player bug in UADE itself, not our wiring,
+# and is unfixable without RE-patching the player binary. UADEPlugin::canHandle
+# declines the FWMP magic (isForgottenWorlds) so they Skip cleanly instead of
+# reporting NO SOUND. Re-open if a working ForgottenWorlds player lands upstream.
