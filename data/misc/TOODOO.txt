@@ -2,6 +2,14 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
+- UADE errors left to investigate:
+* forgotten worlds intro.fw	ForgottenWorlds_Game (FWMP magic)	Player exists, file is self-contained — runs but emits silence.
+* batmanreturns.dsr	Desire	Self-contained, player runs but silent.
+cyf-3-final-2.puma	PumaTracker	Self-contained tracker; player runs silent (not a missing-companion issue).
+* andreab.ftm	Face The Music (FTMN)	No UADE player exists for it (Atari ST format) → hard FAILED. Would need a separate decoder.
+* qts.Big Pro	Quartet ST	Needs a set.Big Pro sample bank that isn't on modland anywhere — unsourceable companion.
+* fiendish freddys - songs.kh	KrisHatlelid (Amiga hunk-exe rip, 0x000003f3)	Self-contained exe rip, player runs silent.
+
 - ability to manually add stuff to database. via a manual.txt file
 
 - ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
