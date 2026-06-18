@@ -2,13 +2,6 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-- is this expected:
-[RemoteLoader.cpp:77] Local path: /opt/Music/asma/Games/Zone_X.sap
-[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/http%3a%2f%2fasma.atari.org%2fasma%2fGames/Zone_X.sap
-[RemoteLoader.cpp:90] CODE -1
-[MusicPlayerList.cpp:551] Detected ext: 
-MusicPlayer: Plugin 'Game Music Engine' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/http%3a%2f%2fasma.atari.org%2fasma%2fGames/Zone_X.sap'. Error: Could not load GME music: Digimusic not supported
-
 - ability to manually add stuff to database. via a manual.txt file
 
 - ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.

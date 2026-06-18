@@ -1762,6 +1762,41 @@ TEST_CASE("UADE ast routing", "[music]")
     REQUIRE(plugin.canHandle((tmp / "astrt_no_such.ast").string()));
 }
 TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmus/pn", ""); }
+// SAP type routing. GME's Sap_Emu plays only register types B and C; Digimusic
+// ('D') and other player types fail to load there ("Digimusic not supported").
+// Those route to the ASAP-based PokeyNoise plugin instead. The two plugins gate
+// on the SAP TYPE tag so they stay mutually exclusive regardless of order.
+TEST_CASE("SAP type routing", "[music]")
+{
+    musix::GMEPlugin gme;
+    musix::PokeyNoisePlugin asap;
+
+    // Type B / C: GME owns them, PokeyNoise declines.
+    for (auto const& bc : {"testmus/gme/deadline.sap",     // TYPE B
+                           "testmus/gme/Alchemia.sap"}) {  // TYPE C
+        REQUIRE(gme.canHandle(bc));
+        REQUIRE_FALSE(asap.canHandle(bc));
+    }
+
+    // Type D (Digimusic): GME declines, PokeyNoise claims and plays it.
+    std::string const digi = "testmus/pn/Zone_X.sap";
+    REQUIRE_FALSE(gme.canHandle(digi));
+    REQUIRE(asap.canHandle(digi));
+
+    auto* player = asap.fromFile(digi);
+    REQUIRE(player != nullptr);
+    std::array<int16_t, 8192> buffer;
+    int64_t sum = 0;
+    for (int count = 50; sum == 0 && count != 0; count--) {
+        int rc = player->getSamples(&buffer[0], buffer.size());
+        if (rc <= 0) break;
+        for (int i = 0; i < rc; ++i) {
+            if (buffer[i] != 0) { sum = 1; break; }
+        }
+    }
+    delete player;
+    REQUIRE(sum != 0);
+}
 // Monotone (.mon) -- PC-speaker tracker by Trixter/Hornet, played by the
 // vendored PTPlayer. The extension collides with UADE's Maniacs of Noise; the
 // Monotone-magic gate keeps the two apart.
