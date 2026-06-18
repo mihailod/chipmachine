@@ -2,16 +2,6 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-- UADE errors left to investigate:
-
-What's left — just 2, both genuine dead-ends
-* andreab.ftm	Face The Music (FTMN)	No UADE player exists for it (Atari ST format) → hard FAILED. Would need a separate decoder.
-andreab.ftm — Face The Music, no UADE replayer exists at all (FAILED).
-
-* qts.Big Pro	Quartet ST	Needs a set.Big Pro sample bank that isn't on modland anywhere — unsourceable companion.
-qts.Big Pro — Quartet ST, sample bank not on modland anywhere (NO SOUND).
-
-
 - ability to manually add stuff to database. via a manual.txt file
 
 - ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
@@ -27,14 +17,22 @@ Also look at the zx repositories below, maybe someone already did this.
  - option b: use filter
  - option c (i think the best): augment search deduping to also remove the non-supported results from the search
 
+CMTEST FALLOUT:
+
+- UADE errors left to investigate:
+What's left — just 2, both genuine dead-ends
+*** andreab.ftm	Face The Music (FTMN)	No UADE player exists for it (Atari ST format) → hard FAILED. Would need a separate decoder.
+andreab.ftm — Face The Music, no UADE replayer exists at all (FAILED).
+*** qts.Big Pro	Quartet ST	Needs a set.Big Pro sample bank that isn't on modland anywhere — unsourceable companion.
+qts.Big Pro — Quartet ST, sample bank not on modland anywhere (NO SOUND). our QuartetPlugin handles Amiga .4v, not Atari-ST .qts, so no reroute. Bad rip or eagleplayer bug.
+
 - These are single-file "score died" or odd cases with no companion to bundle — need real eagleplayer A/B debugging:
 	
 	-- Deferred (genuine single-file "score died" — no companion, no routing fix)
 	* sdr.monsterbusiness 1 (Synth Dream) — modland dir has only sdr.*, no companion. Bad rip or eagleplayer bug.
 	* sjs.rudi (SoundPlayer) — SoundPlayer is single-file (dir has only sjs.*). Same.
-	* qts.Big Pro (Quartet ST) — single file; our QuartetPlugin handles Amiga .4v, not Atari-ST .qts, so no reroute. Bad rip or eagleplayer bug.
 	
-	-- NO SOUND: batmanreturns.dsr, bombjack.jmf, cyf-3-final-2.puma
+	-- NO SOUND: batmanreturns.dsr
 
 	-- best of guitars.sdata (MusicMaker V8): multi-companion (.ip + .ip.l + .ip.n) with a naming scheme the current fmt_2files prefix logic doesn't fit — needs a small loader/secondary-file extension.
 Recommendation: leave best of guitars.sdata in the needs-research bucket. If you want, I can do the focused experiment next (temporarily route .sdata→8V and A/B it, and check whether it's the lone V8 .sdata outlier) — but that's a deliberate eagleplayer investigation
