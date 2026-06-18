@@ -108,6 +108,8 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
                          sol::state& _lua)
     : workDir(wd), remoteLoader(rl), player(mpl), musicDatabase(mdb), lua(_lua),
       currentScreen(MAIN_SCREEN), eq(SpectrumAnalyzer::eq_slots),
+      eqLeft(SpectrumAnalyzer::eq_slots), eqRight(SpectrumAnalyzer::eq_slots),
+      eqMono(SpectrumAnalyzer::eq_slots),
       starEffect(screen), scrollEffect(screen)
 {
     isShuttingDown = false; // Safe initialization state
@@ -190,7 +192,8 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
             }
         });
 
-    musicBars.setup(spectrumWidth, spectrumHeight);
+    musicBarsWidth = spectrumWidth;
+    musicBars.setup(musicBarsWidth, spectrumHeight);
 
     LOGD("WORKDIR %s", workDir.string());
     musicDatabase.initFromLuaAsync(this->workDir);
@@ -366,7 +369,8 @@ void ChipMachine::layoutScreen()
 
     starEffect.resize(screen.width(), screen.height());
     scrollEffect.resize(screen.width(), 300);
-    musicBars.setup(spectrumWidth, spectrumHeight);
+    musicBarsWidth = stereoSpectrum ? spectrumWidth : spectrumWidth * 2;
+    musicBars.setup(musicBarsWidth, spectrumHeight);
     updateScreenshotArea();
 
     searchField.setFont(font);
@@ -732,12 +736,18 @@ void ChipMachine::update()
     }
 
     if (!player.isPaused()) {
-        for (auto& e : eq) {
-            if (e >= 4 * 4)
-                e -= 2 * 4;
-            else
-                e = 2 * 4;
-        }
+        auto decayEq = [](std::vector<uint8_t>& values) {
+            for (auto& e : values) {
+                if (e >= 4 * 4)
+                    e -= 2 * 4;
+                else
+                    e = 2 * 4;
+            }
+        };
+        decayEq(eq);
+        decayEq(eqLeft);
+        decayEq(eqRight);
+        decayEq(eqMono);
     }
 
     if (player.isPlaying()) {
@@ -746,15 +756,22 @@ void ChipMachine::update()
             while (fft.size() > delay + 4) {
                 fft.popLevels();
             }
-            spectrum = fft.getLevels();
+            spectrum = fft.getStereoLevels();
             fft.popLevels();
         }
         for (auto i : utils::count_to(fft.eq_slots)) {
-            if (spectrum[i] > 5) {
-                auto f = static_cast<unsigned>(logf(spectrum[i]) * 64);
-                if (f > 255) f = 255;
-                if (f > eq[i]) eq[i] = static_cast<uint8_t>(f);
-            }
+            auto updateEq = [](uint16_t source, uint8_t& target) {
+                if (source > 5) {
+                    auto f = static_cast<unsigned>(logf(source) * 64);
+                    if (f > 255) f = 255;
+                    if (f > target) target = static_cast<uint8_t>(f);
+                }
+            };
+
+            updateEq(spectrum.left[i], eqLeft[i]);
+            updateEq(spectrum.right[i], eqRight[i]);
+            updateEq((spectrum.left[i] + spectrum.right[i]) / 2, eqMono[i]);
+            eq[i] = eqMono[i];
         }
     }
     bool busy = (playerState == MusicPlayerList::Loading || webutils::Web::inProgress() > 0);
@@ -821,8 +838,27 @@ void ChipMachine::render(uint32_t delta)
 
     if (playerState == MusicPlayerList::Stopped || playerState == MusicPlayerList::Error) {
         std::fill(eq.begin(), eq.end(), 0);
+        std::fill(eqLeft.begin(), eqLeft.end(), 0);
+        std::fill(eqRight.begin(), eqRight.end(), 0);
+        std::fill(eqMono.begin(), eqMono.end(), 0);
     }
-    musicBars.render(spectrumPos, spectrumColor, eq);
+
+    int targetMusicBarsWidth = stereoSpectrum ? spectrumWidth : spectrumWidth * 2;
+    if (musicBarsWidth != targetMusicBarsWidth) {
+        musicBarsWidth = targetMusicBarsWidth;
+        musicBars.setup(musicBarsWidth, spectrumHeight);
+    }
+
+    if (stereoSpectrum) {
+        musicBars.render(spectrumPos, spectrumColor, eqLeft);
+        utils::vec2i rightSpectrumPos = {
+            spectrumPos.x + spectrumWidth * SpectrumAnalyzer::eq_slots + spectrumGap,
+            spectrumPos.y
+        };
+        musicBars.render(rightSpectrumPos, spectrumColor, eqRight);
+    } else {
+        musicBars.render(spectrumPos, spectrumColor, eqMono);
+    }
 
     if (starsOn) starEffect.render(delta);
     scrollEffect.render(delta);
@@ -847,4 +883,3 @@ void ChipMachine::render(uint32_t delta)
     webutils::Web::pollAll();
 }
 } // namespace chipmachine
-

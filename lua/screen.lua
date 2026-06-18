@@ -66,8 +66,10 @@ Settings.xinfo_field = { X0 - 4, SY + 35 * GSCALE, GSCALE * 0.75, 0xffffffff }
 Settings.favicon = { X0 + 330 * GSCALE, SY - GSCALE*25, 8*8 * GSCALE, 8*6 * GSCALE }
 
 EQ_SLOTS = 24
-SPECW = SCREEN_WIDTH / EQ_SLOTS
-SPECH = SPECW * 3.5
+SPECTRUM_GAP = 4
+MONO_SPECW = SCREEN_WIDTH / EQ_SLOTS
+SPECW = (SCREEN_WIDTH - SPECTRUM_GAP) / (EQ_SLOTS * 2)
+SPECH = MONO_SPECW * 3.5
 
 if TV then
   Settings.scroll = { Y1 - 100, GSCALE * 2.0, SCROLL_SPEED, "data/Bello.otf" }

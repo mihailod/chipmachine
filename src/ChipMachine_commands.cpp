@@ -13,6 +13,12 @@ void ChipMachine::setupCommands()
         commands.emplace_back(name, f);
     };
 
+    cmd("Stereo/Mono_Spectrum_Analyzer", [=] {
+        stereoSpectrum = !stereoSpectrum;
+        musicBarsWidth = stereoSpectrum ? spectrumWidth : spectrumWidth * 2;
+        musicBars.setup(musicBarsWidth, spectrumHeight);
+    });
+
     cmd("show_main", [=] { showScreen(MAIN_SCREEN); });
 
     cmd("show_search", [=]() {

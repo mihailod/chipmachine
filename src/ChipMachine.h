@@ -246,8 +246,14 @@ private:
     int spectrumWidth = 24;
     utils::vec2i spectrumPos;
     std::vector<uint8_t> eq;
+    std::vector<uint8_t> eqLeft;
+    std::vector<uint8_t> eqRight;
+    std::vector<uint8_t> eqMono;
     SpectrumAnalyzer fft;
-    std::array<uint16_t, SpectrumAnalyzer::eq_slots> spectrum;
+    SpectrumAnalyzer::StereoLevels spectrum;
+    bool stereoSpectrum = true;
+    int spectrumGap = 4;
+    int musicBarsWidth = 0;
 
     uint32_t bgcolor = 0;
     bool starsOn = true;
@@ -390,4 +396,3 @@ private:
     std::atomic<bool> isShuttingDown{false};
 };
 } // namespace chipmachine
-
