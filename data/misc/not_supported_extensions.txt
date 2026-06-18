@@ -22,6 +22,16 @@
 # targeting AdLib OPL2 (wrong chip, not portable C). 
 # commented but documented due to .mus lowercase clash
 
+# axs softsynth/tracker (resolution audio, www.resolutionaudio.nl; closed
+# commercial DOS 2.x + Win32 3.x, freeware since 2001). IFF container
+# "FORM <size> AXSF" with USER/SHDR/SONG/BLOK/TRAK/INST/INNM chunks. The
+# sequencer/pattern data is parseable, but the INST chunks are SYNTH PATCHES
+# (a Roland JP8000-style softsynth model) -- there is NO sample/PCM data in the
+# file, so voices come entirely from the closed built-in DSP engine. No open
+# replayer anywhere (UADE/OpenMPT/libxmp/ZXTune/rePlayer); playback needs full
+# RE of the win32/dos synth. Same dead-end as .psy/.sn. ~22 tunes on modland.
+.axs
+
 # atari falcon ace tracker -- only falcon or port whole emulator
 .am
 
@@ -45,6 +55,27 @@
 .spm
 .sps
 
+# dux (amiga). Was listed in UADE supported_ext but UADE has NO player for it --
+# no eagleplayer.conf prefix, no amifilemagic content detection, no player binary
+# anywhere in the vendored 3.05 tree. Every .dux module therefore just FAILED
+# ("score died"). No open replayer found (UADE/rePlayer/libxmp/OpenMPT none).
+# Removed from supported_ext so they Skip instead of hard-FAIL. Re-open if a dux
+# eagleplayer lands upstream.
+.dux
+
+# 670 (modland "Composer 670 (CDFM)", 7 tunes). Looks like it should map to
+# libopenmpt's c67 loader ("CDFM / Composer 670"), but the modland .670 files are
+# a DIFFERENT on-disk layout (tiny header byte0=speed 1-15, then a 32-bit
+# pattern-offset table) that Load_c67's ValidateHeader rejects -- it expects the
+# unpacked 1954-byte named header (32 sample names + 32 FM-instr names + 256
+# orders). Verified: all 3 sampled tunes (amnesia - intro / black glass ][ -
+# muzik1 / amnesia - shaded vectors) fail openmpt_module_create_from_memory ->
+# "error loading file". No vendored engine decodes this packed CDFM variant
+# (AdPlug's CdfmLoader is the unrelated "Digital-FM" .dfm). NOT claimed by OpenMPT
+# so it Skips instead of throwing a load EXCEPTION. Re-open if a CDFM/Composer 670
+# depacker or matching loader lands.
+.670
+
 # Skale Tracker for PC by Baktery: No open replayer and no public spec exist
 .skm
 
@@ -53,3 +84,33 @@
 # and a native plugin would need full RE of the .ct->SID packer. Low value: the
 # composers' own packed SIDs are already in HVSC and play via the sidplugin.
 .ct
+
+# POLYTONE (.pol, prochazkaml) -- the PC-speaker sibling of MONOTONE played by
+# the same PTPlayer. Support was dropped from the monotone plugin: the only
+# public sample (PTPlayer's jakim.pol) is format version 2, while both our
+# vendored engine and current upstream PTPlayer only parse version 1
+# ("\x08POLYTONE\x01"). With no playable v1 fixture, .pol is documented here
+# rather than advertised. Re-add to monotoneplugin supported_ext if v2 lands.
+.pol
+
+# game boy tracker / paragon 5 (s.hockenhull). .mgb = the editor's serialized
+# project file ("GameBoy Music Module" tagged tree), NOT a gb rom -- so GME's
+# game boy emu can't run it directly. Only the closed pt.exe reads .mgb; the
+# open replayer (gbdev/GBSoundSystem) consumes the tracker's EXPORTED .z80/.inc
+# driver data, not raw .mgb. No portable open parser anywhere (UADE/OpenMPT/
+# libxmp/ZXTune/rePlayer/GME/vgmstream). RE-prototyped: container + note stream
+# are decodable (plain binary, not compressed) but full support = leaf decode ->
+# driver data -> RGBDS harness rom -> GME, with no headless reference to validate
+# against the closed gui. Parked. Re-open if a portable .mgb player lands.
+.mgb
+
+# all sound tracker (.ast, modland "All Sound Tracker"). NOTE: .ast is shared and
+# NOT fully unsupported -- UADE's "ActionAmics" eagleplayer plays the V0.1 binary
+# replay dumps (pointer table + "ACTIONAMICS SOUND TOOL V0.1", e.g. dynablaster.ast),
+# so no bare ".ast" line here. But the modland corpus is the tracker's NATIVE
+# versioned save format (Pascal-string magic \x08"AST 00xx": "AST 0001","AST 0032"
+# ...), a different layout the V0.1 testversion player cannot parse -- it loads,
+# runs and emits silence while UADE reports success. No open replayer exists for
+# the native format. UADEPlugin::canHandle declines it (isAllSoundTrackerNative)
+# so those files Skip cleanly instead of false-positiving as a silent "ok". Re-open
+# if a player for the "AST 00xx" native format lands.

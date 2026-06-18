@@ -4,7 +4,20 @@
   <img src="https://img.shields.io/github/downloads/mihailod/chipmachine/total?label=Total%20Downloads" alt="Total Downloads">
 </div>
 
-**Port of ChipMachine for Apple Silicon.**
+**Port of ChipMachine for Apple Silicon**
+
+But this is far more than a simple port!
+
+While ensuring the player runs on modern Apple hardware, my passion for it has expanded its compatibility and scale:
+
+* 50+ Plugins: Supporting over 300 retro and chip music formats
+* Massive Index: Currently approaching 500,000 indexed tracks
+
+The Roadmap
+
+The mission statement: implement every viable format and index every known retro/chip music database in existence.
+
+Despite the massive expansion under the hood, the core experience remains untouched: instant, incremental autocomplete search across the entire global library, delivering zero-latency playback from a single, unified interface.
 
 [![Screenshot](data/misc/screen.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
 
@@ -75,6 +88,9 @@ git clone https://github.com/mihailod/audiodecoder.wsr.git audiodecoderwsr
 git clone https://github.com/mihailod/protrekkr.git
 git clone https://github.com/mihailod/soundsmith.git
 git clone https://github.com/mihailod/arkostracker3.git
+git clone https://github.com/mihailod/playerpro.git
+git clone https://github.com/mihailod/jaytrax.git
+git clone https://github.com/mihailod/webixs.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
@@ -152,11 +168,13 @@ Support for PC and Amiga tracker formats
 * ProTracker, ScreamTracker III, FastTracker II, Impulse Tracker, OpenMPT, ScreamTracker II, NoiseTracker, Soundtracker, Mod's Grave, UltraTracker, Composer 669 / UNIS 669, MultiTracker, OctaMed, Farandole Composer, DigiTracker, Extreme's Tracker, Velvet Studio, DSIK Format, DSMI, ASYLUM, Oktalyzer, X-Tracker, PolyTracker, Epic Megagames, MASI, MadTracker 2, DigiBooster Pro, DigiBooster, Imago Orpheus, Galaxy Sound System
 * **New with the 0.8.7 upgrade:** Symphonie / Symphonie Pro (Amiga "pseudo-DAW" with software mixer + real-time echo DSP), Digital Symphony, Face The Music, Graoumf Tracker 1 & 2, TCB Tracker, Real Tracker, Astroidea XMF, Composer 667, EasyTrax, FM Tracker, CBA
 
-Extensions: `.mod` `.xm` `.it` `.s3m` `.mptm` `.stm` `.nst` `.m15` `.stk` `.wow` `.ult` `.669` `.mtm` `.med` `.far` `.mdl` `.ams` `.dsm` `.amf` `.okt` `.dmf` `.mt2` `.dbm` `.digi` `.imf` `.j2b` `.gdm` `.umx` `.mo3` `.symmod` `.dsym` `.ftm` `.gt2` `.gtk` `.tcb` `.rtm` `.xmf` `.667` `.etx` `.fmt` `.cba` `.c67` `.fst` `.ice` `.mmcmp` `.mms` `.mus` `.oxm` `.plm` `.ppm` `.psm` `.pt36` `.ptm` `.sfx` `.sfx2` `.stp` `.stx` `.xpk`
+Extensions: `.mod` `.xm` `.it` `.s3m` `.mptm` `.stm` `.nst` `.m15` `.stk` `.wow` `.ult` `.669` `.mtm` `.med` `.far` `.mdl` `.ams` `.dsm` `.amf` `.okt` `.omf` `.dmf` `.mt2` `.dbm` `.digi` `.imf` `.j2b` `.gdm` `.umx` `.mo3` `.symmod` `.dsym` `.ftm` `.gt2` `.gtk` `.tcb` `.rtm` `.xmf` `.667` `.etx` `.fmt` `.cba` `.c67` `.fst` `.ice` `.mmcmp` `.mms` `.mus` `.oxm` `.plm` `.ppm` `.psm` `.pt36` `.ptm` `.sfx` `.sfx2` `.stp` `.stx` `.xpk`
 
 (`.mus`, `.psm` and `.stp` are shared extensions: libopenmpt claims them, but a SID `.mus` falls through to libvice, a ZX `.psm`/`.stp` to ZXTune/Ayfly — routing is by content.)
 
 > Note: `.dsm` covers three unrelated DSIK/Dynamic-Studio variants. libopenmpt natively plays the newer DSIK "RIFF" format (`RIFF…DSMF`) and Dynamic Studio (`DSm`), but not the original DSIK "old" Internal Format (`DSM` + 0x10, e.g. the Necros tunes). Support for that v1 variant was added in a local patch to the vendored libopenmpt `Load_dsm.cpp`, with the loader adapted from MilkyTracker's `LoaderDSMv1` (BSD-3-Clause).
+
+> Note: `.omf` (**Onyx Music File**) is a MOD-like Amiga format from the 1993 musicdisk *Jangle* by Onyx (the modland `Onyx Music File/` corpus, 24 tunes). It never had a standalone replayer — the tunes were only playable through the original musicdisk executable. Playback reuses libopenmpt's existing MOD engine.
 
 > Note: some Amiga formats libopenmpt can also decode (Future Composer, Puma, Game Music Creator, Images Music System, etc.) are intentionally routed to the **UADE** plugin instead, which uses the original 68k replayers — see the UADE section below.
 
@@ -186,9 +204,8 @@ Support for various 8 bit console music
 
 Extensions: `.spc` `.nsf` `.nsfe` `.gbs` `.gbr` `.ay` `.gym` `.sap` `.vgm` `.vgz` `.hes` `.kss` `.sgc` `.emul`
 
-> `.gbr` is the older Game Boy rip format (predecessor of `.gbs`); it is decoded
-> by the same Game Boy emulator after rewriting its 32-byte header into the GBS
-> form. GBR carries no "first song" field and many rips keep a silent stop-track
+> `.gbr` is the older Game Boy rip format (predecessor of `.gbs`).
+> GBR carries no "first song" field and many rips keep a silent stop-track
 > at song 0 — use the subsong controls if a tune starts silent.
 
 ### SC68
@@ -291,7 +308,7 @@ Extensions: `.rsn` `.rps` `.rdc` `.rds` `.rgs` `.r64`
 
 Support for various ZX Spectrum formats, including **Fuxoft AY Language** (`.fxm`) — František Fuka's compiled AY music format ("FXSM" files). The `.fxm` player is a C++ transliteration of the Fuxoft routines in Sergey Bulba's AY_Emul (the same lineage as the rest of the Ayfly engine); a 64K Spectrum image is rebuilt from the file's origin address and the interpreter runs over it exactly as the original Z80 playroutine does.
 
-Also **AY Amadeus** (`.amad`) — ZX Spectrum AY tunes by František Fuka (Fuxoft) and Patrik Rak, stored in the `ZXAY` container with the `AMAD` type tag. Per AY_Emul, the `AMAD` type is the direct analog of FXM: the same playroutine drives both, so `.amad` reuses the `.fxm` engine. The container wrapper (`AMADPlay.h`) extracts the load origin, the per-file noise mask and the module body, builds the 64K image and plays it exactly as for `.fxm`.
+Also **AY Amadeus** (`.amad`) — ZX Spectrum AY tunes by František Fuka (Fuxoft) and Patrik Rak, stored in the `ZXAY` container with the `AMAD` type tag.
 
 Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2` `.pt3` `.vtx` `.vt2` `.zxs` `.st13` `.fxm` `.amad`
 
@@ -375,7 +392,7 @@ Extensions: `.bbsong`
 
 ### SoundSmith (Apple IIgs)
 
-Support for Apple IIgs SoundSmith music (Huibert Aalbers, 1989) — the dominant IIgs tracker, driving the legendary Ensoniq 5503 "DOC" 32-oscillator chip. The DOC is emulated in-process (a faithful port of Sean Kasun's BSD-licensed player, vendored at repo-root `soundsmith/`), rendering at the chip's native 26320 Hz.
+Support for Apple IIgs SoundSmith music (Huibert Aalbers, 1989) — the dominant IIgs tracker, driving the legendary Ensoniq 5503 "DOC" 32-oscillator chip. The DOC is emulated in-process (a faithful port of Sean Kasun's BSD-licensed player, rendering at the chip's native 26320 Hz.
 
 Extensions: bare song name + `.W` (wavebank)
 
@@ -387,7 +404,7 @@ Extensions: `.musx`
 
 ### Coconizer
 
-Support for **Coconizer**, a sample-based Acorn Archimedes music format (the same VIDC-era family as Archimedes Tracker), via the libxmp `coco_loader`. The plugin reuses the libxmp slice already compiled for Archimedes Tracker rather than building a second copy.
+Support for **Coconizer**, a sample-based Acorn Archimedes music format (the same VIDC-era family as Archimedes Tracker).
 
 Extensions: `.coco`
 
@@ -411,27 +428,33 @@ Extensions: `.ned`
 
 ### SCC-Musixx (MSX)
 
-Support for **SCC-Musixx**, Tyfoon-Software's 1990 tracker for Konami's SCC wavetable sound chip on the MSX — the chip behind Konami classics like Nemesis/Gradius, Salamander and King's Valley II. The original SCC-MUSIXX replay routine runs on an embedded Z80 core, with its SCC register writes driving the emu2212 SCC emulator.
+Support for **SCC-Musixx**, Tyfoon-Software's 1990 tracker for Konami's SCC wavetable sound chip on the MSX. The original SCC-MUSIXX replay routine runs on an embedded Z80 core, with its SCC register writes driving the emu2212 SCC emulator.
 
 Extensions: `.SNG`
 
 ### PlayerPRO (Macintosh)
 
-Support for **PlayerPRO**, Antoine Rosset's classic Macintosh tracker — the dominant Mac module editor of the 1990s. On Modland the whole `PlayerPro/` collection is Benjamin Birney's "mantra" game score in the older `MADG`/`MADF` module format. Played by a minimal slice of PlayerPRO's own public-domain "MADDriver" software synth (vendored at repo-root `playerpro/`), driven offline at 44100 Hz. The `.mad` extension is shared with AdPlug's unrelated Mad Tracker 2 loader, which is content-gated (magic `MAD+`) so PlayerPRO tunes route here.
+Support for **PlayerPRO**, Antoine Rosset's classic Macintosh tracker — the dominant Mac module editor of the 1990s. Played by a minimal slice of PlayerPRO's own public-domain "MADDriver" software synth, driven offline at 44100 Hz. The `.mad` extension is shared with AdPlug's unrelated Mad Tracker 2 loader, which is content-gated (magic `MAD+`) so PlayerPRO tunes route here.
 
 Extensions: `.mad` (`MADG`/`MADF`/`MADK`)
 
 ### JayTrax
 
-Support for **JayTrax** (`.jxs`), Reinier "Rhino" van Vliet's cross-platform software synthesizer + tracker (the engine began as *Mugician*; the desktop/PocketPC apps were *JayTrax* and *Syntrax*). Instruments are samples or synth waveforms shaped by AM/FM/pan/arpeggio modulators, mixed across up to six stereo channels with a stereo echo. Played in-process by the public C port of Rhino's own replayer (vendored at repo-root `jaytrax/`), rendering at 44100 Hz — not via UADE. Detection is by the 16-bit `mugiversion` tag (3456/3457); the format has no string magic. The replayer has no explicit upstream license; it was publicly released by the author and is reused by other players (kode54/foobar2000, rePlayer) — see `jaytrax/PROVENANCE.md`.
+Support for **JayTrax** (`.jxs`), Reinier "Rhino" van Vliet's cross-platform software synthesizer + tracker (the engine began as *Mugician*; the desktop/PocketPC apps were *JayTrax* and *Syntrax*). Instruments are samples or synth waveforms shaped by AM/FM/pan/arpeggio modulators, mixed across up to six stereo channels with a stereo echo. Played in-process by the public C port of Rhino's own replayer, rendering at 44100 Hz — not via UADE. The replayer has no explicit upstream license; it was publicly released by the author and is reused by other players (kode54/foobar2000, rePlayer) — see `jaytrax/PROVENANCE.md`.
 
 Extensions: `.jxs`
 
+### Ixalance
+
+Support for **Ixalance** (`.ixs`), an Impulse-Tracker-family format from the (defunct) Shortcut Software Development BV (~2000).
+
+Extensions: `.ixs`
+
 ### Monotone
 
-Support for **MONOTONE** (`.mon`), Jim "Trixter" Leonard / Hornet's PC-speaker tracker — up to a dozen square-wave tracks summed into the IBM PC's single 1-bit beeper. Played by the vendored **PTPlayer** library (prochazkaml), which unpacks the module and rebuilds each track's square wave at 44100 Hz; the related **Polytone** (`.pol`) format is read for free. The `.mon` extension is shared with UADE's Amiga *Maniacs of Noise* player, so both UADE and this plugin content-gate on the `\x08MONOTONE` magic — Amiga `.mon` modules stay with UADE, Monotone files route here. (Previously a Monotone file fed to the 68k Maniacs of Noise player crashed UADE with an illegal-instruction trap.)
+Support for **MONOTONE** (`.mon`), Jim "Trixter" Leonard / Hornet's PC-speaker tracker — up to a dozen square-wave tracks summed into the IBM PC's single 1-bit beeper. Played by the vendored **PTPlayer** library (prochazkaml), which unpacks the module and rebuilds each track's square wave at 44100 Hz. The `.mon` extension is shared with UADE's Amiga *Maniacs of Noise* player, so both UADE and this plugin content-gate on the `\x08MONOTONE` magic — Amiga `.mon` modules stay with UADE, Monotone files route here.
 
-Extensions: `.mon`, `.pol`
+Extensions: `.mon`
 
 ### MikMod UNITRK / UNIMOD
 
@@ -541,8 +564,10 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **SCC-Musixx (MSX):** SCC-Musixx and its `.SNG` format are by **Tyfoon-Software** (M. Spoor, 1990); the original "MUSIXX REPLAY ROUTINE v1.2" (`REPLAY.BIN`, freeware, distributed via the MSX Resource Center) is embedded and run unmodified. The Konami **SCC** sound chip is emulated by **emu2212** by Mitsutaka Okazaki (MIT, the same vendored copy used by libkss). The Z80 CPU core is GME's (Shay Green, LGPL-2.1).
 * **PlayerPRO (Macintosh):** PlayerPRO and its `MADG`/`MADF`/`MADK` module formats are by **Antoine Rosset**, who released the source to the **Public Domain**. Playback uses a minimal slice of PlayerPRO's own "MADDriver" software-synth engine (from the MaddTheSane/PlayerPRO mirror), vendored at repo-root `playerpro/` and driven offline in its `NoHardwareDriver` mode. The chipmachine-specific glue — a static loader registry replacing the dlopen scanner, inert stubs for the Mac CoreAudio/Finder entry points, and two small header patches — is documented in `playerpro/PROVENANCE.md`.
 * **DSIK "old" Internal Format (`.dsm` v1):** libopenmpt decodes the newer DSIK "RIFF" and Dynamic Studio `.dsm` variants but not the original DSIK Internal Format (`DSM` + 0x10, e.g. the Necros demoscene tunes). Support for that variant is a local patch to the vendored libopenmpt `Load_dsm.cpp`, with the loader adapted from **MilkyTracker**'s `LoaderDSMv1` (`milkyplay/LoaderDSM.cpp`) by the MilkyTracker Team. Playback itself reuses libopenmpt's existing DSIK engine. Licensed under BSD-3-Clause.
+* **Onyx Music File (`.omf`):** the MOD-like Amiga format of the 1993 Onyx musicdisk *Jangle* (modland `Onyx Music File/`, 24 tunes). No standalone replayer ever existed. Support is a chipmachine-local loader, `soundlib/Load_omf.cpp`, added to the vendored libopenmpt and written from the byte-level format specification reverse-engineered by **Martin Bazley** (*swirlythingy*) on 6 December 2009 (archived in modland's `documents/format_documentation/`). Playback reuses libopenmpt's existing MOD engine. Licensed under BSD-3-Clause (consistent with the surrounding libopenmpt soundlib).
 * **MONOTONE (IBM PC speaker):** MONOTONE and its `.mon` format are by Jim "Trixter" Leonard of Hornet. Playback uses **PTPlayer** by Michal Procházka — the player library for the modern *Polytone* tracker, which also loads legacy Monotone files (and the `.pol` format). Licensed under BSD-3-Clause.
 * **MikMod UNITRK / UNIMOD (`.uni`):** the UNIMOD on-disk format and its reader are part of **libmikmod**, originally by Jean-Paul Mikkers ("MikMak") and Jake Stine, maintained by the libmikmod team (Raphaël Assenat, Ozkan Sezer and others). A minimal slice of libmikmod 3.3.13 is vendored at `musicplayer/src/plugins/mikmodplugin/libmikmod/` (player core + virtual mixer + `load_uni` + depackers + null driver only). Licensed under LGPL-2.1-or-later. The vendored sources are unmodified; the chipmachine glue registers only the UNI loader and null driver and pulls PCM via the virtual mixer.
+* **Ixalance (`.ixs`):** the format and its original Win32 player are by **Shortcut Software Development BV** (~2000); the music is by **Maarten van Strien**. The original sources are lost, so playback uses **webixs** — Juergen Wothke's native C++ reimplementation reverse-engineered with Ghidra from the surviving Win32 player (`https://bitbucket.org/wothke/webixs`), vendored at repo-root `webixs/` and built with `-DLINUX` (the non-Win32 path) so its pull-style render API is exposed. The format synthesizes and zlib-compresses its own wavetables, hence the zlib dependency. **Licensed CC BY-NC-SA 4.0 (NonCommercial)** — the only NonCommercial component in the project; see `webixs/LICENSE`. (Built with `-fsigned-char`, like PlayerPRO, since the decompiled code relies on signed-char semantics.)
 
 ---
 

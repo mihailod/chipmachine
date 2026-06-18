@@ -133,6 +133,18 @@ Notice: libopenmpt does not decode the original DSIK Internal Format (magic
         the vendored libopenmpt soundlib/Load_dsm.cpp; playback reuses
         libopenmpt's existing DSIK engine.
 
+Component: Onyx Music File (.omf) loader
+Author: Loader by chipmachine, from the format specification reverse-engineered
+        by Martin Bazley ("swirlythingy"), 6 December 2009
+License: BSD-3-Clause
+Notice: Onyx Music File is the MOD-like format of the 1993 Amiga musicdisk
+        "Jangle" by Onyx (modland "Onyx Music File/", 24 tunes); no standalone
+        replayer ever existed. Support is a chipmachine-local loader,
+        soundlib/Load_omf.cpp, added to the vendored libopenmpt and written from
+        Martin Bazley's byte-level format specification (archived in modland's
+        documents/format_documentation/). Playback reuses libopenmpt's existing
+        MOD engine.
+
 Component: HivelyTracker (AHX/HVL)
 Author: Developed by IRIS (Peter "Yohng" V, Curt Cool)
 License: BSD-3-Clause
@@ -195,6 +207,17 @@ Author: Original tracker by Huibert Aalbers (1989); Ensoniq 5503 "DOC" player
         ported from the SoundSmith player by Sean Kasun (mrkite), vendored at
         repo-root soundsmith/.
 License: BSD 2-Clause License
+
+Component: Ixalance (.ixs synth tracker)
+Author: Original Win32 player and format by Shortcut Software Development BV
+        (~2000); music by Maarten van Strien. Played via "webixs", Juergen
+        Wothke's native C++ reimplementation reverse-engineered (Ghidra) from
+        the lost original (https://bitbucket.org/wothke/webixs), vendored at
+        repo-root webixs/.
+License: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International
+        (CC BY-NC-SA 4.0) -- see webixs/LICENSE. NOTE: this is the only
+        NonCommercial-licensed component; the player may not be used for
+        commercial purposes.
 
 Component: SunVox (Modular Synthesizer)
 Author: Developed by Alexander Zolotov (NightRadio)

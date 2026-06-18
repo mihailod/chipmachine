@@ -37,6 +37,12 @@ static int g_errors = 0; // red lines: FAILED / NO SOUND / EXCEPTION
 static int g_skips = 0;   // gray lines: Skipping (plugin can't handle)
 static int g_ok = 0;     // playback OK
 
+// Same tallies de-duplicated by extension: 5 .mod OKs count as one unique OK.
+// An extension can appear in more than one set (e.g. some .hsc play, some don't).
+static std::set<std::string> g_errorExts;
+static std::set<std::string> g_skipExts;
+static std::set<std::string> g_okExts;
+
 // Extensions that are truly impossible to support (per data/misc/
 // not_supported_extensions.txt). These are silently ignored everywhere -- no
 // testing, no Skipping warning, no missing-coverage report -- and listed once
@@ -59,6 +65,36 @@ static const std::set<std::string>& notSupportedExts()
         return s;
     }();
     return exts;
+}
+
+// Classification for files that are correctly skipped and shouldn't count
+// toward coverage tallies.
+// Category A: Companion/Support files (instruments, banks, libs).
+// Category B: Intentionally Unsupported or Negative Tests (Deflemask DMF, bad PSF).
+static bool shouldIgnoreFile(const std::string& name)
+{
+    static const std::set<std::string> ignoredExts = {
+        "ins", "bnk", "dat", "dtl", "edl", "fmf", "cal", "d01", "vib", "003",
+        "fmb", "pmb", "pvi", "mbk", "pdx", "gsflib", "2sflib", "qsflib",
+        "ssflib", "usflib", "psflib", "psf2lib", "opm", "ss", "instr", "inst",
+        "dsflib"
+    };
+    auto ext = utils::toLower(utils::path_extension(name));
+    if (ignoredExts.count(ext) > 0) return true;
+
+    // Specific patterns for Category B or multi-part extensions
+    if (name.find("smpl.") != std::string::npos) return true;
+    if (name.find("smp.") != std::string::npos) return true;
+    if (name.find(".adsc.as") != std::string::npos) return true;
+    if (name.find("sfx2.dmf") != std::string::npos) return true;
+    if (name.find("bad-magic-not-a-psf.psf") != std::string::npos) return true;
+
+    static const std::set<std::string> auxExts = {
+        "w", "md", "set"
+    };
+    if (auxExts.count(ext) > 0) return true;
+
+    return false;
 }
 
 TEST_CASE("modutils", "[machine]")
@@ -197,18 +233,36 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
             // so don't count it as a skip (would inflate the coverage gate).
             if (f.isDir()) continue;
 
-            if (exclude != "" && f.getName().find(exclude) != std::string::npos)
-                continue;
+            // `exclude` is a comma-separated list of substrings; skip the file if
+            // it matches ANY of them. (Lets a corpus exclude companion/sample
+            // files precisely -- e.g. ".smpl,smp." drops the TFMX/SoundMaster
+            // sample banks in testmus/uade without also hiding ".smpro" songs.)
+            if (exclude != "") {
+                bool excluded = false;
+                for (std::string pat : utils::split(exclude, ",")) {
+                    if (!pat.empty() &&
+                        f.getName().find(pat) != std::string::npos) {
+                        excluded = true;
+                        break;
+                    }
+                }
+                if (excluded) continue;
+            }
 
+            auto ext = utils::toLower(utils::path_extension(f.getName()));
             // silently ignore extensions flagged impossible-to-support
-            if (notSupportedExts().count(
-                    utils::toLower(utils::path_extension(f.getName()))) > 0)
+            if (notSupportedExts().count(ext) > 0) continue;
+
+            if (shouldIgnoreFile(f.getName())) {
+                printf("\033[90mIgnored %s\033[0m\n", f.getName().c_str());
                 continue;
+            }
 
             int64_t sum = 0;
             if (!plugin.canHandle(f.getName())) {
-                printf("\033[90mSkipping %s\033[0m\n", f.getName().c_str());
+                printf("\033[33mSkipping %s\033[0m\n", f.getName().c_str());
                 g_skips++;
+                g_skipExts.insert(ext);
                 continue;
             }
             printf("Trying %s ... ", f.getName().c_str());
@@ -241,9 +295,11 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
                     printf("\r\033[31mTrying %s ... playback %s\033[0m\n",
                            f.getName().c_str(), status);
                     g_errors++;
+                    g_errorExts.insert(ext);
                 } else {
                     printf("playback %s\n", status);
                     g_ok++;
+                    g_okExts.insert(ext);
                 }
             } catch (std::exception& e) {
                 // A plugin may deliberately fast-fail a known sibling format
@@ -254,13 +310,15 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
                 // playback error that should fail coverage.
                 std::string msg = e.what();
                 if (msg.find("unsupported") != std::string::npos) {
-                    printf("\r\033[90mSkipping %s (%s)\033[0m\n",
+                    printf("\r\033[33mSkipping %s (%s)\033[0m\n",
                            f.getName().c_str(), e.what());
                     g_skips++;
+                    g_skipExts.insert(ext);
                 } else {
                     printf("\r\033[31mTrying %s ... playback EXCEPTION (%s)\033[0m\n",
                            f.getName().c_str(), e.what());
                     g_errors++;
+                    g_errorExts.insert(ext);
                 }
             }
         }
@@ -347,6 +405,29 @@ TEST_CASE("GME GBR plays sound", "[music]")
 // from modland's Ad Lib/Visual Composer set) so america2.rol renders for real.
 TEST_CASE("AdPlug", "[music]") { testPlugin<musix::AdPlugin>("testmus/adlib", "", "data"); }
 
+// Sierra SCI (.sci) is a multi-file AdLib format: AdPlug's mid.cpp loader needs
+// the "<prefix>patch.003" OPL2 instrument bank alongside the song. AdPlugin must
+// name it via getSecondaryFiles so the host fetches it (modland co-hosts it in
+// the same dir, e.g. "kq1 flutey.sci" + "kq1patch.003"). Without it the load
+// throws and the song can't play from the GUI.
+TEST_CASE("AdPlug SCI secondary patch", "[music]")
+{
+    musix::AdPlugin plugin{ "data" };
+    auto sec = plugin.getSecondaryFiles("testmus/adlib/kq1 flutey.sci");
+    REQUIRE(sec.size() == 1);
+    REQUIRE(sec[0] == "kq1patch.003");
+    // full paths/URLs resolve to just the companion file name
+    REQUIRE(plugin.getSecondaryFiles(
+                "ftp://x/Ad Lib/Sierra/Kings Quest 1/kq1 flutey.sci")
+                .at(0) == "kq1patch.003");
+    // .ksm (Ken Silverman) needs the fixed-name "insts.dat" instrument bank
+    auto ksm = plugin.getSecondaryFiles("testmus/adlib/maxosong.ksm");
+    REQUIRE(ksm.size() == 1);
+    REQUIRE(ksm[0] == "insts.dat");
+    // non-SCI/KSM AdLib formats request no secondary files
+    REQUIRE(plugin.getSecondaryFiles("song.laa").empty());
+}
+
 // Render up to `buffers` blocks and return summed absolute sample energy.
 static int64_t adplugEnergy(musix::ChipPlayer* player, int buffers)
 {
@@ -404,7 +485,57 @@ TEST_CASE("Westwood SND plays sound", "[music]")
 
     delete player;
 }
-TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", "smp", "data"); }
+// Exclude the TFMX/SoundMaster sample banks (turrican2.smpl, smp.starball) which
+// are companion files, not standalone songs -- but NOT ".smpro" SoundMaster songs
+// (futureshock-gameover.smpro), which the old broad "smp" substring wrongly hid.
+TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", ".mod.nt", "data"); }
+
+// GUI sanity check for every multi-file fixture whose companion we bundled.
+// cmtest plays from local files, so a song would render fine here even if the
+// plugin couldn't NAME its companion -- but the GUI streams the song and fetches
+// secondaries by the names getSecondaryFiles() returns. So for each bundled
+// companion we assert (a) getSecondaryFiles() returns exactly that name and
+// (b) the named file actually sits next to the song. If either breaks, the tune
+// plays in cmtest but FAILS in the app. Locks the companion-fix work end-to-end.
+TEST_CASE("secondary files resolve for multi-file fixtures", "[music]")
+{
+    auto check = [](musix::ChipPlugin& plugin, std::string const& song,
+                    std::string const& companion) {
+        INFO(song << "  ->  " << companion);
+        auto sec = plugin.getSecondaryFiles(song);
+        REQUIRE(std::find(sec.begin(), sec.end(), companion) != sec.end());
+        auto dir = utils::path_directory(song);
+        REQUIRE(utils::File{ dir + "/" + companion }.exists());
+    };
+
+    musix::UADEPlugin uade{ "data" };
+    check(uade, "testmus/uade/mdat.kraft", "smpl.kraft");                 // TFMX
+    check(uade, "testmus/uade/mdat.avalon2-ongame", "smpl.avalon2-ongame");
+    check(uade, "testmus/uade/mdat.hexuma-ice", "smpl.hexuma-ice");
+    check(uade, "testmus/uade/daisy.adsc", "daisy.adsc.as");             // AudioSculpture
+    check(uade, "testmus/uade/jpn.empiresoccer94", "smp.empiresoccer94"); // Jason Page
+    check(uade, "testmus/uade/dns.hollywoodpokerpro ingame",
+          "smp.hollywoodpokerpro ingame");                               // DynamicSynth
+    check(uade, "testmus/uade/mcr.aquablast", "mcs.aquablast");          // Mark Cooksey
+    check(uade, "testmus/uade/uds.obsession menu", "smp.obsession menu"); // BladePacker
+    check(uade, "testmus/uade/tpu.timelock ingame", "smp.timelock ingame"); // DirkBialluch
+    check(uade, "testmus/uade/mfp.crystaldragon ingame",
+          "smp.crystaldragon ingame");                                    // MagneticFields
+    check(uade, "testmus/uade/MIDI.Entity high", "SMPL.Entity high");     // MIDI-Loriciel
+
+    musix::HTPlugin ht; // PSF "_lib" tag
+    check(ht, "testmus/ht/ggx-66-00-01.minidsf", "ggx_66.dsflib");
+    check(ht, "testmus/ht/w00-00-25.minissf", "W00.ssflib");
+
+    musix::USFPlugin usf;
+    check(usf, "testmus/usf/sparse01.miniusf", "quake2.usflib");
+
+    musix::AdPlugin adp{ "data" };
+    check(adp, "testmus/adlib/kq1 flutey.sci", "kq1patch.003");
+    check(adp, "testmus/adlib/maxosong.ksm", "insts.dat");
+    check(adp, "testmus/adlib/song1.sng", "song1.ins"); // AdLib Tracker
+}
+
 TEST_CASE("PxTone", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/ptcop", ""); }
 TEST_CASE("PxTune", "[music]") { testPlugin<musix::PxTonePlugin>("testmus/pttune", ""); }
 TEST_CASE("PTK", "[music]") { testPlugin<musix::PTKPlugin>("testmus/ptk", ""); }
@@ -414,7 +545,7 @@ TEST_CASE("SunVox", "[music]") { testPlugin<musix::SunVoxPlugin>("testmus/sunvox
 // Exclude the ".W" wavebank from the scan -- it's the song's companion, not a
 // playable fixture (canHandle rightly declines it); fromFile() picks it up next
 // to the bare song.
-TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmus/soundsmith", ".W"); }
+TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmus/soundsmith", ""); }
 TEST_CASE("Musx", "[music]") { testPlugin<musix::MusxPlugin>("testmus/musx", ""); }
 TEST_CASE("Coconizer", "[music]") { testPlugin<musix::CocoPlugin>("testmus/coco", ""); }
 TEST_CASE("MaxTrax", "[music]") { testPlugin<musix::MaxTraxPlugin>("testmus/maxtrax", ""); }
@@ -422,6 +553,7 @@ TEST_CASE("STarKos", "[music]") { testPlugin<musix::SksPlugin>("testmus/sks", ""
 TEST_CASE("NerdTracker2", "[music]") { testPlugin<musix::NEDPlugin>("testmus/ned", ""); }
 TEST_CASE("PlayerPRO", "[music]") { testPlugin<musix::PlayerProPlugin>("testmus/playerpro", ""); }
 TEST_CASE("JayTrax", "[music]") { testPlugin<musix::JxsPlugin>("testmus/jxs", ""); }
+TEST_CASE("IXS", "[music]") { testPlugin<musix::IXSPlugin>("testmus/ixs", ""); }
 
 // PlayerPRO ".mad" (Macintosh tracker, "MADG"/"MADF"/"MADK") plays via the
 // vendored public-domain MADDriver. The ".mad" extension collides with AdPlug's
@@ -857,6 +989,37 @@ TEST_CASE("SoundSmith plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// Ixalance (.ixs). A synth tracker from the defunct Shortcut Software: it stores
+// no PCM, instead synthesizing + zlib-compressing its own wavetables (songs are
+// only a few KB). Played via the vendored webixs core (Wothke's RE of the lost
+// Win32 player). Routing is by the "IXS!" magic. This fails if the magic check
+// regresses, the zlib-dependent wavetable build breaks, or the pull-style render
+// API (genAudio/getAudioBuffer) produces silence.
+TEST_CASE("IXS plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::IXSPlugin plugin;
+
+    std::string const ixs = "testmus/ixs/ixalance_theme.ixs";
+    REQUIRE(plugin.canHandle(ixs));
+
+    auto* player = plugin.fromFile(ixs);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // Regression test for OctaMED MMD3 routing. libopenmpt's MED loader decodes the
 // whole MMD0..MMD3 family by content, but Tables.cpp only advertises the "med"
 // extension, so openmpt_is_extension_supported("mmd3") is false. UADE already
@@ -919,6 +1082,42 @@ TEST_CASE("OpenMPT DSM v1 plays sound", "[music]")
     delete player;
 
     REQUIRE(energy != 0);
+}
+
+// Onyx Music File (.omf) plays sound. This MOD-like Amiga format from the 1993
+// "Jangle" musicdisk (modland "Onyx Music File/", 24 tunes) never had a
+// standalone replayer -- it was decoded only by the chipmachine-local
+// Load_omf.cpp, written from Martin Bazley's (swirlythingy's) 2009 format
+// specification. The format stores its sequence table, patterns and events
+// backwards, pads every pattern/sample block with three bytes, and uses
+// unsigned 8-bit samples. Fails if the loader or its Tables.cpp/Sndfile.cpp
+// registration regresses.
+TEST_CASE("OpenMPT OMF plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::OpenMPTPlugin plugin;
+
+    for (auto const& omf : {"testmus/openmpt/jangle intro.omf",
+                            "testmus/openmpt/laxity remix.omf",
+                            "testmus/openmpt/tal.omf"}) {
+        REQUIRE(plugin.canHandle(omf));
+
+        auto* player = plugin.fromFile(omf);
+        REQUIRE(player != nullptr);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+
+        REQUIRE(energy != 0);
+    }
 }
 
 // Symphonie / Symphonie Pro (.symmod) plays sound. This Amiga "pseudo-DAW"
@@ -1468,6 +1667,34 @@ TEST_CASE("UADE mus routing", "[music]")
     // dry canHandle probe on a not-yet-downloaded remote path doesn't regress.
     REQUIRE(plugin.canHandle((tmp / "musix_no_such.mus").string()));
 }
+// ".ast" is shared. UADE's V0.1 "ActionAmics" eagleplayer plays the genuine
+// binary replay dumps (no "AST" magic), but the modland "All Sound Tracker"
+// corpus is the tracker's native versioned save format (Pascal-string magic
+// \x08"AST 00xx") the V0.1 player cannot parse -- it loads and emits silence
+// while UADE reports "ok". canHandle must decline the native saves (so they Skip)
+// while still claiming the V0.1 binary form.
+TEST_CASE("UADE ast routing", "[music]")
+{
+    musix::UADEPlugin plugin{"data"};
+    auto tmp = fs::temp_directory_path();
+
+    // Native "All Sound Tracker" save: \x08"AST 00xx" magic -> declined.
+    auto nativeAst = tmp / "astrt_native.ast";
+    {
+        std::ofstream f(nativeAst, std::ios::binary);
+        const unsigned char hdr[] = {0x08, 'A', 'S', 'T', ' ', '0', '0', '3', '2'};
+        f.write(reinterpret_cast<const char*>(hdr), sizeof(hdr));
+    }
+    REQUIRE_FALSE(plugin.canHandle(nativeAst.string()));
+    fs::remove(nativeAst);
+
+    // The genuine V0.1 binary dump carries no "AST" magic and stays with UADE.
+    REQUIRE(plugin.canHandle("testmus/uade/dynablaster.ast"));
+
+    // Unreadable/virtual path: fall back to the extension match so a dry probe on
+    // a not-yet-downloaded remote .ast doesn't regress.
+    REQUIRE(plugin.canHandle((tmp / "astrt_no_such.ast").string()));
+}
 TEST_CASE("PokeyNoise", "[music]") { testPlugin<musix::PokeyNoisePlugin>("testmus/pn", ""); }
 // Monotone (.mon) -- PC-speaker tracker by Trixter/Hornet, played by the
 // vendored PTPlayer. The extension collides with UADE's Maniacs of Noise; the
@@ -1770,7 +1997,7 @@ TEST_CASE("V2", "[music]") { testPlugin<musix::V2Plugin>("testmus/v2", ""); }
 // basename in the same directory. QuartetPlugin locates that sibling (trying
 // both ".set" and ".SET") and declares it via getSecondaryFiles so the loader
 // fetches it. The ".set" itself is not a playable song, so it's excluded here.
-TEST_CASE("Quartet", "[music]") { testPlugin<musix::QuartetPlugin>("testmus/4v", ".set"); }
+TEST_CASE("Quartet", "[music]") { testPlugin<musix::QuartetPlugin>("testmus/4v", ""); }
 
 // Quartet plays sound. "Bangkok.4v" needs its "Bangkok.set" voiceset for any
 // audio; the plugin must pair the two, hand both to zingzong, and render
@@ -1893,10 +2120,13 @@ TEST_CASE("priority_map", "[.]")
 
 TEST_CASE("coverage", "[music]")
 {
-    printf("===========================================\n");
-    printf("\033[31mERRORS: %d\033[0m, \033[90mSKIPS: %d\033[0m, \033[32mOK: %d\033[0m\n",
+    printf("======================================================\n");
+    printf("TOTAL EXTENSION STATS:  \033[31mERRORS: %d\033[0m, \033[33mSKIPS: %d\033[0m, \033[32mOK: %d\033[0m\n",
            g_errors, g_skips, g_ok);
-    printf("===========================================\n");
+    printf("UNIQUE EXTENSION STATS: \033[31mERRORS: %zu\033[0m, \033[33mSKIPS: %zu\033[0m, \033[32mOK: %zu\033[0m\n",
+           g_errorExts.size(), g_skipExts.size(), g_okExts.size());
+    printf("(note: auxilarry files are ignored for the stats)\n");
+    printf("======================================================\n");
     musix::ChipPlugin::createPlugins("data");
     auto& plugins = musix::ChipPlugin::getPlugins();
 
@@ -2051,9 +2281,9 @@ TEST_CASE("coverage", "[music]")
         for (auto const& m : allMissing) {
             //printf("  %s\n", m.c_str());
         }
-        printf("--------------------------------------\n");
+        printf("-------------------------------------\n");
         printf("TOTAL MISSING EXTENSIONS SKIPPED: %zu\n", allMissing.size());
-        printf("--------------------------------------\n");
+        printf("-------------------------------------\n");
     } else {
         printf("\n--- COVERAGE METRIC: 100%% COMPLIANT (0 MISSING EXTENSIONS) ---\n");
     }
@@ -2102,6 +2332,45 @@ TEST_CASE("coverage", "[music]")
     // remote source, intentionally-bad rips); g_skips are deliberate canHandle
     // declines plus companion/lib files that aren't standalone tunes.
     // Set tight to the exact current counts so ANY new failure trips the gate.
-    REQUIRE(g_errors <= 69);
-    REQUIRE(g_skips <= 46);
+    //
+    // 2026-06-17: errors 69->44 after fixing dune1.dro (DRO v0), 2.hsc (HSC
+    // half-pattern bug), the .sci/.ksm/.minidsf/.minissf/.miniusf multi-file
+    // fixtures (bundled their companion banks/libs). skips 46->47: those bundled
+    // companion files (insts.dat, *patch.003, *.dsflib/.ssflib/.usflib) are not
+    // standalone tunes and correctly skip.
+    //
+    // 2026-06-17 (b): errors 44->30 after relocating misfiled fixtures out of
+    // testmus/uade to their owning, higher-priority plugins (.it/.xm->openmpt,
+    // .mdx->mdx, .dsf->ht, .pt2->zx, .bbsong->bbsong, .sid->libvice) where they
+    // play, moving an orphan pm.psf2lib to psx, and bundling smpl.kraft so the
+    // TFMX mdat.kraft plays. skips 47->48 from the shuffle (all legitimate).
+    //
+    // 2026-06-17 (c): errors 30->27 after bundling the missing companion files
+    // for three "score died" UADE tunes -- daisy.adsc.as (Audio Sculpture) and
+    // smpl.avalon2-ongame / smpl.hexuma-ice (TFMX). skips 48->51: those three
+    // companions aren't standalone tunes and correctly skip.
+    //
+    // 2026-06-17 (d): errors 27->17. Bundled 5 more UADE companions (jpn->smp,
+    // dns->smp, mcr->mcs, uds->smp, tpu->smp; latter 3 added to fmt_2files) so
+    // those score-died tunes play; relocated misrouted fixtures -- prom.asc /
+    // pr2.asc are ZX ASC Sound Master (->zx, now play), alp.pdx/pha.pdx are MDX
+    // PCM banks (->mdx) and TP.PVI an FMP PCM bank (->fmp), all non-standalone
+    // and correctly skipping. skips 51->55 from the bundled smp.* companions.
+    //
+    // 2026-06-17 (e): errors 17->14. Three .sng files misrouted to UADE are
+    // really AdLib formats AdPlug 2.4 decodes -- sanxion.sng (FMC!), playmus1.sng
+    // (ObsM), song1.sng (AdLib Tracker + song1.ins). Added a content-gated .sng
+    // claim to AdPlug.canHandle (FMC!/ObsM magic or 36000B AdLib Tracker) so it
+    // doesn't steal SCC-Musixx/Richard Joseph .sng, plus .sng->.ins secondary;
+    // moved the three fixtures to testmus/adlib. (aquatic games.sng = Amiga
+    // Richard Joseph "RJP1SMOD" stays in UADE.)
+    //
+    // 2026-06-17 (f): errors 14->11. Bundled companions mfp->smp (Magnetic
+    // Fields Packer) and MIDI->SMPL (MIDI-Loriciel; added both to fmt_2files);
+    // and the "war hawk.st1.3.mod.nt" fixture was actually the StarTrekker AM
+    // .nt companion -- fetched the real 29756B "war hawk.st1.3.mod" (now plays,
+    // finds its .nt sibling) and excluded the standalone ".mod.nt" companion
+    // from the UADE folder scan. skips 55->56 (SMPL.Entity high companion).
+    REQUIRE(g_errors <= 11);
+    REQUIRE(g_skips <= 56);
 }

@@ -724,6 +724,29 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
     std::lock_guard lock{ dbMutex };
 
     result.resize(0);
+    std::set<std::string> seen;
+
+    auto add_unique = [&](int index) {
+        if (result.size() >= searchLimit) return false;
+
+        std::string identity;
+        if (index >= PLAYLIST_INDEX) {
+            identity = "PL:" + playLists[index - PLAYLIST_INDEX].name;
+        } else {
+            std::string title = titleIndex.getString(index);
+            std::string composer =
+                composerIndex.getString(titleToComposer[index]);
+            uint8_t fmt = formats[index] & 0xff;
+            identity = title + "\t" + composer + "\t" + std::to_string(fmt);
+        }
+
+        if (seen.find(identity) == seen.end()) {
+            result.push_back(index);
+            seen.insert(identity);
+            return true;
+        }
+        return false;
+    };
 
     std::string title_query = query;
     std::string composer_query = query;
@@ -736,31 +759,32 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
 
     // For empty query, return all playlists
     if (query == "") {
-        for (int i = 0; i < playLists.size(); i++) {
-            result.push_back(PLAYLIST_INDEX + i);
+        for (int i = 0; i < (int)playLists.size(); i++) {
+            add_unique(PLAYLIST_INDEX + i);
         }
         return result.size();
     }
 
     // Push back all matching playlists
-    for (int i = 0; i < playLists.size(); i++) {
+    for (int i = 0; i < (int)playLists.size(); i++) {
         if (toLower(playLists[i].name).find(query) != std::string::npos)
-            result.push_back(PLAYLIST_INDEX + i);
+            add_unique(PLAYLIST_INDEX + i);
     }
 
-    titleIndex.search(title_query, result, searchLimit);
+    std::vector<int> tresult;
+    titleIndex.search(title_query, tresult, searchLimit);
+    for (int index : tresult) {
+        if (!add_unique(index))
+            if (result.size() >= searchLimit) break;
+    }
 
-    if (result.size() >= searchLimit) return searchLimit;
-
-    std::set<int> seen(result.begin(), result.end());
-    searchLimit -= result.size();
+    if (result.size() >= searchLimit) return result.size();
 
     std::vector<int> cresult;
     composerIndex.search(composer_query, cresult, searchLimit);
     for (int index : cresult) {
         int offset = composerTitleStart[index];
         while (composerToTitle[offset] != -1) {
-            if (result.size() >= searchLimit) break;
             int songindex = composerToTitle[offset++];
 
             if (seen.find(songindex) != seen.end()) continue;
@@ -768,8 +792,8 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
             if (collectionFilter == -1 ||
                 (formats[songindex] >> 8) == collectionFilter) {
                 if (!titleIndex.isFiltered(songindex)) {
-                    result.push_back(songindex);
-                    seen.insert(songindex);
+                    if (!add_unique(songindex))
+                        if (result.size() >= searchLimit) break;
                 }
             }
         }

@@ -2,18 +2,51 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-- i see some dupes in search, example: monkmusings (only 1 record in db), maybe there is more
-
 - ability to manually add stuff to database. via a manual.txt file
 
 - ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
 Your strategy of extracting the routine + data payload, indexing it, booting a minimal emulator stub, and jumping straight to the execution address works perfectly for 48K beeper engines. In fact, it avoids the timing sync issues plaguing AY emulation because the Z80 CPU is the sound synthesizer.
 Also look at the zx repositories below, maybe someone already did this.
 
-- (minor) radio screenshots missing for rainwave (favicon issue)
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 - (minor) star trek tactical -- needs ntr-atje-usa.2sflib not on modland, song should be removed from db
-- in general genuinely bad or missing files should be removed from the index
+- in general genuinely bad or missing files should not be surfacing:
+ - option a: remove from index
+ - option b: use filter
+ - option c (i think the best): augment search deduping to also remove the non-supported results from the search
+
+- investigate content and status of these, there should be none:
+	chipmachine/testmus/gme/nowork
+	chipmachine/testmus/ted/nowork
+	musicplayer/testmus/gme/nowork
+
+- These are single-file "score died" or odd cases with no companion to bundle — need real eagleplayer A/B debugging:
+	
+	-- Deferred (genuine single-file "score died" — no companion, no routing fix)
+	* sdr.monsterbusiness 1 (Synth Dream) — modland dir has only sdr.*, no companion. Bad rip or eagleplayer bug.
+	* sjs.rudi (SoundPlayer) — SoundPlayer is single-file (dir has only sjs.*). Same.
+	* qts.Big Pro (Quartet ST) — single file; our QuartetPlugin handles Amiga .4v, not Atari-ST .qts, so no reroute. Bad rip or eagleplayer bug.
+	
+	-- NO SOUND: batmanreturns.dsr, bombjack.jmf, cyf-3-final-2.puma, forgotten worlds intro.fw, fiendish freddys - songs.kh (maxsubsong=-1).
+
+	-- best of guitars.sdata (MusicMaker V8): multi-companion (.ip + .ip.l + .ip.n) with a naming scheme the current fmt_2files prefix logic doesn't fit — needs a small loader/secondary-file extension.
+Recommendation: leave best of guitars.sdata in the needs-research bucket. If you want, I can do the focused experiment next (temporarily route .sdata→8V and A/B it, and check whether it's the lone V8 .sdata outlier) — but that's a deliberate eagleplayer investigation
+
+	-- aquatic games.sng remains in the needs-research bucket (Amiga RJP — likely a missing .ins companion that may not be on modland, or a bad rip).
+
+SKIPPED:
+
+  Category 1: Intentionally Unsupported or Negative Tests
+   * OpenMPT: .dmf (Deflemask is explicitly unsupported by libopenmpt; only X-Tracker .dmf works).
+   * HEPlugin: bad-magic-not-a-psf.psf (Negative test case to ensure magic validation works).
+
+  Category 2: Potential "Low-Hanging Fruit" (Easy Fixes)
+  A few files might be playable if we update the plugin's extension list or fix minor identification issues:
+   * AdPlug: .lem (Xmas Lemmings), .fmt (Lassie Come Home), .fmk (Pimpmobile), .sig, .melovatrix. These are obscure
+     AdLib formats that AdPlug might support if we claim the extensions.
+   * UADE: .BGM (Allegro Amadeus), .dmw (Perfume), .bds (Chubby Gristle). These Amiga formats might need a specific
+     "prefix" or eagleplayer mapping that is currently missing.
+   * Euphony: BARRY3_3.PMB was skipped but BARRY.EUP (from previous list) should play it. I'll check if any .eup files are missing their companions.
 
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
@@ -96,12 +129,6 @@ Bash
 curl -H "Accept: application/json" "https://demozoo.org/api/v1/productions/?production_type=music"
 Iterate through the paginated JSON responses to extract data fields natively instead of writing brittle regex scrapers.
 
-Radio Streams & Streams Media
-
-1. Kohina
-URL: [https://www.kohina.com](https://www.kohina.com)
-What it is: One of the absolute oldest, purest retro audio streams still running. It plays exclusively 8-bit and 16-bit computer music (C64, Atari, Amiga, NES) directly simulated or sampled from original hardware.
-
 **************************
 * PLAYBACK BUGS / ISSUES *
 **************************
@@ -128,6 +155,8 @@ The one open replayer, fcatrin/fstr (MIT), is unusable for porting — x86 real-
 [aac @ 0x15860b340] decode_band_types: Input buffer exhausted before END element found
 [aist#0:0/aac @ 0x15860e770] [dec:aac @ 0x15860aea0] Error submitting packet to decoder: Invalid data found when processing input
 
+- search for sll, scroll down, manu smus (magenta) files don't play but one does, seems the ones that don't miss instruments?
+
 *********
 * OTHER *
 *********
@@ -144,11 +173,12 @@ product/process
 ===============
 - use some IDE (with integrated AI?) for development?
 - cleanup cmtest
+- move all plugins into musicplayer/src/plugins and unify into one repo, it is becoming silly with clones... and we don't ship anything independently anyway so it is pointless 
 
 major new features
 ==================
-- better matching and sourcing for screenshot, for example hybris should display hybris game art...
-- consolidate all db scripts into one unified
+- better matching and sourcing for screenshot, for example hybris should display hybris game art... idea: do google search for images (name + format) and maybe some fuzzy pull from web if matches...
+- consolidate all db scripts into one unified?
 - filter by platform (C64, Amiga... -- something done but needs discussion) and format (mod, ym, mp3...) -- Pesic
 - Separate db from code and auto-update db independently from code
 
@@ -192,10 +222,7 @@ No comment = works and regression test(s) in place
 
 ---
 AUDIO OVERLOAD APP extensions NOT checked to be covered:
-* OGG — [add unit test] no .ogg file successfully played. -- we cover this, add regression test
-
 * GYM — [5 songs in db ] present in the log, but playback threw an exception (Packed GYM file not supported).
-
 * ORC — [no songs in db] no .orc file appears in the log.
 * QSF — [no songs in db] no .qsf file successfully played (only .miniqsf played successfully; .qsflib files were skipped).
 ---
@@ -352,7 +379,7 @@ maybe there is still some deeper .adl issue -- wider sample to test needed
 
 puma	42 -- OK ... but just in case investigate testmus/uade/cyf-3-final-2.puma ... playback NO SOUND
 
-ksm	41 -- INVESTIGATE -- no playback, errors in cmtest and GUI attempt
+ksm	41 -- OK -- FIXED! no playback, errors in cmtest and GUI attempt
 Trying testmus/uade/ken's labyrinth - begin.ksm ... playback NO SOUND
 Trying testmus/adlib/maxosong.ksm ... playback EXCEPTION ()
 [RemoteLoader.cpp:90] CODE 226
@@ -484,32 +511,35 @@ The fix is clean and low-risk: libmikmod is the canonical reader (load_uni.c, LG
 
 sn2	25 -- NO - Sound Club 2 (Bluemoon Software, Win95/NT; PC, NOT Amiga). Native magic SN2\xd2, little-endian IFF-like chunks (NAM/SEQ/PAT/pna/voi). Note/pattern data is parseable but the module contains NO sample/instrument data — voices are produced by Sound Club 2's closed built-in synth, so playback needs full RE of the Bluemoon Win32 engine. No open replayer anywhere (UADE/OpenMPT/libxmp/ZXTune/rePlayer/NostalgicPlayer/vgmstream all lack it). OpenMPT's "Sound Club 2" string (Load_s3m.cpp) only labels S3M *exports*, it does not read native .sn2. Same dead-end as sn/psy/skm. PARK.
 
-
---- FIXER WATERMARK --------------------
->>> all triaging doe for items above <<<
-
-
-
-mgb	25 -- no test
+mgb	25 -- NO Gameboy Tracker format 
+game boy tracker / paragon 5 (s.hockenhull). .mgb = the editor's serialized project file ("GameBoy Music Module" tagged tree), NOT a gb rom -- so GME's game boy emu can't run it directly. Only the closed pt.exe reads .mgb; the open replayer (gbdev/GBSoundSystem) consumes the tracker's EXPORTED .z80/.inc driver data, not raw .mgb. No portable open parser anywhere (UADE/OpenMPT/libxmp/ZXTune/rePlayer/GME/vgmstream). RE-prototyped: container + note stream
+are decodable (plain binary, not compressed) but full support = leaf decode -> driver data -> RGBDS harness rom -> GME, with no headless reference to validate against the closed gui. Parked. Re-open if a portable .mgb player lands.
 
 wb	24 -- OK
 
-tcb	24 -- all play from GUI, but cmtest passes for 2 plugins, investigate / tighten
+tcb	24 OK -- all play from GUI, but cmtest passes for 2 plugins, investigate / tighten
 Trying testmus/uade/cannonfodder.tcb ... playback OK
 Trying testmus/openmpt/m-demo3-1.tcb ... playback OK
+not a bug — routing is already deterministic and correct.
+.tcb is one format — TCB Tracker (Atari ST), magic AN COOL.. Both cmtest fixtures (cannonfodder.tcb, m-demo3-1.tcb) are the identical format; the UADE-folder one is just a legacy fixture from before libopenmpt gained a TCB loader.
+OpenMPT plays all 24 in the GUI. It's registered before UADE, advertises tcb, and its loader succeeds on every valid file → it always wins in MusicPlayer::fromFile. UADE's TCB_Tracker claim is a redundant, effectively-unreachable fallback for the same format.
+cmtest's "2 plugins" is a test artifact, not a runtime split — testPlugin<> exercises each engine in isolation against its own folder, so both prove they can decode TCB; the host path only uses OpenMPT.
 
-omf	24 -- no test
-ixs	23 -- no test
+omf	24 -- DONE! Onyx Music File
+
+ixs	23 -- DONE Ixalance
 
 ems	23 -- OK
 
-snd	22 -- no test
-axs	22 -- no test
+
+snd	22 -- It's already wired up. .snd routes to the vendored AdPlug Westwood CadlPlayer. AdPlugin::canHandle validates .snd via isWestwoodAdl()
+
+axs	22 -- NO closed commercial softsynth
 
 dfm	21 -- OK
 chi	21 -- OK
 
-ast	21 -- cmtest ok but silent:
+ast	21 -- NO All Sound Tracker.. cmtest ok but silent:
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/All Sound Tracker/Feilei/tiny opl3 demo.ast
 [web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fFeilei/tiny opl3 demo.ast
 [web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/All%20Sound%20Tracker/Feilei/tiny%20opl3%20demo.ast
@@ -529,14 +559,40 @@ ast	21 -- cmtest ok but silent:
 [UADEPlugin.cpp:25] Starting thread
 [UADEPlugin.cpp:209] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAll Sound Tracker%2fCagliostro/thansong.ast
 
+Two different formats share the .ast extension
+1. Genuine Action Amics Sound Tool (plays fine) — e.g. dynablaster.ast
+2. The modland "All Sound Tracker" corpus (loads → silent) — every file I fetched starts with a Pascal-string magic \x08"AST 00xx":
+There's no open replayer for the "AST 00xx" native format that I can find (UADE 3.05 ships only the V0.1 ActionAmics player; web search turned up nothing). So no support.
 
---- CHECKER WATERMARK ------------------------------------
->>>>>>>> deeper research needed for items below <<<<<<<<<<
+Tested from GUI with <20:
 
+smpro	9 -- OK Supported — SoundMaster module (magic 0x60, Michiel Soede eagleplayer; confirmed working in memory). But the UADE test's over-broad "smp" substring exclude silently filters futureshock-gameover.smpro (alongside the real sample files turrican2.smpl, smp.starball). No single substring can exclude the samples while keeping .smpro, so I left the test infra alone — it's not a failure, just untested. Flag if you want me to make the exclude extension-precise so it's actually exercised.
 
-smufi	19
+- - - - - formats with <20 songs - - - - -
+
+NONE TESTED FROM GUI (FOR NOW), ONLY CMTEST
+
+cmtest etc. with issues but fixed:
+
+sog	16 -- DONE UADE conf routes sog→JochenHippel + it's in supported_ext, but airballtest.sog → playback FAILED (starts then drops out). No playback from GUI.
+FIXED: content-routed Hippel-ST modules to the correct player. FAILED 28→27.
+
+ss	15 -- DONE UADE lists "ss" in supported_ext, but deeptrumpet1.ss → playback FAILED. These .ss files are actually IFF-SMUS instrument samples (see [smus-iff-support](memory note)), not standalone songs — they only play as companions of a .smus. The top-level fixture fails when probed alone.
+
+A2M	13 -- FIXED Genuine AdLib Tracker 2 file (_A2module_ magic) misfiled in testmus/uade/. UADE's canHandle matches the modland-style filename prefix "sonic" → claimed it as Sonic Arranger and FAILED. Fixed: moved fixture to testmus/adlib/ where AdPlug owns .a2m and plays it. No code change. (ERRORS 58→57.)
+
+SKS	13 -- OK.. SHIPPED same as sks above (STarKos, case-insensitive ext) -- sksplugin
+
+imf	10 -- OK Trying testmus/openmpt/antspant.imf ... openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
+Trying testmus/openmpt/antspant.imf ... playback EXCEPTION (Could not load module)
+imf fixed (OpenMPT no longer errors, AdPlug plays it). 
+The file is an Apogee/id AdLib IMF (its bytes after a 2-byte f0 31 size word are identical to roster.imf), but it was misfiled in testmus/openmpt/. Since testPlugin runs each plugin in isolation, OpenMPT's Imago Orpheus loader was handed an Apogee file and threw — a corpus-placement artifact, not a routing bug (in the app, .imf is AdPlug-first). Fixed: moved to testmus/adlib/; AdPlug plays it.
+
+xmf	9 -- OK Genuine OpenMPT XMF (.xmf routes OpenMPT-only), but misfiled in testmus/uade/ where UADE grabbed it via the path_prefix quirk ("max" = MaxTrax) and FAILED "score died". Fixed: moved to testmus/openmpt/; plays. Third instance of this collision class (after sonic.a2m, and conceptually the .ss/imf misfiles). 
+
+These are all covered by cmtests, no issues:
+
 jb	19
-brt	19
 sm3	18
 sc	18
 mtr	18
@@ -544,14 +600,11 @@ mm4	17
 hot	17
 emod	17
 synmod	16
-sog	16
 sm	16
 psf2	16
 glue	16
 aero	16
-ss	15
 plx	15
-dtl	15
 scr	14
 rh	14
 ptk	14
@@ -560,65 +613,80 @@ ntp	14
 mok	14
 mmdc	14
 mix	14
-kt	14
 dz	14
 tf	13
-kdm	13
 ims	13
-SKS	13 -- SHIPPED same as sks above (STarKos, case-insensitive ext) -- sksplugin
-A2M	13
 2sf	13
-tss	12
 pvp	12
 mkj	12
 m	12
-liq	12
 ex	12
 dsc	12
-buz2	12
-bsf	12
-vt	11
 ntk	11
-mvm	11
-fmf	11
 cba	11
 scumm	10
 lion	10
-imf	10
 cm	10
-xmf	9
 xad	9
 tme	9
 spl	9
-smpro	9
 sdb	9
 rk	9
-plist	9
 md	9
 ma	9
 jbm	9
 fmt	9
 agd	9
-trk	8
-t0ast	8
 mc	8
 jt	8
-ftf	8
 etx	8
 dh	8
 arp	8
 vss	7
-vge	7
 sun	7
-plm	7
 mug	7
 jpo	7
-fnk	7
-fmk	7
-dux	7
-dsyn	7
+plm	7
 as3m	7
-670	7 -- no gui playback on 1 tested song
+
+- - - - -
+
+UNSUPPORTED BUT NOT OFFICIALLY REMOVED YET:
+
+smufi	19 -- ???
+
+brt	19 -- ???
+
+dtl	15 -- Fixture bass beat.dtl exists in the AdPlug corpus but every plugin declines it → Skipping. No plugin's canHandle claims .dtl.
+
+kt	14 -- No fixture, no supported_ext, no conf entry, not in not_supported list. Unhandled. (Likely Klystrack — no open replayer here.)
+
+kdm	13 -- claimed by nothing, no fixture. Unhandled.
+
+liq	12 -- liq (Liquid Tracker) is a libopenmpt format upstream, but this trimmed openmpt build omits the Liquid loader (no Load_liq), and it isn't rerouted — so genuinely unsupported here.
+liq is the one possibly-worth-adding gap (libopenmpt already has the loader — it's just not compiled into this slice). Want me to look at enabling the Liquid Tracker loader, or move to the next batch?
+
+fmf	11 -- Fixture sb main.fmf exists in testmus/adlib/ but no plugin claims .fmf (not in adplug.cpp) → skipped gracefully. Unsupported.
+
+vge	7
+fnk	7
+fmk	7 -- NO cruisin'...fmk (magic FMK!) — claimed by nothing, AdPlug skips it gracefully. Unsupported.
+dsyn	7
+
+tss	12
+buz2	12
+bsf	12
+vt	11
+mvm	11
+plist	9 -- !??! mac plist!?
+t0ast	8
+ftf	8
+trk	8
+
+-------------------------------
+-- not triaged below ----------
+-------------------------------
+
 xms	6
 sqx	6
 sb	6
@@ -629,12 +697,16 @@ hip7	6
 fp	6
 core	6
 cff	6
+
+---------------
+
+
 zip	5
 syn	5
 msm	5
 kh	5
 hst	5
-gym	5
+gym	5 -- * GYM — [5 songs in db ] present in the log, but playback threw an exception (Packed GYM file not supported).
 fw	5
 dm	5
 amc	5
@@ -686,3 +758,13 @@ aquablast	2
 aks	2
 
 more garbage below...
+
+
+CONFIRMED NO AND REMOVED:
+
+dux	7 -- NO... in UADE supported_ext (UADEPlugin.cpp:416) but has no eagleplayer.conf entry and no amifilemagic detection — UADE claims the extension but has no player → FAILED. Same pattern as the removed .spm/.sps.
+zero dux players in the UADE tree, no conf routing, no magic.
+Listed in UADE supported_ext but UADE has no player at all (no conf prefix, no amifilemagic, no binary) → carver 1.dux always FAILED "score died". No open replayer anywhere. Fixed: removed from supported_ext + documented in not_supported_extensions.txt → now Skips cleanly. Same pattern as .spm/.sps/.pmd.
+
+670	7 -- NO.. The modland .670 files have a completely different on-disk layout: a tiny header (byte0 = speed, a few bytes) followed by a 32-bit pattern-offset table at ~0x24. sampleNames[0][12] is non-zero binary, so c67's ValidateHeader bails instantly.
+So these modland files are a different (packed?) CDFM variant than the one OpenMPT supports — and upstream OpenMPT 0.8.7 would reject them too (the c67 spec hasn't changed). No other vendored engine handles it either (AdPlug's CdfmLoader is the unrelated "Digital-FM" .dfm).
