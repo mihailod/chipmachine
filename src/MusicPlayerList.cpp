@@ -757,17 +757,31 @@ void MusicPlayerList::loadLhaSong(const std::string& prefix,
 
     files++;
     remoteLoader.load(archivePath, [=](File f) {
-        if (!f) {
-            errors.emplace_back("Could not load archive");
-            SET_STATE(Error);
+        // A subsong's archive can be missing: UnExoticA's song list references
+        // stale per-version .lha paths (e.g. Hybris/Custom_Version.lha) that no
+        // longer exist on the server (FTP 550). When this song is one tune of a
+        // collapsed game (MULTI), don't fail the whole game -- skip to the next
+        // subsong, which may live in an archive that does exist. Only the last
+        // remaining subsong surfaces a real error.
+        auto failOrSkip = [=](const char* msg) {
+            if (!multiSongs.empty() &&
+                multiSongNo + 1 < (int)multiSongs.size()) {
+                multiSongNo++;
+                SET_STATE(Playmulti);
+            } else {
+                errors.emplace_back(msg);
+                SET_STATE(Error);
+            }
             files--;
+        };
+
+        if (!f) {
+            failOrSkip("Could not load archive");
             return;
         }
         auto extracted = extractLha(f.getName(), destDir);
         if (!utils::exists(memberFile)) {
-            errors.emplace_back("Could not extract song from archive");
-            SET_STATE(Error);
-            files--;
+            failOrSkip("Could not extract song from archive");
             return;
         }
         songFiles.push_back(File(memberFile));
