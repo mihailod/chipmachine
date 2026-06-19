@@ -2,11 +2,6 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
----------------------------------
-UNEXOTICA ISSUES:
-- lha cmtest should print status
----------------------------------
-
 - ability to manually add stuff to database. via a manual.txt file
 
 - ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
@@ -26,7 +21,7 @@ Also look at the zx repositories below, maybe someone already did this.
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
 
-1. The Mod Archive
+1. ***IN PROGRESS!*** The Mod Archive
 URL: [https://modarchive.org](https://modarchive.org)
 What it is: The single largest, active repository for tracker modules (.mod, .xm, .it, .s3m). While Modland is a massive raw FTP dump, Mod Archive is highly curated, reviewed, and rated by the community. Essential for tracker history.  
 The Mod Archive (Do Not Scrape)
@@ -35,7 +30,8 @@ Navigate directly to http://tracker.modarchive.org/
 Download the core snapshot torrents (e.g., modarchive_2007_official_snapshot_120000_modules) which forms the massive base archive.
 Download the chronological addendum torrents (e.g., modarchive_2012_additions, etc.) to bring your local collection up to date.
 
-2. ExoticA / UnExoticA
+2. ***DONE!*** ExoticA / UnExoticA
+ADDDED: (9145 songs, 1949 collapsed entries)
 URL: [https://www.exotica.org.uk](https://www.exotica.org.uk)
 What it is: You have janeway.exotica.org.uk listed under demo databases, but you are missing the main site's crown jewel: UnExoticA. It tracks custom, exotic Amiga game music formats that don't fit into standard trackers (e.g., TFMX, Custom, HippoPlayer formats, Sonic Arranger).
 The site is heavily indexed and explicitly hosts single-file download collections for its entire music subsystem so you don't have to scrape thousands of individual game folders.
