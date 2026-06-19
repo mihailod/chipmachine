@@ -2,13 +2,14 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-EXOTICA ISSUES:
+---------------------------------
+UNEXOTICA ISSUES:
 1. format in gui -- needed for deduping, prompt ready
 2. many (all?) lha don't play, maybe some others, needs testing... i think it is the prefix issue (ext.song vs song.ext in lha)
 3. get all new format from exotica, sort by how many and see if they all work
 4. implement collections, example: EINMAL
 5. impement mdat format
-
+---------------------------------
 
 - ability to manually add stuff to database. via a manual.txt file
 
@@ -24,10 +25,6 @@ Also look at the zx repositories below, maybe someone already did this.
  - option a: remove from index
  - option b: use filter
  - option c (i think the best): augment search deduping to also remove the non-supported results from the search
-
-- additional unsupported AD-LIB formats:
-  .fmt (? songs 10 in UNION so less than 10) -- overlapping format, openmpt version works, the adlib one doesn't
-  .dmw (1 song: perfume.dmw which is the test song as well)
 
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
@@ -674,6 +671,10 @@ plist	9 -- !??! mac plist!?
 t0ast	8
 ftf	8
 trk	8
+
+- two additional unsupported AD-LIB formats:
+  .fmt (? songs 10 in UNION so less than 10) -- overlapping format, openmpt version works, the adlib one doesn't
+  .dmw (1 song: perfume.dmw which is the test song as well)
 
 --------------------------------------
 ----- mostly not triaged below -------

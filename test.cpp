@@ -241,6 +241,12 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
             // so don't count it as a skip (would inflate the coverage gate).
             if (f.isDir()) continue;
 
+            // Silently ignore macOS/system hidden files (.DS_Store, ._* resource
+            // forks). They are never playable fixtures and must not be reported
+            // at all -- no "Skipping"/"Ignored" line, not counted in any tally.
+            auto baseName = utils::path_filename(f.getName());
+            if (!baseName.empty() && baseName[0] == '.') continue;
+
             // `exclude` is a comma-separated list of substrings; skip the file if
             // it matches ANY of them. (Lets a corpus exclude companion/sample
             // files precisely -- e.g. ".smpl,smp." drops the TFMX/SoundMaster
@@ -2594,6 +2600,9 @@ TEST_CASE("coverage", "[music]")
     // files (BULLWINKLES MAX, NTV IRS GS SG); "songplay" turned out to be the
     // shared Kris Hatlelid replay executable the .kh tunes load, so it's kept,
     // Ignored, and named by .kh's getSecondaryFiles (the cycles.kh now plays).
+    //
+    // 2026-06-17 (j): skips 11->10. macOS hidden files (.DS_Store, ._*) are now
+    // silently skipped before any reporting (not Skipped/Ignored, not counted).
     REQUIRE(g_errors <= 0);
-    REQUIRE(g_skips <= 11);
+    REQUIRE(g_skips <= 10);
 }
