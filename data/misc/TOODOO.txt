@@ -4,7 +4,7 @@
 
 ---------------------------------
 UNEXOTICA ISSUES:
-- ogg vorbis and mp3 maybe other "big" formats (handled by ffmpeg) download takes time -- implement streaming or display a progress bar/indicator 
+- lha cmtest should print status
 ---------------------------------
 
 - ability to manually add stuff to database. via a manual.txt file

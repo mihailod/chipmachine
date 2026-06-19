@@ -149,6 +149,16 @@ void MusicPlayer::putStream(const uint8_t* ptr, int size)
     stream_fifo->put(ptr, size);
 }
 
+void MusicPlayer::endStream()
+{
+    if (player) player->endStream();
+}
+
+void MusicPlayer::abortStream()
+{
+    if (stream_fifo) stream_fifo->quit();
+}
+
 void MusicPlayer::setParameter(const std::string& what, int v)
 {
     if (player) player->setParameter(what, v);
@@ -165,9 +175,16 @@ bool MusicPlayer::streamFile(const std::string& fileName)
 
     utils::makeLower(name);
     check_silence = true;
+
+    // Fresh fifo per streaming session. A previous, cancelled stream may still
+    // have a producer (the curl/web thread) mid-put; giving each session its own
+    // fifo means stale bytes land in the orphaned old fifo, never in this song's.
+    stream_fifo = std::make_shared<utils::Fifo<uint8_t>>(32768 * 8);
+
+    // Always stream through ffmpeg: it probes the container itself and its player
+    // implements endStream()/EOF so playback ends cleanly when the download does.
     for (auto& plugin : musix::ChipPlugin::getPlugins()) {
-        if (plugin->canHandle(name)) {
-            //LOGD("Playing with %s\n", plugin->name());
+        if (plugin->name() == "ffmpeg" && plugin->canHandle(name)) {
             auto newPlayer = std::shared_ptr<musix::ChipPlayer>(
                 plugin->fromStream(stream_fifo));
             if (newPlayer) player = newPlayer;
@@ -181,7 +198,6 @@ bool MusicPlayer::streamFile(const std::string& fileName)
 
     if (player) {
 
-        clearStreamFifo();
         fifo.clear();
         fadeout_pos = 0;
         pause(false);

@@ -227,29 +227,46 @@ TEST_CASE("STarKos host path plays sound", "[music]")
 // instruments and UADE reports "score died".
 TEST_CASE("LHA extract strips wrapper, keeps subdirs", "[lha]")
 {
+    // Print a green "ok" or a red "FAIL" for each check so a plain `cmtest`
+    // run shows what the [lha] suite is doing (Catch is otherwise silent on
+    // success).
+    auto check = [](char const* what, bool cond) {
+        printf("  %-55s %s\n", what,
+               cond ? "\033[32mok\033[0m" : "\033[31mFAIL\033[0m");
+        REQUIRE(cond);
+    };
+
+    printf("---- LHA extract ----\n");
+
+    printf("Spirit_of_Excalibur.lha (wrapper strip + instruments/ subdir)\n");
     auto dest = (std::filesystem::temp_directory_path() / "cmtest_lha").string();
     std::filesystem::remove_all(dest);
     auto names = chipmachine::extractLha(
         "testmus/lha/Spirit_of_Excalibur.lha", dest);
-    REQUIRE(!names.empty());
+    check("extracted some members", !names.empty());
     // Song sits at the extraction root (wrapper stripped) ...
-    REQUIRE(std::filesystem::exists(dest + "/smus.title"));
-    REQUIRE(!std::filesystem::exists(dest + "/Spirit_of_Excalibur"));
+    check("song smus.title at root", std::filesystem::exists(dest + "/smus.title"));
+    check("wrapper dir stripped",
+          !std::filesystem::exists(dest + "/Spirit_of_Excalibur"));
     // ... and the instruments subdirectory the Sonix driver needs survives.
-    REQUIRE(std::filesystem::exists(dest + "/instruments/mclarinet.instr"));
+    check("instruments/ subdir kept",
+          std::filesystem::exists(dest + "/instruments/mclarinet.instr"));
     std::filesystem::remove_all(dest);
 
     // Einmal Kanzler sein stores "<realname>\0<comment with '/'>" in the LHA
     // filename field (Amiga LhA). The lhasa NUL-truncation fix must recover the
     // real member name; without it every member parsed as " Traveling Bits".
+    printf("Einmal_Kanzler_sein.lha (Amiga name\\0comment filename fix)\n");
     auto dest2 =
         (std::filesystem::temp_directory_path() / "cmtest_lha2").string();
     std::filesystem::remove_all(dest2);
     auto names2 = chipmachine::extractLha(
         "testmus/lha/Einmal_Kanzler_sein.lha", dest2);
-    REQUIRE(names2.size() > 50);
-    REQUIRE(std::filesystem::exists(dest2 + "/mdat.ingame_01"));
-    REQUIRE(!std::filesystem::exists(dest2 + "/ Traveling Bits"));
+    check("extracted > 50 members", names2.size() > 50);
+    check("real name mdat.ingame_01 recovered",
+          std::filesystem::exists(dest2 + "/mdat.ingame_01"));
+    check("comment garbage ' Traveling Bits' absent",
+          !std::filesystem::exists(dest2 + "/ Traveling Bits"));
     std::filesystem::remove_all(dest2);
 }
 
@@ -1950,6 +1967,121 @@ TEST_CASE("MikMod", "[music]") { testPlugin<musix::MikModPlugin>("testmus/mikmod
 // skip ("unsupported"), so coverage exercises the 18 Phaser1 tunes.
 TEST_CASE("Beepola", "[music]") { testPlugin<musix::BBSongPlugin>("testmus/bbsong", ""); }
 TEST_CASE("FFMPEG", "[music]") { testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg", ""); }
+// Progressive (fromStream) path: feed a file's bytes into the fifo a chunk at a
+// time -- as a slow download would -- and confirm ffmpeg starts producing audio
+// before all bytes arrive (getSamples returns 0 = "buffering", then >0), and
+// that endStream() makes it terminate cleanly (SONG_END) instead of hanging.
+TEST_CASE("FFMPEG stream", "[music]")
+{
+    printf("---- ffmpeg progressive streaming ----\n");
+    musix::FFMPEGPlugin plugin;
+    std::ifstream f("testmus/ffmpeg/sample.ogg", std::ios::binary);
+    REQUIRE(f.good());
+    std::vector<uint8_t> bytes((std::istreambuf_iterator<char>(f)),
+                               std::istreambuf_iterator<char>());
+    REQUIRE(!bytes.empty());
+    printf("  source: testmus/ffmpeg/sample.ogg (%zu bytes), feeding 4KB/2ms "
+           "to simulate a slow download\n",
+           bytes.size());
+
+    auto fifo = std::make_shared<utils::Fifo<uint8_t>>(32768 * 8);
+    std::unique_ptr<musix::ChipPlayer> player(plugin.fromStream(fifo));
+    REQUIRE(player != nullptr);
+
+    std::atomic<bool> producerDone{false};
+    std::thread producer([&] {
+        size_t off = 0;
+        while (off < bytes.size()) {
+            int chunk = static_cast<int>(
+                std::min<size_t>(4096, bytes.size() - off));
+            fifo->put(bytes.data() + off, chunk);
+            off += chunk;
+            std::this_thread::sleep_for(std::chrono::milliseconds(2));
+        }
+        player->endStream();
+        producerDone = true;
+    });
+
+    std::vector<int16_t> buf(4096);
+    long total = 0;
+    long nonzero = 0;
+    int rc = 0;
+    int idleGuard = 0;
+    int bufferingPolls = 0;
+    bool firstAudio = false;
+    while (true) {
+        rc = player->getSamples(buf.data(), static_cast<int>(buf.size()));
+        if (rc < 0) break; // SONG_END
+        if (rc == 0) {     // buffering
+            if (!firstAudio) bufferingPolls++;
+            std::this_thread::sleep_for(std::chrono::milliseconds(2));
+            if (++idleGuard > 5000) break; // 10s without audio: give up
+            continue;
+        }
+        if (!firstAudio) {
+            firstAudio = true;
+            printf("  prebuffered ~%dms, first audio arrived before download "
+                   "finished -> playing\n",
+                   bufferingPolls * 2);
+        }
+        idleGuard = 0;
+        total += rc;
+        for (int i = 0; i < rc; i++)
+            if (buf[i] != 0) nonzero++;
+    }
+    producer.join();
+
+    printf("  decoded %ld samples (%.1fs), %ld non-silent; ended via %s\n",
+           total, total / 2.0 / 44100.0, nonzero,
+           rc < 0 ? "clean EOF" : "IDLE-TIMEOUT (FAIL)");
+
+    REQUIRE(producerDone);
+    REQUIRE(rc < 0);          // ended via EOF, not the idle-timeout
+    REQUIRE(total > 44100);   // at least ~0.25s of decoded audio
+    REQUIRE(nonzero > 0);
+    printf("  PASS: progressive playback + clean termination\n");
+}
+
+// Mid-stream abort (a song switch): destroy the streaming player while it is
+// still buffering, without ever signalling end-of-stream. This must not hang
+// (the feeder could be parked in a blocking write to ffmpeg's stdin) -- the
+// destructor has to unblock and join it promptly.
+TEST_CASE("FFMPEG stream abort", "[music]")
+{
+    printf("---- ffmpeg stream abort (song switch mid-buffer) ----\n");
+    musix::FFMPEGPlugin plugin;
+    std::ifstream f("testmus/ffmpeg/sample.ogg", std::ios::binary);
+    REQUIRE(f.good());
+    std::vector<uint8_t> bytes((std::istreambuf_iterator<char>(f)),
+                               std::istreambuf_iterator<char>());
+    REQUIRE(!bytes.empty());
+
+    auto fifo = std::make_shared<utils::Fifo<uint8_t>>(32768 * 8);
+    std::unique_ptr<musix::ChipPlayer> player(plugin.fromStream(fifo));
+    REQUIRE(player != nullptr);
+
+    // Feed a bit and pull a few buffers so ffmpeg is actually running, then drop
+    // the player without endStream().
+    int16_t buf[4096];
+    size_t off = 0;
+    for (int i = 0; i < 8 && off < bytes.size(); i++) {
+        int chunk = static_cast<int>(std::min<size_t>(8192, bytes.size() - off));
+        fifo->put(bytes.data() + off, chunk);
+        off += chunk;
+        player->getSamples(buf, 4096);
+    }
+    printf("  ffmpeg running, destroying player without endStream()...\n");
+
+    auto t0 = std::chrono::steady_clock::now();
+    player.reset(); // destructor must return quickly, not deadlock on join()
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                  std::chrono::steady_clock::now() - t0)
+                  .count();
+    printf("  destructor returned in %lldms (must be < 3000, no join deadlock)\n",
+           static_cast<long long>(ms));
+    REQUIRE(ms < 3000);
+    printf("  PASS: clean abort, no hang\n");
+}
 TEST_CASE("HT", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
 TEST_CASE("SC68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
 TEST_CASE("USF", "[music]") { testPlugin<musix::USFPlugin>("testmus/usf", ""); }

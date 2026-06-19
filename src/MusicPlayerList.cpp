@@ -273,7 +273,39 @@ bool MusicPlayerList::playFile(utils::path fileName)
 void MusicPlayerList::cancelStreaming()
 {
     remoteLoader.cancel();
-    mp.clearStreamFifo();
+    // quit() (not clear()) the fifo: if the web thread is blocked in put()
+    // feeding a stream we're abandoning, only quitting unblocks it -- otherwise
+    // it would wedge curl_multi_perform and stall every transfer. streamFile()
+    // allocates a fresh fifo for the next song.
+    mp.abortStream();
+}
+
+// Stream a remote, finite, ffmpeg-decodable file: curl fetches it into a fifo
+// that feeds ffmpeg's stdin, so playback starts after a short prebuffer instead
+// of waiting for the whole file to download. Returns false if no streaming
+// player could be created (caller falls back to a direct ffmpeg URL).
+bool MusicPlayerList::streamRemoteFile(const std::string& path)
+{
+    if (!mp.streamFile(path)) return false;
+
+    auto weakPlayer = mp.getPlayer();
+    auto fifo = mp.getStreamFifo();
+    remoteLoader.stream(
+        path,
+        [weakPlayer, fifo](int what, const uint8_t* data, int size) -> bool {
+            // The player is gone (song switched): returning false aborts the
+            // transfer. abortStream() has already quit this fifo, so any put()
+            // below returns immediately rather than blocking.
+            auto player = weakPlayer.lock();
+            if (!player) return false;
+            if (what == RemoteLoader::DATA && data != nullptr && size > 0) {
+                fifo->put(data, size); // blocks for backpressure (web thread)
+            } else if (what == RemoteLoader::END) {
+                player->endStream();
+            }
+            return true;
+        });
+    return true;
 }
 
 void MusicPlayerList::update()
@@ -527,20 +559,32 @@ void MusicPlayerList::playCurrent()
         return;
     }
 
-    // Radio streaming: let ffmpeg fetch and decode the resolved stream URL
-    // directly. It handles mp3/ogg/aac, redirects and Shoutcast/ICY mounts
-    // (including bare "ICY 200 OK" servers that the curl+mpg123 path rejected).
     bool extStreamable = (ext == "mp3" || ext == "ogg" || ext == "aac" ||
                           ext == "m4a" || ext == "mp4");
-    if (currentInfo.format != "M3U" &&
-        (extStreamable || toLower(currentInfo.format) == "mp3" ||
-         toLower(currentInfo.format) == "ogg")) {
+    // A bare "MP3"/"OGG" codec tag is set only by .pls/.m3u resolution, i.e. a
+    // radio/Shoutcast stream (often an extension-less ICY mount). Those stay on
+    // the direct-ffmpeg-URL path, which handles ICY/redirects/endless streams.
+    bool isRadioStream = (toLower(currentInfo.format) == "mp3" ||
+                          toLower(currentInfo.format) == "ogg");
+    if (currentInfo.format != "M3U" && (extStreamable || isRadioStream)) {
 
         // Resolve "prefix::relpath" to the full URL (source.url + relpath) the
         // way stream()/load() would, so ffmpeg gets a fetchable URL. Passing the
         // raw currentInfo.path would feed ffmpeg the "radio::" prefix ("Protocol
         // not found"), and the bare relpath would be a non-existent local file.
-        if (mp.streamUrl(remoteLoader.resolveUrl(currentInfo.path))) {
+        if (isRadioStream) {
+            // Radio: let ffmpeg fetch and decode the resolved stream URL directly
+            // (handles bare "ICY 200 OK" mounts the curl path rejects).
+            if (mp.streamUrl(remoteLoader.resolveUrl(currentInfo.path))) {
+                SET_STATE(Playstarted);
+            }
+            return;
+        }
+        // A finite remote file (real .mp3/.ogg/... in a collection): stream it
+        // progressively through curl->fifo->ffmpeg so it plays after a short
+        // prebuffer. Fall back to a direct ffmpeg URL if that can't start.
+        if (streamRemoteFile(currentInfo.path) ||
+            mp.streamUrl(remoteLoader.resolveUrl(currentInfo.path))) {
             SET_STATE(Playstarted);
         }
         return;

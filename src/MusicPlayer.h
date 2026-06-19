@@ -43,6 +43,17 @@ public:
     void clearStreamFifo() { stream_fifo->clear(); }
     std::shared_ptr<utils::Fifo<uint8_t>> getStreamFifo() { return stream_fifo; }
 
+    // Tells the current streaming player no more bytes are coming (download
+    // finished), so it can flush and end. See streamFile().
+    void endStream();
+    // Unblocks any producer blocked in stream_fifo->put() (e.g. the web thread
+    // feeding a now-cancelled stream) by quitting the current fifo. streamFile()
+    // allocates a fresh fifo for the next session.
+    void abortStream();
+    // The active player, if any -- used by the streaming feeder to target the
+    // exact session it belongs to (a weak_ptr so a song switch invalidates it).
+    std::weak_ptr<musix::ChipPlayer> getPlayer() { return player; }
+
     void setParameter(const std::string& what, int v);
 
     // Asks the plugin if the given file requires secondary files.

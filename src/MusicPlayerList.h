@@ -154,6 +154,10 @@ private:
     std::vector<std::function<void()>> funcs;
 
     void cancelStreaming();
+    // Progressively streams a finite remote ffmpeg-decodable file (curl -> fifo
+    // -> ffmpeg stdin) so it starts after a short prebuffer instead of a full
+    // download. Returns false if no streaming player could be created.
+    bool streamRemoteFile(const std::string& path);
     bool handlePlaylist(const std::string& fileName);
     void playCurrent();
     bool playFile(utils::path fileName);
