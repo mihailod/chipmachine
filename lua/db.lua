@@ -27,6 +27,14 @@ VERSION = 34;
 
 DB = {
 {
+	name = "unexotica",
+	id =  "unexotica",
+	source = "ftp://files.exotica.org.uk/pub/exotica/media/audio/UnExoticA",
+	song_list = "data/unexotica.txt",
+        song_template = "title game format composer path",
+	color = 0xfffff
+},
+{
 	name = "modarchive",
 	id =  "modarchive",
 	source = "https://api.modarchive.org/downloads.php?moduleid=",

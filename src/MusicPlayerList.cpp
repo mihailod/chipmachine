@@ -1,4 +1,5 @@
 #include "MusicPlayerList.h"
+#include "LhaArchive.h"
 
 #include <algorithm>
 #include <coreutils/log.h>
@@ -481,6 +482,16 @@ void MusicPlayerList::playCurrent()
 
     cancelStreaming();
 
+    // UnExoticA (and any LHA-packed source): the song path is
+    // "<archive>.lha/<member>". Fetch the .lha into the cache, extract its
+    // members, then play the requested member.
+    if (toLower(path).find(".lha/") != std::string::npos) {
+        loadedFile = "";
+        files = 0;
+        loadLhaSong(prefix, path);
+        return;
+    }
+
     bool local_exists = utils::exists(currentInfo.path);
 
     if (local_exists) {
@@ -657,6 +668,59 @@ void MusicPlayerList::loadSecondaryFile(const std::string& s,
             }
             songFiles.push_back(target.exists() ? target : f);
         }
+        files--;
+    });
+}
+
+void MusicPlayerList::loadLhaSong(const std::string& prefix,
+                                  const std::string& path)
+{
+    // Split "<archive>.lha/<member>" into the archive path and the member name.
+    // The music type lives at the FRONT of the member ("mod.mix0" -> a ".mod"
+    // tune), exactly like Modland's prefix-form names, so the player/UADE layer
+    // handles the member as-is.
+    auto lpos = toLower(path).find(".lha/");
+    std::string archiveRel = path.substr(0, lpos + 4); // ".../X.lha"
+    std::string member = path.substr(lpos + 5);        // member after ".lha/"
+
+    // Fetch the archive through the same source as the song so RemoteLoader
+    // resolves it against the collection's base URL (or local mirror).
+    std::string archivePath =
+        prefix.empty() ? archiveRel : (prefix + "::" + archiveRel);
+
+    // Stable per-archive extraction dir under the cache: re-selecting any tune
+    // from the same archive reuses the already-extracted members, and a song's
+    // in-archive companions sit right next to it.
+    auto safeName = prefix + archiveRel;
+    std::replace(safeName.begin(), safeName.end(), '/', '_');
+    auto destDir = (Environment::getCacheDir() / "_lha" / safeName).string();
+    std::string memberFile = destDir + "/" + member;
+
+    // Already extracted in a previous selection -- play it straight away.
+    if (utils::exists(memberFile)) {
+        songFiles.push_back(File(memberFile));
+        loadedFile = memberFile;
+        files = 0;
+        return;
+    }
+
+    files++;
+    remoteLoader.load(archivePath, [=](File f) {
+        if (!f) {
+            errors.emplace_back("Could not load archive");
+            SET_STATE(Error);
+            files--;
+            return;
+        }
+        auto extracted = extractLha(f.getName(), destDir);
+        if (!utils::exists(memberFile)) {
+            errors.emplace_back("Could not extract song from archive");
+            SET_STATE(Error);
+            files--;
+            return;
+        }
+        songFiles.push_back(File(memberFile));
+        loadedFile = memberFile;
         files--;
     });
 }
