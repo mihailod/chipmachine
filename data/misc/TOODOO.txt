@@ -2,6 +2,8 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
+- still some grouping to be done, possibly not from exotica: see pinball illussions
+
 - ability to manually add stuff to database. via a manual.txt file
 
 - ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.

@@ -15,6 +15,7 @@ namespace di = boost::di;
 #include <musicplayer/src/chipplugin.h>
 #include <musicplayer/src/plugins/plugins.h>
 #include <musicplayer/src/plugins/uadeplugin/UADEPlugin.h>
+#include <musicplayer/src/plugins/ffmpegplugin/FFMPEGPlugin.h>
 #include <musicplayer/src/plugins/ptkplugin/PTKPlugin.h>
 #include <musicplayer/src/plugins/openmptplugin/OpenMPTPlugin.h>
 #include <musicplayer/src/plugins/quartetplugin/QuartetPlugin.h>
@@ -268,6 +269,17 @@ TEST_CASE("LHA extract strips wrapper, keeps subdirs", "[lha]")
     check("comment garbage ' Traveling Bits' absent",
           !std::filesystem::exists(dest2 + "/ Traveling Bits"));
     std::filesystem::remove_all(dest2);
+}
+
+// IFF-8SVX Amiga samples (UnExoticA "8svx.<name>") have no UADE eagleplayer;
+// they are routed to the ffmpeg plugin instead (its IFF demuxer decodes them).
+// Guard that routing decision here (no ffmpeg binary needed for canHandle).
+TEST_CASE("FFMPEG claims 8svx samples", "[ffmpeg8svx]")
+{
+    musix::FFMPEGPlugin p;
+    REQUIRE(p.canHandle("8svx.welcome on amiga"));
+    REQUIRE(p.canHandle("song.mp3"));
+    REQUIRE(!p.canHandle("mod.somesong"));
 }
 
 template <typename PLUGIN, typename... ARGS>
