@@ -2,7 +2,49 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
+- we still need some nicer progress show when loading, the ui sometimes stutters for a second or so...
+bubba n stix 2nd one is a good example (clear cache)
+
 - still some grouping to be done, possibly not from exotica: see pinball illussions
+- Some weird naming issue exotica, files weirdly named, extension contains name (?) etc...
+  format: format (song name) ?!
+bubba n stix 1nd one is a good example, also hybris 1st from unexotica
+- Plist support!? Exotica has plist? example: 
+
+- spectrum analyzer: detect if a song is true stereo mode and switch to stereo, if not switch to mono mode
+
+- lethal xcess sc68 some weird behavior on next/prev: default song plays for 1-2 seconds and then it swtitches...
+
+* hybris unexotica fail:
+[RemoteLoader.cpp:77] Local path: /Users/mihailod/Documents/chipmachine-as/build/../chipmachine//Game/van_der_Valk_Paul/Hybris/Custom_Version.lha
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2ffiles.exotica.org.uk%2fpub%2fexotica%2fmedia%2faudio%2fUnExoticA%2fGame%2fvan_der_Valk_Paul%2fHybris/Custom_Version.lha
+[web.cpp:80] Curl Getting ftp://files.exotica.org.uk/pub/exotica/media/audio/UnExoticA/Game/van_der_Valk_Paul/Hybris/Custom_Version.lha
+[web.cpp:181] CODE 550
+[RemoteLoader.cpp:90] CODE 550
+
+* wod fail
+[RemoteLoader.cpp:77] Local path: /Users/mihailod/Documents/chipmachine-as/build/../chipmachine//Game/Hippel_Jochen/Lethal_Xcess/Older_hip7_hipc_versions.lha
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2ffiles.exotica.org.uk%2fpub%2fexotica%2fmedia%2faudio%2fUnExoticA%2fGame%2fHippel_Jochen%2fLethal_Xcess/Older_hip7_hipc_versions.lha
+[web.cpp:80] Curl Getting ftp://files.exotica.org.uk/pub/exotica/media/audio/UnExoticA/Game/Hippel_Jochen/Lethal_Xcess/Older_hip7_hipc_versions.lha
+[web.cpp:181] CODE 550
+[RemoteLoader.cpp:90] CODE 550
+
+* another smus fail:
+search for sll scroll down there is a mix of smus / ss / instr entries almost none play -- figure out this
+[MusicPlayerList.cpp:606] Detected ext: 
+[UADEPlugin.cpp:610] FILENAME 'Aktion_soft_freaks_by_SLL.smus', PREFIX 'Aktion_soft_freaks_by_SLL', EXT 'smus', BASE 'Aktion_soft_freaks_by_SLL'
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/IFF-SMUS/SLL/Aktion_soft_freaks_by_SLL/Instruments/
+[web.cpp:181] CODE 550
+[UADEPlugin.cpp:687] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:237] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fIFF-SMUS%2fSLL%2fAktion_soft_freaks_by_SLL/Aktion_soft_freaks_by_SLL.smus
+[UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fIFF-SMUS%2fSLL%2fAktion_soft_freaks_by_SLL/Instruments/Phil_harding_claps1.instr' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
+[UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fIFF-SMUS%2fSLL%2fAktion_soft_freaks_by_SLL/Instruments/Phil_harding_claps1.instr
+uade warning: Song ended prematurely due to error: score died
+
+* thunderbirds minigsf silent
+
+
 
 - ability to manually add stuff to database. via a manual.txt file
 

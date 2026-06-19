@@ -2600,8 +2600,13 @@ TEST_CASE("coverage", "[music]")
             utils::File folderCheck{ dir };
             if (!folderCheck.exists()) { continue; }
             for (auto const& f : folderCheck.listFiles()) {
+                // Index by both suffix extension AND modland-style prefix, so
+                // prefix-form formats (e.g. "8svx.<name>", "mdat.<name>") whose
+                // "extension" is the songname still count as covered.
                 globalExts.insert(
                     utils::toLower(utils::path_extension(f.getName())));
+                globalExts.insert(
+                    utils::toLower(utils::path_prefix(f.getName())));
             }
         }
     }
@@ -2627,6 +2632,8 @@ TEST_CASE("coverage", "[music]")
                 for (auto const& f : files) {
                     existingExts.insert(
                         utils::toLower(utils::path_extension(f.getName())));
+                    existingExts.insert(
+                        utils::toLower(utils::path_prefix(f.getName())));
                 }
             }
         }
