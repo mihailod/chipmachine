@@ -411,13 +411,13 @@ Extensions: `.coco`
 
 ### Megatracker (Atari ST)
 
-Support for **Megatracker**, a sample-based Atari ST tracker by Cream. Played via the **libxmp** `mgt_loader` (the same shared libxmp slice used for Archimedes Tracker / Coconizer).
+Support for **Megatracker**, a sample-based Atari ST tracker by Cream.
 
 Extensions: `.mgt`
 
 ### SBStudio (MS-DOS)
 
-Support for **SBStudio**, a sample-based MS-DOS tracker by Henning Hellstroem (early 1990s). Played via a vendored copy of Thomas Pfaff's **libpac**.
+Support for **SBStudio**, a sample-based MS-DOS tracker by Henning Hellstroem (early 1990s).
 
 Extensions: `.pac`
 
@@ -465,7 +465,7 @@ Extensions: `.ixs`
 
 ### Monotone
 
-Support for **MONOTONE** (`.mon`), Jim "Trixter" Leonard / Hornet's PC-speaker tracker — up to a dozen square-wave tracks summed into the IBM PC's single 1-bit beeper. Played by the vendored **PTPlayer** library (prochazkaml), which unpacks the module and rebuilds each track's square wave at 44100 Hz. The `.mon` extension is shared with UADE's Amiga *Maniacs of Noise* player, so both UADE and this plugin content-gate on the `\x08MONOTONE` magic — Amiga `.mon` modules stay with UADE, Monotone files route here.
+Support for **MONOTONE** (`.mon`), Jim "Trixter" Leonard / Hornet's PC-speaker tracker — up to a dozen square-wave tracks summed into the IBM PC's single 1-bit beeper.
 
 Extensions: `.mon`
 
