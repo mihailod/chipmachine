@@ -419,6 +419,38 @@ bool MusicDatabase::parseModland(
     return true;
 }
 
+// Returns true if the filename uses the "songname.<audio-extension>" convention
+// (the CD32 Ogg rips) rather than the Amiga "prefix.songname" convention.
+static bool hasAudioExtension(std::string const& fname, size_t lastDot)
+{
+    if (lastDot == std::string::npos) return false;
+    std::string ext = toLower(fname.substr(lastDot + 1));
+    return ext == "ogg" || ext == "mp3" || ext == "wav" || ext == "flac" ||
+           ext == "aiff" || ext == "aif";
+}
+
+// Pull the song name out of an UnExoticA filename. Amiga modules are named
+// "<format-prefix>.<songname>" (mod.load, smus.Intro); CD32 rips are
+// "<songname>.<audio-ext>" (03_ingame.ogg). The first token only counts as a
+// format prefix if it was seen across several different game directories
+// (passed in via prefixes) - that distinguishes real prefixes like "mod" from
+// songname words that merely happen to contain a dot.
+static std::string unexoticaSongName(std::string const& fname,
+                                     std::set<std::string> const& prefixes)
+{
+    auto lastDot = fname.find_last_of('.');
+    if (hasAudioExtension(fname, lastDot)) return fname.substr(0, lastDot);
+
+    auto dot = fname.find('.');
+    if (dot != std::string::npos &&
+        prefixes.count(toLower(fname.substr(0, dot))) > 0)
+        return fname.substr(dot + 1);
+
+    // Unknown layout: keep the whole filename. It is unique within its
+    // directory, so the dedup key can never wrongly fold distinct songs.
+    return fname;
+}
+
 bool MusicDatabase::parseStandard(
     Variables& vars, std::string const& listFile,
     std::function<void(SongInfo const&)> const& callback)
@@ -458,7 +490,57 @@ bool MusicDatabase::parseStandard(
     bool htmlDec = (vars["html_decode"] != "no");
     auto source = vars["source"];
 
+    // UnExoticA's "title" column is a verbose "Game/Song/filename" path and the
+    // "game" column repeats the game name. Rather than show one verbose row per
+    // tune, collapse every tune of a game into a single "MULTI:" entry titled
+    // with the game name (see the grouping loop below): the search results then
+    // list one row per game that the user steps through with left/right, like a
+    // multi-subsong file. A single-tune game stays a normal row titled
+    // "<game>-<songname>" (songname = filename with its format prefix stripped).
+    bool unexotica = (vars["id"] == "unexotica");
+
     File f{ listFile };
+
+    // Pre-pass: determine which leading filename tokens are genuine format
+    // prefixes. A token qualifies only if it heads files in at least two
+    // different game directories - real prefixes (mod, mdat, cust...) span many
+    // games, whereas a songname that happens to contain a dot does not.
+    std::set<std::string> prefixes;
+    if (unexotica) {
+        std::map<std::string, std::set<std::string>> tokenDirs;
+        for (auto const& s : f.getLines()) {
+            std::vector<std::string> parts = split(s, "\t");
+            if ((int)parts.size() <= pathIndex) continue;
+            std::string const& path = parts[pathIndex];
+            auto slash = path.find_last_of('/');
+            std::string dir =
+                (slash != std::string::npos) ? path.substr(0, slash) : "";
+            std::string fname =
+                (slash != std::string::npos) ? path.substr(slash + 1) : path;
+            if (hasAudioExtension(fname, fname.find_last_of('.'))) continue;
+            auto dot = fname.find('.');
+            if (dot == std::string::npos) continue;
+            tokenDirs[toLower(fname.substr(0, dot))].insert(dir);
+        }
+        for (auto const& [tok, dirs] : tokenDirs)
+            if (dirs.size() >= 2) prefixes.insert(tok);
+    }
+
+    // UnExoticA grouping state: every tune of a game is collapsed into a single
+    // "MULTI:" entry (titled with the game name) so the search results show one
+    // row per game that the user steps through with left/right, exactly like a
+    // multi-subsong file. `cur` buffers the entry being built; consecutive rows
+    // with the same game+composer are appended to it.
+    SongInfo cur;
+    bool curValid = false;
+    std::string groupGame, groupComposer;
+    std::set<std::string> groupSongs; // songnames already in the group (dedup)
+
+    auto flush = [&]() {
+        if (curValid) callback(cur);
+        curValid = false;
+        groupSongs.clear();
+    };
 
     for (auto const& s : f.getLines()) {
         std::vector<std::string> parts =
@@ -479,15 +561,62 @@ bool MusicDatabase::parseStandard(
 
             if (parts.size() > metaIndex) metadata = parts[metaIndex];
 
-            song = SongInfo(
-                parts[pathIndex], gameIndex >= 0 ? parts[gameIndex] : "",
-                parts[titleIndex],
-                composerIndex >= 0 ? parts[composerIndex] : composer,
-                formatIndex <= 0 ? format : parts[formatIndex], metadata,
-                extIndex >= 0 ? parts[extIndex] : "");
-            callback(song);
+            std::string gameField = gameIndex >= 0 ? parts[gameIndex] : "";
+            std::string titleField = parts[titleIndex];
+            std::string composerField =
+                composerIndex >= 0 ? parts[composerIndex] : composer;
+            std::string formatField =
+                formatIndex <= 0 ? format : parts[formatIndex];
+
+            if (!unexotica) {
+                song = SongInfo(parts[pathIndex], gameField, titleField,
+                                composerField, formatField, metadata,
+                                extIndex >= 0 ? parts[extIndex] : "");
+                callback(song);
+                continue;
+            }
+
+            // --- UnExoticA path: derive a clean song name, then group ---
+            std::string fname = parts[pathIndex];
+            auto slash = fname.find_last_of('/');
+            if (slash != std::string::npos) fname = fname.substr(slash + 1);
+            std::string songName = unexoticaSongName(fname, prefixes);
+
+            std::string singleTitle =
+                (gameField != "" && songName != "")
+                    ? gameField + "-" + songName
+                    : (songName != "" ? songName : gameField);
+
+            bool sameGroup = curValid && gameField != "" &&
+                             gameField == groupGame &&
+                             composerField == groupComposer;
+
+            if (sameGroup) {
+                // Fold version-duplicates (AGA/ECS/OCS rips share the songname).
+                std::string key = toLower(songName);
+                if (!key.empty() && groupSongs.count(key) > 0) continue;
+                groupSongs.insert(key);
+
+                // Promote the buffered single entry to a MULTI entry the first
+                // time a second tune shows up; its title becomes the game name.
+                if (!startsWith(cur.path, "MULTI:")) {
+                    cur.path = std::string("MULTI:") + cur.path;
+                    cur.title = groupGame;
+                }
+                cur.path += "\t" + parts[pathIndex];
+            } else {
+                flush();
+                cur = SongInfo(parts[pathIndex], "", singleTitle, composerField,
+                               formatField, metadata,
+                               extIndex >= 0 ? parts[extIndex] : "");
+                curValid = true;
+                groupGame = gameField;
+                groupComposer = composerField;
+                if (!songName.empty()) groupSongs.insert(toLower(songName));
+            }
         }
     }
+    flush();
     return true;
 }
 

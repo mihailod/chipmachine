@@ -4,6 +4,7 @@
 #include "src/MusicPlayer.h"
 #include "src/MusicPlayerList.h"
 #include "src/RemoteLoader.h"
+#include "src/LhaArchive.h"
 #include "src/modutils.h"
 
 #include "src/di.hpp"
@@ -217,6 +218,39 @@ TEST_CASE("STarKos host path plays sound", "[music]")
         sum = std::accumulate(data.begin(), data.end(), (int64_t)0);
     }
     REQUIRE(sum != 0);
+}
+
+// UnExoticA archives wrap their payload in a game-named directory and keep some
+// formats' companions (e.g. the Sonix driver's "instruments/") in a subdir.
+// extractLha must strip the wrapper (the DB member paths are relative to inside
+// it) while preserving deeper structure, otherwise SMUS songs lose their
+// instruments and UADE reports "score died".
+TEST_CASE("LHA extract strips wrapper, keeps subdirs", "[lha]")
+{
+    auto dest = (std::filesystem::temp_directory_path() / "cmtest_lha").string();
+    std::filesystem::remove_all(dest);
+    auto names = chipmachine::extractLha(
+        "testmus/lha/Spirit_of_Excalibur.lha", dest);
+    REQUIRE(!names.empty());
+    // Song sits at the extraction root (wrapper stripped) ...
+    REQUIRE(std::filesystem::exists(dest + "/smus.title"));
+    REQUIRE(!std::filesystem::exists(dest + "/Spirit_of_Excalibur"));
+    // ... and the instruments subdirectory the Sonix driver needs survives.
+    REQUIRE(std::filesystem::exists(dest + "/instruments/mclarinet.instr"));
+    std::filesystem::remove_all(dest);
+
+    // Einmal Kanzler sein stores "<realname>\0<comment with '/'>" in the LHA
+    // filename field (Amiga LhA). The lhasa NUL-truncation fix must recover the
+    // real member name; without it every member parsed as " Traveling Bits".
+    auto dest2 =
+        (std::filesystem::temp_directory_path() / "cmtest_lha2").string();
+    std::filesystem::remove_all(dest2);
+    auto names2 = chipmachine::extractLha(
+        "testmus/lha/Einmal_Kanzler_sein.lha", dest2);
+    REQUIRE(names2.size() > 50);
+    REQUIRE(std::filesystem::exists(dest2 + "/mdat.ingame_01"));
+    REQUIRE(!std::filesystem::exists(dest2 + "/ Traveling Bits"));
+    std::filesystem::remove_all(dest2);
 }
 
 template <typename PLUGIN, typename... ARGS>

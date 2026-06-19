@@ -134,6 +134,7 @@ ninja
 * AmigaVibes - http://www.amigavibes.org
 * Demovibes - https://www.demovibes.org
 * Mod Archive - https://modarchive.org
+* Exotica - https://www.exotica.org.uk
 
 ### Demo databases
 

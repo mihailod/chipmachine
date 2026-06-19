@@ -690,10 +690,17 @@ void MusicPlayerList::loadLhaSong(const std::string& prefix,
 
     // Stable per-archive extraction dir under the cache: re-selecting any tune
     // from the same archive reuses the already-extracted members, and a song's
-    // in-archive companions sit right next to it.
+    // in-archive companions are extracted alongside it (preserving subdirs like
+    // "instruments/" that some replayers need -- see extractLha).
+    //
+    // The "_lha" -> "_lha2" bump invalidates caches written by the older,
+    // flattening extractLha: those dropped subdirectories, so reusing them left
+    // e.g. Sonix tunes without their instruments ("score died"). A fresh dir
+    // forces re-extraction with the current layout instead of needing a manual
+    // cache wipe.
     auto safeName = prefix + archiveRel;
     std::replace(safeName.begin(), safeName.end(), '/', '_');
-    auto destDir = (Environment::getCacheDir() / "_lha" / safeName).string();
+    auto destDir = (Environment::getCacheDir() / "_lha2" / safeName).string();
     std::string memberFile = destDir + "/" + member;
 
     // Already extracted in a previous selection -- play it straight away.
