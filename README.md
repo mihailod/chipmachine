@@ -408,6 +408,18 @@ Support for **Coconizer**, a sample-based Acorn Archimedes music format (the sam
 
 Extensions: `.coco`
 
+### Megatracker (Atari ST)
+
+Support for **Megatracker**, a sample-based Atari ST tracker by Cream. Played via the **libxmp** `mgt_loader` (the same shared libxmp slice used for Archimedes Tracker / Coconizer).
+
+Extensions: `.mgt`
+
+### SBStudio (MS-DOS)
+
+Support for **SBStudio**, a sample-based MS-DOS tracker by Henning Hellstroem (early 1990s). Played via a vendored copy of Thomas Pfaff's **libpac**.
+
+Extensions: `.pac`
+
 ### MaxTrax (Amiga)
 
 Support for **MaxTrax**, a commercial custom Amiga sound engine (multiple packing subformats)
@@ -558,6 +570,8 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **Beepola (ZX Spectrum beeper):** The `.bbsong` format and the Beepola tool are by Chris Cowley. Engine players: **Phaser1** by Shiru (public domain, from 1tracker); **Music Box** reverse-engineered from WHAM! The Music Box (original Z80 code by Mark Alexander, 1985); **Music Studio** reverse-engineered from The Music Studio (original Z80 code by Saša Pušica, 1988); **SFX** (Special FX / Fuzz Click) reverse-engineered from the game Firefly (original Z80 code by Jonathan Smith / Special FX Software Ltd) — its player and compiled data format reproduced from Beepola. The in-repo Z80 assembler is ported from 1tracker's `z80ass` (Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1); the ZX Spectrum 48K ROM is redistributed under Amstrad's emulation permission.
 * **SoundSmith (Apple IIgs):** The original SoundSmith tracker is by Huibert Aalbers (1989). The Ensoniq 5503 "DOC" player is a faithful in-process port of the SoundSmith player by Sean Kasun (mrkite). Licensed under BSD-2-Clause.
 * **Archimedes Tracker (Acorn Archimedes):** The original 8-channel *!Tracker* is by Dan Wilson (1991). Playback uses the **libxmp** `arch_loader` by Claudio Matsuoka, Hipolito Carraro Jr and contributors. libxmp is licensed under MIT; the arch loader source file carries an LGPL-2.1-or-later header.
+* **Megatracker (Atari ST):** Megatracker and its `.mgt` format are by Cream (modland `Megatracker/`). Playback uses the **libxmp** `mgt_loader` by Claudio Matsuoka, Hipolito Carraro Jr and contributors, driven through the same shared libxmp slice as Archimedes Tracker / Coconizer. libxmp is licensed under MIT; the loader source file carries an LGPL-2.1-or-later header.
+* **SBStudio (MS-DOS):** SBStudio and its `.pac` format are by Henning Hellstroem (early 1990s; modland `SBStudio/`). Playback uses a vendored copy of **libpac** by Thomas Pfaff (http://libpac.sourceforge.net/), an ANSI C library that decodes a module straight to PCM. Licensed under ISC (permissive MIT-style).
 * **MaxTrax (Amiga):** The MaxTrax sound engine drives games such as *Dark Seed* (music by David A. Bean). Playback uses a vendored port of the **ScummVM** MaxTrax sequencer and Paula mixer, by the ScummVM Team. Licensed under GPL-3.0-or-later.
 * **STarKos (Amstrad CPC):** STarKos is the AY-3-8912 / YM2149 CPC tracker by Targhan / Arkos, predecessor of Arkos Tracker. Playback uses a vendored non-GUI slice of the **Arkos Tracker 3** source by Julien Névo — the author's own `.sks` importer plus the `SongPlayer` engine and `PsgStreamGenerator` software AY/YM renderer (the same path as AT3's headless `SongToWav` tool). Arkos Tracker 3 is licensed under MIT; it is built on three ISC-licensed **JUCE** core modules (`juce_core`, `juce_events`, `juce_audio_basics`) by Raw Material Software / the JUCE team.
 * **NerdTracker II (NES / Famicom):** The original NerdTracker II tracker is by Michel Iwaniec ("Bananmos"). Playback uses the player/loader core of the **NerdTracker 2 SDL port** by thefox (Mika Keränen), which drives blargg's (Shay Green) **Nes_Snd_Emu** 2A03 APU emulation — the same lineage as GME above. The vendored Nes_Snd_Emu (0.1.7) is licensed under LGPL-2.1; the NerdTracker II and SDL-port code is used with attribution. We clock the APU at NTSC speed (the port's bundled `Simple_Apu_PAL` used the PAL clock, which played notes ~a semitone flat).

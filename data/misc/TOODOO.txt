@@ -2,6 +2,14 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
+EXOTICA ISSUES:
+1. format in gui -- needed for deduping, prompt ready
+2. many (all?) lha don't play, maybe some others, needs testing... i think it is the prefix issue (ext.song vs song.ext in lha)
+3. get all new format from exotica, sort by how many and see if they all work
+4. implement collections, example: EINMAL
+5. impement mdat format
+
+
 - ability to manually add stuff to database. via a manual.txt file
 
 - ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
@@ -539,6 +547,9 @@ Tested from GUI with <20:
 
 smpro	9 -- OK Supported — SoundMaster module (magic 0x60, Michiel Soede eagleplayer; confirmed working in memory). But the UADE test's over-broad "smp" substring exclude silently filters futureshock-gameover.smpro (alongside the real sample files turrican2.smpl, smp.starball). No single substring can exclude the samples while keeping .smpro, so I left the test infra alone — it's not a failure, just untested. Flag if you want me to make the exclude extension-precise so it's actually exercised.
 
+mgt	6 -- DONE, implemented!
+pac	6 -- DONE, implemented!
+
 - - - - - formats with <20 songs - - - - -
 
 NONE TESTED FROM GUI (FOR NOW), ONLY CMTEST
@@ -619,6 +630,16 @@ mug	7
 jpo	7
 plm	7
 as3m	7
+xms	6
+sqx	6
+sb	6
+jmf	6
+hip7	6
+fp	6
+core	6
+cff	6
+
+
 
 - - - - -
 
@@ -653,23 +674,6 @@ plist	9 -- !??! mac plist!?
 t0ast	8
 ftf	8
 trk	8
-
-
-
----in progress:---
-
-xms	6
-sqx	6
-sb	6
-pac	6
-mgt	6
-jmf	6
-hip7	6
-fp	6
-core	6
-cff	6
-
-
 
 --------------------------------------
 ----- mostly not triaged below -------

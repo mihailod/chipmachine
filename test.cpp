@@ -779,6 +779,71 @@ TEST_CASE("Coconizer plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// Megatracker (.mgt) -- an Atari ST sample tracker (modland Megatracker/) played
+// by libxmp's mgt_loader. mgtplugin compiles only mgt_load.c and links musxplugin
+// for the shared libxmp slice (same arrangement as cocoplugin).
+TEST_CASE("Megatracker", "[music]") { testPlugin<musix::MgtPlugin>("testmus/megatracker", ""); }
+
+// Guards the loader wiring + the "MGT"/"MCS" magic gate explicitly.
+TEST_CASE("Megatracker plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::MgtPlugin plugin;
+
+    std::string const mgt = "testmus/megatracker/feasible.mgt";
+    REQUIRE(plugin.canHandle(mgt));
+    // Wrong payload on a different extension must be declined.
+    REQUIRE_FALSE(plugin.canHandle("testmus/org/access.org"));
+
+    auto* player = plugin.fromFile(mgt);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
+// SBStudio (.pac) -- a sample-based MS-DOS tracker by Henning Hellstroem (modland
+// SBStudio/) decoded by the vendored libpac (Thomas Pfaff, ISC). sbstudioplugin
+// compiles libpac directly to PCM; this guards the wiring + the PACG magic gate.
+TEST_CASE("SBStudio", "[music]") { testPlugin<musix::SBStudioPlugin>("testmus/sbstudio", ""); }
+
+TEST_CASE("SBStudio plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::SBStudioPlugin plugin;
+
+    std::string const pac = "testmus/sbstudio/silvermoon.pac";
+    REQUIRE(plugin.canHandle(pac));
+    // Wrong payload on a different extension must be declined.
+    REQUIRE_FALSE(plugin.canHandle("testmus/org/access.org"));
+
+    auto* player = plugin.fromFile(pac);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // SunVox (.sunvox, NightRadio's modular synth). The engine ships as a prebuilt,
 // dlopen()ed shared library (MIT licensed, copied next to the test binary by
 // CMake). This exercises the real DB content -- the .sunvox files here are the

@@ -41,6 +41,8 @@ extern "C" {
     void ixsplugin_register();     // Ixalance (.ixs) via webixs (RE'd Shortcut Software synth tracker)
     void musxplugin_register();    // Acorn Archimedes Tracker (.musx) via libxmp arch_loader
     void cocoplugin_register();    // Coconizer / Acorn Archimedes (.coco) via libxmp coco_loader
+    void mgtplugin_register();     // Megatracker / Atari ST (.mgt) via libxmp mgt_loader
+    void sbstudioplugin_register(); // SBStudio / MS-DOS (.pac) via vendored libpac
     void maxtraxplugin_register(); // MaxTrax / Amiga (.mxtx) via ScummVM MaxTrax+Paula
     void sksplugin_register();     // STarKos / Amstrad CPC (.sks) via Arkos Tracker 3
     void nedplugin_register();     // NerdTracker II / NES (.ned) via blargg Nes_Snd_Emu
@@ -90,6 +92,8 @@ void register_plugins() {
     ixsplugin_register();
     musxplugin_register();
     cocoplugin_register();
+    mgtplugin_register();
+    sbstudioplugin_register();
     maxtraxplugin_register();
     sksplugin_register();
     nedplugin_register();

@@ -149,14 +149,23 @@ Component: HivelyTracker (AHX/HVL)
 Author: Developed by IRIS (Peter "Yohng" V, Curt Cool)
 License: BSD-3-Clause
 
-Component: libxmp (Acorn Archimedes Tracker .musx, Coconizer .coco)
+Component: libxmp (Acorn Archimedes Tracker .musx, Coconizer .coco, Megatracker .mgt)
 Author: Developed by Claudio Matsuoka, Hipolito Carraro Jr and contributors
 License: MIT License
-Notice: Only the Archimedes Tracker (arch_load.c) and Coconizer (coco_load.c)
-        loaders plus the minimal libxmp core needed to drive them are compiled in
-        (vendored under zxtune/3rdparty/xmp). The cocoplugin reuses the same
-        libxmp slice as musxplugin. The arch_load.c and coco_load.c source files
-        themselves carry a GNU Lesser General Public License v2.1 or later header.
+Notice: Only the Archimedes Tracker (arch_load.c), Coconizer (coco_load.c) and
+        Megatracker (mgt_load.c) loaders plus the minimal libxmp core needed to
+        drive them are compiled in (vendored under zxtune/3rdparty/xmp). The
+        cocoplugin and mgtplugin reuse the same libxmp slice as musxplugin. The
+        arch_load.c, coco_load.c and mgt_load.c source files themselves carry a
+        GNU Lesser General Public License v2.1 or later header.
+
+Component: libpac (SBStudio .pac)
+Author: Thomas Pfaff (http://libpac.sourceforge.net/)
+License: ISC License (permissive MIT-style)
+Notice: Vendored under musicplayer/src/plugins/sbstudioplugin/libpac. An ANSI C
+        library that decodes SBStudio PAC modules directly to PCM. Used as-is
+        except for one local patch to mix.c (FRAC_MASK shifts an unsigned value
+        to avoid undefined behaviour; the mask value 0x7FFF is unchanged).
 
 Component: FreeType / Grappix (UI & Text)
 Author: The FreeType Project and Grappix contributors
