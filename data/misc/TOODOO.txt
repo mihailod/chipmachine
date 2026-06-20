@@ -10,9 +10,7 @@
 [web.cpp:273] CODE 550
 [RemoteLoader.cpp:159] CODE 550
 
-- try to fetch screenshots for other platforms, see if Claude can come up with some heuristics
-
-* IN PROGRESS ........... another smus fail:
+* (attempted) IN PROGRESS ........... another smus fail, SLL stuff:
 search for sll scroll down there is a mix of smus / ss / instr entries almost none play -- figure out this
 [MusicPlayerList.cpp:606] Detected ext: 
 [UADEPlugin.cpp:610] FILENAME 'Aktion_soft_freaks_by_SLL.smus', PREFIX 'Aktion_soft_freaks_by_SLL', EXT 'smus', BASE 'Aktion_soft_freaks_by_SLL'
