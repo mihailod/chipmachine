@@ -1043,23 +1043,28 @@ SongInfo MusicDatabase::getSongInfo(int index) const
     }
     throw not_found_exception();
 }
-// Lazily load data/hvtc_screenshots.txt ("games/<name>.prg<TAB>url") on first
-// use. Caller must hold screenshotMutex (getSongScreenshots does).
-std::map<std::string, std::string> const& MusicDatabase::getHvtcShots()
+// Lazily load data/<collection>_screenshots.txt ("<song-path><TAB>url") on first
+// use, caching per collection. Caller must hold screenshotMutex
+// (getSongScreenshots does). Used by collections whose art is matched offline
+// against an external DB (hvtc -> Plus/4 World, sndh -> Atari Mania), both served
+// via the Wayback mirror.
+std::map<std::string, std::string> const& MusicDatabase::getFileShots(
+    std::string const& collection)
 {
-    if (!hvtcShotsLoaded) {
-        hvtcShotsLoaded = true;
-        File f{ workDir.string(), "data/hvtc_screenshots.txt" };
-        if (f.exists()) {
-            for (auto const& line : f.getLines()) {
-                auto tab = line.find('\t');
-                if (tab != std::string::npos)
-                    hvtcShots[line.substr(0, tab)] = line.substr(tab + 1);
-            }
-            LOGD("Loaded %d hvtc screenshots", (int)hvtcShots.size());
+    auto it = fileShots.find(collection);
+    if (it != fileShots.end()) return it->second;
+
+    auto& m = fileShots[collection];   // inserts empty map (the "loaded" marker)
+    File f{ workDir.string(), "data/" + collection + "_screenshots.txt" };
+    if (f.exists()) {
+        for (auto const& line : f.getLines()) {
+            auto tab = line.find('\t');
+            if (tab != std::string::npos)
+                m[line.substr(0, tab)] = line.substr(tab + 1);
         }
+        LOGD("Loaded %d %s screenshots", (int)m.size(), collection.c_str());
     }
-    return hvtcShots;
+    return m;
 }
 
 std::string MusicDatabase::getSongScreenshots(SongInfo& s)
@@ -1097,17 +1102,18 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         s.metadata[SongInfo::SCREENSHOT] = shot;
         s.metadata[SongInfo::INFO] = "";
         LOGV("Got pouet shot %s", shot);
-    } else if (collection == "hvtc") {
-        // Plus/4 game/demo screenshots from Plus/4 World, served via the
-        // Wayback mirror (the live host is flaky). Full URLs stored in
-        // data/hvtc_screenshots.txt, keyed by the song's "games/<name>.prg"
-        // path. Only games/ entries have screenshots; others fall through blank.
-        auto const& shots = getHvtcShots();
+    } else if (collection == "hvtc" || collection == "sndh") {
+        // Game screenshots matched offline against an external database and
+        // served via the Wayback mirror: hvtc -> Plus/4 World (keyed by
+        // "games/<name>.prg"), sndh -> Atari Mania (keyed by
+        // "<composer>/<game>.sndh"). Full URLs in data/<collection>_screenshots
+        // .txt. Tunes with no match (demoscene tunes, gaps) fall through blank.
+        auto const& shots = getFileShots(collection);
         auto it = shots.find(parts[1]);
         if (it != shots.end()) {
             shot = it->second;
             s.metadata[SongInfo::SCREENSHOT] = shot;
-            LOGV("Got hvtc shot %s", shot);
+            LOGV("Got %s shot %s", collection, shot);
         }
     } else {
         auto q = sdb.query<std::string, std::string, std::string, std::string>(

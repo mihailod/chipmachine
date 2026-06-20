@@ -4,8 +4,6 @@
 
 - try to fetch screenshots for other platforms, see if Claude can come up with some heuristics
 
-- still some grouping to be done, possibly not from exotica: see pinball illusions
-
 * IN PROGRESS ........... another smus fail:
 search for sll scroll down there is a mix of smus / ss / instr entries almost none play -- figure out this
 [MusicPlayerList.cpp:606] Detected ext: 
