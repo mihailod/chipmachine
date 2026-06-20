@@ -1102,14 +1102,26 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         s.metadata[SongInfo::SCREENSHOT] = shot;
         s.metadata[SongInfo::INFO] = "";
         LOGV("Got pouet shot %s", shot);
-    } else if (collection == "hvtc" || collection == "sndh") {
+    } else if (collection == "hvtc" || collection == "sndh" ||
+               collection == "unexotica") {
         // Game screenshots matched offline against an external database and
         // served via the Wayback mirror: hvtc -> Plus/4 World (keyed by
         // "games/<name>.prg"), sndh -> Atari Mania (keyed by
-        // "<composer>/<game>.sndh"). Full URLs in data/<collection>_screenshots
-        // .txt. Tunes with no match (demoscene tunes, gaps) fall through blank.
+        // "<composer>/<game>.sndh"), unexotica -> Hall of Light (keyed by the
+        // per-game "/Game/<composer>/<game>.lha" identifier). Full URLs in
+        // data/<collection>_screenshots.txt. No match -> blank.
+        std::string key = parts[1];
+        if (collection == "unexotica") {
+            // The song path is one (or a MULTI: list of) module path(s) inside
+            // the game's .lha; reduce it to the shared "/Game/.../<game>.lha"
+            // identifier that the screenshot map is keyed on.
+            auto game = key.find("/Game/");
+            auto lha = key.find(".lha");
+            if (game != std::string::npos && lha != std::string::npos)
+                key = key.substr(game, lha + 4 - game);
+        }
         auto const& shots = getFileShots(collection);
-        auto it = shots.find(parts[1]);
+        auto it = shots.find(key);
         if (it != shots.end()) {
             shot = it->second;
             s.metadata[SongInfo::SCREENSHOT] = shot;
