@@ -30,8 +30,39 @@ Format is set to be the same as the file extention.
 
 Current distinct file extentions
 ```
-XM
-UMX
+|  cnt  | ext  |
+|-------|------|
+| 76064 | MOD  |
+| 47000 | XM   |
+| 19437 | IT   |
+| 10733 | S3M  |
+| 692   | AHX  |
+| 463   | MPTM |
+| 374   | MTM  |
+| 192   | MED  |
+| 162   | 669  |
+| 127   | MDL  |
+| 111   | MO3  |
+| 71    | STM  |
+| 44    | GDM  |
+| 39    | DBM  |
+| 34    | C67  |
+| 33    | AMF  |
+| 31    | DMF  |
+| 21    | MT2  |
+| 16    | OKT  |
+| 13    | HVL  |
+| 11    | PTM  |
+| 6     | IMF  |
+| 6     | DTM  |
+| 5     | AMS  |
+| 4     | ULT  |
+| 4     | PLM  |
+| 3     | DSM  |
+| 2     | SFX  |
+| 2     | FAR  |
+| 2     | DIGI |
+| 1     | UMX  |
 ```
 
 data/modarchive.txt
