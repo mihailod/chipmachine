@@ -2,6 +2,8 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
+- randomize user agent
+
 - we still need some nicer progress show when loading, the ui sometimes stutters for a second or so...
 bubba n stix 2nd one is a good example (clear cache)
 
@@ -13,7 +15,7 @@ bubba n stix 1nd one is a good example, also hybris 1st from unexotica
 
 - spectrum analyzer: detect if a song is true stereo mode and switch to stereo, if not switch to mono mode
 
-- lethal xcess sc68 some weird behavior on next/prev: default song plays for 1-2 seconds and then it swtitches...
+- lethal xcess sc68 some weird behavior on next/prev: default song plays for 1-2 seconds and then it switches... and it skips around and plays some garbage
 
 
 * IN PROGRESS ........... another smus fail:
@@ -30,17 +32,6 @@ search for sll scroll down there is a mix of smus / ss / instr entries almost no
 uade warning: Song ended prematurely due to error: score died
 
 * thunderbirds minigsf all songs silent
-
-* gauge
-[RemoteLoader.cpp:77] Local path: /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/1
-[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/https%3a%2f%2fapi.modarchive.org/downloads.php%3fmoduleid=1
-[web.cpp:80] Curl Getting https://api.modarchive.org/downloads.php?moduleid=1
-[web.cpp:181] CODE 200
-[RemoteLoader.cpp:90] CODE 200
-[MusicPlayerList.cpp:607] Detected ext: XM
-[MusicPlayerList.cpp:614] Detected ext from Content-Disposition: php%3fmoduleid=1
-[MusicPlayerList.cpp:615] New ext from Content-Disposition: .xm
-
 
 - ability to manually add stuff to database. via a manual.txt file
 
@@ -61,7 +52,8 @@ Also look at the zx repositories below, maybe someone already did this.
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
 
-1. ***IN PROGRESS!*** The Mod Archive
+1. *** DONE *** The Mod Archive
+>>>>>>>>>>>>>>ADDED: 155,703 songs
 URL: [https://modarchive.org](https://modarchive.org)
 What it is: The single largest, active repository for tracker modules (.mod, .xm, .it, .s3m). While Modland is a massive raw FTP dump, Mod Archive is highly curated, reviewed, and rated by the community. Essential for tracker history.  
 The Mod Archive (Do Not Scrape)
@@ -70,8 +62,8 @@ Navigate directly to http://tracker.modarchive.org/
 Download the core snapshot torrents (e.g., modarchive_2007_official_snapshot_120000_modules) which forms the massive base archive.
 Download the chronological addendum torrents (e.g., modarchive_2012_additions, etc.) to bring your local collection up to date.
 
-2. ***DONE!*** ExoticA / UnExoticA
-ADDDED: (9145 songs, 1949 collapsed entries)
+2. ***DONE 155,703 *** ExoticA / UnExoticA
+>>>>>>>>>>>>>>ADDDED: (9145 songs, 1949 collapsed entries)
 URL: [https://www.exotica.org.uk](https://www.exotica.org.uk)
 What it is: You have janeway.exotica.org.uk listed under demo databases, but you are missing the main site's crown jewel: UnExoticA. It tracks custom, exotic Amiga game music formats that don't fit into standard trackers (e.g., TFMX, Custom, HippoPlayer formats, Sonic Arranger).
 The site is heavily indexed and explicitly hosts single-file download collections for its entire music subsystem so you don't have to scrape thousands of individual game folders.
