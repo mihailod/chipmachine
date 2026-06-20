@@ -23,7 +23,10 @@
 -- 33: added Karolina radio station
 -- 34: skip KrisHatlelid "songplay" driver files (companion, not a standalone
 --     song; it sorted before the .kh and became the MULTI: primary -> silent)
-VERSION = 34;
+-- 35: The Sid Station radio: switched from the :2199 HTTPS .pls redirector
+--     (which hangs the in-app fetch -> "BUFFERING..." forever) to the direct
+--     :8144 HTTP Shoutcast MP3 stream, so it plays without a playlist fetch
+VERSION = 35;
 
 DB = {
 {

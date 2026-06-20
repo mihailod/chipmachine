@@ -613,7 +613,12 @@ void MusicPlayerList::playCurrent()
                 auto newFile = fname + wantExt;
 		LOGD("Detected ext from Content-Disposition: %s", curExt.c_str());
 		LOGD("New ext from Content-Disposition: %s", wantExt.c_str());
-                rename(fname.c_str(), newFile.c_str());
+                // Copy, don't rename: the original URL-named file IS the cache
+                // entry that getFile()/inCache() look up next time. Renaming it
+                // away makes every replay miss the cache and re-download (e.g.
+                // modarchive "downloads.php?moduleid=N" -> N.mod). The extension
+                // copy is what the player routes on; the bare original stays put.
+                if (!File::exists(newFile)) File::copy(fname, newFile);
                 f0 = File{ newFile };
             }
         }

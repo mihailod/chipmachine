@@ -580,6 +580,51 @@ void ChipMachine::update()
 
     playerState = player.getState();
 
+    // Show a "LOADING..." toast while a song that is not already in the local
+    // cache is being fetched, and clear it the moment playback starts (or the
+    // load otherwise ends). Cached songs load instantly, so they get no toast.
+    if (playerState == MusicPlayerList::Loading) {
+        if (!loadingToastChecked) {
+            loadingToastChecked = true;
+            auto rawPath = player.getInfo().path;
+            auto loadingPath = utils::toLower(rawPath);
+            // A file already present on local disk plays instantly -> no toast.
+            bool isLocal = utils::exists(rawPath);
+            // Radio and the ffmpeg-decoded formats are streamed rather than
+            // played from a finished local file, so they "buffer".
+            bool streamed = utils::startsWith(loadingPath, "radio::") ||
+                            utils::endsWith(loadingPath, ".mp3") ||
+                            utils::endsWith(loadingPath, ".ogg") ||
+                            utils::endsWith(loadingPath, ".aac") ||
+                            utils::endsWith(loadingPath, ".m4a") ||
+                            utils::endsWith(loadingPath, ".mp4") ||
+                            utils::endsWith(loadingPath, ".8svx");
+            if (isLocal) {
+                // nothing to fetch
+            } else if (streamed) {
+                toast("BUFFERING...", STICKY);
+                loadingToastShown = true;
+            } else {
+                bool cached = false;
+                try {
+                    cached = remoteLoader.inCache(rawPath);
+                } catch (...) {
+                    cached = false; // unknown source -> assume it needs fetching
+                }
+                if (!cached) {
+                    toast("LOADING...", STICKY);
+                    loadingToastShown = true;
+                }
+            }
+        }
+    } else {
+        loadingToastChecked = false;
+        if (loadingToastShown) {
+            removeToast();
+            loadingToastShown = false;
+        }
+    }
+
     if (playerState == MusicPlayerList::Playstarted) {
         timeField.add = 0;
         // Restart stereo content detection for the new tune.

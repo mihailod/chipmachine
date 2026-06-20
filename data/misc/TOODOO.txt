@@ -2,10 +2,12 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-- we still need some nicer progress show when loading, the ui sometimes stutters for a second or so...
-bubba n stix 2nd one is a good example (clear cache)
+- try to make ENTER more responsive
+
+- try to fetch screenshots for other platforms, see if Claude can come up with some heuristics
 
 - still some grouping to be done, possibly not from exotica: see pinball illussions
+
 - Some weird naming issue exotica, files weirdly named, extension contains name (?) etc...
   format: format (song name) ?!
 bubba n stix 1nd one is a good example, also hybris 1st from unexotica

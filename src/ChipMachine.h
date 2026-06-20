@@ -353,6 +353,9 @@ private:
 
     MusicBars musicBars;
     MusicPlayerList::State playerState;
+    // "LOADING..." toast shown while a non-cached song is being fetched.
+    bool loadingToastShown = false;
+    bool loadingToastChecked = false;
     std::string scrollText;
 
     struct Command
