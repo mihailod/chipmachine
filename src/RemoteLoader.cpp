@@ -16,9 +16,10 @@ RemoteLoader::RemoteLoader()
 
 void RemoteLoader::registerSource(const std::string& name,
                                   const std::string url,
-                                  const std::string local_dir)
+                                  const std::string local_dir,
+                                  const std::string fallback_url)
 {
-    Source s(url, local_dir);
+    Source s(url, local_dir, fallback_url);
     if (s.local_dir != "" && !endsWith(s.local_dir, "/")) s.local_dir += "/";
     sources[name] = s;
 }
@@ -86,7 +87,15 @@ bool RemoteLoader::load(const std::string& p, function<void(File f)> done_cb)
         url = url.substr(0, url.length() - 4);
     }
 
-    lastSession = webgetter.getFile(url, [=](webutils::WebJob job) {
+    // If the primary source has a fallback (e.g. hvtc: fast Wayback mirror with
+    // partial coverage, flaky live host as authoritative backup), retry there
+    // when the primary fetch returns nothing (404 from Wayback for an unarchived
+    // tune, or a connection failure). The web layer deletes the target on any
+    // non-200, so a failed primary leaves no stale file to confuse the player.
+    string fallback = source.fallback_url.empty() ? ""
+                                                   : source.fallback_url + path;
+
+    auto finish = [=](webutils::WebJob job) {
         LOGD("CODE %d", job.code());
         auto f = job.file();
         string fileName = f.getName();
@@ -111,6 +120,20 @@ bool RemoteLoader::load(const std::string& p, function<void(File f)> done_cb)
             return;
         }
         done_cb(f);
+    };
+
+    lastSession = webgetter.getFile(url, [=](webutils::WebJob job) {
+        // rc == -1 means the file was served from the local cache (no curl
+        // handle) — that's a success, not a failure. Only 200 responses are
+        // ever cached, so a cache hit is always valid. Fall back only on a real
+        // network/HTTP failure (0 = no response, >=400 = error).
+        long rc = job.code();
+        if (rc != 200 && rc != 226 && rc != -1 && !fallback.empty()) {
+            LOGD("Primary failed (%ld), retrying via fallback %s", rc, fallback);
+            webgetter.getFile(fallback, finish);
+            return;
+        }
+        finish(job);
     });
     return true;
 }

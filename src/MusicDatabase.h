@@ -290,6 +290,12 @@ private:
     RemoteLoader& remoteLoader;
     utils::path workDir;
 
+    // Lazily-loaded HVTC (Plus/4) song-path -> screenshot URL map, read from
+    // data/hvtc_screenshots.txt (full Wayback URLs). Guarded by screenshotMutex.
+    std::map<std::string, std::string> hvtcShots;
+    bool hvtcShotsLoaded = false;
+    std::map<std::string, std::string> const& getHvtcShots();
+
     SearchIndex composerIndex;
     SearchIndex titleIndex;
 

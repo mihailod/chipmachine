@@ -1043,6 +1043,25 @@ SongInfo MusicDatabase::getSongInfo(int index) const
     }
     throw not_found_exception();
 }
+// Lazily load data/hvtc_screenshots.txt ("games/<name>.prg<TAB>url") on first
+// use. Caller must hold screenshotMutex (getSongScreenshots does).
+std::map<std::string, std::string> const& MusicDatabase::getHvtcShots()
+{
+    if (!hvtcShotsLoaded) {
+        hvtcShotsLoaded = true;
+        File f{ workDir.string(), "data/hvtc_screenshots.txt" };
+        if (f.exists()) {
+            for (auto const& line : f.getLines()) {
+                auto tab = line.find('\t');
+                if (tab != std::string::npos)
+                    hvtcShots[line.substr(0, tab)] = line.substr(tab + 1);
+            }
+            LOGD("Loaded %d hvtc screenshots", (int)hvtcShots.size());
+        }
+    }
+    return hvtcShots;
+}
+
 std::string MusicDatabase::getSongScreenshots(SongInfo& s)
 {
     // Called from a detached thread in MusicPlayerList. lookup() has already
@@ -1078,6 +1097,18 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         s.metadata[SongInfo::SCREENSHOT] = shot;
         s.metadata[SongInfo::INFO] = "";
         LOGV("Got pouet shot %s", shot);
+    } else if (collection == "hvtc") {
+        // Plus/4 game/demo screenshots from Plus/4 World, served via the
+        // Wayback mirror (the live host is flaky). Full URLs stored in
+        // data/hvtc_screenshots.txt, keyed by the song's "games/<name>.prg"
+        // path. Only games/ entries have screenshots; others fall through blank.
+        auto const& shots = getHvtcShots();
+        auto it = shots.find(parts[1]);
+        if (it != shots.end()) {
+            shot = it->second;
+            s.metadata[SongInfo::SCREENSHOT] = shot;
+            LOGV("Got hvtc shot %s", shot);
+        }
     } else {
         auto q = sdb.query<std::string, std::string, std::string, std::string>(
             "SELECT product.title, product.screenshots, product.type, "
@@ -1339,7 +1370,17 @@ void MusicDatabase::generateIndex()
         if (!c.local_dir.empty() && !c.local_dir.is_absolute())
             c.local_dir = workDir / c.local_dir;
         // NOTE c.name is really c.id
-        loader.registerSource(c.name, c.url, c.local_dir.string());
+        // hvtc songs live on plus4world.powweb.com, a flaky shared host (~20s
+        // per .prg, intermittent connection failures). Serve them from the fast
+        // Wayback mirror first, falling back to the live host for the ~34% of
+        // tunes Wayback never archived. Derived from c.url so no DB/db.lua change.
+        if (c.name == "hvtc") {
+            std::string live = c.url;
+            std::string wayback = "https://web.archive.org/web/2id_/" + live;
+            loader.registerSource(c.name, wayback, c.local_dir.string(), live);
+        } else {
+            loader.registerSource(c.name, c.url, c.local_dir.string());
+        }
     }
     auto indexPath = Environment::getCacheDir() / "index.dat";
 

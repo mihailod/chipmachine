@@ -16,8 +16,11 @@ class RemoteLoader
 public:
     RemoteLoader();
 
+    // `fallback_url`, when set, is tried if a fetch from `url` fails (non-200).
+    // Used for collections whose fast/reliable mirror has partial coverage
+    // (e.g. hvtc: Wayback primary, flaky live host as authoritative fallback).
     void registerSource(const std::string& name, std::string url,
-                        std::string local_dir);
+                        std::string local_dir, std::string fallback_url = "");
 
     bool load(const std::string& path,
               std::function<void(utils::File)> done_cb);
@@ -77,11 +80,13 @@ private:
     struct Source
     {
         Source() = default;
-        Source(const std::string& url, const std::string& ld)
-            : url(url), local_dir(ld)
+        Source(const std::string& url, const std::string& ld,
+               const std::string& fb = "")
+            : url(url), local_dir(ld), fallback_url(fb)
         {}
         std::string url;
         std::string local_dir;
+        std::string fallback_url;
     };
 
     std::unordered_map<std::string, Source> sources;

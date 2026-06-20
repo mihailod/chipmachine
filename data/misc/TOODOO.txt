@@ -2,8 +2,6 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-- try to make ENTER more responsive
-
 - try to fetch screenshots for other platforms, see if Claude can come up with some heuristics
 
 - still some grouping to be done, possibly not from exotica: see pinball illussions
@@ -11,8 +9,6 @@
 - Some weird naming issue exotica, files weirdly named, extension contains name (?) etc...
   format: format (song name) ?!
 bubba n stix 1nd one is a good example, also hybris 1st from unexotica
-
-- Plist support!? Exotica has plist? example: 
 
 - lethal xcess sc68 some weird behavior on next/prev: default song plays for 1-2 seconds and then it switches... and it skips around and plays some garbage
 
