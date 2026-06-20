@@ -3,6 +3,8 @@
 #include <coreutils/log.h>
 #include <coreutils/split.h>
 
+#include <algorithm>
+
 using namespace std;
 using namespace utils;
 
@@ -26,6 +28,36 @@ void RemoteLoader::registerSource(const std::string& name,
 
 bool RemoteLoader::inCache(const std::string& p) const
 {
+    // LHA-packed sources (UnExoticA et al): the played tune is not the member
+    // URL in the web cache but an extracted member under
+    // <cache>/_lha2/<safeName>/<member>. The web cache only ever holds the .lha
+    // archive (keyed by its own URL), so the plain member-URL lookup below
+    // always misses and these tunes never report as cached (no "*" hint, and a
+    // spurious LOADING toast). Mirror MusicPlayerList::loadLhaSong's path scheme
+    // and treat an extracted member as a cache hit.
+    if (toLower(p).find(".lha/") != string::npos) {
+        string prefix, rel;
+        const auto parts = split(p, "::");
+        if (parts.size() > 1) {
+            prefix = parts[0];
+            rel = parts[1];
+        } else {
+            rel = p;
+        }
+        auto lpos = toLower(rel).find(".lha/");
+        if (lpos != string::npos) {
+            string archiveRel = rel.substr(0, lpos + 4); // ".../X.lha"
+            string member = rel.substr(lpos + 5);         // member after ".lha/"
+            string safeName = prefix + archiveRel;
+            std::replace(safeName.begin(), safeName.end(), '/', '_');
+            string memberFile =
+                (Environment::getCacheDir() / "_lha2" / safeName).string() +
+                "/" + member;
+            if (File::exists(memberFile)) return true;
+        }
+        // Not extracted yet -- fall through to the normal checks.
+    }
+
     Source source;
     string path = p;
     const auto parts = split(path, "::");

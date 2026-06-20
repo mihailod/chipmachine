@@ -4,13 +4,11 @@
 
 - try to fetch screenshots for other platforms, see if Claude can come up with some heuristics
 
-- still some grouping to be done, possibly not from exotica: see pinball illussions
+- still some grouping to be done, possibly not from exotica: see pinball illusions
 
 - Some weird naming issue exotica, files weirdly named, extension contains name (?) etc...
   format: format (song name) ?!
 bubba n stix 1nd one is a good example, also hybris 1st from unexotica
-
-- lethal xcess sc68 some weird behavior on next/prev: default song plays for 1-2 seconds and then it switches... and it skips around and plays some garbage
 
 * IN PROGRESS ........... another smus fail:
 search for sll scroll down there is a mix of smus / ss / instr entries almost none play -- figure out this
@@ -24,8 +22,6 @@ search for sll scroll down there is a mix of smus / ss / instr entries almost no
 [UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fIFF-SMUS%2fSLL%2fAktion_soft_freaks_by_SLL/Instruments/Phil_harding_claps1.instr' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
 [UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fIFF-SMUS%2fSLL%2fAktion_soft_freaks_by_SLL/Instruments/Phil_harding_claps1.instr
 uade warning: Song ended prematurely due to error: score died
-
-* thunderbirds minigsf all songs silent
 
 - ability to manually add stuff to database. via a manual.txt file
 
