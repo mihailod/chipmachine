@@ -2,14 +2,6 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-* advanced ski simulator error
-[RemoteLoader.cpp:138] Local path: /Users/mihailod/Documents/chipmachine-as/build/../chipmachine//Game/Barrett_Steve/Advanced_Ski_Simulator/Custom_Version.lha
-[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2ffiles.exotica.org.uk%2fpub%2fexotica%2fmedia%2faudio%2fUnExoticA%2fGame%2fBarrett_Steve%2fAdvanced_Ski_Simulator/Custom_Version.lha
-[MusicDatabase.cpp:1065] Loaded 179 unexotica screenshots
-[web.cpp:161] Curl Getting ftp://files.exotica.org.uk/pub/exotica/media/audio/UnExoticA/Game/Barrett_Steve/Advanced_Ski_Simulator/Custom_Version.lha
-[web.cpp:273] CODE 550
-[RemoteLoader.cpp:159] CODE 550
-
 * (attempted) IN PROGRESS ........... another smus fail, SLL stuff:
 search for sll scroll down there is a mix of smus / ss / instr entries almost none play -- figure out this
 [MusicPlayerList.cpp:606] Detected ext: 

@@ -26,7 +26,12 @@
 -- 35: The Sid Station radio: switched from the :2199 HTTPS .pls redirector
 --     (which hangs the in-app fetch -> "BUFFERING..." forever) to the direct
 --     :8144 HTTP Shoutcast MP3 stream, so it plays without a playlist fetch
-VERSION = 35;
+-- 36: Fixed 762 malformed UnExoticA paths where a per-version subdir inside the
+--     product .lha (Custom_Version, Direct_from_Composer, Bonus, AGA_Version, ...)
+--     was encoded as "<Game>/<Version>.lha/<member>" -> FTP 550. The real archive
+--     is "<Game>.lha" with the version as an inner dir, so they are now
+--     "<Game>.lha/<Version>/<member>" (e.g. Advanced Ski Simulator Custom).
+VERSION = 36;
 
 DB = {
 {
