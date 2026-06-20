@@ -60,7 +60,12 @@ DB = {
 	name = "Gamebase64",
 	id =  "gb64",
 	prod_list = "data/Games.csv",
-	screen_source = "http://www.gb64.com/Screenshots/",
+	-- gb64.com is now behind a Cloudflare JS/Turnstile challenge that returns 403
+	-- to every non-browser client (no User-Agent or header trick gets past it).
+	-- The Wayback Machine still mirrors the original screenshots and isn't gated;
+	-- the "2id_" modifier serves the raw latest-snapshot image, following the
+	-- internal redirect, so the existing "<prefix><L/Name.png>" URLs keep working.
+	screen_source = "https://web.archive.org/web/2id_/http://www.gb64.com/Screenshots/",
 	index = "no",
 	color = 0xfffff
 },
