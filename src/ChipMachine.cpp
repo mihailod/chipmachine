@@ -582,6 +582,10 @@ void ChipMachine::update()
 
     if (playerState == MusicPlayerList::Playstarted) {
         timeField.add = 0;
+        // Restart stereo content detection for the new tune.
+        stereoDiffAccum = 0;
+        stereoSumAccum = 0;
+        stereoDetectFrames = 0;
         currentInfo = player.getInfo();
         dbInfo = player.getDBInfo();
         screen.setTitle(utils::format("%s / %s (" PROGRAM_NAME " " VERSION_STR ")",
@@ -772,6 +776,27 @@ void ChipMachine::update()
             updateEq(spectrum.right[i], eqRight[i]);
             updateEq((spectrum.left[i] + spectrum.right[i]) / 2, eqMono[i]);
             eq[i] = eqMono[i];
+
+            // Accumulate per-channel difference vs. total energy. A mono source
+            // (or a tune that simply duplicates one channel) yields left==right
+            // across all slots, so the ratio stays at zero.
+            int d = (int)spectrum.left[i] - (int)spectrum.right[i];
+            stereoDiffAccum += (d < 0) ? -d : d;
+            stereoSumAccum += (int)spectrum.left[i] + (int)spectrum.right[i];
+        }
+
+        if (autoStereoDetect && ++stereoDetectFrames >= 45) {
+            // Hysteresis: need a clear difference to flip to stereo, and near
+            // silence between the channels to fall back to mono.
+            if (stereoSumAccum > 1) {
+                double ratio = stereoDiffAccum / stereoSumAccum;
+                if (!stereoSpectrum && ratio > 0.03) stereoSpectrum = true;
+                else if (stereoSpectrum && ratio < 0.01) stereoSpectrum = false;
+            }
+            // Roll the window so the detector keeps tracking the live signal.
+            stereoDiffAccum *= 0.5;
+            stereoSumAccum *= 0.5;
+            stereoDetectFrames = 0;
         }
     }
     bool busy = (playerState == MusicPlayerList::Loading || webutils::Web::inProgress() > 0);

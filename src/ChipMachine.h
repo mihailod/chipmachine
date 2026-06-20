@@ -252,6 +252,12 @@ private:
     SpectrumAnalyzer fft;
     SpectrumAnalyzer::StereoLevels spectrum;
     bool stereoSpectrum = true;
+    // When true, stereoSpectrum follows automatic L/R content detection.
+    // CTRL+M cycles Auto -> Mono -> Stereo.
+    bool autoStereoDetect = true;
+    double stereoDiffAccum = 0;
+    double stereoSumAccum = 0;
+    int stereoDetectFrames = 0;
     int spectrumGap = 4;
     int musicBarsWidth = 0;
 

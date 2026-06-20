@@ -119,9 +119,9 @@ void ChipMachine::setupRules()
     addKey('g' | CTRL, "favorite_shuffle");
     addKey('-', "volume_down");
     addKey({ '+', '=' }, "volume_up");
-    addKey('m' | CTRL, "Stereo/Mono_Spectrum_Analyzer");
+    addKey('m' | CTRL, "Stereo/Mono/Auto_Spectrum_Analyzer");
     auto spectrumToggle = std::find(commands.begin(), commands.end(),
-                                    "Stereo/Mono_Spectrum_Analyzer");
+                                    "Stereo/Mono/Auto_Spectrum_Analyzer");
     if (spectrumToggle != commands.end()) spectrumToggle->shortcut = "CTRL+M";
     addKey(keycodes::TAB, "toggle_command");
     addKey(keycodes::HOME, "local_file_playback");

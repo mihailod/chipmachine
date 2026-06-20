@@ -13,8 +13,23 @@ void ChipMachine::setupCommands()
         commands.emplace_back(name, f);
     };
 
-    cmd("Stereo/Mono_Spectrum_Analyzer", [=] {
-        stereoSpectrum = !stereoSpectrum;
+    cmd("Stereo/Mono/Auto_Spectrum_Analyzer", [=] {
+        // Cycle Auto -> Mono -> Stereo so the user keeps manual control while
+        // still being able to return to automatic content detection.
+        if (autoStereoDetect) {
+            autoStereoDetect = false;
+            stereoSpectrum = false;
+            toast("Spectrum: Mono", NORMAL);
+        } else if (!stereoSpectrum) {
+            stereoSpectrum = true;
+            toast("Spectrum: Stereo", NORMAL);
+        } else {
+            autoStereoDetect = true;
+            stereoDiffAccum = 0;
+            stereoSumAccum = 0;
+            stereoDetectFrames = 0;
+            toast("Spectrum: Auto", NORMAL);
+        }
         musicBarsWidth = stereoSpectrum ? spectrumWidth : spectrumWidth * 2;
         musicBars.setup(musicBarsWidth, spectrumHeight);
     });
