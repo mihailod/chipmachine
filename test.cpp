@@ -1654,6 +1654,70 @@ TEST_CASE("UADE SMUS tolerates a missing .ss sample", "[.smusmiss]")
     REQUIRE(energy != 0);
 }
 
+// Network test (hidden): cmtest "[.smusinstr]". Some rips drop a whole ".instr"
+// the score references (SLL/Super_sll_disco lists "Warriors1" first, but
+// Warriors1.instr is absent from the server). Without the missing-.instr
+// resilience the Sonix driver "score died"s before reaching the 12 instruments
+// that ARE present; the plugin must substitute a silent Synthesis stub so the
+// tune still plays.
+TEST_CASE("UADE SMUS tolerates a missing .instr", "[.smusinstr]")
+{
+    logging::setLevel(logging::Level::Warning);
+    RemoteLoader rl;
+    rl.registerSource("modland", "ftp://ftp.modland.com/pub/modules/", "");
+    auto pump = [&](std::atomic<int>& pending) {
+        for (int i = 0; i < 1200 && pending > 0; ++i) {
+            rl.update();
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        }
+    };
+    const std::string base = "IFF-SMUS/SLL/Super_sll_disco/";
+    const std::string idir = "Instruments/";
+    std::atomic<int> pending{ 1 };
+    std::vector<std::string> names;
+    rl.listDirectory("modland::" + base + idir,
+                     [&](std::vector<std::string> n) { names = std::move(n); pending--; });
+    pump(pending);
+    REQUIRE(!names.empty());
+
+    auto stage = fs::temp_directory_path() / "smus_instr_test";
+    fs::remove_all(stage);
+    fs::create_directories(stage / "Instruments");
+    pending = 1;
+    rl.load("modland::" + base + "Super_sll_disco.smus", [&](utils::File f) {
+        if (f) utils::File::copy(f.getName(),
+                                 (stage / "Super_sll_disco.smus").string());
+        pending--;
+    });
+    for (auto& n : names) {
+        pending++;
+        auto dst = stage / "Instruments" / n;
+        rl.load("modland::" + base + idir + n, [&, dst](utils::File f) {
+            if (f) utils::File::copy(f.getName(), dst.string());
+            pending--;
+        });
+    }
+    pump(pending);
+    // Warriors1.instr is the score's FIRST instrument but is absent from the
+    // server -- the plugin must stub it with a silent Synthesis instrument.
+    REQUIRE(!fs::exists(stage / "Instruments" / "Warriors1.instr"));
+
+    musix::UADEPlugin plugin{ "data" };
+    auto* player =
+        plugin.fromFile((stage / "Super_sll_disco.smus").string());
+    REQUIRE(player != nullptr);
+    std::array<int16_t, 8192> buf{};
+    int64_t energy = 0;
+    for (int c = 0; c < 400 && energy == 0; ++c) {
+        int rc = player->getSamples(buf.data(), buf.size());
+        if (rc <= 0) break;
+        for (int i = 0; i < rc; ++i) energy += std::abs((int)buf[i]);
+    }
+    delete player;
+    fs::remove_all(stage);
+    REQUIRE(energy != 0);
+}
+
 TEST_CASE("UADE SMUS streams and plays from modland", "[.smusnet]")
 {
     logging::setLevel(logging::Level::Warning);
