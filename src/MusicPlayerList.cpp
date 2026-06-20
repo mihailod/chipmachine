@@ -2,6 +2,7 @@
 #include "LhaArchive.h"
 
 #include <algorithm>
+#include <cctype>
 #include <coreutils/log.h>
 #include <coreutils/utils.h>
 #include <unordered_map>
@@ -629,8 +630,15 @@ void MusicPlayerList::playCurrent()
         // tune streams silent. Re-materialise the song under its own clean
         // filename beside the companions. In a local mirror the cached name is
         // already the real name, so this is a no-op.
+        // Only re-materialise when the song's own path is a real filename WITH
+        // an extension (the companion-alignment formats: RJP .sng, MusicMaker
+        // .sdata, ...). Moduleid-based collections (e.g. modarchive, whose path
+        // is just "1") have no extension here -- re-copying would strip the
+        // ".xm"/".umx" the Content-Disposition rename just added and leave the
+        // player unable to route the file by extension.
         auto cleanName = path_filename(currentInfo.path);
-        if (!cleanName.empty() && path_filename(f0.getName()) != cleanName) {
+        if (!cleanName.empty() && !path_extension(cleanName).empty() &&
+            path_filename(f0.getName()) != cleanName) {
             File cleanSong = parentDir / cleanName;
             if (!cleanSong.exists()) {
                 File::copy(f0.getName(), cleanSong.getName());
@@ -660,14 +668,42 @@ void MusicPlayerList::playCurrent()
                 // the member filenames are unpredictable, so list the remote
                 // folder and fetch each into the same subdirectory. A local
                 // mirror yields an empty list (members are read in place).
+                //
+                // The folder's case differs by source -- the Sonix score
+                // references "Instruments/" but modland stores "instruments/" --
+                // and FTP listing is case-sensitive. So if the requested case
+                // lists empty, retry with the first letter's case flipped before
+                // giving up. Members are fetched/placed under whichever case
+                // actually exists remotely; the local FS is case-insensitive, so
+                // the player finds them regardless of the case it asks for.
                 files++;
-                auto dirUrl = songDirUrl + "/" + s;
+                std::string alt = s;
+                if (!alt.empty() && std::isalpha((unsigned char)alt[0])) {
+                    alt[0] = std::islower((unsigned char)alt[0])
+                                 ? (char)std::toupper((unsigned char)alt[0])
+                                 : (char)std::tolower((unsigned char)alt[0]);
+                }
+                auto fetchInto = [=](const std::string& dir,
+                                     const std::vector<std::string>& names) {
+                    for (const auto& n : names) {
+                        loadSecondaryFile(dir + n, parentDir, songDirUrl);
+                    }
+                };
                 remoteLoader.listDirectory(
-                    dirUrl, [=](std::vector<std::string> names) {
-                        for (const auto& n : names) {
-                            loadSecondaryFile(s + n, parentDir, songDirUrl);
+                    songDirUrl + "/" + s,
+                    [=](std::vector<std::string> names) {
+                        if (!names.empty() || alt == s) {
+                            fetchInto(s, names);
+                            files--;
+                            return;
                         }
-                        files--;
+                        // Requested case was empty -- try the flipped case.
+                        remoteLoader.listDirectory(
+                            songDirUrl + "/" + alt,
+                            [=](std::vector<std::string> names2) {
+                                fetchInto(alt, names2);
+                                files--;
+                            });
                     });
             } else {
                 loadSecondaryFile(s, parentDir, songDirUrl);

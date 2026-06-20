@@ -1590,6 +1590,70 @@ TEST_CASE("UADE plays local file from env", "[.uadefile]")
 // the score, then play through UADE. "Pet Shop Jus" references instruments whose
 // sample (.ss) filenames differ from the instrument names -- the exact case the
 // whole-directory fetch exists to handle.
+// An IFF-SMUS rip can be missing a raw ".ss" sample that a SampledSound
+// instrument references (modland data rot -- e.g. SLL's Never_give_up_by_sll
+// references orchestra1.ss, which 404s). Without resilience the Sonix driver
+// renders the WHOLE score silent; the UADE plugin now hands a silent placeholder
+// for a missing ".ss" so the remaining instruments still play.
+// Network test (hidden): cmtest "[.smusmiss]".
+TEST_CASE("UADE SMUS tolerates a missing .ss sample", "[.smusmiss]")
+{
+    logging::setLevel(logging::Level::Warning);
+    RemoteLoader rl;
+    rl.registerSource("modland", "ftp://ftp.modland.com/pub/modules/", "");
+    auto pump = [&](std::atomic<int>& pending) {
+        for (int i = 0; i < 1200 && pending > 0; ++i) {
+            rl.update();
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        }
+    };
+    const std::string base = "IFF-SMUS/SLL/Never_give_up_by_sll/";
+    const std::string idir = "Instruments/";
+    std::atomic<int> pending{ 1 };
+    std::vector<std::string> names;
+    rl.listDirectory("modland::" + base + idir,
+                     [&](std::vector<std::string> n) { names = std::move(n); pending--; });
+    pump(pending);
+    REQUIRE(!names.empty());
+
+    auto stage = fs::temp_directory_path() / "smus_miss_test";
+    fs::remove_all(stage);
+    fs::create_directories(stage / "Instruments");
+    pending = 1;
+    rl.load("modland::" + base + "Never_give_up_by_sll.smus", [&](utils::File f) {
+        if (f) utils::File::copy(f.getName(),
+                                 (stage / "Never_give_up_by_sll.smus").string());
+        pending--;
+    });
+    for (auto& n : names) {
+        pending++;
+        auto dst = stage / "Instruments" / n;
+        rl.load("modland::" + base + idir + n, [&, dst](utils::File f) {
+            if (f) utils::File::copy(f.getName(), dst.string());
+            pending--;
+        });
+    }
+    pump(pending);
+    // orchestra1.ss is deliberately NOT staged (it 404s on modland); the plugin
+    // must synthesize a silent placeholder so playback is not fully silent.
+    REQUIRE(!fs::exists(stage / "Instruments" / "orchestra1.ss"));
+
+    musix::UADEPlugin plugin{ "data" };
+    auto* player =
+        plugin.fromFile((stage / "Never_give_up_by_sll.smus").string());
+    REQUIRE(player != nullptr);
+    std::array<int16_t, 8192> buf{};
+    int64_t energy = 0;
+    for (int c = 0; c < 400 && energy == 0; ++c) {
+        int rc = player->getSamples(buf.data(), buf.size());
+        if (rc <= 0) break;
+        for (int i = 0; i < rc; ++i) energy += std::abs((int)buf[i]);
+    }
+    delete player;
+    fs::remove_all(stage);
+    REQUIRE(energy != 0);
+}
+
 TEST_CASE("UADE SMUS streams and plays from modland", "[.smusnet]")
 {
     logging::setLevel(logging::Level::Warning);
@@ -1662,6 +1726,39 @@ TEST_CASE("UADE SMUS streams and plays from modland", "[.smusnet]")
     delete player;
     fs::remove_all(stage);
     REQUIRE(energy != 0);
+}
+
+// modland stores some IFF-SMUS instrument folders lowercase ("instruments/")
+// even though the Sonix score references "Instruments/"; FTP listing is
+// case-sensitive. Verifies the premise of MusicPlayerList's case fallback:
+// the capital folder lists empty, the lowercase one returns members.
+// Network test (hidden): cmtest "[.smuscase]".
+TEST_CASE("modland IFF-SMUS lowercase instruments dir", "[.smuscase]")
+{
+    logging::setLevel(logging::Level::Warning);
+    RemoteLoader rl;
+    rl.registerSource("modland", "ftp://ftp.modland.com/pub/modules/", "");
+
+    auto listOnce = [&](const std::string& rel) {
+        std::atomic<int> pending{ 1 };
+        std::vector<std::string> names;
+        rl.listDirectory("modland::" + rel, [&](std::vector<std::string> n) {
+            names = std::move(n);
+            pending--;
+        });
+        for (int i = 0; i < 600 && pending > 0; ++i) {
+            rl.update();
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        }
+        return names;
+    };
+
+    const std::string base = "IFF-SMUS/SLL/freak_out_by_sll/";
+    auto capital = listOnce(base + "Instruments/");
+    auto lower = listOnce(base + "instruments/");
+    INFO("capital count=" << capital.size() << " lower count=" << lower.size());
+    REQUIRE(capital.empty());   // case-sensitive FTP: capital does not exist
+    REQUIRE(!lower.empty());    // real folder, members present
 }
 
 // End-to-end GUI streaming for UADE two-file formats whose player derives the
