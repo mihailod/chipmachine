@@ -31,7 +31,36 @@ Format is set to be the same as the file extention.
 Current distinct file extentions
 ```
 XM
+IT
+S3M
+MOD
+MTM
+669
+STM
+MED
+AHX
+HVL
+MO3
+OKT
+MPTM
+DMF
+MDL
+FAR
+AMS
+PTM
+MT2
+DBM
+DIGI
+PLM
+GDM
+DSM
 UMX
+AMF
+ULT
+C67
+DTM
+SFX
+IMF
 ```
 
 data/modarchive.txt
