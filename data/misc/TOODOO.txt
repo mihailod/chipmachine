@@ -2,8 +2,6 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-- randomize user agent
-
 - we still need some nicer progress show when loading, the ui sometimes stutters for a second or so...
 bubba n stix 2nd one is a good example (clear cache)
 
@@ -11,12 +9,10 @@ bubba n stix 2nd one is a good example (clear cache)
 - Some weird naming issue exotica, files weirdly named, extension contains name (?) etc...
   format: format (song name) ?!
 bubba n stix 1nd one is a good example, also hybris 1st from unexotica
+
 - Plist support!? Exotica has plist? example: 
 
-- spectrum analyzer: detect if a song is true stereo mode and switch to stereo, if not switch to mono mode
-
 - lethal xcess sc68 some weird behavior on next/prev: default song plays for 1-2 seconds and then it switches... and it skips around and plays some garbage
-
 
 * IN PROGRESS ........... another smus fail:
 search for sll scroll down there is a mix of smus / ss / instr entries almost none play -- figure out this
