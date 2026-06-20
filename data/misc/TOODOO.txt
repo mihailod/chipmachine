@@ -6,10 +6,6 @@
 
 - still some grouping to be done, possibly not from exotica: see pinball illusions
 
-- Some weird naming issue exotica, files weirdly named, extension contains name (?) etc...
-  format: format (song name) ?!
-bubba n stix 1nd one is a good example, also hybris 1st from unexotica
-
 * IN PROGRESS ........... another smus fail:
 search for sll scroll down there is a mix of smus / ss / instr entries almost none play -- figure out this
 [MusicPlayerList.cpp:606] Detected ext: 

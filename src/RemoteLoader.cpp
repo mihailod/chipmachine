@@ -28,6 +28,34 @@ void RemoteLoader::registerSource(const std::string& name,
 
 bool RemoteLoader::inCache(const std::string& p) const
 {
+    // Collapsed-game entries (UnExoticA et al) store every subsong of a game as
+    // a single tab-separated "MULTI:<sub0>\t<sub1>\t..." path. Such a game is
+    // "locally present" if ANY of its subsongs is cached. Checking all of them
+    // is essential: UnExoticA references stale per-version archives (e.g.
+    // ".../Hybris/Custom_Version.lha") that 550 at play time, so the tune that
+    // actually gets fetched/extracted lives in a DIFFERENT sibling archive
+    // (".../Hybris.lha") named only by a later subsong.
+    {
+        const auto parts = split(p, "::", 2);
+        std::string prefix, rel;
+        if (parts.size() > 1) {
+            prefix = parts[0];
+            rel = parts[1];
+        } else {
+            rel = p;
+        }
+        if (startsWith(rel, "MULTI:")) {
+            for (char const* sub : split(rel.substr(6), "\t")) {
+                if (sub == nullptr || *sub == '\0') continue;
+                std::string subPath = prefix.empty()
+                                          ? std::string(sub)
+                                          : (prefix + "::" + sub);
+                if (inCache(subPath)) return true;
+            }
+            return false;
+        }
+    }
+
     // LHA-packed sources (UnExoticA et al): the played tune is not the member
     // URL in the web cache but an extracted member under
     // <cache>/_lha2/<safeName>/<member>. The web cache only ever holds the .lha

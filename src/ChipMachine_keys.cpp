@@ -288,6 +288,12 @@ void ChipMachine::updateKeys()
         int i = songList.selected();
         SongInfo song = musicDatabase.getSongInfo(iquery->getIndex(i));
         auto ext = getTypeFromName(song.path);
+        // UnExoticA uses Amiga "prefix-form" member names ("cust.title_and_ingame",
+        // "fp.title", ...) where the part after the dot is a song descriptor, not a
+        // file type. getTypeFromName surfaces that descriptor as a bogus
+        // "(TITLE)" / "(TITLE_AND_INGAME)" parenthetical. song.format already names
+        // the real format (CUSTOM, NOISE PACKER 3.X), so drop the parenthetical.
+        if (utils::startsWith(song.path, "unexotica::")) ext = "";
 
         bool isoffline = remoteLoader.isOffline(song.path);
 	bool islocal = RemoteLoader::isLocalAsset(song.path);
