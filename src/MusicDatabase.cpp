@@ -345,6 +345,16 @@ bool MusicDatabase::parseModland(
             // game "plays" the silent driver instead of the song.
             if (endsWith(toLower(song.path), "/songplay")) { continue; }
 
+            // IFF-SMUS (and similar) carry per-instrument companion files in an
+            // "instruments/" subdir (*.instr descriptors, raw *.ss samples).
+            // Modland lists every file recursively, so each one would be indexed
+            // as a bogus standalone song that downloads (FTP CODE 226) but has no
+            // ext to route on and no plugin to decode it. They are fetched via
+            // UADEPlugin::getSecondaryFiles at play time, never standalone tunes.
+            if (toLower(song.path).find("/instruments/") != std::string::npos) {
+                continue;
+            }
+
             auto [ext, base] = getTypeAndBase(song.path);
 
             // Match the secondary-extension list case-insensitively: Modland
