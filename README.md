@@ -11,7 +11,7 @@ But this is far more than a simple port!
 While ensuring the player runs on modern Apple hardware, my passion for it has expanded its compatibility and scale:
 
 * 50+ Plugins: Supporting over 300 retro and chip music formats
-* Massive Index: Currently approaching 500,000 indexed tracks
+* Massive Index: Currently approaching 600,000 indexed items
 
 The Roadmap
 
