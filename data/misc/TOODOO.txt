@@ -2,11 +2,6 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-- AUDIO OVERLOAD APP extensions NOT checked to be covered:
-* GYM — [5 songs in db ] present in the log, but playback threw an exception (Packed GYM file not supported).
-* ORC — [no songs in db] no .orc file appears in the log.
-* QSF — [no songs in db] no .qsf file successfully played (only .miniqsf played successfully; .qsflib files were skipped).
-
 - ability to manually add stuff to database. via a manual.txt file
 
 - ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.

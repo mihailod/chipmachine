@@ -476,6 +476,53 @@ TEST_CASE("GME GBR plays sound", "[music]")
         REQUIRE(energy != 0);
     }
 }
+// Regression test for packed GYM (Sega Genesis/Mega Drive YM2612+PSG register
+// dump). A GYM file may store its command stream raw, or -- with a "GYMX" header
+// -- as a raw zlib stream whose uncompressed length lives in the header's
+// "packed" field (offset 424). The vendored Game_Music_Emu can inflate these,
+// but only when built with zlib (HAVE_ZLIB_H); otherwise Gym_Emu's check_header
+// returns "Packed GYM file not supported". This asserts both that the two .gym
+// fixtures are genuinely packed (non-zero packed field) and that they decode to
+// audio -- i.e. the zlib unpack path (unpack_gym_body) is wired and working.
+TEST_CASE("GME packed GYM plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::GMEPlugin plugin;
+
+    for (auto const& gym : {"testmus/gme/art alive.gym",
+                            "testmus/gme/fantasia-00.gym"}) {
+        INFO(gym);
+
+        // Confirm the fixture really is a packed GYMX file (not just a raw one),
+        // so this test actually exercises the inflate path.
+        auto data = utils::File(gym).readAll();
+        REQUIRE(data.size() > 428);
+        REQUIRE(std::memcmp(data.data(), "GYMX", 4) == 0);
+        uint32_t packed = static_cast<uint8_t>(data[424]) |
+                          (static_cast<uint8_t>(data[425]) << 8) |
+                          (static_cast<uint8_t>(data[426]) << 16) |
+                          (static_cast<uint32_t>(static_cast<uint8_t>(data[427])) << 24);
+        REQUIRE(packed != 0);
+
+        REQUIRE(plugin.canHandle(gym));
+        auto* player = plugin.fromFile(gym);
+        REQUIRE(player != nullptr);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+
+        REQUIRE(energy != 0);
+    }
+}
+
 // .rol (AdLib Visual Composer) was previously excluded because its player loads
 // instruments from a companion "standard.bnk" in the same dir (rol.cpp), which
 // was missing -> silent. The bank is now vendored (testmus/adlib/standard.bnk,
