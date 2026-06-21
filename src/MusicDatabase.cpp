@@ -1759,6 +1759,32 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     return out;
 }
 
+std::string MusicDatabase::describeExtension(std::string const& ext)
+{
+    if (!formatDescriptionsLoaded) {
+        formatDescriptionsLoaded = true;
+        // Each entry spans two lines: "<ext>\t<trackers>" followed by a prose
+        // description, then a blank separator line.
+        File f{ workDir.string(), "data/misc/formats_descriptions.txt" };
+        if (f.exists()) {
+            auto lines = f.getLines();
+            for (size_t i = 0; i < lines.size(); i++) {
+                auto tab = lines[i].find('\t');
+                if (tab == std::string::npos) continue; // desc / blank line
+                std::string key = toLower(lines[i].substr(0, tab));
+                std::string combined = lines[i].substr(tab + 1);
+                if (i + 1 < lines.size() && !lines[i + 1].empty())
+                    combined += " - " + lines[i + 1];
+                formatDescriptions[key] = combined;
+            }
+            LOGD("Loaded %d format descriptions",
+                 (int)formatDescriptions.size());
+        }
+    }
+    auto it = formatDescriptions.find(toLower(ext));
+    return it == formatDescriptions.end() ? "" : it->second;
+}
+
 template <typename T> static void readVector(std::vector<T>& v, apone::File& f)
 {
     auto sz = f.read<uint32_t>();

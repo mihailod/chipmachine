@@ -144,6 +144,12 @@ public:
     void playNamed(const std::string& what) { namedToPlay = what; }
 
 private:
+    // Append the now-playing format info ("Platform - Name (EXT) ... <trackers>
+    // - <description>") to a scroll line so the scroller cycles
+    // metadata -> format -> back. When `text` is empty the format info is all
+    // there is to show.
+    std::string appendFormatInfo(std::string const& text, SongInfo const& info);
+
     enum Screen
     {
         NO_SCREEN = -1,

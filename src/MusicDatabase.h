@@ -163,6 +163,12 @@ public:
     // screen: "Platform - Format name (EXT)", e.g. "Amiga - Soundtracker (MOD)".
     static std::string describeFormat(SongInfo const& s);
 
+    // Trackers + prose description for a file extension, read from
+    // data/misc/formats_descriptions.txt (lazily loaded/cached). Returns
+    // "<trackers> - <description>", or "" when the extension isn't listed.
+    // Used by the scroller fallback when a tune carries no embedded text.
+    std::string describeExtension(std::string const& ext);
+
     // Map a modland/format string (+ path) to its format byte (platform/type).
     static uint8_t classifyFormat(std::string const& fmt,
                                   std::string const& path);
@@ -319,6 +325,11 @@ private:
     std::map<std::string, std::map<std::string, std::string>> fileShots;
     std::map<std::string, std::string> const& getFileShots(
         std::string const& collection);
+
+    // ext -> "<trackers> - <description>", lazily loaded from
+    // data/misc/formats_descriptions.txt by describeExtension().
+    std::map<std::string, std::string> formatDescriptions;
+    bool formatDescriptionsLoaded = false;
 
     SearchIndex composerIndex;
     SearchIndex titleIndex;

@@ -1,11 +1,20 @@
+abk	AMOS Music Bank
+Tracker-like music player created by François Lionet for his AMOS Basic programming language. AMOS comes with programs for converting tracker and Sonix music to the AMOS format.
+
+ac1d	AC1D-DC1A Packer
+A module packer created by Carsten Sørensen (Slammer/Anarchy).  First used in Anarchy's "In The Kitchen" demo.
+
+agi	Sierra AGI
+A sound format used in the first Sierra games that used the AGI (Adventure Game Interpreter) system.
+
+alp	Alcatraz Packer
+A packer that was only used by two games, Oldtimer and Cedric and the Lost Sceptre. The sound format appears to be very similar to NoisePacker.
+
 amc	A.M.Composer 1.2
 Music format created by Marc Hawliteck of Vesalia-Soft.
 
-ac1d	AC1D-DC1A Packer
-A module packer created by Carsten S&oslash;rensen (Slammer/Anarchy).  First used in Anarchy's "In The Kitchen" demo.
-
-abk	AMOS Music Bank
-Tracker-like music player created by Fran&ccedil;ois Lionet for his AMOS Basic programming language. AMOS comes with programs for converting tracker and Sonix music to the AMOS format.
+ash	Ashley Hogg
+A format created by Ashley 'Ash' Hogg. A later version of this format used a Protracker packer using routine by Jonathan Menzies.
 
 ast	Actionamics Sound Tool
 Created by Michael Kleps for the game Dynablaster.
@@ -13,26 +22,47 @@ Created by Michael Kleps for the game Dynablaster.
 aam	Art & Magic
 A music format created by the Art and Magic team for the ingame music in the game Agony.
 
+bd	Benn Daglish
+A music format created for Ben 'Benn' Daglish by Colin 'Fungus the Bogeyman' Dooley .
+
+bds	Benn Daglish SID
+A music format created by Ben 'Benn' Daglish based on his C64 version.
+
+bp	SoundMon 2.0 / SoundMon 2.2
+A music editor created by Brian Postma.
+
 bss	Beathoven Synthesizer
 A music format created by Thomas Lopatic (Dr.Nobody/HQC) 1987, often used in Rainbow Arts and Tristar productions from 1987-88.
 
-bd	Benn Daglish
-A music format created for Ben 'Benn' Daglish by Colin 'Fungus the Bogeyman' Dooley .
+bye	Andrew Parton
+A music format that appears to have only been used in the game B-17 Flying Fortress.
 
 chan	Channel Players
 A module packer created by Alan/Impact in 1994.
 
-mod	ChipTracker
-Also known as KRIS Tracker, a module packer created by KRIS/Anarchy for use by Matthew Simmonds (4-Mat/Anarchy).
+cin	Cinemaware
+A MIDI-like music format that appears to have only been used in Cinemaware's last game, Wings.
+
+cm	CustomMade
+A music and fx format created by Yvo Zoer and Ron Klaren.
+
+core	Core Design
+A music and fx format used in early Core Design games, possibly created by Ben 'Benn' Daglish.
 
 cust	Custom
 DeliTracker's format for Amiga music that's not in any known format.  Custom tunes include both the music data and the player code needed to replay it.  Other Amiga music players, like EaglePlayer, DeliPlayer and UADE, recognise the DeliTracker Custom format.
 
+dat	Paul Robotham
+A MIDI-like music format created by Pete Barnett and used by Paul Robotham.
+
+dh	David Hanney
+A music format created by David Hanney.
+
+di	Digital Illusions
+A module packer with subsong support, created by The Silents for their pinball games. Also known as GrapeTracker.
+
 digi	DIGI Booster
 An eight channel tracker for the Amiga created in 1997 by Tomasz and Waldemar Piasta.  Later followed by DIGI Booster PRO, much respected by Amiga musicians for its built-in Roland TB303 emulator.
-
-dz	Darius Zendeh
-A music format created by Darius Zendeh (Mark II/Quadlite). It is basically his old Mark II Sound-System format with support for subsongs.
 
 dl	Dave Lowe
 A music format created by Dave Lowe (Uncle Art).
@@ -40,53 +70,59 @@ A music format created by Dave Lowe (Uncle Art).
 dln	Dave Lowe New
 A newer version of the Dave Lowe music routine.
 
-dh	David Hanney
-A music format created by David Hanney.
-
-dw	David Whittaker
-A music format created by the prolific David Whittaker.
-
 dm2	DeltaMusic 2.0
 A synthetic music format created by Bent Nielsen.
-
-dsr	Desire
-A music format created by Dentons in 1993.
-
-di	Digital Illusions
-A module packer with subsong support, created by The Silents for their pinball games. Also known as GrapeTracker.
-
-dsc	Digital Sonix & Chrome
-A music format created by Andrew Bailey & David Hanlon.
 
 ds	Dynamic Synthesizer
 An early music format created by Chris Huelsbeck, a predecessor of TFMX.
 
-fw	FWMP
-The custom music routine used in Forgotton Worlds.
+dsc	Digital Sonix & Chrome
+A music format created by Andrew Bailey & David Hanlon.
 
-xm	FastTracker 2.0
-A multi-channel PC music editor by Magnus H&ouml;gdahl and Fredrik Huss.
+dsr	Desire
+A music format created by Dentons in 1993.
 
-tf	Follin Player II
-A music format used by the Follin brothers.
+dum	Infogrames
+A music format that was mainly used in games published by Infogrames. Each song file (.dum) has a separate sample file(.ins), but multiple song files can share the same sample file. The majority of the music is also composed by Charles Callet. The delitracker replayer for this format called it "Rob Hubbard 2", but as far as we know there is no connection between Rob Hubbard and this audio format or the music. It is possible the previous naming was due to some similarities between the replayer code. The creator of this music format is currently unknown.
 
-fred	Fred Editor
-Music editor and audio routines by Fr&eacute;d&eacute;ric Hahn with some support from Julien Clermonte.  Also (wrongly) known as Fredmon or Fred Monitor.
+dw	David Whittaker
+A music format created by the prolific David Whittaker.
 
-fg	Fred Gray
-A music format used by Fred Gray.
+dz	Darius Zendeh
+A music format created by Darius Zendeh (Mark II/Quadlite). It is basically his old Mark II Sound-System format with support for subsongs.
+
+ems	Editeur Musical Sequentiel
+A music format created by Ringard' for use in their demos and games.
+
+ex	Fashion Tracker
+A music format created by the 'Fashion' team.
+
+fc13	Future Composer 1.3
+A synthetic music editor created by Supersero/Superions in 1990, based on Jochen Hippel's routines.
 
 fc14	Future Composer 1.4
 A synthetic music editor created by Supersero/Superions in 1990, based on Jochen Hippel's routines.
 
+fg	Fred Gray
+A music format used by Fred Gray.
+
 fp	Future Player
 A synthetic music format created in 1988 by Paul van der Valk, predecessor of the Medley Sound Editor.
+
+fred	Fred Editor
+Music editor and audio routines by Frédéric Hahn with some support from Julien Clermonte.  Also (wrongly) known as Fredmon or Fred Monitor.
+
+fw	FWMP
+The custom music routine used in Forgotton Worlds.
 
 gmc	Game Music Creator
 A direct competitor of Soundtracker, by Andreas Tadic.  It is very similar to Soundtracker, although it's not a module packer.
 
-hmc	Heatseeker mc1.0
-A module packer created by Fabrice Cantegrel.
+han	Digital Sound Creations
+A format created by Andrew Bailey and David Hanlon and appears to only have been used in early Bullfrog games.
+
+hd	Howie Davies
+A music format created by Gary Antcliffe and Howie Davies in 1990, used in PAL Developments games.
 
 hip	Hippel
 A music format created by Jochen Hippel (Mad Max/The Exceptions).  This can also include Hippel 7V (seven voices) music. sog. is a more modern prefix for the latest replayer.
@@ -94,11 +130,8 @@ A music format created by Jochen Hippel (Mad Max/The Exceptions).  This can also
 hipc	Hippel-COSO
 A variant of the Hippel music format.  This also includes Hippel COSO 7V (seven voices) music. COSO means "crunched datablock", i.e. the music data is compressed.  The Hippel-COSO file format can be decrunched into the regular Hippel format. soc. is a more modern prefix for the latest replayer.
 
-hd	Howie Davies
-A music format created by Gary Antcliffe and Howie Davies in 1990, used in PAL Developments games.
-
-svx	IFF-8SVX
-The Amiga's standard format for 8-bit sound samples, created by Electronic Arts in 1984 at the birth of the Amiga.
+hmc	Heatseeker mc1.0
+A module packer created by Fabrice Cantegrel.
 
 is	Images
 A module packer created by Neil Crossley, used in games that were ported from the Atari ST to the Amiga in 1990 by Images Design.
@@ -106,53 +139,71 @@ A module packer created by Neil Crossley, used in games that were ported from th
 jam	JamCracker
 A Noisetracker-alike music format created by M. Gemmel and Xag of Betrayal in 1990.
 
-jmf	Janko Mrsic-Flogel
-A music format created by Janko Mrsic-Flogel.
-
 jcb	Jason Brooke
 A music format created by Jason C Brooke.
 
-jp	Jason Page
-A music format created by Jason Page.  It was also used as the basis for Jason's music routines on the Atari ST, SNES and Megadrive.
+jd	Special FX
+A music format used in Special FX games, usually by Jonathan Dunn.
+
+jmf	Janko Mrsic-Flogel
+A music format created by Janko Mrsic-Flogel.
 
 jo	Jesper Olsen
 A music format created by Jesper Olsen.
 
+jp	Jason Page
+A music format created by Jason Page.  It was also used as the basis for Jason's music routines on the Atari ST, SNES and Megadrive.
+
+jpo	Steve Turner
+An older version of the Jason Page format, created by Steve Turner and used in Graftgold games.
+
+jt	Jeroen Tel
+Also known as 'Maniacs Of Noise Old', this music format was created by Charles Deenen and Jeroen Tel, used by the Maniacs of Noise.
+
 kh	Kris Hatlelid
 A music format created by Kris Hatlelid.
+
+ksm	Kefrens Sound Machine
+A tracker clone created by Razmo/Kefrens in 1989.
 
 lme	Leggless Music Editor
 A music editor created by Leggless/Silents.
 
-mon	M.O.N New
-A music format created by Charles Deenen and Fr&eacute;d&eacute;ric Hahn, used by the Maniacs of Noise.
+mc	Mark Cooksey
+A music format created by Mark Cooksey and Richard Frankish.
 
-mon	M.O.N Old
-A music format created by Charles Deenen and Jeroen Tel, used by the Maniacs of Noise.  This format now has a new revised replayer - see 'Jeroen Tel'.
+mdat	TFMX / TFMX 7V / TFMX Pro
+"The Final Musicsystem eXtended".  Elaborate music formats devised and created by Chris Huelsbeck, with Peter Thierolf writing the editor. The TFMX 7V uses Jochen Hippel's routines to get seven voices on the four channel Amiga.
+
+md	Mike Davies
+A music format created in 1989 by Mike Davies, often used in Tiertex games.
 
 med	MED
 Music EDitor by Tejio Kinnunen. MED was originally available as freeware, with a commercial eight channel version called OctaMED.  The latest version of MED is OctaMED Sound Studio.  This format was very popular with musicians, but it was not used much in games because the complexity of the format required too much CPU time.
 
-mmdc	MMDC
-A module packer created by Tony Crowther.
-
 mfp	Magnetic Fields Packer
 A module packer created by Shaun Southern.
-
-mc	Mark Cooksey
-A music format created by Mark Cooksey and Richard Frankish.
 
 mkii	Mark II Sound-System
 A music format created by Darius Zendeh (Mark II/Quadlite), the music was originally hand written in assembly language as data. Later a music editor was created.
 
-mw	Martin Walker
-A music format created by Martin Walker.
+mmdc	MMDC
+A module packer created by Tony Crowther.
 
-mxtx	MaxTrax
-A music format created by David 'Talin' Joiner and Joe Pearce for playing scores created or edited in Music-X.
+mod	SoundTracker / SoundTracker 2.6 / NoiseTracker / Protracker / StarTrekker / ChipTracker
+The original legendary tracker music editor, created by Karsten Obarski (and the most common extension). The 2.6 version by Mnemotron/Spreadpoint differs from Sound/Noise/ProTracker in that each pattern is no longer made up from 4 joined tracks, but instead channel uses its own sub-patterns. This enables you to create a drum beat and repeat that without having to copy and paste it into each track. File format is similar to that of Protracker. NoiseTracker is an evolution of the Soundtracker format by Per Tufvesson (Mahoney/Northstar) and Anders Berkeman (Kaktus/Silents). Protracker is the venerable successor of Noisetracker, originally created by the Amiga Freelancers (Lars and Anders Hamre, Sven Vahsen and Rune Johnsrud), followed by Peter Hanning and Anders Ramsay for version 2.1 to 2.3, then by the Cryptoburners (Ivar Just Olsen, Tom Bech and Bjarte Andreaeassen). StarTrekker is a Soundtracker clone created in 1990 by Björn Wesen (Exolon/Fairlight).  The "4AM" replayer can play synthetic sound samples. ChipTracker (also known as KRIS Tracker) is a module packer created by KRIS/Anarchy for use by Matthew Simmonds (4-Mat/Anarchy).
 
-md	Mike Davies
-A music format created in 1989 by Mike Davies, often used in Tiertex games.
+mok	Silmarils
+A music format created by Michel Pernot.
+
+mon	M.O.N Old / New
+A music format created by Charles Deenen and Frédéric Hahn, used by the Maniacs of Noise. The New version has a new revised replayer - see 'Jeroen Tel'.
+
+mp2	ISO-MPEG Audio Layer-2
+A substitute audio compression format used in place of very sizeable CDDA tracks,
+
+mp3	ISO-MPEG Audio Layer-3
+A substitute audio compression format used in place of very sizeable CDDA tracks.  More commonly known as MP3.
 
 mug	Mugician
 Also known as "Digital Mugician", this music format was created by Reiner van Vliet (Rhino/Team Hoi).
@@ -160,158 +211,29 @@ Also known as "Digital Mugician", this music format was created by Reiner van Vl
 mug2	Mugician II
 A music format created by Reiner van Vliet (Rhino/Team Hoi), it allows for seven voice tunes like the TFMX and Hippel formats.
 
+mw	Martin Walker
+A music format created by Martin Walker.
+
+mxtx	MaxTrax
+A music format created by David 'Talin' Joiner and Joe Pearce for playing scores created or edited in Music-X.
+
 np2	NoisePacker 2.x
 A module packer created by Twins/Phenomena.
 
 np3	NoisePacker 3.x
 A module packer created by Twins/Phenomena.
 
-mod	NoiseTracker
-An evolution of the Soundtracker format by Per Tufvesson (Mahoney/Northstar) and Anders Berkeman (Kaktus/Silents).
-
 ntp	NovoTrade Packer
 A module packer created by NovoTrade.
+
+ogg	Ogg Vorbis
+A substitute audio compression format used in place of very sizeable CDDA tracks.
 
 okt	Oktalyzer
 An eight channel music editor by Armin Sander (TIP/The New Masters).
 
-dat	Paul Robotham
-A MIDI-like music format created by Pete Barnett and used by Paul Robotham.
-
-ps	Paul Shields
-A music format created by Paul Hunter and used by Paul Shields.
-
-snk	Paul Summers
-A music format created in 1989 by Paul Summers and Mike Chilton.
-
-pvp	Peter Verswyvelen Packer
-A module packer created by Peter Verswyvelen.
-
-pha	Pha Packer
-A module packer created by Azatoth/Phenomena.
-
-pap	Pierre Adane Packer
-A module packer created by Pierre Adane.
-
-pp21	ProPacker 2.1
-A module packer created by Christian Estrup.
-
-pp30	ProPacker 3.0
-A module packer created by Christian Estrup.
-
-psa	Professional Sound Artists
-A music format created by a group called the Professional Sound Artists.
-
-pr1	Promizer
-A module packer created by Franck Hulsmann (MC68000/Masque).
-
-prun	Prorunner 1.0
-A module packer by Cosmos/Sanity.
-
-pru2	Prorunner 2.0
-A module packer by Cosmos/Sanity.
-
-mod	Protracker
-The venerable successor of Noisetracker, originally created by the Amiga Freelancers (Lars and Anders Hamre, Sven Vahsen and Rune Johnsrud), followed by Peter Hanning and Anders Ramsay for version 2.1 to 2.3, then by the Cryptoburners (Ivar Just Olsen, Tom Bech and Bjarte Andreaeassen).
-
-puma	PumaTracker
-A music format created by Jean-Charles Meyrignac on the Atari ST, ported to the Amiga by Pierre-Eric Loriaux.
-
-rjp	Richard Joseph
-A music editor written by Alan McCarthy and Andi Smithers.  Also known as the Vectordean format.
-
-rh	Rob Hubbard
-A music format created by Rob Hubbard.
-
-rho	Rob Hubbard Old
-An older version of the Rob Hubbard format.
-
-rk	Ron Klaren
-A music and fx format created by Yvo Zoer and Ron Klaren.  Files in this format have an eagleplayer specific header.
-
-scumm	SCUMM
-SCUMM stands for "Script Creation Utility for Maniac Mansion", and the music format is that which is used in LucasArts adventures prior to Monkey Island 2, when it was replaced with the "iMuse" system.
-
-s3m	ScreamTracker 3
-A multi-channel PC music editor created by Sami Tammilehto (PSI/Future Crew).
-
-scn	Sean Connolly
-A music format created by Sean 'Odie' Connolly.
-
-scr	Sean Conran
-A music format created by Sean Conran.
-
-sid	Sidmon
-A music editor created by Reinier van Vliet (Rhino/Team Hoi).
-
-sid2	Sidmon II
-A music editor created by Michael Kleps (Unknown/D.O.C).
-
-mok	Silmarils
-A music format created by Michel Pernot.
-
-sa	Sonic Arranger
-A music editor created by Carlsten Schlote, Branko Mikic and Carsten Herbst.
-
-tw	Sound Images
-A music format created by Tony Williams.
-
-sm	Sound Master
-A music format created by Michiel Soede, used mostly by Jeroen Soede.
-
-spl	Sound Programming Language
-A music programming language created by Holder Gehrmann.  First created for the C64 and Tandy PC, later ported to the Amiga and Atari ST.  Also known as SOPROL.
-
-sfx	SoundFX
-A Soundtracker clone created by Christian Haller and Christian A. Weber.
-
-bp	SoundMon 2.0
-A music editor created by Brian Postma.
-
-sjs	SoundPlayer
-A music format created by Scott Johnston, only used in the game Lemmings.
-
-mod	SoundTracker
-The original tracker music editor, created by Karsten Obarski.
-
-mod	SoundTracker 2.6
-SoundTracker version by Mnemotron/Spreadpoint. Differs from Sound/Noise/ProTracker in that each pattern is no longer made up from 4 joined tracks, but instead channel uses its own sub-patterns. This enables you to create a drum beat and repeat that without having to copy and paste it into each track. File format is similar to that of Protracker.
-
-sct	Soundcontrol
-A music editor created by Holger Gehrmann.
-
-psf	Soundfactory
-A music format created in 1989 by Zuheir Urwani and Thomas Kolbe.  Also known as the Profiteam Sound Factory format.
-
-jd	Special FX
-A music format used in Special FX games, usually by Jonathan Dunn.
-
-mod	StarTrekker
-A Soundtracker clone created in 1990 by Bj&ouml;rn Wesen (Exolon/Fairlight).  The "4AM" replayer can play synthetic sound samples.
-
-sb	Steve Barrett
-Music composed by Steve Barrett using the Ariston replay routine.
-
-jpo	Steve Turner
-An older version of the Jason Page format, created by Steve Turner and used in Graftgold games.
-
-sdr	Synth Dream
-A music format created in 1991 by Laurens 'Lotus' Tummers and John Tonnard.
-
 osp	Synth Pack
 A music format created in 1989 by Karsten Obarski.
-
-mdat	TFMX
-"The Final Musicsystem eXtended".  An elaborate music format devised and created by Chris Huelsbeck, with Peter Thierolf writing the editor.
-
-mdat	TFMX 7V
-"The Final Musicsystem eXtended".  An elaborate music format devised and created by Chris Huelsbeck, with Peter Thierolf writing the editor.  This version uses Jochen Hippel's routines to get seven voices on the four channel Amiga.
-
-mdat	TFMX Pro
-"The Final Musicsystem eXtended".  An elaborate music format devised and created by Chris Huelsbeck, with Peter Thierolf writing the editor.
-
-tme	The Musical Enlightenment
-A music format created in n 1989 by N.J. Luuring Jr.
 
 p4x	The Player 4.x
 A module packer created by Jarno Paananen (Guru/Sahara Surfers), this particular version of The Player (4.1a) was never released publically, yet it was leaked to game development companies and became one of the most widespread module packers in existance.
@@ -322,93 +244,374 @@ A module packer created by Jarno Paananen (Guru/Sahara Surfers), this version wa
 p6x	The Player 6.x
 A module packer created by Jarno Paananen (Guru/Sahara Surfers), this is the most popular module packing software used on the Amiga.
 
-thm	Thomas Hermann
-A music format created in 1989 by Thomas Hermann.
+pap	Pierre Adane Packer
+A module packer created by Pierre Adane.
 
-tp3	Trackerpacker 3
-A module packer created by Crazy Crack/MEXX.
+pha	Pha Packer
+A module packer created by Azatoth/Phenomena.
 
-uds	Unique Development
-A music format created by Unique Development, found in both the Amiga and Atari ST versions of the game Obsession.
+pp21	ProPacker 2.1
+A module packer created by Christian Estrup.
 
-wb	Wally Beben
-Music composed by Wally Beben using the Ariston replay routine.
+pp30	ProPacker 3.0
+A module packer created by Christian Estrup.
 
-cm	CustomMade
-A music and fx format created by Yvo Zoer and Ron Klaren.
+pr1	Promizer
+A module packer created by Franck Hulsmann (MC68000/Masque).
 
-ss	Speedy System
-This is the first Michael Winterberg music format for the Amiga.  Known versions are 2.0, 2.1, 2.2, 3.0, and 'A'.
+pru2	Prorunner 2.0
+A module packer by Cosmos/Sanity.
 
-mp3	ISO-MPEG Audio Layer-3
-A substitute audio compression format used in place of very sizeable CDDA tracks.  More commonly known as MP3, more information can be found <a href="http://www.iis.fraunhofer.de/amm/techinf/layer3/" target="_blank">here</a>.
+prun	Prorunner 1.0
+A module packer by Cosmos/Sanity.
 
-bds	Benn Daglish SID
-A music format created by Ben 'Benn' Daglish based on his C64 version.
+ps	Paul Shields
+A music format created by Paul Hunter and used by Paul Shields.
 
-core	Core Design
-A music and fx format used in early Core Design games, possibly created by Ben 'Benn' Daglish.
+psa	Professional Sound Artists
+A music format created by a group called the Professional Sound Artists.
 
-cin	Cinemaware
-A MIDI-like music format that appears to have only been used in Cinemaware's last game, Wings.
+psf	Soundfactory
+A music format created in 1989 by Zuheir Urwani and Thomas Kolbe.  Also known as the Profiteam Sound Factory format.
 
-smus	Sonix Music Driver
-Also know as IFF-SMUS, this is another Electronic Arts standardised music format, created along with 8SVX, ILBM and FTXT as the EA IFF 85 specification.  Other than the archaic Aegis Sonix and EA's own Deluxe Music Construction Set (DMCS), almost no software uses this format.
-Sonix includes some non-standard instrument file formats that are not part of the IFF-SMUS specification.  Don Adan created a replayer based on the code from Aegis Sonix in order to play Sonix-specific SMUS music.
+puma	PumaTracker
+A music format created by Jean-Charles Meyrignac on the Atari ST, ported to the Amiga by Pierre-Eric Loriaux.
 
-ogg	Ogg Vorbis
-A substitute audio compression format used in place of very sizeable CDDA tracks.  More information can be found <a href="http://www.vorbis.com" target="_blank">here</a>.
+pvp	Peter Verswyvelen Packer
+A module packer created by Peter Verswyvelen.
 
-mp2	ISO-MPEG Audio Layer-2
-A substitute audio compression format used in place of very sizeable CDDA tracks.  More information can be found <a href="http://www.iis.fraunhofer.de/amm/techinf/layer3/" target="_blank">here</a>.
+rh	Rob Hubbard
+A music format created by Rob Hubbard.
 
-ex	Fashion Tracker
-A music format created by the 'Fashion' team.
+rho	Rob Hubbard Old
+An older version of the Rob Hubbard format.
 
-jt	Jeroen Tel
-Also known as 'Maniacs Of Noise Old', this music format was created by Charles Deenen and Jeroen Tel, used by the Maniacs of Noise.
+rjp	Richard Joseph
+A music editor written by Alan McCarthy and Andi Smithers.  Also known as the Vectordean format.
 
-ems	Editeur Musical Sequentiel
-A music format created by Ringard' for use in their demos and games.
+rk	Ron Klaren
+A music and fx format created by Yvo Zoer and Ron Klaren.  Files in this format have an eagleplayer specific header.
 
-agi	Sierra AGI
-A sound format used in the first Sierra games that used the AGI (Adventure Game Interpreter) system.
-
-bp	SoundMon 2.2
-A music editor created by Brian Postma.
-
-fc13	Future Composer 1.3
-A synthetic music editor created by Supersero/Superions in 1990, based on Jochen Hippel's routines.
-
-tpu	Dirk Bialluch
-A format created by The Power Unit and only used in the game Time Lock.
-
-han	Digital Sound Creations
-A format created by Andrew Bailey and David Hanlon and appears to only have been used in early Bullfrog games.
-
-unic	Unic Tracker
-Also called UNIC Tracker, a module packer created by Anders E. Hansen, used in Kefrens demos.
-
-unic	Laxity Tracker
-Sometimes called UNIC Tracker 2, a module packer created by Anders E. Hansen, used in Kefrens demos.
-
-dum	Infogrames
-A music format that was mainly used in games published by Infogrames. Each song file (.dum) has a separate sample file(.ins), but multiple song files can share the same sample file.
-The majority of the music is also composed by Charles Callet. The delitracker replayer for this format called it "Rob Hubbard 2", but as far as we know there is no connection between Rob Hubbard and this audio format or the music.
-It is possible the previous naming was due to some similarities between the replayer code. The creator of this music format is currently unknown.
-
-alp	Alcatraz Packer
-A packer that was only used by two games, Oldtimer and Cedric and the Lost Sceptre. The sound format appears to be very similar to NoisePacker.
-
-ash	Ashley Hogg
-A format created by Ashley 'Ash' Hogg. A later version of this format used a Protracker packer using routine by Jonathan Menzies.
-
-bye	Andrew Parton
-A music format that appears to have only been used in the game B-17 Flying Fortress.
-
-ksm	Kefrens Sound Machine
-A tracker clone created by Razmo/Kefrens in 1989.
+s3m	ScreamTracker 3
+A multi-channel PC music editor created by Sami Tammilehto (PSI/Future Crew).
 
 s7g	Hippel 7V
 This is the first Amiga music format to support seven voices. The song data can also be compressed as COSO.
 
+sa	Sonic Arranger
+A music editor created by Carlsten Schlote, Branko Mikic and Carsten Herbst.
+
+sb	Steve Barrett
+Music composed by Steve Barrett using the Ariston replay routine.
+
+scn	Sean Connolly
+A music format created by Sean 'Odie' Connolly.
+
+scr	Sean Conran
+A music format created by Sean Conran.
+
+sct	Soundcontrol
+A music editor created by Holger Gehrmann.
+
+scumm	SCUMM
+SCUMM stands for "Script Creation Utility for Maniac Mansion", and the music format is that which is used in LucasArts adventures prior to Monkey Island 2, when it was replaced with the "iMuse" system.
+
+sdr	Synth Dream
+A music format created in 1991 by Laurens 'Lotus' Tummers and John Tonnard.
+
+sfx	SoundFX
+A Soundtracker clone created by Christian Haller and Christian A. Weber.
+
+sid	Sidmon
+A music editor created by Reinier van Vliet (Rhino/Team Hoi).
+
+sid2	Sidmon II
+A music editor created by Michael Kleps (Unknown/D.O.C).
+
+sjs	SoundPlayer
+A music format created by Scott Johnston, only used in the game Lemmings.
+
+sm	Sound Master
+A music format created by Michiel Soede, used mostly by Jeroen Soede.
+
+smus	Sonix Music Driver
+Also know as IFF-SMUS, this is another Electronic Arts standardised music format, created along with 8SVX, ILBM and FTXT as the EA IFF 85 specification.  Other than the archaic Aegis Sonix and EA's own Deluxe Music Construction Set (DMCS), almost no software uses this format. Sonix includes some non-standard instrument file formats that are not part of the IFF-SMUS specification.  Don Adan created a replayer based on the code from Aegis Sonix in order to play Sonix-specific SMUS music.
+
+snk	Paul Summers
+A music format created in 1989 by Paul Summers and Mike Chilton.
+
+spl	Sound Programming Language
+A music programming language created by Holder Gehrmann.  First created for the C64 and Tandy PC, later ported to the Amiga and Atari ST.  Also known as SOPROL.
+
+ss	Speedy System
+This is the first Michael Winterberg music format for the Amiga.  Known versions are 2.0, 2.1, 2.2, 3.0, and 'A'.
+
+svx	IFF-8SVX
+The Amiga's standard format for 8-bit sound samples, created by Electronic Arts in 1984 at the birth of the Amiga.
+
+tf	Follin Player II
+A music format used by the Follin brothers.
+
+thm	Thomas Hermann
+A music format created in 1989 by Thomas Hermann.
+
+tme	The Musical Enlightenment
+A music format created in n 1989 by N.J. Luuring Jr.
+
+tp3	Trackerpacker 3
+A module packer created by Crazy Crack/MEXX.
+
+tpu	Dirk Bialluch
+A format created by The Power Unit and only used in the game Time Lock.
+
+tw	Sound Images
+A music format created by Tony Williams.
+
+uds	Unique Development
+A music format created by Unique Development, found in both the Amiga and Atari ST versions of the game Obsession.
+
+unic	Unic Tracker / Laxity Tracker
+Also called UNIC Tracker / UNIC Tracker 2, module packers created by Anders E. Hansen, used in Kefrens demos.
+
+wb	Wally Beben
+Music composed by Wally Beben using the Ariston replay routine.
+
+xm	FastTracker 2.0
+A multi-channel PC music editor by Magnus Högdahl and Fredrik Huss.
+
+nsf	NES Sound Format
+Music ripped from Nintendo NES/Famicom games, devised by Kevin Horton in 1999 (originally "NESM"); the 6502 sound code plus a small header, replayed on an emulated 2A03. Hugely popular for original chiptune composition.
+
+nsfe	NES Sound Format (Extended)
+An extended NSF variant using named chunks to carry per-track titles, times and metadata that the original NESM header could not hold.
+
+spc	SPC700 (Super Nintendo)
+A 64KB dump of the SNES SPC700/S-SMP sound RAM, so every tune is exactly 64K and self-contained. Carries ID666 tags; collections are often distributed RAR-packed as .rsn.
+
+gbs	Game Boy Sound System
+Nintendo Game Boy / Game Boy Color sound code ripped to a compact module with a descriptive header (spec by Scott Worley). The richer successor to the earlier GBR format.
+
+gbr	Game Boy (GBR)
+An early Game Boy music rip format with a small header; superseded by GBS, which added the detail needed to replay more advanced driver tricks.
+
+hes	NEC PC Engine (HES)
+Sound code ripped from NEC PC Engine / TurboGrafx-16 games, replayed on an emulated HuC6280 wavetable chip.
+
+vgm	Video Game Music log
+A sample-accurate log of the raw register writes sent to game sound chips (started for the Sega Master System, now covering dozens of chips). The de-facto standard for accurate retro hardware capture.
+
+vgz	Video Game Music log (gzip)
+A gzip-compressed VGM file; identical contents to .vgm, just smaller on disk.
+
+sap	Slight Atari Player
+Music ripped from Atari 8-bit (XL/XE) computers, replayed on an emulated 6502 + POKEY chip. The standard archive format for the Atari 8-bit scene (ASMA collection).
+
+psf2	PlayStation 2 Sound Format
+A PSF2 sub-format (Portable Sound Format, by Neill Corlett): a PlayStation 2 sequencer program plus samples, replayed by emulating the original hardware.
+
+usf	Ultra64 Sound Format
+A PSF sub-format by Adam Gashlin holding the sound code of a Nintendo 64 game, played back by emulating the N64's audio path.
+
+gsf	Game Boy Advance Sound Format
+A PSF sub-format (Caitsith2 & Zoopd) containing a Game Boy Advance program that is emulated to reproduce the game's music.
+
+2sf	Nintendo DS Sound Format
+A PSF sub-format that emulates a Nintendo DS sound program; a small .2sf usually pairs with a shared .2sflib data file.
+
+dsf	Dreamcast Sound Format
+A PSF sub-format holding a Sega Dreamcast sound program, replayed via emulation of the console's audio hardware.
+
+ssf	Saturn Sound Format
+A PSF sub-format for Sega Saturn music, emulating the console's SCSP sound system.
+
+qsf	Capcom Q-Sound Format
+A PSF sub-format for Capcom arcade boards using the QSound chip, reproduced through emulation.
+
+sndh	SNDH (Atari ST)
+The standard Atari ST chip-music archive, devised by Jochen "BDC" Knaus: the original 68000 driver code prefixed by an "SNDH" header of tags, usually Pack-ICE compressed.
+
+sc68	sc68 (Atari ST / Amiga)
+A unified container for Atari ST and Amiga chip music created by Benjamin Gerard, packaging the original 680x0 replay code for emulated playback.
+
+ym	YM (StSound)
+A register dump of an AY-3-8910 / YM2149 tune captured 50 times a second, designed by Arnaud Carre (Leonard/Oxygene) for his ST-Sound player. Covers Atari ST, Amstrad CPC and ZX Spectrum chip tunes; LHA-compressed.
+
+ymst	YM (stereo)
+A stereo variant of the YM AY-3-8910/YM2149 register-dump format, replayed by the same StSound-style engine.
+
+mdx	MDX (Sharp X68000)
+The dominant Sharp X68000 music format, built on Music Macro Language for the Yamaha YM2151 (OPM); may carry a companion .pdx file of PCM samples. Default driver MXDRV by K. Maekawa & Missy.M.
+
+vtx	VTX (Vortex)
+A compact, LHA-packed AY-3-8910/YM2149 register-dump format with embedded metadata, widely used to archive ZX Spectrum (and other AY) chip tunes.
+
+vt2	Vortex Tracker II
+The native module of Vortex Tracker II, a Windows tracker by Sergey Bulba for the AY/YM chips of the ZX Spectrum and similar machines; saves to PT3 as well.
+
+asc	ASC Sound Master
+A ZX Spectrum AY tracker format, one of the classic native Spectrum chip-music editors.
+
+stc	Sound Tracker (ZX)
+An early ZX Spectrum AY tracker format from the Sound Tracker family of editors.
+
+pt1	Pro Tracker 1 (ZX)
+A first-generation ZX Spectrum Pro Tracker AY module format.
+
+pt2	Pro Tracker 2 (ZX)
+The Pro Tracker 2 AY module format for the ZX Spectrum, a staple of the Russian Spectrum demoscene.
+
+pt3	Pro Tracker 3 (ZX)
+Pro Tracker 3, the most widespread ZX Spectrum AY format; also the save target of Vortex Tracker. The reference format of the Spectrum chip scene.
+
+stp	Sound Tracker Pro (ZX)
+A ZX Spectrum AY format from the Sound Tracker Pro editor lineage.
+
+sqt	SQ-Tracker (ZX)
+An AY module format produced by SQ-Tracker on the ZX Spectrum.
+
+ftc	Fast Tracker (ZX)
+An AY-3-8910 tracker format for the ZX Spectrum (Fast Tracker / FTC), one of the native Spectrum chip editors.
+
+zxs	ZX Spectrum (ZXS)
+A ZX Spectrum AY chip-music format handled by the AY emulation players.
+
+kss	KSS (MSX)
+MSX sound code ripped to a module supporting the FM-PAC (YM2413), MSX-AUDIO (Y8950), Konami SCC and AY-3-8910 chips. The general container for MSX game music.
+
+mgs	MGSDRV (MSX)
+An MSX music format played by the popular MGSDRV driver, supporting the PSG, SCC and FM chips of MSX machines.
+
+s98	S98 (PC-98)
+A register-log format (close kin to VGM) for capturing FM sound from NEC PC-98 games and other Japanese hardware.
+
+it	Impulse Tracker
+Jeffrey Lim's 1995 DOS tracker, an evolution of Scream Tracker 3 adding 16-bit samples, instruments with envelopes and a resonant filter. Long the gold standard of PC tracking; open-sourced in 2014.
+
+stm	Scream Tracker 2
+The module format of Future Crew's Scream Tracker 2, an influential early PC tracker that paved the way for S3M and the whole DOS tracking scene.
+
+mtm	MultiTracker
+The MultiTracker Module format by Daniel Goldstein (Renaissance), a multi-channel PC tracker of the early 1990s demoscene.
+
+far	Farandole Composer
+The native format of Farandole Composer (Daniel Potter), a DOS tracker notable for its piano-roll style note entry.
+
+gdm	General Digital Music
+The General Digital Music format of the Bells, Whistles & Sound Boards (BWSB) library, used as a normalized container by some DOS games.
+
+dmf	X-Tracker (DMF)
+The Delusion/X-Tracker Digital Music File format, a DOS tracker module format from D-Lusion.
+
+amf	DSMI (AMF)
+The Advanced Module Format used by the DSMI library / DMP player (Otto Chrons), and by the Asylum tracker; a common DOS playback container.
+
+ult	UltraTracker
+The native module of MAS UltraTracker by Marc Andre Schallehn, a DOS tracker built around the Gravis Ultrasound.
+
+mdl	DigiTrakker
+The module format of DigiTrakker (n-Factor), a DOS tracker supporting larger sample sets.
+
+669	Composer 669
+Tran's Composer 669 module (named for its "if" magic bytes), one of the earliest PC trackers, popular in the early-90s European scene.
+
+mo3	MO3
+A compressed module container that stores tracker patterns plus MP3/OGG-encoded samples, shrinking MOD/XM/IT/S3M files for distribution.
+
+mptm	OpenMPT
+OpenMPT's native format, extending the IT format with modern features (more channels, plugins, advanced envelopes).
+
+d00	EdLib (Vibrants)
+The AdLib OPL music format of EdLib by Vibrants (JCH), used in several scene productions and games on the AdLib/Sound Blaster.
+
+cmf	Creative Music File
+Creative Technology's AdLib/OPL format, a MIDI-like stream bundling its own FM instrument bank; used by many early Sound Blaster games.
+
+rol	AdLib Visual Composer
+The native format of AdLib Inc.'s Visual Composer: MIDI-like FM music that pulls patches from an external .bnk instrument bank.
+
+laa	LucasArts AdLib
+The AdLib/OPL music format used by LucasArts' iMUSE-era games on the Sound Blaster and AdLib.
+
+dro	DOSBox Raw OPL
+A raw capture of OPL chip register writes recorded by DOSBox; effectively a hardware log that replays any AdLib game music verbatim.
+
+imf	id Software Music Format
+The AdLib OPL format used by Apogee and id Software games (Wolfenstein 3D, Commander Keen), a timed stream of OPL register writes.
+
+hsc	HSC AdLib Composer
+The module format of the HSC AdLib Composer (Electronic Rats), a popular AdLib tracker on the PC demoscene.
+
+adl	Westwood ADL
+The AdLib/OPL music format used by Westwood Studios games such as Dune II and the Kyrandia series.
+
+ftm	FamiTracker
+FamiTracker (by jsr, 2005) module data for the NES 2A03 and its expansion chips; the dominant modern tool for composing new NES/Famicom music.
+
+ahx	AHX
+Abyss' Highest Experience, a synthetic Amiga chiptune format (no samples) by Dexter & Pink of Abyss, prized for its tiny, classic 8-bit Amiga sound.
+
+hvl	HivelyTracker
+An open evolution of the AHX engine; HivelyTracker adds extra channels and stereo while keeping the synthetic Amiga chiptune character.
+
+dbm	DigiBooster Pro
+The module format of DigiBooster Pro (by Tomasz Piasta / d-lusion) for the Amiga, supporting many channels and high-quality samples.
+
+fxm	Fuxoft AY Language
+A ZX Spectrum AY format by Frantisek Fuxa (Fuxoft), used in 1980s Czech Spectrum games; replayed here via a port of the AY_Emul routines.
+
+amad	AY Amadeus
+A ZX Spectrum AY format (Fuxoft / Patrik Rak) wrapped in a ZXAYAMAD container; a close relative of the Fuxoft FXM format.
+
+jxs	JayTrax
+A cross-platform tracker with an internal wavedraw synth, written by Rhino; commercial until it went free at version 2.2 around 2004.
+
+mad	PlayerPRO
+The native module of PlayerPRO, the long-running Macintosh tracker and module player by Antoine Rosset.
+
+ned	NerdTracker II
+A DOS tracker by Michel Iwaniec (Bananmos) dedicated to NES/Famicom 2A03 music, used to compose tunes for real NES hardware.
+
+sks	STarKos
+An Amstrad CPC AY tracker by Targhan/Arkos that ran on real CPC hardware; the ancestor of the modern cross-platform Arkos Tracker.
+
+musx	Archimedes Tracker
+A sample tracker for the Acorn Archimedes / RISC OS, playing through the machine's VIDC sound hardware.
+
+coco	Coconizer
+A 1990 Acorn Archimedes sample tracker by Playfield that could also import Amiga MOD files for playback on RISC OS.
+
+eup	Euphony (FM Towns)
+A MIDI-like music format for the Fujitsu FM Towns (Towns OS), driving its YM2612 FM chip and RF5c68 PCM; uses .fmb/.pmb instrument banks.
+
+mgt	Megatracker
+An Atari ST sample tracker by Cream, one of the ST's multi-channel software-mixing music editors.
+
+pac	SBStudio
+The module format of SBStudio, a general-purpose sample-based MS-DOS tracker written by Henning Hellstroem in the early 1990s.
+
+omf	Onyx Music File
+A MOD-like Amiga format used on the 1993 Onyx musicdisk "Jangle"; stores its sequence and pattern data in reverse order.
+
+ixs	Ixalance
+A synth tracker by Shortcut Software (Maarten van Strien) that synthesizes and compresses its own wavetables, producing extremely tiny song files.
+
+ptk	ProTrekkr
+A tracker combining a soft-synth with a sample tracker (a heavily modified NoiseTrekker 2), aimed at small demos and chip/IDM tunes.
+
+ntk	NoiseTrekker / ProTrekkr
+An earlier NoiseTrekker-lineage module read by the ProTrekkr engine, mixing soft-synth voices with sampled instruments.
+
+uni	MikMod (UNIMOD)
+The internal UNIMOD format of the MikMod library, into which it converts many tracker formats; occasionally stored on disk directly.
+
+sunvox	SunVox
+A modular soft-synth and tracker by Alexander "NightRadio" Zolotov (2008), pairing a node-graph synth with tracker-style sequencing across many platforms.
+
+org	Organya
+The chiptune format by Daisuke "Pixel" Amaya created for his game Cave Story, with 8 melody + 8 percussion channels drawn from built-in waveforms.
+
+pn	PokeyNoise
+An Atari 8-bit format driving the POKEY chip's noise/synthesis features, played here via an emulated 6502 + POKEY rather than via UADE.
+
+bbsong	Beepola
+A cross-platform ZX Spectrum 1-bit "beeper" tracker by Chris Cowley, driving the Spectrum's single-bit speaker through engines like Tritone and Phaser1.

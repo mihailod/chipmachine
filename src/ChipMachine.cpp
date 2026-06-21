@@ -343,9 +343,10 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
 
     scrollText = "INITIAL_TEXT";
     scrollEffect.set("scrolltext",
-      " . . . . . . " PROGRAM_NAME " " VERSION_STR
-      " . . . Just type to search . . . UP/DOWN to select"
-      " . . . ENTER to play . . . TAB to see all commands . . . . .    ");
+      PROGRAM_NAME " " VERSION_STR
+      " . . type to search, UP/DOWN/ENTER to play"
+      " . . F9 for formats"
+      " . . TAB for all commands . . . .    ");
     starEffect.fadeIn();
     }
 
@@ -365,6 +366,23 @@ ChipMachine::~ChipMachine()
 void ChipMachine::setScrolltext(std::string const& txt)
 {
     scrollEffect.set("scrolltext", txt);
+}
+
+std::string ChipMachine::appendFormatInfo(std::string const& text,
+                                          SongInfo const& info)
+{
+    if (info.format.empty()) return text;
+
+    // "Platform - Name (EXT)" plus, if listed, "<trackers> - <description>".
+    std::string fmt = info.format;
+    std::string ext =
+        info.ext.empty() ? utils::path_extension(info.path) : info.ext;
+    auto desc = musicDatabase.describeExtension(ext);
+    if (!desc.empty()) fmt += " ... " + desc;
+
+    // Dots give a clean gap between sections and before the line repeats.
+    if (text.empty()) return "... " + fmt + " ...";
+    return text + " ... " + fmt + " ...";
 }
 
 void ChipMachine::initLua()
@@ -730,9 +748,17 @@ void ChipMachine::update()
         } else {
             m = compressWhitespace(player.getMeta("message"));
         }
-        if (m == "" && utils::startsWith(dbInfo.path, "radio::")) {
+        bool isRadio = utils::startsWith(dbInfo.path, "radio::");
+        if (m == "" && isRadio) {
             m = currentInfo.title;
         }
+        // Append the format info ("Platform - Name (EXT) ... <trackers> -
+        // <description>") so the scroller cycles metadata -> format -> back.
+        // When there is no embedded message/info the format line is all there
+        // is to show. Leading/trailing dots give clean gaps between sections.
+        // Radio streams have no meaningful module format, so skip it there.
+        if (!isRadio)
+            m = appendFormatInfo(m, currentInfo);
         if (scrollText != m) {
             scrollEffect.set("scrolltext", m);
             scrollText = m;
@@ -842,9 +868,14 @@ void ChipMachine::update()
         songField.setText(utils::format("[%02d/%02d]", currentTune + 1,
                                         currentInfo.numtunes));
         auto m = compressWhitespace(player.getMeta("message"));
-        if (m == "" && utils::startsWith(dbInfo.path, "radio::")) {
+        bool isRadio = utils::startsWith(dbInfo.path, "radio::");
+        if (m == "" && isRadio) {
             m = currentInfo.title;
         }
+        // Same metadata -> format -> back cycle as on Playstarted, so subtune
+        // changes keep the format info appended. Skip for radio streams.
+        if (!isRadio)
+            m = appendFormatInfo(m, currentInfo);
         if (m != "" && scrollText != m) {
             scrollEffect.set("scrolltext", m);
             scrollText = m;
