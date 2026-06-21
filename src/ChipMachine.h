@@ -94,6 +94,11 @@ class ChipMachine
 public:
     static const std::vector<FilterOption> filterOptions;
 
+    // When set (via the --donotloadimages CLI flag), loadScreenshot() never
+    // fetches a screenshot. Useful when the screenshot host (e.g. the Wayback
+    // mirror that gb64/hvtc/sndh/unexotica depend on) is down or unreachable.
+    static bool noImages;
+
     using Color = grappix::Color;
 
     void renderSong(const grappix::Rectangle& rec, int y, uint32_t index,

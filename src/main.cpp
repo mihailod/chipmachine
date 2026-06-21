@@ -66,6 +66,7 @@ int main(int argc, char* argv[])
         bool only_headless = false;
         bool force_reindex = false;
         bool delete_web_cache = false;
+        bool no_images = false;
         std::string play_what;
 #ifdef TEXTMODE_ONLY
         bool text_mode = true;
@@ -91,6 +92,8 @@ int main(int argc, char* argv[])
 
     opts.add_flag("--forcedbreindex", options.force_reindex, "Force database rebuild");
     opts.add_flag("--deletewebcache", options.delete_web_cache, "Delete web cache");
+    opts.add_flag("--donotloadimages", options.no_images,
+                  "Never download screenshots (e.g. when the image host is down)");
     opts.add_option("-T,--telnet", options.telnet_server,
                     "Start telnet server");
     opts.add_option("-p,--port", options.port, "Port for telnet server", true);
@@ -101,6 +104,10 @@ int main(int argc, char* argv[])
     opts.add_option("files", options.songs, "Songs to play");
 
     CLI11_PARSE(opts, argc, argv)
+
+#ifndef TEXTMODE_ONLY
+    chipmachine::ChipMachine::noImages = options.no_images;
+#endif
 
     if (options.delete_web_cache) {
         utils::print_fmt("Clearing Web Cache...\n");

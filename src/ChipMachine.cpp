@@ -434,8 +434,18 @@ void ChipMachine::updateScreenshotArea()
     screenShotIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
 }
 
+bool ChipMachine::noImages = false;
+
 void ChipMachine::loadScreenshot(const std::string& shot)
 {
+    // --donotloadimages: never attempt any screenshot download.
+    if (noImages) {
+        screenShotIcon.clear();
+        screenshots.clear();
+        currentScreenshot = "";
+        return;
+    }
+
     // Called from Playstarted (immediate) and from the Playing poll (late arrival).
     // Guards against re-loading the same URL and against loading an empty shot.
     if (shot == currentScreenshot) {
