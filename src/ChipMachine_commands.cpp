@@ -53,6 +53,9 @@ void ChipMachine::setupCommands()
 
     cmd("show_advanced", [=] {
         if (currentScreen != ADVANCED_SCREEN) lastScreen = currentScreen;
+        // Ensure the per-format tune counts are ready (e.g. when the index was
+        // loaded from cache and the indexing-finished path never ran).
+        if (filterCounts.empty()) computeFilterCounts();
         showScreen(ADVANCED_SCREEN);
     });
 

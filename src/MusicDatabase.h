@@ -66,11 +66,17 @@ enum Formats
     STR, // Stereo Sidplayer (.str), C64 stereo SID
     PRG, // Commodore TED (16/116/+4), .prg tunes
 
-    SPECTRUM,
+    SPECTRUM,    // generic / unclassified ZX Spectrum
+    ZXBEEPER,    // ZX Spectrum 16/48 1-bit beeper (Beepola, Picatune2, ...)
+    ZXAY,        // ZX Spectrum 128 AY/YM (Pro Tracker, Vortex, AY Emul, ...)
+    MSX,         // MSX (Z80 + AY/SCC/OPLL/FM): MGSDRV, KSS, MoonBlaster, ...
+    AMSTRAD,     // Amstrad CPC (AY): Starkos, ArkosTracker
+    ACORN,       // Acorn Archimedes: Digital Symphony, Coconizer, ...
 
     APPLE,
 
-    ATARI,
+    ATARI, // Atari ST/STE (YM2149): sndh, YM, SC68, ST UADE formats
+    POKEY, // Atari XL/XE 8-bit (POKEY): .sap
 
     MP3,
 
@@ -79,15 +85,19 @@ enum Formats
 
     OGG,
 
+    RADIO, // Live streaming radio stations (the "radio" collection)
+
     YOUTUBE,
 
     PC,
+    JPFM, // Japanese FM computers: NEC PC-98, Sharp X68000, Fujitsu FM Towns
 
     ADPLUG,
     TRACKER = 0x30,
-    SCREAMTRACKER,
-    IMPULSETRACKER,
-    FASTTRACKER,
+    SCREAMTRACKER,  // IBM PC: Scream Tracker (S3M/STM)
+    IMPULSETRACKER, // IBM PC: Impulse Tracker (IT)
+    FASTTRACKER,    // IBM PC: FastTracker II (XM)
+    PCTRACKER,      // other IBM PC/DOS trackers (MTM, 669, MDL, GDM, ...)
 
     AMIGA,
     PROTRACKER,
@@ -148,6 +158,18 @@ public:
     }
     // Get full data, may require SQL query
     SongInfo getSongInfo(int index) const;
+
+    // Unified one-line description of a song's format for the now-playing
+    // screen: "Platform - Format name (EXT)", e.g. "Amiga - Soundtracker (MOD)".
+    static std::string describeFormat(SongInfo const& s);
+
+    // Map a modland/format string (+ path) to its format byte (platform/type).
+    static uint8_t classifyFormat(std::string const& fmt,
+                                  std::string const& path);
+
+    // Number of indexed songs (excluding products) per format byte (0..255).
+    // Used to show per-platform tune counts on the F9 filter screen.
+    std::vector<int> getFormatByteCounts() const;
 
     std::string getTitle(int index) const
     {

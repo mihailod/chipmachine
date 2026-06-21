@@ -56,10 +56,16 @@ void runConsole(std::shared_ptr<bbs::Console> console, ChipInterface& ci)
         static const std::map<uint32_t, int> colors = {
             { NOT_SET, Console::PURPLE },  { PLAYLIST, Console::GREY },
             { CONSOLE, Console::RED },     { SID, Console::BROWN },
-            { ATARI, Console::YELLOW },    { MP3, Console::GREEN },
+            { ZXBEEPER, Console::PINK },   { ZXAY, Console::PURPLE },
+            { MSX, Console::BLUE },        { AMSTRAD, Console::LIGHT_GREY },
+            { ACORN, Console::WHITE },
+            { ATARI, Console::YELLOW },    { POKEY, Console::ORANGE },
+            { MP3, Console::GREEN },
             { APPLE, Console::CYAN },
-            { M3U, Console::LIGHT_GREEN }, { YOUTUBE, Console::RED },
+            { M3U, Console::LIGHT_GREEN }, { RADIO, Console::ORANGE },
+            { YOUTUBE, Console::RED },
             { PC, Console::CYAN },         { AMIGA, Console::LIGHT_BLUE },
+            { JPFM, Console::PINK },       { PCTRACKER, Console::LIGHT_GREY },
             { 255, Console::ORANGE }
         };
 

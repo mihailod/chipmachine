@@ -1347,18 +1347,111 @@ void initFormats()
     format_map["stereo sidplayer"] = STR;
     // Commodore TED (16/116/+4) .prg tunes -- identify_song() tags these "TED".
     format_map["ted"] = PRG;
+
+    // --- ZX Spectrum 16/48 beeper (1-bit) ---
+    // beepola/picatune2 are listed in uade_formats (default UADE/Amiga); these
+    // explicit entries override that so they group as ZX Spectrum, not Amiga.
+    format_map["beepola"] = ZXBEEPER;
+    format_map["picatune2"] = ZXBEEPER;
+
+    // --- ZX Spectrum 128 AY/YM ---
+    // All of these modland format labels live exclusively under "Spectrum/", so
+    // mapping by string can't pull in Amstrad CPC (Starkos/ArkosTracker), MSX or
+    // Atari-ST YM tunes -- those keep their own platforms and stay out of the ZX
+    // AY filter. Names like "Pro Tracker 3"/"Sound Tracker Pro 2" are the ZX AY
+    // formats and are distinct strings from the Amiga "Protracker"/"Soundtracker
+    // Pro II" labels.
+    format_map["ay emul"] = ZXAY;
+    format_map["ay amadeus"] = ZXAY;
+    format_map["ay strc"] = ZXAY;
+    format_map["fuxoft ay language"] = ZXAY;
+    format_map["zxs"] = ZXAY;
+    format_map["pro tracker 1"] = ZXAY;
+    format_map["pro tracker 2"] = ZXAY;
+    format_map["pro tracker 3"] = ZXAY;
+    format_map["st song compiler"] = ZXAY;
+    format_map["asc sound master"] = ZXAY;
+    format_map["sq tracker"] = ZXAY;
+    format_map["vortex"] = ZXAY;
+    format_map["vortex tracker ii"] = ZXAY;
+    format_map["sound tracker pro"] = ZXAY;
+    format_map["sound tracker pro 2"] = ZXAY;
+    format_map["sound tracker 1.1"] = ZXAY;
+    format_map["sound tracker 1.3"] = ZXAY;
+    format_map["pro sound creator"] = ZXAY;
+    format_map["pro sound maker"] = ZXAY;
+    format_map["pro sound maker 1.0"] = ZXAY;
+    format_map["flash tracker"] = ZXAY;
+    format_map["fast tracker"] = ZXAY; // ZX AY .ftc, NOT Amiga/PC FastTracker
+    format_map["global tracker"] = ZXAY;
+    format_map["chip tracker"] = ZXAY;
+
+    // --- MSX (Z80 + AY/SCC/OPLL/FM) ---
+    // Several of these (kss, face the music, mvs tracker, the musical
+    // enlightenment) are listed in uade_formats; these explicit entries override
+    // that Amiga default so they group as MSX.
+    format_map["mgsdrv"] = MSX;
+    format_map["kss"] = MSX;
+    format_map["musica"] = MSX;
+    format_map["moonblaster"] = MSX;
+    format_map["moonblaster (edit mode)"] = MSX;
+    format_map["oplldrv"] = MSX;
+    format_map["mpk"] = MSX;
+    format_map["scc-musixx"] = MSX;
+    format_map["face the music"] = MSX;
+    format_map["fac soundtracker"] = MSX;
+    format_map["mvs tracker"] = MSX;
+    format_map["the musical enlightenment"] = MSX;
+    format_map["editeur musical sequentiel"] = MSX;
+    format_map["msx1"] = MSX;
+    format_map["msx2"] = MSX;
+
+    // --- Amstrad CPC (AY) --- (starkos/arkostracker are in uade_formats)
+    format_map["starkos"] = AMSTRAD;
+    format_map["arkostracker"] = AMSTRAD;
+
+    // --- Acorn Archimedes ---
+    format_map["digital symphony"] = ACORN;
+    format_map["archimedes tracker"] = ACORN;
+    format_map["coconizer"] = ACORN;
+
     format_map["super nintendo"] = SNES;
     format_map["hes"] = HES;
     format_map["mp3"] = MP3;
+
+    // --- Atari ST/STE (YM2149) ---
     format_map["sc68"] = ATARI;
+    format_map["atari st"] = ATARI; // sndh collection
+    format_map["ym"] = ATARI;
+    format_map["ymst"] = ATARI;
+    // UADE-played Atari ST formats -- override their uade_formats (Amiga)
+    // default; the "ST" suffix distinguishes them from the Amiga namesakes
+    // ("Special FX", "Quartet", "Jochen Hippel").
+    format_map["quartet st"] = ATARI;
+    format_map["special fx st"] = ATARI;
+    format_map["tcb tracker"] = ATARI;
+    format_map["hippel st"] = ATARI;
+    // --- Atari XL/XE 8-bit (POKEY), distinct chip from the ST line ---
+    // startsWith("atari") would otherwise lump "Atari 8Bit" (.sap) in with the
+    // ST tunes; this explicit entry keeps POKEY separate.
+    format_map["atari 8bit"] = POKEY;
     format_map["soundsmith"] = APPLE; // Apple IIgs SoundSmith
     format_map["playerpro"] = APPLE;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
     format_map["jaytrax"] = TRACKER;  // JayTrax (.jxs), cross-platform synth tracker -- not UADE/Amiga
     format_map["ultra64 sound format"] = NINTENDO64;
     format_map["nintendo ds sound format"] = NDS;
     format_map["nintendo sound format"] = NES;
+    // Sega 8-bit (SN76489 PSG): Master System, Game Gear, SG-1000, SC-3000
     format_map["sega master system"] = SEGAMS;
     format_map["sega game gear"] = SEGAMS;
+    format_map["sega sg-1000"] = SEGAMS;
+    format_map["sega sc-3000"] = SEGAMS;
+    // Sega 16-bit (Mega Drive/Genesis, YM2612 + SN76489) and its add-ons
+    format_map["sega megadrive"] = MEGADRIVE;
+    format_map["megadrive gym"] = MEGADRIVE;
+    format_map["megadrive cym"] = MEGADRIVE;
+    format_map["sega 32x"] = MEGADRIVE;
+    format_map["sega mega cd"] = MEGADRIVE;
     format_map["playstation sound format"] = PLAYSTATION;
     format_map["dreamcast sound format"] = DREAMCAST;
     format_map["playlist"] = PLAYLIST;
@@ -1366,6 +1459,107 @@ void initFormats()
     format_map["c64 event"] = PLAYLIST;
     format_map["pls"] = PLS;
     format_map["m3u"] = M3U;
+
+    // -----------------------------------------------------------------------
+    // Catch-all classification pass: many songs (especially from ModArchive)
+    // carry bare format codes or names not covered by the loops/fallbacks above
+    // and would otherwise be UNKNOWN (invisible to every platform filter). Map
+    // them to the closest platform so every song is classifiable.
+    // -----------------------------------------------------------------------
+    // Classic module trackers. MOD is Amiga; XM/IT/S3M are the IBM PC/DOS
+    // trackers (FastTracker II / Impulse Tracker / Scream Tracker), which live
+    // in the dedicated "IBM PC Trackers" filter (see ChipMachine::filterOptions).
+    format_map["mod"] = PROTRACKER;        // Amiga ProTracker module
+    format_map["xm"] = FASTTRACKER;        // FastTracker II
+    format_map["it"] = IMPULSETRACKER;     // Impulse Tracker
+    format_map["s3m"] = SCREAMTRACKER;     // Scream Tracker 3
+    format_map["stm"] = SCREAMTRACKER;     // Scream Tracker 2
+    // Other IBM PC / DOS trackers -> PCTRACKER (also in "IBM PC Trackers").
+    for (char const* f :
+         { "mtm", "mo3", "669", "unis 669", "mdl", "gdm", "dmf", "amf", "ptm",
+           "ult", "far", "ams", "dsm", "umx", "mptm", "openmpt mptm", "mt2",
+           "dsmi compact", "composer 670 (cdfm)", "composer 667", "c67",
+           "multitracker", "x-tracker", "polytracker", "ultratracker",
+           "digitrakker" })
+        format_map[f] = PCTRACKER;
+    // Ambiguous/cross-platform trackers -> generic TRACKER (stays under Amiga).
+    format_map["dtm"] = TRACKER; // Digital Tracker (Atari Falcon / Amiga)
+    format_map["plm"] = TRACKER;
+    // Amiga (native trackers, custom players, packers, composer rips).
+    for (char const* f :
+         { "med",        "octamed mmdc", "mmdc",        "iff-smus",
+           "iff-8svx",   "custom",       "his master's noise",
+           "hippel coso", "hippel / hippel-coso", "infogrames",
+           "noise tracker gs 1", "startrekker", "startrekker flt8",
+           "maximum effect", "dbm", "digi booster", "digi", "soundmon 2.0",
+           "soundmon 2.2", "bp soundmon 1", "the player 4.x", "the player 5.x",
+           "the player 6.x", "sonix music driver", "benn daglish",
+           "mikmod unitrk", "tfmx pro", "tfmx 7v", "okt", "martin walker",
+           "hvl", "prorunner 2.0", "prorunner 1.0", "buzzic 2", "buzzic",
+           "noisepacker 3.x", "noisepacker 2.x", "amos music bank",
+           "pixel painters fmf", "pixel painters ftf", "arpeggiator",
+           "astroidea xmf", "easytrax", "m.o.n new", "m.o.n old",
+           "trackerpacker 3", "musicmaker v8 old", "ac1d-dc1a packer",
+           "ashley hogg", "mugician", "mugician ii", "pha packer",
+           "propacker 2.1", "synth pack", "alcatraz packer", "digital illusions",
+           "digital sound creations", "rob hubbard old", "fred editor",
+           "peter verswyvelen packer", "promizer", "sfx", "sidmon ii", "sidmon",
+           "actionamics sound tool", "andrew parton", "art & magic",
+           "channel players", "cinemaware", "deltamusic 2.0",
+           "digital sonix & chrome", "fwmp", "heatseeker mc1.0",
+           "kefrens sound machine", "musicline", "steve turner",
+           "midi-loriciel" })
+        format_map[f] = AMIGA;
+    // AdLib / OPL (PC).
+    for (char const* f : { "raw opl capture", "edlib packed", "edlib d00",
+                           "edlib d01", "herad music system", "imf",
+                           "a.m.composer 1.2" })
+        format_map[f] = ADPLUG;
+    // Japanese FM home computers (NEC PC-98, Sharp X68000, Fujitsu FM Towns).
+    for (char const* f :
+         { "fm sound driver (fmp)", "pmd", "s98", "mdx", "euphony" })
+        format_map[f] = JPFM;
+    // PC / DAW / synth.
+    for (char const* f : { "deflemask", "v2", "piston collage",
+                           "piston collage protected", "renoise", "renoise old",
+                           "piece music driver", "sierra agi" })
+        format_map[f] = PC;
+    // Remaining single-platform mappings.
+    format_map["nsfe"] = NES;
+    format_map["hvsc"] = SID;
+    format_map["benn daglish sid"] = SID;
+    format_map["playstation 2 sound format"] = PLAYSTATION2;
+    format_map["sgc"] = SEGAMS;             // SG-1000 / Coleco / SMS rips
+    format_map["saturn sound format"] = CONSOLE; // no dedicated Saturn filter
+    format_map["ogg vorbis"] = OGG;
+    format_map["iso-mpeg audio layer-2"] = MP3;
+    format_map["iso-mpeg audio layer-3"] = MP3;
+    format_map["hippel st coso"] = ATARI;   // Atari ST Hippel
+    format_map["bbc micro"] = ACORN;        // Acorn 8-bit (close enough)
+    // Misc consoles/handhelds with no dedicated platform filter.
+    for (char const* f :
+         { "wonderswan", "vectrex", "colecovision", "capcom q-sound format" })
+        format_map[f] = CONSOLE;
+
+    // Correct cross-platform formats that the generic fallbacks (endsWith
+    // "tracker" -> TRACKER, uade_formats -> UADE) would otherwise mis-file under
+    // Amiga. These are native to other platforms.
+    format_map["sidplayer"] = SID;          // Commodore 64 (not Amiga)
+    format_map["goattracker"] = SID;
+    format_map["goattracker 2"] = SID;
+    format_map["cybertracker"] = SID;
+    format_map["cybertracker c64"] = SID;
+    format_map["famitracker"] = NES;
+    format_map["nerdtracker 2"] = NES;
+    format_map["psycle"] = PC;              // Windows tracker/DAW
+    format_map["sunvox"] = PC;
+    format_map["buzz"] = PC;
+    format_map["organya"] = PC;             // Cave Story (.org)
+    format_map["organya 2"] = PC;
+    format_map["epic megagames masi"] = PCTRACKER;               // PSM, DOS
+    format_map["digital sound and music interface"] = PCTRACKER; // DSMI, DOS
+    format_map["digital sound interface kit"] = PCTRACKER;       // DSIK, DOS
+    format_map["digital sound interface kit riff"] = PCTRACKER;
 }
 
 static uint8_t formatToByte(std::string const& fmt, std::string const& path,
@@ -1411,6 +1605,158 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
         // fprintf(stderr, "%s\n", f.c_str());
     }
     return l;
+}
+
+// Human-readable platform name for a format byte, used by describeFormat().
+// Mirrors the F9 platform filters (see ChipMachine::filterOptions).
+static std::string platformName(uint8_t b)
+{
+    switch (b) {
+    case AMIGA:
+    case PROTRACKER:
+    case SOUNDTRACKER:
+    case UADE:
+    case TRACKER: return "Amiga";
+    case SCREAMTRACKER:
+    case IMPULSETRACKER:
+    case FASTTRACKER:
+    case PCTRACKER: return "PC";
+    case JPFM: return "PC-98 / X68000";
+    case SID:
+    case STR: return "Commodore 64";
+    case PRG: return "Commodore 16/+4";
+    case ATARI: return "Atari ST/STE";
+    case POKEY: return "Atari XL/XE";
+    case ZXBEEPER:
+    case ZXAY: return "ZX Spectrum";
+    case MSX: return "MSX";
+    case AMSTRAD: return "Amstrad CPC";
+    case ACORN: return "Acorn Archimedes";
+    case APPLE: return "Apple IIGS";
+    case NES: return "Nintendo NES";
+    case SNES: return "Nintendo SNES";
+    case GAMEBOY:
+    case GBA: return "Nintendo Game Boy";
+    case NINTENDO64: return "Nintendo 64";
+    case NDS: return "Nintendo DS";
+    case SEGA:
+    case MEGADRIVE: return "Sega Mega Drive";
+    case SEGAMS: return "Sega 8-bit";
+    case DREAMCAST: return "Sega Dreamcast";
+    case PLAYSTATION:
+    case PLAYSTATION2: return "PlayStation";
+    case HES: return "PC Engine";
+    case CONSOLE: return "Console";
+    case ADPLUG: return "PC AdLib";
+    case PC: return "PC";
+    case MP3: return "MP3";
+    case OGG: return "OGG";
+    case M3U:
+    case PLS: return "Playlist";
+    case RADIO: return "Radio";
+    case YOUTUBE: return "YouTube";
+    default: return "";
+    }
+}
+
+uint8_t MusicDatabase::classifyFormat(std::string const& fmt,
+                                      std::string const& path)
+{
+    return formatToByte(fmt, path, 0);
+}
+
+std::vector<int> MusicDatabase::getFormatByteCounts() const
+{
+    std::lock_guard lock{ dbMutex };
+    std::vector<int> counts(256, 0);
+    // Songs occupy [0, productStartIndex); the rest are products -- skip them.
+    uint32_t n = (productStartIndex > 0 &&
+                  productStartIndex <= (uint32_t)formats.size())
+                     ? productStartIndex
+                     : (uint32_t)formats.size();
+    for (uint32_t i = 0; i < n; i++) counts[formats[i] & 0xff]++;
+    return counts;
+}
+
+std::string MusicDatabase::describeFormat(SongInfo const& s)
+{
+    uint8_t b = formatToByte(s.format, s.path, 0);
+
+    // YouTube videos have no module format/extension. The format string carries
+    // the source platform(s) in parentheses (e.g. "Youtube (ZX Spectrum)");
+    // surface that as "YouTube - ZX Spectrum".
+    if (b == YOUTUBE) {
+        auto open = s.format.find('(');
+        auto close = s.format.rfind(')');
+        if (open != std::string::npos && close != std::string::npos &&
+            close > open + 1)
+            return "YouTube - " + s.format.substr(open + 1, close - open - 1);
+        return "YouTube";
+    }
+
+    // Extension (uppercase, no dot); prefer the stored ext, fall back to path.
+    std::string ext = s.ext;
+    if (ext.empty()) ext = utils::path_extension(s.path);
+    for (auto& c : ext) c = (char)toupper((unsigned char)c);
+
+    // Many songs (e.g. from ModArchive) carry a bare format code as their format
+    // string (MOD, XM, IT, ...) which would otherwise render as "MOD (MOD)".
+    // Expand those to a real platform + tracker name. (Audio codes like MP3 are
+    // already classified via format_map, so they don't need an entry here -- the
+    // redundancy collapse below turns "MP3 - MP3 (MP3)" into just "MP3".)
+    static const std::map<std::string, std::pair<std::string, std::string>>
+        codeNames = {
+            { "mod", { "Amiga", "ProTracker" } },
+            { "ahx", { "Amiga", "AHX" } },
+            { "thx", { "Amiga", "AHX" } },
+            { "med", { "Amiga", "OctaMED" } },
+            { "okt", { "Amiga", "Oktalyzer" } },
+            { "dbm", { "Amiga", "DigiBooster Pro" } },
+            { "digi", { "Amiga", "DigiBooster" } },
+            { "xm", { "PC", "FastTracker II" } },
+            { "it", { "PC", "Impulse Tracker" } },
+            { "s3m", { "PC", "Scream Tracker 3" } },
+            { "stm", { "PC", "Scream Tracker 2" } },
+            { "mtm", { "PC", "MultiTracker" } },
+            { "mdl", { "PC", "DigiTrakker" } },
+            { "mptm", { "OpenMPT", "OpenMPT" } },
+            { "mo3", { "PC", "MO3" } },
+            { "669", { "PC", "Composer 669" } },
+            { "far", { "PC", "Farandole Composer" } },
+            { "ptm", { "PC", "PolyTracker" } },
+            { "ult", { "PC", "UltraTracker" } },
+        };
+
+    std::string plat, name;
+    std::string key = toLower(s.format.empty() ? ext : s.format);
+    auto cit = codeNames.find(key);
+    if (cit != codeNames.end()) {
+        plat = cit->second.first;
+        name = cit->second.second;
+    } else {
+        plat = platformName(b);
+        name = s.format;
+    }
+    if (name.empty()) name = ext.empty() ? "Unknown" : ext;
+
+    // Build "Platform - Name (EXT)", dropping any piece that just repeats
+    // another (e.g. "MP3 - MP3 (MP3)" -> "MP3", "YM (YM)" -> ...).
+    auto ieq = [](std::string const& a, std::string const& b2) {
+        if (a.size() != b2.size()) return false;
+        for (size_t i = 0; i < a.size(); i++)
+            if (tolower((unsigned char)a[i]) != tolower((unsigned char)b2[i]))
+                return false;
+        return true;
+    };
+    std::string out = name;
+    if (!plat.empty() && !ieq(plat, name)) out = plat + " - " + name;
+    // Skip the "(EXT)" suffix when it would be redundant: when it matches the
+    // name/platform, or the name already ends in a parenthetical that conveys
+    // the format detail (e.g. "FM sound driver (FMP)").
+    bool nameHasParen = !name.empty() && name.back() == ')';
+    if (!ext.empty() && !ieq(ext, name) && !ieq(ext, plat) && !nameHasParen)
+        out += " (" + ext + ")";
+    return out;
 }
 
 template <typename T> static void readVector(std::vector<T>& v, apone::File& f)
@@ -1519,6 +1865,16 @@ void MusicDatabase::generateIndex()
                           std::string, int>(
         "SELECT title, game, format, composer, path, collection FROM song");
 
+    // The "radio" collection holds live streaming stations whose format tags
+    // (M3U/MP3) are shared with regular content; tag them by collection ROWID so
+    // they get a dedicated RADIO format byte (and their own F9 filter).
+    int radioColl = -1;
+    try {
+        auto cq =
+            db.query<int>("SELECT ROWID FROM collection WHERE id='radio'");
+        if (cq.step()) radioColl = cq.get();
+    } catch (...) {}
+
     int count = 0;
     // int maxTotal = 3;
     int cindex = 0;
@@ -1547,6 +1903,7 @@ void MusicDatabase::generateIndex()
         tie(title, game, fmt, composer, path, collection) = query.get_tuple();
 
         uint8_t b = formatToByte(fmt, path, collection);
+        if (collection == radioColl) b = RADIO;
         formats.push_back(b | (collection << 8));
 
         if (game != "") {

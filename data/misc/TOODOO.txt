@@ -118,6 +118,5 @@ product/process
 major new features
 ==================
 - consolidate all db scripts into one unified?
-- filter by platform (C64, Amiga... -- something done but needs discussion) and format (mod, ym, mp3...) -- Pesic
 - Separate db from code and auto-update db independently from code
 

@@ -33,36 +33,74 @@ std::string compressWhitespace(std::string const& text)
 
 namespace chipmachine {
 
+static std::string withCommas(int n); // defined below
+
 const std::vector<FilterOption> ChipMachine::filterOptions = {
-    { "[Show All]", {} },
-    { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER, SCREAMTRACKER, IMPULSETRACKER, FASTTRACKER } },
-    { "Atari", { ATARI } },
-    { "Apple IIgs", { APPLE } },
+    { "[No Filter]", {} },
+    { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER } },
+    { "Atari ST/STE (YM/PCM)", { ATARI } },
+    { "Atari XL/XE (POKEY)", { POKEY } },
     { "Commodore 64", { SID, STR } },
-    { "Commodore TED (16/116/+4)", { PRG } },
-    { "NES", { NES } },
-    { "SNES", { SNES } },
-    { "Game Boy / GBA", { GAMEBOY, GBA } },
-    { "Sega", { SEGA, SEGAMS, MEGADRIVE, DREAMCAST } },
-    { "PlayStation", { PLAYSTATION, PLAYSTATION2 } },
-    { "Nintendo 64 / DS", { NINTENDO64, NDS } },
+    { "Commodore 16/116/+4 (TED)", { PRG } },
+    { "ZX Spectrum 16/48 (Beeper)", { ZXBEEPER } },
+    { "ZX Spectrum 128 (AY)", { ZXAY } },
+    { "MSX", { MSX } },
+    { "Amstrad CPC", { AMSTRAD } },
+    { "Acorn Archimedes", { ACORN } },
+    { "Apple IIGS", { APPLE } },
+    { "Nintendo NES", { NES } },
+    { "Nintendo SNES", { SNES } },
+    { "Nintendo Game Boy/GBA", { GAMEBOY, GBA } },
+    { "Nintendo 64", { NINTENDO64 } },
+    { "Nintendo DS", { NDS } },
+    { "Sega 8bit", { SEGAMS } },
+    { "Sega 16bit/32X", { SEGA, MEGADRIVE } },
+    { "Sega Dreamcast", { DREAMCAST } },
+    { "PlayStation 1/2", { PLAYSTATION, PLAYSTATION2 } },
+    { "IBM PC Trackers", { FASTTRACKER, IMPULSETRACKER, SCREAMTRACKER, PCTRACKER } },
+    { "PC-98 / X68000 / FM Towns", { JPFM } },
     { "Adlib / PC", { ADPLUG, PC } },
-    { "MP3 / OGG", { MP3, OGG } }
+    { "MP3 / OGG", { MP3, OGG } },
+    { "YouTube", { YOUTUBE } },
+    { "Radio Stations", { RADIO } }
 };
+
+// Base color for a format byte. Shared by the now-playing list (renderSong)
+// and the F9 filter screen so platforms keep a consistent color everywhere.
+static uint32_t formatColor(int f)
+{
+    static const std::map<uint32_t, uint32_t> colors = {
+        { NOT_SET, 0xffff00ff }, { PLAYLIST, 0xffffff88 },
+        { CONSOLE, 0xffdd3355 },
+        { NES, 0xffe05555 },     { SNES, 0xff9a7bd0 },
+        { GAMEBOY, 0xff9bbc0f },  { GBA, 0xff9bbc0f },
+        { NINTENDO64, 0xff4466cc },
+        { NDS, 0xff55ccbb },     { SEGAMS, 0xff66aaee },
+        { SEGA, 0xff3377dd },    { MEGADRIVE, 0xff3377dd },
+        { DREAMCAST, 0xffee8844 }, { PLAYSTATION, 0xffbbbbbb },
+        { PLAYSTATION2, 0xffbbbbbb },
+        { SID, 0xffcc8844 },
+        { ZXBEEPER, 0xffff88dd }, { ZXAY, 0xffbb88ff },
+        { MSX, 0xff66ddaa },     { AMSTRAD, 0xff44aadd },
+        { ACORN, 0xff88dd55 },
+        { ATARI, 0xffcccc33 },   { POKEY, 0xffcc9933 },
+        { MP3, 0xff88ff88 },
+        { APPLE, 0xff66cccc },
+        { M3U, 0xffaaddaa },     { RADIO, 0xffff7722 },
+        { YOUTUBE, 0xffff0000 },
+        { PC, 0xffcccccc },      { JPFM, 0xffff66cc },
+        { ADPLUG, 0xffddaa55 },
+        { AMIGA, 0xff6666cc },
+        { SCREAMTRACKER, 0xffaaccee }, { PCTRACKER, 0xffaaccee },
+        { PRODUCT, 0xffff88cc }, { 255, 0xff00ffff }
+    };
+    auto it = --colors.upper_bound((uint32_t)f);
+    return it->second;
+}
 
 void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
                              uint32_t index, bool hilight)
 {
-    static const std::map<uint32_t, uint32_t> colors = {
-        { NOT_SET, 0xffff00ff }, { PLAYLIST, 0xffffff88 },
-        { CONSOLE, 0xffdd3355 }, { SID, 0xffcc8844 },
-        { ATARI, 0xffcccc33 },   { MP3, 0xff88ff88 },
-        { APPLE, 0xff66cccc },
-        { M3U, 0xffaaddaa },     { YOUTUBE, 0xffff0000 },
-        { PC, 0xffcccccc },      { AMIGA, 0xff6666cc },
-        { PRODUCT, 0xffff88cc }, { 255, 0xff00ffff }
-    };
-
     Color c;
     std::string text;
 
@@ -81,9 +119,7 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
         else
             text = utils::format("%s / %s", parts[0], parts[1]);
     }
-    auto it = --colors.upper_bound(f);
-    c = it->second;
-    c = c * 0.75f;
+    c = Color(formatColor(f)) * 0.75f;
 
     if (hilight) {
         static uint32_t markStartcolor = 0;
@@ -275,7 +311,11 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
         [=](grappix::Rectangle& rec, int y, uint32_t index, bool hilight) {
             if (index < filterOptions.size()) {
                 auto const& opt = filterOptions[index];
-                uint32_t c = 0xaa33bbff;
+                // Inherit the platform's color (see formatColor / renderSong);
+                // "[Show All]" has no single format, so render it white.
+                uint32_t c = opt.matchedFormats.empty()
+                                 ? 0xffffffff
+                                 : formatColor(opt.matchedFormats[0]);
                 if (hilight) {
                     static uint32_t markStartcolor = 0;
                     if (markStartcolor != c) {
@@ -290,7 +330,11 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
                     }
                     c = markColor;
                 }
-                grappix::screen.text(listFont, opt.name, rec.x, rec.y, c,
+                std::string label = opt.name;
+                if (index < filterCounts.size())
+                    label += utils::format("  [%s tunes]",
+                                           withCommas(filterCounts[index]));
+                grappix::screen.text(listFont, label, rec.x, rec.y, c,
                                      resultFieldTemplate.scale);
             }
         });
@@ -541,12 +585,44 @@ void ChipMachine::updateNextField()
                 nextField.setText("Next");
             else
                 nextField.setText(utils::format("Next (%d)", psz));
+            info.format = MusicDatabase::describeFormat(info);
             nextInfoField.setInfo(info);
             currentNextPath = info.path;
         }
     } else if (nextField.getText() != "") {
         nextInfoField.setInfo(SongInfo());
         nextField.setText("");
+    }
+}
+
+// Format an integer with thousands separators, e.g. 345000 -> "345,000".
+static std::string withCommas(int n)
+{
+    std::string s = std::to_string(n);
+    for (int pos = (int)s.size() - 3; pos > 0; pos -= 3)
+        s.insert((size_t)pos, ",");
+    return s;
+}
+
+void ChipMachine::computeFilterCounts()
+{
+    if (musicDatabase.busy()) return; // not indexed yet -- retry later
+    auto counts = musicDatabase.getFormatByteCounts();
+    int total = 0;
+    for (int c : counts)
+        total += c;
+    if (total == 0) return;
+    filterCounts.assign(filterOptions.size(), 0);
+    for (size_t i = 0; i < filterOptions.size(); i++) {
+        auto const& opt = filterOptions[i];
+        if (opt.matchedFormats.empty()) {
+            filterCounts[i] = total; // "[Show All]"
+        } else {
+            int s = 0;
+            for (uint8_t b : opt.matchedFormats)
+                s += counts[b];
+            filterCounts[i] = s;
+        }
     }
 }
 
@@ -559,6 +635,7 @@ void ChipMachine::update()
         if (!musicDatabase.busy()) {
             indexingDatabase = false;
             removeToast();
+            computeFilterCounts();
         } else
             return;
     }
@@ -643,6 +720,7 @@ void ChipMachine::update()
         stereoSumAccum = 0;
         stereoDetectFrames = 0;
         currentInfo = player.getInfo();
+        currentInfo.format = MusicDatabase::describeFormat(currentInfo);
         dbInfo = player.getDBInfo();
         screen.setTitle(utils::format("%s / %s (" PROGRAM_NAME " " VERSION_STR ")",
                                       currentInfo.title, currentInfo.composer));
@@ -732,6 +810,7 @@ void ChipMachine::update()
         currentInfoField[0].pos.x = currentInfoField[1].pos.x;
 
         SongInfo song = player.getInfo();
+        song.format = MusicDatabase::describeFormat(song);
         prevInfoField.setInfo(song);
         currentTween = Tween::make()
                            .from(prevInfoField, nextInfoField)
@@ -755,6 +834,7 @@ void ChipMachine::update()
         songField.add = 0.0;
         Tween::make().sine().to(songField.add, 1.0).seconds(0.5);
         currentInfo = player.getInfo();
+        currentInfo.format = MusicDatabase::describeFormat(currentInfo);
         auto sub_title = player.getMeta("sub_title");
         xinfoField.setText(sub_title);
         currentInfoField.setInfo(currentInfo);

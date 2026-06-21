@@ -168,6 +168,7 @@ private:
     void updateKeys();
     void updateFavorite();
     void updateNextField();
+    void computeFilterCounts();
     void updateScreenshotArea();
     void updateLists()
     {
@@ -313,6 +314,9 @@ private:
     TextField advancedTitle;
     TextField mainFilterField;
     std::string selectedFilterName;
+    // Per-filterOptions tune counts, shown as "[N tunes]" on the F9 screen.
+    // Populated once the database finishes indexing.
+    std::vector<int> filterCounts;
 
     std::string currentNextPath;
     SongInfo currentInfo;
