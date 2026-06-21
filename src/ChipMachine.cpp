@@ -50,7 +50,7 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "Apple IIGS", { APPLE } },
     { "Nintendo NES", { NES } },
     { "Nintendo SNES", { SNES } },
-    { "Nintendo Game Boy/GBA", { GAMEBOY, GBA } },
+    { "Nintendo GameBoy/GBA", { GAMEBOY, GBA } },
     { "Nintendo 64", { NINTENDO64 } },
     { "Nintendo DS", { NDS } },
     { "Sega 8bit", { SEGAMS } },
@@ -58,9 +58,9 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "Sega Dreamcast", { DREAMCAST } },
     { "PlayStation 1/2", { PLAYSTATION, PLAYSTATION2 } },
     { "IBM PC Trackers", { FASTTRACKER, IMPULSETRACKER, SCREAMTRACKER, PCTRACKER } },
-    { "PC-98 / X68000 / FM Towns", { JPFM } },
-    { "Adlib / PC", { ADPLUG, PC } },
-    { "MP3 / OGG", { MP3, OGG } },
+    { "PC-98/X68000/FM Towns", { JPFM } },
+    { "Adlib/PC", { ADPLUG, PC } },
+    { "MP3/OGG", { MP3, OGG } },
     { "YouTube", { YOUTUBE } },
     { "Radio Stations", { RADIO } }
 };
@@ -303,42 +303,56 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     advancedTitle.color = 0xffffffaa;
     advancedTitle.scale = searchField.scale;
     advancedTitle.visible(true);
-    advancedTitle.setText("SELECT FILTER PLATFORM / FORMAT");
+    advancedTitle.setText("FILTER SEARCH RESULTS BY PLATFORM:");
     advancedScreen.add(&advancedTitle);
 
+    // The filter screen lays its entries out in two columns (column-major: the
+    // left column holds the first half, the right column the rest) so all
+    // platforms fit without scrolling. Up/Down still walk the single selection
+    // index (down the left column, then down the right). visibleItems is set to
+    // the item count so the list renders every entry (and never scrolls).
     advancedList = VerticalList(
-        listrec, numLines,
+        listrec, (int)filterOptions.size(),
         [=](grappix::Rectangle& rec, int y, uint32_t index, bool hilight) {
-            if (index < filterOptions.size()) {
-                auto const& opt = filterOptions[index];
-                // Inherit the platform's color (see formatColor / renderSong);
-                // "[Show All]" has no single format, so render it white.
-                uint32_t c = opt.matchedFormats.empty()
-                                 ? 0xffffffff
-                                 : formatColor(opt.matchedFormats[0]);
-                if (hilight) {
-                    static uint32_t markStartcolor = 0;
-                    if (markStartcolor != c) {
-                        markStartcolor = c;
-                        markColor = c;
-                        markTween = Tween::make()
-                                        .sine()
-                                        .repeating()
-                                        .from(markColor, hilightColor)
-                                        .seconds(1.0);
-                        markTween.start();
-                    }
-                    c = markColor;
+            if (index >= filterOptions.size()) return;
+            auto const& opt = filterOptions[index];
+            // Inherit the platform's color (see formatColor / renderSong); the
+            // "[No Filter]" entry has no single format, so render it white.
+            uint32_t c = opt.matchedFormats.empty()
+                             ? 0xffffffff
+                             : formatColor(opt.matchedFormats[0]);
+            if (hilight) {
+                static uint32_t markStartcolor = 0;
+                if (markStartcolor != c) {
+                    markStartcolor = c;
+                    markColor = c;
+                    markTween = Tween::make()
+                                    .sine()
+                                    .repeating()
+                                    .from(markColor, hilightColor)
+                                    .seconds(1.0);
+                    markTween.start();
                 }
-                std::string label = opt.name;
-                if (index < filterCounts.size())
-                    label += utils::format("  [%s tunes]",
-                                           withCommas(filterCounts[index]));
-                grappix::screen.text(listFont, label, rec.x, rec.y, c,
-                                     resultFieldTemplate.scale);
+                c = markColor;
             }
+            std::string label = opt.name;
+            if (index < filterCounts.size())
+                label += utils::format("  [%s tunes]",
+                                       withCommas(filterCounts[index]));
+
+            int rows = ((int)filterOptions.size() + 1) / 2;
+            int col = (int)index / rows;
+            int row = (int)index % rows;
+            float lineH = advancedArea.h / (float)numLines;
+            float colW = advancedArea.w / 2.0f;
+            float px = advancedArea.x + col * colW;
+            float py = advancedArea.y + lineH * (row + 1);
+            grappix::screen.text(listFont, label, px, py, c,
+                                 resultFieldTemplate.scale * 0.7f);
         });
     advancedList.setTotal(filterOptions.size());
+    advancedList.setVisible((int)filterOptions.size());
+    advancedList.setArea(advancedArea); // match the layout area (scissor clip)
     advancedScreen.add(&advancedList);
 
     scrollText = "INITIAL_TEXT";

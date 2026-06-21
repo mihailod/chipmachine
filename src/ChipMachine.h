@@ -186,9 +186,10 @@ private:
         commandList.setArea(grappix::Rectangle(
             topLeft.x, y, grappix::screen.width() - topLeft.x,
             downRight.y - topLeft.y - y));
-        advancedList.setArea(grappix::Rectangle(
-            topLeft.x, y, grappix::screen.width() - topLeft.x,
-            downRight.y - topLeft.y - y));
+        advancedArea = grappix::Rectangle(topLeft.x, y,
+                                          grappix::screen.width() - topLeft.x,
+                                          downRight.y - topLeft.y - y);
+        advancedList.setArea(advancedArea);
     }
 
     static inline const std::vector<std::string> key_names = {
@@ -317,6 +318,7 @@ private:
 
     RenderSet advancedScreen;
     grappix::VerticalList advancedList;
+    grappix::Rectangle advancedArea; // area of the F9 list (for 2-column layout)
     TextField advancedTitle;
     TextField mainFilterField;
     std::string selectedFilterName;
