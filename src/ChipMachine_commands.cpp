@@ -61,29 +61,34 @@ void ChipMachine::setupCommands()
 
     cmd("select_filter", [=] {
         int idx = advancedList.selected();
+        bool hasFilter = false;
         if (idx >= 0 && idx < filterOptions.size()) {
             auto const& opt = filterOptions[idx];
-            if (opt.name == "[Show All]") {
-                selectedFilterName = "";
-                musicDatabase.setFormatFilter({});
-            } else {
-                selectedFilterName = opt.name;
-                musicDatabase.setFormatFilter(opt.matchedFormats);
-            }
+            // The no-filter entry is the one with no formats (its label is
+            // user-editable, so match on that rather than the name).
+            hasFilter = !opt.matchedFormats.empty();
+            selectedFilterName = hasFilter ? opt.name : "";
+            activeFilterCount = (hasFilter && idx < (int)filterCounts.size())
+                                    ? filterCounts[idx]
+                                    : 0;
+            musicDatabase.setFormatFilter(opt.matchedFormats);
+
             iquery->invalidate();
-            // Force the search to re-run with the new filter applied; without
-            // this the result list keeps showing the stale pre-filter results
-            // (e.g. C64 collections lingering after switching to the Amiga
-            // filter) until the user edits the search text.
+            // Start from an empty query so the search re-runs cleanly with the
+            // new filter -- and a *small* filter pre-populates with all of its
+            // songs (see MusicDatabase::search). Without this the list keeps the
+            // stale pre-filter results until the user edits the search text.
+            searchField.setText("");
+            songList.select(0); // show the pre-populated list from the top
             searchUpdated = true;
 
-            if (selectedFilterName.empty()) {
-                mainFilterField.setText("");
-            } else {
-                mainFilterField.setText(selectedFilterName + "   (F9 for all platforms)");
-            }
+            mainFilterField.setText(
+                hasFilter ? selectedFilterName + "   (F9 for all platforms)"
+                          : "");
         }
-        showScreen(MAIN_SCREEN);
+        // Land on the search screen so the (pre-populated) results are visible
+        // immediately; selecting "no filter" just returns to the main screen.
+        showScreen(hasFilter ? SEARCH_SCREEN : MAIN_SCREEN);
     });
 
     cmd("close_advanced", [=] {

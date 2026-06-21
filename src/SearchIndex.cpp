@@ -212,7 +212,12 @@ void IncrementalQuery::search()
     newRes = true;
 
     if (query.size() == 0) {
-        finalResult.resize(0);
+        // Let the provider decide what an empty query shows (normally nothing,
+        // but a small active platform filter lists all its songs sorted).
+        oldWords.clear();
+        firstResult.clear();
+        if (provider) provider->search("", firstResult, searchLimit);
+        finalResult = firstResult;
         return;
     }
 

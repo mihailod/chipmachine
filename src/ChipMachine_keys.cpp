@@ -330,6 +330,19 @@ void ChipMachine::updateKeys()
         }
 
         iquery->setString(s);
+        // Prompt hint for an empty query under a platform filter: a small filter
+        // auto-lists everything ("showing all N"), a large one waits for input
+        // ("type to search N"). Otherwise just a bare "#".
+        if (s.empty() && iquery->numHits() > 0)
+            searchField.setPrompt(utils::format("# [showing all %d %s songs]",
+                                                iquery->numHits(),
+                                                selectedFilterName));
+        else if (s.empty() && activeFilterCount > 0)
+            searchField.setPrompt(utils::format("# [type to search %d %s songs]",
+                                                activeFilterCount,
+                                                selectedFilterName));
+        else
+            searchField.setPrompt("#");
         searchField.visible(true);
         filterField.visible(true);
         searchField.pos.x = filterField.pos.x + filterField.getWidth() + 5;

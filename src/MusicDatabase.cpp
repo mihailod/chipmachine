@@ -944,13 +944,22 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
         composer_query = p[1];
     }
 
-    // For empty query, return all playlists. Playlists (e.g. <FAVORITES>) are
-    // not platform-specific, so skip them entirely while a platform filter is
-    // active -- otherwise e.g. typing "fa" surfaces <FAVORITES> under a filter.
+    // Empty query: normally blank (the user types to search). But when a *small*
+    // platform filter is active (fewer than kFilterShowAllLimit songs), a tiny
+    // format isn't worth typing for -- so list ALL of its songs up front, sorted
+    // alphabetically by title. Large filters / no filter stay blank.
+    static constexpr size_t kFilterShowAllLimit = 1000;
     if (query == "") {
-        if (!formatFilterActive) {
-            for (int i = 0; i < (int)playLists.size(); i++) {
-                add_unique(PLAYLIST_INDEX + i);
+        if (formatFilterActive && !filteredCandidates.empty() &&
+            filteredCandidates.size() < kFilterShowAllLimit) {
+            std::vector<int> sorted(filteredCandidates.begin(),
+                                    filteredCandidates.end());
+            std::sort(sorted.begin(), sorted.end(), [&](int a, int b) {
+                return toLower(titleIndex.getString(a)) <
+                       toLower(titleIndex.getString(b));
+            });
+            for (int idx : sorted) {
+                if (!add_unique(idx) && result.size() >= searchLimit) break;
             }
         }
         return result.size();
