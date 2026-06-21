@@ -19,7 +19,11 @@ The mission statement: implement every viable format and index every known retro
 
 Despite the massive expansion under the hood, the core experience remains untouched: instant, incremental autocomplete search across the entire global library, delivering zero-latency playback from a single, unified interface.
 
+**(Screenshots might show features from dev in progress (not released) code.)**
+
 [![Screenshot](data/misc/screen.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
+
+**(Screenshots might show features from dev in progress (not released) code.)**
 
 [![Screenshot](data/misc/formats.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
 
