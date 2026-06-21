@@ -41,18 +41,21 @@ public:
 			scrollText = val;
 			LOGD("SCROLL: %s", scrollText);
 			xpos = target.width() + 100;
-			scrollLen = font.get_width(val, 3.0);
 		}
 	}
 
 	void render(uint32_t delta) override {
 		if(alpha <= 0.01)
 			return;
-		if(xpos < -scrollLen)
-			xpos = target.width() + 100;
 
 		// Calculate dynamic scale factor based on target resolution
 		float dynScale = (target.height() / 576.0f) * 3.0f;
+
+		// Keep the reset boundary in sync with the scale actually rendered
+		// (also covers window resizes after the text was set).
+		scrollLen = font.get_width(scrollText, dynScale);
+		if(xpos < -scrollLen)
+			xpos = target.width() + 100;
 
 		scr.clear(0x00000000);
 		// Render text using dynamic scale factor
