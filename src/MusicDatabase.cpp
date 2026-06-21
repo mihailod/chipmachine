@@ -1113,14 +1113,19 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         s.metadata[SongInfo::INFO] = "";
         LOGV("Got pouet shot %s", shot);
     } else if (collection == "hvtc" || collection == "sndh" ||
-               collection == "unexotica") {
+               collection == "unexotica" || collection == "modland") {
         // Game screenshots matched offline against an external database and
         // served via the Wayback mirror: hvtc -> Plus/4 World (keyed by
         // "games/<name>.prg"), sndh -> Atari Mania (keyed by
         // "<composer>/<game>.sndh"), unexotica -> Hall of Light (keyed by the
-        // per-game "/Game/<composer>/<game>.lha" identifier). Full URLs in
-        // data/<collection>_screenshots.txt. No match -> blank.
+        // per-game "/Game/<composer>/<game>.lha" identifier), modland -> the ZX
+        // Spectrum subset matched against ZXDB / World of Spectrum (keyed by the
+        // full song path). Full URLs in data/<file>_screenshots.txt; no match ->
+        // blank (most modland songs aren't ZX games, so they get nothing).
         std::string key = parts[1];
+        // The ZX screenshots only cover the modland ZX-AY subset, kept in its
+        // own data file rather than a giant modland_screenshots.txt.
+        std::string file = (collection == "modland") ? "zxspectrum" : collection;
         if (collection == "unexotica") {
             // The song path is one (or a MULTI: list of) module path(s) inside
             // the game's .lha; reduce it to the shared "/Game/.../<game>.lha"
@@ -1130,7 +1135,7 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
             if (game != std::string::npos && lha != std::string::npos)
                 key = key.substr(game, lha + 4 - game);
         }
-        auto const& shots = getFileShots(collection);
+        auto const& shots = getFileShots(file);
         auto it = shots.find(key);
         if (it != shots.end()) {
             shot = it->second;

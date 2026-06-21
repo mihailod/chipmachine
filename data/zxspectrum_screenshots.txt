@@ -1,0 +1,796 @@
+AY Amadeus/Frantisek Fuka/atomix.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Atomix.gif
+AY Amadeus/Frantisek Fuka/belegost.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Belegost.gif
+AY Amadeus/Frantisek Fuka/chimera.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chimera.gif
+AY Amadeus/Frantisek Fuka/commando.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Commando_2.gif
+AY Amadeus/Frantisek Fuka/feud.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Feud.gif
+AY Amadeus/Frantisek Fuka/ghostbusters.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Ghostbusters.gif
+AY Amadeus/Frantisek Fuka/jet story.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/Jet-Story.gif
+AY Amadeus/Frantisek Fuka/master of magic.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MasterOfMagic.gif
+AY Amadeus/Frantisek Fuka/monty on the run.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MontyOnTheRun.gif
+AY Amadeus/Frantisek Fuka/star dragon.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarDragon.gif
+AY Amadeus/Frantisek Fuka/terra cresta.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TerraCresta.gif
+AY Amadeus/Frantisek Fuka/tetris 2.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris2.gif
+AY Amadeus/Frantisek Fuka/top gun.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TopGun.gif
+AY Amadeus/Frantisek Fuka/zub.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zub.gif
+AY Amadeus/Patrik Rak/exploding atoms.amad	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/ExplodingAtoms.gif
+AY Emul/- unknown/180.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OneHundredAndEighty.gif
+AY Emul/- unknown/1999.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/123/gif/1999.gif
+AY Emul/- unknown/3d snooker.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Snooker3D.gif
+AY Emul/- unknown/advanced tactical fighter.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/ATF.gif
+AY Emul/- unknown/afterburner.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Afterburner.gif
+AY Emul/- unknown/alteredbeast.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AlteredBeast.gif
+AY Emul/- unknown/astro marine corps.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AstroMarineCorps.gif
+AY Emul/- unknown/batman.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+AY Emul/- unknown/bearagrudge.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BearAGrudge.gif
+AY Emul/- unknown/beyondtheicepalace.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BeyondTheIcePalace.gif
+AY Emul/- unknown/bioniccommando.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BionicCommando.gif
+AY Emul/- unknown/blasteroids.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Blasteroids.gif
+AY Emul/- unknown/blood brothers.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BloodBrothers.gif
+AY Emul/- unknown/butcher hill.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/ButcherHill.gif
+AY Emul/- unknown/chevy chase.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/ChevyChase.gif
+AY Emul/- unknown/combat school.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+AY Emul/- unknown/combatschool.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+AY Emul/- unknown/commando.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Commando_2.gif
+AY Emul/- unknown/conquest.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Conquest.gif
+AY Emul/- unknown/crackdown.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CrackDown.gif
+AY Emul/- unknown/cyberball.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cyberball.gif
+AY Emul/- unknown/cybernoid.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cybernoid.gif
+AY Emul/- unknown/death stalker.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeathStalker.gif
+AY Emul/- unknown/death star.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeathStar.gif
+AY Emul/- unknown/defenders of the earth.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DefendersOfTheEarth.gif
+AY Emul/- unknown/demo7.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Demo7.gif
+AY Emul/- unknown/dnawarrior.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/D.N.A.Warrior.gif
+AY Emul/- unknown/dotty.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dotty.gif
+AY Emul/- unknown/dragon ninja.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DragonNinja.gif
+AY Emul/- unknown/dragonninja.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DragonNinja.gif
+AY Emul/- unknown/fast food.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FastFood.gif
+AY Emul/- unknown/fox fights back.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FoxxFightsBack.gif
+AY Emul/- unknown/frankie goes to hollywood.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FrankieGoesToHollywood.gif
+AY Emul/- unknown/gemini wing.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GeminiWing.gif
+AY Emul/- unknown/gliderrider.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GliderRider.gif
+AY Emul/- unknown/goldenaxe.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GoldenAxe.gif
+AY Emul/- unknown/gryzor.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gryzor.gif
+AY Emul/- unknown/hercules.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hercules.gif
+AY Emul/- unknown/hotshot.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hotshot.gif
+AY Emul/- unknown/joeblade2.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/JoeBladeII.gif
+AY Emul/- unknown/kwik snax.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KwikSnax.gif
+AY Emul/- unknown/livingonvideo.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LivingOnVideo.gif
+AY Emul/- unknown/lotusespritturbochallenge.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LotusEspritTurboChallenge.gif
+AY Emul/- unknown/merry christmas.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MerryChristmas_3.gif
+AY Emul/- unknown/motor massacre.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MotorMassacre.gif
+AY Emul/- unknown/nightbreed.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NightBreed.gif
+AY Emul/- unknown/ninjaspirit.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NinjaSpirit.gif
+AY Emul/- unknown/odyssey-1.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/Odyssey1(SoftstoneLtd).gif
+AY Emul/- unknown/operation wolf.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OperationWolf.gif
+AY Emul/- unknown/outrun.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OutRun.gif
+AY Emul/- unknown/pacland.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pac-Land.gif
+AY Emul/- unknown/pacmania.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pac-Mania.gif
+AY Emul/- unknown/pang.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pang.gif
+AY Emul/- unknown/panther.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Panther.gif
+AY Emul/- unknown/passing shot.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PassingShot.gif
+AY Emul/- unknown/peter pack rat.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PeterPackRat.gif
+AY Emul/- unknown/platoon.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Platoon.gif
+AY Emul/- unknown/powerplay.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Powerplay.gif
+AY Emul/- unknown/pro mountain bike simulator.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/ProMountainBikeSimulator.gif
+AY Emul/- unknown/pulsewarrior.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PulseWarrior.gif
+AY Emul/- unknown/python.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Python.gif
+AY Emul/- unknown/robocop.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop.gif
+AY Emul/- unknown/run the gauntlet.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RunTheGauntlet.gif
+AY Emul/- unknown/saboteur2.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SaboteurII.gif
+AY Emul/- unknown/shadowofthebeast.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/ShadowOfTheBeast.gif
+AY Emul/- unknown/shinobi.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Shinobi(MastertronicPlus).gif
+AY Emul/- unknown/short circuit.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/ShortCircuit_2.gif
+AY Emul/- unknown/shortcircuit.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/ShortCircuit_2.gif
+AY Emul/- unknown/signalpart3.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SignalPart3.gif
+AY Emul/- unknown/skate crazy.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SkateCrazy.gif
+AY Emul/- unknown/smash tv.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SmashTV.gif
+AY Emul/- unknown/spellbound.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Spellbound.gif
+AY Emul/- unknown/spike in transylvania.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SpikeInTransylvania.gif
+AY Emul/- unknown/stormlord.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stormlord.gif
+AY Emul/- unknown/swiv.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SWIV.gif
+AY Emul/- unknown/techno cop.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TechnoCop.gif
+AY Emul/- unknown/thundercats.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Thundercats.gif
+AY Emul/- unknown/tiger road.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TigerRoad.gif
+AY Emul/- unknown/timescanner.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TimeScanner.gif
+AY Emul/- unknown/toxicelephant.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/ToxicElephant.gif
+AY Emul/- unknown/turrican.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Turrican.gif
+AY Emul/- unknown/typhoon.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Typhoon.gif
+AY Emul/- unknown/unknown.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Unknown.gif
+AY Emul/- unknown/venom.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Venom.gif
+AY Emul/- unknown/vixen.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Vixen.gif
+AY Emul/- unknown/wec le mans.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WECLeMans.gif
+AY Emul/- unknown/weclemans.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WECLeMans.gif
+AY Emul/- unknown/where time stood still.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WhereTimeStoodStill.gif
+AY Emul/- unknown/wizard willy.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WizardWilly.gif
+AY Emul/- unknown/xenon.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenon(MastertronicPlus).gif
+AY Emul/- unknown/xor.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/XOR.gif
+AY Emul/- unknown/zub.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zub.gif
+AY Emul/Agent X/dies irae.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DiesIrae.gif
+AY Emul/Agent X/schizofrenia.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Schizofrenia.gif
+AY Emul/Agent X/sokoban.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sokoban_3.gif
+AY Emul/Allister Brimble/slightly magic.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SlightlyMagic.gif
+AY Emul/Andy Severn/deviants.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Deviants.gif
+AY Emul/Ashnar/3d-pool.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pool3D.gif
+AY Emul/Barry Leitch/gemini wing.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GeminiWing.gif
+AY Emul/Barry Leitch/xenophobe.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenophobe.gif
+AY Emul/Ben Daglish/auf wiedersehen monty.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AufWiedersehenMonty.gif
+AY Emul/Ben Daglish/avenger.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Avenger.gif
+AY Emul/Ben Daglish/blood brothers.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BloodBrothers.gif
+AY Emul/Ben Daglish/butcher hill.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/ButcherHill.gif
+AY Emul/Ben Daglish/challenge of the gobots.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/ChallengeOfTheGobots.gif
+AY Emul/Ben Daglish/chubby gristle.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/ChubbyGristle.gif
+AY Emul/Ben Daglish/dark fusion (cpc).emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DarkFusion.gif
+AY Emul/Ben Daglish/dark fusion.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DarkFusion.gif
+AY Emul/Ben Daglish/death wish 3.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeathWish3.gif
+AY Emul/Ben Daglish/deflektor.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Deflektor.gif
+AY Emul/Ben Daglish/footballer of the year 2.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FootballerOfTheYear2.gif
+AY Emul/Ben Daglish/future knight.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FutureKnight.gif
+AY Emul/Ben Daglish/gary lineker's hot shot.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GaryLinekersHot-Shot.gif
+AY Emul/Ben Daglish/gary lineker's super skills.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GaryLinekersSuperskills.gif
+AY Emul/Ben Daglish/moto cross simulator.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MotoCrossSimulator.gif
+AY Emul/Ben Daglish/mountie mick's death ride.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MountieMicksDeathRide.gif
+AY Emul/Ben Daglish/northstar.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NorthStar.gif
+AY Emul/Ben Daglish/skate crazy.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SkateCrazy.gif
+AY Emul/Ben Daglish/switchblade.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Switchblade.gif
+AY Emul/Ben Daglish/techno cop.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TechnoCop.gif
+AY Emul/Ben Daglish/terramex.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Terramex.gif
+AY Emul/Ben Daglish/the flintstones.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FlintstonesThe.gif
+AY Emul/Ben Daglish/thing bounces back.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/ThingBouncesBack.gif
+AY Emul/Big Alec/locomotion.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Loco-Motion.gif
+AY Emul/Dave Rogers/cybernoid.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cybernoid.gif
+AY Emul/Dave Rogers/g.i. hero.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/G.I.Hero.gif
+AY Emul/Dave Rogers/marauder.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Marauder.gif
+AY Emul/Dave Rogers/netherworld.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Netherworld.gif
+AY Emul/Dave Rogers/stormlord.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stormlord.gif
+AY Emul/Dave Rogers/turbo boat simulator.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TurboBoatSimulator.gif
+AY Emul/David Whittaker/180.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OneHundredAndEighty.gif
+AY Emul/David Whittaker/advanced pinball simulator.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AdvancedPinballSimulator(DefenderLightGun).gif
+AY Emul/David Whittaker/amaurote.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Amaurote.gif
+AY Emul/David Whittaker/apb.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/APB.gif
+AY Emul/David Whittaker/atv simulator.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/ATVSimulator.gif
+AY Emul/David Whittaker/beyond the ice palace.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BeyondTheIcePalace.gif
+AY Emul/David Whittaker/bmx freestyle simulator.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BMXFreestyle.gif
+AY Emul/David Whittaker/brave starr.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BraveStarr.gif
+AY Emul/David Whittaker/bubble dizzy.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BubbleDizzy.gif
+AY Emul/David Whittaker/captain fizz meets the blaster-trons.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CaptainFizz.gif
+AY Emul/David Whittaker/chip's challenge.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/ChipsChallenge.gif
+AY Emul/David Whittaker/combat school.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+AY Emul/David Whittaker/death stalker.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeathStalker.gif
+AY Emul/David Whittaker/defcom.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Defcom.gif
+AY Emul/David Whittaker/feud.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Feud.gif
+AY Emul/David Whittaker/fruit machine simulator 2.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FruitMachineSimulator2.gif
+AY Emul/David Whittaker/fruit machine simulator.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FruitMachineSimulator.gif
+AY Emul/David Whittaker/ghosts'n goblins.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GhostNGoblins.gif
+AY Emul/David Whittaker/glider rider.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GliderRider.gif
+AY Emul/David Whittaker/grand prix simulator 2.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GrandPrixSimulator2.gif
+AY Emul/David Whittaker/grand prix simulator.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GrandPrixSimulator.gif
+AY Emul/David Whittaker/gryzor.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gryzor.gif
+AY Emul/David Whittaker/hades nebula.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/HadesNebula.gif
+AY Emul/David Whittaker/international rugby simulator.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/InternationalRugbySimulator.gif
+AY Emul/David Whittaker/leviathan (cpc).emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Leviathan.gif
+AY Emul/David Whittaker/leviathan.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Leviathan.gif
+AY Emul/David Whittaker/licence to kill.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LicenceToKill.gif
+AY Emul/David Whittaker/loopz.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Loopz.gif
+AY Emul/David Whittaker/milk race.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MilkRace.gif
+AY Emul/David Whittaker/monte carlo casino.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MonteCarloCasino.gif
+AY Emul/David Whittaker/operation gunship.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OperationGunship.gif
+AY Emul/David Whittaker/platoon.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Platoon.gif
+AY Emul/David Whittaker/professional bmx simulator.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/ProfessionalBMXSimulator_Side1.gif
+AY Emul/David Whittaker/professional skateboard simulator.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/ProSkateboardSimulator.gif
+AY Emul/David Whittaker/savage.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Savage.gif
+AY Emul/David Whittaker/shadow of the beast.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/ShadowOfTheBeast.gif
+AY Emul/David Whittaker/sky high stuntman.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SkyHighStuntman.gif
+AY Emul/David Whittaker/split personalities.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SplitPersonalities.gif
+AY Emul/David Whittaker/star wars.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+AY Emul/David Whittaker/super stuntman.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SuperStuntman.gif
+AY Emul/David Whittaker/tetris.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris_2.gif
+AY Emul/David Whittaker/the tube.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TubeThe.gif
+AY Emul/David Whittaker/transmuter.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Transmuter.gif
+AY Emul/David Whittaker/trantor the last storm trooper.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Trantor-TheLastStormtrooper.gif
+AY Emul/David Whittaker/xenon.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenon(MastertronicPlus).gif
+AY Emul/David Whittaker/zub.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zub.gif
+AY Emul/Frantisek Fuka/atomix.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Atomix.gif
+AY Emul/Frantisek Fuka/belegost.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Belegost.gif
+AY Emul/Frantisek Fuka/chimera.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chimera.gif
+AY Emul/Frantisek Fuka/commando.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Commando_2.gif
+AY Emul/Frantisek Fuka/feud.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Feud.gif
+AY Emul/Frantisek Fuka/ghostbusters.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Ghostbusters.gif
+AY Emul/Frantisek Fuka/indiana jones 3.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/IndianaJones3.gif
+AY Emul/Frantisek Fuka/jet story.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/Jet-Story.gif
+AY Emul/Frantisek Fuka/master of magic.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MasterOfMagic.gif
+AY Emul/Frantisek Fuka/monty on the run.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MontyOnTheRun.gif
+AY Emul/Frantisek Fuka/planet of shades.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PlanetOfShades.gif
+AY Emul/Frantisek Fuka/star dragon.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarDragon.gif
+AY Emul/Frantisek Fuka/terra cresta.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TerraCresta.gif
+AY Emul/Frantisek Fuka/tetris 2.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris2.gif
+AY Emul/Frantisek Fuka/zub.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zub.gif
+AY Emul/Fred Gray/nodes of yesod.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NodesOfYesod.gif
+AY Emul/Fred Gray/renegade.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Renegade.gif
+AY Emul/Fred Gray/robin of the wood.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RobinOfTheWood.gif
+AY Emul/Gary Biasillo/joe blade.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/JoeBlade.gif
+AY Emul/Ian Sheridan/street cred boxing.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StreetCredBoxing.gif
+AY Emul/Ian Sheridan/street cred football.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StreetCredFootball.gif
+AY Emul/Imagitec/space crusade.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SpaceCrusade.gif
+AY Emul/Jammer/karateka.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Karateka.gif
+AY Emul/Jason C. Brooke/andy capp.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AndyCapp.gif
+AY Emul/Jason C. Brooke/mad balls.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Madballs.gif
+AY Emul/Jason C. Brooke/mega apocalypse.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mega-Apocalypse.gif
+AY Emul/Jason C. Brooke/motos.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Motos.gif
+AY Emul/Jason C. Brooke/outrun.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OutRun.gif
+AY Emul/Jason C. Brooke/rastan.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rastan.gif
+AY Emul/Jason C. Brooke/raster runner.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RasterRunner.gif
+AY Emul/Jason C. Brooke/vixen.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Vixen.gif
+AY Emul/Jonathan Dunn/battle command.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BattleCommand.gif
+AY Emul/Jonathan Dunn/chase hq.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/ChaseH.Q..gif
+AY Emul/Jonathan Dunn/daley thompson's olympic challenge.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DaleyThompsonsOlympicChallenge.gif
+AY Emul/Jonathan Dunn/darkman.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Darkman.gif
+AY Emul/Jonathan Dunn/guerrilla war.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GuerrillaWar.gif
+AY Emul/Jonathan Dunn/operation wolf.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OperationWolf.gif
+AY Emul/Jonathan Dunn/puzznic.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Puzznic.gif
+AY Emul/Jonathan Dunn/robocop 2.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop2.gif
+AY Emul/Jonathan Dunn/robocop 3.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop3.gif
+AY Emul/Jonathan Dunn/total recall.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TotalRecall.gif
+AY Emul/Jonathan Dunn/typhoon.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Typhoon.gif
+AY Emul/Jonathan Dunn/w.e.c. le mans.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WECLeMans.gif
+AY Emul/Keith Tinman/cabal.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cabal.gif
+AY Emul/Keith Tinman/hyper active.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/HyperActive.gif
+AY Emul/Keith Tinman/i.c.u.p.s.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/I.C.U.P.S..gif
+AY Emul/Keith Tinman/midnight resistance.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MidnightResistance.gif
+AY Emul/Keith Tinman/the arc of yesod.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/ArcOfYesodThe.gif
+AY Emul/Kicia/koledy.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Koledy.gif
+AY Emul/Lyndon Sharp/paris to dakar.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/ParisToDakar.gif
+AY Emul/Mark Cooksey/buggy boy.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BuggyBoy.gif
+AY Emul/Mark Cooksey/live and let die.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LiveAndLetDie.gif
+AY Emul/Martin Galway/cobra.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cobra.gif
+AY Emul/Martin Galway/mikie.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mikie.gif
+AY Emul/Martin Galway/ping pong.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PingPong.gif
+AY Emul/Martin Galway/terra cresta.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TerraCresta.gif
+AY Emul/Matt Furniss/shadow warriors.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/ShadowWarriors.gif
+AY Emul/Matt Furniss/toobin.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Toobin.gif
+AY Emul/Matthew Cannon/adidas championship football.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AdidasChampionshipFootball.gif
+AY Emul/Matthew Cannon/batman - the movie.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman-TheMovie.gif
+AY Emul/Matthew Cannon/robocop 2.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop2.gif
+AY Emul/Matthew Westcott/acoustic dreams.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AcousticDreams.gif
+AY Emul/Matthew Westcott/interchrome.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/Interchrome.gif
+AY Emul/Matthew Westcott/pondlife preview.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PondlifePreview.gif
+AY Emul/Matty/navy seals.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NavySEALs.gif
+AY Emul/MmcM/apocalypse.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Apocalypse.gif
+AY Emul/Nick Snake/180.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OneHundredAndEighty.gif
+AY Emul/Nick Snake/gryzor.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gryzor.gif
+AY Emul/Nick Snake/pang.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pang.gif
+AY Emul/Nick Snake/saboteur2.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SaboteurII.gif
+AY Emul/Nick Snake/xenon.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenon(MastertronicPlus).gif
+AY Emul/Noro/interlacedemo.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/InterlaceDemo.gif
+AY Emul/Ozzyoss/killers.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Killers.gif
+AY Emul/Pennsoft/fairlight.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Fairlight.gif
+AY Emul/Peter Clarke/taipan.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tai-Pan.gif
+AY Emul/Richard Joseph/barbarian.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Barbarian_2.gif
+AY Emul/Richard Joseph/international 3d tennis.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/International3DTennis.gif
+AY Emul/Rob Hubbard/hydrofool.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hydrofool.gif
+AY Emul/Rob Hubbard/nemesis the warlock.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NemesisTheWarlock.gif
+AY Emul/Rob Hubbard/saboteur 2.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SaboteurII.gif
+AY Emul/Rob Hubbard/spellbound.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Spellbound.gif
+AY Emul/Rob Hubbard/tarzan.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tarzan_2.gif
+AY Emul/Rob Hubbard/thundercats.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Thundercats.gif
+AY Emul/Rob Hubbard/trans-atlantic balloon challenge (cpc).emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Trans-AtlanticBalloonChallenge.gif
+AY Emul/Sean Conran/atom ant.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtomAnt.gif
+AY Emul/Sean Conran/plotting.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Plotting.gif
+AY Emul/Stephane Picq/captain blood.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CaptainBlood.gif
+AY Emul/Stephane Picq/purple saturn day.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PurpleSaturnDay.gif
+AY Emul/Steve Turner/flying shark.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FlyingShark.gif
+AY Emul/Steve Turner/magnetron.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Magnetron.gif
+AY Emul/Steve Turner/rana rama.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Ranarama.gif
+AY Emul/Steve Turner/soldier of fortune.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SoldierOfFortune.gif
+AY Emul/Steve Turner/uridium.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Uridium.gif
+AY Emul/Steve Turner/zynaps.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zynaps.gif
+AY Emul/Tim Follin/bionic commando.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BionicCommando.gif
+AY Emul/Tim Follin/black lamp.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BlackLamp.gif
+AY Emul/Tim Follin/future games.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FutureGames.gif
+AY Emul/Tim Follin/led storm.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LEDStorm.gif
+AY Emul/Tim Follin/solar invasion.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SolarInvasion.gif
+AY Emul/Tim Follin/star paws.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarPaws.gif
+AY Emul/Tony Williams/shinobi.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Shinobi(MastertronicPlus).gif
+AY Emul/Wally Beben/sanxion.emul	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sanxion.gif
+Spectrum/ASC Sound Master/- unknown/citadel.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Citadel_2.gif
+Spectrum/ASC Sound Master/- unknown/ninja+.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Ninja.gif
+Spectrum/ASC Sound Master/- unknown/robocop.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop.gif
+Spectrum/ASC Sound Master/- unknown/trantor.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Trantor-TheLastStormtrooper.gif
+Spectrum/ASC Sound Master/ASC/commando.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Commando_2.gif
+Spectrum/ASC Sound Master/Alex Filimonov/chronos.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chronos.gif
+Spectrum/ASC Sound Master/Alex Heather/batman.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+Spectrum/ASC Sound Master/Alex Heather/doctor.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Doctor.gif
+Spectrum/ASC Sound Master/Andrey Makarevich/ghost'n'goblins.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GhostNGoblins.gif
+Spectrum/ASC Sound Master/Antony/d.d.t.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pssst.gif
+Spectrum/ASC Sound Master/Arcadiy Gobusov/colorlines.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/ColorLines.gif
+Spectrum/ASC Sound Master/Artice/king.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DogboyThe(G.I.Games).gif
+Spectrum/ASC Sound Master/Ded Smirnoff/talisman.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Talisman.gif
+Spectrum/ASC Sound Master/Dreamer/citadel.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Citadel_2.gif
+Spectrum/ASC Sound Master/Dreamer/level5.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Level5.gif
+Spectrum/ASC Sound Master/Dreamer/quest.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/q/gif/QuestAdventure.gif
+Spectrum/ASC Sound Master/Dreamer/r-type.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/R-Type.gif
+Spectrum/ASC Sound Master/Dreamer/ramparts (faultless version).asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Ramparts.gif
+Spectrum/ASC Sound Master/Dreamer/ramparts.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Ramparts.gif
+Spectrum/ASC Sound Master/Dreamer/spirits.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Spirits.gif
+Spectrum/ASC Sound Master/Eugene Kudaev/car.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Spark.gif
+Spectrum/ASC Sound Master/Exalot/#_robot_.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Robo.gif
+Spectrum/ASC Sound Master/Exalot/orion.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/Orion_2.gif
+Spectrum/ASC Sound Master/Funatic/mortal kombat.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MortalKombat.gif
+Spectrum/ASC Sound Master/Giss Alexey/timecop.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TimeCopDemo.gif
+Spectrum/ASC Sound Master/Grey/knight lore.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightLore.gif
+Spectrum/ASC Sound Master/Igoval/enigma.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Spectrum/ASC Sound Master/Inter Game/delta (cut).asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeltaCharge.gif
+Spectrum/ASC Sound Master/Ivan Tugay/robocop3.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop3.gif
+Spectrum/ASC Sound Master/Ivan Tugay/top-gun.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TopGun.gif
+Spectrum/ASC Sound Master/Ivan Tugay/troll.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Troll.gif
+Spectrum/ASC Sound Master/Karpoff/walk.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Walk.gif
+Spectrum/ASC Sound Master/Mak/airspace.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AirSpace.gif
+Spectrum/ASC Sound Master/Mak/nautilus.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OceanConqueror.gif
+Spectrum/ASC Sound Master/Mohovs/color lines.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/ColorLines.gif
+Spectrum/ASC Sound Master/Monah/elite3.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite3.gif
+Spectrum/ASC Sound Master/OKO/batman (smmod version).asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+Spectrum/ASC Sound Master/OKO/delta (cut).asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeltaCharge.gif
+Spectrum/ASC Sound Master/OKO/tennis.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KonamisTennis(TheHitSquad).gif
+Spectrum/ASC Sound Master/Oleg Krasnobaev/batman.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+Spectrum/ASC Sound Master/Royal Software/peking.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Peking.gif
+Spectrum/ASC Sound Master/Royal Software/slyspy.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SlySpy-SecretAgent.gif
+Spectrum/ASC Sound Master/Sergej Letyagin/aliens.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Alien_11.gif
+Spectrum/ASC Sound Master/Sergej Letyagin/doctor.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Doctor.gif
+Spectrum/ASC Sound Master/Stanislav Gaydukov/delta.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeltaCharge.gif
+Spectrum/ASC Sound Master/Stanislav Rukovishnikov/soviet.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Soviet.gif
+Spectrum/Fast Tracker/- unknown/sanxion.ftc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sanxion.gif
+Spectrum/Fast Tracker/Zhenya/pyramid.ftc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pyramid(G.I.Games).gif
+Spectrum/Flash Tracker/- unknown/eldorado.fls	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoradoEl.gif
+Spectrum/Flash Tracker/- unknown/enigma.fls	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Spectrum/Fuxoft AY Language/- unknown/jet story.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/Jet-Story.gif
+Spectrum/Fuxoft AY Language/Fuxoft/atomix.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Atomix.gif
+Spectrum/Fuxoft AY Language/Fuxoft/belegost.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Belegost.gif
+Spectrum/Fuxoft AY Language/Fuxoft/chimera.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chimera.gif
+Spectrum/Fuxoft AY Language/Fuxoft/commando.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Commando_2.gif
+Spectrum/Fuxoft AY Language/Fuxoft/feud.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Feud.gif
+Spectrum/Fuxoft AY Language/Fuxoft/ghostbusters.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Ghostbusters.gif
+Spectrum/Fuxoft AY Language/Fuxoft/indiana jones 3.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/IndianaJones3.gif
+Spectrum/Fuxoft AY Language/Fuxoft/master of magic.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MasterOfMagic.gif
+Spectrum/Fuxoft AY Language/Fuxoft/monty on the run.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MontyOnTheRun.gif
+Spectrum/Fuxoft AY Language/Fuxoft/stardragon.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarDragon.gif
+Spectrum/Fuxoft AY Language/Fuxoft/terra cresta.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TerraCresta.gif
+Spectrum/Fuxoft AY Language/Fuxoft/zub.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zub.gif
+Spectrum/Fuxoft AY Language/Patrik Rak/explodingatoms.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/ExplodingAtoms.gif
+Spectrum/Fuxoft AY Language/Patrik Rak/falcon.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Falcon-TheRenegadeLord.gif
+Spectrum/Fuxoft AY Language/Patrik Rak/spacecrusade.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SpaceCrusade.gif
+Spectrum/Fuxoft AY Language/Patrik Rak/terracresta.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TerraCresta.gif
+Spectrum/Global Tracker/- unknown/kolobok.gtr	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Kolobok.gif
+Spectrum/Global Tracker/- unknown/robocop.gtr	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop.gif
+Spectrum/Pro Sound Creator/Bear/dizzy.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Spectrum/Pro Sound Creator/Bear/the last.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LastThe_2.gif
+Spectrum/Pro Sound Creator/Ice 'N' Green/atlantis.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtlantisAdventure(different).gif
+Spectrum/Pro Sound Creator/Jaguar/dizzy.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Spectrum/Pro Sound Creator/KAA/aliens.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Alien_11.gif
+Spectrum/Pro Sound Creator/Sair00s/invasion.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/Invasion.gif
+Spectrum/Pro Sound Creator/Time Keeper/atlantis.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtlantisAdventure(different).gif
+Spectrum/Pro Sound Creator/Time Keeper/mario.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mario_3.gif
+Spectrum/Pro Tracker 1/Impetus/demon.pt1	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Demon_2.gif
+Spectrum/Pro Tracker 2/- unknown/bedlam.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bedlam(AWASoftware).gif
+Spectrum/Pro Tracker 2/- unknown/doom.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoomDemo_2.gif
+Spectrum/Pro Tracker 2/- unknown/firegear.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FireGear.gif
+Spectrum/Pro Tracker 2/- unknown/maniac.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Maniac.gif
+Spectrum/Pro Tracker 2/- unknown/miner.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sapper_6.gif
+Spectrum/Pro Tracker 2/- unknown/pyramid.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pyramid(G.I.Games).gif
+Spectrum/Pro Tracker 2/- unknown/sly spy.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SlySpy-SecretAgent.gif
+Spectrum/Pro Tracker 2/- unknown/warrobot.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WarRobot.gif
+Spectrum/Pro Tracker 2/Alex MC/atlantis.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtlantisAdventure(different).gif
+Spectrum/Pro Tracker 2/Alex X/battle.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Battle_2.gif
+Spectrum/Pro Tracker 2/Alex X/warlords.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Warlords.gif
+Spectrum/Pro Tracker 2/Alos/gorodki.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Towns.gif
+Spectrum/Pro Tracker 2/Alos/squards.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Squards.gif
+Spectrum/Pro Tracker 2/Andrew Kolesnik/ninja.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Ninja.gif
+Spectrum/Pro Tracker 2/Andrew Kolesnik/s w i v.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SWIV.gif
+Spectrum/Pro Tracker 2/Ans/vampire.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Phantomas2.gif
+Spectrum/Pro Tracker 2/Ashnar/Subway.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Subway.gif
+Spectrum/Pro Tracker 2/Baz0fft/-DANDY-.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dandy.gif
+Spectrum/Pro Tracker 2/Baz0fft/JACKAL.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/Jackal.gif
+Spectrum/Pro Tracker 2/Baz0fft/jimmy.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/Jimmy.gif
+Spectrum/Pro Tracker 2/Black Lord/doom.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoomDemo_2.gif
+Spectrum/Pro Tracker 2/Black Lord/fairlight.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Fairlight.gif
+Spectrum/Pro Tracker 2/Camel/Atlantis.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtlantisAdventure(different).gif
+Spectrum/Pro Tracker 2/DJ Denson/falcon.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Falcon-TheRenegadeLord.gif
+Spectrum/Pro Tracker 2/DNK/xreversy.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/XreversyDemo.gif
+Spectrum/Pro Tracker 2/DX-69/xixit.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xixit.gif
+Spectrum/Pro Tracker 2/Davos/battle.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Battle_2.gif
+Spectrum/Pro Tracker 2/Davos/darkside.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DarkSide.gif
+Spectrum/Pro Tracker 2/Davos/rasputin.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rasputin.gif
+Spectrum/Pro Tracker 2/Davos/ufo.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/UFO_2.gif
+Spectrum/Pro Tracker 2/Davos/unknown.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Unknown.gif
+Spectrum/Pro Tracker 2/Davos/warrobot.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WarRobot.gif
+Spectrum/Pro Tracker 2/Demiurge Ash/pirate.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pirate.gif
+Spectrum/Pro Tracker 2/Deni/pyramid.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pyramid(G.I.Games).gif
+Spectrum/Pro Tracker 2/Dexter/dex.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dex.gif
+Spectrum/Pro Tracker 2/Dexter/protracker.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/ProTrackerV3.51.gif
+Spectrum/Pro Tracker 2/Dexter/star control.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarControl(DroSoft).gif
+Spectrum/Pro Tracker 2/Dismaster/r-type-.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/R-Type.gif
+Spectrum/Pro Tracker 2/Doc/narc.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NARC.gif
+Spectrum/Pro Tracker 2/Doc/savage.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Savage.gif
+Spectrum/Pro Tracker 2/Fatal Snipe/ace2088#.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/ACE2088.gif
+Spectrum/Pro Tracker 2/Fatal Snipe/font editor.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FontEditor_2.gif
+Spectrum/Pro Tracker 2/Fatal Snipe/klimax.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Klimax.gif
+Spectrum/Pro Tracker 2/Gogin/mikie.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mikie.gif
+Spectrum/Pro Tracker 2/Hazard/starwars.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+Spectrum/Pro Tracker 2/Hazard/zombies.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/ZombieIsland_2.gif
+Spectrum/Pro Tracker 2/Ironman/adventure.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Adventure_3.gif
+Spectrum/Pro Tracker 2/Ironman/atlantis.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtlantisAdventure(different).gif
+Spectrum/Pro Tracker 2/Ironman/elite2.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite2.gif
+Spectrum/Pro Tracker 2/Ironman/guardian.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Guardian.gif
+Spectrum/Pro Tracker 2/Ironman/ironlord.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/IronLord.gif
+Spectrum/Pro Tracker 2/Ironman/samurai.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Samurai.gif
+Spectrum/Pro Tracker 2/Ironman/u-f-o.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/UFO_2.gif
+Spectrum/Pro Tracker 2/Ironman/zombi.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zombi.gif
+Spectrum/Pro Tracker 2/Jungar/eldorado.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoradoEl.gif
+Spectrum/Pro Tracker 2/KSA/bye-bye.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/ByeBye.gif
+Spectrum/Pro Tracker 2/Karbofos/return to home - 4.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/ReturnToHome4.gif
+Spectrum/Pro Tracker 2/Klav/robocop3.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop3.gif
+Spectrum/Pro Tracker 2/Klim/marioislands.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MarioIslandsDemo.gif
+Spectrum/Pro Tracker 2/Kum/eagle.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eagle.gif
+Spectrum/Pro Tracker 2/Kum/iceman.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/IceMan.gif
+Spectrum/Pro Tracker 2/Kurt/joker.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/Joker.gif
+Spectrum/Pro Tracker 2/Kurt/red-hawk.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Redhawk.gif
+Spectrum/Pro Tracker 2/Kurt/tuareg.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tuareg.gif
+Spectrum/Pro Tracker 2/Lob/robocop.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop.gif
+Spectrum/Pro Tracker 2/Mad Max/coop-Ziutek/starwars.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+Spectrum/Pro Tracker 2/Mast/maniac.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Maniac.gif
+Spectrum/Pro Tracker 2/Mast/rasputin.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rasputin.gif
+Spectrum/Pro Tracker 2/Mast/sherlock.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sherlock.gif
+Spectrum/Pro Tracker 2/Maverick/plutonia.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Plutonia.gif
+Spectrum/Pro Tracker 2/Megus/meganova.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Meganova.gif
+Spectrum/Pro Tracker 2/Megus/sos.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SOS.gif
+Spectrum/Pro Tracker 2/Mew/g-force (turn-mus).pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tempest(G-Force)(Euro-Byte).gif
+Spectrum/Pro Tracker 2/Mew/g-force.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tempest(G-Force)(Euro-Byte).gif
+Spectrum/Pro Tracker 2/Midnight/fullshit.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FullShit.gif
+Spectrum/Pro Tracker 2/Midnight/robo.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Robo.gif
+Spectrum/Pro Tracker 2/Mischel/matrix.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Matrix_3.gif
+Spectrum/Pro Tracker 2/Monohrom/renegade.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Renegade.gif
+Spectrum/Pro Tracker 2/Moonwalker/metrocross.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Metro-Cross.gif
+Spectrum/Pro Tracker 2/Mushnikov Andrey/beethoven.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BeethovensArrangement.gif
+Spectrum/Pro Tracker 2/Never/roadfighter.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoadFighter.gif
+Spectrum/Pro Tracker 2/Nick Dance/the last courier.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LastCourierThe.gif
+Spectrum/Pro Tracker 2/Nik-O/enigma.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Spectrum/Pro Tracker 2/Panda/santa.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Santa.gif
+Spectrum/Pro Tracker 2/Phantom Lord/nautilus.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OceanConqueror.gif
+Spectrum/Pro Tracker 2/Phantom Lord/odyssey1.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/Odyssey1(SoftstoneLtd).gif
+Spectrum/Pro Tracker 2/Phantom Lord/shiza.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Shiza.gif
+Spectrum/Pro Tracker 2/Push/arkanoid.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Arkanoid(ErbeSoftwareS.A.).gif
+Spectrum/Pro Tracker 2/Push/space-7.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Space7.gif
+Spectrum/Pro Tracker 2/RCL/empire.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Empire.gif
+Spectrum/Pro Tracker 2/RCL/lost.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lost.gif
+Spectrum/Pro Tracker 2/Shark/zybex.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zybex.gif
+Spectrum/Pro Tracker 2/Skull Chaser/legend.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LegendPart1.gif
+Spectrum/Pro Tracker 2/Slash/dizzy.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Spectrum/Pro Tracker 2/Slash/merlin.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Merlin.gif
+Spectrum/Pro Tracker 2/Slash/turrican.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Turrican.gif
+Spectrum/Pro Tracker 2/Soundliner/titan.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Titan.gif
+Spectrum/Pro Tracker 2/Specman/walker.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Walker(demo2).gif
+Spectrum/Pro Tracker 2/Specman/warzone.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WarZone(CCS).gif
+Spectrum/Pro Tracker 2/TMS/batman.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+Spectrum/Pro Tracker 2/TMS/glider.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Glider.gif
+Spectrum/Pro Tracker 2/Tankard/flying shark.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FlyingShark.gif
+Spectrum/Pro Tracker 2/Twin S/citadel.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Citadel_2.gif
+Spectrum/Pro Tracker 2/VBI/spider.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Spider_2.gif
+Spectrum/Pro Tracker 2/Vedem/explosive.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Explosive.gif
+Spectrum/Pro Tracker 2/Viper/track.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Track.gif
+Spectrum/Pro Tracker 2/Visual/conquest.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Conquest.gif
+Spectrum/Pro Tracker 2/Visual/delta.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeltaCharge.gif
+Spectrum/Pro Tracker 2/Visual/eagle.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eagle.gif
+Spectrum/Pro Tracker 2/Visual/epsilon.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Epsilon.gif
+Spectrum/Pro Tracker 2/Visual/the-deep.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeepThe.gif
+Spectrum/Pro Tracker 2/Visual/warcraft.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WarcraftDemo.gif
+Spectrum/Pro Tracker 2/X-Raizor/elite.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite.gif
+Spectrum/Pro Tracker 2/Zhenya/lost.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lost.gif
+Spectrum/Pro Tracker 2/Zhenya/snoopy.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Snoopy.gif
+Spectrum/Pro Tracker 3/- unknown/psyho xor.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PsyhoXor.gif
+Spectrum/Pro Tracker 3/- unknown/sokoban (compiler software 2006).pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sokoban_3.gif
+Spectrum/Pro Tracker 3/Ahim/matrix.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Matrix_3.gif
+Spectrum/Pro Tracker 3/Ahim/star glider 2.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Starglider2.gif
+Spectrum/Pro Tracker 3/Alexoft/fist.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/ExplodingFist%2B.gif
+Spectrum/Pro Tracker 3/Alone Coder/guardian.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Guardian.gif
+Spectrum/Pro Tracker 3/Asi/goody.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Goody.gif
+Spectrum/Pro Tracker 3/Asi/warlock.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Warlock.gif
+Spectrum/Pro Tracker 3/Avatar/demoniada.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Demoniada.gif
+Spectrum/Pro Tracker 3/Avatar/ramparts.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Ramparts.gif
+Spectrum/Pro Tracker 3/Black Fox/ceitnot.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Ceitnot.gif
+Spectrum/Pro Tracker 3/C-Jeff/computer.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Computer.gif
+Spectrum/Pro Tracker 3/C-Jeff/zaxxon.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zaxxon.gif
+Spectrum/Pro Tracker 3/CJ Echo/convoy.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Convoy.gif
+Spectrum/Pro Tracker 3/CJ Echo/guardian.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Guardian.gif
+Spectrum/Pro Tracker 3/CJ Echo/projectx.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/ProjectX.gif
+Spectrum/Pro Tracker 3/Caliph/jim.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/JogoDoGalo.gif
+Spectrum/Pro Tracker 3/Criminal/tv-x.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TV-X.gif
+Spectrum/Pro Tracker 3/D-Juice/feces.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Feces.gif
+Spectrum/Pro Tracker 3/D-Juice/unknown.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Unknown.gif
+Spectrum/Pro Tracker 3/DJ Doc/tau ceti.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TauCeti.gif
+Spectrum/Pro Tracker 3/DJ Doc/tau-ceti (izhnews version).pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TauCeti.gif
+Spectrum/Pro Tracker 3/DJ Kot/ddt.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pssst.gif
+Spectrum/Pro Tracker 3/David Willis/commando.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Commando_2.gif
+Spectrum/Pro Tracker 3/Davos/academy.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Academy.gif
+Spectrum/Pro Tracker 3/Davos/battle.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Battle_2.gif
+Spectrum/Pro Tracker 3/Davos/diablo (adventurer).pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Diablo(ZenobiSoftware).gif
+Spectrum/Pro Tracker 3/Davos/diablo.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Diablo(ZenobiSoftware).gif
+Spectrum/Pro Tracker 3/Davos/dracula.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DraculaPart1-TheFirstNight.gif
+Spectrum/Pro Tracker 3/Davos/fullshit.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FullShit.gif
+Spectrum/Pro Tracker 3/Davos/hellfire.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hellfire.gif
+Spectrum/Pro Tracker 3/Davos/invasion.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/Invasion.gif
+Spectrum/Pro Tracker 3/Davos/starwars.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+Spectrum/Pro Tracker 3/Davos/terramex.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Terramex.gif
+Spectrum/Pro Tracker 3/Davos/titanic.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Titanic(YesSoftware).gif
+Spectrum/Pro Tracker 3/Davos/warlord.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Warlord.gif
+Spectrum/Pro Tracker 3/Equator/worm.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Worm_2.gif
+Spectrum/Pro Tracker 3/Flabber/darkwing duck.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DarkwingDuckDemo.gif
+Spectrum/Pro Tracker 3/Flabber/erotris.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Erotris.gif
+Spectrum/Pro Tracker 3/Foxx/dizzy.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Spectrum/Pro Tracker 3/Gogin/dizzy (version).pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Spectrum/Pro Tracker 3/Gogin/rat.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rat.gif
+Spectrum/Pro Tracker 3/Ik/moria.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Moria.gif
+Spectrum/Pro Tracker 3/Karbofos/izzywizzy.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/IzzyWizzy.gif
+Spectrum/Pro Tracker 3/Karo/may-day.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mayday.gif
+Spectrum/Pro Tracker 3/Karo/s.o.s.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SOS.gif
+Spectrum/Pro Tracker 3/Kenotron/alchemist.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Alchemist.gif
+Spectrum/Pro Tracker 3/Kevin/braindamage.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BrainDamage.gif
+Spectrum/Pro Tracker 3/Kevin/topsecret.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TopSecret.gif
+Spectrum/Pro Tracker 3/Key-Jee/demolition.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Demolition.gif
+Spectrum/Pro Tracker 3/Key-Jee/sirius.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sirius.gif
+Spectrum/Pro Tracker 3/Kyv/iball.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/IBall.gif
+Spectrum/Pro Tracker 3/Kyv/robocop (orig).pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop.gif
+Spectrum/Pro Tracker 3/Kyv/solnegro.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SolNegro.gif
+Spectrum/Pro Tracker 3/Lav/fastfood.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FastFood.gif
+Spectrum/Pro Tracker 3/Mast/aladdin.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Aladdin.gif
+Spectrum/Pro Tracker 3/Mast/impossible mission (version).pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/ImpossibleMission.gif
+Spectrum/Pro Tracker 3/Mast/impossible mission.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/ImpossibleMission.gif
+Spectrum/Pro Tracker 3/Mast/nupogodi.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NuPogodi.gif
+Spectrum/Pro Tracker 3/Mast/starwars.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+Spectrum/Pro Tracker 3/Mast/warcraft.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WarcraftDemo.gif
+Spectrum/Pro Tracker 3/Mast/worms.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WormsDemo_2.gif
+Spectrum/Pro Tracker 3/McMaker/sos!.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SOS.gif
+Spectrum/Pro Tracker 3/Megus/robocop.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop.gif
+Spectrum/Pro Tracker 3/Midisoft/shithead.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Shithead.gif
+Spectrum/Pro Tracker 3/Midisoft/titanic!.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Titanic(YesSoftware).gif
+Spectrum/Pro Tracker 3/MmcM/adventure.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Adventure_3.gif
+Spectrum/Pro Tracker 3/MmcM/emulate.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Emulate.gif
+Spectrum/Pro Tracker 3/MmcM/history.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/History.gif
+Spectrum/Pro Tracker 3/Moran/dominion.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dominion.gif
+Spectrum/Pro Tracker 3/Moran/target.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Target.gif
+Spectrum/Pro Tracker 3/Moran/zoids.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zoids-TheBattleBegins.gif
+Spectrum/Pro Tracker 3/Mr. Beeper/lost.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lost.gif
+Spectrum/Pro Tracker 3/Mr. Beeper/sliders.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sliders.gif
+Spectrum/Pro Tracker 3/Nik-O/corners.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Corners.gif
+Spectrum/Pro Tracker 3/Nik-O/enigma.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Spectrum/Pro Tracker 3/Ravager/hunter.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hunter_2.gif
+Spectrum/Pro Tracker 3/Riskej/eclipse.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eclipse.gif
+Spectrum/Pro Tracker 3/Riskej/matrix+.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Matrix_3.gif
+Spectrum/Pro Tracker 3/Riskej/matrix.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Matrix_3.gif
+Spectrum/Pro Tracker 3/Riskej/pioneer.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pioneer.gif
+Spectrum/Pro Tracker 3/SCL/king.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DogboyThe(G.I.Games).gif
+Spectrum/Pro Tracker 3/Siril/darkside.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DarkSide.gif
+Spectrum/Pro Tracker 3/Siril/sliders.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sliders.gif
+Spectrum/Pro Tracker 3/Sirius/technodrom.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Technodrom.gif
+Spectrum/Pro Tracker 3/Slider/joker.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/Joker.gif
+Spectrum/Pro Tracker 3/Soundliner/doom.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoomDemo_2.gif
+Spectrum/Pro Tracker 3/Soundliner/eagle.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eagle.gif
+Spectrum/Pro Tracker 3/Soundliner/labyrinth (black crow version).pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Labyrinth_6.gif
+Spectrum/Pro Tracker 3/Soundliner/labyrinth.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Labyrinth_6.gif
+Spectrum/Pro Tracker 3/Vad/asc.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/ASC.gif
+Spectrum/Pro Tracker 3/Vad/mouse.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mouse.gif
+Spectrum/Pro Tracker 3/Viper/unknown.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Unknown.gif
+Spectrum/Pro Tracker 3/Visual/mystical.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mystical.gif
+Spectrum/Pro Tracker 3/Volin/robot.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Robo.gif
+Spectrum/Pro Tracker 3/Wally (UA)/robot.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Robo.gif
+Spectrum/Pro Tracker 3/X-Raizor/sherwood.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sherwood.gif
+Spectrum/Pro Tracker 3/Z00m/bounder.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bounder.gif
+Spectrum/Pro Tracker 3/Z00m/super mario bros.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SuperMarioBros..gif
+Spectrum/SQ Tracker/Bell/savage.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Savage.gif
+Spectrum/SQ Tracker/Factor6/atlantis.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtlantisAdventure(different).gif
+Spectrum/SQ Tracker/Factor6/belegost.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Belegost.gif
+Spectrum/SQ Tracker/Factor6/deflektor.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Deflektor.gif
+Spectrum/SQ Tracker/Factor6/dice.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dice_5.gif
+Spectrum/SQ Tracker/Factor6/eliminator.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eliminator.gif
+Spectrum/SQ Tracker/Factor6/enigma.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Spectrum/SQ Tracker/Factor6/moonpatrol.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MoonPatrol.gif
+Spectrum/SQ Tracker/Factor6/sq tracker.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SQ-Tracker.gif
+Spectrum/SQ Tracker/Factor6/stormlord.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stormlord.gif
+Spectrum/SQ Tracker/Luckysoft/gold (by east17).sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gold.gif
+Spectrum/SQ Tracker/Mr. Kid/thecube.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CubeThe.gif
+Spectrum/SQ Tracker/TDM/batman.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+Spectrum/SQ Tracker/TDM/blacklamp.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BlackLamp.gif
+Spectrum/SQ Tracker/TDM/chronos.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chronos.gif
+Spectrum/SQ Tracker/TDM/delta.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeltaCharge.gif
+Spectrum/SQ Tracker/TDM/goldenaxe.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GoldenAxe.gif
+Spectrum/SQ Tracker/TDM/rawrecruit.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RawRecruit.gif
+Spectrum/SQ Tracker/TDM/renegade.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Renegade.gif
+Spectrum/SQ Tracker/TDM/robocop 2.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop2.gif
+Spectrum/SQ Tracker/X-Agon/beverly-hills-cop.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BeverlyHillsCop.gif
+Spectrum/SQ Tracker/X-Agon/fearzone.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Fearzone.gif
+Spectrum/SQ Tracker/X-Agon/jetsetwilly(rob hubbard).sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/JetSetWilly.gif
+Spectrum/ST Song Compiler/- unknown/adventure (blinky's scary school + intro).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Adventure_3.gif
+Spectrum/ST Song Compiler/- unknown/airwolf.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Airwolf.gif
+Spectrum/ST Song Compiler/- unknown/battle.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Battle_2.gif
+Spectrum/ST Song Compiler/- unknown/currojimenez.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CurroJimenez.gif
+Spectrum/ST Song Compiler/- unknown/empire.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Empire.gif
+Spectrum/ST Song Compiler/- unknown/fbi.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/F.B.I..gif
+Spectrum/ST Song Compiler/- unknown/galaxy-3.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Galaxy3.gif
+Spectrum/ST Song Compiler/- unknown/inferno.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/Inferno.gif
+Spectrum/ST Song Compiler/- unknown/metro.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Subway.gif
+Spectrum/ST Song Compiler/- unknown/moon2.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Moon2.gif
+Spectrum/ST Song Compiler/- unknown/starwars.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+Spectrum/ST Song Compiler/- unknown/twiinz.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Twinz.gif
+Spectrum/ST Song Compiler/- unknown/wolf2 (sos).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Wolf2.gif
+Spectrum/ST Song Compiler/- unknown/xecutor.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xecutor.gif
+Spectrum/ST Song Compiler/- unknown/zybex.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zybex.gif
+Spectrum/ST Song Compiler/AVO/pirates.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pirates.gif
+Spectrum/ST Song Compiler/AVO/red-moon.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RedMoon.gif
+Spectrum/ST Song Compiler/Agaev Eldar/sherlock.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sherlock.gif
+Spectrum/ST Song Compiler/Agent-X/schizofrenia.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Schizofrenia.gif
+Spectrum/ST Song Compiler/Agent-X/sokoban.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sokoban_3.gif
+Spectrum/ST Song Compiler/Alex Filimonov/alien.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Alien.gif
+Spectrum/ST Song Compiler/Alex Filimonov/stalker.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stalker.gif
+Spectrum/ST Song Compiler/Alexander Rostov/bismark.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bismark.gif
+Spectrum/ST Song Compiler/Alexey Efremov/moria.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Moria.gif
+Spectrum/ST Song Compiler/Andrew FER/technodrom.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Technodrom.gif
+Spectrum/ST Song Compiler/Andrey Kolesnik/unknown.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Unknown.gif
+Spectrum/ST Song Compiler/Andrey Makarevich/Arkanoid (version).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Arkanoid(ErbeSoftwareS.A.).gif
+Spectrum/ST Song Compiler/Andrey Makarevich/arkanoid.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Arkanoid(ErbeSoftwareS.A.).gif
+Spectrum/ST Song Compiler/Ashnar/3D-POOL.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pool3D.gif
+Spectrum/ST Song Compiler/Bzyk/startrip.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarTrip(different).gif
+Spectrum/ST Song Compiler/Cat-Man/cows demo.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CowsDemo.gif
+Spectrum/ST Song Compiler/Cat-Man/livingonvideo.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LivingOnVideo.gif
+Spectrum/ST Song Compiler/Dangerous/kolobok.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Kolobok.gif
+Spectrum/ST Song Compiler/Daniil Korobeynikov/gotohell.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GoToHell.gif
+Spectrum/ST Song Compiler/Demon/barbarian (intro).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Barbarian_2.gif
+Spectrum/ST Song Compiler/Demon/barbarian.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Barbarian_2.gif
+Spectrum/ST Song Compiler/Demon/skyway.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Skyway.gif
+Spectrum/ST Song Compiler/Dmitry Kovalev/color lines (stavropol).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/ColorLines.gif
+Spectrum/ST Song Compiler/Dron/ufo.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/UFO_2.gif
+Spectrum/ST Song Compiler/GEB-Soft/goodluck.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GoodLuck(TopTenSoftware).gif
+Spectrum/ST Song Compiler/Gangster/inner space 5.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/InnerSpace5.gif
+Spectrum/ST Song Compiler/Gasman/enigma.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Spectrum/ST Song Compiler/Gasman/hcore.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/H-Core.gif
+Spectrum/ST Song Compiler/Gasman/pondlifepreview.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PondlifePreview.gif
+Spectrum/ST Song Compiler/Imp/satan.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Satan.gif
+Spectrum/ST Song Compiler/Ironman/omega1.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OmegaOne.gif
+Spectrum/ST Song Compiler/Ironman/solaris.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Solaris_2.gif
+Spectrum/ST Song Compiler/KSA/bye-bye.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/ByeBye.gif
+Spectrum/ST Song Compiler/KSA/dizzy.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Spectrum/ST Song Compiler/KSA/golden axe.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GoldenAxe.gif
+Spectrum/ST Song Compiler/KSA/kolobok.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Kolobok.gif
+Spectrum/ST Song Compiler/KSA/stormlord.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stormlord.gif
+Spectrum/ST Song Compiler/Karp/monster.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Monster.gif
+Spectrum/ST Song Compiler/Kent/brat attack.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BratAttack.gif
+Spectrum/ST Song Compiler/Kent/warlock (demo version).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Warlock.gif
+Spectrum/ST Song Compiler/Kev/shark.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Shark.gif
+Spectrum/ST Song Compiler/Klav/batman.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+Spectrum/ST Song Compiler/Klav/robocop3 (version).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop3.gif
+Spectrum/ST Song Compiler/LA Esq/for the united minds.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/ForTheUnitedMinds.gif
+Spectrum/ST Song Compiler/LA Esq/h-core.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/H-Core.gif
+Spectrum/ST Song Compiler/LA Esq/matrix.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Matrix_3.gif
+Spectrum/ST Song Compiler/MP/highlander.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Highlander.gif
+Spectrum/ST Song Compiler/Michael Wakson/fist.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/ExplodingFist%2B.gif
+Spectrum/ST Song Compiler/Michael Wakson/nosferatu.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Nosferatu-QuestForTheVampire.gif
+Spectrum/ST Song Compiler/Michal Bukowski/bunchofarse.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BunchOfArse.gif
+Spectrum/ST Song Compiler/Predator/predator.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Predator.gif
+Spectrum/ST Song Compiler/RST7/resound1.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Resound1.gif
+Spectrum/ST Song Compiler/Rajsoft/subbuteo.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Subbuteo.gif
+Spectrum/ST Song Compiler/Rebel/metro cross.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Metro-Cross.gif
+Spectrum/ST Song Compiler/Roman Zadorozhniy/mr.vain.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Vain.gif
+Spectrum/ST Song Compiler/Sirius Soft/yurecquest.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/y/gif/YurecQuest.gif
+Spectrum/ST Song Compiler/Suha/sigma7.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sigma7.gif
+Spectrum/ST Song Compiler/The Spy/bye!bye!.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/ByeBye.gif
+Spectrum/ST Song Compiler/Twin S/48irons.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/123/gif/48Irons.gif
+Spectrum/ST Song Compiler/Twin S/draconus.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Draconus.gif
+Spectrum/ST Song Compiler/Twin S/smash tv.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SmashTV.gif
+Spectrum/ST Song Compiler/UCom/assassin.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Assassin.gif
+Spectrum/ST Song Compiler/VBI/cobra force.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CobraForce.gif
+Spectrum/ST Song Compiler/VBI/enigma.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Spectrum/ST Song Compiler/VBI/sos.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SOS.gif
+Spectrum/ST Song Compiler/VBI/troll.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Troll.gif
+Spectrum/ST Song Compiler/Voxon/airwolf.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Airwolf.gif
+Spectrum/ST Song Compiler/Voxon/amadeus.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Amadeus.gif
+Spectrum/ST Song Compiler/Voxon/milkyway2.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MilkyWay2.gif
+Spectrum/ST Song Compiler/Wild Slyam/mrvain (ornament version).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Vain.gif
+Spectrum/ST Song Compiler/Yakov Kazakov/rasputin.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rasputin.gif
+Spectrum/ST Song Compiler/Z00m/mission impossible.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MissionImpossible.gif
+Spectrum/Sound Tracker 1.1/- unknown/turrican.st11	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Turrican.gif
+Spectrum/Sound Tracker 1.1/- unknown/zybex.st11	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zybex.gif
+Spectrum/Sound Tracker 1.3/3A Soft/zybex.st13	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zybex.gif
+Spectrum/Sound Tracker Pro 2/- unknown/alien.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Alien.gif
+Spectrum/Sound Tracker Pro 2/- unknown/dragonia.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dragonia.gif
+Spectrum/Sound Tracker Pro 2/- unknown/quadrax.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/q/gif/Quadrax.gif
+Spectrum/Sound Tracker Pro 2/- unknown/wolf.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Wolf_2.gif
+Spectrum/Sound Tracker Pro 2/- unknown/yolka'98.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/y/gif/Yolka98.gif
+Spectrum/Sound Tracker Pro 2/George/unknown (listened by tv).stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Unknown.gif
+Spectrum/Sound Tracker Pro 2/Hacker KAY/bis!.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bis.gif
+Spectrum/Sound Tracker Pro 2/Hacker KAY/techno 2.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Techno2.gif
+Spectrum/Sound Tracker Pro 2/Vad/galaxy3.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Galaxy3.gif
+Spectrum/Sound Tracker Pro 2/Vad/gold.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gold.gif
+Spectrum/Sound Tracker Pro 2/Vad/math.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Math_2.gif
+Spectrum/Sound Tracker Pro 2/Znahar/gothik.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gothik.gif
+Spectrum/Sound Tracker Pro 2/Znahar/gremlins.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gremlins.gif
+Spectrum/Sound Tracker Pro 2/Znahar/power up.stp2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PowerUpV2.0.gif
+Spectrum/Sound Tracker Pro/- unknown/quadrax.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/q/gif/Quadrax.gif
+Spectrum/Sound Tracker Pro/AVO/tron.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Escape-MCP.gif
+Spectrum/Sound Tracker Pro/KSA/biff.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Biff.gif
+Spectrum/Sound Tracker Pro/Shov/odyssey1.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/Odyssey1(SoftstoneLtd).gif
+Spectrum/Sound Tracker Pro/Vedem/barbarian (remix).stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Barbarian_2.gif
+Spectrum/Sound Tracker Pro/Vedem/megalomania.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Megalomania.gif
+Spectrum/Sound Tracker Pro/Vedem/nightmare.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Nightmare.gif
+Spectrum/Sound Tracker Pro/Vedem/warlock (remix).stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Warlock.gif
+Spectrum/Sound Tracker Pro/Visual/eclipse.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eclipse.gif
+Spectrum/Sound Tracker Pro/Znahar/yolka98.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/y/gif/Yolka98.gif
+Spectrum/Vortex Tracker II/Key-Jee/gridlock.vt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gridlock.gif
+Spectrum/Vortex Tracker II/Mr. T.A.D/rat.vt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rat.gif
+Spectrum/Vortex Tracker II/Splinter/mermaid.vt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MermaidMadness.gif
+Spectrum/Vortex Tracker II/Vedem/nightmare.vt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Nightmare.gif
+Spectrum/Vortex Tracker II/Znahar/gremlins (rush2-18).vt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gremlins.gif
+Spectrum/Vortex Tracker II/Znahar/xenophobe (opera-6).vt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenophobe.gif
+Spectrum/Vortex/- unknown/48 irons.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/123/gif/48Irons.gif
+Spectrum/Vortex/- unknown/commando.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Commando_2.gif
+Spectrum/Vortex/- unknown/crystal kingdom dizzy.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CrystalKingdomDizzy.gif
+Spectrum/Vortex/- unknown/defcom.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Defcom.gif
+Spectrum/Vortex/- unknown/elevator action.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/ElevatorAction.gif
+Spectrum/Vortex/- unknown/great gurianos.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GreatGurianos.gif
+Spectrum/Vortex/- unknown/hotshot.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hotshot.gif
+Spectrum/Vortex/- unknown/hydrofool.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hydrofool.gif
+Spectrum/Vortex/- unknown/last will dizzy.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LastWillDizzy.gif
+Spectrum/Vortex/- unknown/licence to kill.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LicenceToKill.gif
+Spectrum/Vortex/- unknown/moon walker.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Moonwalker.gif
+Spectrum/Vortex/- unknown/real action.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RealAction.gif
+Spectrum/Vortex/- unknown/skull & crossbones.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SkullCrossbones.gif
+Spectrum/Vortex/- unknown/song in lines - 2.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SongInLines2.gif
+Spectrum/Vortex/- unknown/steg.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Steg.gif
+Spectrum/Vortex/- unknown/switch blade.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Switchblade.gif
+Spectrum/Vortex/- unknown/viz.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Viz.gif
+Spectrum/Vortex/- unknown/xenophobe.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenophobe.gif
+Spectrum/Vortex/Agent-X/sokoban.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sokoban_3.gif
+Spectrum/Vortex/Agent-X/startrip.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarTrip(different).gif
+Spectrum/Vortex/Allister Brimble/cj in the usa.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CJInTheUSA.gif
+Spectrum/Vortex/Allister Brimble/dizzy down the rapids.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DizzyDownTheRapids.gif
+Spectrum/Vortex/Allister Brimble/dizzy prince of the yolkfolk.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DizzyPrinceOfTheYolkFolk.gif
+Spectrum/Vortex/Allister Brimble/slightly magic.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SlightlyMagic.gif
+Spectrum/Vortex/Allister Brimble/spellbound dizzy.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SpellboundDizzy.gif
+Spectrum/Vortex/Allister Brimble/wild west seymour.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WildWestSeymour.gif
+Spectrum/Vortex/DNK/mortal kombat.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MortalKombat.gif
+Spectrum/Vortex/Dave Rogers/cybernoid.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cybernoid.gif
+Spectrum/Vortex/Dave Rogers/deliverance stormlord ii.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StormlordII-Deliverance.gif
+Spectrum/Vortex/Dave Rogers/nether world.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Netherworld.gif
+Spectrum/Vortex/Dave Rogers/stormlord.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stormlord.gif
+Spectrum/Vortex/David Whittaker/bmx freestyle.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BMXFreestyle.gif
+Spectrum/Vortex/David Whittaker/fast food.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FastFood.gif
+Spectrum/Vortex/David Whittaker/kgb superspy.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KGBSuperspy.gif
+Spectrum/Vortex/David Whittaker/operation gunship.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OperationGunship.gif
+Spectrum/Vortex/David Whittaker/savage.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Savage.gif
+Spectrum/Vortex/David Whittaker/treasure island dizzy.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TreasureIslandDizzy.gif
+Spectrum/Vortex/David Whittaker/xenon.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenon(MastertronicPlus).gif
+Spectrum/Vortex/Factor6/eliminator.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eliminator.gif
+Spectrum/Vortex/G. Brandt/tom & jerry.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TomJerry2.gif
+Spectrum/Vortex/Gerard Gourley/stuntman seymour.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StuntmanSeymour.gif
+Spectrum/Vortex/Gerry Anderson/thunderbirds (1989)(gerry anderson).vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Thunderbirds.gif
+Spectrum/Vortex/Jay Derrett/ballbreaker.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BallBreaker.gif
+Spectrum/Vortex/Joe/doom.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoomDemo_2.gif
+Spectrum/Vortex/Jonathan Dunn/puzznic.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Puzznic.gif
+Spectrum/Vortex/KSA/dizzy xx.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DizzyXXDemo.gif
+Spectrum/Vortex/Lyndon Sharp/magicland dizzy.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MagiclandDizzy.gif
+Spectrum/Vortex/Lyndon Sharp/spike in transylvania.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SpikeInTransylvania.gif
+Spectrum/Vortex/Lyndon Sharp/super seymour saves the planet.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SuperSeymourSavesThePlanet.gif
+Spectrum/Vortex/Lyndon Sharp/the amazing adventures of robin hood.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RobinHood-LegendQuest.gif
+Spectrum/Vortex/Lyndon Sharp/tilt.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tilt.gif
+Spectrum/Vortex/Matt Furniss/space harrier ii.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SpaceHarrierII.gif
+Spectrum/Vortex/Matt Furniss/toobin.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Toobin.gif
+Spectrum/Vortex/Matthew Cannon/robocop 2.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop2.gif
+Spectrum/Vortex/Megus/techno 2.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Techno2.gif
+Spectrum/Vortex/Nigel Pritchard/dna warrior.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/D.N.A.Warrior.gif
+Spectrum/Vortex/Orpheus/boulder dash.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BoulderDash(PrismLeisureCorporationPLC).gif
+Spectrum/Vortex/ST Compile/living on video.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LivingOnVideo.gif
+Spectrum/Vortex/Sean Conran/turrican ii.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TurricanII(%2B3).gif
+Spectrum/Vortex/Sound Images/golden axe.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GoldenAxe.gif
+Spectrum/Vortex/Stack/warcraft.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WarcraftDemo.gif
+Spectrum/Vortex/TDM/black lamp.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BlackLamp.gif
+Spectrum/Vortex/TDM/delta.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeltaCharge.gif
+Spectrum/Vortex/TDM/led storm.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LEDStorm.gif
+Spectrum/Vortex/Tim Follin/black lamp.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BlackLamp.gif
+Spectrum/Vortex/Tim Follin/ghouls n' ghosts.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GhoulsNGhosts.gif
+Spectrum/ZXS/- unknown/fullshit.zxs	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FullShit.gif
+Spectrum/ZXS/Monster Of Music/msx10.zxs	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MSX10.gif
