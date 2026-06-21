@@ -31,7 +31,7 @@
 --     was encoded as "<Game>/<Version>.lha/<member>" -> FTP 550. The real archive
 --     is "<Game>.lha" with the version as an inner dir, so they are now
 --     "<Game>.lha/<Version>/<member>" (e.g. Advanced Ski Simulator Custom).
-VERSION = 47;
+VERSION = 48;
 
 DB = {
 {

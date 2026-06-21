@@ -55,6 +55,8 @@ enum Formats
     SEGAMS,
     MEGADRIVE,
     DREAMCAST,
+    SATURN,     // Sega Saturn (.ssf)
+    WONDERSWAN, // Bandai WonderSwan handheld
 
     SONY,
 

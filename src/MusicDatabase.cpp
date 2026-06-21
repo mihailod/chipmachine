@@ -1530,15 +1530,15 @@ void initFormats()
     format_map["benn daglish sid"] = SID;
     format_map["playstation 2 sound format"] = PLAYSTATION2;
     format_map["sgc"] = SEGAMS;             // SG-1000 / Coleco / SMS rips
-    format_map["saturn sound format"] = CONSOLE; // no dedicated Saturn filter
+    format_map["saturn sound format"] = SATURN;
+    format_map["wonderswan"] = WONDERSWAN;
     format_map["ogg vorbis"] = OGG;
     format_map["iso-mpeg audio layer-2"] = MP3;
     format_map["iso-mpeg audio layer-3"] = MP3;
     format_map["hippel st coso"] = ATARI;   // Atari ST Hippel
     format_map["bbc micro"] = ACORN;        // Acorn 8-bit (close enough)
-    // Misc consoles/handhelds with no dedicated platform filter.
-    for (char const* f :
-         { "wonderswan", "vectrex", "colecovision", "capcom q-sound format" })
+    // Misc small consoles/arcade -> generic CONSOLE ("Other Consoles" filter).
+    for (char const* f : { "vectrex", "colecovision", "capcom q-sound format" })
         format_map[f] = CONSOLE;
 
     // Correct cross-platform formats that the generic fallbacks (endsWith
@@ -1643,6 +1643,8 @@ static std::string platformName(uint8_t b)
     case MEGADRIVE: return "Sega Mega Drive";
     case SEGAMS: return "Sega 8-bit";
     case DREAMCAST: return "Sega Dreamcast";
+    case SATURN: return "Sega Saturn";
+    case WONDERSWAN: return "WonderSwan";
     case PLAYSTATION:
     case PLAYSTATION2: return "PlayStation";
     case HES: return "PC Engine";
