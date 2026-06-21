@@ -38,7 +38,8 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER, SCREAMTRACKER, IMPULSETRACKER, FASTTRACKER } },
     { "Atari", { ATARI } },
     { "Apple IIgs", { APPLE } },
-    { "Commodore C64", { C64, SID } },
+    { "Commodore 64", { SID, STR } },
+    { "Commodore TED (16/116/+4)", { PRG } },
     { "NES", { NES } },
     { "SNES", { SNES } },
     { "Game Boy / GBA", { GAMEBOY, GBA } },
@@ -54,7 +55,7 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
 {
     static const std::map<uint32_t, uint32_t> colors = {
         { NOT_SET, 0xffff00ff }, { PLAYLIST, 0xffffff88 },
-        { CONSOLE, 0xffdd3355 }, { C64, 0xffcc8844 },
+        { CONSOLE, 0xffdd3355 }, { SID, 0xffcc8844 },
         { ATARI, 0xffcccc33 },   { MP3, 0xff88ff88 },
         { APPLE, 0xff66cccc },
         { M3U, 0xffaaddaa },     { YOUTUBE, 0xffff0000 },

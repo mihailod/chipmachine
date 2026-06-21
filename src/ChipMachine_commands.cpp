@@ -68,7 +68,12 @@ void ChipMachine::setupCommands()
                 musicDatabase.setFormatFilter(opt.matchedFormats);
             }
             iquery->invalidate();
-            
+            // Force the search to re-run with the new filter applied; without
+            // this the result list keeps showing the stale pre-filter results
+            // (e.g. C64 collections lingering after switching to the Amiga
+            // filter) until the user edits the search text.
+            searchUpdated = true;
+
             if (selectedFilterName.empty()) {
                 mainFilterField.setText("");
             } else {

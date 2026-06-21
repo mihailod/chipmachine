@@ -62,8 +62,9 @@ enum Formats
     PLAYSTATION2,
 
     COMPUTER,
-    C64,
-    SID,
+    SID, // Commodore 64 SID tunes (formerly C64)
+    STR, // Stereo Sidplayer (.str), C64 stereo SID
+    PRG, // Commodore TED (16/116/+4), .prg tunes
 
     SPECTRUM,
 
@@ -304,6 +305,24 @@ private:
     std::vector<uint32_t> composerToTitle;
     std::vector<uint32_t> composerTitleStart;
     std::vector<uint16_t> formats;
+    // Platform format-byte per product (indexed by product ordinal, i.e.
+    // titleIndex position - productStartIndex). Products only carry the PRODUCT
+    // byte in `formats`, so this side-channel lets the platform filter (F9)
+    // include/exclude collections by platform. 0 = unknown (filtered out).
+    std::vector<uint8_t> productPlatform;
+    // Real SQL product.ROWID per indexed product (indexed by product ordinal).
+    // The product index query skips single-song products (HAVING count>1), so
+    // the ordinal is NOT the ROWID; getSongInfo() must map ordinal -> ROWID via
+    // this table to fetch the correct product.
+    std::vector<int> productRowid;
+
+    // When a platform filter (F9) is active, the set of titleIndex indices that
+    // pass it, precomputed in setFormatFilter(). Lets short queries (< 3 chars)
+    // scan the (typically small) filtered set directly instead of the sparse
+    // 1-2 letter substring buckets, so filtered search responds from the first
+    // keystroke. Empty / false when no platform filter is active.
+    std::vector<int> filteredCandidates;
+    bool formatFilterActive = false;
 
     mutable std::mutex chkMutex;
     mutable std::mutex dbMutex;

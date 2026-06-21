@@ -55,7 +55,7 @@ void runConsole(std::shared_ptr<bbs::Console> console, ChipInterface& ci)
     listView.setCallback([&](Console& c, int index, bool marked) {
         static const std::map<uint32_t, int> colors = {
             { NOT_SET, Console::PURPLE },  { PLAYLIST, Console::GREY },
-            { CONSOLE, Console::RED },     { C64, Console::BROWN },
+            { CONSOLE, Console::RED },     { SID, Console::BROWN },
             { ATARI, Console::YELLOW },    { MP3, Console::GREEN },
             { APPLE, Console::CYAN },
             { M3U, Console::LIGHT_GREEN }, { YOUTUBE, Console::RED },

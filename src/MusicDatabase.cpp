@@ -845,15 +845,45 @@ void MusicDatabase::setFilter(std::string const& collection, int type)
     }
 }
 
+// Map a product's free-text `type` (e.g. "C64 Game", "Amiga Demo", csdb
+// "Music Collection") to a platform format byte, so collections obey the F9
+// platform filter. Returns 0 (unknown) when no platform is recognised, which
+// causes the product to be hidden whenever any platform filter is active.
+static uint8_t productTypeToPlatform(std::string const& type)
+{
+    std::string t = toLower(type);
+    if (startsWith(t, "amiga")) return AMIGA;
+    // gamebase ("C64 Game") and csdb releases (Music Collection / Diskmag /
+    // Demo, sourced from HVSC) are all Commodore 64 SID.
+    if (t.find("c64") != std::string::npos ||
+        t.find("commodore 64") != std::string::npos ||
+        endsWith(t, "music collection") || endsWith(t, "diskmag") ||
+        endsWith(t, "demo"))
+        return SID;
+    return 0;
+}
+
 void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
 {
     if (allowedFormats.empty()) {
         titleIndex.setFilter();
+        formatFilterActive = false;
+        filteredCandidates.clear();
+        filteredCandidates.shrink_to_fit();
     } else {
         titleIndex.setFilter([=](int index) {
             auto f = formats[index];
             uint8_t fmtByte = f & 0xff;
-            if (fmtByte == PRODUCT) return false;
+            if (fmtByte == PRODUCT) {
+                // Products (collections) carry their platform separately.
+                int ord = index - static_cast<int>(productStartIndex);
+                uint8_t plat = (ord >= 0 && ord < (int)productPlatform.size())
+                                   ? productPlatform[ord]
+                                   : 0;
+                for (auto const& allowed : allowedFormats)
+                    if (plat == allowed) return false; // keep
+                return true;                            // exclude
+            }
             for (auto const& allowed : allowedFormats) {
                 if (fmtByte == allowed) {
                     return false;
@@ -861,6 +891,16 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
             }
             return true;
         });
+
+        // Precompute the indices that pass the filter so short queries can scan
+        // them directly (see MusicDatabase::search). Cheap: one pass over the
+        // title index per F9 selection.
+        formatFilterActive = true;
+        filteredCandidates.clear();
+        uint32_t n = titleIndex.size();
+        for (uint32_t i = 0; i < n; i++) {
+            if (!titleIndex.isFiltered(i)) filteredCandidates.push_back(i);
+        }
     }
 }
 
@@ -904,18 +944,52 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
         composer_query = p[1];
     }
 
-    // For empty query, return all playlists
+    // For empty query, return all playlists. Playlists (e.g. <FAVORITES>) are
+    // not platform-specific, so skip them entirely while a platform filter is
+    // active -- otherwise e.g. typing "fa" surfaces <FAVORITES> under a filter.
     if (query == "") {
-        for (int i = 0; i < (int)playLists.size(); i++) {
-            add_unique(PLAYLIST_INDEX + i);
+        if (!formatFilterActive) {
+            for (int i = 0; i < (int)playLists.size(); i++) {
+                add_unique(PLAYLIST_INDEX + i);
+            }
         }
         return result.size();
     }
 
-    // Push back all matching playlists
-    for (int i = 0; i < (int)playLists.size(); i++) {
-        if (toLower(playLists[i].name).find(query) != std::string::npos)
-            add_unique(PLAYLIST_INDEX + i);
+    // Push back all matching playlists (unless a platform filter is active)
+    if (!formatFilterActive) {
+        for (int i = 0; i < (int)playLists.size(); i++) {
+            if (toLower(playLists[i].name).find(query) != std::string::npos)
+                add_unique(PLAYLIST_INDEX + i);
+        }
+    }
+
+    // Short queries (< 3 chars) can't use the 3-letter substring buckets: for
+    // 1-2 char queries those buckets only hold strings with a standalone short
+    // word, so under a restrictive platform filter almost nothing matches until
+    // the 3rd letter. When a filter is active, scan the precomputed (small)
+    // filtered candidate set directly instead, matching title or composer, so
+    // results appear from the first keystroke. Early-exits at searchLimit, so it
+    // stays fast even for large filters.
+    if (formatFilterActive && !title_query.empty() && title_query.size() < 3) {
+        std::string tq = title_query;
+        SearchIndex::simplify(tq);
+        std::string cq = composer_query;
+        SearchIndex::simplify(cq);
+        for (int index : filteredCandidates) {
+            std::string title = titleIndex.getString(index);
+            SearchIndex::simplify(title);
+            bool match = title.find(tq) != std::string::npos;
+            if (!match) {
+                std::string comp =
+                    composerIndex.getString(titleToComposer[index]);
+                SearchIndex::simplify(comp);
+                match = comp.find(cq) != std::string::npos;
+            }
+            if (match && !add_unique(index) && result.size() >= searchLimit)
+                break;
+        }
+        return result.size();
     }
 
     std::vector<int> tresult;
@@ -1016,19 +1090,25 @@ SongInfo MusicDatabase::getSongInfo(int index) const
     index++;
     // LOGD("ID %d vs PROD %d", index, productStartIndex);
     if (index >= productStartIndex) {
-        index -= productStartIndex;
+        // index is now ordinal+1 (the ++ above); map the ordinal to the real
+        // product ROWID -- it is NOT the ordinal because single-song products
+        // are skipped during indexing.
+        int ord = index - productStartIndex - 1;
+        int rowid = (ord >= 0 && ord < (int)productRowid.size())
+                        ? productRowid[ord]
+                        : index - productStartIndex;
         auto q = db.query<std::string, std::string, std::string, std::string,
                           std::string>(
             "SELECT title, creator, type, collection.id, metadata "
             "FROM  product, collection "
             "WHERE product.ROWID = ? AND product.collection = collection.ROWID",
-            index);
+            rowid);
         if (q.step()) {
             SongInfo song;
             std::string collection;
             tie(song.title, song.composer, song.format, collection,
                 song.metadata[SongInfo::INFO]) = q.get_tuple();
-            song.path = "product::" + std::to_string(index);
+            song.path = "product::" + std::to_string(rowid);
             return song;
         }
 
@@ -1259,8 +1339,14 @@ void initFormats()
         format_map[f] = ADPLUG;
     }
 
-    format_map["commodore 64"] = C64;
-    format_map["cyber tracker"] = C64;
+    format_map["commodore 64"] = SID;
+    format_map["cyber tracker"] = SID;
+    // Stereo Sidplayer is a C64 stereo SID format (played via UADE). Override
+    // the uade_formats default so it groups/colours as Commodore 64 rather than
+    // Amiga, and is reachable from the "Commodore 64" platform filter.
+    format_map["stereo sidplayer"] = STR;
+    // Commodore TED (16/116/+4) .prg tunes -- identify_song() tags these "TED".
+    format_map["ted"] = PRG;
     format_map["super nintendo"] = SNES;
     format_map["hes"] = HES;
     format_map["mp3"] = MP3;
@@ -1367,6 +1453,8 @@ void MusicDatabase::readIndex(apone::File&& f)
     readVector(composerToTitle, f);
     readVector(composerTitleStart, f);
     readVector(formats, f);
+    readVector(productPlatform, f);
+    readVector(productRowid, f);
 
     titleIndex.load(f);
     composerIndex.load(f);
@@ -1381,6 +1469,8 @@ void MusicDatabase::writeIndex(apone::File&& f)
     writeVector(composerToTitle, f);
     writeVector(composerTitleStart, f);
     writeVector(formats, f);
+    writeVector(productPlatform, f);
+    writeVector(productRowid, f);
 
     titleIndex.dump(f);
     composerIndex.dump(f);
@@ -1489,10 +1579,11 @@ void MusicDatabase::generateIndex()
 
     productStartIndex = titleIndex.size();
 
-    auto prodQuery = db.query<std::string, std::string, std::string, int>(
-        "SELECT product.title, type, creator, collection FROM product, "
-        "prod2song WHERE prodid = product.ROWID GROUP BY prodid HAVING "
+    auto prodQuery = db.query<int, std::string, std::string, std::string, int>(
+        "SELECT product.ROWID, product.title, type, creator, collection FROM "
+        "product, prod2song WHERE prodid = product.ROWID GROUP BY prodid HAVING "
         "count(*) > 1");
+    int prodRowid;
     while (count < 1000000) {
         count++;
         if (!prodQuery.step()) break;
@@ -1501,10 +1592,19 @@ void MusicDatabase::generateIndex()
             LOGD("%d songs indexed", count);
         }
 
-        tie(title, fmt, composer, collection) = prodQuery.get_tuple();
+        tie(prodRowid, title, fmt, composer, collection) =
+            prodQuery.get_tuple();
 
         uint8_t b = PRODUCT;
         formats.push_back(b | (collection << 8));
+        // Tag the product with a platform byte (from its `type`) so the F9
+        // filter can include/exclude collections by platform. Aligned with
+        // productStartIndex (this is the (formats.size()-productStartIndex)'th
+        // product).
+        productPlatform.push_back(productTypeToPlatform(fmt));
+        // Remember the real ROWID -- the ordinal here is not the ROWID because
+        // single-song products are skipped above (see getSongInfo).
+        productRowid.push_back(prodRowid);
 
         if (dontIndex[collection]) {
             title = "";
