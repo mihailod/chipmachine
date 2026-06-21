@@ -27,6 +27,10 @@ Despite the massive expansion under the hood, the core experience remains untouc
 
 [![Screenshot](data/misc/formats.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
 
+**(Screenshots might show features from dev in progress (not released) code.)**
+
+[![Screenshot](data/misc/search.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
+
 ## Intro
 
 *A demoscene/retro Jukebox/spotify-like music player*
