@@ -348,7 +348,7 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
             float px = advancedArea.x + col * colW;
             float py = advancedArea.y + lineH * (row + 1);
             grappix::screen.text(listFont, label, px, py, c,
-                                 resultFieldTemplate.scale * 0.7f);
+                                 resultFieldTemplate.scale * 0.9f);
         });
     advancedList.setTotal(filterOptions.size());
     advancedList.setVisible((int)filterOptions.size());

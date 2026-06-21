@@ -30,8 +30,12 @@ public:
 	}
 
 	void resize(int w, int h) override {
-		if(w > 8 && h > 8)
-			scr = grappix::Texture(w+10, 300);
+		// Texture is (re)sized in render() to track the window/text scale; just
+		// scale the height with the target here so the first frame isn't clipped.
+		int texH = (int)(300 * (target.height() / 576.0f));
+		if(texH < 8) texH = 300;
+		if(w > 8)
+			scr = grappix::Texture(w+10, texH);
 	}
 	void set(const std::string &what, const std::string &val, float seconds = 0.0) override {
 		if(what == "font") {
@@ -49,7 +53,17 @@ public:
 			return;
 
 		// Calculate dynamic scale factor based on target resolution
-		float dynScale = (target.height() / 576.0f) * 3.0f;
+		float gscale = target.height() / 576.0f;
+		float dynScale = gscale * 3.0f;
+
+		// The render texture must grow with the text scale, otherwise large
+		// windows clip the glyphs at the old fixed 300px height (the bottoms
+		// of the letters disappear). Keep it 1:1 with on-screen pixels.
+		int texW = target.width() + 10;
+		int texH = (int)(300 * gscale);
+		if(texH < 8) texH = 300;
+		if((int)scr.width() != texW || (int)scr.height() != texH)
+			scr = grappix::Texture(texW, texH);
 
 		// Keep the reset boundary in sync with the scale actually rendered
 		// (also covers window resizes after the text was set).
@@ -58,11 +72,11 @@ public:
 			xpos = target.width() + 100;
 
 		scr.clear(0x00000000);
-		// Render text using dynamic scale factor
-		scr.text(font, scrollText, xpos-=scrollspeed, 150, 0xffffffff, dynScale); 
+		// Render text using dynamic scale factor; baseline centred in texture.
+		scr.text(font, scrollText, xpos-=scrollspeed, texH / 2.0f, 0xffffffff, dynScale);
 		program.use();
 		static float uvs[] = { 0,0,1,0,0,1,1,1 };
-		target.draw(scr, 0.0F, scrolly - 150, target.width(), 300, uvs, program);
+		target.draw(scr, 0.0F, scrolly - texH / 2.0f, target.width(), texH, uvs, program);
 	}
 
 	float alpha = 1.0;
