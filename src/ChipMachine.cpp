@@ -343,6 +343,10 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
             int rows = ((int)filterOptions.size() + 1) / 2;
             int col = (int)index / rows;
             int row = (int)index % rows;
+            // Leave the top row of the right column empty so "[No Filter]"
+            // (alone at the top of the left column) stands out: shift the right
+            // column down by one row.
+            row += col;
             float lineH = advancedArea.h / (float)numLines;
             float colW = advancedArea.w / 2.0f;
             float px = advancedArea.x + col * colW;
