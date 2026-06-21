@@ -21,7 +21,7 @@ Despite the massive expansion under the hood, the core experience remains untouc
 
 **(Screenshots might show features from dev in progress (not released) code.)**
 
-[![Screenshot](data/misc/screen.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
+[![Screenshot](data/misc/amegas.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
 
 **(Screenshots might show features from dev in progress (not released) code.)**
 
