@@ -459,14 +459,67 @@ std::string ChipMachine::appendFormatInfo(std::string const& text,
 
     // "Platform - Name (EXT)" plus, if listed, "<trackers> - <description>".
     std::string fmt = info.format;
-    std::string ext =
-        info.ext.empty() ? utils::path_extension(info.path) : info.ext;
-    auto desc = musicDatabase.describeExtension(ext);
+    auto desc = musicDatabase.describeExtension(formatKey(info));
     if (!desc.empty()) fmt += " ... " + desc;
 
     // Dots give a clean gap between sections and before the line repeats.
     if (text.empty()) return "... " + fmt + " ...";
     return text + " ... " + fmt + " ...";
+}
+
+// Resolve the extension key used to look up a format description. Compressed
+// containers (.lha members, .gz/.zip wrappers) must NOT be keyed on the
+// container extension -- the real format lives in the inner file. The inner
+// name can be either suffix-form ("song.mod") or modland/UnExoticA prefix-form
+// ("mod.song" inside an .lha), so we try both tokens and return the first that
+// the descriptions table actually knows.
+std::string ChipMachine::formatKey(SongInfo const& info)
+{
+    auto known = [&](std::string const& e) {
+        return !e.empty() && !musicDatabase.describeExtension(e).empty();
+    };
+
+    // 1. The detected extension, if it's a real (described) format.
+    if (known(utils::toLower(info.ext))) return utils::toLower(info.ext);
+
+    // Pick the leaf name: for an ".lha/<member>" path use the member, which
+    // carries the type prefix (e.g. "mod.mix0"); otherwise the file name.
+    std::string path = info.path;
+    std::string leaf;
+    auto lpos = utils::toLower(path).find(".lha/");
+    if (lpos != std::string::npos)
+        leaf = path.substr(lpos + 5);
+    else
+        leaf = utils::path_filename(path);
+
+    // Strip trailing archive/compression wrappers so "x.sid.gz" -> "x.sid".
+    static const char* containers[] = { "lha", "gz",  "zip", "rar",
+                                        "lzh", "lzx", "z",   "7z" };
+    for (bool stripped = true; stripped;) {
+        stripped = false;
+        auto d = leaf.find_last_of('.');
+        if (d == std::string::npos) break;
+        auto e = utils::toLower(leaf.substr(d + 1));
+        for (auto const* c : containers)
+            if (e == c) {
+                leaf = leaf.substr(0, d);
+                stripped = true;
+                break;
+            }
+    }
+
+    // Suffix-form: token after the last dot ("song.mod" -> "mod").
+    auto d = leaf.find_last_of('.');
+    if (d != std::string::npos && known(utils::toLower(leaf.substr(d + 1))))
+        return utils::toLower(leaf.substr(d + 1));
+
+    // Prefix-form: token before the first dot ("mod.song" -> "mod").
+    auto f = leaf.find_first_of('.');
+    if (f != std::string::npos && known(utils::toLower(leaf.substr(0, f))))
+        return utils::toLower(leaf.substr(0, f));
+
+    // Nothing matched -- fall back to the plain extension (may be unlisted).
+    return info.ext.empty() ? utils::path_extension(info.path) : info.ext;
 }
 
 void ChipMachine::initLua()
