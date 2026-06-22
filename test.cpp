@@ -221,6 +221,39 @@ TEST_CASE("STarKos host path plays sound", "[music]")
     REQUIRE(sum != 0);
 }
 
+// Native Arkos Tracker songs (.aks) play through the very same AT3 SongLoader +
+// SongPlayer chain as STarKos .sks -- the loader transparently gunzips and auto-
+// detects the Arkos version (modland's .aks are gzip-compressed AT1 XML). Only
+// SksPlugin::canHandle needed widening to claim the extension; this asserts the
+// two corpus tunes both load and render real audio.
+TEST_CASE("Arkos Tracker AKS plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::SksPlugin plugin;
+
+    for (auto const& aks : {"testmus/sks/Targhan - Demo.aks",
+                            "testmus/sks/Glafouk - Sontagbeat.aks"}) {
+        INFO(aks);
+        REQUIRE(plugin.canHandle(aks));
+
+        auto* player = plugin.fromFile(aks);
+        REQUIRE(player != nullptr);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+
+        REQUIRE(energy != 0);
+    }
+}
+
 // UnExoticA archives wrap their payload in a game-named directory and keep some
 // formats' companions (e.g. the Sonix driver's "instruments/") in a subdir.
 // extractLha must strip the wrapper (the DB member paths are relative to inside
