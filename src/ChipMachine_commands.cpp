@@ -83,7 +83,7 @@ void ChipMachine::setupCommands()
             searchUpdated = true;
 
             mainFilterField.setText(
-                hasFilter ? selectedFilterName + "   (F9 for all platforms)"
+                hasFilter ? selectedFilterName + "  (F9 to change)"
                           : "");
         }
         // Land on the search screen so the (pre-populated) results are visible
