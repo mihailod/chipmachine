@@ -161,30 +161,6 @@ struct AudioPlayerNull : public AudioPlayer
     };
 };
 
-TEST_CASE("DBG hue spread", "[dbgspread]")
-{
-    using namespace chipmachine;
-    const auto injector = di::make_injector(di::bind<utils::path>.to("."));
-    auto mdb = injector.create<std::unique_ptr<MusicDatabase>>();
-    REQUIRE(mdb->initFromLua(utils::path(".")) == true);
-    auto probe = [&](std::vector<uint8_t> f, const char* label) {
-        mdb->setFormatFilter(f);
-        std::vector<int> r;
-        mdb->search("a", r, 5000);
-        std::map<std::string, float> spreadByFmt;
-        for (int i : r) {
-            float t = mdb->formatSpread(i);
-            if (t >= 0) spreadByFmt[mdb->getSongInfo(i).format] = t;
-        }
-        printf("=== %s: %zu formats, spreads: ===\n", label,
-               spreadByFmt.size());
-        for (auto& kv : spreadByFmt)
-            printf("   t=%.3f  %s\n", kv.second, kv.first.c_str());
-    };
-    probe({ ACORN }, "Acorn");
-    probe({ AMSTRAD }, "Amstrad CPC");
-}
-
 TEST_CASE("musicplayerlist", "")
 {
     logging::setLevel(logging::Level::Debug);
@@ -500,6 +476,42 @@ TEST_CASE("GME GBR plays sound", "[music]")
         REQUIRE(energy != 0);
     }
 }
+// Regression test for AY-3-8910 VGM (Vectrex / ZX Spectrum). The vendored
+// Game_Music_Emu's VGM parser predates AY8910 support, so it skipped every
+// 0xA0 register write -> the track fell silent and "ended" immediately. The
+// chip emulator (Ay_Apu) was already present (it plays .ay), so it's now wired
+// into the VGM command stream: AY clock is read from header offset 0x74 and,
+// for an AY-only tune (no SN76489 PSG), the blip-time domain is clocked at the
+// AY rate so the pitch is right. These Vectrex rips are all AY-only.
+TEST_CASE("GME Vectrex AY VGM plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::GMEPlugin plugin;
+
+    for (auto const& vgz : {"testmus/gme/vectrex-heads up.vgz",
+                            "testmus/gme/vectrex-berzerk.vgz",
+                            "testmus/gme/vectrex-scramble.vgz"}) {
+        INFO(vgz);
+        REQUIRE(plugin.canHandle(vgz));
+
+        auto* player = plugin.fromFile(vgz);
+        REQUIRE(player != nullptr);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+
+        REQUIRE(energy != 0);
+    }
+}
+
 // Regression test for packed GYM (Sega Genesis/Mega Drive YM2612+PSG register
 // dump). A GYM file may store its command stream raw, or -- with a "GYMX" header
 // -- as a raw zlib stream whose uncompressed length lives in the header's

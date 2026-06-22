@@ -900,16 +900,16 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
         formatFilterActive = true;
         filteredCandidates.clear();
         uint32_t n = titleIndex.size();
-        std::set<uint8_t> hues;
+        std::set<uint16_t> hues;
         for (uint32_t i = 0; i < n; i++) {
             if (titleIndex.isFiltered(i)) continue;
             filteredCandidates.push_back(i);
-            // Collect the distinct song sub-format hues present (skip products,
-            // which carry the neutral 128) to rank them for an even hue spread.
+            // Collect the distinct song sub-format keys present (skip products,
+            // which carry the neutral 0) to rank them for an even hue spread.
             if (i < productStartIndex) hues.insert(formatHue[i]);
         }
         int rank = 0;
-        for (uint8_t h : hues) filterHueRank[h] = rank++;
+        for (uint16_t h : hues) filterHueRank[h] = rank++;
         filterHueCount = (int)hues.size();
     }
 }
@@ -1598,18 +1598,19 @@ void initFormats()
     format_map["digital sound interface kit riff"] = PCTRACKER;
 }
 
-// A stable per-format hue seed (0..255) from the format string, so every
-// sub-format within a platform gets a consistent small color variation. 128 is
-// reserved as "neutral"; everything else maps around it.
-static uint8_t hueSeed(std::string const& fmt)
+// A stable 16-bit per-format key from the format string, so every distinct
+// sub-format within a platform gets its own value (16-bit avoids the collisions
+// an 8-bit hash would have for a platform's handful of formats). 0 is reserved
+// as the neutral value used for products.
+static uint16_t hueSeed(std::string const& fmt)
 {
     uint32_t h = 2166136261u; // FNV-1a
     for (char c : fmt) {
         h ^= (uint8_t)tolower((unsigned char)c);
         h *= 16777619u;
     }
-    uint8_t v = (uint8_t)(h & 0xff);
-    return v == 128 ? 129 : v; // avoid the neutral value
+    uint16_t v = (uint16_t)(h & 0xffff);
+    return v == 0 ? 1 : v; // reserve 0 for products
 }
 
 static uint8_t formatToByte(std::string const& fmt, std::string const& path,
@@ -2036,7 +2037,7 @@ void MusicDatabase::generateIndex()
 
         uint8_t b = PRODUCT;
         formats.push_back(b | (collection << 8));
-        formatHue.push_back(128); // products: neutral (no hue shift)
+        formatHue.push_back(0); // products: neutral (no hue shift)
         // Tag the product with a platform byte (from its `type`) so the F9
         // filter can include/exclude collections by platform. Aligned with
         // productStartIndex (this is the (formats.size()-productStartIndex)'th

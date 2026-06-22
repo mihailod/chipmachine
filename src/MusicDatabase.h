@@ -367,11 +367,12 @@ private:
     // the ordinal is NOT the ROWID; getSongInfo() must map ordinal -> ROWID via
     // this table to fetch the correct product.
     std::vector<int> productRowid;
-    // Per-entry hue seed (hash of the format string), aligned with `formats`.
-    // When a platform filter is active, renderSong rotates the platform color by
-    // this so different sub-formats/extensions within one platform get slightly
-    // different hues. 128 = neutral (no shift).
-    std::vector<uint8_t> formatHue;
+    // Per-entry sub-format key (16-bit hash of the format string), aligned with
+    // `formats`. Distinct formats within a platform are ranked from these and
+    // spread evenly across the hue range (see setFormatFilter / formatSpread).
+    // 16-bit so the few formats in a platform don't collide to the same color.
+    // 0 = neutral (products).
+    std::vector<uint16_t> formatHue;
 
     // When a platform filter (F9) is active, the set of titleIndex indices that
     // pass it, precomputed in setFormatFilter(). Lets short queries (< 3 chars)
@@ -383,7 +384,7 @@ private:
     // Rank (0..N-1) of each distinct sub-format hue present in the active
     // filter, and the count N. Built in setFormatFilter() so renderSong can
     // spread hues evenly across however many formats the platform actually has.
-    std::map<uint8_t, int> filterHueRank;
+    std::map<uint16_t, int> filterHueRank;
     int filterHueCount = 0;
 
     mutable std::mutex chkMutex;
