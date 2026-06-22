@@ -44,7 +44,18 @@
 --     extension fed them to the wrong native player (silent / could not play).
 --     Such mismatches now stream as ogg; only genuinely-supported extensions
 --     play natively. Category (filter) still groups by type/compo.
-VERSION = 50;
+-- 51: zxart multi-part game soundtracks ("<game> - <part> (<chip>) <N>") are
+--     folded into one row per chip class instead of N redundant rows. zxart lists
+--     each internal subsong of a rip as a separate tune-id but they are all the
+--     SAME multi-subsong file (verified by identical md5), so we emit a single URL
+--     -- the file's own subsongs drive next/prev as an instant mp.seek(), not a
+--     reload. Mixed beeper+AY games are separate files -> "<game> (Beeper)" /
+--     "<game> (AY)". The (chip) title label drives the category, so .ay beeper
+--     rips classify as ZX 16/48 beeper rather than defaulting to AY.
+-- 52: (above corrected) -- v51 first shipped a MULTI: umbrella of N identical-file
+--     URLs, which reloaded the same file each step and replayed subsong 0 ("always
+--     1st tune", slow); switched to the single-file form so subsong nav is instant.
+VERSION = 52;
 
 DB = {
 {

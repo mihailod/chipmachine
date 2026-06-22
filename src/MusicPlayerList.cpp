@@ -250,7 +250,6 @@ bool MusicPlayerList::playFile(utils::path fileName)
     }
 
     bool success = mp.playFile(fileName.string());
-    
 
     if (success) {
         if (currentInfo.starttune >= 0) mp.seek(currentInfo.starttune);
