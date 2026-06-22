@@ -391,3 +391,31 @@ nsfe tester: search for orange painting
 
 
 
+
+=======================================================
+ZXART.EE MUSIC, see https://zxart.ee/eng/music
+=======================================================
+~29k ZX Spectrum (AY + 1-bit beeper) and Sam Coupe tunes, id-addressed via the
+zxart REST API. Regenerate data/zxart.txt with:
+
+    python3 tools/build_zxart.py --histogram   # inspect type/compo/ext spread first
+    python3 tools/build_zxart.py --build        # write chipmachine/data/zxart.txt
+
+API pages are cached under tools/zxart_cache/ (delete it to force a fresh pull).
+
+Classification notes (see build_zxart.py classify()):
+- Route by the curated `type` field, NOT `compo` -- `compo` is the demoparty
+  competition category (~80% "standard"), not the chip type. The
+  originalFileName extension is garbled (URL-encoded/truncated) so it is ignored.
+- Stored `ext` = type lowercased even when the originalUrl filename differs
+  (e.g. type PT3 served as .mt3 -> stored pt3; COP served as .etc -> cop). The
+  download's Content-Disposition + the ext column drive the cache rename and the
+  engines detect by content.
+- Originals whose type is in the ayfly/zxtune supported set play natively;
+  everything else falls back to the per-tune ogg (mp3FilePath, music.zxart.ee).
+- format strings emitted: "Spectrum AY" (ZXAY), "Spectrum Beeper" (ZXBEEPER,
+  from compo in {beeper,realtimebeeper}), "Sam Coupe" (SAMCOUPE, type COP/SAA),
+  "OGG" (MP3/OGG). db.lua uses source="" with the full URL in each row's path.
+
+db.lua: bump VERSION when zxart.txt changes (forces the mandatory reindex; the
+SAMCOUPE enum byte also shifts later format bytes, so a stale cache must rebuild).

@@ -1424,6 +1424,19 @@ void initFormats()
     format_map["archimedes tracker"] = ACORN;
     format_map["coconizer"] = ACORN;
 
+    // --- zxart.ee music collection: chip-family format strings emitted by
+    // tools/build_zxart.py (see that script's classify()). The collection routes
+    // by ZX chip type so AY tunes, 1-bit beeper tunes and Sam Coupe SAA tunes
+    // land in their own platform filters; unplayable originals fall back to ogg.
+    format_map["spectrum ay"] = ZXAY;
+    format_map["spectrum beeper"] = ZXBEEPER;
+    format_map["sam coupe"] = SAMCOUPE;
+    // The existing modland "Sam Coupe COP" (191) / "Sam Coupe SNG" (15) tunes are
+    // listed in uade_formats, so they default to UADE/Amiga; override them onto
+    // the dedicated Sam Coupe (SAA1099) platform alongside the zxart COP/SAA rips.
+    format_map["sam coupe cop"] = SAMCOUPE;
+    format_map["sam coupe sng"] = SAMCOUPE;
+
     format_map["super nintendo"] = SNES;
     format_map["hes"] = HES;
     format_map["mp3"] = MP3;
@@ -1542,6 +1555,7 @@ void initFormats()
     format_map["saturn sound format"] = SATURN;
     format_map["wonderswan"] = WONDERSWAN;
     format_map["ogg vorbis"] = OGG;
+    format_map["ogg"] = OGG; // zxart ogg-fallback tunes (format string "OGG")
     format_map["iso-mpeg audio layer-2"] = MP3;
     format_map["iso-mpeg audio layer-3"] = MP3;
     format_map["hippel st coso"] = ATARI;   // Atari ST Hippel
@@ -1636,8 +1650,9 @@ static std::string platformName(uint8_t b)
     case PRG: return "Commodore 16/+4";
     case ATARI: return "Atari ST/STE";
     case POKEY: return "Atari XL/XE";
-    case ZXBEEPER:
-    case ZXAY: return "ZX Spectrum";
+    case ZXBEEPER: return "ZX Spectrum 16/48";
+    case ZXAY: return "ZX Spectrum 128";
+    case SAMCOUPE: return "Sam Coupe";
     case MSX: return "MSX";
     case AMSTRAD: return "Amstrad CPC";
     case ACORN: return "Acorn Archimedes";

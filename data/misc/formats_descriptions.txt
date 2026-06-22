@@ -615,3 +615,27 @@ An Atari 8-bit format driving the POKEY chip's noise/synthesis features, played 
 
 bbsong	Beepola
 A cross-platform ZX Spectrum 1-bit "beeper" tracker by Chris Cowley, driving the Spectrum's single-bit speaker through engines like Tritone and Phaser1.
+
+ay	AY Emul (ZX Spectrum / Amstrad CPC)
+A snapshot container for AY-3-8910 chip music ripped straight from ZX Spectrum and Amstrad CPC games, devised by Sergey Bulba for his AY_Emul player; it bundles the raw Z80 player code with its init and interrupt entry vectors so the original game routine is replayed verbatim.
+
+psg	AY/YM PSG register dump
+A logged stream of writes to the AY-3-8910 / YM2149 programmable sound generator, replayed register-for-register; a simple, lossless way to archive ZX Spectrum (and Atari ST) chip tunes independent of the original player code.
+
+psc	Spectrum Pro Sound Creator
+A ZX Spectrum 128K music editor driving the AY-3-8910 sound chip, part of the family of native Spectrum AY trackers.
+
+psm	Spectrum Pro Sound Maker
+A ZX Spectrum 128K AY-3-8910 music format from the Pro Sound Maker editor. The .psm extension is shared with the unrelated Epic MegaGames MASI tracker, so ChipMachine checks the file content to route the Spectrum variant to its own player.
+
+gtr	Spectrum Global Tracker
+A native ZX Spectrum 128K tracker for the AY-3-8910 sound chip.
+
+chi	Spectrum Chip Tracker
+A ZX Spectrum tracker that plays multi-channel digital (sampled) music by software-mixing samples through the machine's DAC rather than the AY tone generators.
+
+tfe	TFM Music Maker
+A music format for the TurboSound FM expansion (twin AY plus a Yamaha YM2203-class FM chip) on the ZX Spectrum, written with the TFM Music Maker editor.
+
+cop	Sam Coupe COP
+A music format for the SAM Coupé home computer, driving its Philips SAA1099 stereo sound chip.

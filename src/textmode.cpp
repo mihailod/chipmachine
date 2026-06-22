@@ -58,7 +58,7 @@ void runConsole(std::shared_ptr<bbs::Console> console, ChipInterface& ci)
             { CONSOLE, Console::RED },     { SID, Console::BROWN },
             { ZXBEEPER, Console::PINK },   { ZXAY, Console::PURPLE },
             { MSX, Console::BLUE },        { AMSTRAD, Console::LIGHT_GREY },
-            { ACORN, Console::WHITE },
+            { ACORN, Console::WHITE },     { SAMCOUPE, Console::PINK },
             { ATARI, Console::YELLOW },    { POKEY, Console::ORANGE },
             { MP3, Console::GREEN },
             { APPLE, Console::CYAN },

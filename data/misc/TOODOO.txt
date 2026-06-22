@@ -2,6 +2,8 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
+- The 191 modland "Sam Coupe COP" files are a raw-Z80 format our zxtune can't decode (separate from zxart's COP). They now Skip gracefully. -- see if you implement this format
+
 - ability to manually add stuff to database. via a manual.txt file
 
 - ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
@@ -61,8 +63,11 @@ Maintained by Sergey Bulba (author of Ay_Emul), this archive contains the histor
 9. https://zxtunes.com
 A massive historical repository of ZX Spectrum chiptunes. While heavily populated by standard AY tracking formats, its index includes extensive mappings of older, undocumented internal-beeper game routines that were ripped and isolated by early scene groups.
 
-10. https://zxart.ee/eng/music/top-100/beeper/
-This is the most comprehensive active repository for 1-bit audio tracking. It hosts isolated beeper variants for classic game soundtracks—including Tim Follin’s multi-channel drivers for Chronos and Agent X II, David Whittaker's Trantor and Tetris, and Ben Daglish's Deflektor. The modules are downloadable in community-standard formats ready for parsing.
+10. DONE https://zxart.ee/eng/music/top-100/beeper/
+29,312 rows, all cleanly 5-column (title · composer · format · path · ext).
+•Playback split: 27,750 native / 1,562 ogg fallback.
+•Categories: Spectrum AY 28,480 · Sam Coupe 593 · Spectrum Beeper 138 · OGG 101.
+
 
 Demo Databases & Trackers
 
@@ -70,7 +75,7 @@ Demo Databases & Trackers
 URL: [http://bitworld.bitfellas.org](http://bitworld.bitfellas.org)
 What it is: A sprawling, searchable database completely dedicated to tracking individual tracking artists, their releases, group affiliations, and scene history.
 
-2. Demozoo
+2. Demozoo -- IN PROGRESS: PESIC...
 URL: [https://demozoo.org](https://demozoo.org)
 What it is: Pouet is great for comments and quick links, but Demozoo is the modern, highly structured relational database for the demoscene. It maps productions, groups, parties, and specific scene musicians across all platforms (including retro and modern PC).
 Demozoo is a highly structured database. Scraping the raw HTML pages is a waste of time and parsing energy. They provide a completely open, fully documented JSON API for bulk data synchronization.

@@ -74,6 +74,7 @@ enum Formats
     MSX,         // MSX (Z80 + AY/SCC/OPLL/FM): MGSDRV, KSS, MoonBlaster, ...
     AMSTRAD,     // Amstrad CPC (AY): Starkos, ArkosTracker
     ACORN,       // Acorn Archimedes: Digital Symphony, Coconizer, ...
+    SAMCOUPE,    // MGT Sam Coupe (SAA1099): COP / SAA tunes (zxart)
 
     APPLE,
 

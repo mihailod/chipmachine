@@ -140,6 +140,7 @@ ninja
 * Demovibes - https://www.demovibes.org
 * Mod Archive - https://modarchive.org
 * Exotica - https://www.exotica.org.uk
+* ZX Art - https://zxart.ee/eng/music (~29,000 ZX Spectrum AY/beeper and Sam Coupe tunes; original community formats play natively, others fall back to the site's ogg)
 
 ### Demo databases
 

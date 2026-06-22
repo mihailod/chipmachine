@@ -31,7 +31,20 @@
 --     was encoded as "<Game>/<Version>.lha/<member>" -> FTP 550. The real archive
 --     is "<Game>.lha" with the version as an inner dir, so they are now
 --     "<Game>.lha/<Version>/<member>" (e.g. Advanced Ski Simulator Custom).
-VERSION = 48;
+-- 49: zxart.ee MUSIC collection (~29k ZX Spectrum / Sam Coupe tunes). Built by
+--     tools/build_zxart.py from the zxart API; routes by chip type (AY ->
+--     "ZX Spectrum 128", beeper -> "ZX Spectrum 16/48", COP/SAA -> new "Sam
+--     Coupe" category). Originals play natively when the format is supported;
+--     otherwise the per-tune ogg fallback (music.zxart.ee) streams via ffmpeg.
+--     New SAMCOUPE format byte shifts later enum values, so a full reindex is
+--     mandatory (this bump forces it).
+-- 50: zxart.txt rebuilt -- native-vs-ogg and the stored ext now come from the
+--     REAL file extension, not zxart's `type`. `type` mislabels some files
+--     (e.g. an ETracker .etc tune tagged type=COP), and renaming to the type's
+--     extension fed them to the wrong native player (silent / could not play).
+--     Such mismatches now stream as ogg; only genuinely-supported extensions
+--     play natively. Category (filter) still groups by type/compo.
+VERSION = 50;
 
 DB = {
 {
@@ -48,6 +61,17 @@ DB = {
 	source = "https://api.modarchive.org/downloads.php?moduleid=",
 	song_list = "data/modarchive.txt",
 	song_template = "title ext path format",
+	color = 0xfffff
+},
+{
+	-- zxart.ee music: id-addressed like modarchive, but each row's `path` is a
+	-- full URL (originals on zxart.ee/file/id:, ogg fallbacks on
+	-- music.zxart.ee/music/), so `source` is empty and the URL is used verbatim.
+	name = "zxart.ee",
+	id =  "zxart",
+	source = "",
+	song_list = "data/zxart.txt",
+	song_template = "title composer format path ext",
 	color = 0xfffff
 },
 {
