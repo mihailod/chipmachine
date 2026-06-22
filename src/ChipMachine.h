@@ -175,6 +175,7 @@ private:
     void updateFavorite();
     void updateNextField();
     void computeFilterCounts();
+    static std::string withCommas(int n); // 345000 -> "345,000"
     void updateScreenshotArea();
     void updateLists()
     {

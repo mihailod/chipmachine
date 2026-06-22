@@ -33,8 +33,6 @@ std::string compressWhitespace(std::string const& text)
 
 namespace chipmachine {
 
-static std::string withCommas(int n); // defined below
-
 const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "[No Filter]", {} },
     { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER } },
@@ -638,7 +636,7 @@ void ChipMachine::updateNextField()
 }
 
 // Format an integer with thousands separators, e.g. 345000 -> "345,000".
-static std::string withCommas(int n)
+std::string ChipMachine::withCommas(int n)
 {
     std::string s = std::to_string(n);
     for (int pos = (int)s.size() - 3; pos > 0; pos -= 3)

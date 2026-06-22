@@ -334,13 +334,17 @@ void ChipMachine::updateKeys()
         // auto-lists everything ("showing all N"), a large one waits for input
         // ("type to search N"). Otherwise just a bare "#".
         if (s.empty() && iquery->numHits() > 0)
-            searchField.setPrompt(utils::format("# [showing all %d %s songs]",
-                                                iquery->numHits(),
-                                                selectedFilterName));
+            searchField.setPrompt(
+                utils::format("# [showing all %s %s tunes]",
+                              withCommas(iquery->numHits()), selectedFilterName));
         else if (s.empty() && activeFilterCount > 0)
-            searchField.setPrompt(utils::format("# [type to search %d %s songs]",
-                                                activeFilterCount,
+            searchField.setPrompt(utils::format("# [type to search %s %s tunes]",
+                                                withCommas(activeFilterCount),
                                                 selectedFilterName));
+        else if (s.empty() && selectedFilterName.empty() &&
+                 !filterCounts.empty())
+            searchField.setPrompt(utils::format("# [type to search %s tunes]",
+                                                withCommas(filterCounts[0])));
         else
             searchField.setPrompt("#");
         searchField.visible(true);
