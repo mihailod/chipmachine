@@ -161,6 +161,30 @@ struct AudioPlayerNull : public AudioPlayer
     };
 };
 
+TEST_CASE("DBG hue spread", "[dbgspread]")
+{
+    using namespace chipmachine;
+    const auto injector = di::make_injector(di::bind<utils::path>.to("."));
+    auto mdb = injector.create<std::unique_ptr<MusicDatabase>>();
+    REQUIRE(mdb->initFromLua(utils::path(".")) == true);
+    auto probe = [&](std::vector<uint8_t> f, const char* label) {
+        mdb->setFormatFilter(f);
+        std::vector<int> r;
+        mdb->search("a", r, 5000);
+        std::map<std::string, float> spreadByFmt;
+        for (int i : r) {
+            float t = mdb->formatSpread(i);
+            if (t >= 0) spreadByFmt[mdb->getSongInfo(i).format] = t;
+        }
+        printf("=== %s: %zu formats, spreads: ===\n", label,
+               spreadByFmt.size());
+        for (auto& kv : spreadByFmt)
+            printf("   t=%.3f  %s\n", kv.second, kv.first.c_str());
+    };
+    probe({ ACORN }, "Acorn");
+    probe({ AMSTRAD }, "Amstrad CPC");
+}
+
 TEST_CASE("musicplayerlist", "")
 {
     logging::setLevel(logging::Level::Debug);

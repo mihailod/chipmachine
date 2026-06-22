@@ -7,6 +7,7 @@
 #include <grappix/window.h>
 
 #include <cctype>
+#include <cmath>
 #include <map>
 #ifdef _WIN32
 #    include <ShellApi.h>
@@ -103,6 +104,54 @@ static uint32_t formatColor(int f)
     return it->second;
 }
 
+// Vary a base color by an evenly-spaced position t in [0,1) -- this sub-format's
+// slot among the distinct formats present in the active platform filter. Because
+// the slots are evenly spaced, two-format platforms separate as widely as
+// many-format ones. Spreads hue generously plus a brightness/saturation gradient
+// (so even desaturated base colors stay distinguishable).
+static uint32_t shiftColorBySpread(uint32_t argb, float t)
+{
+    uint32_t a = (argb >> 24) & 0xff;
+    float r = ((argb >> 16) & 0xff) / 255.f;
+    float g = ((argb >> 8) & 0xff) / 255.f;
+    float b = (argb & 0xff) / 255.f;
+    float mx = r > g ? (r > b ? r : b) : (g > b ? g : b);
+    float mn = r < g ? (r < b ? r : b) : (g < b ? g : b);
+    float v = mx, d = mx - mn;
+    float s = mx <= 0.f ? 0.f : d / mx;
+    float h = 0.f;
+    if (d > 0.f) {
+        if (mx == r) h = (g - b) / d + (g < b ? 6.f : 0.f);
+        else if (mx == g) h = (b - r) / d + 2.f;
+        else h = (r - g) / d + 4.f;
+        h *= 60.f;
+    }
+    h += (t - 0.5f) * 150.f; // +-75 deg, evenly spread across the formats
+    if (h < 0.f) h += 360.f;
+    if (h >= 360.f) h -= 360.f;
+    v *= 0.70f + 0.30f * (1.f - t); // brightness gradient over the spread
+    s *= 0.72f + 0.28f * t;         // saturation gradient over the spread
+    if (v > 1.f) v = 1.f;
+    if (s > 1.f) s = 1.f;
+    float cc = v * s;
+    float x = cc * (1.f - std::fabs(std::fmod(h / 60.f, 2.f) - 1.f));
+    float m = v - cc;
+    float rr = 0, gg = 0, bb = 0;
+    switch ((int)(h / 60.f) % 6) {
+    case 0: rr = cc; gg = x; break;
+    case 1: rr = x; gg = cc; break;
+    case 2: gg = cc; bb = x; break;
+    case 3: gg = x; bb = cc; break;
+    case 4: rr = x; bb = cc; break;
+    default: rr = cc; bb = x; break;
+    }
+    auto q = [](float f) -> uint32_t {
+        int v = (int)((f) * 255.f + 0.5f);
+        return v < 0 ? 0 : (v > 255 ? 255 : v);
+    };
+    return (a << 24) | (q(rr + m) << 16) | (q(gg + m) << 8) | q(bb + m);
+}
+
 void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
                              uint32_t index, bool hilight)
 {
@@ -124,7 +173,17 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
         else
             text = utils::format("%s / %s", parts[0], parts[1]);
     }
-    c = Color(formatColor(f)) * 0.75f;
+    uint32_t base = formatColor(f);
+    // Inside a platform filter, vary the hue per sub-format/extension so the
+    // different formats in the result list are distinguishable. The variation
+    // is spread evenly across however many formats the platform has, so a
+    // 2-format platform separates as widely as a 20-format one. General
+    // (unfiltered) search keeps a single flat platform color as before.
+    if (musicDatabase.hasFormatFilter() && f != PLAYLIST && f != PRODUCT) {
+        float t = musicDatabase.formatSpread(std::stol(parts[2]));
+        if (t >= 0.f) base = shiftColorBySpread(base, t);
+    }
+    c = Color(base) * 0.75f;
 
     if (hilight) {
         static uint32_t markStartcolor = 0;

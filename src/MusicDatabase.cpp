@@ -865,6 +865,8 @@ static uint8_t productTypeToPlatform(std::string const& type)
 
 void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
 {
+    filterHueRank.clear();
+    filterHueCount = 0;
     if (allowedFormats.empty()) {
         titleIndex.setFilter();
         formatFilterActive = false;
@@ -898,9 +900,17 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
         formatFilterActive = true;
         filteredCandidates.clear();
         uint32_t n = titleIndex.size();
+        std::set<uint8_t> hues;
         for (uint32_t i = 0; i < n; i++) {
-            if (!titleIndex.isFiltered(i)) filteredCandidates.push_back(i);
+            if (titleIndex.isFiltered(i)) continue;
+            filteredCandidates.push_back(i);
+            // Collect the distinct song sub-format hues present (skip products,
+            // which carry the neutral 128) to rank them for an even hue spread.
+            if (i < productStartIndex) hues.insert(formatHue[i]);
         }
+        int rank = 0;
+        for (uint8_t h : hues) filterHueRank[h] = rank++;
+        filterHueCount = (int)hues.size();
     }
 }
 
@@ -1588,6 +1598,20 @@ void initFormats()
     format_map["digital sound interface kit riff"] = PCTRACKER;
 }
 
+// A stable per-format hue seed (0..255) from the format string, so every
+// sub-format within a platform gets a consistent small color variation. 128 is
+// reserved as "neutral"; everything else maps around it.
+static uint8_t hueSeed(std::string const& fmt)
+{
+    uint32_t h = 2166136261u; // FNV-1a
+    for (char c : fmt) {
+        h ^= (uint8_t)tolower((unsigned char)c);
+        h *= 16777619u;
+    }
+    uint8_t v = (uint8_t)(h & 0xff);
+    return v == 128 ? 129 : v; // avoid the neutral value
+}
+
 static uint8_t formatToByte(std::string const& fmt, std::string const& path,
                             int coll)
 {
@@ -1856,6 +1880,7 @@ void MusicDatabase::readIndex(apone::File&& f)
     readVector(formats, f);
     readVector(productPlatform, f);
     readVector(productRowid, f);
+    readVector(formatHue, f);
 
     titleIndex.load(f);
     composerIndex.load(f);
@@ -1872,6 +1897,7 @@ void MusicDatabase::writeIndex(apone::File&& f)
     writeVector(formats, f);
     writeVector(productPlatform, f);
     writeVector(productRowid, f);
+    writeVector(formatHue, f);
 
     titleIndex.dump(f);
     composerIndex.dump(f);
@@ -1960,6 +1986,7 @@ void MusicDatabase::generateIndex()
         uint8_t b = formatToByte(fmt, path, collection);
         if (collection == radioColl) b = RADIO;
         formats.push_back(b | (collection << 8));
+        formatHue.push_back(hueSeed(fmt));
 
         if (game != "") {
             if (title != "")
@@ -2009,6 +2036,7 @@ void MusicDatabase::generateIndex()
 
         uint8_t b = PRODUCT;
         formats.push_back(b | (collection << 8));
+        formatHue.push_back(128); // products: neutral (no hue shift)
         // Tag the product with a platform byte (from its `type`) so the F9
         // filter can include/exclude collections by platform. Aligned with
         // productStartIndex (this is the (formats.size()-productStartIndex)'th

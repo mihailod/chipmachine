@@ -162,6 +162,22 @@ public:
     // Get full data, may require SQL query
     SongInfo getSongInfo(int index) const;
 
+    // True while a platform filter (F9) is active.
+    bool hasFormatFilter() const { return formatFilterActive; }
+    // Position of a song's sub-format among the distinct formats present in the
+    // active filter, in [0,1) -- used to spread hues evenly so few-format
+    // platforms separate as much as many-format ones. Returns -1 when there is
+    // nothing to distinguish (no filter, <2 formats, or not a filtered song).
+    float formatSpread(int index) const
+    {
+        if (filterHueCount < 2 || index < 0 ||
+            index >= (int)formatHue.size())
+            return -1.0f;
+        auto it = filterHueRank.find(formatHue[index]);
+        if (it == filterHueRank.end()) return -1.0f;
+        return (it->second + 0.5f) / (float)filterHueCount;
+    }
+
     // Unified one-line description of a song's format for the now-playing
     // screen: "Platform - Format name (EXT)", e.g. "Amiga - Soundtracker (MOD)".
     static std::string describeFormat(SongInfo const& s);
@@ -351,6 +367,11 @@ private:
     // the ordinal is NOT the ROWID; getSongInfo() must map ordinal -> ROWID via
     // this table to fetch the correct product.
     std::vector<int> productRowid;
+    // Per-entry hue seed (hash of the format string), aligned with `formats`.
+    // When a platform filter is active, renderSong rotates the platform color by
+    // this so different sub-formats/extensions within one platform get slightly
+    // different hues. 128 = neutral (no shift).
+    std::vector<uint8_t> formatHue;
 
     // When a platform filter (F9) is active, the set of titleIndex indices that
     // pass it, precomputed in setFormatFilter(). Lets short queries (< 3 chars)
@@ -359,6 +380,11 @@ private:
     // keystroke. Empty / false when no platform filter is active.
     std::vector<int> filteredCandidates;
     bool formatFilterActive = false;
+    // Rank (0..N-1) of each distinct sub-format hue present in the active
+    // filter, and the count N. Built in setFormatFilter() so renderSong can
+    // spread hues evenly across however many formats the platform actually has.
+    std::map<uint8_t, int> filterHueRank;
+    int filterHueCount = 0;
 
     mutable std::mutex chkMutex;
     mutable std::mutex dbMutex;

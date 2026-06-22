@@ -55,7 +55,7 @@
 -- 52: (above corrected) -- v51 first shipped a MULTI: umbrella of N identical-file
 --     URLs, which reloaded the same file each step and replayed subsong 0 ("always
 --     1st tune", slow); switched to the single-file form so subsong nav is instant.
-VERSION = 52;
+VERSION = 53;
 
 DB = {
 {

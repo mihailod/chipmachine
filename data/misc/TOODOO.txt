@@ -2,6 +2,39 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
+- .vgz vectrex doesn't play
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Video Game Music/Vectrex/- unknown/Heads Up!/title screen.vgz
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fVideo Game Music%2fVectrex%2f- unknown%2fHeads Up%21/title screen.vgz
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Video%20Game%20Music/Vectrex/-%20unknown/Heads%20Up%21/title%20screen.vgz
+[web.cpp:282] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:606] Detected ext: 
+[MusicPlayerList.h:91] META message
+[GMEPlugin.cpp:49] ## GME HAS ENDED
+
+
+- Arkos (.aks) tracker for amstrad doesn't work -- only 2 songs... investigate...
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Starkos/Pulkomandy/2_AUTUMN.SKS
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fStarkos%2fPulkomandy/2_AUTUMN.SKS
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Starkos/Pulkomandy/2_AUTUMN.SKS
+[web.cpp:282] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:606] Detected ext: 
+[MusicPlayerList.h:91] META message
+[MusicDatabase.cpp:1810] Loaded 214 format descriptions
+[Scroller.h:46] SCROLL: ... Amstrad CPC - Starkos (SKS) ... STarKos - An Amstrad CPC AY tracker by Targhan/Arkos that ran on real CPC hardware; the ancestor of the modern cross-platform Arkos Tracker. ...
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/ArkosTracker/Targhan/demo.aks
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fArkosTracker%2fTarghan/demo.aks
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/ArkosTracker/Targhan/demo.aks
+[web.cpp:282] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:606] Detected ext: 
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/ArkosTracker/Glafouk/sontagbeat.aks
+[web.h:332] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fArkosTracker%2fGlafouk/sontagbeat.aks
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/ArkosTracker/Glafouk/sontagbeat.aks
+[web.cpp:282] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 
 - in general genuinely bad or missing files should not be surfacing:
