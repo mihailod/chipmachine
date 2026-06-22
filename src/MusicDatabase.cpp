@@ -1431,6 +1431,9 @@ void initFormats()
     // --- Amstrad CPC (AY) --- (starkos/arkostracker are in uade_formats)
     format_map["starkos"] = AMSTRAD;
     format_map["arkostracker"] = AMSTRAD;
+    // cpc-power.com YM audiotheque: CPC game .ym rips (AY-3-8912). Distinct from
+    // the "ym" string (Atari ST) -- these are tagged "Amstrad CPC" by the builder.
+    format_map["amstrad cpc"] = AMSTRAD;
 
     // --- Acorn Archimedes ---
     format_map["digital symphony"] = ACORN;

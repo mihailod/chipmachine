@@ -4,7 +4,7 @@
 
 - find more platform-specific databases like amstrad, msx, ...
 
-- cmtest: i think we now have some of the extensions in not covered set -- add them to reduce misses
+- cmtest: added more extensions, some fail/skip, investigate why
 
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 
@@ -16,6 +16,126 @@
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
+
+AGY REPORT:
+
+================================================================================
+CHIPMACHINEAS - RETRO MUSIC DATABASES COVERAGE REPORT
+================================================================================
+
+This report outlines retro game, computer, chiptune, and tracker music databases
+currently missing from ChipMachineAS's index. These sources represent
+significant vaults of historical chip music across multiple platforms, covering
+gaps not addressed by standard databases like Modland, HVSC, and ZX Art.
+
+--------------------------------------------------------------------------------
+1. CONSOLE & ARCADE RIPS (CHIPTUNE ARCHIVES)
+--------------------------------------------------------------------------------
+
+These databases host native hardware-emulated sound dumps (.spc, .nsf, .gbs, etc.)
+where the game engine's music driver is emulated in real time.
+
+* ZOPHAR'S DOMAIN MUSIC ARCHIVE
+  - URL: https://www.zophar.net/music.html
+  - Platforms/Chips: NES, SNES, GB, GBA, N64, Genesis, SMS, Turbografx-16, PS1, Saturn, Arcade
+  - Key Formats: .nsf, .spc, .gbs, .gsf, .usf, .vgm, .hes, .psf, .ssf
+  - Notes: One of the oldest and largest consolidated vaults of native-format console
+    gamerips. Rips are organized by game title in predictable platform directories.
+
+* VGMdb
+  - URL: https://vgmdb.net
+  - Platforms: All gaming platforms
+  - Key Formats: Catalog metadata only (Tracklists, composers, labels)
+  - Notes: A massive community-driven wiki cataloging albums, game music history,
+    and composer metadata. Useful for scraping high-quality metadata, composer
+    aliases, and cross-linking tracks.
+
+* KHINSIDER VIDEO GAME MUSIC
+  - URL: https://downloads.khinsider.com
+  - Platforms: All gaming platforms (modern & retro)
+  - Key Formats: Pre-rendered (.mp3, .flac)
+  - Notes: Contains pre-recorded soundtracks (OSTs) for consoles that are hard to
+    emulate or rely on streamed audio (e.g. CD-DA, ADX). Scrapers / bulk-downloaders exist.
+
+* SITTING ON CLOUDS
+  - URL: https://www.sittingonclouds.net
+  - Platforms: Modern consoles, arcade systems
+  - Key Formats: Pre-rendered (.mp3, .flac)
+  - Notes: High-quality FLAC and MP3 game soundtrack index. Useful as a fallback
+    for games where native chips cannot be easily emulated (e.g. modern Arcade/PS3/PS4).
+
+--------------------------------------------------------------------------------
+2. JAPANESE COMPUTERS & SYNTH ENGINES
+--------------------------------------------------------------------------------
+
+Preservation of classic Japanese 8-bit/16-bit computer formats that rely heavily
+on Yamaha FM-synthesis sound chips (OPN/OPNA/OPM).
+
+* VAMPI'S MDX DATABASE
+  - URL: http://mdx.vampi.tech
+  - Platforms/Chips: Sharp X68000 (YM2151 OPM & OKIM6258 ADPCM)
+  - Key Formats: .mdx + .pdx
+  - Notes: An organized, relational database indexing thousands of MDX chiptunes
+    with composers, track timings, and game titles. Offers a direct web search API.
+
+* NEO KOBE NEC PC-98 LIBRARY
+  - URL: https://archive.org/details/neo-kobe-nec-pc-9801-2017-11-17-archive
+  - Platforms/Chips: NEC PC-9801/8801 (YM2608 OPNA / YM2203 OPN)
+  - Key Formats: .m, .m2, .s98, .muz
+  - Notes: Although primarily a game preservation project, it contains the definitive
+    raw .m and .m2 (PMD) game soundtrack dumps. Can be bulk downloaded via Archive.org torrents.
+
+* GYUSYABU PC-98 SOUNDTRACKS
+  - URL: http://gyusyabu.ddo.jp (or mirrors)
+  - Platforms/Chips: NEC PC-9801/8801 FM Synthesis
+  - Key Formats: High-quality .mp3 rips
+  - Notes: A long-standing Japanese community archive hosting pre-recorded MP3 renders
+    of PC-98 game music recorded from real hardware (PC-9821 with OPNA boards).
+
+--------------------------------------------------------------------------------
+3. DEDICATED SOUND CHIP ARCHIVES
+--------------------------------------------------------------------------------
+
+Specialized databases centering around specific programmable sound generators (PSG)
+and FM-synthesis chips.
+
+* THE OPL ARCHIVE
+  - URL: https://www.oplarchive.com
+  - Sound Chips: Yamaha OPL2 (YM3812) / OPL3 (YMF262)
+  - Key Formats: .vgm (OPL logs)
+  - Notes: Houses thousands of non-game OPL tracks (demoscene, covers, standalone trackers).
+    Provides direct browser playback and a structured directory tree of OPL-logged chiptunes.
+
+* PROJECT AY / AY-EMUL ARCHIVE
+  - URL: http://bulba.untergrund.net/music.htm
+  - Sound Chips: General Instrument AY-3-8910 / AY-3-8912
+  - Key Formats: .ay, .ym, .pt3, .stc
+  - Notes: Managed by Sergey Bulba (author of Ay_Emul), this is the definitive
+    repository for ZX Spectrum and Amstrad CPC raw machine-code player rips (the Ironfist collection).
+
+--------------------------------------------------------------------------------
+4. DEMOSCENE & TRACKER REPOSITORIES
+--------------------------------------------------------------------------------
+
+Databases collecting tracking music formats (.mod, .xm, .it, .s3m) specifically
+related to the demoscene.
+
+* SCENIC / SCENE.ORG MUSIC VAULT
+  - URL: https://www.scene.org
+  - Community: Demoscene releases, music packs, musicdisk records
+  - Key Formats: .mod, .xm, .it, .mp3
+  - Notes: The central file storage for the global demoscene. Houses thousands of
+    party music competition archives and scene-released musicdisks.
+
+* OVERCLOCKED REMIX (OCREMIX)
+  - URL: https://ocremix.org
+  - Community: Arranged game music & remixes
+  - Key Formats: .mp3
+  - Notes: The premier repository for fan-made arranged game soundtracks. Contains
+    highly structured metadata (game, original composer, remixer, year).
+================================================================================
+
+
 
 3. VGMRips
 URL: [https://vgmrips.net](https://vgmrips.net)
@@ -43,14 +163,6 @@ wget --mirror --no-parent --accept "*.zip" \
      --wait=1 --random-wait \
      https://www.smspower.org/Music/
 
-
-5. IN PROGRESS Hoot Archive -- NO... Pivoting to joshw.info.
-https://snesmusic.org/hoot/html/
-Focuses heavily on Japanese PC-88, PC-98, Sharp X68000, and FM-towns game music logs.
-we need to onboard this using archive/wayback links and integrate into formats structure
-Pivoting to joshw.info.........
-
-
 6. Mirsoft World of Game Mods
 URL: [http://www.mirsoft.info](http://www.mirsoft.info)
 What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.
@@ -63,17 +175,8 @@ Maintained by Sergey Bulba (author of Ay_Emul), this archive contains the histor
 9. https://zxtunes.com -- a Russian site
 A massive historical repository of ZX Spectrum chiptunes. While heavily populated by standard AY tracking formats, its index includes extensive mappings of older, undocumented internal-beeper game routines that were ripped and isolated by early scene groups.
 
-10. DONE https://zxart.ee/eng/music/top-100/beeper/
-29,312 rows, all cleanly 5-column (title · composer · format · path · ext).
-•Playback split: 27,750 native / 1,562 ogg fallback.
-•Categories: Spectrum AY 28,480 · Sam Coupe 593 · Spectrum Beeper 138 · OGG 101.
-
 
 Demo Databases & Trackers
-
-1. Kestra BitWorld
-URL: [http://bitworld.bitfellas.org](http://bitworld.bitfellas.org)
-What it is: A sprawling, searchable database completely dedicated to tracking individual tracking artists, their releases, group affiliations, and scene history.
 
 2. Demozoo -- IN PROGRESS: PESIC...
 URL: [https://demozoo.org](https://demozoo.org)
@@ -84,6 +187,49 @@ To extract all demoscene music production links programmatically, loop through t
 Bash
 curl -H "Accept: application/json" "https://demozoo.org/api/v1/productions/?production_type=music"
 Iterate through the paginated JSON responses to extract data fields natively instead of writing brittle regex scrapers.
+
+
+
+------ DATABASES DONE / RESOLVED / ABANDONED IN THIS PASS BELOW ----------
+
+* ... PARTIALLY DONE ....   CPC-POWER AUDIOTHEQUE
+  - URL: https://www.cpc-power.com
+  - Sound Chips: Amstrad CPC (AY-3-8912)
+  - Key Formats: .ay, .ym
+  - Notes: A dedicated database tracking Amstrad CPC computer games and their
+    accompanying AY chiptune soundtracks.
+full scan needed, will take hours and DOS the site maybe...
+a small subset was found on wayback and added (51 songs)
+It's the Wayback subset (51 tunes), not the full audiotheque — cpc-power has no browsable music index (/YM/ is 403, games DB is ~10/page over ~30k entries), so the complete set needs a heavy multi-thousand-request crawl you declined. The builder uses the ~51 files Wayback captured, with URLs pointing at the live /YM/ files. I documented in memory exactly how to expand it later (rate-limited crawl of the zicym tabs) if you ever want the full ~1–3k.
+
+* ABANDONED   APPLE IIGS MUSIC PRESERVATION
+brutaldeluxe.fr is software preservation, not a song archive. 
+The actual SoundSmith songs are already onboarded: soundsmithplugin (SHIPPED) plays them, and modland has 486 SoundSmith tunes indexed and playable under the "Apple IIGS" filter.
+  - URL: https://www.brutaldeluxe.fr
+  - Sound Chips: Ensoniq ES5503 DOC (Wavetable)
+  - Key Formats: SoundSmith ($D5/$0007), NoiseTracker
+  - Notes: Apple IIGS trackers utilized the advanced Ensoniq wavetable chip.
+    SoundSmith and NinjaTracker files are preserved inside raw ProDOS disk
+    images (.2mg / .po) and ShrinkIt archives (.shk).
+
+10. DONE https://zxart.ee/eng/music/top-100/beeper/
+29,312 rows, all cleanly 5-column (title · composer · format · path · ext).
+•Playback split: 27,750 native / 1,562 ogg fallback.
+•Categories: Spectrum AY 28,480 · Sam Coupe 593 · Spectrum Beeper 138 · OGG 101.
+
+5. DONE -- NO IMPORT joshw.info.
+https://snesmusic.org/hoot/html/
+Focuses heavily on Japanese PC-88, PC-98, Sharp X68000, and FM-towns game music logs.
+we need to onboard this using archive/wayback links and integrate into formats structure
+We already have ~29k playable PC-88/PC-98/X68000/FM Towns tunes via modland.
+joshw would mostly duplicate those. 
+The genuinely net-new things joshw could add are the systems modland lacks (e.g. X1, MSX-specific, PC Engine CD, arcade/M1 rips), not the four core FM platforms.
+Targeting only net-new systems.
+nothing new discovered -- PARK
+
+1. DONE ALREADY Kestra BitWorld
+URL: [http://bitworld.bitfellas.org](http://bitworld.bitfellas.org)
+What it is: A sprawling, searchable database completely dedicated to tracking individual tracking artists, their releases, group affiliations, and scene history.
 
 **************************
 * PLAYBACK BUGS / ISSUES *

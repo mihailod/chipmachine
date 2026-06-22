@@ -55,7 +55,12 @@
 -- 52: (above corrected) -- v51 first shipped a MULTI: umbrella of N identical-file
 --     URLs, which reloaded the same file each step and replayed subsong 0 ("always
 --     1st tune", slow); switched to the single-file form so subsong nav is instant.
-VERSION = 54;
+-- 55: CPC-Power YM audiotheque (small Wayback subset). Amstrad CPC game .ym rips
+--     (AY-3-8912), LHA-wrapped; stsoundplugin depacks them natively. Full set has
+--     no browsable index (/YM/ is 403), so only the ~51 Wayback-known files are
+--     indexed, with URLs pointing at the live /YM/ files (fetched on demand).
+--     Built by tools/build_cpcpower.py; format "Amstrad CPC" -> AMSTRAD filter.
+VERSION = 55;
 
 DB = {
 {
@@ -64,6 +69,16 @@ DB = {
 	source = "ftp://files.exotica.org.uk/pub/exotica/media/audio/UnExoticA",
 	song_list = "data/unexotica.txt",
         song_template = "title game format composer path",
+	color = 0xfffff
+},
+{
+	-- CPC-Power Amstrad CPC YM audiotheque (Wayback-known subset). Full URLs in
+	-- the path column point at the live cpc-power /YM/ files; source is empty.
+	name = "CPC-Power",
+	id =  "cpcpower",
+	source = "",
+	song_list = "data/cpcpower.txt",
+	song_template = "title composer format path ext",
 	color = 0xfffff
 },
 {
