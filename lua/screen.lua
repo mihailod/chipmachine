@@ -52,16 +52,15 @@ Settings.main_title = { X0, Y0 + 8 * scale, scale, TEXT_COLOR }
 Settings.main_composer = { X0, Y0 + 33 * scale, scale * 0.6, TEXT_COLOR }
 Settings.main_format = { X0, Y0 + 50 * scale, scale * 0.25, TEXT_COLOR }
 
--- Filter banner: sits just below the format line, before the song/time row
-Settings.main_filter = { X0, Y0 + 70 * scale, scale * 0.3, 0xff44ff88 }
-
-
 SY = Settings.main_format[2] + 32 * GSCALE
 Settings.song_field = { X0, SY, GSCALE, DIGITS_COLOR }
 Settings.time_field = { X0 + 130 * GSCALE, SY, GSCALE, DIGITS_COLOR }
 Settings.length_field = { X0 + 220 * GSCALE, SY, GSCALE, DIGITS_COLOR }
 
 Settings.xinfo_field = { X0 - 4, SY + 35 * GSCALE, GSCALE * 0.75, 0xffffffff }
+
+-- Filter banner: one line below the song subtitle (xinfo) so they don't overlap
+Settings.main_filter = { X0, SY + 70 * GSCALE, scale * 0.3, 0xff44ff88 }
 
 Settings.favicon = { X0 + 330 * GSCALE, SY - GSCALE*25, 8*8 * GSCALE, 8*6 * GSCALE }
 
