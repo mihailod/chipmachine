@@ -1202,15 +1202,18 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         s.metadata[SongInfo::INFO] = "";
         LOGV("Got pouet shot %s", shot);
     } else if (collection == "hvtc" || collection == "sndh" ||
-               collection == "unexotica" || collection == "modland") {
+               collection == "unexotica" || collection == "modland" ||
+               collection == "zxart") {
         // Game screenshots matched offline against an external database and
         // served via the Wayback mirror: hvtc -> Plus/4 World (keyed by
         // "games/<name>.prg"), sndh -> Atari Mania (keyed by
         // "<composer>/<game>.sndh"), unexotica -> Hall of Light (keyed by the
         // per-game "/Game/<composer>/<game>.lha" identifier), modland -> the ZX
         // Spectrum subset matched against ZXDB / World of Spectrum (keyed by the
-        // full song path). Full URLs in data/<file>_screenshots.txt; no match ->
-        // blank (most modland songs aren't ZX games, so they get nothing).
+        // full song path), zxart -> zxart.ee ZX game tunes matched against ZXDB
+        // by game title (keyed by the full zxart.ee song URL). Full URLs in
+        // data/<file>_screenshots.txt; no match -> blank (most songs aren't ZX
+        // games, so they get nothing).
         std::string key = parts[1];
         // The ZX screenshots only cover the modland ZX-AY subset, kept in its
         // own data file rather than a giant modland_screenshots.txt.

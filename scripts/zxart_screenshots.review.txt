@@ -1,0 +1,746 @@
+# ROBOT	https://zxart.ee/file/id:68132/filename:Exalot_-_%23_ROBOT_%281996%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Robo.gif
+-DANDY-	https://zxart.ee/file/id:63315/filename:Bazofft_-_-DANDY-_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dandy.gif
+-XIXIT-	https://zxart.ee/file/id:66243/filename:DX-69_-_-XIXIT-_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xixit.gif
+180	https://zxart.ee/file/id:55820/filename:David_Whittaker_-_180_-_TitleIn-Game_%28AY%29_1_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OneHundredAndEighty.gif
+180 (C64. 1 of 3)	https://music.zxart.ee/music/513483_CNGSoft_180__C64__1_of_3_.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OneHundredAndEighty.gif
+180 (C64. 2 of 3)	https://music.zxart.ee/music/513484_CNGSoft_180__C64__2_of_3_.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OneHundredAndEighty.gif
+180 (C64. 3 of 3)	https://music.zxart.ee/music/513485_CNGSoft_180__C64__3_of_3_.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OneHundredAndEighty.gif
+1943	https://zxart.ee/file/id:377204/filename:Jason_C._Brooke_-_1943_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/123/gif/1943.gif
+1999 (AY)	https://zxart.ee/file/id:56708/filename:Ice_Cool_Coders_-_1999_-_Intro_%28Sample%29_2_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/123/gif/1999.gif
+1999 (Beeper)	https://zxart.ee/file/id:56139/filename:Ice_Cool_Coders_-_1999_-_Title_%28Beeper%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/123/gif/1999.gif
+48IRONS	https://zxart.ee/file/id:81859/filename:Twin_S._-_48IRONS.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/123/gif/48Irons.gif
+<ELITE>	https://music.zxart.ee/music/365268_DJ_AVO__ELITE_.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite.gif
+ACADEMY	https://zxart.ee/file/id:66144/filename:Davos_-_ACADEMY_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Academy.gif
+ADVENTURE (Blinkyss1)	https://zxart.ee/file/id:72481/filename:%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80_%D0%9A%D0%BE%D1%81%D1%82%D0%B8%D0%BA_-_ADVENTURE_%28Blinkyss1%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Adventure_3.gif
+AIRSPACE	https://zxart.ee/file/id:75804/filename:MAK_-_AIRSPACE.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AirSpace.gif
+ALIBABA	https://zxart.ee/file/id:75910/filename:Megabyte_-_ALIBABA.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AliBaba.gif
+ALIEN	https://zxart.ee/file/id:71635/filename:Ice%26%23039%3Bn%26%23039%3BGreen_-_ALIEN_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Alien.gif
+ALIEN	https://zxart.ee/file/id:75929/filename:Megabyte_-_ALIEN.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Alien.gif
+ALIENS	https://zxart.ee/file/id:74009/filename:%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9_%D0%9B%D0%B5%D1%82%D1%8F%D0%B3%D0%B8%D0%BD_-_ALIENS_%281995%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Alien_11.gif
+APB	https://zxart.ee/file/id:56391/filename:David_Whittaker_-_APB_-_Title_%28AY%29_1_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/APB.gif
+ARKANOID	https://zxart.ee/file/id:70470/filename:Push_-_ARKANOID.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Arkanoid(ErbeSoftwareS.A.).gif
+ARMAGEDDON	https://zxart.ee/file/id:71588/filename:Ice%26%23039%3Bn%26%23039%3BGreen_-_ARMAGEDDON_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Armageddon.gif
+ASC	https://zxart.ee/file/id:82407/filename:VAD_-_ASC_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/ASC.gif
+ASSASSIN	https://zxart.ee/file/id:81922/filename:UCom_-_ASSASSIN.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Assassin.gif
+ATLANTIS	https://zxart.ee/file/id:70787/filename:Ironman_-_ATLANTIS.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtlantisAdventure(different).gif
+ATLANTIS	https://zxart.ee/file/id:71578/filename:Ice%26%23039%3Bn%26%23039%3BGreen_-_ATLANTIS_%281998%29.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtlantisAdventure(different).gif
+AWAKEN	https://zxart.ee/file/id:74744/filename:McMaker_-_AWAKEN.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AwakenDemo.gif
+Academy	https://zxart.ee/file/id:73291/filename:Karo_da_Hodge_-_Academy_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Academy.gif
+Admiral	https://zxart.ee/file/id:71831/filename:JK_-_Admiral_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Admiral(GS128).gif
+AdvancedTacticalFighter	https://zxart.ee/file/id:55095/filename:Unknown_-_AdvancedTacticalFighter_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/ATF.gif
+Adventure	https://zxart.ee/file/id:49551/filename:MmcM_-_Adventure_%282012%29_%28Next_Castle_Party_2012%2C_2%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Adventure_3.gif
+Adventure	https://zxart.ee/file/id:70718/filename:Ironman_-_Adventure.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Adventure_3.gif
+Adversary (Gate42)	https://zxart.ee/file/id:47891/filename:Cj_Splinter_-_Adversary_%28Gate42%29_%282010%29_%28DiHalt_2010%2C_1%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Adversary.gif
+Afterburner	https://zxart.ee/file/id:56258/filename:Tarann_Ltd%2C_Jon_Paul_Eldridge_-_Afterburner_-_TitleIn-Game_%28AY%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Afterburner.gif
+Aftermath	https://music.zxart.ee/music/536448_Alex_Winston_Aftermath.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Aftermath_2.gif
+Afteroids	https://music.zxart.ee/music/513437_CNGSoft_Afteroids.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Afteroids.gif
+AgentX	https://zxart.ee/file/id:56134/filename:Tim_Follin_-_AgentX_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AgentX.gif
+Aladdin	https://zxart.ee/file/id:75001/filename:Mast_-_Aladdin_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Aladdin.gif
+Aladdin	https://zxart.ee/file/id:80773/filename:Renegade_-_Aladdin.tfe	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Aladdin.gif
+Alchemist	https://zxart.ee/file/id:73621/filename:Kenotron_-_Alchemist_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Alchemist.gif
+Alien	https://zxart.ee/file/id:49642/filename:AER_-_Alien_%282010%29_%28ZX_AAA_Demo_Compo_2010%2C_27%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Alien.gif
+Aliens	https://zxart.ee/file/id:73554/filename:KAA_-_Aliens.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Alien_11.gif
+Amaurote	https://zxart.ee/file/id:55921/filename:David_Whittaker_-_Amaurote_-_Title_%28AY%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Amaurote.gif
+Anfractuos	https://zxart.ee/file/id:55128/filename:Andy_Severn_-_Anfractuos_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Anfractuos.gif
+AnoGaia	https://zxart.ee/file/id:55667/filename:Andy_Mills_-_AnoGaia_%281992%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AnoGaia.gif
+Antics	https://zxart.ee/file/id:377206/filename:Andrew_Peckham_-_Antics_%281984%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Antics.gif
+ApoCalyPse	https://zxart.ee/file/id:74473/filename:MmcM_-_ApoCalyPse_%281999%29_%28Chaos_Constructions_1999%2C_3%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Apocalypse.gif
+ArcadeFlightSimulator	https://zxart.ee/file/id:56190/filename:David_Whittaker_-_ArcadeFlightSimulator_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/ArcadeFlightSimulator.gif
+Arkanoid	https://zxart.ee/file/id:309764/filename:MadMax_-_Arkanoid_%282019%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Arkanoid(ErbeSoftwareS.A.).gif
+Arkanoid	https://zxart.ee/file/id:56457/filename:Mark_R._Jones_-_Arkanoid_-_Title_%28Beeper%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Arkanoid(ErbeSoftwareS.A.).gif
+Arkanoid	https://zxart.ee/file/id:76059/filename:%D0%90%D0%BD%D0%B4%D1%80%D0%B5%D0%B9_%D0%9C%D0%B0%D0%BA%D0%B0%D1%80%D0%B5%D0%B2%D0%B8%D1%87_-_Arkanoid_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Arkanoid(ErbeSoftwareS.A.).gif
+Arkanoid	https://zxart.ee/file/id:83058/filename:XPEH_-_Arkanoid.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Arkanoid(ErbeSoftwareS.A.).gif
+Arkanoid (C64)	https://music.zxart.ee/music/516320_CNGSoft_Arkanoid__C64_.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Arkanoid(ErbeSoftwareS.A.).gif
+Arrival (6ch)	https://zxart.ee/file/id:513653/filename:KUVO_-_Arrival_%286ch%29_%282024%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Arrival.gif
+Artura	https://zxart.ee/file/id:56928/filename:Ben_Daglish_-_Artura_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Artura.gif
+Assassin	https://music.zxart.ee/music/193446_Pyramex_Assassin.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Assassin.gif
+Atlantis	https://music.zxart.ee/music/59688_Stephen_McGreal_Atlantis.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtlantisAdventure(different).gif
+Atlantis	https://zxart.ee/file/id:59005/filename:Aki_-_Atlantis_%281997%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtlantisAdventure(different).gif
+Atlantis	https://zxart.ee/file/id:81747/filename:Time_Keeper_-_Atlantis_%281998%29.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AtlantisAdventure(different).gif
+Atomix	https://zxart.ee/file/id:56253/filename:Fuxoft_-_Atomix_-_Title_%28AY%29_1_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Atomix.gif
+Atrog	https://zxart.ee/file/id:56325/filename:Unknown_-_Atrog_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Atrog.gif
+Automania	https://zxart.ee/file/id:377207/filename:Unknown_-_Automania_%281984%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Automania.gif
+Avenger (AY)	https://zxart.ee/file/id:55576/filename:Ben_Daglish_-_Avenger_-_Title_%28AY%29_1_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Avenger.gif
+Avenger (Beeper)	https://zxart.ee/file/id:55727/filename:Ben_Daglish_-_Avenger_-_Title_%28Beeper%29_2_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Avenger.gif
+BANDIT	https://music.zxart.ee/music/349745_Snowman_BANDIT.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bandit_2.gif
+BATMAN	https://music.zxart.ee/music/89063_DJ_Max_BATMAN.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+BATMAN	https://zxart.ee/file/id:62627/filename:AL_-_BATMAN_%281994%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+BATMAN	https://zxart.ee/file/id:73062/filename:Klav_-_BATMAN.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+BATMAN	https://zxart.ee/file/id:81780/filename:TMS_-_BATMAN.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+BATTLE	https://zxart.ee/file/id:66013/filename:Davos_-_BATTLE.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Battle_2.gif
+BATTLE	https://zxart.ee/file/id:68388/filename:Em%28022000%29_-_BATTLE_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Battle_2.gif
+BATTLE;	https://zxart.ee/file/id:71346/filename:IK_-_BATTLE%3B_%282002%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Battle_2.gif
+BIFF	https://zxart.ee/file/id:72364/filename:KSA_-_BIFF.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Biff.gif
+BLITZKRIEG	https://music.zxart.ee/music/88962_LDE_Soft_BLITZKRIEG.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Blitzkrieg.gif
+BUILDING	https://zxart.ee/file/id:81618/filename:Terminator_-_BUILDING_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Building_2.gif
+Barbarian	https://music.zxart.ee/music/516361_Quaker_Barbarian.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Barbarian_2.gif
+Barbarian	https://zxart.ee/file/id:55657/filename:Richard_Joseph_-_Barbarian_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Barbarian_2.gif
+Barbarian	https://zxart.ee/file/id:91645/filename:Demon_-_Barbarian_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Barbarian_2.gif
+Batman	https://zxart.ee/file/id:45276/filename:TDM_-_Batman.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+Batman	https://zxart.ee/file/id:71018/filename:Ironman_-_Batman_%281995%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+Batman	https://zxart.ee/file/id:81658/filename:Titus_-_Batman_%281995%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman.gif
+BatmanTheCapedCrusader	https://zxart.ee/file/id:56941/filename:Keith_Tinman_-_BatmanTheCapedCrusader_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batman-TheCapedCrusader.gif
+Battle	https://zxart.ee/file/id:62761/filename:Alex_X_-_Battle_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Battle_2.gif
+BattleCommand	https://zxart.ee/file/id:55661/filename:Jonathan_Dunn_-_BattleCommand_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BattleCommand.gif
+Batty	https://zxart.ee/file/id:70927/filename:Ironman_-_Batty_%281995%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Batty(Outlet).gif
+Bedlam	https://zxart.ee/file/id:82138/filename:Voxon_-_Bedlam.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bedlam(AWASoftware).gif
+Belegost	https://zxart.ee/file/id:59007/filename:Aki_-_Belegost_%281997%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Belegost.gif
+Belegost	https://zxart.ee/file/id:61983/filename:Fuxoft_-_Belegost.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Belegost.gif
+Belegost	https://zxart.ee/file/id:69760/filename:Fuxoft_-_Belegost_%281989%29.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Belegost.gif
+Birds	https://zxart.ee/file/id:70633/filename:Push_-_Birds_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Birds_SideA.gif
+Bis!	https://zxart.ee/file/id:70330/filename:Hacker_KAY_-_Bis%21_%281997%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bis.gif
+Bismark	https://zxart.ee/file/id:78315/filename:Alex_Rostov_-_Bismark_%281997%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bismark.gif
+Blackbeard	https://zxart.ee/file/id:56323/filename:Gominolas_-_Blackbeard_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BlackBeard.gif
+BladeRunner	https://zxart.ee/file/id:55819/filename:Unknown_-_BladeRunner_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BladeRunner.gif
+Bobsleigh (AY)	https://zxart.ee/file/id:56448/filename:Unknown_-_Bobsleigh_-_Title_%28AY%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bobsleigh.gif
+Bobsleigh (Beeper)	https://zxart.ee/file/id:57142/filename:Unknown_-_Bobsleigh_-_Title_%28Beeper%29_2_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bobsleigh.gif
+Booty	https://zxart.ee/file/id:55041/filename:John_F._Cain_-_Booty_%281984%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Booty(Outlet).gif
+Bounder	https://zxart.ee/file/id:55180/filename:Unknown_-_Bounder_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bounder.gif
+BrainDamage	https://zxart.ee/file/id:72494/filename:Kevin_-_BrainDamage_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BrainDamage.gif
+Brainstorm	https://zxart.ee/file/id:61986/filename:Unknown_-_Brainstorm_-_Title_%28AY%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Brainstorm.gif
+BratAttack	https://zxart.ee/file/id:55566/filename:Unknown_-_BratAttack_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BratAttack.gif
+BraveStarr	https://zxart.ee/file/id:55669/filename:David_Whittaker_-_BraveStarr_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BraveStarr.gif
+Breakthru	https://zxart.ee/file/id:308425/filename:OldFartGamer_-_Breakthru_%282019%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Breakthru.gif
+BrianBloodaxe	https://zxart.ee/file/id:56297/filename:Unknown_-_BrianBloodaxe_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BrianBloodaxe.gif
+BubbleBobbleTheAdventure	https://zxart.ee/file/id:56412/filename:Anton_Ze_Player_-_BubbleBobbleTheAdventure_%281993%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BubbleBobble-TheAdventure.gif
+BunchOfArse	https://zxart.ee/file/id:45015/filename:Yerzmyey_-_BunchOfArse.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BunchOfArse.gif
+ButchHardGuy	https://zxart.ee/file/id:55163/filename:Unknown_-_ButchHardGuy_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Butch-HardGuy.gif
+CAR	https://zxart.ee/file/id:73503/filename:Kudaev_E_I_-_CAR.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Spark.gif
+CHESS	https://zxart.ee/file/id:68306/filename:Eraser_-_CHESS.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chess.gif
+CHRONOS	https://zxart.ee/file/id:63782/filename:Booster_-_CHRONOS.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chronos.gif
+CIRCUS	https://zxart.ee/file/id:76012/filename:Megabyte_-_CIRCUS.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Circus.gif
+CITADEL	https://zxart.ee/file/id:66987/filename:Dreamer_-_CITADEL_%281995%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Citadel_2.gif
+CJInTheUSA	https://zxart.ee/file/id:55033/filename:Allister_Brimble_-_CJInTheUSA_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CJInTheUSA.gif
+COMPUTER	https://zxart.ee/file/id:81632/filename:Terminator_-_COMPUTER_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Computer.gif
+CONQUEST	https://music.zxart.ee/music/89095_UCom_CONQUEST.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Conquest.gif
+CONQUEST	https://zxart.ee/file/id:82643/filename:Visual_-_CONQUEST_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Conquest.gif
+Cabal	https://zxart.ee/file/id:55120/filename:Keith_Tinman_-_Cabal_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cabal.gif
+Cabal	https://zxart.ee/file/id:73535/filename:Keith_Tinman_-_Cabal_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cabal.gif
+CarrierCommand	https://zxart.ee/file/id:56148/filename:Dave_Lowe_-_CarrierCommand_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CarrierCommand.gif
+Casanova	https://zxart.ee/file/id:55704/filename:Unknown_-_Casanova_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Casanova.gif
+Casanova	https://zxart.ee/file/id:65224/filename:Casanova_-_Casanova_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Casanova.gif
+Catch23	https://zxart.ee/file/id:56245/filename:Unknown_-_Catch23_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Catch23.gif
+Cavemania	https://zxart.ee/file/id:55736/filename:Adrian_R._Shaw_-_Cavemania_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cavemania.gif
+Cavemania	https://zxart.ee/file/id:63090/filename:Adrian_R._Shaw_-_Cavemania_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cavemania.gif
+Chess	https://zxart.ee/file/id:73801/filename:Loner_-_Chess_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chess.gif
+Chimera	https://zxart.ee/file/id:69749/filename:Fuxoft_-_Chimera_%281987%29.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chimera.gif
+Chronos	https://zxart.ee/file/id:45241/filename:TDM_-_Chronos_%282000%29_%28MilleniuM_VP%2C_11%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chronos.gif
+Chronos (AY)	https://zxart.ee/file/id:56220/filename:Tim_Follin_-_Chronos_-_Title_%28AY_%26_Beeper%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chronos.gif
+Chronos (Beeper)	https://zxart.ee/file/id:56849/filename:Tim_Follin_-_Chronos_-_Title_%28Beeper%29_2_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Chronos.gif
+ChuckieEgg2	https://zxart.ee/file/id:55672/filename:AnF_R%26amp%3BD_Team_-_ChuckieEgg2_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/ChuckieEgg2.gif
+Citadel	https://zxart.ee/file/id:81866/filename:Twin_S._-_Citadel.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Citadel_2.gif
+CoNvoY	https://zxart.ee/file/id:64255/filename:Cj_Echo_-_CoNvoY_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Convoy.gif
+Cobra	https://zxart.ee/file/id:56794/filename:Martin_Galway_-_Cobra_-_Title_%28Beeper%29_1_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cobra.gif
+Cobra (C64)	https://music.zxart.ee/music/513790_CNGSoft_Cobra.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cobra.gif
+Coliseum	https://zxart.ee/file/id:56257/filename:Gominolas_-_Coliseum_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Coliseum.gif
+Colony	https://zxart.ee/file/id:56359/filename:Tiny_Williams_-_Colony_-_Title_%28Beeper%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Colony.gif
+Commando	https://zxart.ee/file/id:69765/filename:Fuxoft_-_Commando_%281988%29.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Commando_2.gif
+Confused	https://zxart.ee/file/id:364390/filename:KUVO_-_Confused_%282021%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Confused.gif
+Cookie	https://zxart.ee/file/id:55109/filename:Unknown_-_Cookie_-_Start_Game_%28Beeper%29_1_%281983%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cookie.gif
+CosmicShockAbsorber	https://zxart.ee/file/id:55562/filename:Unknown_-_CosmicShockAbsorber_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CosmicShockAbsorber.gif
+CosmicWartoad	https://zxart.ee/file/id:56270/filename:Unknown_-_CosmicWartoad_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CosmicWartoad.gif
+CountDuckula2	https://zxart.ee/file/id:55678/filename:Unknown_-_CountDuckula2_%281992%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CountDuckula2(Outlet).gif
+Crossword (Game music)	https://music.zxart.ee/music/59677_Unknown_Crossword__Game_music_.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Crossword.gif
+Cybernoid	https://zxart.ee/file/id:77372/filename:Qjeta_-_Cybernoid.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cybernoid.gif
+DARKSIDE	https://zxart.ee/file/id:66147/filename:Davos_-_DARKSIDE.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DarkSide.gif
+DELTA	https://zxart.ee/file/id:70046/filename:%D0%A1%D1%82%D0%B0%D0%BD%D0%B8%D1%81%D0%BB%D0%B0%D0%B2_%D0%93%D0%B0%D0%B9%D0%B4%D1%83%D0%BA%D0%BE%D0%B2_-_DELTA.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeltaCharge.gif
+DELTA	https://zxart.ee/file/id:82633/filename:Visual_-_DELTA_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeltaCharge.gif
+DEMON	https://zxart.ee/file/id:73374/filename:Koshparenok_Pasha_-_DEMON.pt1	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Demon_2.gif
+DIABLO	https://zxart.ee/file/id:66089/filename:Davos_-_DIABLO_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Diablo(ZenobiSoftware).gif
+DIAMOND	https://zxart.ee/file/id:77808/filename:Ra_-_DIAMOND.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Diamond_2.gif
+DIZZY	https://zxart.ee/file/id:65824/filename:DNK_-_DIZZY_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+DOCTOR	https://zxart.ee/file/id:62631/filename:AL_-_DOCTOR_%281994%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Doctor.gif
+DOCTOR	https://zxart.ee/file/id:74016/filename:%D0%A1%D0%B5%D1%80%D0%B3%D0%B5%D0%B9_%D0%9B%D0%B5%D1%82%D1%8F%D0%B3%D0%B8%D0%BD_-_DOCTOR_%281995%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Doctor.gif
+DOOM	https://zxart.ee/file/id:81619/filename:Terminator_-_DOOM_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoomDemo_2.gif
+DRACONUS	https://zxart.ee/file/id:81867/filename:Twin_S._-_DRACONUS.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Draconus.gif
+DRACULA	https://zxart.ee/file/id:66046/filename:Davos_-_DRACULA.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DraculaPart1-TheFirstNight.gif
+DarkSceptre	https://zxart.ee/file/id:55689/filename:Unknown_-_DarkSceptre_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DarkSceptre.gif
+DarkSide	https://zxart.ee/file/id:78678/filename:oisee_-_DarkSide_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DarkSide.gif
+Darkman	https://zxart.ee/file/id:65943/filename:Doc_-_Darkman.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Darkman.gif
+Darkman	https://zxart.ee/file/id:72152/filename:Jam_-_Darkman.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Darkman.gif
+Deactivators	https://zxart.ee/file/id:377205/filename:Unknown_-_Deactivators_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Deactivators.gif
+Defcom	https://zxart.ee/file/id:54571/filename:David_Whittaker_-_Defcom_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Defcom.gif
+Deflektor	https://zxart.ee/file/id:54984/filename:Ben_Daglish_-_Deflektor_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Deflektor.gif
+Deflektor	https://zxart.ee/file/id:59125/filename:Aki_-_Deflektor_%282000%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Deflektor.gif
+Deflektor	https://zxart.ee/file/id:81390/filename:Molodcov_Alex_-_Deflektor_%282015%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Deflektor.gif
+Dejavu	https://music.zxart.ee/music/57805_Karbofos_Dejavu.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DejaVu.gif
+Delta	https://zxart.ee/file/id:45284/filename:TDM_-_Delta.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeltaCharge.gif
+Delta	https://zxart.ee/file/id:59218/filename:Gasman_-_Delta_%282001%29.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DeltaCharge.gif
+Denizen	https://zxart.ee/file/id:55569/filename:Mike_Brown%2C_Andy_Severn_-_Denizen_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Denizen.gif
+Desperado	https://zxart.ee/file/id:56207/filename:Gominolas_-_Desperado_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Desperado.gif
+DestinyMission	https://zxart.ee/file/id:56250/filename:Sound_Images_-_DestinyMission_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DestinyMission.gif
+Deviants	https://zxart.ee/file/id:56248/filename:Andy_Severn_-_Deviants_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Deviants.gif
+Dice	https://zxart.ee/file/id:58953/filename:Aki_-_Dice_%281994%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dice_5.gif
+Dizzy	https://zxart.ee/file/id:20342/filename:Foxx_-_Dizzy_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Dizzy	https://zxart.ee/file/id:63443/filename:Bear_-_Dizzy_%281998%29.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Dizzy	https://zxart.ee/file/id:70861/filename:Ironman_-_Dizzy_%281995%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Dizzy	https://zxart.ee/file/id:71881/filename:Jaguar_-_Dizzy.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Dizzy	https://zxart.ee/file/id:79322/filename:Slash_-_Dizzy.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Dominion	https://zxart.ee/file/id:60764/filename:Moran_-_Dominion_%282002%29_%28FOReVER_3%2C_18%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dominion.gif
+DooM	https://music.zxart.ee/music/359903_Gex_DooM.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoomDemo_2.gif
+Doom	https://music.zxart.ee/music/58869_Dr_Yorick_Doom.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoomDemo_2.gif
+Doom	https://zxart.ee/file/id:63564/filename:Black_Lord_-_Doom.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoomDemo_2.gif
+Doom	https://zxart.ee/file/id:79038/filename:Soundliner_-_Doom_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoomDemo_2.gif
+Doom	https://zxart.ee/file/id:79558/filename:Satansoft_-_Doom.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoomDemo_2.gif
+DoubleTake	https://zxart.ee/file/id:56354/filename:Unknown_-_DoubleTake_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoubleTake.gif
+Draconus	https://zxart.ee/file/id:83047/filename:XPEH_-_Draconus.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Draconus.gif
+Dustin	https://zxart.ee/file/id:55529/filename:Manuel_Cubedo_-_Dustin_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dustin.gif
+DynamiteDan	https://zxart.ee/file/id:61964/filename:Unknown_-_DynamiteDan_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DynamiteDan.gif
+EAGLE	https://zxart.ee/file/id:72856/filename:Kum_-_EAGLE_%281995%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eagle.gif
+EAGLE	https://zxart.ee/file/id:79029/filename:Soundliner_-_EAGLE_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eagle.gif
+EAGLE	https://zxart.ee/file/id:82603/filename:Visual_-_EAGLE_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eagle.gif
+ECLIPSE	https://zxart.ee/file/id:82644/filename:Visual_-_ECLIPSE_%281996%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eclipse.gif
+ELDORADO	https://zxart.ee/file/id:539606/filename:Voxon_-_ELDORADO.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoradoEl.gif
+ELDORADO	https://zxart.ee/file/id:80180/filename:Surgeon_-_ELDORADO_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoradoEl.gif
+ELDORADO	https://zxart.ee/file/id:80189/filename:Jungar_-_ELDORADO.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DoradoEl.gif
+ELITE	https://zxart.ee/file/id:45735/filename:Hacker_VBI_-_ELITE_%281998%29_%28Multimatograf_X%2C_3%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite.gif
+ELITE2	https://zxart.ee/file/id:70725/filename:Ironman_-_ELITE2.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite2.gif
+ELITE3'	https://zxart.ee/file/id:74665/filename:Monah_-_ELITE3%27.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite3.gif
+EMPIRE	https://zxart.ee/file/id:77914/filename:RCL_-_EMPIRE_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Empire.gif
+ENIGMA	https://zxart.ee/file/id:70652/filename:Igoval_-_ENIGMA_%281997%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+ENIGMA	https://zxart.ee/file/id:77806/filename:Ra_-_ENIGMA.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+EPSILON	https://zxart.ee/file/id:82593/filename:Visual_-_EPSILON_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Epsilon.gif
+Eclipse	https://zxart.ee/file/id:77490/filename:riskej_-_Eclipse_%282003%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eclipse.gif
+Egypt	https://zxart.ee/file/id:73822/filename:Loner_-_Egypt.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Egypt.gif
+ElevatorAction	https://zxart.ee/file/id:55665/filename:David_Whittaker_-_ElevatorAction_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/ElevatorAction.gif
+Eliminator	https://zxart.ee/file/id:55062/filename:Nick_Jones_-_Eliminator_-_Title_%28AY%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Eliminator.gif
+Elite	https://zxart.ee/file/id:359477/filename:AER_-_Elite_%282016%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite.gif
+Elite	https://zxart.ee/file/id:70813/filename:Ironman_-_Elite_%281995%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite.gif
+Elite	https://zxart.ee/file/id:83010/filename:X-Raizor_-_Elite.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite.gif
+Elite (LIKE)	https://zxart.ee/file/id:82993/filename:X-Raizor_-_Elite_%28LIKE%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite.gif
+Elite2	https://zxart.ee/file/id:71026/filename:Ironman_-_Elite2_%281995%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Elite2.gif
+EmUlate	https://zxart.ee/file/id:74461/filename:MmcM_-_EmUlate_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Emulate.gif
+Enchanted	https://zxart.ee/file/id:55053/filename:Alberto_Sampler_-_Enchanted_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enchanted.gif
+EnergyWarrior	https://zxart.ee/file/id:55045/filename:Unknown_-_EnergyWarrior_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/EnergyWarrior.gif
+Enigma	https://zxart.ee/file/id:47755/filename:Hacker_VBI_-_Enigma_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Enigma	https://zxart.ee/file/id:59011/filename:Aki_-_Enigma_%281997%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Enigma	https://zxart.ee/file/id:59188/filename:Gasman_-_Enigma_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Enigma	https://zxart.ee/file/id:76386/filename:nq_-_Enigma_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Enigma	https://zxart.ee/file/id:82119/filename:Voxon_-_Enigma.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Enigma_2.gif
+Equinox	https://zxart.ee/file/id:55650/filename:Nick_Jones_-_Equinox_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Equinox.gif
+Equinox	https://zxart.ee/file/id:73850/filename:Loner_-_Equinox_%282001%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Equinox.gif
+Erotris	https://zxart.ee/file/id:69678/filename:Flabber_-_Erotris_%282003%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Erotris.gif
+Exodus (in game)	https://music.zxart.ee/music/59379_Andy_Monk_Exodus__in_game_.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Exodus.gif
+Exodus (title screen) (alternate version)	https://music.zxart.ee/music/59378_Andy_Monk_Exodus__title_screen___alternate_version_.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Exodus.gif
+Exolon	https://zxart.ee/file/id:71570/filename:Ice%26%23039%3Bn%26%23039%3BGreen_-_Exolon_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Exolon.gif
+Exolon (AY)	https://zxart.ee/file/id:56778/filename:Nick_Jones_-_Exolon_-_Title_%28AY%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Exolon.gif
+Exolon (Beeper)	https://zxart.ee/file/id:57178/filename:Nick_Jones_-_Exolon_-_Title_%28Beeper%29_2_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Exolon.gif
+ExplodingAtoms	https://zxart.ee/file/id:77334/filename:Raxoft_-_ExplodingAtoms.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/ExplodingAtoms.gif
+FARAON	https://music.zxart.ee/music/391612_Dexter_FARAON.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Faraon.gif
+FIST	https://zxart.ee/file/id:82089/filename:Voxon_-_FIST.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/ExplodingFist%2B.gif
+FULLSHIT	https://zxart.ee/file/id:66086/filename:Davos_-_FULLSHIT_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FullShit.gif
+FULLSHIT	https://zxart.ee/file/id:75691/filename:Midnight_Shadow_-_FULLSHIT.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FullShit.gif
+Fairlight	https://zxart.ee/file/id:63566/filename:Black_Lord_-_Fairlight.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Fairlight.gif
+Fairlight (AY)	https://zxart.ee/file/id:55114/filename:Pennsoft_-_Fairlight_-_A_Prelude_-_TitleIn-Game_%28AY%29_1_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Fairlight.gif
+Fairlight (Beeper)	https://zxart.ee/file/id:55318/filename:Pennsoft_-_Fairlight_-_A_Prelude_-_Title_%28Beeper%29_2_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Fairlight.gif
+Falcon	https://zxart.ee/file/id:67301/filename:DJ_Denson_-_Falcon_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Falcon-TheRenegadeLord.gif
+Falcon	https://zxart.ee/file/id:77335/filename:Raxoft_-_Falcon.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Falcon-TheRenegadeLord.gif
+FallenAngel	https://zxart.ee/file/id:54981/filename:Unknown_-_FallenAngel_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FallenAngel.gif
+Fantasia	https://zxart.ee/file/id:59219/filename:Gasman_-_Fantasia_%282001%29.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Phantasia.gif
+Fastfood	https://zxart.ee/file/id:74135/filename:Mic_-_Fastfood.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FastFood.gif
+FatWormBlowsASparky	https://zxart.ee/file/id:55783/filename:Unknown_-_FatWormBlowsASparky_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FatWormBlowsASparky.gif
+Fearzone	https://zxart.ee/file/id:83159/filename:X-agon_-_Fearzone.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Fearzone.gif
+Feud	https://zxart.ee/file/id:69754/filename:Fuxoft_-_Feud_%281987%29.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Feud.gif
+FinalFight	https://zxart.ee/file/id:56365/filename:Dave_Lowe_-_FinalFight_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FinalFight.gif
+Firefly	https://zxart.ee/file/id:44453/filename:Keith_Tinman_-_Firefly_-_Title_01_%28Beeper%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Firefly.gif
+Firefly	https://zxart.ee/file/id:77364/filename:Qjeta_-_Firefly.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Firefly.gif
+Fist	https://zxart.ee/file/id:62842/filename:AleXofT_-_Fist_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/ExplodingFist%2B.gif
+Fist+	https://zxart.ee/file/id:55776/filename:Dave_Kelly_-_Fist%2B_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/ExplodingFist%2B.gif
+FlashPoint	https://zxart.ee/file/id:55097/filename:Unknown_-_FlashPoint_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Flashpoint.gif
+FrankieGoesToHollywood	https://zxart.ee/file/id:54976/filename:Unknown_-_FrankieGoesToHollywood_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FrankieGoesToHollywood.gif
+Frontiers	https://zxart.ee/file/id:86777/filename:nq_-_Frontiers_%282016%29_%28ZX_Enhanced_compo_2016%2C_2%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Frontiers.gif
+FrostByte	https://zxart.ee/file/id:55577/filename:Nick_Jones_-_FrostByte_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FrostByte.gif
+FruitMachineSimulator	https://zxart.ee/file/id:56171/filename:David_Whittaker_-_FruitMachineSimulator_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FruitMachineSimulator.gif
+Fruity	https://zxart.ee/file/id:78865/filename:Seth_-_Fruity_%282001%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Fruity.gif
+Fuksoft	https://zxart.ee/file/id:55572/filename:Stano_Hrda_-_Fuksoft_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Fuksoft.gif
+GALAXY3	https://zxart.ee/file/id:82434/filename:VAD_-_GALAXY3.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Galaxy3.gif
+GOLD	https://zxart.ee/file/id:66675/filename:DJ_Enik_-_GOLD_%281999%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gold.gif
+GOLD	https://zxart.ee/file/id:82392/filename:VAD_-_GOLD_%282000%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gold.gif
+GOODLUCK	https://zxart.ee/file/id:70102/filename:GEB-Soft_-_GOODLUCK.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GoodLuck(TopTenSoftware).gif
+GORODKI	https://zxart.ee/file/id:62408/filename:Alos_Jnr_-_GORODKI_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Towns.gif
+GOTHIK	https://zxart.ee/file/id:83404/filename:Znahar_-_GOTHIK_%281998%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gothik.gif
+GREMLINS  (Rush2 18)	https://zxart.ee/file/id:83406/filename:Znahar_-_GREMLINS__%28Rush2_18%29_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gremlins.gif
+GUARDIAN	https://zxart.ee/file/id:71140/filename:Ironman_-_GUARDIAN.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Guardian.gif
+Gambit	https://zxart.ee/file/id:70573/filename:Push_-_Gambit_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GambitV2.2.gif
+Ghostbusters	https://zxart.ee/file/id:69764/filename:Fuxoft_-_Ghostbusters_%281988%29.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Ghostbusters.gif
+Ghostbusters (TSmix)	https://zxart.ee/file/id:406321/filename:Voxel_-_Ghostbusters_%28TSmix%29_%282009%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Ghostbusters.gif
+Glider	https://zxart.ee/file/id:81778/filename:TMS_-_Glider.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Glider.gif
+Gold (by East17)	https://zxart.ee/file/id:73896/filename:Luckysoft_-_Gold_%28by_East17%29_%281994%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gold.gif
+Goody	https://zxart.ee/file/id:55619/filename:Angel_Zarazaga_-_Goody_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Goody.gif
+Goody	https://zxart.ee/file/id:62858/filename:Asi_-_Goody_%282004%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Goody.gif
+Goody (CPC)	https://zxart.ee/file/id:413909/filename:C.D.L._Laboratory_-_Goody_%28CPC%29_%282017%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Goody.gif
+Gotohell	https://zxart.ee/file/id:73406/filename:%D0%94%D0%B0%D0%BD%D0%B8%D0%B8%D0%BB_%D0%9A%D0%BE%D1%80%D0%BE%D0%B1%D0%B5%D0%B9%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2_-_Gotohell.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GoToHell.gif
+GrandPrixSimulator	https://zxart.ee/file/id:55694/filename:David_Whittaker_-_GrandPrixSimulator_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GrandPrixSimulator.gif
+GrangeHill	https://zxart.ee/file/id:55927/filename:David_Whittaker_-_GrangeHill_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GrangeHill.gif
+Gridlock	https://zxart.ee/file/id:72593/filename:luchibobra_-_Gridlock_%282005%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gridlock.gif
+Gryzor (AY)	https://zxart.ee/file/id:55035/filename:David_Whittaker_-_Gryzor_-_Title_%28AY%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gryzor.gif
+Gryzor (Beeper)	https://zxart.ee/file/id:55254/filename:David_Whittaker_-_Gryzor_-_Title_%28Beeper%29_3_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gryzor.gif
+Guardian	https://zxart.ee/file/id:58391/filename:Alone_Coder_-_Guardian_%282001%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Guardian.gif
+Guardian	https://zxart.ee/file/id:64311/filename:Cj_Echo_-_Guardian.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Guardian.gif
+GunRunner	https://zxart.ee/file/id:56127/filename:Unknown_-_GunRunner_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gunrunner.gif
+Gunfighter	https://zxart.ee/file/id:63089/filename:Adrian_R._Shaw_-_Gunfighter_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gunfighter.gif
+Gunfright	https://zxart.ee/file/id:56772/filename:Unknown_-_Gunfright_-_Title_%28Beeper%29_1_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gunfright.gif
+Gunsmoke	https://zxart.ee/file/id:55778/filename:Gominolas_-_Gunsmoke_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Desperado_2.gif
+Gutz	https://zxart.ee/file/id:55080/filename:Keith_Tinman_-_Gutz_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gutz.gif
+Gyroscope	https://zxart.ee/file/id:55137/filename:Mark_Alexander_-_Gyroscope_-_Title_01_%28Beeper%29_1_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gyroscope.gif
+Gyruss	https://zxart.ee/file/id:55187/filename:Unknown_-_Gyruss.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gyruss.gif
+HELLFIRE	https://zxart.ee/file/id:66124/filename:Davos_-_HELLFIRE_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hellfire.gif
+HORSES	https://zxart.ee/file/id:69803/filename:Graf_-_HORSES_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Horses(RacePredictions).gif
+HadesNebula	https://zxart.ee/file/id:56330/filename:David_Whittaker_-_HadesNebula_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/HadesNebula.gif
+Havoc	https://zxart.ee/file/id:80377/filename:Sonic_Graffiti_-_Havoc_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Havoc.gif
+Heartbroken	https://zxart.ee/file/id:56332/filename:Adrian_R._Shaw_-_Heartbroken_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Heartbroken.gif
+Heartbroken	https://zxart.ee/file/id:63088/filename:Adrian_R._Shaw_-_Heartbroken_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Heartbroken.gif
+Heartland	https://zxart.ee/file/id:56223/filename:Keith_Tinman_-_Heartland_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Heartland.gif
+Heritage	https://zxart.ee/file/id:364531/filename:aGGreSSor_-_Heritage_%282021%29_%28Chaos_Constructions_Summer_2021%2C_5%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Heritage.gif
+Hero	https://zxart.ee/file/id:77869/filename:Rad_-_Hero_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/H.E.R.O..gif
+HisTorY	https://music.zxart.ee/music/60345_DJ_Mel_Cj_Le0_HisTorY.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/History.gif
+HistOrY	https://zxart.ee/file/id:74463/filename:MmcM_-_HistOrY_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/History.gif
+Hostages	https://zxart.ee/file/id:56264/filename:Alberto_Gonzalez_-_Hostages_-_Intro_%28AY%29_1_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hostages.gif
+Hotshot	https://zxart.ee/file/id:62002/filename:Unknown_-_Hotshot_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hotshot.gif
+HowToBeACompleteBastard	https://zxart.ee/file/id:55892/filename:Unknown_-_HowToBeACompleteBastard_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/HowToBeACompleteBastard.gif
+Humphrey	https://zxart.ee/file/id:55792/filename:Unknown_-_Humphrey_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Humphrey.gif
+Hunchback	https://zxart.ee/file/id:55006/filename:Christian_F._Urquhart_-_Hunchback_-_Start_%28Beeper%29_1_%281984%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hunchback.gif
+Hydrofool (AY)	https://zxart.ee/file/id:56657/filename:Rob_Hubbard_-_Hydrofool_-_In-Game_%28AY%29_2_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hydrofool.gif
+Hydrofool (Beeper)	https://zxart.ee/file/id:55930/filename:Rob_Hubbard_-_Hydrofool_-_Title_%28Beeper%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hydrofool.gif
+Hypaball	https://zxart.ee/file/id:56418/filename:Keith_Tinman_-_Hypaball_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hypaball.gif
+HyperActive	https://zxart.ee/file/id:54998/filename:Keith_Tinman_-_HyperActive_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/HyperActive.gif
+HyperLane (AY)	https://zxart.ee/file/id:56386/filename:Andy_Brown_-_HyperLane_-_Title_%28AY%29_1_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hyperlane%2B.gif
+HyperLane (Beeper)	https://zxart.ee/file/id:57084/filename:Andy_Brown_-_HyperLane_-_Title_%28Beeper%29_2_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hyperlane%2B.gif
+Hyperlane	https://zxart.ee/file/id:70374/filename:Hamish_Rust_-_Hyperlane_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hyperlane%2B.gif
+ICEMAN	https://zxart.ee/file/id:72841/filename:Kum_-_ICEMAN_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/IceMan.gif
+INVADERS	https://zxart.ee/file/id:71402/filename:IK_-_INVADERS_%282001%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/Invaders.gif
+INVASION	https://zxart.ee/file/id:66127/filename:Davos_-_INVASION_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/Invasion.gif
+IkariWarriors	https://zxart.ee/file/id:56100/filename:Nick_Jones_-_IkariWarriors_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/IkariWarriors.gif
+Impossamole	https://zxart.ee/file/id:55135/filename:Barry_Leitch_-_Impossamole_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/Impossamole.gif
+Inferno	https://zxart.ee/file/id:65644/filename:Dee.jay.slee_-_Inferno_%282002%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/Inferno.gif
+Interchange	https://zxart.ee/file/id:83604/filename:Zhenya_-_Interchange_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/InsectorHectiInTheInterchange.gif
+InternationalKarate+	https://zxart.ee/file/id:56382/filename:Rob_Hubbard_-_InternationalKarate%2B_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/InternationalKarate.gif
+Invasion	https://zxart.ee/file/id:73883/filename:Loner_-_Invasion_%282001%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/Invasion.gif
+Invasion	https://zxart.ee/file/id:79138/filename:Sairoos_-_Invasion_%281999%29.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/Invasion.gif
+JACKAL	https://zxart.ee/file/id:63385/filename:Bazofft_-_JACKAL.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/Jackal.gif
+JACKPOT	https://music.zxart.ee/music/88551_K_Den_JACKPOT.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/Jackpot_3.gif
+JOKER	https://zxart.ee/file/id:73045/filename:Kurt_-_JOKER.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/Joker.gif
+JetSetWilly(Rob Hubbard)	https://zxart.ee/file/id:83171/filename:X-agon_-_JetSetWilly%28Rob_Hubbard%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/JetSetWilly.gif
+Joker	https://zxart.ee/file/id:65651/filename:Dee.jay.slee_-_Joker.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/Joker.gif
+JungleWarrior	https://zxart.ee/file/id:56444/filename:Lete_-_JungleWarrior_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/JungleWarrior.gif
+KING...	https://zxart.ee/file/id:72883/filename:Kum_-_KING....pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DogboyThe(G.I.Games).gif
+KLAD	https://music.zxart.ee/music/193637_Demon_KLAD+unHOBETA.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Klad.gif
+KLAD____	https://music.zxart.ee/music/193638_Demon_KLAD____+unHOBETA.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Klad.gif
+KLIMAX	https://zxart.ee/file/id:69414/filename:fatalsnipe_-_KLIMAX_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Klimax.gif
+KOLOBOK	https://zxart.ee/file/id:67377/filename:Dangerous_-_KOLOBOK_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Kolobok.gif
+KOLOBOK	https://zxart.ee/file/id:72396/filename:KSA_-_KOLOBOK.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Kolobok.gif
+Kaboom!	https://zxart.ee/file/id:55067/filename:Fuxoft_-_Kaboom%21_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Kaboom.gif
+Kamikaze	https://zxart.ee/file/id:61961/filename:Lyndon_Sharp_-_Kamikaze_-_Title_%28AY%29_1_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Kamikaze_2.gif
+Karateka	https://music.zxart.ee/music/513623_Jammer_Karateka.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Karateka.gif
+Klimax	https://zxart.ee/file/id:56432/filename:M.F._Valente_-_Klimax_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Klimax.gif
+Krakout	https://zxart.ee/file/id:55732/filename:Ben_Daglish_-_Krakout_-_Title_%28Beeper%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Krakout.gif
+Krakout	https://zxart.ee/file/id:78147/filename:ROM_Corporation_-_Krakout.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Krakout.gif
+LEVEL5	https://zxart.ee/file/id:66931/filename:Dreamer_-_LEVEL5_%281995%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Level5.gif
+LOST	https://zxart.ee/file/id:83635/filename:Zhenya_-_LOST.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lost.gif
+LSD (Outer Space)	https://zxart.ee/file/id:70099/filename:Gangster_-_LSD_%28Outer_Space%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/L.s.d.(unknown).gif
+Labyrinth	https://zxart.ee/file/id:79025/filename:Soundliner_-_Labyrinth_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Labyrinth_6.gif
+Labyrinth (Black Crow Version)	https://zxart.ee/file/id:79015/filename:Soundliner_-_Labyrinth_%28Black_Crow_Version%29_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Labyrinth_6.gif
+Lancelot	https://zxart.ee/file/id:597067/filename:Beyker_-_Lancelot_%282009%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lancelot.gif
+LastMission	https://zxart.ee/file/id:55571/filename:Unknown_-_LastMission_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LastMission.gif
+Lazerwheel	https://zxart.ee/file/id:55138/filename:Unknown_-_Lazerwheel_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LazerWheel.gif
+LeApfRoG	https://zxart.ee/file/id:364016/filename:Slash_-_LeApfRoG_%282021%29_%28Lost_Party_2021%2C_4%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Leapfrog.gif
+Legend	https://zxart.ee/file/id:79398/filename:Skull_Chaser_-_Legend_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LegendPart1.gif
+LegendOfTheAmazonWomen	https://zxart.ee/file/id:56371/filename:Unknown_-_LegendOfTheAmazonWomen_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LegendOfTheAmazonWomen.gif
+Lemmings	https://music.zxart.ee/music/59382_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59383_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59384_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59385_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59387_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59388_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59389_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59390_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59391_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59392_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59393_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59395_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59396_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59397_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://music.zxart.ee/music/59399_Craig_Turberfield_Lemmings.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Lemmings	https://zxart.ee/file/id:55031/filename:Sound_Images_-_Lemmings_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lemmings.gif
+Leviathan	https://zxart.ee/file/id:55582/filename:David_Whittaker_-_Leviathan_-_Title_%28AY%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Leviathan.gif
+Leviathan	https://zxart.ee/file/id:77366/filename:Qjeta_-_Leviathan.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Leviathan.gif
+Locomotion	https://zxart.ee/file/id:63818/filename:Big_Alec_-_Locomotion.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Loco-Motion.gif
+LodeRunner	https://zxart.ee/file/id:61988/filename:Bach._-_LodeRunner.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LodeRunner.gif
+Lost	https://zxart.ee/file/id:75635/filename:Mr._Beeper_-_Lost_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lost.gif
+Lost	https://zxart.ee/file/id:77930/filename:RCL_-_Lost_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Lost.gif
+Lsd	https://zxart.ee/file/id:82104/filename:Voxon_-_Lsd.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/L.s.d.(unknown).gif
+MASK	https://zxart.ee/file/id:65828/filename:DNK_-_MASK_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MASK.gif
+MATH	https://zxart.ee/file/id:82406/filename:VAD_-_MATH_%282000%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Math_2.gif
+MATRIX	https://zxart.ee/file/id:69095/filename:fatalsnipe_-_MATRIX_%282000%29_%28Twilight_Demoparty_2002%2C_5%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Matrix_3.gif
+MAYHEM	https://zxart.ee/file/id:75422/filename:Mitchell_-_MAYHEM_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mayhem.gif
+MENACE	https://zxart.ee/file/id:71580/filename:Ice%26%23039%3Bn%26%23039%3BGreen_-_MENACE_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Menace(FirebirdSoftwareLtd).gif
+MERLIN	https://zxart.ee/file/id:79253/filename:Slash_-_MERLIN.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Merlin.gif
+METROCROSS	https://zxart.ee/file/id:75467/filename:Moonwalker_-_METROCROSS_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Metro-Cross.gif
+MIDNIGHT	https://music.zxart.ee/music/89128_Reactor_MIDNIGHT.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Midnight.gif
+MIDNIGHT	https://zxart.ee/file/id:69161/filename:fatalsnipe_-_MIDNIGHT.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Midnight.gif
+MINER	https://music.zxart.ee/music/193647_Demon_MINER.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sapper_6.gif
+MORIA	https://zxart.ee/file/id:68427/filename:%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9_%D0%95%D1%84%D1%80%D0%B5%D0%BC%D0%BE%D0%B2_-_MORIA.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Moria.gif
+MORIA	https://zxart.ee/file/id:71385/filename:IK_-_MORIA_%282004%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Moria.gif
+MORIA...	https://zxart.ee/file/id:71378/filename:IK_-_MORIA..._%282002%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Moria.gif
+MOTION	https://zxart.ee/file/id:72832/filename:Kum_-_MOTION_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Motion.gif
+MOUSE	https://zxart.ee/file/id:82415/filename:VAD_-_MOUSE_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mouse.gif
+MRVAIN (Ornament Version)	https://zxart.ee/file/id:82871/filename:Wild_Slyam_-_MRVAIN_%28Ornament_Version%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Vain.gif
+MSX10	https://zxart.ee/file/id:75782/filename:Monster_of_Music_-_MSX10.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MSX10.gif
+MYSTICAL	https://zxart.ee/file/id:82703/filename:Visual_-_MYSTICAL_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mystical.gif
+MagMax	https://zxart.ee/file/id:55742/filename:Unknown_-_MagMax_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MagMax.gif
+Magnetron	https://zxart.ee/file/id:56781/filename:Steve_Turner_-_Magnetron_-_Title_%28Beeper%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Magnetron.gif
+Maniac	https://zxart.ee/file/id:75069/filename:Mast_-_Maniac.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Maniac.gif
+Marauder	https://zxart.ee/file/id:55007/filename:Dave_Rogers_-_Marauder_-_Title_%28AY%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Marauder.gif
+Marine	https://music.zxart.ee/music/88898_David_Willis_Marine.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Marine.gif
+Martianoids	https://zxart.ee/file/id:55893/filename:Unknown_-_Martianoids_-_Title_%28Beeper%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Martianoids.gif
+Masha	https://zxart.ee/file/id:80083/filename:SAS_-_Masha.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Masha.gif
+Mask	https://zxart.ee/file/id:61945/filename:Ben_Daglish_-_Mask.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MASK.gif
+MaskTwo	https://zxart.ee/file/id:56848/filename:Ben_Daglish_-_MaskTwo_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MASKII.gif
+MatriX	https://zxart.ee/file/id:62731/filename:Ahim_-_MatriX_%282004%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Matrix_3.gif
+Matrix	https://zxart.ee/file/id:45192/filename:LaesQ_-_Matrix.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Matrix_3.gif
+Matrix	https://zxart.ee/file/id:75715/filename:Mishel_-_Matrix_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Matrix_3.gif
+Matrix+	https://zxart.ee/file/id:77434/filename:riskej_-_Matrix%2B_%282002%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Matrix_3.gif
+Mayday	https://zxart.ee/file/id:73285/filename:Karo_da_Hodge_-_Mayday_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mayday.gif
+Mayday	https://zxart.ee/file/id:73411/filename:%D0%94%D0%B0%D0%BD%D0%B8%D0%B8%D0%BB_%D0%9A%D0%BE%D1%80%D0%BE%D0%B1%D0%B5%D0%B9%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2_-_Mayday.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mayday.gif
+Meganova	https://zxart.ee/file/id:75357/filename:Megus_-_Meganova_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Meganova.gif
+Megaphoenix (+arpeggios)	https://music.zxart.ee/music/514027_CNGSoft_Megaphoenix___arpeggios_.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Megaphoenix.gif
+Megaphoenix (+glissandos)	https://music.zxart.ee/music/514026_CNGSoft_Megaphoenix___glissandos_.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Megaphoenix.gif
+Megaphoenix (+portamentos)	https://music.zxart.ee/music/514028_CNGSoft_Megaphoenix___portamentos_.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Megaphoenix.gif
+Megaphoenix (+vibratos)	https://music.zxart.ee/music/514029_CNGSoft_Megaphoenix___vibratos_.mp3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Megaphoenix.gif
+Midnight	https://music.zxart.ee/music/59784_Lee_Willis_Midnight.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Midnight.gif
+Midnight	https://zxart.ee/file/id:73271/filename:Karo_da_Hodge_-_Midnight_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Midnight.gif
+Mikie	https://zxart.ee/file/id:69905/filename:Gogin_-_Mikie_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mikie.gif
+MilkyWay2	https://zxart.ee/file/id:82166/filename:Voxon_-_MilkyWay2.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MilkyWay2.gif
+MindTrap	https://zxart.ee/file/id:56847/filename:Vojislav_Mihailovic%2C_Sanja%2C_Sloba_-_MindTrap_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mindtrap.gif
+MissileGroundZero	https://zxart.ee/file/id:55084/filename:Tim_Follin_-_MissileGroundZero_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MissileGroundZero.gif
+MontyOnTheRun	https://zxart.ee/file/id:54987/filename:Unknown_-_MontyOnTheRun_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MontyOnTheRun.gif
+MoonPatrol	https://zxart.ee/file/id:59132/filename:Aki_-_MoonPatrol_%282000%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MoonPatrol.gif
+Moonstrike (AY)	https://zxart.ee/file/id:62239/filename:Unknown_-_Moonstrike_-_In-Game_%28AY%29_2_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MoonStrike.gif
+Moonstrike (Beeper)	https://zxart.ee/file/id:62000/filename:Unknown_-_Moonstrike_-_Title_%28Beeper%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MoonStrike.gif
+MortalKombat	https://zxart.ee/file/id:61948/filename:DNK_-_MortalKombat.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MortalKombat.gif
+Motion!	https://zxart.ee/file/id:44165/filename:Mic_-_Motion%21_%281997%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Motion.gif
+Motos	https://zxart.ee/file/id:55894/filename:Jason_C._Brooke_-_Motos_-_Title_%28AY%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Motos.gif
+MsPacMan	https://zxart.ee/file/id:55693/filename:Unknown_-_MsPacMan_%281984%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Ms.Pac-Man.gif
+MyStIcAl	https://music.zxart.ee/music/58750_Karbofos_MyStIcAl.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mystical.gif
+Mystical	https://zxart.ee/file/id:55830/filename:Alberto_Gonzalez_-_Mystical_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mystical.gif
+NARC	https://zxart.ee/file/id:56351/filename:Sound_Images_-_NARC_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NARC.gif
+NAUTILUS	https://zxart.ee/file/id:75803/filename:MAK_-_NAUTILUS.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OceanConqueror.gif
+NINJA	https://zxart.ee/file/id:73447/filename:Kolesnik_Andrew_-_NINJA_%281994%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Ninja.gif
+NOSFERATU	https://zxart.ee/file/id:82096/filename:Voxon_-_NOSFERATU.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Nosferatu-QuestForTheVampire.gif
+Nautilus	https://zxart.ee/file/id:76999/filename:Phantom_Lord_-_Nautilus.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OceanConqueror.gif
+Nebulus	https://zxart.ee/file/id:56195/filename:Unknown_-_Nebulus_-_Title_%28Beeper%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Nebulus.gif
+Nebulus	https://zxart.ee/file/id:63813/filename:Beyker_-_Nebulus_%282006%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Nebulus.gif
+NemesisTheFinalChallenge	https://zxart.ee/file/id:56403/filename:Unknown_-_NemesisTheFinalChallenge_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Nemesis.gif
+NemesisTheWarlock	https://zxart.ee/file/id:55085/filename:Rob_Hubbard_-_NemesisTheWarlock_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NemesisTheWarlock.gif
+Netherworld (AY)	https://zxart.ee/file/id:55146/filename:Dave_Rogers_-_Netherworld_-_Title_%28AY%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Netherworld.gif
+Netherworld (Beeper)	https://zxart.ee/file/id:55362/filename:Dave_Rogers_-_Netherworld_-_Title_%28Beeper%29_4_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Netherworld.gif
+NightShift	https://zxart.ee/file/id:56833/filename:Dave_Lowe_-_NightShift_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NightShift.gif
+Nightmare	https://zxart.ee/file/id:54376/filename:Vedem_-_Nightmare.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Nightmare.gif
+Northstar	https://zxart.ee/file/id:58693/filename:Cj_Splinter_-_Northstar_%282005%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NorthStar.gif
+Northstar	https://zxart.ee/file/id:61975/filename:Ben_Daglish_-_Northstar_-_Title_%28Beeper%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/NorthStar.gif
+ORION	https://zxart.ee/file/id:68162/filename:Exalot_-_ORION_%281995%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/Orion_2.gif
+Obliterator	https://zxart.ee/file/id:56368/filename:Unknown_-_Obliterator_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/Obliterator.gif
+Odyssey1	https://zxart.ee/file/id:79189/filename:Shov_-_Odyssey1_%281997%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/Odyssey1(SoftstoneLtd).gif
+OlliAndLissa	https://zxart.ee/file/id:56182/filename:Jerry_Astley_-_OlliAndLissa_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OlliAndLissa.gif
+OrientalHero	https://zxart.ee/file/id:54994/filename:Tommy_Gardh_-_OrientalHero_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OrientalHero.gif
+Orion (2 chanels)	https://zxart.ee/file/id:597055/filename:Beyker_-_Orion_%282_chanels%29_%282005%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/Orion_2.gif
+Outrun	https://zxart.ee/file/id:327085/filename:DJ_Max_-_Outrun_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OutRun.gif
+Outrun!	https://music.zxart.ee/music/59633_Sean_Bernard_Outrun_.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OutRun.gif
+PAng	https://zxart.ee/file/id:56901/filename:Unknown_-_PAng_-_Paris_%26_Maya_%28AY%29_9_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pang.gif
+PITON	https://zxart.ee/file/id:80177/filename:Surgeon_-_PITON_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Python.gif
+PLEXAR	https://music.zxart.ee/music/89101_UCom_PLEXAR.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Plexar.gif
+POPS	https://zxart.ee/file/id:72868/filename:Kum_-_POPS_%281995%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pops.gif
+PREDATOR	https://zxart.ee/file/id:77242/filename:Predator_-_PREDATOR_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Predator.gif
+PROTRACKER	https://zxart.ee/file/id:65431/filename:Dexter_-_PROTRACKER_%281999%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/ProTrackerV3.51.gif
+PacLand	https://zxart.ee/file/id:56228/filename:Jason_C._Brooke_-_PacLand_-_Start_%28AY%29_1_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pac-Land.gif
+Pacman (Title Tune)	https://music.zxart.ee/music/59644_ESI_Pacman__Title_Tune_.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pac-Man.gif
+Pang	https://zxart.ee/file/id:56237/filename:Unknown_-_Pang_-_Intro_%28AY%29_1_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pang.gif
+Passiance	https://zxart.ee/file/id:78912/filename:Sauron_-_Passiance_%281995%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Passiance.gif
+Peking	https://zxart.ee/file/id:370021/filename:Royal_-_Peking_%281994%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Peking.gif
+Pentagram	https://zxart.ee/file/id:56110/filename:Unknown_-_Pentagram_-_Title_%28Beeper%29_1_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pentagram.gif
+PercyThePottyPigeon	https://zxart.ee/file/id:56247/filename:Unknown_-_PercyThePottyPigeon_%281984%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PercyThePottyPigeon.gif
+Phantomas	https://zxart.ee/file/id:61984/filename:Unknown_-_Phantomas_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Phantomas.gif
+Pirate	https://zxart.ee/file/id:65232/filename:Demiurge_Ash_-_Pirate_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pirate.gif
+Pirates	https://zxart.ee/file/id:63811/filename:Beyker_-_Pirates_%282006%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pirates.gif
+Platoon (AY)	https://zxart.ee/file/id:56355/filename:David_Whittaker_-_Platoon_-_Title_%28AY%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Platoon.gif
+Platoon (Beeper)	https://zxart.ee/file/id:62107/filename:David_Whittaker_-_Platoon_-_Title_%28Beeper%29_8_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Platoon.gif
+Plotting	https://zxart.ee/file/id:55069/filename:Sean_Conran_-_Plotting_-_Title_%28AY%29_1_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Plotting.gif
+Plutonia	https://zxart.ee/file/id:75542/filename:Maverick_-_Plutonia_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Plutonia.gif
+Podraz3	https://zxart.ee/file/id:55850/filename:Fuxoft_-_Podraz3_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Podraz3.gif
+PondlifePreview	https://zxart.ee/file/id:59205/filename:Gasman_-_PondlifePreview_%281997%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PondlifePreview.gif
+Popeye	https://zxart.ee/file/id:65088/filename:Ch41ns4w_-_Popeye_%282007%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Popeye(AlternativeSoftwareLtd).gif
+Potsworth	https://zxart.ee/file/id:55000/filename:Mark_Cooksey_-_Potsworth_-_Title_%28AY%29_1_%281992%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PotsworthCo..gif
+PowerPlay	https://zxart.ee/file/id:61969/filename:Mike_Brown%2C_Andy_Severn_-_PowerPlay_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Powerplay.gif
+Powerdrift	https://zxart.ee/file/id:56845/filename:Dave_Lowe_-_Powerdrift_-_Title_%28AY%29_1_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PowerDrift.gif
+Predator	https://zxart.ee/file/id:73557/filename:KAA_-_Predator.psc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Predator.gif
+PrinceOfPersia	https://zxart.ee/file/id:55056/filename:D.J.Musicsoft_-_PrinceOfPersia_%281996%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PrinceOfPersia.gif
+Print	https://zxart.ee/file/id:47037/filename:AER_-_Print_%282014%29_%28DiHalt_2014%2C_1%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Print.gif
+Prohibition	https://zxart.ee/file/id:56230/filename:Unknown_-_Prohibition_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Prohibition.gif
+Projectx	https://zxart.ee/file/id:64313/filename:Cj_Echo_-_Projectx_%282002%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/ProjectX.gif
+Pssst	https://zxart.ee/file/id:55118/filename:Unknown_-_Pssst_%281983%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pssst.gif
+Pulsator	https://zxart.ee/file/id:55015/filename:Mark_Alexander_-_Pulsator_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pulsator.gif
+Pulsoid	https://zxart.ee/file/id:56893/filename:Tiny_Williams_-_Pulsoid_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pulsoids.gif
+PurpleSaturnDay	https://zxart.ee/file/id:56462/filename:Stephane_Picq_-_PurpleSaturnDay_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/PurpleSaturnDay.gif
+Pyjamarama!	https://zxart.ee/file/id:589114/filename:nq_-_Pyjamarama%21_%282026%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pyjamarama.gif
+Pyjamarama!	https://zxart.ee/file/id:61990/filename:Unknown_-_Pyjamarama%21_-_Title_01_%28Beeper%29_1_%281984%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pyjamarama.gif
+QUEST	https://zxart.ee/file/id:66951/filename:Dreamer_-_QUEST_%281995%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/q/gif/QuestAdventure.gif
+Quazatron	https://zxart.ee/file/id:56773/filename:Steve_Turner_-_Quazatron_-_Title_%28Beeper%29_1_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/q/gif/Quazatron.gif
+Quest	https://zxart.ee/file/id:77021/filename:Phantom_Lord_-_Quest_%281999%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/q/gif/QuestAdventure.gif
+RAMPARTS	https://zxart.ee/file/id:66906/filename:Dreamer_-_RAMPARTS_%281994%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Ramparts.gif
+RAMPARTS (Faultless Version)	https://zxart.ee/file/id:66910/filename:Dreamer_-_RAMPARTS_%28Faultless_Version%29_%281994%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Ramparts.gif
+RASPUTIN	https://zxart.ee/file/id:66036/filename:Davos_-_RASPUTIN.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rasputin.gif
+RASPUTIN	https://zxart.ee/file/id:83263/filename:PKM_-_RASPUTIN_%281994%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rasputin.gif
+RENEGADE	https://zxart.ee/file/id:74292/filename:Monohrom_-_RENEGADE.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Renegade.gif
+ROBO	https://zxart.ee/file/id:74090/filename:Mic_-_ROBO_%281996%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Robo.gif
+ROBO	https://zxart.ee/file/id:75688/filename:Midnight_Shadow_-_ROBO.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Robo.gif
+ROBOCOP	https://zxart.ee/file/id:73950/filename:Lob_-_ROBOCOP.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop.gif
+ROBOCOP (orig)	https://zxart.ee/file/id:73117/filename:Kyv_-_ROBOCOP_%28orig%29_%282005%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop.gif
+ROBOCOP3	https://zxart.ee/file/id:68379/filename:Em%28022000%29_-_ROBOCOP3_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop3.gif
+ROBOCOP3	https://zxart.ee/file/id:73073/filename:Klav_-_ROBOCOP3.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop3.gif
+ROBOCOP3	https://zxart.ee/file/id:76031/filename:Megabyte_-_ROBOCOP3.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop3.gif
+ROBOT	https://music.zxart.ee/music/359908_Gex_ROBOT.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Robo.gif
+RODLAND	https://zxart.ee/file/id:73445/filename:Kolesnik_Andrew_-_RODLAND_%281994%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rod-Land.gif
+Ragnablock (Get Ready)	https://zxart.ee/file/id:63815/filename:Beyker_-_Ragnablock_%28Get_Ready%29_%282006%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Ragnablock.gif
+Ragnablock (Hi-Scores)	https://zxart.ee/file/id:597060/filename:Beyker_-_Ragnablock_%28Hi-Scores%29_%282006%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Ragnablock.gif
+Ram	https://zxart.ee/file/id:56443/filename:TPM_-_Ram_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/R.A.M..gif
+Ramparts	https://zxart.ee/file/id:62374/filename:Avatar_-_Ramparts_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Ramparts.gif
+Ramparts	https://zxart.ee/file/id:76044/filename:%D0%90%D0%BD%D0%B4%D1%80%D0%B5%D0%B9_%D0%9C%D0%B0%D0%BA%D0%B0%D1%80%D0%B5%D0%B2%D0%B8%D1%87_-_Ramparts_%281996%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Ramparts.gif
+Rasterscan	https://zxart.ee/file/id:55797/filename:Jason_C._Brooke_-_Rasterscan_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rasterscan.gif
+Rat	https://zxart.ee/file/id:78449/filename:rnR_T.A.D._7D9_-_Rat_%282006%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rat.gif
+RawRecruit	https://zxart.ee/file/id:45247/filename:TDM_-_RawRecruit_%281999%29_%28Doxycon_1999%2C_7%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RawRecruit.gif
+Rectime6	https://zxart.ee/file/id:70893/filename:Ironman_-_Rectime6_%281995%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RecTime6.gif
+RedHeat	https://zxart.ee/file/id:56944/filename:Keith_Tinman_-_RedHeat_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RedHeat.gif
+Redheat	https://zxart.ee/file/id:71003/filename:Ironman_-_Redheat_%281995%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RedHeat.gif
+Reflections	https://zxart.ee/file/id:385932/filename:Charlie_-_Reflections_%282022%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Reflections(ForwardSoftware).gif
+Renegade	https://zxart.ee/file/id:45249/filename:TDM_-_Renegade_%281998%29_%28Doxycon_1998%2C_3%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Renegade.gif
+Renegade (AY)	https://zxart.ee/file/id:55105/filename:Fred_Gray_-_Renegade_-_TitleHi-Score_%28AY%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Renegade.gif
+Renegade (Beeper)	https://zxart.ee/file/id:55392/filename:Fred_Gray_-_Renegade_-_TitleHi-Score_%28Beeper%29_12_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Renegade.gif
+Resound1	https://zxart.ee/file/id:77903/filename:Rst7_-_Resound1.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Resound1.gif
+Robocop	https://zxart.ee/file/id:56435/filename:Jonathan_Dunn_-_Robocop_-_Title_%28AY%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop.gif
+Robocop	https://zxart.ee/file/id:75339/filename:Megus_-_Robocop_%282000%29_%28Phat0%2C_15%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop.gif
+Robocop3	https://zxart.ee/file/id:73065/filename:Klav_-_Robocop3.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboCop3.gif
+Robot	https://zxart.ee/file/id:82928/filename:Wally_-_Robot_%282001%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Mr.Robo.gif
+Robozone	https://zxart.ee/file/id:56930/filename:Sound_Images_-_Robozone_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Robozone.gif
+RollerCoaster	https://zxart.ee/file/id:56410/filename:S._Brockelhurst_-_RollerCoaster_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RollerCoaster.gif
+RoundTheBend!	https://zxart.ee/file/id:55691/filename:David_Sanders_-_RoundTheBend%21_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoundTheBend.gif
+Rygar	https://zxart.ee/file/id:351069/filename:Lion_Killer_-_Rygar_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Rygar.gif
+SAMPLER	https://zxart.ee/file/id:68345/filename:Eastman_-_SAMPLER_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sampler_2.gif
+SAMURAI	https://zxart.ee/file/id:71058/filename:Ironman_-_SAMURAI.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Samurai.gif
+SCREEN-	https://zxart.ee/file/id:597565/filename:dvsn_-_SCREEN-_%282025%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Screen.gif
+SEWERAGE	https://zxart.ee/file/id:377126/filename:Laser_Genius_-_SEWERAGE_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sewerage.gif
+SHERLOCK	https://zxart.ee/file/id:63052/filename:%D0%AD%D0%BB%D1%8C%D0%B4%D0%B0%D1%80_%D0%90%D0%B3%D0%B0%D0%B5%D0%B2_-_SHERLOCK.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sherlock.gif
+SHERWOOD	https://zxart.ee/file/id:83016/filename:X-Raizor_-_SHERWOOD_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sherwood.gif
+SHITHEAD	https://zxart.ee/file/id:74849/filename:Midisoft_-_SHITHEAD_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Shithead.gif
+SKYWAY (DEMON)	https://zxart.ee/file/id:65583/filename:Demon_-_SKYWAY_%28DEMON%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Skyway.gif
+SLYSPY	https://zxart.ee/file/id:78013/filename:Royal_Software_-_SLYSPY.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SlySpy-SecretAgent.gif
+SNOOPY	https://zxart.ee/file/id:83641/filename:Zhenya_-_SNOOPY.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Snoopy.gif
+SOVIET	https://zxart.ee/file/id:78709/filename:Stas_-_SOVIET.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Soviet.gif
+SPIDER	https://zxart.ee/file/id:47820/filename:Hacker_VBI_-_SPIDER_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Spider_2.gif
+SPIRITS	https://zxart.ee/file/id:66941/filename:Dreamer_-_SPIRITS_%281995%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Spirits.gif
+STARWARS	https://zxart.ee/file/id:66068/filename:Davos_-_STARWARS_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+STARWARS	https://zxart.ee/file/id:74241/filename:MadMax_-_STARWARS_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+STORMLORD	https://zxart.ee/file/id:72283/filename:KSA_-_STORMLORD.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stormlord.gif
+SWIV	https://zxart.ee/file/id:55630/filename:Sound_Images_-_SWIV_-_Title_%28AY%29_1_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SWIV.gif
+Saboteur	https://zxart.ee/file/id:56289/filename:Unknown_-_Saboteur_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Saboteur.gif
+Saboteur	https://zxart.ee/file/id:70993/filename:Ironman_-_Saboteur_%281995%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Saboteur.gif
+Sabrina	https://zxart.ee/file/id:61954/filename:Julio_Carlos_Rodriguez%2C_Jesus_Vicente_Aranda_-_Sabrina_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sabrina.gif
+Santa	https://zxart.ee/file/id:76880/filename:Panda_-_Santa.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Santa.gif
+Sanxion	https://music.zxart.ee/music/59599_Roger_Hartley_Sanxion.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sanxion.gif
+Sanxion	https://zxart.ee/file/id:192567/filename:Bonysoft_-_Sanxion_%282017%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sanxion.gif
+Sanxion	https://zxart.ee/file/id:71036/filename:Ironman_-_Sanxion_%281995%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sanxion.gif
+Sanxion (AY)	https://zxart.ee/file/id:55685/filename:Wally_Beben_-_Sanxion_-_Title_%28AY%29_1_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sanxion.gif
+Sanxion (Beeper)	https://zxart.ee/file/id:56018/filename:Wally_Beben_-_Sanxion_-_Title_%28Beeper%29_3_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sanxion.gif
+Satan (release by MKHG)	https://zxart.ee/file/id:413819/filename:Raiden_-_Satan_%28release_by_MKHG%29_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Satan.gif
+Satan (release by MKHG)	https://zxart.ee/file/id:413820/filename:Raiden_-_Satan_%28release_by_MKHG%29_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Satan.gif
+Satan (release by MKHG)	https://zxart.ee/file/id:413821/filename:Raiden_-_Satan_%28release_by_MKHG%29_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Satan.gif
+Satan (release by MKHG)	https://zxart.ee/file/id:413822/filename:Raiden_-_Satan_%28release_by_MKHG%29_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Satan.gif
+Savage	https://zxart.ee/file/id:56265/filename:Jas_C._Brooke_-_Savage_-_Intro_%28Beeper%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Savage.gif
+Savage	https://zxart.ee/file/id:63105/filename:Bell_-_Savage.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Savage.gif
+Savage	https://zxart.ee/file/id:65911/filename:Doc_-_Savage.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Savage.gif
+Savage	https://zxart.ee/file/id:80790/filename:Renegade_-_Savage.tfe	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Savage.gif
+Scramble	https://zxart.ee/file/id:71353/filename:IK_-_Scramble_%282002%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Scramble.gif
+Seahawk	https://zxart.ee/file/id:55681/filename:Adrian_R._Shaw_-_Seahawk_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Seahawk.gif
+Sextris	https://zxart.ee/file/id:76829/filename:Panda_-_Sextris_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sextris.gif
+ShanghaiKarate	https://zxart.ee/file/id:56852/filename:Mike_Brown%2C_Andy_Severn_-_ShanghaiKarate_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/ShanghaiKarate.gif
+Shark	https://zxart.ee/file/id:194776/filename:Ian_Sheridan%2C_Andy_Severn_-_Shark_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Shark.gif
+Shark	https://zxart.ee/file/id:63807/filename:Baloo_-_Shark_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Shark.gif
+Shark	https://zxart.ee/file/id:64872/filename:Caliph_-_Shark.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Shark.gif
+Sherlock	https://zxart.ee/file/id:75095/filename:Mast_-_Sherlock.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sherlock.gif
+Shiza	https://zxart.ee/file/id:76903/filename:Phantom_Lord_-_Shiza.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Shiza.gif
+ShowJumping	https://zxart.ee/file/id:55817/filename:Unknown_-_ShowJumping_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/ShowJumping.gif
+SilentShadow	https://zxart.ee/file/id:55141/filename:Gominolas_-_SilentShadow_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SilentShadow.gif
+Silkworm	https://music.zxart.ee/music/59592_Stefan_Drissen_Silkworm.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Silkworm.gif
+Silkworm	https://zxart.ee/file/id:55637/filename:Barry_Leitch_-_Silkworm_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Silkworm.gif
+Sirius	https://zxart.ee/file/id:72568/filename:luchibobra_-_Sirius_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sirius.gif
+Sirius	https://zxart.ee/file/id:79507/filename:Sirius_-_Sirius.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sirius.gif
+SlIdErS.	https://zxart.ee/file/id:78671/filename:oisee_-_SlIdErS._%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sliders.gif
+Sliders	https://zxart.ee/file/id:75626/filename:Mr._Beeper_-_Sliders_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sliders.gif
+Snap!	https://music.zxart.ee/music/523102_Cooper_Snap_.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CrackCity.gif
+Snare	https://zxart.ee/file/id:55052/filename:Andy_Brown_-_Snare_%281992%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Snare(different).gif
+Sokoban	https://zxart.ee/file/id:56159/filename:Agent-X_-_Sokoban_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sokoban_3.gif
+Solaris	https://zxart.ee/file/id:597062/filename:Beyker_-_Solaris_%282007%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Solaris_2.gif
+Solaris	https://zxart.ee/file/id:70970/filename:Ironman_-_Solaris_%281995%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Solaris_2.gif
+SoldierOfFortune	https://zxart.ee/file/id:56161/filename:Steve_Turner_-_SoldierOfFortune_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SoldierOfFortune.gif
+Soldiers	https://music.zxart.ee/music/59493_Bob_Brunsden_Soldiers.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Soldiers.gif
+Solitaire (Game Music)	https://music.zxart.ee/music/59444_Unknown_Solitaire__Game_Music_.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Solitaire.gif
+Solo	https://zxart.ee/file/id:65662/filename:Dee.jay.slee_-_Solo.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Solo.gif
+Sos	https://zxart.ee/file/id:65645/filename:Dee.jay.slee_-_Sos_%282002%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SOS.gif
+SpaceCrusade	https://zxart.ee/file/id:77336/filename:Raxoft_-_SpaceCrusade.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SpaceCrusade.gif
+SpaceRaiders	https://zxart.ee/file/id:72042/filename:JeRrS_-_SpaceRaiders_%282005%29.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SpaceRaiders.gif
+Specimen	https://zxart.ee/file/id:56406/filename:Unknown_-_Specimen_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Specimen.gif
+Spellbound	https://zxart.ee/file/id:78350/filename:Rob_Hubbard_-_Spellbound_-_TitleIn-Game_%28AY%29_1_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Spellbound.gif
+Sputnik	https://zxart.ee/file/id:56304/filename:Unknown_-_Sputnik_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sputnik.gif
+Squards	https://zxart.ee/file/id:62399/filename:Alos_Jnr_-_Squards.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Squards.gif
+StainlessSteel	https://zxart.ee/file/id:55160/filename:Nick_Jones_-_StainlessSteel_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StainlessSteel.gif
+StarBowls	https://zxart.ee/file/id:55151/filename:Unknown_-_StarBowls_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarBowls.gif
+StarByte	https://zxart.ee/file/id:55123/filename:Unknown_-_StarByte_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Starbyte.gif
+StarFirebirds	https://zxart.ee/file/id:55775/filename:Tim_Follin_-_StarFirebirds_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarFirebirds.gif
+StarWars	https://zxart.ee/file/id:56180/filename:David_Whittaker_-_StarWars_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+StarWars	https://zxart.ee/file/id:70120/filename:Hazard_-_StarWars.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+StarWars	https://zxart.ee/file/id:75009/filename:Mast_-_StarWars_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+Stardust	https://zxart.ee/file/id:56199/filename:Martin_Gonzalo%2C_Gominolas_-_Stardust_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stardust.gif
+Starfox	https://zxart.ee/file/id:61989/filename:Fuxoft_-_Starfox_-_Title_%28Beeper%29_1.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Starfox.gif
+Starglider	https://zxart.ee/file/id:54989/filename:Dave_Lowe_-_Starglider_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Starglider.gif
+Startrek	https://music.zxart.ee/music/59464_John_Hutchings_Startrek.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarTrek_2.gif
+Startrip	https://zxart.ee/file/id:63792/filename:Jaroslaw_Byrczynski_-_Startrip_%281990%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarTrip(different).gif
+Starwars! (Lyra II Megademo)	https://music.zxart.ee/music/59653_ESI_Starwars___Lyra_II_Megademo_.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+StormLord	https://zxart.ee/file/id:59115/filename:Aki_-_StormLord_%281999%29_%28Doxycon_1999%2C_5%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stormlord.gif
+Stormbringer	https://zxart.ee/file/id:56266/filename:David_Whittaker_-_Stormbringer_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stormbringer.gif
+Stormlord (AY)	https://zxart.ee/file/id:55821/filename:Dave_Rogers_-_Stormlord_-_Title_%28AY%29_1_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stormlord.gif
+Stormlord (Beeper)	https://zxart.ee/file/id:56511/filename:Dave_Rogers_-_Stormlord_-_Title_%28Beeper%29_18_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stormlord.gif
+Strike	https://zxart.ee/file/id:56436/filename:Jason_C._Brooke_-_Strike_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Strike.gif
+StrikeForceSAS	https://zxart.ee/file/id:56434/filename:Nick_Jones_-_StrikeForceSAS_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StrikeForceSAS.gif
+StripLogik	https://zxart.ee/file/id:55836/filename:Unknown_-_StripLogik_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StripLogik.gif
+StuntmanSeymour	https://zxart.ee/file/id:56933/filename:Tau_Zero%2C_Gerard_Gourley_-_StuntmanSeymour_%281992%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StuntmanSeymour.gif
+SubterraneanStryker	https://zxart.ee/file/id:55607/filename:Tim_Follin_-_SubterraneanStryker_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SubterraneanStryker.gif
+Subway	https://zxart.ee/file/id:53757/filename:Ashnar_-_Subway_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Subway.gif
+Subway	https://zxart.ee/file/id:90525/filename:Alex_Rostov_-_Subway_%282009%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Subway.gif
+SuperNova	https://zxart.ee/file/id:56357/filename:Unknown_-_SuperNova_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Supernova(PlayersSoftware).gif
+Survivor	https://zxart.ee/file/id:56176/filename:Gominolas_-_Survivor_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Survivor(USGoldLtd).gif
+Switchblade	https://zxart.ee/file/id:44550/filename:Ben_Daglish_-_Switchblade_-_Title_%28AY%29_1_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Switchblade.gif
+SwordSlayer	https://zxart.ee/file/id:56843/filename:Mike_Brown%2C_Andy_Severn_-_SwordSlayer_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SwordSlayer.gif
+TANK	https://zxart.ee/file/id:69654/filename:Fox_Fluffy%26%23039%3Bs_-_TANK.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tank.gif
+TARGET	https://zxart.ee/file/id:60800/filename:Moran_-_TARGET_%282001%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Target.gif
+TERRAMEX	https://zxart.ee/file/id:66151/filename:Davos_-_TERRAMEX_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Terramex.gif
+TETRIS-	https://zxart.ee/file/id:549838/filename:dvsn_-_TETRIS-.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris_2.gif
+TETRIS..	https://zxart.ee/file/id:575049/filename:dvsn_-_TETRIS.._%282025%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris_2.gif
+THEIR	https://zxart.ee/file/id:75941/filename:Megabyte_-_THEIR.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Their.gif
+TITANIC	https://zxart.ee/file/id:66054/filename:Davos_-_TITANIC.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Titanic(YesSoftware).gif
+TITANIC	https://zxart.ee/file/id:67630/filename:Dr.Mind_-_TITANIC.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Titanic(YesSoftware).gif
+TITANIC!	https://zxart.ee/file/id:74847/filename:Midisoft_-_TITANIC%21_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Titanic(YesSoftware).gif
+TRANTOR	https://zxart.ee/file/id:370198/filename:Rted%2C_Bumerang_Co%2C_%D0%92%D0%B8%D1%82%D0%B0%D0%BB%D0%B8%D0%B9_%D0%91%D0%B5%D0%BB%D1%8F%D0%B5%D0%B2%2C_Alex%2C_Stas_-_TRANTOR.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Trantor-TheLastStormtrooper.gif
+TRAP	https://zxart.ee/file/id:400337/filename:aGGreSSor_-_TRAP_%282023%29_%28DiHalt_2023%2C_9%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Trap.gif
+TRON	https://zxart.ee/file/id:67102/filename:DJ_AVO_-_TRON.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/e/gif/Escape-MCP.gif
+TUAREG	https://zxart.ee/file/id:73006/filename:Kurt_-_TUAREG.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tuareg.gif
+TaiPan	https://zxart.ee/file/id:61956/filename:Peter_Clarke_-_TaiPan_-_Title_%28AY%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tai-Pan.gif
+TakeIt	https://zxart.ee/file/id:64607/filename:Cobra_-_TakeIt_%281996%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TakeIt.gif
+Talisman	https://zxart.ee/file/id:66517/filename:Ded_Smirnoff_-_Talisman.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Talisman.gif
+Tank	https://zxart.ee/file/id:70856/filename:Ironman_-_Tank_%281995%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tank.gif
+Tarzan	https://zxart.ee/file/id:55059/filename:Rob_Hubbard_-_Tarzan_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tarzan_2.gif
+Technodrom	https://zxart.ee/file/id:62496/filename:Andy_Fer_-_Technodrom_%281996%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Technodrom.gif
+TeenageMutantHeroTurtles	https://zxart.ee/file/id:56415/filename:Sound_Images_-_TeenageMutantHeroTurtles_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TeenageMutantHeroTurtles.gif
+TerraCresta	https://zxart.ee/file/id:77332/filename:Raxoft_-_TerraCresta.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TerraCresta.gif
+Terramex	https://zxart.ee/file/id:56316/filename:Ben_Daglish_-_Terramex_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Terramex.gif
+Tesla	https://zxart.ee/file/id:80373/filename:Silver_-_Tesla.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tesla.gif
+Tetris	https://zxart.ee/file/id:569775/filename:Filippp_-_Tetris_%282025%29_%28Multimatograf_2025%2C_4%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris_2.gif
+Tetris	https://zxart.ee/file/id:74228/filename:MadMax_-_Tetris_%281994%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris_2.gif
+Tetris	https://zxart.ee/file/id:80791/filename:Renegade_-_Tetris.tfe	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris_2.gif
+Tetris (AY)	https://zxart.ee/file/id:55903/filename:David_Whittaker_-_Tetris_-_Title_%28AY%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris_2.gif
+Tetris (Beeper)	https://zxart.ee/file/id:56627/filename:David_Whittaker_-_Tetris_-_Title_%28Beeper%29_4_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris_2.gif
+Tetris2	https://music.zxart.ee/music/88956_Preacher_Tetris2.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris2.gif
+Thanatos (AY)	https://zxart.ee/file/id:72081/filename:Julian_Breeze_-_Thanatos_-_Title_%28AY%29_1_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Thanatos.gif
+Thanatos (Beeper)	https://zxart.ee/file/id:80633/filename:Julian_Breeze_-_Thanatos_-_Title_%28Beeper%29_2_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Thanatos.gif
+TheCube	https://zxart.ee/file/id:76106/filename:Mr._Kid_-_TheCube_%281997%29.sqt	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CubeThe.gif
+Thunderbirds	https://zxart.ee/file/id:55130/filename:Unknown_-_Thunderbirds_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Thunderbirds.gif
+Thundercats	https://zxart.ee/file/id:55750/filename:Rob_Hubbard_-_Thundercats_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Thundercats.gif
+Tilt	https://zxart.ee/file/id:55091/filename:Lyndon_Sharp_-_Tilt_%281990%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tilt.gif
+Timeout	https://zxart.ee/file/id:69696/filename:Flymansoft_-_Timeout_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TimeOut.gif
+Titan	https://zxart.ee/file/id:70085/filename:Gar_-_Titan.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Titan.gif
+Titan	https://zxart.ee/file/id:79041/filename:Soundliner_-_Titan.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Titan.gif
+Titanic	https://zxart.ee/file/id:55726/filename:Gominolas_-_Titanic_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Titanic(YesSoftware).gif
+Titanic (CPC)	https://zxart.ee/file/id:413896/filename:C.D.L._Laboratory%2C_Gominolas_-_Titanic_%28CPC%29_%282017%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Titanic(YesSoftware).gif
+Toobin	https://zxart.ee/file/id:56352/filename:Matt_Furniss_-_Toobin_-_Title_%28AY%29_1_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Toobin.gif
+Track	https://zxart.ee/file/id:82000/filename:Viper_-_Track.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Track.gif
+Trailblazer	https://music.zxart.ee/music/59553_A_Man_in_his_Technoshed_Trailblazer.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Trailblazer.gif
+Trailblazer (AY)	https://zxart.ee/file/id:55683/filename:Unknown_-_Trailblazer_-_TitleIn-Game_%28AY%29_1_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Trailblazer.gif
+Trailblazer (Beeper)	https://zxart.ee/file/id:56016/filename:Unknown_-_Trailblazer_-_Title_%28Beeper%29_2_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Trailblazer.gif
+Transmuter	https://zxart.ee/file/id:56798/filename:David_Whittaker_-_Transmuter_-_Title_%28Beeper%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Transmuter.gif
+Trantor	https://zxart.ee/file/id:44452/filename:David_Whittaker_-_Trantor_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Trantor-TheLastStormtrooper.gif
+Triton	https://zxart.ee/file/id:597063/filename:Beyker_-_Triton_%282007%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Triton.gif
+Troll	https://zxart.ee/file/id:47775/filename:Hacker_VBI_-_Troll_%281995%29.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Troll.gif
+TurboBoatSimulator	https://zxart.ee/file/id:55796/filename:Dave_Rogers_-_TurboBoatSimulator_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TurboBoatSimulator.gif
+Twiinz	https://zxart.ee/file/id:55852/filename:Theo_Develegas_-_Twiinz_%281991%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Twinz.gif
+Twister	https://zxart.ee/file/id:62545/filename:Andy_Fer_-_Twister_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Twister.gif
+Typhoon (AY)	https://zxart.ee/file/id:56186/filename:Jonathan_Dunn_-_Typhoon_-_Title_%28AY%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Typhoon.gif
+Typhoon (Beeper)	https://zxart.ee/file/id:56763/filename:Jonathan_Dunn_-_Typhoon_-_Title_%28Beeper%29_4_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Typhoon.gif
+UFO	https://zxart.ee/file/id:65688/filename:Dron_-_UFO.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/UFO_2.gif
+UFO	https://zxart.ee/file/id:66201/filename:Davos_-_UFO_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/UFO_2.gif
+UNKNOWN	https://zxart.ee/file/id:65971/filename:Davos_-_UNKNOWN.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Unknown.gif
+UNKNOWN	https://zxart.ee/file/id:81600/filename:Terminator_-_UNKNOWN_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Unknown.gif
+Ufo	https://zxart.ee/file/id:68610/filename:Firestarter_-_Ufo_%282002%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/UFO_2.gif
+Unknown	https://zxart.ee/file/id:73671/filename:Kenotron_-_Unknown_%281997%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Unknown.gif
+Unknown	https://zxart.ee/file/id:82021/filename:Viper_-_Unknown_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Unknown.gif
+Unknown (listened by TV)	https://zxart.ee/file/id:69950/filename:George_-_Unknown_%28listened_by_TV%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Unknown.gif
+Urano	https://zxart.ee/file/id:597075/filename:Beyker_-_Urano_%282009%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Urano.gif
+Uridium	https://zxart.ee/file/id:55676/filename:Steve_Turner_-_Uridium_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/Uridium.gif
+VAMPIRE	https://zxart.ee/file/id:62618/filename:ANS_-_VAMPIRE_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Phantomas2.gif
+Vampire	https://zxart.ee/file/id:61971/filename:Unknown_-_Vampire_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Phantomas2.gif
+Vampire (Converted Mod)	https://music.zxart.ee/music/59558_Bob_Brunsden_Vampire__Converted_Mod_.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Phantomas2.gif
+Vectron	https://zxart.ee/file/id:56280/filename:Tim_Follin_-_Vectron_%281985%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Vectron.gif
+Vertigo	https://zxart.ee/file/id:598571/filename:Pator%2C_C-Jeff_-_Vertigo_%282026%29_%28Multimatograf_2026%2C_1%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TunelesMarcianos(Vertigo)(Unique1).gif
+Vindicators	https://zxart.ee/file/id:55871/filename:Dave_Kelly_-_Vindicators_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Vindicators.gif
+Vixen	https://zxart.ee/file/id:56464/filename:Jas_C._Brooke_-_Vixen_-_Title_%28AY%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Vixen.gif
+WALK	https://zxart.ee/file/id:417027/filename:S.A.V._-_WALK_%282008%29_%28DiHalt_2008%2C_3%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Walk.gif
+WALK	https://zxart.ee/file/id:58524/filename:bfox_-_WALK_%282000%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Walk.gif
+WALK	https://zxart.ee/file/id:73922/filename:Les_-_WALK_%281995%29.asc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Walk.gif
+WARCRAFT	https://music.zxart.ee/music/88965_Stack_WARCRAFT.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WarcraftDemo.gif
+WARCRAFT	https://zxart.ee/file/id:82637/filename:Visual_-_WARCRAFT_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WarcraftDemo.gif
+WARLOCK	https://zxart.ee/file/id:72952/filename:Kent_-_WARLOCK.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Warlock.gif
+WARLORD	https://zxart.ee/file/id:66041/filename:Davos_-_WARLORD.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Warlord.gif
+WARROBOT	https://zxart.ee/file/id:66189/filename:Davos_-_WARROBOT.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WarRobot.gif
+WORM	https://zxart.ee/file/id:71577/filename:Ice%26%23039%3Bn%26%23039%3BGreen_-_WORM_%281998%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Worm_2.gif
+Walker	https://zxart.ee/file/id:79855/filename:Specman_-_Walker_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Walker(demo2).gif
+WarCraft	https://zxart.ee/file/id:75002/filename:Mast_-_WarCraft_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WarcraftDemo.gif
+Warlock	https://zxart.ee/file/id:55910/filename:Pennsoft_-_Warlock_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Warlock.gif
+Warlock	https://zxart.ee/file/id:77329/filename:Pennsoft_-_Warlock_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Warlock.gif
+Warlords	https://zxart.ee/file/id:62774/filename:Alex_X_-_Warlords_%281995%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Warlords.gif
+Warzone	https://zxart.ee/file/id:79841/filename:Specman_-_Warzone_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WarZone(CCS).gif
+WereWolvesOfLondon	https://zxart.ee/file/id:55702/filename:Unknown_-_WereWolvesOfLondon_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WerewolvesOfLondon.gif
+Wiz	https://zxart.ee/file/id:54967/filename:Consult_-_Wiz_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Wiz.gif
+Wiz	https://zxart.ee/file/id:82853/filename:Wizard_-_Wiz_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Wiz.gif
+Wizball	https://zxart.ee/file/id:55025/filename:Peter_Clarke_-_Wizball_-_Title_%28AY%29_1_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Wizball.gif
+Wolf	https://zxart.ee/file/id:73951/filename:Listat_-_Wolf_%281996%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Wolf_2.gif
+Worm	https://zxart.ee/file/id:68196/filename:Equator_-_Worm.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Worm_2.gif
+Worms	https://zxart.ee/file/id:75018/filename:Mast_-_Worms_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/WormsDemo_2.gif
+XENOPHOBE	https://zxart.ee/file/id:71557/filename:Ice%26%23039%3Bn%26%23039%3BGreen_-_XENOPHOBE_%281999%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenophobe.gif
+XOR	https://zxart.ee/file/id:54997/filename:Unknown_-_XOR_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/XOR.gif
+XREVERSY	https://zxart.ee/file/id:65792/filename:DNK_-_XREVERSY.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/XreversyDemo.gif
+Xecutor	https://zxart.ee/file/id:55050/filename:Unknown_-_Xecutor_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xecutor.gif
+Xenon	https://zxart.ee/file/id:55698/filename:David_Whittaker_-_Xenon_-_Sector_1_%28AY%29_1_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenon(MastertronicPlus).gif
+Xenophobe	https://zxart.ee/file/id:55165/filename:Barry_Leitch_-_Xenophobe_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenophobe.gif
+Xenophobe  (OPERA 6)	https://zxart.ee/file/id:83443/filename:Znahar_-_Xenophobe__%28OPERA_6%29_%281997%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenophobe.gif
+Xybots	https://zxart.ee/file/id:55013/filename:Matt_Furniss%2C_Ben_Daglish_-_Xybots_%281989%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xybots.gif
+YOLKA98	https://zxart.ee/file/id:83440/filename:Znahar_-_YOLKA98_%281997%29.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/y/gif/Yolka98.gif
+ZOMBI	https://zxart.ee/file/id:71066/filename:Ironman_-_ZOMBI.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zombi.gif
+ZOMBIES	https://zxart.ee/file/id:70124/filename:Hazard_-_ZOMBIES.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/ZombieIsland_2.gif
+ZYBEX	https://zxart.ee/file/id:79418/filename:Shark_-_ZYBEX_%281997%29.pt2	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zybex.gif
+ZZZZ	https://zxart.ee/file/id:71860/filename:JS_Madcap_-_ZZZZ_%281998%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zzzz(ZenobiSoftware).gif
+Zarjas	https://zxart.ee/file/id:56369/filename:Andrew_Cavendish_-_Zarjas_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zarjas.gif
+Zarjas	https://zxart.ee/file/id:63032/filename:Andrew_Cavendish_-_Zarjas_%281988%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zarjas.gif
+Zaxxon	https://zxart.ee/file/id:190949/filename:C-Jeff_-_Zaxxon_%282003%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zaxxon.gif
+Zoids	https://music.zxart.ee/music/203875_Pyramex_Rob_Hubbard_Zoids.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zoids-TheBattleBegins.gif
+Zoids	https://zxart.ee/file/id:60807/filename:Moran_-_Zoids_%282005%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zoids-TheBattleBegins.gif
+Zombi	https://zxart.ee/file/id:82457/filename:VAD_-_Zombi_%282002%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zombi.gif
+Zombies	https://zxart.ee/file/id:73422/filename:%D0%94%D0%B0%D0%BD%D0%B8%D0%B8%D0%BB_%D0%9A%D0%BE%D1%80%D0%BE%D0%B1%D0%B5%D0%B9%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2_-_Zombies.stp	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/ZombieIsland_2.gif
+Zorro	https://zxart.ee/file/id:56361/filename:Unknown_-_Zorro_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zorro(AmericanaSoftwareLtd).gif
+Zub	https://zxart.ee/file/id:55656/filename:David_Whittaker_-_Zub_-_Title_%28AY%29_1_%281986%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zub.gif
+Zub	https://zxart.ee/file/id:69745/filename:Fuxoft_-_Zub_%281987%29.fxm	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zub.gif
+Zybex	https://music.zxart.ee/music/193435_Bonysoft_Zybex.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zybex.gif
+Zybex	https://music.zxart.ee/music/59452_Unknown_Zybex.ogg	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zybex.gif
+Zynaps	https://zxart.ee/file/id:55703/filename:Steve_Turner_-_Zynaps_%281987%29.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/z/gif/Zynaps.gif
+afterburner	https://zxart.ee/file/id:84516/filename:wbcbz7_-_afterburner_%282014%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Afterburner.gif
+circus	https://zxart.ee/file/id:191402/filename:Aki_-_circus_%282017%29_%28Forever_2017_-_Mad_Max_-_The_8-Bit_Road%2C_3%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Circus.gif
+gyruss (sky - toccata and fugue in d minor)	https://zxart.ee/file/id:415048/filename:Grongy_-_gyruss_%28sky_-_toccata_and_fugue_in_d_minor%29_%282023%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gyruss.gif
+jim	https://zxart.ee/file/id:377509/filename:Caliph_-_jim.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/j/gif/JogoDoGalo.gif
+sputnik	https://zxart.ee/file/id:72691/filename:luchibobra_-_sputnik_%281999%29_%28MilleniuM_VP%2C_3%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sputnik.gif
+supersonic	https://zxart.ee/file/id:52778/filename:Voxel_-_supersonic_%282004%29_%28KidSoft_2004%2C_5%29.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SuperSonicV1.01MusicEditorDemo.gif
