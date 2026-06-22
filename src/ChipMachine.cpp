@@ -366,10 +366,12 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
 
     scrollText = "INITIAL_TEXT";
     scrollEffect.set("scrolltext",
-      PROGRAM_NAME " " VERSION_STR
-      " . . type to search, UP/DOWN/ENTER to play"
-      " . . F9 for formats"
-      " . . TAB for all commands . . . .    ");
+      " . . . type to search . . UP/DOWN/ENTER to navigate & play"
+        " . . F9 for all formats"
+        " . . TAB for help . . . "
+        PROGRAM_NAME " " VERSION_STR
+      " . . ."
+    );
     starEffect.fadeIn();
     }
 
