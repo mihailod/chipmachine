@@ -47,6 +47,7 @@ extern "C" {
     void sksplugin_register();     // STarKos / Amstrad CPC (.sks) via Arkos Tracker 3
     void nedplugin_register();     // NerdTracker II / NES (.ned) via blargg Nes_Snd_Emu
     void sccmusixxplugin_register(); // SCC-Musixx / MSX Konami SCC (.SNG) via Z80 + emu2212
+    void copplugin_register();     // Sam Coupe COP / SAA1099 (.cop) via GME Z80 + SAASound
     void playerproplugin_register(); // PlayerPRO / Macintosh tracker (.mad MADG/MADF/MADK) via vendored MADDriver
     void jxsplugin_register();     // JayTrax / cross-platform synth tracker (.jxs) via Rhino's replayer (C port)
     void monotoneplugin_register(); // MONOTONE / PC-speaker tracker (.mon) via vendored PTPlayer (BSD-3)
@@ -98,6 +99,7 @@ void register_plugins() {
     sksplugin_register();
     nedplugin_register();
     sccmusixxplugin_register();
+    copplugin_register();
     playerproplugin_register();
     jxsplugin_register();
     monotoneplugin_register();

@@ -327,6 +327,27 @@ Notice: The original ~1.5 KB Z80 replayer (REPLAY.BIN) is embedded verbatim and
         executed on the GME Z80 core; the Konami SCC is emulated by emu2212
         (MIT, see above). Shipped with attribution to Tyfoon-Software.
 
+Component: SAASound (Philips SAA1099 sound chip emulator, .cop)
+Author: Dave Hooper <dave@beermex.com>, with Simon Owen.
+        https://github.com/stripwax/SAASound
+        Vendored at musicplayer/src/plugins/copplugin/saasound/.
+License: BSD 3-Clause License
+Notice: Used to render the SAM Coupé SAA1099 for the COP player. Two local
+        vendoring changes: disable the optional config-file support (defns.h, to
+        drop the minIni dependency) and declare the volume-boost variable when
+        the config file is off (SAAImpl.cpp).
+
+Component: COP / SAM Coupé player design (modland "Sam Coupe COP", .cop)
+Author: Christopher O'Neill (Deltafire) -- SCPlayer (load/patch/calling
+        convention). https://github.com/Deltafire/SCPlayer
+        E-Tracker replay routine by Ethanol Software Inc (ESI): Maciej J.
+        Woloszyk and Andrzej Siuda; embedded as etracker_bin.h.
+License: SCPlayer library code: MIT (Christopher O'Neill, 2011).
+Notice: The COP player re-implements SCPlayer's format handling driving the
+        commercial-clean GME Z80 core and SAASound (not SCPlayer's own
+        non-commercial Z80 emulator). The ESI E-Tracker replayer (~1.2 KB Z80
+        binary) is embedded verbatim for the E-Tracker data files.
+
 Component: PTPlayer (MONOTONE / Polytone PC-speaker tracker, .mon/.pol)
 Author: Michal Procházka (https://github.com/prochazkaml/PTPlayer); the player
         library for the Polytone tracker, which also loads legacy MONOTONE files.

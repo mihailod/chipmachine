@@ -2,13 +2,10 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-- The 191 modland "Sam Coupe COP" files are a raw-Z80 format our zxtune can't decode (separate from zxart's COP). They now Skip gracefully. -- see if you implement this format
+- IN PROGRESS ..... The 191 modland "Sam Coupe COP" files are a raw-Z80 format our zxtune can't decode (separate from zxart's COP). They now Skip gracefully. -- see if you implement this format
 
-- ability to manually add stuff to database. via a manual.txt file
-
-- ZX Spectrum music from games dear to me: reverse engineer games and produce playback routines that produce music from the game and ship those with the app (local storage, already have for .nsfe). worst case pointers to youtube.
-Your strategy of extracting the routine + data payload, indexing it, booting a minimal emulator stub, and jumping straight to the execution address works perfectly for 48K beeper engines. In fact, it avoids the timing sync issues plaguing AY emulation because the Z80 CPU is the sound synthesizer.
-Also look at the zx repositories below, maybe someone already did this.
+- unify zx into 1 platform, it is impossible to separate
+- ZXART melodies deduping -- collections already work actually and all songs have all subsongs inside!?
 
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 
@@ -117,11 +114,9 @@ The one open replayer, fcatrin/fstr (MIT), is unusable for porting — x86 real-
 product/process
 ===============
 - use some IDE (with integrated AI?) for development?
-- cleanup cmtest 100%
 - move all plugins into musicplayer/src/plugins and unify into one repo, it is becoming silly with clones... and we don't ship anything independently anyway so it is pointless 
 
 major new features
 ==================
-- consolidate all db scripts into one unified?
 - Separate db from code and auto-update db independently from code
 

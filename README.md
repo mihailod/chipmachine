@@ -323,7 +323,7 @@ Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2
 
 Support for additional ZX Spectrum and Sam Coupe formats
 
-Extensions: `.st11` `.cop` `.gtr` `.chi` `.tfe` `.psm` `.ftc`
+Extensions: `.st11` `.gtr` `.chi` `.tfe` `.psm` `.ftc`
 
 ### MDX
 
@@ -450,6 +450,12 @@ Extensions: `.ned`
 Support for **SCC-Musixx**, Tyfoon-Software's 1990 tracker for Konami's SCC wavetable sound chip on the MSX. The original SCC-MUSIXX replay routine runs on an embedded Z80 core, with its SCC register writes driving the emu2212 SCC emulator.
 
 Extensions: `.SNG`
+
+### Sam Coupé (COP)
+
+Support for **Sam Coupé** music (the modland "Sam Coupe COP" corpus) for the Philips SAA1099 sound chip. Each `.cop` file is a SAM Coupé memory image whose Z80 replay routine is either compiled into the song or is the shared E-Tracker player; that original Z80 routine runs on an embedded Z80 core, with its SAA1099 port writes driving Dave Hooper's SAASound emulator. The load and calling convention follow Christopher O'Neill's SCPlayer. (The `.cop` extension is shared with the zxart E-Tracker variant decoded by ZXTune; routing is by content.)
+
+Extensions: `.cop`
 
 ### PlayerPRO (Macintosh)
 

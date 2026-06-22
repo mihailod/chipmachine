@@ -2036,7 +2036,6 @@ TEST_CASE("Ayfly SQT malformed no crash", "[music]")
 TEST_CASE("ZXTune", "[music]")
 {
     testPlugin<musix::ZXTunePlugin>("testmus/st11", ""); // Sound Tracker 1.1
-    testPlugin<musix::ZXTunePlugin>("testmus/cop", "");  // Sam Coupe COP (SAA1099)
     testPlugin<musix::ZXTunePlugin>("testmus/gtr", "");  // Global Tracker (AY)
     testPlugin<musix::ZXTunePlugin>("testmus/chi", "");  // Chip Tracker (DAC)
     testPlugin<musix::ZXTunePlugin>("testmus/tfe", "");  // TFM Music Maker (FM)
@@ -2076,6 +2075,33 @@ TEST_CASE("FTC routing", "[music]")
     }
     REQUIRE(winner == "ZX Spectrum (ZXTune)");
     REQUIRE(musix::AyflyPlugin().canHandle("x.ftc") == false);
+}
+// Sam Coupe COP (the modland "Sam Coupe COP" corpus): SAM Coupé music for the
+// SAA1099, played by running the song's embedded Z80 replayer (or the shared
+// E-Tracker replayer) on the GME Z80 core with Dave Hooper's SAASound. The
+// fixture set covers both layouts: bd/e11 are raw-Z80 "compiled" songs, duck1/
+// duck2 are E-Tracker data files.
+TEST_CASE("Sam Coupe COP", "[music]")
+{
+    testPlugin<musix::CopPlugin>("testmus/cop", "");
+}
+// ".cop" is shared: ZXTune decodes the zxart E-Tracker variant (5-byte header),
+// but the modland corpus (10-byte-header data files + raw-Z80 compiled songs)
+// only plays here. Assert the live registry routes the modland files to
+// CopPlugin and that ZXTune declines them, so neither steals the other's files.
+TEST_CASE("COP routing", "[music]")
+{
+    musix::ChipPlugin::createPlugins("data");
+    auto winner = [](std::string const& file) -> std::string {
+        for (const auto& pl : musix::ChipPlugin::getPlugins()) {
+            if (pl->canHandle(file)) { return pl->name(); }
+        }
+        return "(none)";
+    };
+    REQUIRE(winner("testmus/cop/bd.cop") == "Sam Coupe (COP)");    // compiled
+    REQUIRE(winner("testmus/cop/duck1.cop") == "Sam Coupe (COP)"); // E-Tracker
+    REQUIRE_FALSE(musix::ZXTunePlugin().canHandle("testmus/cop/bd.cop"));
+    REQUIRE_FALSE(musix::ZXTunePlugin().canHandle("testmus/cop/duck1.cop"));
 }
 // .mus is overloaded on modland: UADE's UFO eagleplayer owns the Amiga variant,
 // but the extension is also used by FAC SoundTracker, an MSX PSG format the
@@ -2765,6 +2791,7 @@ TEST_CASE("coverage", "[music]")
         {"STarKos", "testmus/sks"},
         {"NerdTracker2", "testmus/ned"},
         {"SCC-Musixx", "testmus/sccmusixx"},
+        {"Sam Coupe (COP)", "testmus/cop"},
         {"JayTrax", "testmus/jxs"}
     };
 
@@ -2779,10 +2806,11 @@ TEST_CASE("coverage", "[music]")
         // playback tests read.
         {"PxTone Collage Player", {"testmus/ptcop", "testmus/pttune"}},
         // ZXTune handles several ZX/Sam Coupe formats, each under its own
-        // fixture dir: Sound Tracker 1.1, Sam Coupe COP, Global Tracker, Chip
-        // Tracker, TFM Music Maker, and ZX Pro Sound Maker (.psm, routed away
-        // from OpenMPT by content -- see OpenMPTPlugin::canHandle).
-        {"ZX Spectrum (ZXTune)", {"testmus/st11", "testmus/cop", "testmus/gtr",
+        // fixture dir: Sound Tracker 1.1, Global Tracker, Chip Tracker, TFM
+        // Music Maker, and ZX Pro Sound Maker (.psm, routed away from OpenMPT by
+        // content -- see OpenMPTPlugin::canHandle). (Sam Coupe COP .cop is now
+        // handled by CopPlugin -- see pluginDirs above.)
+        {"ZX Spectrum (ZXTune)", {"testmus/st11", "testmus/gtr",
                                   "testmus/chi", "testmus/tfe", "testmus/psm",
                                   "testmus/ftc"}}
     };
