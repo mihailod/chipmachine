@@ -43,11 +43,15 @@ wget --mirror --no-parent --accept "*.zip" \
      --wait=1 --random-wait \
      https://www.smspower.org/Music/
 
-5. Hoot Archive
-URL: ftp://[ftp.modland.com/pub/modules/Hoot/](https://ftp.modland.com/pub/modules/Hoot/) (or community mirrors like [http://snesmusic.org/hoot/vgm/](http://snesmusic.org/hoot/vgm/))
-What it is: Focuses heavily on Japanese PC-88, PC-98, Sharp X68000, and FM-towns game music logs. Essential if you want to dig into the PMD/PMD88 trackers and Yamaha FM-synthesis mastery.
-6. Mirsoft World of Game Mods
 
+5. IN PROGRESS Hoot Archive -- NO... Pivoting to joshw.info.
+https://snesmusic.org/hoot/html/
+Focuses heavily on Japanese PC-88, PC-98, Sharp X68000, and FM-towns game music logs.
+we need to onboard this using archive/wayback links and integrate into formats structure
+Pivoting to joshw.info.........
+
+
+6. Mirsoft World of Game Mods
 URL: [http://www.mirsoft.info](http://www.mirsoft.info)
 What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.
 
@@ -56,7 +60,7 @@ What it is: A massive database specifically tracking down original game tracker 
 8. https://bulba.untergrund.net/music_e.htm
 Maintained by Sergey Bulba (author of Ay_Emul), this archive contains the historic Ironfist collection. Ironfist spent years manually ripping, disassembling, and packaging raw Z80 music engines directly from commercial 48K ZX Spectrum games into clean .ay file structures, complete with initialization addresses and entry vectors.
 
-9. https://zxtunes.com
+9. https://zxtunes.com -- a Russian site
 A massive historical repository of ZX Spectrum chiptunes. While heavily populated by standard AY tracking formats, its index includes extensive mappings of older, undocumented internal-beeper game routines that were ripped and isolated by early scene groups.
 
 10. DONE https://zxart.ee/eng/music/top-100/beeper/
