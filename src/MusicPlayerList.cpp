@@ -274,12 +274,15 @@ bool MusicPlayerList::playFile(utils::path fileName)
 
 void MusicPlayerList::cancelStreaming()
 {
+    LOGD("TEARDOWN: cancelStreaming begin");
     remoteLoader.cancel();
+    LOGD("TEARDOWN: remoteLoader.cancel done");
     // quit() (not clear()) the fifo: if the web thread is blocked in put()
     // feeding a stream we're abandoning, only quitting unblocks it -- otherwise
     // it would wedge curl_multi_perform and stall every transfer. streamFile()
     // allocates a fresh fifo for the next song.
     mp.abortStream();
+    LOGD("TEARDOWN: abortStream done");
 }
 
 // Stream a remote, finite, ffmpeg-decodable file: curl fetches it into a fifo
@@ -288,7 +291,9 @@ void MusicPlayerList::cancelStreaming()
 // player could be created (caller falls back to a direct ffmpeg URL).
 bool MusicPlayerList::streamRemoteFile(const std::string& path)
 {
+    LOGD("TEARDOWN: streamRemoteFile begin %s", path.c_str());
     if (!mp.streamFile(path)) return false;
+    LOGD("TEARDOWN: streamFile created player");
 
     auto weakPlayer = mp.getPlayer();
     auto fifo = mp.getStreamFifo();
@@ -500,6 +505,12 @@ void MusicPlayerList::playCurrent()
     }
 
     auto ext = path_extension(path);
+    // Strip any URL query (".mp3?p=f" -> "mp3") so the streamable test and the
+    // decoder see the real codec. Some podcast feeds (AmigaVibes via podCloud)
+    // append a query to the enclosure URL, which otherwise left ext empty and
+    // dropped the episode onto the no-extension full-download path (no decoder).
+    auto qpos = ext.find('?');
+    if (qpos != std::string::npos) ext = ext.substr(0, qpos);
     makeLower(ext);
 
     detectSilence = true;
@@ -568,23 +579,33 @@ void MusicPlayerList::playCurrent()
     // the direct-ffmpeg-URL path, which handles ICY/redirects/endless streams.
     bool isRadioStream = (toLower(currentInfo.format) == "mp3" ||
                           toLower(currentInfo.format) == "ogg");
-    if (currentInfo.format != "M3U" && (extStreamable || isRadioStream)) {
+    // Podcasts are always streamed (their enclosure URLs sometimes lack a
+    // detectable extension), via the switch-safe streamRemoteFile path below.
+    bool isPodcast = MusicDatabase::classifyFormat(currentInfo.format,
+                                                   currentInfo.path) == PODCAST;
+    if (currentInfo.format != "M3U" &&
+        (extStreamable || isRadioStream || isPodcast)) {
 
         // Resolve "prefix::relpath" to the full URL (source.url + relpath) the
         // way stream()/load() would, so ffmpeg gets a fetchable URL. Passing the
         // raw currentInfo.path would feed ffmpeg the "radio::" prefix ("Protocol
         // not found"), and the bare relpath would be a non-existent local file.
         if (isRadioStream) {
-            // Radio: let ffmpeg fetch and decode the resolved stream URL directly
-            // (handles bare "ICY 200 OK" mounts the curl path rejects).
+            // Endless radio: let ffmpeg fetch and decode the resolved URL
+            // directly (handles bare "ICY 200 OK" mounts the curl path rejects).
             if (mp.streamUrl(remoteLoader.resolveUrl(currentInfo.path))) {
                 SET_STATE(Playstarted);
             }
             return;
         }
-        // A finite remote file (real .mp3/.ogg/... in a collection): stream it
-        // progressively through curl->fifo->ffmpeg so it plays after a short
-        // prebuffer. Fall back to a direct ffmpeg URL if that can't start.
+        // Any finite remote file -- a real .mp3/.ogg/... in a collection, OR a
+        // podcast episode: stream it progressively through curl->fifo->ffmpeg so
+        // it plays after a short prebuffer instead of a full download. This path
+        // is now switch-safe: aborting an in-flight transfer (RemoteLoader::cancel
+        // + MusicPlayer::abortStream) detaches and frees the curl handle under the
+        // web mutex, so a 100MB+ download can be cancelled mid-flight without
+        // racing the next track's transfer. Fall back to a direct ffmpeg URL if
+        // the progressive stream can't start.
         if (streamRemoteFile(currentInfo.path) ||
             mp.streamUrl(remoteLoader.resolveUrl(currentInfo.path))) {
             SET_STATE(Playstarted);

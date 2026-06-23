@@ -2,6 +2,8 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
+- can we add screenshots for more formats?
+
 - revisit cpcpower database
 - revisit zophar arcade
 
@@ -25,26 +27,12 @@
   - Notes: Although primarily a game preservation project, it contains the definitive
     raw .m and .m2 (PMD) game soundtrack dumps. Can be bulk downloaded via Archive.org torrents.
 
-* GYUSYABU PC-98 SOUNDTRACKS
-  - URL: http://gyusyabu.ddo.jp (or mirrors)
-  - Platforms/Chips: NEC PC-9801/8801 FM Synthesis
-  - Key Formats: High-quality .mp3 rips
-  - Notes: A long-standing Japanese community archive hosting pre-recorded MP3 renders
-    of PC-98 game music recorded from real hardware (PC-9821 with OPNA boards).
-
 * THE OPL ARCHIVE
   - URL: https://www.oplarchive.com
   - Sound Chips: Yamaha OPL2 (YM3812) / OPL3 (YMF262)
   - Key Formats: .vgm (OPL logs)
   - Notes: Houses thousands of non-game OPL tracks (demoscene, covers, standalone trackers).
     Provides direct browser playback and a structured directory tree of OPL-logged chiptunes.
-
-* PROJECT AY / AY-EMUL ARCHIVE
-  - URL: http://bulba.untergrund.net/music.htm
-  - Sound Chips: General Instrument AY-3-8910 / AY-3-8912
-  - Key Formats: .ay, .ym, .pt3, .stc
-  - Notes: Managed by Sergey Bulba (author of Ay_Emul), this is the definitive
-    repository for ZX Spectrum and Amstrad CPC raw machine-code player rips (the Ironfist collection).
 
 * SCENIC / SCENE.ORG MUSIC VAULT
   - URL: https://www.scene.org
@@ -85,8 +73,12 @@ What it is: A massive database specifically tracking down original game tracker 
 
 * https://chipmusic.org -- zx spectrum beeper music, maybe more...
 
-* https://bulba.untergrund.net/music_e.htm
+* https://bulba.untergrund.net/music_e.htm - PROJECT AY / AY-EMUL ARCHIVE
 Maintained by Sergey Bulba (author of Ay_Emul), this archive contains the historic Ironfist collection. Ironfist spent years manually ripping, disassembling, and packaging raw Z80 music engines directly from commercial 48K ZX Spectrum games into clean .ay file structures, complete with initialization addresses and entry vectors.
+  - URL: http://bulba.untergrund.net/music.htm
+  - Sound Chips: General Instrument AY-3-8910 / AY-3-8912
+  - Key Formats: .ay, .ym, .pt3, .stc
+  - this is the definitive repository for ZX Spectrum and Amstrad CPC raw machine-code player rips (the Ironfist collection).
 
 * https://zxtunes.com -- a Russian site
 A massive historical repository of ZX Spectrum chiptunes. While heavily populated by standard AY tracking formats, its index includes extensive mappings of older, undocumented internal-beeper game routines that were ripped and isolated by early scene groups.
@@ -102,6 +94,13 @@ curl -H "Accept: application/json" "https://demozoo.org/api/v1/productions/?prod
 Iterate through the paginated JSON responses to extract data fields natively instead of writing brittle regex scrapers.
 
 --- MP3 / FLAC - not sure - we focus on real chip music - but already have some - maybe -----
+
+* GYUSYABU PC-98 SOUNDTRACKS
+  - URL: http://gyusyabu.ddo.jp (or mirrors)
+  - Platforms/Chips: NEC PC-9801/8801 FM Synthesis
+  - Key Formats: High-quality .mp3 rips
+  - Notes: A long-standing Japanese community archive hosting pre-recorded MP3 renders
+    of PC-98 game music recorded from real hardware (PC-9821 with OPNA boards).
 
 * KHINSIDER VIDEO GAME MUSIC
   - URL: https://downloads.khinsider.com

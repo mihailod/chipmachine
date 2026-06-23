@@ -92,6 +92,8 @@ enum Formats
 
     YOUTUBE,
 
+    PODCAST, // Podcast episodes (RSS feeds / archive.org rips; "podcast" type)
+
     PC,
     JPFM, // Japanese FM computers: NEC PC-98, Sharp X68000, Fujitsu FM Towns
 
@@ -289,6 +291,40 @@ public:
 private:
     void initDatabase(utils::path const& workDir, Variables& vars);
     void generateIndex();
+
+    // --- Podcast live-feed refresh (Q4) ---------------------------------
+    // A podcast whose episode list can be augmented from a live RSS feed.
+    struct PodcastFeed
+    {
+        std::string id;         // collection id (also the cache file stem)
+        std::string songList;   // shipped back-catalogue file (data/<id>.xml)
+        std::string remoteList; // live feed URL (https)
+    };
+    std::vector<PodcastFeed> podcastFeeds;
+
+    // Resolve a podcast's index source: the writable augmented copy in the
+    // cache (back catalogue + merged live episodes) if present, else the
+    // shipped file. Seeds the cache copy from the shipped file on first use.
+    std::string podcastSource(utils::path const& workDir,
+                              std::string const& id,
+                              std::string const& songList) const;
+
+    // Seed cache copies, detect whether a previous background refresh left new
+    // episodes (returns true -> caller forces a reindex), and kick off a
+    // throttled background fetch+merge for any feed not checked in ~24h.
+    // Never blocks launch on the network.
+    bool preparePodcasts(utils::path const& workDir);
+
+    // Background worker: fetch remoteList, merge any new <item>s into the cache
+    // copy (union by enclosure URL), and drop a .dirty marker when it changed.
+    static void refreshPodcastFeed(utils::path cacheDir, std::string id,
+                                   std::string remoteList);
+
+    // Append episodes present in a podcast's cache XML but not yet in the song
+    // table (without dropping/re-parsing other collections). Called instead of
+    // a full reindex when a background refresh added episodes; the caller then
+    // rebuilds just the search index from the table.
+    void syncPodcastSongs();
 
     struct Collection
     {

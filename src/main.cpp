@@ -31,6 +31,7 @@ void initYoutube(sol::state&);
 #include "di.hpp"
 namespace di = boost::di;
 
+#include <csignal>
 #include <filesystem>
 #include <optional>
 #include <vector>
@@ -45,6 +46,14 @@ void runConsole(std::shared_ptr<bbs::Console> console, ChipInterface& ci);
 
 int main(int argc, char* argv[])
 {
+    // Ignore SIGPIPE process-wide. We pipe audio through ffmpeg subprocesses
+    // (FFMPEGPlayer); when a stream is torn down on a song switch, the feeder
+    // thread can write to ffmpeg's stdin just as ffmpeg exits, and a write to a
+    // pipe with no reader raises SIGPIPE -- whose default action silently kills
+    // the whole app (no crash report). Ignoring it makes that write return EPIPE
+    // instead, which feedLoop() already handles by stopping.
+    std::signal(SIGPIPE, SIG_IGN);
+
     Environment::setAppName("chipmachine");
 
 #ifdef CM_DEBUG

@@ -77,7 +77,7 @@
 --     dedup by (basename,size) vs modland MDX -> 6872 kept, 2449 dups skipped.
 --     Built by tools/build_vampi.py; path = data/<filename> (verified .mdx);
 --     format "MDX" -> JPFM (X68000/FM Towns filter); plays via mdxplugin.
-VERSION = 58;
+VERSION = 63;
 
 DB = {
 {
@@ -283,6 +283,7 @@ DB = {
 	id =  "demovibes",
 	source = "https://www.demovibes.org/downloads/",
 	song_list = "data/demovibes.txt",
+	podcast = "yes",
 	color = 0xfffff
 },
 {
@@ -291,6 +292,8 @@ DB = {
 	source = "https://stats.podcloud.fr/amigavibes/",
 	song_list = "data/amigavibes.txt",
 	song_template = "title format path",
+	podcast = "yes",
+	artwork = "https://uploads.podcloud.fr/uploads/covers/e6/6d/e66d7d3ce5a7b589acff2df7809904bcdcdfed7d.jpg",
 	color = 0xfffff
 },
 {
@@ -344,6 +347,8 @@ DB = {
 	song_list = "data/syntax.txt",
 	song_template = "path title",
 	format = "MP3",
+	podcast = "yes",
+	artwork = "https://archive.org/services/img/podcast_syntax-error-podcast_1481271871",
 	-- presenter = "Sol"
 	color = 0xfffff
 },
@@ -364,6 +369,21 @@ DB = {
 	type =  "podcast",
 	source = "",
 	song_list = "data/c64takeaway.xml",
+	remote_list = "https://c64takeaway.com/feed/",
+	artwork = "https://c64takeaway.com/assets/C64Takeaway-banner-6581-1400x1400.png",
+	color = 0xfffff
+},
+{
+	name = "Completely Unnecessary Podcast",
+	id = "cupodcast",
+	type = "podcast",
+	source = "",
+	-- Full catalogue (395 eps, 2013-) snapshotted from the live Anchor feed;
+	-- per-episode artwork comes from each item's <itunes:image>. Newer
+	-- episodes are merged in at startup from remote_list (union by URL).
+	song_list = "data/cupodcast.xml",
+	remote_list = "https://anchor.fm/s/37360560/podcast/rss",
+	artwork = "https://archive.org/services/img/completely-unnecessary-podcast-series",
 	color = 0xfffff
 },
 {

@@ -64,9 +64,9 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "WonderSwan", { WONDERSWAN } },
     { "Other Consoles", { CONSOLE } },
     { "MP3/OGG", { MP3, OGG } },
-    { "YouTube", { YOUTUBE } },
+    { "YouTube Audio", { YOUTUBE } },
+    { "Podcasts", { PODCAST } },
     { "Radio Stations", { RADIO } }
-
 };
 
 // Base color for a format byte. Shared by the now-playing list (renderSong)
@@ -94,6 +94,7 @@ static uint32_t formatColor(int f)
         { APPLE, 0xff66cccc },
         { M3U, 0xffaaddaa },     { RADIO, 0xffff7722 },
         { YOUTUBE, 0xffff0000 },
+        { PODCAST, 0xff22bbff },
         { PC, 0xffcccccc },      { JPFM, 0xffff66cc },
         { ADPLUG, 0xffe8c040 },
         { AMIGA, 0xff6666cc },
@@ -400,9 +401,17 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
                 c = markColor;
             }
             std::string label = opt.name;
-            if (index < filterCounts.size())
-                label += utils::format("  [%s tunes]",
-                                       withCommas(filterCounts[index]));
+            if (index < filterCounts.size()) {
+                // Count unit by platform: podcasts in episodes, radio in
+                // streams, everything else in tunes.
+                const char* unit = "tunes";
+                if (!opt.matchedFormats.empty()) {
+                    if (opt.matchedFormats[0] == PODCAST) unit = "episodes";
+                    else if (opt.matchedFormats[0] == RADIO) unit = "streams";
+                }
+                label += utils::format("  [%s %s]",
+                                       withCommas(filterCounts[index]), unit);
+            }
 
             int rows = ((int)filterOptions.size() + 1) / 2;
             int col = (int)index / rows;
@@ -879,23 +888,47 @@ void ChipMachine::update()
         dbInfo = player.getDBInfo();
         screen.setTitle(utils::format("%s / %s (" PROGRAM_NAME " " VERSION_STR ")",
                                       currentInfo.title, currentInfo.composer));
-        std::string m;
-        if (currentInfo.metadata[SongInfo::INFO] != "") {
-            m = compressWhitespace(currentInfo.metadata[SongInfo::INFO]);
-        } else {
-            m = compressWhitespace(player.getMeta("message"));
-        }
         bool isRadio = utils::startsWith(dbInfo.path, "radio::");
-        if (m == "" && isRadio) {
+        // Detect podcasts from dbInfo: it carries the DB-sourced format
+        // ("Podcast") and is never overwritten, whereas currentInfo.format is
+        // replaced by the player's codec tag ("MP3") in updateInfo() before
+        // Playstarted -- so classifying currentInfo missed the episode. Also
+        // accept the already-described "Podcast (...)" string as a fallback.
+        bool isPodcast =
+            MusicDatabase::classifyFormat(dbInfo.format, dbInfo.path) ==
+                PODCAST ||
+            utils::startsWith(currentInfo.format, "Podcast");
+        std::string m;
+        if (isPodcast) {
+            // Podcasts: scroll the episode title plus its description (the INFO
+            // metadata, which parseRss falls back to the show description for
+            // when an episode has none). Never append the module-format line --
+            // "Podcast (MP3)" is meaningless for a talk/music show.
             m = currentInfo.title;
+            auto desc = compressWhitespace(currentInfo.metadata[SongInfo::INFO]);
+            // Some "standard" podcast collections (e.g. Demovibes) store a
+            // screenshot URL in INFO rather than a text description -- don't
+            // scroll a raw URL; the title alone is descriptive enough there.
+            if (!desc.empty() && !utils::startsWith(desc, "http"))
+                m += " ... " + desc;
+        } else {
+            if (currentInfo.metadata[SongInfo::INFO] != "") {
+                m = compressWhitespace(currentInfo.metadata[SongInfo::INFO]);
+            } else {
+                m = compressWhitespace(player.getMeta("message"));
+            }
+            if (m == "" && isRadio) {
+                m = currentInfo.title;
+            }
+            // Append the format info ("Platform - Name (EXT) ... <trackers> -
+            // <description>") so the scroller cycles metadata -> format ->
+            // back. When there is no embedded message/info the format line is
+            // all there is to show. Leading/trailing dots give clean gaps
+            // between sections. Radio streams have no meaningful module format,
+            // so skip it there.
+            if (!isRadio)
+                m = appendFormatInfo(m, currentInfo);
         }
-        // Append the format info ("Platform - Name (EXT) ... <trackers> -
-        // <description>") so the scroller cycles metadata -> format -> back.
-        // When there is no embedded message/info the format line is all there
-        // is to show. Leading/trailing dots give clean gaps between sections.
-        // Radio streams have no meaningful module format, so skip it there.
-        if (!isRadio)
-            m = appendFormatInfo(m, currentInfo);
         if (scrollText != m) {
             scrollEffect.set("scrolltext", m);
             scrollText = m;
