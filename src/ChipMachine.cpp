@@ -368,7 +368,7 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     advancedTitle.color = 0xffffffaa;
     advancedTitle.scale = searchField.scale;
     advancedTitle.visible(true);
-    advancedTitle.setText("FILTER SEARCH RESULTS BY PLATFORM:");
+    advancedTitle.setText("FILTER SEARCH RESULTS BY PLATFORM / CATEGORY:");
     advancedScreen.add(&advancedTitle);
 
     // The filter screen lays its entries out in two columns (column-major: the
@@ -402,13 +402,16 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
             }
             std::string label = opt.name;
             if (index < filterCounts.size()) {
-                // Count unit by platform: podcasts in episodes, radio in
-                // streams, everything else in tunes.
+                // Count unit by platform: "[No Filter]" spans everything
+                // (tunes + podcasts + radio) so it counts in "items"; podcasts
+                // in episodes, radio in streams, everything else in tunes.
                 const char* unit = "tunes";
-                if (!opt.matchedFormats.empty()) {
-                    if (opt.matchedFormats[0] == PODCAST) unit = "episodes";
-                    else if (opt.matchedFormats[0] == RADIO) unit = "streams";
-                }
+                if (opt.matchedFormats.empty())
+                    unit = "items";
+                else if (opt.matchedFormats[0] == PODCAST)
+                    unit = "episodes";
+                else if (opt.matchedFormats[0] == RADIO)
+                    unit = "streams";
                 label += utils::format("  [%s %s]",
                                        withCommas(filterCounts[index]), unit);
             }
