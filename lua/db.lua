@@ -77,7 +77,11 @@
 --     dedup by (basename,size) vs modland MDX -> 6872 kept, 2449 dups skipped.
 --     Built by tools/build_vampi.py; path = data/<filename> (verified .mdx);
 --     format "MDX" -> JPFM (X68000/FM Towns filter); plays via mdxplugin.
-VERSION = 63;
+-- 64: four more music podcasts (type=podcast, live remote_list + shipped
+--     snapshot, per-episode itunes:image art): This Week in Chiptune (Dj
+--     CUTMAN), Pixelated Audio, GameFuel + Nitro Game Injection (KNGI). All
+--     show under the F9 Podcasts category alongside C64 Take-away / CU Podcast.
+VERSION = 64;
 
 DB = {
 {
@@ -384,6 +388,50 @@ DB = {
 	song_list = "data/cupodcast.xml",
 	remote_list = "https://anchor.fm/s/37360560/podcast/rss",
 	artwork = "https://archive.org/services/img/completely-unnecessary-podcast-series",
+	color = 0xfffff
+},
+{
+	-- Chiptune music-mix show (Dj CUTMAN); ran 2013-2017, full archive.
+	name = "This Week in Chiptune",
+	id = "twic",
+	type = "podcast",
+	source = "",
+	song_list = "data/twic.xml",
+	remote_list = "http://thisweekinchiptune.libsyn.com/rss",
+	artwork = "https://static.libsyn.com/p/assets/a/e/1/e/ae1e0001ed40227a/This-Week-In-Chiptune-Podcast-art-2015.jpg",
+	color = 0xfffff
+},
+{
+	-- Video game music podcast: discussion + tracks, with interviews.
+	name = "Pixelated Audio",
+	id = "pixelated",
+	type = "podcast",
+	source = "",
+	song_list = "data/pixelated.xml",
+	remote_list = "https://pixelatedaudio.com/feed/podcast",
+	artwork = "http://www.pixelatedaudio.com/wp-content/uploads/2016/04/2016-PA-PodcastCover-final-boosted.jpg",
+	color = 0xfffff
+},
+{
+	-- KNGI Network VGM music show (original tracks, OSTs, chiptunes).
+	name = "GameFuel",
+	id = "gamefuel",
+	type = "podcast",
+	source = "",
+	song_list = "data/gamefuel.xml",
+	remote_list = "https://feeds.feedburner.com/GameFuel",
+	artwork = "https://kngi.org/public_html/wp-content/uploads/GameFuelAlbum2016-1-1024x1024.png",
+	color = 0xfffff
+},
+{
+	-- KNGI Network video game music + remixes show.
+	name = "Nitro Game Injection",
+	id = "nitro",
+	type = "podcast",
+	source = "",
+	song_list = "data/nitro.xml",
+	remote_list = "https://feeds.feedburner.com/NitroGameInjection",
+	artwork = "http://kngi.org/public_html/wp-content/uploads/powerpress/NGI2015AlbumArtiTunes1400-808.jpg",
 	color = 0xfffff
 },
 {

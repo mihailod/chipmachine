@@ -145,10 +145,23 @@ ninja
 
 ### Podcasts
 
-* Syntax Error - http://www.syntaxerror.nu
-* C64 Take Away - http://c64takeaway.com
-* AmigaVibes - http://www.amigavibes.org
-* Demovibes - https://www.demovibes.org
+Podcasts are a first-class category — press *F9* and pick **Podcasts** to
+browse/filter only podcast episodes. Shows backed by a live RSS feed ship with
+a snapshot of their back catalogue and are refreshed from the feed in the
+background at startup (throttled to roughly once a day), so newly published
+episodes are merged in automatically without a full re-index; the remaining
+shows are curated track lists. Episodes show per-episode cover art when the
+feed provides it, otherwise the show's cover.
+
+* C64 Take-away — Commodore 64 remixes & original SID (complete, ended 2025) - https://c64takeaway.com
+* Completely Unnecessary Podcast — retro gaming (Pat Contri & Ian Ferguson) - https://cupodcast.podbean.com
+* This Week in Chiptune — chiptune mixes (Dj CUTMAN, 2013–2017 archive) - https://thisweekinchiptune.com
+* Pixelated Audio — video game music & interviews - https://pixelatedaudio.com
+* GameFuel — video game music (KNGI Network) - https://kngi.org
+* Nitro Game Injection — video game music & remixes (KNGI Network) - https://kngi.org
+* Demovibes — demoscene music - https://www.demovibes.org
+* AmigaVibes — Amiga & demoscene music - http://www.amigavibes.org
+* Syntax Error — game & demoscene music (Sol) - http://www.syntaxerror.nu
 
 ### Remixes (MP3)
 
