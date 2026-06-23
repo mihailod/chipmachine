@@ -154,7 +154,6 @@ shows are curated track lists. Episodes show per-episode cover art when the
 feed provides it, otherwise the show's cover.
 
 * C64 Take-away — Commodore 64 remixes & original SID (complete, ended 2025) - https://c64takeaway.com
-* Completely Unnecessary Podcast — retro gaming (Pat Contri & Ian Ferguson) - https://cupodcast.podbean.com
 * This Week in Chiptune — chiptune mixes (Dj CUTMAN, 2013–2017 archive) - https://thisweekinchiptune.com
 * Pixelated Audio — video game music & interviews - https://pixelatedaudio.com
 * GameFuel — video game music (KNGI Network) - https://kngi.org
@@ -162,6 +161,10 @@ feed provides it, otherwise the show's cover.
 * Demovibes — demoscene music - https://www.demovibes.org
 * AmigaVibes — Amiga & demoscene music - http://www.amigavibes.org
 * Syntax Error — game & demoscene music (Sol) - http://www.syntaxerror.nu
+
+And one not related to retro music but dear to my heart so here it is:
+
+* Completely Unnecessary Podcast — retro gaming (Pat "The NES Punk" Contri & Ian Ferguson) - https://cupodcast.podbean.com
 
 ### Remixes (MP3)
 
