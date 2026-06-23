@@ -143,6 +143,7 @@ ninja
 * ZX Art - https://zxart.ee/eng/music
 * CPC-Power - https://www.cpc-power.com
 * Zophar's Domain (Sega Genesis only) - https://www.zophar.net
+* Vampi's MDX Collection (Sharp X68000) - https://mdx.vampi.tech
 
 ### Demo databases
 

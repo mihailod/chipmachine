@@ -3,6 +3,7 @@
 ******************************************************
 
 - revisit cpcpower database
+- revisit zophar arcade
 
 - cmtest: added more extensions, some fail/skip, investigate why
 
@@ -16,80 +17,6 @@
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
-
-AGY REPORT:
-
-================================================================================
-CHIPMACHINEAS - RETRO MUSIC DATABASES COVERAGE REPORT
-================================================================================
-
-This report outlines retro game, computer, chiptune, and tracker music databases
-currently missing from ChipMachineAS's index. These sources represent
-significant vaults of historical chip music across multiple platforms, covering
-gaps not addressed by standard databases like Modland, HVSC, and ZX Art.
-
---------------------------------------------------------------------------------
-1. CONSOLE & ARCADE RIPS (CHIPTUNE ARCHIVES)
---------------------------------------------------------------------------------
-
-These databases host native hardware-emulated sound dumps (.spc, .nsf, .gbs, etc.)
-where the game engine's music driver is emulated in real time.
-
-* ......... IN PROGRESS .........ZOPHAR'S DOMAIN MUSIC ARCHIVE
-  - URL: https://www.zophar.net/music.html
-  - Platforms/Chips: NES, SNES, GB, GBA, N64, Genesis, SMS, Turbografx-16, PS1, Saturn, Arcade
-  - Key Formats: .nsf, .spc, .gbs, .gsf, .usf, .vgm, .hes, .psf, .ssf
-  - Notes: One of the oldest and largest consolidated vaults of native-format console
-    gamerips. Rips are organized by game title in predictable platform directories.
-modland already covers essentially all of Zophar, comprehensively
-The one genuine gap: modland has no VGM (only 265 "Megadrive GYM", an older format) and no arcade at all. Zophar's VGM platforms — Sega Genesis, Master System, Game Gear, and Arcade — are therefore genuinely net-new (and all play via GME). 
-The genuine net-new gap is confirmed: Sega Genesis/Mega Drive, Master System, Game Gear, and Arcade (VGM/SGC) — modland has no VGM and no arcade. Everything else duplicates modland's tens of thousands.
-So we pivot Sega Genesis VGM (the biggest genuine gap), with dedup against modland's 265 "Megadrive GYM" games.
-
-DONE: SEGA GENESIS: 335 new
-
-REMAINS:
-Platform			Zophar format	modland coverage			Verdict
-Arcade			VGM		none				✅ Fully net-new
-
-
-
-
-* VGMdb
-  - URL: https://vgmdb.net
-  - Platforms: All gaming platforms
-  - Key Formats: Catalog metadata only (Tracklists, composers, labels)
-  - Notes: A massive community-driven wiki cataloging albums, game music history,
-    and composer metadata. Useful for scraping high-quality metadata, composer
-    aliases, and cross-linking tracks.
-
-* KHINSIDER VIDEO GAME MUSIC
-  - URL: https://downloads.khinsider.com
-  - Platforms: All gaming platforms (modern & retro)
-  - Key Formats: Pre-rendered (.mp3, .flac)
-  - Notes: Contains pre-recorded soundtracks (OSTs) for consoles that are hard to
-    emulate or rely on streamed audio (e.g. CD-DA, ADX). Scrapers / bulk-downloaders exist.
-
-* SITTING ON CLOUDS
-  - URL: https://www.sittingonclouds.net
-  - Platforms: Modern consoles, arcade systems
-  - Key Formats: Pre-rendered (.mp3, .flac)
-  - Notes: High-quality FLAC and MP3 game soundtrack index. Useful as a fallback
-    for games where native chips cannot be easily emulated (e.g. modern Arcade/PS3/PS4).
-
---------------------------------------------------------------------------------
-2. JAPANESE COMPUTERS & SYNTH ENGINES
---------------------------------------------------------------------------------
-
-Preservation of classic Japanese 8-bit/16-bit computer formats that rely heavily
-on Yamaha FM-synthesis sound chips (OPN/OPNA/OPM).
-
-* VAMPI'S MDX DATABASE
-  - URL: http://mdx.vampi.tech
-  - Platforms/Chips: Sharp X68000 (YM2151 OPM & OKIM6258 ADPCM)
-  - Key Formats: .mdx + .pdx
-  - Notes: An organized, relational database indexing thousands of MDX chiptunes
-    with composers, track timings, and game titles. Offers a direct web search API.
 
 * NEO KOBE NEC PC-98 LIBRARY
   - URL: https://archive.org/details/neo-kobe-nec-pc-9801-2017-11-17-archive
@@ -105,13 +32,6 @@ on Yamaha FM-synthesis sound chips (OPN/OPNA/OPM).
   - Notes: A long-standing Japanese community archive hosting pre-recorded MP3 renders
     of PC-98 game music recorded from real hardware (PC-9821 with OPNA boards).
 
---------------------------------------------------------------------------------
-3. DEDICATED SOUND CHIP ARCHIVES
---------------------------------------------------------------------------------
-
-Specialized databases centering around specific programmable sound generators (PSG)
-and FM-synthesis chips.
-
 * THE OPL ARCHIVE
   - URL: https://www.oplarchive.com
   - Sound Chips: Yamaha OPL2 (YM3812) / OPL3 (YMF262)
@@ -126,13 +46,6 @@ and FM-synthesis chips.
   - Notes: Managed by Sergey Bulba (author of Ay_Emul), this is the definitive
     repository for ZX Spectrum and Amstrad CPC raw machine-code player rips (the Ironfist collection).
 
---------------------------------------------------------------------------------
-4. DEMOSCENE & TRACKER REPOSITORIES
---------------------------------------------------------------------------------
-
-Databases collecting tracking music formats (.mod, .xm, .it, .s3m) specifically
-related to the demoscene.
-
 * SCENIC / SCENE.ORG MUSIC VAULT
   - URL: https://www.scene.org
   - Community: Demoscene releases, music packs, musicdisk records
@@ -140,17 +53,7 @@ related to the demoscene.
   - Notes: The central file storage for the global demoscene. Houses thousands of
     party music competition archives and scene-released musicdisks.
 
-* OVERCLOCKED REMIX (OCREMIX)
-  - URL: https://ocremix.org
-  - Community: Arranged game music & remixes
-  - Key Formats: .mp3
-  - Notes: The premier repository for fan-made arranged game soundtracks. Contains
-    highly structured metadata (game, original composer, remixer, year).
-================================================================================
-
-
-
-3. VGMRips
+* VGMRips
 URL: [https://vgmrips.net](https://vgmrips.net)
 What it is: The premier home for .vgm (Video Game Music) file logs, focusing heavily on arcade boards (Capcom CPS1/2/3, Sega system 16, Neo Geo) and sound chips like the YM2612, YM2151, and AY-3-8910.
 VGMRips (Use the Server Admin's Zip)
@@ -159,7 +62,7 @@ Go directly to the VGMRips forum thread: https://vgmrips.net/forum/viewtopic.php
 The thread is titled "VGMRips full download packs".
 Download the single aggregated zip file (VGMRips_all_of_them_[DATE].zip). It sits around 4 to 5 GB and contains every single pack logged on the site up to its compilation date.
 
-4. Project 2612 & SMS Power!
+* Project 2612 & SMS Power!
 URLs: [https://project2612.org](https://project2612.org) | [https://www.smspower.org](https://www.smspower.org)
 What they are: Definitive, dedicated system vaults. Project 2612 is the definitive source for Sega Genesis/Mega Drive .vgm rips. SMS Power handles Sega Master System, Game Gear, and SG-1000 audio logging.
 These sites are simple, predictable directory trees. They do not block standard command-line tools if you throttle your requests.
@@ -176,22 +79,19 @@ wget --mirror --no-parent --accept "*.zip" \
      --wait=1 --random-wait \
      https://www.smspower.org/Music/
 
-6. Mirsoft World of Game Mods
+* Mirsoft World of Game Mods
 URL: [http://www.mirsoft.info](http://www.mirsoft.info)
 What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.
 
-7. https://chipmusic.org -- zx spectrum beeper music, maybe more...
+* https://chipmusic.org -- zx spectrum beeper music, maybe more...
 
-8. https://bulba.untergrund.net/music_e.htm
+* https://bulba.untergrund.net/music_e.htm
 Maintained by Sergey Bulba (author of Ay_Emul), this archive contains the historic Ironfist collection. Ironfist spent years manually ripping, disassembling, and packaging raw Z80 music engines directly from commercial 48K ZX Spectrum games into clean .ay file structures, complete with initialization addresses and entry vectors.
 
-9. https://zxtunes.com -- a Russian site
+* https://zxtunes.com -- a Russian site
 A massive historical repository of ZX Spectrum chiptunes. While heavily populated by standard AY tracking formats, its index includes extensive mappings of older, undocumented internal-beeper game routines that were ripped and isolated by early scene groups.
 
-
-Demo Databases & Trackers
-
-2. Demozoo -- IN PROGRESS: PESIC...
+* Demozoo -- IN PROGRESS: PESIC...
 URL: [https://demozoo.org](https://demozoo.org)
 What it is: Pouet is great for comments and quick links, but Demozoo is the modern, highly structured relational database for the demoscene. It maps productions, groups, parties, and specific scene musicians across all platforms (including retro and modern PC).
 Demozoo is a highly structured database. Scraping the raw HTML pages is a waste of time and parsing energy. They provide a completely open, fully documented JSON API for bulk data synchronization.
@@ -201,9 +101,62 @@ Bash
 curl -H "Accept: application/json" "https://demozoo.org/api/v1/productions/?production_type=music"
 Iterate through the paginated JSON responses to extract data fields natively instead of writing brittle regex scrapers.
 
+--- MP3 / FLAC - not sure - we focus on real chip music - but already have some - maybe -----
 
+* KHINSIDER VIDEO GAME MUSIC
+  - URL: https://downloads.khinsider.com
+  - Platforms: All gaming platforms (modern & retro)
+  - Key Formats: Pre-rendered (.mp3, .flac)
+  - Notes: Contains pre-recorded soundtracks (OSTs) for consoles that are hard to
+    emulate or rely on streamed audio (e.g. CD-DA, ADX). Scrapers / bulk-downloaders exist.
+
+* SITTING ON CLOUDS
+  - URL: https://www.sittingonclouds.net
+  - Platforms: Modern consoles, arcade systems
+  - Key Formats: Pre-rendered (.mp3, .flac)
+  - Notes: High-quality FLAC and MP3 game soundtrack index. Useful as a fallback
+    for games where native chips cannot be easily emulated (e.g. modern Arcade/PS3/PS4).
 
 ------ DATABASES DONE / RESOLVED / ABANDONED IN THIS PASS BELOW ----------
+
+* DONE VAMPI'S MDX DATABASE
+  - URL: http://mdx.vampi.tech
+  - Platforms/Chips: Sharp X68000 (YM2151 OPM & OKIM6258 ADPCM)
+  - Key Formats: .mdx + .pdx
+  - Notes: An organized, relational database indexing thousands of MDX chiptunes
+    with composers, track timings, and game titles. Offers a direct web search API.
+MDX files 9,321 -- before dedup against modland's 7,449
+6,872 net-new MDX (X68000/FM Towns filter)
+Vampi has 9,321 MDX vs modland's 7,449. I kept only the genuinely-new ones — best-effort dedup by (basename, size) against modland's MDX → 6,872 kept, 2,449 dropped as modland dups. It's imperfect (modland descriptively-renames some files, so a few dups slip through; md5 dedup wasn't possible since allmods has size but no md5) — exactly the trade-off we accepted.
+
+* OVERCLOCKED REMIX (OCREMIX)
+  - URL: https://ocremix.org
+  - Community: Arranged game music & remixes
+  - Key Formats: .mp3
+  - Notes: The premier repository for fan-made arranged game soundtracks. Contains
+    highly structured metadata (game, original composer, remixer, year).
+
+* VGMdb (METADATA ONLY -- no songs)
+  - URL: https://vgmdb.net
+  - Platforms: All gaming platforms
+  - Key Formats: Catalog metadata only (Tracklists, composers, labels)
+  - Notes: A massive community-driven wiki cataloging albums, game music history,
+    and composer metadata. Useful for scraping high-quality metadata, composer
+    aliases, and cross-linking tracks.
+
+* ......... DONE FOR SEGA GENESIS.........ZOPHAR'S DOMAIN MUSIC ARCHIVE
+  - URL: https://www.zophar.net/music.html
+  - Platforms/Chips: NES, SNES, GB, GBA, N64, Genesis, SMS, Turbografx-16, PS1, Saturn, Arcade
+  - Key Formats: .nsf, .spc, .gbs, .gsf, .usf, .vgm, .hes, .psf, .ssf
+  - Notes: One of the oldest and largest consolidated vaults of native-format console
+    gamerips. Rips are organized by game title in predictable platform directories.
+modland already covers essentially all of Zophar, comprehensively
+The one genuine gap: modland has no VGM (only 265 "Megadrive GYM", an older format) and no arcade at all. Zophar's VGM platforms — Sega Genesis, Master System, Game Gear, and Arcade — are therefore genuinely net-new (and all play via GME). 
+The genuine net-new gap is confirmed: Sega Genesis/Mega Drive, Master System, Game Gear, and Arcade (VGM/SGC) — modland has no VGM and no arcade. Everything else duplicates modland's tens of thousands.
+So we pivot Sega Genesis VGM (the biggest genuine gap), with dedup against modland's 265 "Megadrive GYM" games.
+DONE: SEGA GENESIS: 335 new
+parked: arcade (mp3, needs full scan)
+
 
 * ... PARTIALLY DONE ....   CPC-POWER AUDIOTHEQUE
   - URL: https://www.cpc-power.com

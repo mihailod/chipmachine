@@ -72,7 +72,12 @@
 --     Video Game Music Sega dirs -> 335 genuinely-new games (215 MD + 119 Sega CD
 --     + 1 32X). Also fixed the libcurl HTTP/2 prune crash (web.cpp FORBID_REUSE)
 --     and the ZipFile extractor (archive.cpp) that this collection first exposed.
-VERSION = 57;
+-- 58: Vampi's MDX Database (mdx.vampi.tech) -- Sharp X68000 MDX. Vampi has 9321
+--     MDX vs modland's 7449, so we onboard ONLY the net-new ones: best-effort
+--     dedup by (basename,size) vs modland MDX -> 6872 kept, 2449 dups skipped.
+--     Built by tools/build_vampi.py; path = data/<filename> (verified .mdx);
+--     format "MDX" -> JPFM (X68000/FM Towns filter); plays via mdxplugin.
+VERSION = 58;
 
 DB = {
 {
@@ -81,6 +86,16 @@ DB = {
 	source = "ftp://files.exotica.org.uk/pub/exotica/media/audio/UnExoticA",
 	song_list = "data/unexotica.txt",
         song_template = "title game format composer path",
+	color = 0xfffff
+},
+{
+	-- Vampi's MDX Database (Sharp X68000). Net-new-vs-modland subset; path is a
+	-- full mdx.vampi.tech/data/<file> URL (source empty). Plays via mdxplugin.
+	name = "Vampi MDX",
+	id =  "vampi",
+	source = "",
+	song_list = "data/vampi.txt",
+	song_template = "title composer format path ext",
 	color = 0xfffff
 },
 {
