@@ -122,39 +122,41 @@ ninja
 
 ## Data Sources
 
-### Music Collections
+### Chip Music Collections
 
 * Modland - https://ftp.modland.com
 * High Voltage SID collection - https://www.hvsc.c64.org
 * Gamebase64 - http://www.gb64.com
 * AMP (Amiga Music Preservation) - http://amp.dascene.net
-* Amiga remix - http://amigaremix.com
 * RKO - http://remix.kwed.org
 * Atari ST (SNDH) - http://sndh.atari.org
 * SNES Music - http://snesmusic.org
 * Atari SAP (ASMA) - http://asma.atari.org
 * HVTC (High Voltage TED Collection) - http://plus4world.powweb.com
 * NSFE (Famicompo mini NSFE archive of 1,228 songs from https://forums.nesdev.org/viewtopic.php?t=21128)
-* Sounds of Scenesat - https://scenesat.com
-* AmigaVibes - http://www.amigavibes.org
-* Demovibes - https://www.demovibes.org
 * Mod Archive - https://modarchive.org
+* Bitworld - http://janeway.exotica.org.uk
 * Exotica - https://www.exotica.org.uk
+* CSDb - https://csdb.dk
 * ZX Art - https://zxart.ee/eng/music
 * CPC-Power - https://www.cpc-power.com
 * Zophar's Domain (Sega Genesis only) - https://www.zophar.net
 * Vampi's MDX Collection (Sharp X68000) - https://mdx.vampi.tech
 
-### Demo databases
-
-* Pouet - https://www.pouet.net (production soundtracks streamed from YouTube)
-* Bitworld - http://janeway.exotica.org.uk
-* CSDb - https://csdb.dk
-
 ### Podcasts
 
 * Syntax Error - http://www.syntaxerror.nu
 * C64 Take Away - http://c64takeaway.com
+* AmigaVibes - http://www.amigavibes.org
+* Demovibes - https://www.demovibes.org
+
+### Remixes (MP3)
+
+* Amiga remix (MP3) - http://amigaremix.com
+* Sounds of Scenesat - https://scenesat.com
+
+### Youtube Audio
+* Pouet - https://www.pouet.net
 
 ### Shoutcast Radio Streams
 
