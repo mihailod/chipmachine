@@ -60,7 +60,19 @@
 --     no browsable index (/YM/ is 403), so only the ~51 Wayback-known files are
 --     indexed, with URLs pointing at the live /YM/ files (fetched on demand).
 --     Built by tools/build_cpcpower.py; format "Amstrad CPC" -> AMSTRAD filter.
-VERSION = 55;
+-- 56: Zophar's Domain pilot -- Sega Genesis VGM gamerips (the genuinely net-new
+--     slice; modland already has SNES/GB/PS/N64/Saturn/NES/Dreamcast but NO VGM
+--     and NO arcade). Each row's path is a "<game> (EMU).zophar.zip" of per-track
+--     .vgm files; MusicPlayerList detects the ZIP by magic, extracts it, and plays
+--     the tracks as local subsongs. Built by tools/build_zophar.py (dedup vs the
+--     265 modland Megadrive GYM games). format "Sega Genesis" -> MEGADRIVE filter.
+-- 57: zophar.txt deduped properly. v56 wrongly deduped Genesis only vs "Megadrive
+--     GYM" (265) and missed modland's huge "Video Game Music/Sega Megadrive" tree
+--     (10961 files / 621 games), so 480 of the 815 were dups. Now dedups vs the
+--     Video Game Music Sega dirs -> 335 genuinely-new games (215 MD + 119 Sega CD
+--     + 1 32X). Also fixed the libcurl HTTP/2 prune crash (web.cpp FORBID_REUSE)
+--     and the ZipFile extractor (archive.cpp) that this collection first exposed.
+VERSION = 57;
 
 DB = {
 {
@@ -69,6 +81,17 @@ DB = {
 	source = "ftp://files.exotica.org.uk/pub/exotica/media/audio/UnExoticA",
 	song_list = "data/unexotica.txt",
         song_template = "title game format composer path",
+	color = 0xfffff
+},
+{
+	-- Zophar's Domain (pilot: Sega Genesis VGM). Each path is a full EMU zip URL
+	-- on the fi.zophar.net CDN; the host extracts it and plays the .vgm tracks as
+	-- subsongs. source empty (full URLs in the path column).
+	name = "Zophar",
+	id =  "zophar",
+	source = "",
+	song_list = "data/zophar.txt",
+	song_template = "title composer format path ext",
 	color = 0xfffff
 },
 {

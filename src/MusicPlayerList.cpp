@@ -1,5 +1,7 @@
 #include "MusicPlayerList.h"
 #include "LhaArchive.h"
+#include <archive/archive.h>
+#include <set>
 
 #include <algorithm>
 #include <cctype>
@@ -599,6 +601,53 @@ void MusicPlayerList::playCurrent()
             SET_STATE(Error);
             files--;
             return;
+        }
+
+        // --- Zophar's Domain console gamerips: the downloaded file is a .zip of
+        // per-track native files (e.g. Sega Genesis = 01.vgm, 02.vgm, ...).
+        // Detect the ZIP by magic (PK\x03\x04), extract every member next to the
+        // cache file, and present the music tracks as local subsongs (multiSongs).
+        // Switching tracks then plays an already-extracted local file -- no
+        // re-download. Any shared lib (usflib/gsflib) extracts alongside.
+        {
+            bool isZip = false;
+            if (FILE* fp = fopen(f0.getName().c_str(), "rb")) {
+                unsigned char m[4] = { 0 };
+                isZip = fread(m, 1, 4, fp) == 4 && m[0] == 'P' && m[1] == 'K' &&
+                        m[2] == 3 && m[3] == 4;
+                fclose(fp);
+            }
+            if (isZip) {
+                static const std::set<std::string> musicExt = {
+                    "vgm", "vgz", "nsf", "nsfe", "spc", "gbs", "hes", "kss",
+                    "sgc", "ay", "gym", "usf", "miniusf", "gsf", "minigsf",
+                    "psf", "minipsf", "2sf", "mini2sf" };
+                std::string dir = f0.getName() + "_x";
+                utils::makedirs(dir);
+                std::vector<std::string> tracks;
+                try {
+                    auto* a = utils::Archive::open(f0.getName(), dir);
+                    for (auto const& m : *a) {
+                        auto ef = a->extract(m);
+                        if (musicExt.count(toLower(path_extension(m))) > 0)
+                            tracks.push_back(ef.getName());
+                    }
+                } catch (...) {}
+                std::sort(tracks.begin(), tracks.end());
+                if (tracks.empty()) {
+                    errors.emplace_back("No playable tracks in archive");
+                    SET_STATE(Error);
+                    files--;
+                    return;
+                }
+                multiSongs = tracks; // local extracted paths (no source prefix)
+                multiSongNo = 0;
+                currentInfo.numtunes = (int)tracks.size();
+                currentInfo.path = tracks[0];
+                loadedFile = tracks[0];
+                files--;
+                return;
+            }
         }
         // The cached file has a URL-encoded name (e.g. "downloads.php%3fmoduleid=1")
         // which may contain bogus extensions like ".php". Use the format field

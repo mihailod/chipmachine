@@ -1486,6 +1486,7 @@ void initFormats()
     format_map["sega sc-3000"] = SEGAMS;
     // Sega 16-bit (Mega Drive/Genesis, YM2612 + SN76489) and its add-ons
     format_map["sega megadrive"] = MEGADRIVE;
+    format_map["sega genesis"] = MEGADRIVE; // Zophar Genesis VGM gamerips
     format_map["megadrive gym"] = MEGADRIVE;
     format_map["megadrive cym"] = MEGADRIVE;
     format_map["sega 32x"] = MEGADRIVE;

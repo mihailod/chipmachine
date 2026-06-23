@@ -2,7 +2,7 @@
 * DATA BUGS / ISSUES (fix might need db version bump *
 ******************************************************
 
-- find more platform-specific databases like amstrad, msx, ...
+- revisit cpcpower database
 
 - cmtest: added more extensions, some fail/skip, investigate why
 
@@ -35,12 +35,25 @@ gaps not addressed by standard databases like Modland, HVSC, and ZX Art.
 These databases host native hardware-emulated sound dumps (.spc, .nsf, .gbs, etc.)
 where the game engine's music driver is emulated in real time.
 
-* ZOPHAR'S DOMAIN MUSIC ARCHIVE
+* ......... IN PROGRESS .........ZOPHAR'S DOMAIN MUSIC ARCHIVE
   - URL: https://www.zophar.net/music.html
   - Platforms/Chips: NES, SNES, GB, GBA, N64, Genesis, SMS, Turbografx-16, PS1, Saturn, Arcade
   - Key Formats: .nsf, .spc, .gbs, .gsf, .usf, .vgm, .hes, .psf, .ssf
   - Notes: One of the oldest and largest consolidated vaults of native-format console
     gamerips. Rips are organized by game title in predictable platform directories.
+modland already covers essentially all of Zophar, comprehensively
+The one genuine gap: modland has no VGM (only 265 "Megadrive GYM", an older format) and no arcade at all. Zophar's VGM platforms — Sega Genesis, Master System, Game Gear, and Arcade — are therefore genuinely net-new (and all play via GME). 
+The genuine net-new gap is confirmed: Sega Genesis/Mega Drive, Master System, Game Gear, and Arcade (VGM/SGC) — modland has no VGM and no arcade. Everything else duplicates modland's tens of thousands.
+So we pivot Sega Genesis VGM (the biggest genuine gap), with dedup against modland's 265 "Megadrive GYM" games.
+
+DONE: SEGA GENESIS: 335 new
+
+REMAINS:
+Platform			Zophar format	modland coverage			Verdict
+Arcade			VGM		none				✅ Fully net-new
+
+
+
 
 * VGMdb
   - URL: https://vgmdb.net
