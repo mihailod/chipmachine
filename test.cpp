@@ -2026,6 +2026,26 @@ TEST_CASE("modland console-subtune m3u resolves to module and plays",
 }
 
 TEST_CASE("OpenMPT", "[music]") { testPlugin<musix::OpenMPTPlugin>("testmus/openmpt", ""); }
+// Startrekker (FLT/EXO) routing: OpenMPT plays purely *sampled* FLT4/EXO4
+// modules but declines genuine *AM* ones (synth voices live in an external
+// .nt/.as companion this libopenmpt build can't load) so UADE handles those.
+// OpenMPTPlugin distinguishes them by counting referenced-but-empty samples.
+// Assert both directions so a future plugin/loader change can't re-misroute.
+TEST_CASE("Startrekker AM vs sampled routing", "[music]")
+{
+    musix::OpenMPTPlugin ompt;
+    // Sampled FLT4 (UnExoticA fastest-compo): OpenMPT must play it.
+    auto* sampled = ompt.fromFile("testmus/openmpt/amiga-fastest-compo.mod");
+    REQUIRE(sampled != nullptr);
+    delete sampled;
+    // AM modules: OpenMPT must decline (throws), leaving them to UADE.
+    for (auto const& am : {"testmus/uade/war hawk.st1.3.mod",
+                           "testmus/uade/daisy.adsc",
+                           "testmus/uade/amsyntdemo.adsc"}) {
+        INFO(am);
+        REQUIRE_THROWS(ompt.fromFile(am));
+    }
+}
 TEST_CASE("GSF", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib"); }
 // On a clean machine, streaming a .gsf/.minigsf must also fetch its shared
 // .gsflib (named via the PSF "_lib" tag) or the VBA loader fails ("Could not
