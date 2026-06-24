@@ -2045,6 +2045,32 @@ TEST_CASE("Startrekker AM vs sampled routing", "[music]")
         INFO(am);
         REQUIRE_THROWS(ompt.fromFile(am));
     }
+    // Companion fetch routing: OpenMPT claims ".mod" and is registered before
+    // UADE, so MusicPlayer::getSecondaryFiles (first-canHandle wins) asks OpenMPT
+    // -- not UADE -- for a Startrekker AM ".mod"'s companions. OpenMPT must
+    // therefore surface the ".nt"/".as" synth file itself, or the GUI never
+    // downloads it and UADE plays silent. (cmtest uses local fixtures, so this
+    // is the only coverage of the GUI fetch path for AM .mod files.)
+    auto sec = ompt.getSecondaryFiles("testmus/uade/war hawk.st1.3.mod");
+    INFO("OpenMPT AM secondaries");
+    REQUIRE(std::find(sec.begin(), sec.end(), "war hawk.st1.3.mod.nt") !=
+            sec.end());
+    // The modland-named companion actually sits next to the song.
+    REQUIRE(utils::File{ "testmus/uade/war hawk.st1.3.mod.nt" }.exists());
+    // Sampled MODs need no companion.
+    REQUIRE(ompt.getSecondaryFiles("testmus/openmpt/amiga-fastest-compo.mod")
+                .empty());
+    // Replicate the live first-canHandle resolver and confirm OpenMPT is the
+    // plugin that actually answers for the AM ".mod".
+    musix::ChipPlugin::createPlugins("data");
+    std::string resolver = "(none)";
+    for (const auto& pl : musix::ChipPlugin::getPlugins()) {
+        if (pl->canHandle("testmus/uade/war hawk.st1.3.mod")) {
+            resolver = pl->name();
+            break;
+        }
+    }
+    REQUIRE(resolver == "OpenMPT");
 }
 TEST_CASE("GSF", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib"); }
 // On a clean machine, streaming a .gsf/.minigsf must also fetch its shared
