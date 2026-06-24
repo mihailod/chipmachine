@@ -35,7 +35,7 @@ std::string compressWhitespace(std::string const& text)
 namespace chipmachine {
 
 const std::vector<FilterOption> ChipMachine::filterOptions = {
-    { "[No Filter]", {} },
+    { "[show all]", {} },
     { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER } },
     { "Atari ST/STE (YM/PCM)", { ATARI } },
     { "Atari XL/XE (POKEY)", { POKEY } },
@@ -162,8 +162,12 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
     auto res = iquery->getResult(index);
     auto parts = utils::split(res, "\t");
     int f = std::stol(parts[3]) & 0xff;
+    bool isShow = std::stol(parts[2]) >= MusicDatabase::PODCAST_SHOW_INDEX;
 
-    if (f == PLAYLIST || f == PRODUCT) {
+    if (isShow) {
+        // Podcast show row: a drillable group, shown like a folder.
+        text = utils::format("> %s", parts[0]);
+    } else if (f == PLAYLIST || f == PRODUCT) {
         if (parts[1] == nullptr || parts[1][0] == '\0')
             text = utils::format("<%s>", parts[0]);
         else
@@ -401,19 +405,31 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
                 c = markColor;
             }
             std::string label = opt.name;
+            uint8_t fmt0 =
+                opt.matchedFormats.empty() ? 0 : opt.matchedFormats[0];
+            // Prefix the Podcasts entry with the number of distinct shows, e.g.
+            // "9 Podcasts  [1,497 episodes]".
+            if (fmt0 == PODCAST && podcastShowCount > 0)
+                label = utils::format("%d %s", podcastShowCount, opt.name);
             if (index < filterCounts.size()) {
-                // Count unit by platform: "[No Filter]" spans everything
-                // (tunes + podcasts + radio) so it counts in "items"; podcasts
-                // in episodes, radio in streams, everything else in tunes.
-                const char* unit = "tunes";
-                if (opt.matchedFormats.empty())
-                    unit = "items";
-                else if (opt.matchedFormats[0] == PODCAST)
-                    unit = "episodes";
-                else if (opt.matchedFormats[0] == RADIO)
-                    unit = "streams";
-                label += utils::format("  [%s %s]",
-                                       withCommas(filterCounts[index]), unit);
+                if (fmt0 == RADIO) {
+                    // Each radio entry IS one station, so just count-prefix the
+                    // name ("10 Radio Stations") -- no "[N streams]" bracket.
+                    label = utils::format("%s %s",
+                                          withCommas(filterCounts[index]),
+                                          opt.name);
+                } else {
+                    // Count unit by platform: "[No Filter]" spans everything
+                    // (tunes + podcasts + radio) so it counts in "items";
+                    // podcasts in episodes, everything else in tunes.
+                    const char* unit = opt.matchedFormats.empty()
+                                           ? "items"
+                                           : (fmt0 == PODCAST ? "episodes"
+                                                              : "tunes");
+                    label += utils::format("  [%s %s]",
+                                           withCommas(filterCounts[index]),
+                                           unit);
+                }
             }
 
             int rows = ((int)filterOptions.size() + 1) / 2;
@@ -779,6 +795,7 @@ void ChipMachine::computeFilterCounts()
     for (int c : counts)
         total += c;
     if (total == 0) return;
+    podcastShowCount = musicDatabase.getPodcastShowCount();
     filterCounts.assign(filterOptions.size(), 0);
     for (size_t i = 0; i < filterOptions.size(); i++) {
         auto const& opt = filterOptions[i];

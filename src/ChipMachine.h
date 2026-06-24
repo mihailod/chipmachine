@@ -330,6 +330,9 @@ private:
     // Per-filterOptions tune counts, shown as "[N tunes]" on the F9 screen.
     // Populated once the database finishes indexing.
     std::vector<int> filterCounts;
+    // Number of distinct podcast shows, used to prefix the F9 "Podcasts" label
+    // ("9 Podcasts  [N episodes]"). Populated alongside filterCounts.
+    int podcastShowCount = 0;
     // Tune count of the currently selected platform filter (0 = no filter);
     // used for the "type to search N songs" prompt hint on large filters.
     int activeFilterCount = 0;

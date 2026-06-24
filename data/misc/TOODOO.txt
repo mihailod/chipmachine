@@ -1,6 +1,6 @@
-******************************************************
-* DATA BUGS / ISSUES (fix might need db version bump *
-******************************************************
+**************************************************
+* BUGS / ISSUES (fix might need db version bump) *
+**************************************************
 
 - can we add screenshots for more formats?
 

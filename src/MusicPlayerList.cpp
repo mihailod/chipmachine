@@ -336,15 +336,15 @@ bool MusicPlayerList::playFile(utils::path fileName)
 
 void MusicPlayerList::cancelStreaming()
 {
-    LOGD("TEARDOWN: cancelStreaming begin");
+    //LOGD("TEARDOWN: cancelStreaming begin");
     remoteLoader.cancel();
-    LOGD("TEARDOWN: remoteLoader.cancel done");
+    //LOGD("TEARDOWN: remoteLoader.cancel done");
     // quit() (not clear()) the fifo: if the web thread is blocked in put()
     // feeding a stream we're abandoning, only quitting unblocks it -- otherwise
     // it would wedge curl_multi_perform and stall every transfer. streamFile()
     // allocates a fresh fifo for the next song.
     mp.abortStream();
-    LOGD("TEARDOWN: abortStream done");
+    //LOGD("TEARDOWN: abortStream done");
 }
 
 // Stream a remote, finite, ffmpeg-decodable file: curl fetches it into a fifo

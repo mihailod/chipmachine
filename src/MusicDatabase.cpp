@@ -1135,6 +1135,12 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
 {
     filterHueRank.clear();
     filterHueCount = 0;
+    // Reset podcast-browse state on every filter change; rebuilt below when the
+    // podcast filter is the one being activated.
+    podcastFilterActive = (allowedFormats.size() == 1 &&
+                           allowedFormats[0] == PODCAST);
+    podcastShowFilter = -1;
+    podcastShowList.clear();
     if (allowedFormats.empty()) {
         titleIndex.setFilter();
         formatFilterActive = false;
@@ -1179,6 +1185,25 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
         int rank = 0;
         for (uint16_t h : hues) filterHueRank[h] = rank++;
         filterHueCount = (int)hues.size();
+
+        // Build the podcast show list (distinct collections among the podcast
+        // episodes), names from the collection table, sorted alphabetically.
+        if (podcastFilterActive) {
+            std::set<int> shows;
+            for (int idx : filteredCandidates)
+                shows.insert(formats[idx] >> 8);
+            for (int rowid : shows) {
+                std::string name;
+                auto q = db.query<std::string>(
+                    "SELECT name FROM collection WHERE ROWID = ?", rowid);
+                if (q.step()) name = q.get();
+                podcastShowList.emplace_back(rowid, name);
+            }
+            std::sort(podcastShowList.begin(), podcastShowList.end(),
+                      [](auto const& a, auto const& b) {
+                          return toLower(a.second) < toLower(b.second);
+                      });
+        }
     }
 }
 
@@ -1195,7 +1220,9 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
         if (result.size() >= searchLimit) return false;
 
         std::string identity;
-        if (index >= PLAYLIST_INDEX) {
+        if (index >= PODCAST_SHOW_INDEX) {
+            identity = "SHOW:" + std::to_string(index - PODCAST_SHOW_INDEX);
+        } else if (index >= PLAYLIST_INDEX) {
             identity = "PL:" + playLists[index - PLAYLIST_INDEX].name;
         } else {
             std::string title = titleIndex.getString(index);
@@ -1228,6 +1255,23 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
     // alphabetically by title. Large filters / no filter stay blank.
     static constexpr size_t kFilterShowAllLimit = 1000;
     if (query == "") {
+        // Podcasts browse: with the Podcasts filter active and no drilled-in
+        // show, list the shows themselves (one synthetic row each). Drilled into
+        // a show, list that show's episodes in feed order (each show is small,
+        // so this ignores the show-all size limit).
+        if (podcastFilterActive && podcastShowFilter < 0) {
+            for (auto const& s : podcastShowList)
+                if (!add_unique(PODCAST_SHOW_INDEX + s.first) &&
+                    result.size() >= searchLimit)
+                    break;
+            return result.size();
+        }
+        if (podcastFilterActive && podcastShowFilter >= 0) {
+            for (int idx : filteredCandidates)
+                if ((formats[idx] >> 8) == podcastShowFilter)
+                    if (!add_unique(idx) && result.size() >= searchLimit) break;
+            return result.size();
+        }
         if (formatFilterActive && !filteredCandidates.empty() &&
             filteredCandidates.size() < kFilterShowAllLimit) {
             std::vector<int> sorted(filteredCandidates.begin(),
@@ -1368,6 +1412,20 @@ std::string MusicDatabase::getScreenshotURL(std::string const& collection)
 // Get SongInfo from the search result
 SongInfo MusicDatabase::getSongInfo(int index) const
 {
+
+    if (index >= PODCAST_SHOW_INDEX) {
+        // A podcast SHOW row: title = show name, path carries the collection
+        // ROWID so the UI can drill into its episodes (it is not playable).
+        int rowid = index - PODCAST_SHOW_INDEX;
+        std::string name;
+        {
+            std::lock_guard lock{ dbMutex };
+            for (auto const& s : podcastShowList)
+                if (s.first == rowid) name = s.second;
+        }
+        return SongInfo("podcastshow::" + std::to_string(rowid), "", name, "",
+                        "Podcast");
+    }
 
     if (index >= PLAYLIST_INDEX) {
         std::string p = playLists[index - PLAYLIST_INDEX].name;
@@ -2039,6 +2097,21 @@ std::vector<int> MusicDatabase::getFormatByteCounts() const
                      : (uint32_t)formats.size();
     for (uint32_t i = 0; i < n; i++) counts[formats[i] & 0xff]++;
     return counts;
+}
+
+int MusicDatabase::getPodcastShowCount() const
+{
+    std::lock_guard lock{ dbMutex };
+    std::set<int> shows;
+    uint32_t n = (productStartIndex > 0 &&
+                  productStartIndex <= (uint32_t)formats.size())
+                     ? productStartIndex
+                     : (uint32_t)formats.size();
+    // formats[i] packs the collection id in the high bits; collect the distinct
+    // collections that carry PODCAST episodes.
+    for (uint32_t i = 0; i < n; i++)
+        if ((formats[i] & 0xff) == PODCAST) shows.insert(formats[i] >> 8);
+    return (int)shows.size();
 }
 
 std::string MusicDatabase::describeFormat(SongInfo const& s)

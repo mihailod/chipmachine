@@ -154,7 +154,9 @@ public:
     {
         // std::lock_guard lock{dbMutex};
         int f;
-        if (index >= PLAYLIST_INDEX)
+        if (index >= PODCAST_SHOW_INDEX)
+            f = PODCAST;
+        else if (index >= PLAYLIST_INDEX)
             f = PLAYLIST;
         else
             f = formats[index];
@@ -198,9 +200,19 @@ public:
     // Used to show per-platform tune counts on the F9 filter screen.
     std::vector<int> getFormatByteCounts() const;
 
+    // Number of distinct podcast shows (collections containing PODCAST-format
+    // episodes). Used to label the F9 Podcasts filter ("9 Podcasts [...]").
+    int getPodcastShowCount() const;
+
     std::string getTitle(int index) const
     {
         std::lock_guard lock{ dbMutex };
+        if (index >= PODCAST_SHOW_INDEX) {
+            int rowid = index - PODCAST_SHOW_INDEX;
+            for (auto const& s : podcastShowList)
+                if (s.first == rowid) return s.second;
+            return "";
+        }
         if (index >= PLAYLIST_INDEX)
             return playLists[index - PLAYLIST_INDEX].name;
         return titleIndex.getString(index);
@@ -371,6 +383,26 @@ private:
 
     static constexpr int PLAYLIST_INDEX = 0x10000000;
 
+public:
+    // Synthetic result indices for podcast SHOW rows (one per podcast
+    // collection) shown when the Podcasts filter is active with an empty query.
+    // index = PODCAST_SHOW_INDEX + collection ROWID. Kept above PLAYLIST_INDEX
+    // and checked first wherever indices are dispatched.
+    static constexpr int PODCAST_SHOW_INDEX = 0x18000000;
+
+    // Podcast browse: list of (collection ROWID, name) for each podcast show,
+    // sorted by name; populated when the Podcasts format filter activates.
+    std::vector<std::pair<int, std::string>> const& podcastShows() const
+    {
+        return podcastShowList;
+    }
+    // Drill into one show (its ROWID) so an empty query lists that show's
+    // episodes; pass -1 to go back to the show list.
+    void setPodcastShow(int rowid) { podcastShowFilter = rowid; }
+    int podcastShow() const { return podcastShowFilter; }
+    bool podcastFilterActive_() const { return podcastFilterActive; }
+
+private:
     RemoteLoader& remoteLoader;
     utils::path workDir;
 
@@ -417,6 +449,10 @@ private:
     // keystroke. Empty / false when no platform filter is active.
     std::vector<int> filteredCandidates;
     bool formatFilterActive = false;
+    // Podcast browse state (see PODCAST_SHOW_INDEX / podcastShows()).
+    bool podcastFilterActive = false;                     // PODCAST filter on
+    int podcastShowFilter = -1;                           // drilled-in ROWID
+    std::vector<std::pair<int, std::string>> podcastShowList; // (ROWID,name)
     // Rank (0..N-1) of each distinct sub-format hue present in the active
     // filter, and the count N. Built in setFormatFilter() so renderSong can
     // spread hues evenly across however many formats the platform actually has.
