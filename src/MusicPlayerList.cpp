@@ -232,7 +232,69 @@ bool MusicPlayerList::playFile(utils::path fileName)
                                        return l == "" || l[0] == '#';
                                    }),
                     lines.end());
-        currentInfo.path = lines[0];
+        if (lines.empty()) {
+            errors.emplace_back("Empty playlist");
+            SET_STATE(Error);
+            return false;
+        }
+        std::string first = lines[0];
+        if (!first.empty() && first.back() == '\r') first.pop_back();
+
+        // Modland's console collections (SGC/KSS/NSF/GBS/HES/...) expose each
+        // subtune as a tiny GME-style .m3u that points at a SHARED module file:
+        //   "Alien Syndrome.sgc::KSS,0,<title>,<len>,..."
+        // i.e. "<filename>[::<type>],<track>,...". These are NOT radio
+        // playlists -- resolve to the sibling module in the same remote
+        // directory and start the named subtune, rather than streaming the
+        // playlist text to ffmpeg (which yields "No such file"). Radio .m3u
+        // entries are always http(s) URLs, so they skip this branch.
+        bool isUrl = startsWith(toLower(first), "http://") ||
+                     startsWith(toLower(first), "https://");
+        auto sep = first.find("::");
+        std::string fileField, rest;
+        if (sep != std::string::npos) {
+            fileField = first.substr(0, sep);
+            rest = first.substr(sep + 2); // "<type>,<track>,..."
+            auto c = rest.find(',');      // drop the "::type" token
+            rest = (c == std::string::npos) ? "" : rest.substr(c + 1);
+        } else {
+            auto c = first.find(',');
+            fileField = (c == std::string::npos) ? first : first.substr(0, c);
+            rest = (c == std::string::npos) ? "" : first.substr(c + 1);
+        }
+        std::string fext = toLower(path_extension(fileField));
+        bool subtuneM3u = !isUrl && !fileField.empty() && !fext.empty() &&
+                          fext != ".m3u" && fext != ".mp3" && fext != ".ogg";
+        if (subtuneM3u) {
+            // Leading integer of the remaining fields = the 0-based subtune.
+            int track = 0;
+            size_t i = 0;
+            while (i < rest.size() && rest[i] == ' ') i++;
+            size_t j = i;
+            while (j < rest.size() && std::isdigit((unsigned char)rest[j])) j++;
+            if (j > i) track = std::stoi(rest.substr(i, j - i));
+
+            // Resolve the sibling module's URL, preserving the source prefix so
+            // remoteLoader.load() fetches it from the same collection/host.
+            std::string prefix, rel;
+            auto pp = split(currentInfo.path, std::string("::"), size_t(2));
+            if (pp.size() == 2) {
+                prefix = pp[0];
+                rel = pp[1];
+            } else
+                rel = currentInfo.path;
+            std::string dir = path_directory(rel);
+            std::string modRel = dir.empty() ? fileField : dir + "/" + fileField;
+            currentInfo.path = prefix.empty() ? modRel : prefix + "::" + modRel;
+            currentInfo.ext = fext.substr(1);    // "sgc"
+            currentInfo.format = fext.substr(1); // routed/described by extension
+            currentInfo.starttune = track;
+            currentInfo.numtunes = 0;
+            playCurrent();
+            return false;
+        }
+
+        currentInfo.path = first;
         // Pick the codec from the resolved stream URL so non-mp3 radio streams
         // (e.g. Kohina's .ogg) are tagged correctly; the actual decoder is
         // chosen by extension in playCurrent().

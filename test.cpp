@@ -1987,6 +1987,44 @@ TEST_CASE("UADE two-file formats stream and play via MusicPlayerList",
     }
 }
 
+// Regression for Modland's console collections (SGC/KSS/NSF/GBS/HES/...), which
+// expose every subtune as a tiny GME-style .m3u that points at a SHARED module:
+//   "Alien Syndrome.sgc::KSS,0,<title>,<len>,..."
+// The .m3u branch of MusicPlayerList::playFile() used to treat ANY .m3u as a
+// radio playlist -- it took line 0 verbatim, tagged it "MP3", and handed it to
+// ffmpeg, which choked on the literal "KSS,0,..." text ("No such file or
+// directory"). It now recognises the "<file>[::type],<track>,..." form, fetches
+// the sibling module from the same Modland directory, and starts the named
+// subtune. Network-gated (Modland FTP); not part of the default run.
+TEST_CASE("modland console-subtune m3u resolves to module and plays",
+          "[.m3usubtune]")
+{
+    using namespace chipmachine;
+    logging::setLevel(logging::Level::Warning);
+    auto ap = std::make_shared<AudioPlayerNull>();
+    RemoteLoader rl;
+    rl.registerSource("modland", "ftp://ftp.modland.com/pub/modules/",
+                      "/nonexistent-mirror/");
+    MusicDatabase mdb{ rl };
+    musix::ChipPlugin::createPlugins("data");
+    MusicPlayerList mpl{ mdb, rl, ap };
+
+    mpl.playSong(SongInfo{ "modland::SGC/Takashi Horiguchi/"
+                           "Alien Syndrome/01 BGM #01.m3u" });
+
+    int64_t energy = 0;
+    std::vector<int16_t> buf(8192);
+    for (int i = 0; i < 3000 && energy == 0; ++i) {
+        REQUIRE_FALSE(mpl.hasError());
+        if (mpl.getState() == MusicPlayerList::Playing) {
+            ap->get(buf);
+            for (auto v : buf) { energy += std::abs(static_cast<int>(v)); }
+        }
+        std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    }
+    REQUIRE(energy != 0);
+}
+
 TEST_CASE("OpenMPT", "[music]") { testPlugin<musix::OpenMPTPlugin>("testmus/openmpt", ""); }
 TEST_CASE("GSF", "[music]") { testPlugin<musix::GSFPlugin>("testmus/gsf", "lib"); }
 // On a clean machine, streaming a .gsf/.minigsf must also fetch its shared
