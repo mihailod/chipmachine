@@ -2,13 +2,21 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+! [web.cpp:291] CODE 200
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Picatune2/BeRo/acidhouse.pt2
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune2%2fBeRo/acidhouse.pt2
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Picatune2/BeRo/acidhouse.pt2
+[MusicDatabase.cpp:1502] Loaded 796 zxspectrum screenshots
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:738] Detected ext: 
+MusicPlayer: Plugin 'Ayfly ZX' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune2%2fBeRo/acidhouse.pt2'. Error: Not an AY file
+
+- formats menu up down should wrap around
+
 - /Demo/Beyonder/Welcome_On_Amiga.lha/8svx.Welcome On Amiga
 starts and then stops playback (silent) after several seconds and locks the program
 then the lock goes away and it is just silent
-
-
-- if there is no screenshot, rotate chipmachine logo and platform logo!
-- if there is screenshots, append to that list chipmachine log and song platform logo!
 
 - can we add screenshots for more formats?
 

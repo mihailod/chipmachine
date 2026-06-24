@@ -1835,6 +1835,7 @@ void initFormats()
     // startsWith("atari") would otherwise lump "Atari 8Bit" (.sap) in with the
     // ST tunes; this explicit entry keeps POKEY separate.
     format_map["atari 8bit"] = POKEY;
+    format_map["pokeynoise"] = POKEY; // Atari 8-bit POKEY (.pn), not Amiga
     format_map["soundsmith"] = APPLE; // Apple IIgs SoundSmith
     format_map["playerpro"] = APPLE;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
     format_map["jaytrax"] = TRACKER;  // JayTrax (.jxs), cross-platform synth tracker -- not UADE/Amiga
@@ -1962,6 +1963,47 @@ void initFormats()
     format_map["digital sound and music interface"] = PCTRACKER; // DSMI, DOS
     format_map["digital sound interface kit"] = PCTRACKER;       // DSIK, DOS
     format_map["digital sound interface kit riff"] = PCTRACKER;
+
+    // -----------------------------------------------------------------------
+    // Formats that sit in uade_formats (so they would default to UADE/Amiga)
+    // but are NOT Amiga -- they are played by their own dedicated plugins, and
+    // this only fixes the now-playing platform label / F9 filter / screenshot
+    // logo. Platform attributions verified against data/misc/formats_descriptions.txt
+    // and the per-format notes. (2026-06-24 audit.)
+    // -----------------------------------------------------------------------
+    // Commodore 64 (SID).
+    format_map["ben daglish sid"] = SID; // bds: "based on his C64 version"
+                                         // (the old "benn daglish sid" was a typo)
+    format_map["goattracker stereo"] = SID; // GoatTracker is C64, like goattracker/2
+    // ZX Spectrum.
+    format_map["picatune"] = ZXBEEPER;       // Shiru 1-bit beeper, sibling of picatune2
+    format_map["tfm music maker"] = ZXAY;    // tfe: ZX Spectrum TurboSound FM
+    // Atari ST/STE.
+    format_map["quartet psg"] = ATARI;       // Quartet (Atari ST), like quartet st
+    format_map["tfmx st"] = ATARI;           // Atari ST TFMX variant
+    format_map["rob hubbard st"] = ATARI;    // Atari ST Rob Hubbard
+    format_map["graoumf tracker"] = ATARI;   // Graoumf Tracker (Atari ST/Falcon)
+    format_map["graoumf tracker 2"] = ATARI;
+    format_map["megatracker"] = ATARI;       // mgt: "Atari ST sample tracker by Cream"
+    // IBM PC trackers (DOS/Windows, sample-based).
+    format_map["imago orpheus"] = PCTRACKER; // DOS tracker (.imf Imago Orpheus)
+    format_map["sbstudio"] = PCTRACKER;      // pac: "general-purpose...MS-DOS tracker"
+    format_map["mad tracker 2"] = PCTRACKER; // MadTracker 2 (Windows)
+    format_map["velvet studio"] = PCTRACKER; // Velvet Studio (Windows, .ams)
+    format_map["skale tracker"] = PCTRACKER; // Skale Tracker (Windows/DOS)
+    format_map["liquid tracker"] = PCTRACKER;// Liquid Tracker (DOS, .liq)
+    format_map["funktracker"] = PCTRACKER;   // FunkTracker (DOS, .funk)
+    format_map["real tracker"] = PCTRACKER;  // RealTracker (DOS/Windows, .rtm)
+    // PC softsynth / chiptune trackers / DAWs (group with psycle/sunvox/buzz).
+    format_map["monotone"] = PC;             // PC-speaker 1-bit beeper tracker, NOT Amiga
+    format_map["noisetrekker"] = PC;         // NoiseTrekker (Windows)
+    format_map["noisetrekker 2"] = PC;
+    format_map["protrekkr"] = PC;            // ProTrekkr (cross-platform softsynth)
+    format_map["protrekkr 2.0"] = PC;
+    format_map["klystrack"] = PC;            // klystrack (cross-platform chiptune tracker)
+    format_map["darkwave studio"] = PC;      // DarkWave Studio (Windows DAW)
+    format_map["dreamstation"] = PC;         // DreamStation (Windows)
+    format_map["ixalance"] = PC;             // Ixalance softsynth (Windows)
 }
 
 // A stable 16-bit per-format key from the format string, so every distinct
@@ -2084,6 +2126,41 @@ uint8_t MusicDatabase::classifyFormat(std::string const& fmt,
                                       std::string const& path)
 {
     return formatToByte(fmt, path, 0);
+}
+
+// Map a format byte to a filesystem-safe platform slug for the per-platform
+// logo lookup, or "" for "platforms" that are really streaming/meta sources
+// (no hardware screenshot makes sense for them).
+static std::string platformSlugForByte(uint8_t b)
+{
+    std::string name = platformName(b);
+    static const std::set<std::string> nonHardware = {
+        "", "MP3", "OGG", "Playlist", "Radio", "YouTube", "Podcast"
+    };
+    if (nonHardware.count(name)) return "";
+    // '/' is not a legal filename character; keep everything else (spaces are
+    // fine on disk and keep the names readable).
+    for (auto& c : name)
+        if (c == '/') c = '-';
+    return name;
+}
+
+std::string MusicDatabase::platformScreenshotName(SongInfo const& s)
+{
+    return platformSlugForByte(formatToByte(s.format, s.path, 0));
+}
+
+std::vector<std::string> MusicDatabase::platformScreenshotNames()
+{
+    std::vector<std::string> out;
+    std::set<std::string> seen;
+    for (int b = 0; b < 256; b++) {
+        auto slug = platformSlugForByte((uint8_t)b);
+        if (slug.empty() || seen.count(slug)) continue;
+        seen.insert(slug);
+        out.push_back(slug);
+    }
+    return out;
 }
 
 std::vector<int> MusicDatabase::getFormatByteCounts() const

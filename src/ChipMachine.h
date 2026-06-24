@@ -22,6 +22,7 @@
 #include <tween/tween.h>
 
 #include <cstdio>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -242,8 +243,11 @@ private:
 
     void nextScreenshot();
     void loadScreenshot(const std::string& shot);
-    // Falls back to the program icon when a song has no screenshot/cover art.
-    void showDefaultScreenshot();
+    // Loads the per-platform logos at startup and warns about missing ones.
+    void loadPlatformScreenshots();
+    // Appends the current song's platform logo (if any) and the ChipMachine
+    // logo to the screenshots rotation, so it is never empty.
+    void appendLogoScreenshots();
 
     utils::path workDir;
 
@@ -430,8 +434,19 @@ private:
     std::vector<NamedBitmap> screenshots;
     uint64_t setShotAt = 0;
     std::string currentScreenshot;
-    // Lazily-loaded program icon shown when a song has no screenshot.
+    // Lazily-loaded ChipMachine logo (data/misc/icon.png), used as the final
+    // fallback so the screenshot area is never blank.
     image::bitmap defaultShot;
+    // Per-platform logos loaded once at startup from
+    // data/misc/platformscreenshots/<platform>.png|jpg. Missing ones are simply
+    // absent (warned about at startup, never fatal).
+    std::map<std::string, image::bitmap> platformShots;
+    // Platform slug of the song currently shown; lets loadScreenshot avoid
+    // rebuilding (and re-fading) the logo-only set between same-platform songs.
+    std::string currentPlatformSlug;
+    // Platform slug of the playing song, classified from its raw format BEFORE
+    // describeFormat() rewrites currentInfo.format into a display string.
+    std::string currentSongPlatform;
 
     // The defensive thread barrier for application destruction
     std::atomic<bool> isShuttingDown{false};

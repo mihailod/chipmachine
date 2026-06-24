@@ -302,6 +302,11 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     musicBars.setup(musicBarsWidth, spectrumHeight);
 
     LOGD("WORKDIR %s", workDir.string());
+
+    // Preload per-platform logos (and warn about any that are missing) so they
+    // are ready to rotate into the screenshot area when a song plays.
+    loadPlatformScreenshots();
+
     musicDatabase.initFromLuaAsync(this->workDir);
 
     if (musicDatabase.busy()) {
@@ -674,19 +679,27 @@ void ChipMachine::loadScreenshot(const std::string& shot)
         return;
     }
 
+    // Platform of the playing song (classified from its raw format when
+    // currentInfo was set), used to pick the per-platform logo.
+    std::string slug = currentSongPlatform;
+
     // Called from Playstarted (immediate) and from the Playing poll (late arrival).
     if (shot == "") {
-        // Song has no screenshot/cover art — fall back to the program icon.
-        // Keep currentScreenshot empty so the Playing poll can still upgrade to
-        // a real screenshot URL that arrives late. Don't reload (and re-fade)
-        // the icon if it is already the thing on screen.
+        // Song has no screenshot/cover art — rotate just the platform logo and
+        // the ChipMachine logo. Keep currentScreenshot empty so the Playing poll
+        // can still upgrade to a real screenshot URL that arrives late. Avoid
+        // rebuilding (and re-fading) when we are already showing the logo-only
+        // set for this same platform.
+        if (currentScreenshot == "" && slug == currentPlatformSlug &&
+            !screenshots.empty())
+            return;
         currentScreenshot = "";
-        bool alreadyDefault = screenshots.size() == 1 &&
-                              screenshots[0].name == "icon.png";
-        if (!alreadyDefault) {
-            screenShotIcon.clear();
-            showDefaultScreenshot();
-        }
+        currentPlatformSlug = slug;
+        screenShotIcon.clear();
+        screenshots.clear();
+        appendLogoScreenshots();
+        currentShot = -1;
+        nextScreenshot();
         return;
     }
 
@@ -700,27 +713,26 @@ void ChipMachine::loadScreenshot(const std::string& shot)
     screenShotIcon.clear();
     screenshots.clear();
     currentScreenshot = shot;
+    currentPlatformSlug = slug;
 
     auto parts = utils::split(shot, ";");
-    int total = parts.size();
+    // One callback fires per requested part; count them down so we know when
+    // every download has settled (success or failure) before finalizing.
+    auto remaining = std::make_shared<int>((int)parts.size());
     auto cb = [=](utils::File f) {
-        if (currentScreenshot == "")
+        // Bail if the song changed (or went to the logo-only path) meanwhile.
+        if (currentScreenshot != shot)
             return;
-        int t = total;
-        if (!f) {
-            // Keep processing
-        } else {
+        if (f) {
             try {
                 if (utils::toLower(utils::path_extension(
                         f.getName())) == "gif") {
-                    t--;
                     for (auto& bm : image::load_gifs(f.getName())) {
                         for (auto& px : bm) {
                             if ((px & 0xffffff) == 0)
                                 px &= 0xffffff;
                         }
                         screenshots.emplace_back(f.getFileName(), bm);
-                        t++;
                     }
                 } else {
                     auto bm = image::load_image(f.getName());
@@ -734,11 +746,17 @@ void ChipMachine::loadScreenshot(const std::string& shot)
             }
         }
 
-        if (screenshots.size() >= t) {
+        if (--(*remaining) <= 0) {
+            // All downloads settled. Sort the real screenshots. Only fall back
+            // to the platform + ChipMachine logos when no real screenshot loaded
+            // (e.g. every download failed) -- if the song has art, show only it.
             screenshots.erase(std::remove(screenshots.begin(),
                                           screenshots.end(), ""),
                               screenshots.end());
             sort(screenshots.begin(), screenshots.end());
+            if (screenshots.empty())
+                appendLogoScreenshots();
+            currentShot = -1;
             nextScreenshot();
         }
     };
@@ -746,23 +764,75 @@ void ChipMachine::loadScreenshot(const std::string& shot)
         webutils::Web::getInstance().getFile(p, cb);
 }
 
-void ChipMachine::showDefaultScreenshot()
+void ChipMachine::appendLogoScreenshots()
 {
+    // Per-platform logo for the current song, when one is installed.
+    bool havePlatform = false;
+    if (!currentPlatformSlug.empty()) {
+        auto it = platformShots.find(currentPlatformSlug);
+        if (it != platformShots.end() && it->second.width() > 0) {
+            screenshots.emplace_back("platform:" + currentPlatformSlug,
+                                     it->second);
+            havePlatform = true;
+        }
+    }
+    LOGD("Screenshot logos: platform='%s' logo=%s", currentPlatformSlug,
+         havePlatform ? "yes" : "none");
+    // Only when there is no platform logo, fall back to the ChipMachine icon so
+    // the area isn't blank. When a platform logo exists, show only that.
+    if (havePlatform)
+        return;
     if (defaultShot.width() == 0 || defaultShot.height() == 0) {
         try {
             auto ic = workDir / "data" / "misc" / "icon.png";
             defaultShot = image::load_image(ic.string());
         } catch (image::image_exception& e) {
-            LOGD("Failed to load default icon");
-            return;
+            LOGD("Failed to load ChipMachine logo (icon.png)");
         }
     }
-    if (defaultShot.width() == 0 || defaultShot.height() == 0) return;
+    if (defaultShot.width() > 0 && defaultShot.height() > 0)
+        screenshots.emplace_back("chipmachine", defaultShot);
+}
 
-    screenshots.clear();
-    screenshots.emplace_back("icon.png", defaultShot);
-    currentShot = 0;
-    nextScreenshot();
+void ChipMachine::loadPlatformScreenshots()
+{
+    // Load every per-platform logo once at startup from
+    // data/misc/platformscreenshots/<platform>.png (or .jpg). Missing files are
+    // not fatal: collect them and emit a single warning so they can be added.
+    auto dir = workDir / "data" / "misc" / "platformscreenshots";
+    std::vector<std::string> missing;
+    for (auto& name : MusicDatabase::platformScreenshotNames()) {
+        bool loaded = false;
+        for (auto ext : { ".png", ".jpg", ".jpeg" }) {
+            auto p = dir / (name + ext);
+            if (!utils::File::exists(p.string()))
+                continue;
+            try {
+                auto bm = image::load_image(p.string());
+                // Match the downloaded-screenshot behaviour: key out pure black
+                // so logos exported on a black background show the starfield
+                // through. (Real RGBA alpha is preserved either way.)
+                for (auto& px : bm)
+                    if ((px & 0xffffff) == 0) px &= 0xffffff;
+                platformShots[name] = bm;
+                loaded = true;
+                break;
+            } catch (image::image_exception& e) {
+                LOGW("Could not decode platform logo %s", p.string());
+            }
+        }
+        if (!loaded)
+            missing.push_back(name);
+    }
+    LOGD("Loaded %d platform logos from %s", (int)platformShots.size(),
+         dir.string());
+    if (!missing.empty()) {
+        std::string list;
+        for (auto& m : missing)
+            list += (list.empty() ? "" : ", ") + m;
+        LOGW("Missing %d platform logo(s) in %s (add <name>.png or .jpg): %s",
+             (int)missing.size(), dir.string(), list);
+    }
 }
 
 void ChipMachine::nextScreenshot()
@@ -936,6 +1006,10 @@ void ChipMachine::update()
         stereoSumAccum = 0;
         stereoDetectFrames = 0;
         currentInfo = player.getInfo();
+        // Classify the platform from the raw format before describeFormat()
+        // rewrites it into a display string ("Amiga - Soundtracker (MOD)"),
+        // which would no longer classify.
+        currentSongPlatform = MusicDatabase::platformScreenshotName(currentInfo);
         currentInfo.format = MusicDatabase::describeFormat(currentInfo);
         dbInfo = player.getDBInfo();
         screen.setTitle(utils::format("%s / %s (" PROGRAM_NAME " " VERSION_STR ")",
@@ -1082,6 +1156,7 @@ void ChipMachine::update()
         songField.add = 0.0;
         Tween::make().sine().to(songField.add, 1.0).seconds(0.5);
         currentInfo = player.getInfo();
+        currentSongPlatform = MusicDatabase::platformScreenshotName(currentInfo);
         currentInfo.format = MusicDatabase::describeFormat(currentInfo);
         auto sub_title = player.getMeta("sub_title");
         xinfoField.setText(sub_title);

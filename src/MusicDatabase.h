@@ -196,6 +196,16 @@ public:
     static uint8_t classifyFormat(std::string const& fmt,
                                   std::string const& path);
 
+    // Filesystem-safe platform name for a song, used to pick a per-platform
+    // logo at data/misc/platformscreenshots/<name>.png|jpg. Returns "" for
+    // songs without a real hardware platform (MP3, OGG, Radio, YouTube,
+    // Podcast, Playlist, unknown). '/' in display names is replaced with '-'.
+    static std::string platformScreenshotName(SongInfo const& s);
+
+    // The full set of distinct platform names (slugs) that can carry a
+    // per-platform logo. Used at startup to warn about missing images.
+    static std::vector<std::string> platformScreenshotNames();
+
     // Number of indexed songs (excluding products) per format byte (0..255).
     // Used to show per-platform tune counts on the F9 filter screen.
     std::vector<int> getFormatByteCounts() const;
