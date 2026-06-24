@@ -2130,6 +2130,11 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
         return "YouTube";
     }
 
+    // Podcasts are streamed audio; the enclosure "extension" is derived from the
+    // URL and often carries a query string (".mp3?p=f", ".mp3?dest-id=..."), so
+    // skip the "(EXT)" suffix entirely and just label them "Podcast".
+    if (b == PODCAST) return "Podcast";
+
     // Extension (uppercase, no dot); prefer the stored ext, fall back to path.
     std::string ext = s.ext;
     if (ext.empty()) ext = utils::path_extension(s.path);

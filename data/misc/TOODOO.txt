@@ -2,6 +2,17 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+- startrekker
+MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_lha2/unexotica_Demo_Korzeniewski_Robert_Fastest_Demo.lha/mod.amiga-fastest-compo'. Error: Can not play Startrekker module
+[UADEPlugin.cpp:752] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:301] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_lha2/unexotica_Demo_Korzeniewski_Robert_Fastest_Demo.lha/mod.amiga-fastest-compo
+[UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_lha2/unexotica_Demo_Korzeniewski_Robert_Fastest_Demo.lha/mod.amiga-fastest-compo.AS' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
+[UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_lha2/unexotica_Demo_Korzeniewski_Robert_Fastest_Demo.lha/mod.amiga-fastest-compo.AS
+[UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_lha2/unexotica_Demo_Korzeniewski_Robert_Fastest_Demo.lha/mod.amiga-fastest-compo.NT' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
+[UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_lha2/unexotica_Demo_Korzeniewski_Robert_Fastest_Demo.lha/mod.amiga-fastest-compo.NT
+uade warning: Song ended prematurely due to error: score died
+
 - can we add screenshots for more formats?
 
 - revisit cpcpower database
