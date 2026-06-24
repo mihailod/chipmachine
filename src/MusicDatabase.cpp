@@ -13,8 +13,10 @@
 
 #include <algorithm>
 #include <chrono>
+#include <filesystem>
 #include <map>
 #include <set>
+#include <thread>
 
 #include <sol.hpp>
 
@@ -65,11 +67,11 @@ void MusicDatabase::createTables()
 {
     db.exec("CREATE TABLE IF NOT EXISTS collection (name STRING, url STRING, "
             "localdir STRING, "
-            "description STRING, id UNIQUE, version INTEGER)");
+            "description STRING, id UNIQUE, version INTEGER, artwork STRING)");
     db.exec("CREATE TABLE IF NOT EXISTS song (title STRING, game STRING, "
             "composer STRING, "
             "format STRING, path STRING, collection INTEGER, metadata STRING, "
-            "ext STRING)");
+            "ext STRING, artwork STRING)");
     db.exec("CREATE TABLE IF NOT EXISTS product (title STRING, creator STRING, "
             "type STRING, "
             "screenshots STRING, collection INTEGER, metadata STRING)");
@@ -247,6 +249,14 @@ bool MusicDatabase::parseRss(
         return false;
     }
     auto channelNode = rssNode["channel"];
+
+    // Channel-level description, used as the per-episode fallback so the
+    // scroller always has something show-relevant to display when an episode
+    // carries no <description> of its own (common -- e.g. most C64 Take-away
+    // items). Without this the scroller would fall through to the module-format
+    // line, which is meaningless for a podcast.
+    std::string showDescription = htmldecode(channelNode["description"].text());
+
     for (auto const& i : channelNode.all("item")) {
         auto title = i["title"].text();
         auto e = i["enclosure"];
@@ -265,6 +275,7 @@ bool MusicDatabase::parseRss(
             description = desc.text();
 
         description = htmldecode(description);
+        if (description.empty()) description = showDescription;
 
         std::string composer;
 
@@ -281,10 +292,253 @@ bool MusicDatabase::parseRss(
         auto pos = enclosure.find("file=");
         if (pos != std::string::npos) enclosure = enclosure.substr(pos + 5);
 
-        callback(SongInfo(enclosure, "", title, composer, "MP3", description));
+        SongInfo song(enclosure, "", title, composer, "Podcast", description);
+        // Per-episode artwork, when the feed provides it (<itunes:image>).
+        // Episodes without one fall back to the show's representative image
+        // (collection.artwork) in getSongScreenshots.
+        auto img = i["itunes:image"];
+        if (img.valid()) song.metadata[SongInfo::SCREENSHOT] = img.attr("href");
+        callback(song);
     }
     LOGD("Done");
     return true;
+}
+
+// --- Podcast live-feed refresh (Q4) -------------------------------------
+//
+// Podcasts are dynamic: shows publish new episodes after release. The shipped
+// data/<id>.xml is a frozen back catalogue, so we augment it from each show's
+// live RSS feed (db.lua `remote_list`). The augmented copy lives in the
+// writable cache (the .app bundle is read-only and code-signed -- never write
+// data/ back), and the merge runs in a detached background thread so launch is
+// never blocked. New episodes a refresh discovers become visible on the next
+// launch, when the changed cache copy forces a reindex. Offline / failed
+// fetches simply leave the cached copy untouched.
+namespace {
+
+utils::path podcastCacheDir()
+{
+    return Environment::getCacheDir() / "_podcasts";
+}
+
+// Normalise an enclosure URL into a dedup key. Feeds often serve the same
+// episode under a different scheme (the C64 Take-away back catalogue ships as
+// https:// while the live feed is http://) or with a trailing query string, so
+// strip the scheme and any ?query to compare on the stable middle.
+std::string podcastUrlKey(std::string url)
+{
+    if (startsWith(url, "https://"))
+        url = url.substr(8);
+    else if (startsWith(url, "http://"))
+        url = url.substr(7);
+    auto q = url.find('?');
+    if (q != std::string::npos) url = url.substr(0, q);
+    return url;
+}
+
+// Extract a dedup key for every <item>'s enclosure URL from an RSS document.
+std::set<std::string> rssEnclosureUrls(std::string const& xmlText)
+{
+    std::set<std::string> urls;
+    try {
+        auto doc = xmldoc::fromText(xmlText);
+        auto channel = doc["rss"]["channel"];
+        for (auto const& i : channel.all("item")) {
+            auto e = i["enclosure"];
+            if (e.valid()) urls.insert(podcastUrlKey(e.attr("url")));
+        }
+    } catch (xml_exception const&) {}
+    return urls;
+}
+
+} // namespace
+
+std::string MusicDatabase::podcastSource(utils::path const& workDir,
+                                         std::string const& id,
+                                         std::string const& songList) const
+{
+    auto shipped = (workDir / songList).string();
+    auto cached = (podcastCacheDir() / (id + ".xml")).string();
+    std::error_code ec;
+    // Seed the cache copy from the shipped back catalogue on first use.
+    if (!utils::exists(cached) && utils::exists(shipped)) {
+        std::filesystem::create_directories(podcastCacheDir().string(), ec);
+        std::filesystem::copy_file(shipped, cached, ec);
+    }
+    return utils::exists(cached) ? cached : shipped;
+}
+
+bool MusicDatabase::preparePodcasts(utils::path const& workDir)
+{
+    using namespace std::chrono;
+    bool changed = false;
+    auto dir = podcastCacheDir();
+    std::error_code ec;
+    std::filesystem::create_directories(dir.string(), ec);
+
+    auto now = duration_cast<seconds>(system_clock::now().time_since_epoch())
+                   .count();
+    const long long refreshInterval = 24 * 60 * 60; // 24h throttle
+
+    for (auto const& feed : podcastFeeds) {
+        // Make sure a cache copy exists (seeds from the shipped file).
+        podcastSource(workDir, feed.id, feed.songList);
+
+        // A previous background refresh that found new episodes left a .dirty
+        // marker -> the cache copy now has more than the last index saw, so
+        // force a reindex and clear the marker (this index run consumes it).
+        auto dirty = (dir / (feed.id + ".dirty")).string();
+        if (utils::exists(dirty)) {
+            changed = true;
+            std::filesystem::remove(dirty, ec);
+        }
+
+        if (feed.remoteList.empty()) continue;
+
+        // Throttle: only hit the network if we have not checked in ~24h.
+        auto stamp = (dir / (feed.id + ".stamp")).string();
+        long long last = 0;
+        if (utils::exists(stamp)) {
+            try {
+                last = std::stoll(utils::File{ stamp }.read());
+            } catch (...) {}
+        }
+        if (now - last < refreshInterval) continue;
+
+        // Record the attempt now so a hang/crash doesn't retry every launch.
+        { utils::File s{ stamp }; s.write(std::to_string(now)); s.close(); }
+
+        std::thread(&MusicDatabase::refreshPodcastFeed, dir, feed.id,
+                    feed.remoteList)
+            .detach();
+    }
+    return changed;
+}
+
+void MusicDatabase::refreshPodcastFeed(utils::path cacheDir, std::string id,
+                                       std::string remoteList)
+{
+    std::string body;
+    try {
+        body = webutils::Web::getBlocking(remoteList);
+    } catch (...) { return; }
+    if (body.empty()) return;
+
+    auto liveUrls = rssEnclosureUrls(body);
+    if (liveUrls.empty()) return; // not a feed we understand / fetch failed
+
+    auto cached = (cacheDir / (id + ".xml")).string();
+    std::string current;
+    try {
+        current = utils::File{ cached }.read();
+    } catch (...) { return; }
+    auto have = rssEnclosureUrls(current);
+
+    // Collect <item> blocks from the live feed whose enclosure we don't have.
+    std::string additions;
+    int added = 0;
+    try {
+        auto doc = xmldoc::fromText(body);
+        auto channel = doc["rss"]["channel"];
+        for (auto const& i : channel.all("item")) {
+            auto e = i["enclosure"];
+            if (!e.valid()) continue;
+            auto url = e.attr("url");
+            if (have.count(podcastUrlKey(url))) continue;
+            auto esc = [](std::string s) {
+                std::string o;
+                for (char c : s) {
+                    if (c == '&') o += "&amp;";
+                    else if (c == '<') o += "&lt;";
+                    else if (c == '>') o += "&gt;";
+                    else o += c;
+                }
+                return o;
+            };
+            std::string title = i["title"].valid() ? i["title"].text() : "";
+            std::string creator =
+                i["dc:creator"].valid() ? i["dc:creator"].text() : "";
+            std::string desc =
+                i["description"].valid() ? i["description"].text() : "";
+            auto img = i["itunes:image"];
+            additions += "<item>\n<title>" + esc(title) + "</title>\n";
+            if (!creator.empty())
+                additions += "<dc:creator>" + esc(creator) + "</dc:creator>\n";
+            if (img.valid())
+                additions += "<itunes:image href=\"" + esc(img.attr("href")) +
+                             "\"></itunes:image>\n";
+            additions += "<description>" + esc(desc) +
+                         "</description>\n<enclosure url=\"" + esc(url) +
+                         "\" type=\"audio/mpeg\" length=\"0\"></enclosure>\n"
+                         "</item>\n";
+            added++;
+        }
+    } catch (...) { return; }
+
+    if (added == 0) return; // nothing new
+
+    // Insert before </channel> and write atomically (temp + rename) so a
+    // concurrent index read never sees a half-written file.
+    auto pos = current.rfind("</channel>");
+    if (pos == std::string::npos) return;
+    std::string merged =
+        current.substr(0, pos) + additions + current.substr(pos);
+
+    auto tmp = cached + ".tmp";
+    { utils::File t{ tmp }; t.write(merged); t.close(); }
+    std::error_code ec;
+    std::filesystem::rename(tmp, cached, ec);
+    if (ec) return;
+
+    // Mark dirty so the next launch reindexes with the new episodes.
+    auto dirty = (cacheDir / (id + ".dirty")).string();
+    utils::File d{ dirty };
+    d.write(std::to_string(added));
+    d.close();
+    LOGD("Podcast %s: merged %d new episode(s)", id.c_str(), added);
+}
+
+void MusicDatabase::syncPodcastSongs()
+{
+    auto insert = db.query("INSERT INTO song (title, game, composer, format, "
+                           "path, collection, metadata, ext, artwork) "
+                           "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    for (auto const& feed : podcastFeeds) {
+        auto cq = db.query<int>("SELECT ROWID FROM collection WHERE id = ?",
+                                feed.id);
+        if (!cq.step()) continue; // not indexed yet -> full reindex handles it
+        int collection_id = cq.get();
+
+        // Episodes already in the table for this collection.
+        std::set<std::string> have;
+        auto pq = db.query<std::string>(
+            "SELECT path FROM song WHERE collection = ?", collection_id);
+        while (pq.step())
+            have.insert(pq.get());
+
+        auto src = podcastSource(workDir, feed.id, feed.songList);
+        Variables vars;
+        int added = 0;
+        parseRss(vars, src, [&](SongInfo const& song) {
+            if (have.count(song.path)) return; // append-only: keep ROWIDs stable
+            insert
+                .bind(song.title, song.game, song.composer, song.format,
+                      song.path, collection_id,
+                      song.metadata[SongInfo::INFO] != ""
+                          ? song.metadata[SongInfo::INFO].c_str()
+                          : nullptr,
+                      song.ext != "" ? song.ext.c_str() : nullptr,
+                      song.metadata[SongInfo::SCREENSHOT] != ""
+                          ? song.metadata[SongInfo::SCREENSHOT].c_str()
+                          : nullptr)
+                .step();
+            added++;
+            totalSongs++;
+        });
+        if (added > 0)
+            print_fmt("Podcast '%s': appended %d new episode(s)\n", feed.id,
+                      added);
+    }
 }
 
 bool MusicDatabase::parseModland(
@@ -577,6 +831,12 @@ bool MusicDatabase::parseStandard(
                 composerIndex >= 0 ? parts[composerIndex] : composer;
             std::string formatField =
                 formatIndex <= 0 ? format : parts[formatIndex];
+            // `podcast = "yes"` marks a standard (.txt) collection as a podcast
+            // show (Demovibes, AmigaVibes, Syntax Error): force the PODCAST
+            // format byte regardless of the per-song/collection codec tag, so
+            // these land in the Podcast F9 category and use the podcast
+            // playback/scroll paths -- without the RSS `type = "podcast"` parser.
+            if (vars["podcast"] == "yes") formatField = "Podcast";
 
             if (!unexotica) {
                 song = SongInfo(parts[pathIndex], gameField, titleField,
@@ -669,9 +929,9 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
     // Store the raw relative local_dir from vars so the DB is portable across
     // install locations (dev tree, /Applications, etc.). generateIndex()
     // resolves it against the current workDir at runtime.
-    db.exec("INSERT INTO collection (name, id, url, localdir, description) "
-            "VALUES (?, ?, ?, ?, ?)",
-            name, id, source, vars["local_dir"], description);
+    db.exec("INSERT INTO collection (name, id, url, localdir, description, "
+            "artwork) VALUES (?, ?, ?, ?, ?, ?)",
+            name, id, source, vars["local_dir"], description, vars["artwork"]);
     auto collection_id = db.last_rowid();
     dontIndex.resize(collection_id + 1);
     dontIndex[collection_id] = 0;
@@ -695,8 +955,12 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
 
     if (song_list == "") song_list = remote_list;
 
-    if (startsWith(song_list, "http://")) {
+    if (startsWith(song_list, "http://") || startsWith(song_list, "https://")) {
         listFile = web.getFileBlocking(song_list);
+    } else if (type == "podcast" && song_list != "") {
+        // Podcasts index the writable cache copy (back catalogue + any episodes
+        // a background refresh has merged), seeded from the shipped file.
+        listFile = File(podcastSource(workDir, id, song_list));
     } else if (song_list != "") {
         listFile = File(workDir.string(), song_list);
         writeListFile = listFile.exists();
@@ -748,8 +1012,9 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
         });
     } else {
         auto query = db.query("INSERT INTO song (title, game, composer, "
-                              "format, path, collection, metadata, ext) "
-                              "VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                              "format, path, collection, metadata, ext, "
+                              "artwork) "
+                              "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
         if (utils::exists(listFile.getName())) {
 
@@ -771,7 +1036,10 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                           song.metadata[SongInfo::INFO] != ""
                               ? song.metadata[SongInfo::INFO].c_str()
                               : nullptr,
-                          song.ext != "" ? song.ext.c_str() : nullptr)
+                          song.ext != "" ? song.ext.c_str() : nullptr,
+                          song.metadata[SongInfo::SCREENSHOT] != ""
+                              ? song.metadata[SongInfo::SCREENSHOT].c_str()
+                              : nullptr)
                     .step();
                 localCount++;
                 totalSongs++;
@@ -865,6 +1133,14 @@ static uint8_t productTypeToPlatform(std::string const& type)
 
 void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
 {
+    filterHueRank.clear();
+    filterHueCount = 0;
+    // Reset podcast-browse state on every filter change; rebuilt below when the
+    // podcast filter is the one being activated.
+    podcastFilterActive = (allowedFormats.size() == 1 &&
+                           allowedFormats[0] == PODCAST);
+    podcastShowFilter = -1;
+    podcastShowList.clear();
     if (allowedFormats.empty()) {
         titleIndex.setFilter();
         formatFilterActive = false;
@@ -898,8 +1174,35 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
         formatFilterActive = true;
         filteredCandidates.clear();
         uint32_t n = titleIndex.size();
+        std::set<uint16_t> hues;
         for (uint32_t i = 0; i < n; i++) {
-            if (!titleIndex.isFiltered(i)) filteredCandidates.push_back(i);
+            if (titleIndex.isFiltered(i)) continue;
+            filteredCandidates.push_back(i);
+            // Collect the distinct song sub-format keys present (skip products,
+            // which carry the neutral 0) to rank them for an even hue spread.
+            if (i < productStartIndex) hues.insert(formatHue[i]);
+        }
+        int rank = 0;
+        for (uint16_t h : hues) filterHueRank[h] = rank++;
+        filterHueCount = (int)hues.size();
+
+        // Build the podcast show list (distinct collections among the podcast
+        // episodes), names from the collection table, sorted alphabetically.
+        if (podcastFilterActive) {
+            std::set<int> shows;
+            for (int idx : filteredCandidates)
+                shows.insert(formats[idx] >> 8);
+            for (int rowid : shows) {
+                std::string name;
+                auto q = db.query<std::string>(
+                    "SELECT name FROM collection WHERE ROWID = ?", rowid);
+                if (q.step()) name = q.get();
+                podcastShowList.emplace_back(rowid, name);
+            }
+            std::sort(podcastShowList.begin(), podcastShowList.end(),
+                      [](auto const& a, auto const& b) {
+                          return toLower(a.second) < toLower(b.second);
+                      });
         }
     }
 }
@@ -917,7 +1220,9 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
         if (result.size() >= searchLimit) return false;
 
         std::string identity;
-        if (index >= PLAYLIST_INDEX) {
+        if (index >= PODCAST_SHOW_INDEX) {
+            identity = "SHOW:" + std::to_string(index - PODCAST_SHOW_INDEX);
+        } else if (index >= PLAYLIST_INDEX) {
             identity = "PL:" + playLists[index - PLAYLIST_INDEX].name;
         } else {
             std::string title = titleIndex.getString(index);
@@ -950,6 +1255,23 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
     // alphabetically by title. Large filters / no filter stay blank.
     static constexpr size_t kFilterShowAllLimit = 1000;
     if (query == "") {
+        // Podcasts browse: with the Podcasts filter active and no drilled-in
+        // show, list the shows themselves (one synthetic row each). Drilled into
+        // a show, list that show's episodes in feed order (each show is small,
+        // so this ignores the show-all size limit).
+        if (podcastFilterActive && podcastShowFilter < 0) {
+            for (auto const& s : podcastShowList)
+                if (!add_unique(PODCAST_SHOW_INDEX + s.first) &&
+                    result.size() >= searchLimit)
+                    break;
+            return result.size();
+        }
+        if (podcastFilterActive && podcastShowFilter >= 0) {
+            for (int idx : filteredCandidates)
+                if ((formats[idx] >> 8) == podcastShowFilter)
+                    if (!add_unique(idx) && result.size() >= searchLimit) break;
+            return result.size();
+        }
         if (formatFilterActive && !filteredCandidates.empty() &&
             filteredCandidates.size() < kFilterShowAllLimit) {
             std::vector<int> sorted(filteredCandidates.begin(),
@@ -1056,9 +1378,10 @@ SongInfo& MusicDatabase::lookup(SongInfo& song)
     }
 
     auto q = db.query<std::string, std::string, std::string, std::string,
-                      std::string, std::string, std::string, std::string>(
+                      std::string, std::string, std::string, std::string,
+                      std::string>(
         "SELECT path, title, game, composer, format, collection.id, metadata, "
-        "ext "
+        "ext, song.artwork "
         "FROM song, collection "
         "WHERE song.collection = collection.ROWID AND song.path = ?",
         path);
@@ -1066,7 +1389,8 @@ SongInfo& MusicDatabase::lookup(SongInfo& song)
     if (q.step()) {
         std::string coll;
         tie(song.path, song.title, song.game, song.composer, song.format, coll,
-            song.metadata[SongInfo::INFO], song.ext) = q.get_tuple();
+            song.metadata[SongInfo::INFO], song.ext,
+            song.metadata[SongInfo::SCREENSHOT]) = q.get_tuple();
         song.path = coll + "::" + song.path;
         //LOGD("LOOKUP '%s' became '%s'", path, song.path);
     } else {
@@ -1088,6 +1412,20 @@ std::string MusicDatabase::getScreenshotURL(std::string const& collection)
 // Get SongInfo from the search result
 SongInfo MusicDatabase::getSongInfo(int index) const
 {
+
+    if (index >= PODCAST_SHOW_INDEX) {
+        // A podcast SHOW row: title = show name, path carries the collection
+        // ROWID so the UI can drill into its episodes (it is not playable).
+        int rowid = index - PODCAST_SHOW_INDEX;
+        std::string name;
+        {
+            std::lock_guard lock{ dbMutex };
+            for (auto const& s : podcastShowList)
+                if (s.first == rowid) name = s.second;
+        }
+        return SongInfo("podcastshow::" + std::to_string(rowid), "", name, "",
+                        "Podcast");
+    }
 
     if (index >= PLAYLIST_INDEX) {
         std::string p = playLists[index - PLAYLIST_INDEX].name;
@@ -1234,6 +1572,39 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
             s.metadata[SongInfo::SCREENSHOT] = shot;
             LOGV("Got %s shot %s", collection, shot);
         }
+    } else if (classifyFormat(s.format, s.path) == PODCAST) {
+        // Podcast episode artwork. Prefer per-episode art where the enclosure
+        // URL makes it derivable; otherwise fall back to the show's
+        // representative image (collection.artwork, set in db.lua).
+        std::string const& url = parts[1];
+        auto dot = url.rfind('.');
+        if (url.find("archive.org/") != std::string::npos &&
+            (endsWith(url, ".m4a") || endsWith(url, ".mp3")) &&
+            dot != std::string::npos) {
+            // archive.org rips ship a sibling PNG (same basename, .png ext).
+            shot = url.substr(0, dot) + ".png";
+        } else if (url.find("youtube.com/") != std::string::npos ||
+                   url.find("youtu.be/") != std::string::npos) {
+            // YouTube thumbnail, keyed by the 11-char video id.
+            std::string id;
+            auto v = url.find("v=");
+            if (v != std::string::npos)
+                id = url.substr(v + 2, 11);
+            else {
+                auto sl = url.rfind('/');
+                if (sl != std::string::npos) id = url.substr(sl + 1, 11);
+            }
+            if (id.size() == 11)
+                shot = "https://img.youtube.com/vi/" + id + "/hqdefault.jpg";
+        }
+        if (shot.empty()) {
+            // No per-episode art -> the show's representative artwork.
+            auto q = sdb.query<std::string>(
+                "SELECT artwork FROM collection WHERE id = ?", collection);
+            if (q.step()) shot = q.get();
+        }
+        s.metadata[SongInfo::SCREENSHOT] = shot;
+        LOGV("Got podcast shot %s", shot);
     } else {
         auto q = sdb.query<std::string, std::string, std::string, std::string>(
             "SELECT product.title, product.screenshots, product.type, "
@@ -1421,6 +1792,9 @@ void initFormats()
     // --- Amstrad CPC (AY) --- (starkos/arkostracker are in uade_formats)
     format_map["starkos"] = AMSTRAD;
     format_map["arkostracker"] = AMSTRAD;
+    // cpc-power.com YM audiotheque: CPC game .ym rips (AY-3-8912). Distinct from
+    // the "ym" string (Atari ST) -- these are tagged "Amstrad CPC" by the builder.
+    format_map["amstrad cpc"] = AMSTRAD;
 
     // --- Acorn Archimedes ---
     format_map["digital symphony"] = ACORN;
@@ -1443,6 +1817,7 @@ void initFormats()
     format_map["super nintendo"] = SNES;
     format_map["hes"] = HES;
     format_map["mp3"] = MP3;
+    format_map["podcast"] = PODCAST; // podcast episodes (RSS / archive.org)
 
     // --- Atari ST/STE (YM2149) ---
     format_map["sc68"] = ATARI;
@@ -1460,6 +1835,7 @@ void initFormats()
     // startsWith("atari") would otherwise lump "Atari 8Bit" (.sap) in with the
     // ST tunes; this explicit entry keeps POKEY separate.
     format_map["atari 8bit"] = POKEY;
+    format_map["pokeynoise"] = POKEY; // Atari 8-bit POKEY (.pn), not Amiga
     format_map["soundsmith"] = APPLE; // Apple IIgs SoundSmith
     format_map["playerpro"] = APPLE;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
     format_map["jaytrax"] = TRACKER;  // JayTrax (.jxs), cross-platform synth tracker -- not UADE/Amiga
@@ -1473,6 +1849,7 @@ void initFormats()
     format_map["sega sc-3000"] = SEGAMS;
     // Sega 16-bit (Mega Drive/Genesis, YM2612 + SN76489) and its add-ons
     format_map["sega megadrive"] = MEGADRIVE;
+    format_map["sega genesis"] = MEGADRIVE; // Zophar Genesis VGM gamerips
     format_map["megadrive gym"] = MEGADRIVE;
     format_map["megadrive cym"] = MEGADRIVE;
     format_map["sega 32x"] = MEGADRIVE;
@@ -1586,6 +1963,62 @@ void initFormats()
     format_map["digital sound and music interface"] = PCTRACKER; // DSMI, DOS
     format_map["digital sound interface kit"] = PCTRACKER;       // DSIK, DOS
     format_map["digital sound interface kit riff"] = PCTRACKER;
+
+    // -----------------------------------------------------------------------
+    // Formats that sit in uade_formats (so they would default to UADE/Amiga)
+    // but are NOT Amiga -- they are played by their own dedicated plugins, and
+    // this only fixes the now-playing platform label / F9 filter / screenshot
+    // logo. Platform attributions verified against data/misc/formats_descriptions.txt
+    // and the per-format notes. (2026-06-24 audit.)
+    // -----------------------------------------------------------------------
+    // Commodore 64 (SID).
+    format_map["ben daglish sid"] = SID; // bds: "based on his C64 version"
+                                         // (the old "benn daglish sid" was a typo)
+    format_map["goattracker stereo"] = SID; // GoatTracker is C64, like goattracker/2
+    // ZX Spectrum.
+    format_map["picatune"] = ZXBEEPER;       // Shiru 1-bit beeper, sibling of picatune2
+    format_map["tfm music maker"] = ZXAY;    // tfe: ZX Spectrum TurboSound FM
+    // Atari ST/STE.
+    format_map["quartet psg"] = ATARI;       // Quartet (Atari ST), like quartet st
+    format_map["tfmx st"] = ATARI;           // Atari ST TFMX variant
+    format_map["rob hubbard st"] = ATARI;    // Atari ST Rob Hubbard
+    format_map["graoumf tracker"] = ATARI;   // Graoumf Tracker (Atari ST/Falcon)
+    format_map["graoumf tracker 2"] = ATARI;
+    format_map["megatracker"] = ATARI;       // mgt: "Atari ST sample tracker by Cream"
+    // IBM PC trackers (DOS/Windows, sample-based).
+    format_map["imago orpheus"] = PCTRACKER; // DOS tracker (.imf Imago Orpheus)
+    format_map["sbstudio"] = PCTRACKER;      // pac: "general-purpose...MS-DOS tracker"
+    format_map["mad tracker 2"] = PCTRACKER; // MadTracker 2 (Windows)
+    format_map["velvet studio"] = PCTRACKER; // Velvet Studio (Windows, .ams)
+    format_map["skale tracker"] = PCTRACKER; // Skale Tracker (Windows/DOS)
+    format_map["liquid tracker"] = PCTRACKER;// Liquid Tracker (DOS, .liq)
+    format_map["funktracker"] = PCTRACKER;   // FunkTracker (DOS, .funk)
+    format_map["real tracker"] = PCTRACKER;  // RealTracker (DOS/Windows, .rtm)
+    // PC softsynth / chiptune trackers / DAWs (group with psycle/sunvox/buzz).
+    format_map["monotone"] = PC;             // PC-speaker 1-bit beeper tracker, NOT Amiga
+    format_map["noisetrekker"] = PC;         // NoiseTrekker (Windows)
+    format_map["noisetrekker 2"] = PC;
+    format_map["protrekkr"] = PC;            // ProTrekkr (cross-platform softsynth)
+    format_map["protrekkr 2.0"] = PC;
+    format_map["klystrack"] = PC;            // klystrack (cross-platform chiptune tracker)
+    format_map["darkwave studio"] = PC;      // DarkWave Studio (Windows DAW)
+    format_map["dreamstation"] = PC;         // DreamStation (Windows)
+    format_map["ixalance"] = PC;             // Ixalance softsynth (Windows)
+}
+
+// A stable 16-bit per-format key from the format string, so every distinct
+// sub-format within a platform gets its own value (16-bit avoids the collisions
+// an 8-bit hash would have for a platform's handful of formats). 0 is reserved
+// as the neutral value used for products.
+static uint16_t hueSeed(std::string const& fmt)
+{
+    uint32_t h = 2166136261u; // FNV-1a
+    for (char c : fmt) {
+        h ^= (uint8_t)tolower((unsigned char)c);
+        h *= 16777619u;
+    }
+    uint16_t v = (uint16_t)(h & 0xffff);
+    return v == 0 ? 1 : v; // reserve 0 for products
 }
 
 static uint8_t formatToByte(std::string const& fmt, std::string const& path,
@@ -1684,6 +2117,7 @@ static std::string platformName(uint8_t b)
     case PLS: return "Playlist";
     case RADIO: return "Radio";
     case YOUTUBE: return "YouTube";
+    case PODCAST: return "Podcast";
     default: return "";
     }
 }
@@ -1692,6 +2126,41 @@ uint8_t MusicDatabase::classifyFormat(std::string const& fmt,
                                       std::string const& path)
 {
     return formatToByte(fmt, path, 0);
+}
+
+// Map a format byte to a filesystem-safe platform slug for the per-platform
+// logo lookup, or "" for "platforms" that are really streaming/meta sources
+// (no hardware screenshot makes sense for them).
+static std::string platformSlugForByte(uint8_t b)
+{
+    std::string name = platformName(b);
+    static const std::set<std::string> nonHardware = {
+        "", "MP3", "OGG", "Playlist", "Radio", "YouTube", "Podcast"
+    };
+    if (nonHardware.count(name)) return "";
+    // '/' is not a legal filename character; keep everything else (spaces are
+    // fine on disk and keep the names readable).
+    for (auto& c : name)
+        if (c == '/') c = '-';
+    return name;
+}
+
+std::string MusicDatabase::platformScreenshotName(SongInfo const& s)
+{
+    return platformSlugForByte(formatToByte(s.format, s.path, 0));
+}
+
+std::vector<std::string> MusicDatabase::platformScreenshotNames()
+{
+    std::vector<std::string> out;
+    std::set<std::string> seen;
+    for (int b = 0; b < 256; b++) {
+        auto slug = platformSlugForByte((uint8_t)b);
+        if (slug.empty() || seen.count(slug)) continue;
+        seen.insert(slug);
+        out.push_back(slug);
+    }
+    return out;
 }
 
 std::vector<int> MusicDatabase::getFormatByteCounts() const
@@ -1705,6 +2174,21 @@ std::vector<int> MusicDatabase::getFormatByteCounts() const
                      : (uint32_t)formats.size();
     for (uint32_t i = 0; i < n; i++) counts[formats[i] & 0xff]++;
     return counts;
+}
+
+int MusicDatabase::getPodcastShowCount() const
+{
+    std::lock_guard lock{ dbMutex };
+    std::set<int> shows;
+    uint32_t n = (productStartIndex > 0 &&
+                  productStartIndex <= (uint32_t)formats.size())
+                     ? productStartIndex
+                     : (uint32_t)formats.size();
+    // formats[i] packs the collection id in the high bits; collect the distinct
+    // collections that carry PODCAST episodes.
+    for (uint32_t i = 0; i < n; i++)
+        if ((formats[i] & 0xff) == PODCAST) shows.insert(formats[i] >> 8);
+    return (int)shows.size();
 }
 
 std::string MusicDatabase::describeFormat(SongInfo const& s)
@@ -1722,6 +2206,11 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
             return "YouTube - " + s.format.substr(open + 1, close - open - 1);
         return "YouTube";
     }
+
+    // Podcasts are streamed audio; the enclosure "extension" is derived from the
+    // URL and often carries a query string (".mp3?p=f", ".mp3?dest-id=..."), so
+    // skip the "(EXT)" suffix entirely and just label them "Podcast".
+    if (b == PODCAST) return "Podcast";
 
     // Extension (uppercase, no dot); prefer the stored ext, fall back to path.
     std::string ext = s.ext;
@@ -1856,6 +2345,7 @@ void MusicDatabase::readIndex(apone::File&& f)
     readVector(formats, f);
     readVector(productPlatform, f);
     readVector(productRowid, f);
+    readVector(formatHue, f);
 
     titleIndex.load(f);
     composerIndex.load(f);
@@ -1872,6 +2362,7 @@ void MusicDatabase::writeIndex(apone::File&& f)
     writeVector(formats, f);
     writeVector(productPlatform, f);
     writeVector(productRowid, f);
+    writeVector(formatHue, f);
 
     titleIndex.dump(f);
     composerIndex.dump(f);
@@ -1960,6 +2451,12 @@ void MusicDatabase::generateIndex()
         uint8_t b = formatToByte(fmt, path, collection);
         if (collection == radioColl) b = RADIO;
         formats.push_back(b | (collection << 8));
+        // Hue key: normally per-format, but podcasts all share the format
+        // "Podcast" -- key them by their show (collection) so episodes of one
+        // podcast share a hue and differ from another's.
+        formatHue.push_back(fmt == "Podcast"
+                                ? hueSeed("podcast#" + std::to_string(collection))
+                                : hueSeed(fmt));
 
         if (game != "") {
             if (title != "")
@@ -2009,6 +2506,7 @@ void MusicDatabase::generateIndex()
 
         uint8_t b = PRODUCT;
         formats.push_back(b | (collection << 8));
+        formatHue.push_back(0); // products: neutral (no hue shift)
         // Tag the product with a platform byte (from its `type`) so the F9
         // filter can include/exclude collections by platform. Aligned with
         // productStartIndex (this is the (formats.size()-productStartIndex)'th
@@ -2129,6 +2627,16 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
             dbmap[name] = "";
     };
 
+    // Collect podcast feeds (id + shipped list + live feed URL) during a
+    // pre-pass so we can run the throttled background refresh and decide
+    // whether new episodes warrant a reindex *before* the version gate below.
+    podcastFeeds.clear();
+    lua["register_podcast"] = [&](std::string const& id,
+                                  std::string const& songList,
+                                  std::string const& remoteList) {
+        podcastFeeds.push_back({ id, songList, remoteList });
+    };
+
     if (auto f = findFile(workDir.string(), "lua/db.lua")) {
         auto res = lua.safe_script_file(f->string(), sol::script_pass_on_error);
         if (!res.valid()) {
@@ -2137,6 +2645,16 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
             return false;
         }
     }
+
+    lua.safe_script(R"(
+        for _, b in pairs(DB) do
+            if type(b) == 'table' and b.type == 'podcast' then
+                register_podcast(b.id or '', b.song_list or '',
+                                 b.remote_list or '')
+            end
+        end
+    )", sol::script_pass_on_error);
+    bool podcastsChanged = preparePodcasts(workDir);
 
     totalSongs = 0;
     dbVersion = lua["VERSION"];
@@ -2151,7 +2669,8 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
 
     LOGD("DBVERSION %d INDEXVERSION %d SQLITEVERSION %d", dbVersion,
          indexVersion, sqliteVersion);
-    if (dbVersion != indexVersion || dbVersion != sqliteVersion) {
+    bool fullReindex = dbVersion != indexVersion || dbVersion != sqliteVersion;
+    if (fullReindex) {
         utils::print_fmt("Clearing Web Cache (DB update detected)...\n");
         auto cacheDir = Environment::getCacheDir();
         auto webFilesDir = cacheDir / "_webfiles";
@@ -2164,6 +2683,14 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
         db.exec("DROP TABLE IF EXISTS prod2song");
         createTables();
         db.exec(utils::format("PRAGMA user_version = %d", dbVersion));
+        reindexNeeded = true;
+    } else if (podcastsChanged) {
+        // A background feed refresh found new episodes (full catalogue already
+        // in the cache XML). Don't drop/re-parse the big collections -- just
+        // append the new episodes to the song table and rebuild the search
+        // index from the table. Append-only keeps song ROWIDs contiguous, which
+        // getSongInfo relies on (search position i <-> song.ROWID i+1).
+        syncPodcastSongs();
         reindexNeeded = true;
     }
 

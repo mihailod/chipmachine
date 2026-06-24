@@ -22,6 +22,7 @@
 #include <tween/tween.h>
 
 #include <cstdio>
+#include <map>
 #include <memory>
 #include <string>
 #include <vector>
@@ -150,6 +151,10 @@ private:
     // there is to show.
     std::string appendFormatInfo(std::string const& text, SongInfo const& info);
 
+    // Resolve the extension key for a format-description lookup, seeing past
+    // compressed containers (.lha members, .gz/.zip) to the inner file.
+    std::string formatKey(SongInfo const& info);
+
     enum Screen
     {
         NO_SCREEN = -1,
@@ -238,6 +243,11 @@ private:
 
     void nextScreenshot();
     void loadScreenshot(const std::string& shot);
+    // Loads the per-platform logos at startup and warns about missing ones.
+    void loadPlatformScreenshots();
+    // Appends the current song's platform logo (if any) and the ChipMachine
+    // logo to the screenshots rotation, so it is never empty.
+    void appendLogoScreenshots();
 
     utils::path workDir;
 
@@ -326,6 +336,9 @@ private:
     // Per-filterOptions tune counts, shown as "[N tunes]" on the F9 screen.
     // Populated once the database finishes indexing.
     std::vector<int> filterCounts;
+    // Number of distinct podcast shows, used to prefix the F9 "Podcasts" label
+    // ("9 Podcasts  [N episodes]"). Populated alongside filterCounts.
+    int podcastShowCount = 0;
     // Tune count of the currently selected platform filter (0 = no filter);
     // used for the "type to search N songs" prompt hint on large filters.
     int activeFilterCount = 0;
@@ -421,6 +434,19 @@ private:
     std::vector<NamedBitmap> screenshots;
     uint64_t setShotAt = 0;
     std::string currentScreenshot;
+    // Lazily-loaded ChipMachine logo (data/misc/icon.png), used as the final
+    // fallback so the screenshot area is never blank.
+    image::bitmap defaultShot;
+    // Per-platform logos loaded once at startup from
+    // data/misc/platformscreenshots/<platform>.png|jpg. Missing ones are simply
+    // absent (warned about at startup, never fatal).
+    std::map<std::string, image::bitmap> platformShots;
+    // Platform slug of the song currently shown; lets loadScreenshot avoid
+    // rebuilding (and re-fading) the logo-only set between same-platform songs.
+    std::string currentPlatformSlug;
+    // Platform slug of the playing song, classified from its raw format BEFORE
+    // describeFormat() rewrites currentInfo.format into a display string.
+    std::string currentSongPlatform;
 
     // The defensive thread barrier for application destruction
     std::atomic<bool> isShuttingDown{false};

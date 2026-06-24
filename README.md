@@ -122,36 +122,57 @@ ninja
 
 ## Data Sources
 
-### Music Collections
+### Chip Music Collections
 
 * Modland - https://ftp.modland.com
 * High Voltage SID collection - https://www.hvsc.c64.org
 * Gamebase64 - http://www.gb64.com
 * AMP (Amiga Music Preservation) - http://amp.dascene.net
-* Amiga remix - http://amigaremix.com
 * RKO - http://remix.kwed.org
 * Atari ST (SNDH) - http://sndh.atari.org
 * SNES Music - http://snesmusic.org
 * Atari SAP (ASMA) - http://asma.atari.org
 * HVTC (High Voltage TED Collection) - http://plus4world.powweb.com
 * NSFE (Famicompo mini NSFE archive of 1,228 songs from https://forums.nesdev.org/viewtopic.php?t=21128)
-* Sounds of Scenesat - https://scenesat.com
-* AmigaVibes - http://www.amigavibes.org
-* Demovibes - https://www.demovibes.org
 * Mod Archive - https://modarchive.org
-* Exotica - https://www.exotica.org.uk
-* ZX Art - https://zxart.ee/eng/music (~29,000 ZX Spectrum AY/beeper and Sam Coupe tunes; original community formats play natively, others fall back to the site's ogg)
-
-### Demo databases
-
-* Pouet - https://www.pouet.net (production soundtracks streamed from YouTube)
 * Bitworld - http://janeway.exotica.org.uk
+* Exotica - https://www.exotica.org.uk
 * CSDb - https://csdb.dk
+* ZX Art - https://zxart.ee/eng/music
+* CPC-Power - https://www.cpc-power.com
+* Zophar's Domain (Sega Genesis only) - https://www.zophar.net
+* Vampi's MDX Collection (Sharp X68000) - https://mdx.vampi.tech
 
 ### Podcasts
 
-* Syntax Error - http://www.syntaxerror.nu
-* C64 Take Away - http://c64takeaway.com
+Podcasts are a first-class category — press *F9* and pick **Podcasts** to
+browse/filter only podcast episodes. Shows backed by a live RSS feed ship with
+a snapshot of their back catalogue and are refreshed from the feed in the
+background at startup (throttled to roughly once a day), so newly published
+episodes are merged in automatically without a full re-index; the remaining
+shows are curated track lists. Episodes show per-episode cover art when the
+feed provides it, otherwise the show's cover.
+
+* C64 Take-away — Commodore 64 remixes & original SID (complete, ended 2025) - https://c64takeaway.com
+* This Week in Chiptune — chiptune mixes (Dj CUTMAN, 2013–2017 archive) - https://thisweekinchiptune.com
+* Pixelated Audio — video game music & interviews - https://pixelatedaudio.com
+* GameFuel — video game music (KNGI Network) - https://kngi.org
+* Nitro Game Injection — video game music & remixes (KNGI Network) - https://kngi.org
+* Demovibes — demoscene music - https://www.demovibes.org
+* AmigaVibes — Amiga & demoscene music - http://www.amigavibes.org
+* Syntax Error — game & demoscene music (Sol) - http://www.syntaxerror.nu
+
+And one not related to retro music but dear to my heart so here it is:
+
+* Completely Unnecessary Podcast — retro gaming (Pat "The NES Punk" Contri & Ian Ferguson) - https://cupodcast.podbean.com
+
+### Remixes (MP3)
+
+* Amiga remix (MP3) - http://amigaremix.com
+* Sounds of Scenesat - https://scenesat.com
+
+### Youtube Audio
+* Pouet - https://www.pouet.net
 
 ### Shoutcast Radio Streams
 

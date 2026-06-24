@@ -171,7 +171,9 @@ bool MusicPlayer::streamFile(const std::string& fileName)
 
     playing_info = SongInfo();
     std::string name = fileName;
-    player = nullptr;
+    LOGD("TEARDOWN: streamFile resetting old player");
+    player = nullptr; // destroys previous FFMPEGPlayer (joins feeder, closes pipe)
+    LOGD("TEARDOWN: old player destroyed");
 
     utils::makeLower(name);
     check_silence = true;

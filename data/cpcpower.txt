@@ -1,0 +1,51 @@
+11 A Side Soccer 1-2	David Whittaker	Amstrad CPC	https://www.cpc-power.com/YM/11%20A%20Side%20Soccer%201-2%20%281989%29%28Codemasters%29%28David%20Whittaker%29.ym	ym
+180 Darts 1-3	Jason C. Brooke	Amstrad CPC	https://www.cpc-power.com/YM/180%20Darts%201-3%20%281986%29%28Codemasters%29%28Jason%20C.%20Brooke%29.ym	ym
+180 Darts 2-3	Jason C. Brooke	Amstrad CPC	https://www.cpc-power.com/YM/180%20Darts%202-3%20%281986%29%28Codemasters%29%28Jason%20C.%20Brooke%29.ym	ym
+180 Darts 3-3	Jason C. Brooke	Amstrad CPC	https://www.cpc-power.com/YM/180%20Darts%203-3%20%281986%29%28Codemasters%29%28Jason%20C.%20Brooke%29.ym	ym
+3D Trail Bikes	Your Computer	Amstrad CPC	https://www.cpc-power.com/YM/3D%20Trail%20Bikes%20%281986%29%28Your%20Computer%29%28Basic%29.ym	ym
+3Dmaniaks	Impact	Amstrad CPC	https://www.cpc-power.com/YM/3Dmaniaks%20%282021%29%28Impact%29%28Mast%29.ym	ym
+720	US Gold	Amstrad CPC	https://www.cpc-power.com/YM/720%20%281988%29%28US%20Gold%29.ym	ym
+AFC Disk No 3 - Menu	Eliot	Amstrad CPC	https://www.cpc-power.com/YM/AFC%20Disk%20No%203%20-%20Menu%20%281997%29%28AFC%29%28Eliot%29.ym	ym
+AFC Disk No 4 - Menu	Eliot	Amstrad CPC	https://www.cpc-power.com/YM/AFC%20Disk%20No%204%20-%20Menu%20%281998%29%28AFC%29%28Eliot%29%28ST-128%20Module%29.ym	ym
+Amsthrees 1-2	John Lobo	Amstrad CPC	https://www.cpc-power.com/YM/Amsthrees%201-2%20%282016%29%28CpcRetroDev.ByteRealms%29%28John%20Lobo%29%28StArkos%29.ym	ym
+Amsthrees 2-2	John Lobo	Amstrad CPC	https://www.cpc-power.com/YM/Amsthrees%202-2%20%282016%29%28CpcRetroDev.ByteRealms%29%28John%20Lobo%29%28StArkos%29.ym	ym
+Atari 8-Bit Music Disk - 3 - Draconus Main	SuTeKH	Amstrad CPC	https://www.cpc-power.com/YM/Atari%208-Bit%20Music%20Disk%20-%203%20-%20Draconus%20Main%20%282018%29%28Epyteor%29%28SuTeKH%29%28StArkos%29.ym	ym
+Atari 8-Bit Music Disk - 5 - Jet Set Willy	SuTeKH	Amstrad CPC	https://www.cpc-power.com/YM/Atari%208-Bit%20Music%20Disk%20-%205%20-%20Jet%20Set%20Willy%20%282018%29%28Epyteor%29%28SuTeKH%29%28StArkos%29.ym	ym
+Au Pied De L'Arbre - 03 - 30YMENU 2014	Tony	Amstrad CPC	https://www.cpc-power.com/YM/Au%20Pied%20De%20L%27Arbre%20-%2003%20-%2030YMENU%202014%20%282018%29%28Futurs%29%28Tony%29%28StArkos%29.ym	ym
+Au Pied De L'Arbre - 07 - HA3DPabe Decembre 2001	Tony	Amstrad CPC	https://www.cpc-power.com/YM/Au%20Pied%20De%20L%27Arbre%20-%2007%20-%20HA3DPabe%20Decembre%202001%20%282018%29%28Futurs%29%28Tony%29%28ST-128%20Module%29.ym	ym
+Au Pied De L'Arbre - 09 - Kidjo Annees 90	Tony	Amstrad CPC	https://www.cpc-power.com/YM/Au%20Pied%20De%20L%27Arbre%20-%2009%20-%20Kidjo%20Annees%2090%20%282018%29%28Futurs%29%28Tony%29%28ST-128%20Module%29.ym	ym
+Au Pied De L'Arbre - 10 - Ot-Rap Juin 2001	Tony	Amstrad CPC	https://www.cpc-power.com/YM/Au%20Pied%20De%20L%27Arbre%20-%2010%20-%20Ot-Rap%20Juin%202001%20%282018%29%28Futurs%29%28Tony%29%28ST-Module%20128%29.ym	ym
+Au Pied De L'Arbre - 11 - Wednsday 1998	Tony	Amstrad CPC	https://www.cpc-power.com/YM/Au%20Pied%20De%20L%27Arbre%20-%2011%20-%20Wednsday%201998%20%282018%29%28Futurs%29%28Tony%29%28ST-Module%20128%29.ym	ym
+Au Pied De L'Arbre - 12 - ZM96 1996	Tony	Amstrad CPC	https://www.cpc-power.com/YM/Au%20Pied%20De%20L%27Arbre%20-%2012%20-%20ZM96%201996%20%282018%29%28Futurs%29%28Tony%29%28ST-Module%20128%29.ym	ym
+Au Pied De L'Arbre - 13 - ZM98 1998	Tony	Amstrad CPC	https://www.cpc-power.com/YM/Au%20Pied%20De%20L%27Arbre%20-%2013%20-%20ZM98%201998%20%282018%29%28Futurs%29%28Tony%29%28ST-Module%20128%29.ym	ym
+Au Pied De L'Arbre - 14 - Laremi Annees 2000	Tony	Amstrad CPC	https://www.cpc-power.com/YM/Au%20Pied%20De%20L%27Arbre%20-%2014%20-%20Laremi%20Annees%202000%20%282018%29%28Futurs%29%28Tony%29%28ST-128%20Module%29.ym	ym
+Au Pied De L'Arbre - 16 - Surcing Annees 2000	Tony	Amstrad CPC	https://www.cpc-power.com/YM/Au%20Pied%20De%20L%27Arbre%20-%2016%20-%20Surcing%20Annees%202000%20%282018%29%28Futurs%29%28Tony%29%28ST-128%20Module%29.ym	ym
+Au Pied De L'Arbre - 17 - Up Annees 2000	Tony	Amstrad CPC	https://www.cpc-power.com/YM/Au%20Pied%20De%20L%27Arbre%20-%2017%20-%20Up%20Annees%202000%20%282018%29%28Futurs%29%28Tony%29%28ST-128%20Module%29.ym	ym
+BeTiled! - Before Game	WYZ	Amstrad CPC	https://www.cpc-power.com/YM/BeTiled%21%20-%20Before%20Game%20%282009%29%28CEZ%20Games%20Studio%29%28WYZ%29.ym	ym
+BeTiled! - End Game	WYZ	Amstrad CPC	https://www.cpc-power.com/YM/BeTiled%21%20-%20End%20Game%20%282009%29%28CEZ%20Games%20Studio%29%28WYZ%29.ym	ym
+CEZ Collection Volume 1 - Face A	CEZ Games Studio	Amstrad CPC	https://www.cpc-power.com/YM/CEZ%20Collection%20Volume%201%20-%20Face%20A%20%282008%29%28CEZ%20Games%20Studio%29%28Protracker%203.5%29.ym	ym
+CEZ Collection Volume 1 - Face B	CEZ Games Studio	Amstrad CPC	https://www.cpc-power.com/YM/CEZ%20Collection%20Volume%201%20-%20Face%20B%20%282008%29%28CEZ%20Games%20Studio%29%28Protracker%203.5%29.ym	ym
+CPC Meuuuhting Iron	Sice	Amstrad CPC	https://www.cpc-power.com/YM/CPC%20Meuuuhting%20Iron%20%282008%29%28Public%20Domain%29%28Sice%29%28ST-128%20Module%29.ym	ym
+Gates To Hell - Menu	WYZ	Amstrad CPC	https://www.cpc-power.com/YM/Gates%20To%20Hell%20-%20Menu%20%282005%29%28CEZ%20Games%20Studio%29%28WYZ%29.ym	ym
+Good Demo	Vaerlose Crackers	Amstrad CPC	https://www.cpc-power.com/YM/Good%20Demo%20%2819xx%29%28Vaerlose%20Crackers%29%28Basic%29.ym	ym
+Greek Meeting 6 - Intro	FG Brain	Amstrad CPC	https://www.cpc-power.com/YM/Greek%20Meeting%206%20-%20Intro%20%282002%29%28Brothers%29%28FG%20Brain%29%28ST-128%20Module%29.ym	ym
+Greek Meeting 6 - Main Part - Music 1	Brothers	Amstrad CPC	https://www.cpc-power.com/YM/Greek%20Meeting%206%20-%20Main%20Part%20-%20Music%201%20%282002%29%28Brothers%29%28ST-128%20Module%29.ym	ym
+Greek Meeting 6 - Main Part - Music 2	Brothers	Amstrad CPC	https://www.cpc-power.com/YM/Greek%20Meeting%206%20-%20Main%20Part%20-%20Music%202%20%282002%29%28Brothers%29%28ST-128%20Module%29.ym	ym
+Magnetic Messenger 6	ST-Module	Amstrad CPC	https://www.cpc-power.com/YM/Magnetic%20Messenger%206%20%2819xx%29%28Public%20Domain%29%28Kangaroo%29%28ST-Module%29.ym	ym
+Phantomas Saga Infinity End	Bepker	Amstrad CPC	https://www.cpc-power.com/YM/Phantomas%20Saga%20Infinity%20End%20%282006%29%28CEZ%20Games%20Studio%29%28Bepker%29.ym	ym
+Phantomas Saga Infinity InGame	Bepker	Amstrad CPC	https://www.cpc-power.com/YM/Phantomas%20Saga%20Infinity%20InGame%20%282006%29%28CEZ%20Games%20Studio%29%28Bepker%29.ym	ym
+Phantomas Saga Infinity Intro	Bepker	Amstrad CPC	https://www.cpc-power.com/YM/Phantomas%20Saga%20Infinity%20Intro%20%282006%29%28CEZ%20Games%20Studio%29%28Bepker%29.ym	ym
+Procrastinopolis	Sice	Amstrad CPC	https://www.cpc-power.com/YM/Procrastinopolis%20%282013%29%28Dirty%20Minds%29%28Sice%29%28StArkos%29.ym	ym
+Reset 10 - EgoTrip Player 3-3	EgoTrip	Amstrad CPC	https://www.cpc-power.com/YM/Reset%2010%20-%20EgoTrip%20Player%203-3%20%282019%29%28Public%20Domain%29%28EgoTrip%29%28StArkos%29.ym	ym
+Reset 10 - Summer Night Rejection	Brink	Amstrad CPC	https://www.cpc-power.com/YM/Reset%2010%20-%20Summer%20Night%20Rejection%20%282013%29%28Public%20Domain%29%28Brink%29%28StArkos%29.ym	ym
+Spannerman	Chris Hunt	Amstrad CPC	https://www.cpc-power.com/YM/Spannerman%20%281984%29%28Amsoft%29%28Chris%20Hunt%29.ym	ym
+Sram 2	Ere Software	Amstrad CPC	https://www.cpc-power.com/YM/Sram%202%20%281986%29%28Ere%20Software%29.ym	ym
+Techno 2000 Demo - Anthem	Catloc	Amstrad CPC	https://www.cpc-power.com/YM/Techno%202000%20Demo%20-%20Anthem%20%282000%29%28Brothers%29%28Catloc%29%28ST-128%20Module%29.ym	ym
+Techno 2000 Demo - Constrat	Catloc	Amstrad CPC	https://www.cpc-power.com/YM/Techno%202000%20Demo%20-%20Constrat%20%282000%29%28Brothers%29%28Catloc%29%28ST-128%20Module%29.ym	ym
+Techno 2000 Demo - Cyber	Catloc	Amstrad CPC	https://www.cpc-power.com/YM/Techno%202000%20Demo%20-%20Cyber%20%282000%29%28Brothers%29%28Catloc%29%28ST-128%20Module%29.ym	ym
+Techno 2000 Demo - Ode To Fun	Catloc	Amstrad CPC	https://www.cpc-power.com/YM/Techno%202000%20Demo%20-%20Ode%20To%20Fun%20%282000%29%28Brothers%29%28Catloc%29%28ST-128%20Module%29.ym	ym
+Techno 2000 Demo - Track 41	Catloc	Amstrad CPC	https://www.cpc-power.com/YM/Techno%202000%20Demo%20-%20Track%2041%20%282000%29%28Brothers%29%28Catloc%29%28ST-128%20Module%29.ym	ym
+The Mushroom Demo - Part 1	Ythcal	Amstrad CPC	https://www.cpc-power.com/YM/The%20Mushroom%20Demo%20-%20Part%201%20%281995%29%28Public%20Domain%29%28Ythcal%29%28ST-128%20Module%29.ym	ym
+The Mushroom Demo - Part 2	Ythcal	Amstrad CPC	https://www.cpc-power.com/YM/The%20Mushroom%20Demo%20-%20Part%202%20%281995%29%28Public%20Domain%29%28Ythcal%29%28ST-128%20Module%29.ym	ym
+Ze Meeting 2000	Shap	Amstrad CPC	https://www.cpc-power.com/YM/Ze%20Meeting%202000%20%282000%29%28Hard%27Os%29%28Shap%29%28ST-128%20Module%29.ym	ym
+Zox 2099	Jean-Philippe Biscay	Amstrad CPC	https://www.cpc-power.com/YM/Zox%202099%20%281987%29%28Loriciels%29%28Jean-Philippe%20Biscay%29.ym	ym

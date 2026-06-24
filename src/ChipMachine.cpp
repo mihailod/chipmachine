@@ -7,6 +7,7 @@
 #include <grappix/window.h>
 
 #include <cctype>
+#include <cmath>
 #include <map>
 #ifdef _WIN32
 #    include <ShellApi.h>
@@ -34,7 +35,7 @@ std::string compressWhitespace(std::string const& text)
 namespace chipmachine {
 
 const std::vector<FilterOption> ChipMachine::filterOptions = {
-    { "[No Filter]", {} },
+    { "[show all]", {} },
     { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER } },
     { "Atari ST/STE (YM/PCM)", { ATARI } },
     { "Atari XL/XE (POKEY)", { POKEY } },
@@ -63,9 +64,9 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "WonderSwan", { WONDERSWAN } },
     { "Other Consoles", { CONSOLE } },
     { "MP3/OGG", { MP3, OGG } },
-    { "YouTube", { YOUTUBE } },
+    { "YouTube Audio", { YOUTUBE } },
+    { "Podcasts", { PODCAST } },
     { "Radio Stations", { RADIO } }
-
 };
 
 // Base color for a format byte. Shared by the now-playing list (renderSong)
@@ -93,6 +94,7 @@ static uint32_t formatColor(int f)
         { APPLE, 0xff66cccc },
         { M3U, 0xffaaddaa },     { RADIO, 0xffff7722 },
         { YOUTUBE, 0xffff0000 },
+        { PODCAST, 0xff22bbff },
         { PC, 0xffcccccc },      { JPFM, 0xffff66cc },
         { ADPLUG, 0xffe8c040 },
         { AMIGA, 0xff6666cc },
@@ -101,6 +103,54 @@ static uint32_t formatColor(int f)
     };
     auto it = --colors.upper_bound((uint32_t)f);
     return it->second;
+}
+
+// Vary a base color by an evenly-spaced position t in [0,1) -- this sub-format's
+// slot among the distinct formats present in the active platform filter. Because
+// the slots are evenly spaced, two-format platforms separate as widely as
+// many-format ones. Spreads hue generously plus a brightness/saturation gradient
+// (so even desaturated base colors stay distinguishable).
+static uint32_t shiftColorBySpread(uint32_t argb, float t)
+{
+    uint32_t a = (argb >> 24) & 0xff;
+    float r = ((argb >> 16) & 0xff) / 255.f;
+    float g = ((argb >> 8) & 0xff) / 255.f;
+    float b = (argb & 0xff) / 255.f;
+    float mx = r > g ? (r > b ? r : b) : (g > b ? g : b);
+    float mn = r < g ? (r < b ? r : b) : (g < b ? g : b);
+    float v = mx, d = mx - mn;
+    float s = mx <= 0.f ? 0.f : d / mx;
+    float h = 0.f;
+    if (d > 0.f) {
+        if (mx == r) h = (g - b) / d + (g < b ? 6.f : 0.f);
+        else if (mx == g) h = (b - r) / d + 2.f;
+        else h = (r - g) / d + 4.f;
+        h *= 60.f;
+    }
+    h += (t - 0.5f) * 150.f; // +-75 deg, evenly spread across the formats
+    if (h < 0.f) h += 360.f;
+    if (h >= 360.f) h -= 360.f;
+    v *= 0.70f + 0.30f * (1.f - t); // brightness gradient over the spread
+    s *= 0.72f + 0.28f * t;         // saturation gradient over the spread
+    if (v > 1.f) v = 1.f;
+    if (s > 1.f) s = 1.f;
+    float cc = v * s;
+    float x = cc * (1.f - std::fabs(std::fmod(h / 60.f, 2.f) - 1.f));
+    float m = v - cc;
+    float rr = 0, gg = 0, bb = 0;
+    switch ((int)(h / 60.f) % 6) {
+    case 0: rr = cc; gg = x; break;
+    case 1: rr = x; gg = cc; break;
+    case 2: gg = cc; bb = x; break;
+    case 3: gg = x; bb = cc; break;
+    case 4: rr = x; bb = cc; break;
+    default: rr = cc; bb = x; break;
+    }
+    auto q = [](float f) -> uint32_t {
+        int v = (int)((f) * 255.f + 0.5f);
+        return v < 0 ? 0 : (v > 255 ? 255 : v);
+    };
+    return (a << 24) | (q(rr + m) << 16) | (q(gg + m) << 8) | q(bb + m);
 }
 
 void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
@@ -112,8 +162,12 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
     auto res = iquery->getResult(index);
     auto parts = utils::split(res, "\t");
     int f = std::stol(parts[3]) & 0xff;
+    bool isShow = std::stol(parts[2]) >= MusicDatabase::PODCAST_SHOW_INDEX;
 
-    if (f == PLAYLIST || f == PRODUCT) {
+    if (isShow) {
+        // Podcast show row: a drillable group, shown like a folder.
+        text = utils::format("> %s", parts[0]);
+    } else if (f == PLAYLIST || f == PRODUCT) {
         if (parts[1] == nullptr || parts[1][0] == '\0')
             text = utils::format("<%s>", parts[0]);
         else
@@ -124,7 +178,17 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
         else
             text = utils::format("%s / %s", parts[0], parts[1]);
     }
-    c = Color(formatColor(f)) * 0.75f;
+    uint32_t base = formatColor(f);
+    // Inside a platform filter, vary the hue per sub-format/extension so the
+    // different formats in the result list are distinguishable. The variation
+    // is spread evenly across however many formats the platform has, so a
+    // 2-format platform separates as widely as a 20-format one. General
+    // (unfiltered) search keeps a single flat platform color as before.
+    if (musicDatabase.hasFormatFilter() && f != PLAYLIST && f != PRODUCT) {
+        float t = musicDatabase.formatSpread(std::stol(parts[2]));
+        if (t >= 0.f) base = shiftColorBySpread(base, t);
+    }
+    c = Color(base) * 0.75f;
 
     if (hilight) {
         static uint32_t markStartcolor = 0;
@@ -238,6 +302,11 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     musicBars.setup(musicBarsWidth, spectrumHeight);
 
     LOGD("WORKDIR %s", workDir.string());
+
+    // Preload per-platform logos (and warn about any that are missing) so they
+    // are ready to rotate into the screenshot area when a song plays.
+    loadPlatformScreenshots();
+
     musicDatabase.initFromLuaAsync(this->workDir);
 
     if (musicDatabase.busy()) {
@@ -308,7 +377,7 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     advancedTitle.color = 0xffffffaa;
     advancedTitle.scale = searchField.scale;
     advancedTitle.visible(true);
-    advancedTitle.setText("FILTER SEARCH RESULTS BY PLATFORM:");
+    advancedTitle.setText("FILTER SEARCH RESULTS BY PLATFORM / CATEGORY:");
     advancedScreen.add(&advancedTitle);
 
     // The filter screen lays its entries out in two columns (column-major: the
@@ -341,9 +410,32 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
                 c = markColor;
             }
             std::string label = opt.name;
-            if (index < filterCounts.size())
-                label += utils::format("  [%s tunes]",
-                                       withCommas(filterCounts[index]));
+            uint8_t fmt0 =
+                opt.matchedFormats.empty() ? 0 : opt.matchedFormats[0];
+            // Prefix the Podcasts entry with the number of distinct shows, e.g.
+            // "9 Podcasts  [1,497 episodes]".
+            if (fmt0 == PODCAST && podcastShowCount > 0)
+                label = utils::format("%d %s", podcastShowCount, opt.name);
+            if (index < filterCounts.size()) {
+                if (fmt0 == RADIO) {
+                    // Each radio entry IS one station, so just count-prefix the
+                    // name ("10 Radio Stations") -- no "[N streams]" bracket.
+                    label = utils::format("%s %s",
+                                          withCommas(filterCounts[index]),
+                                          opt.name);
+                } else {
+                    // Count unit by platform: "[No Filter]" spans everything
+                    // (tunes + podcasts + radio) so it counts in "items";
+                    // podcasts in episodes, everything else in tunes.
+                    const char* unit = opt.matchedFormats.empty()
+                                           ? "items"
+                                           : (fmt0 == PODCAST ? "episodes"
+                                                              : "tunes");
+                    label += utils::format("  [%s %s]",
+                                           withCommas(filterCounts[index]),
+                                           unit);
+                }
+            }
 
             int rows = ((int)filterOptions.size() + 1) / 2;
             int col = (int)index / rows;
@@ -366,10 +458,12 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
 
     scrollText = "INITIAL_TEXT";
     scrollEffect.set("scrolltext",
-      PROGRAM_NAME " " VERSION_STR
-      " . . type to search, UP/DOWN/ENTER to play"
-      " . . F9 for formats"
-      " . . TAB for all commands . . . .    ");
+      " . . . type to search . . UP/DOWN/ENTER to navigate & play"
+        " . . F9 for all formats"
+        " . . TAB for help . . . "
+        PROGRAM_NAME " " VERSION_STR
+      " . . ."
+    );
     starEffect.fadeIn();
     }
 
@@ -398,14 +492,67 @@ std::string ChipMachine::appendFormatInfo(std::string const& text,
 
     // "Platform - Name (EXT)" plus, if listed, "<trackers> - <description>".
     std::string fmt = info.format;
-    std::string ext =
-        info.ext.empty() ? utils::path_extension(info.path) : info.ext;
-    auto desc = musicDatabase.describeExtension(ext);
+    auto desc = musicDatabase.describeExtension(formatKey(info));
     if (!desc.empty()) fmt += " ... " + desc;
 
     // Dots give a clean gap between sections and before the line repeats.
     if (text.empty()) return "... " + fmt + " ...";
     return text + " ... " + fmt + " ...";
+}
+
+// Resolve the extension key used to look up a format description. Compressed
+// containers (.lha members, .gz/.zip wrappers) must NOT be keyed on the
+// container extension -- the real format lives in the inner file. The inner
+// name can be either suffix-form ("song.mod") or modland/UnExoticA prefix-form
+// ("mod.song" inside an .lha), so we try both tokens and return the first that
+// the descriptions table actually knows.
+std::string ChipMachine::formatKey(SongInfo const& info)
+{
+    auto known = [&](std::string const& e) {
+        return !e.empty() && !musicDatabase.describeExtension(e).empty();
+    };
+
+    // 1. The detected extension, if it's a real (described) format.
+    if (known(utils::toLower(info.ext))) return utils::toLower(info.ext);
+
+    // Pick the leaf name: for an ".lha/<member>" path use the member, which
+    // carries the type prefix (e.g. "mod.mix0"); otherwise the file name.
+    std::string path = info.path;
+    std::string leaf;
+    auto lpos = utils::toLower(path).find(".lha/");
+    if (lpos != std::string::npos)
+        leaf = path.substr(lpos + 5);
+    else
+        leaf = utils::path_filename(path);
+
+    // Strip trailing archive/compression wrappers so "x.sid.gz" -> "x.sid".
+    static const char* containers[] = { "lha", "gz",  "zip", "rar",
+                                        "lzh", "lzx", "z",   "7z" };
+    for (bool stripped = true; stripped;) {
+        stripped = false;
+        auto d = leaf.find_last_of('.');
+        if (d == std::string::npos) break;
+        auto e = utils::toLower(leaf.substr(d + 1));
+        for (auto const* c : containers)
+            if (e == c) {
+                leaf = leaf.substr(0, d);
+                stripped = true;
+                break;
+            }
+    }
+
+    // Suffix-form: token after the last dot ("song.mod" -> "mod").
+    auto d = leaf.find_last_of('.');
+    if (d != std::string::npos && known(utils::toLower(leaf.substr(d + 1))))
+        return utils::toLower(leaf.substr(d + 1));
+
+    // Prefix-form: token before the first dot ("mod.song" -> "mod").
+    auto f = leaf.find_first_of('.');
+    if (f != std::string::npos && known(utils::toLower(leaf.substr(0, f))))
+        return utils::toLower(leaf.substr(0, f));
+
+    // Nothing matched -- fall back to the plain extension (may be unlisted).
+    return info.ext.empty() ? utils::path_extension(info.path) : info.ext;
 }
 
 void ChipMachine::initLua()
@@ -532,8 +679,31 @@ void ChipMachine::loadScreenshot(const std::string& shot)
         return;
     }
 
+    // Platform of the playing song (classified from its raw format when
+    // currentInfo was set), used to pick the per-platform logo.
+    std::string slug = currentSongPlatform;
+
     // Called from Playstarted (immediate) and from the Playing poll (late arrival).
-    // Guards against re-loading the same URL and against loading an empty shot.
+    if (shot == "") {
+        // Song has no screenshot/cover art — rotate just the platform logo and
+        // the ChipMachine logo. Keep currentScreenshot empty so the Playing poll
+        // can still upgrade to a real screenshot URL that arrives late. Avoid
+        // rebuilding (and re-fading) when we are already showing the logo-only
+        // set for this same platform.
+        if (currentScreenshot == "" && slug == currentPlatformSlug &&
+            !screenshots.empty())
+            return;
+        currentScreenshot = "";
+        currentPlatformSlug = slug;
+        screenShotIcon.clear();
+        screenshots.clear();
+        appendLogoScreenshots();
+        currentShot = -1;
+        nextScreenshot();
+        return;
+    }
+
+    // Guards against re-loading the same URL.
     if (shot == currentScreenshot) {
         // Already loaded or loading — just advance to next frame
         nextScreenshot();
@@ -543,29 +713,26 @@ void ChipMachine::loadScreenshot(const std::string& shot)
     screenShotIcon.clear();
     screenshots.clear();
     currentScreenshot = shot;
-
-    if (shot == "") return;
+    currentPlatformSlug = slug;
 
     auto parts = utils::split(shot, ";");
-    int total = parts.size();
+    // One callback fires per requested part; count them down so we know when
+    // every download has settled (success or failure) before finalizing.
+    auto remaining = std::make_shared<int>((int)parts.size());
     auto cb = [=](utils::File f) {
-        if (currentScreenshot == "")
+        // Bail if the song changed (or went to the logo-only path) meanwhile.
+        if (currentScreenshot != shot)
             return;
-        int t = total;
-        if (!f) {
-            // Keep processing
-        } else {
+        if (f) {
             try {
                 if (utils::toLower(utils::path_extension(
                         f.getName())) == "gif") {
-                    t--;
                     for (auto& bm : image::load_gifs(f.getName())) {
                         for (auto& px : bm) {
                             if ((px & 0xffffff) == 0)
                                 px &= 0xffffff;
                         }
                         screenshots.emplace_back(f.getFileName(), bm);
-                        t++;
                     }
                 } else {
                     auto bm = image::load_image(f.getName());
@@ -579,16 +746,93 @@ void ChipMachine::loadScreenshot(const std::string& shot)
             }
         }
 
-        if (screenshots.size() >= t) {
+        if (--(*remaining) <= 0) {
+            // All downloads settled. Sort the real screenshots. Only fall back
+            // to the platform + ChipMachine logos when no real screenshot loaded
+            // (e.g. every download failed) -- if the song has art, show only it.
             screenshots.erase(std::remove(screenshots.begin(),
                                           screenshots.end(), ""),
                               screenshots.end());
             sort(screenshots.begin(), screenshots.end());
+            if (screenshots.empty())
+                appendLogoScreenshots();
+            currentShot = -1;
             nextScreenshot();
         }
     };
     for (auto& p : parts)
         webutils::Web::getInstance().getFile(p, cb);
+}
+
+void ChipMachine::appendLogoScreenshots()
+{
+    // Per-platform logo for the current song, when one is installed.
+    bool havePlatform = false;
+    if (!currentPlatformSlug.empty()) {
+        auto it = platformShots.find(currentPlatformSlug);
+        if (it != platformShots.end() && it->second.width() > 0) {
+            screenshots.emplace_back("platform:" + currentPlatformSlug,
+                                     it->second);
+            havePlatform = true;
+        }
+    }
+    LOGD("Screenshot logos: platform='%s' logo=%s", currentPlatformSlug,
+         havePlatform ? "yes" : "none");
+    // Only when there is no platform logo, fall back to the ChipMachine icon so
+    // the area isn't blank. When a platform logo exists, show only that.
+    if (havePlatform)
+        return;
+    if (defaultShot.width() == 0 || defaultShot.height() == 0) {
+        try {
+            auto ic = workDir / "data" / "misc" / "icon.png";
+            defaultShot = image::load_image(ic.string());
+        } catch (image::image_exception& e) {
+            LOGD("Failed to load ChipMachine logo (icon.png)");
+        }
+    }
+    if (defaultShot.width() > 0 && defaultShot.height() > 0)
+        screenshots.emplace_back("chipmachine", defaultShot);
+}
+
+void ChipMachine::loadPlatformScreenshots()
+{
+    // Load every per-platform logo once at startup from
+    // data/misc/platformscreenshots/<platform>.png (or .jpg). Missing files are
+    // not fatal: collect them and emit a single warning so they can be added.
+    auto dir = workDir / "data" / "misc" / "platformscreenshots";
+    std::vector<std::string> missing;
+    for (auto& name : MusicDatabase::platformScreenshotNames()) {
+        bool loaded = false;
+        for (auto ext : { ".png", ".jpg", ".jpeg" }) {
+            auto p = dir / (name + ext);
+            if (!utils::File::exists(p.string()))
+                continue;
+            try {
+                auto bm = image::load_image(p.string());
+                // Match the downloaded-screenshot behaviour: key out pure black
+                // so logos exported on a black background show the starfield
+                // through. (Real RGBA alpha is preserved either way.)
+                for (auto& px : bm)
+                    if ((px & 0xffffff) == 0) px &= 0xffffff;
+                platformShots[name] = bm;
+                loaded = true;
+                break;
+            } catch (image::image_exception& e) {
+                LOGW("Could not decode platform logo %s", p.string());
+            }
+        }
+        if (!loaded)
+            missing.push_back(name);
+    }
+    LOGD("Loaded %d platform logos from %s", (int)platformShots.size(),
+         dir.string());
+    if (!missing.empty()) {
+        std::string list;
+        for (auto& m : missing)
+            list += (list.empty() ? "" : ", ") + m;
+        LOGW("Missing %d platform logo(s) in %s (add <name>.png or .jpg): %s",
+             (int)missing.size(), dir.string(), list);
+    }
 }
 
 void ChipMachine::nextScreenshot()
@@ -653,6 +897,7 @@ void ChipMachine::computeFilterCounts()
     for (int c : counts)
         total += c;
     if (total == 0) return;
+    podcastShowCount = musicDatabase.getPodcastShowCount();
     filterCounts.assign(filterOptions.size(), 0);
     for (size_t i = 0; i < filterOptions.size(); i++) {
         auto const& opt = filterOptions[i];
@@ -761,27 +1006,55 @@ void ChipMachine::update()
         stereoSumAccum = 0;
         stereoDetectFrames = 0;
         currentInfo = player.getInfo();
+        // Classify the platform from the raw format before describeFormat()
+        // rewrites it into a display string ("Amiga - Soundtracker (MOD)"),
+        // which would no longer classify.
+        currentSongPlatform = MusicDatabase::platformScreenshotName(currentInfo);
         currentInfo.format = MusicDatabase::describeFormat(currentInfo);
         dbInfo = player.getDBInfo();
         screen.setTitle(utils::format("%s / %s (" PROGRAM_NAME " " VERSION_STR ")",
                                       currentInfo.title, currentInfo.composer));
-        std::string m;
-        if (currentInfo.metadata[SongInfo::INFO] != "") {
-            m = compressWhitespace(currentInfo.metadata[SongInfo::INFO]);
-        } else {
-            m = compressWhitespace(player.getMeta("message"));
-        }
         bool isRadio = utils::startsWith(dbInfo.path, "radio::");
-        if (m == "" && isRadio) {
+        // Detect podcasts from dbInfo: it carries the DB-sourced format
+        // ("Podcast") and is never overwritten, whereas currentInfo.format is
+        // replaced by the player's codec tag ("MP3") in updateInfo() before
+        // Playstarted -- so classifying currentInfo missed the episode. Also
+        // accept the already-described "Podcast (...)" string as a fallback.
+        bool isPodcast =
+            MusicDatabase::classifyFormat(dbInfo.format, dbInfo.path) ==
+                PODCAST ||
+            utils::startsWith(currentInfo.format, "Podcast");
+        std::string m;
+        if (isPodcast) {
+            // Podcasts: scroll the episode title plus its description (the INFO
+            // metadata, which parseRss falls back to the show description for
+            // when an episode has none). Never append the module-format line --
+            // "Podcast (MP3)" is meaningless for a talk/music show.
             m = currentInfo.title;
+            auto desc = compressWhitespace(currentInfo.metadata[SongInfo::INFO]);
+            // Some "standard" podcast collections (e.g. Demovibes) store a
+            // screenshot URL in INFO rather than a text description -- don't
+            // scroll a raw URL; the title alone is descriptive enough there.
+            if (!desc.empty() && !utils::startsWith(desc, "http"))
+                m += " ... " + desc;
+        } else {
+            if (currentInfo.metadata[SongInfo::INFO] != "") {
+                m = compressWhitespace(currentInfo.metadata[SongInfo::INFO]);
+            } else {
+                m = compressWhitespace(player.getMeta("message"));
+            }
+            if (m == "" && isRadio) {
+                m = currentInfo.title;
+            }
+            // Append the format info ("Platform - Name (EXT) ... <trackers> -
+            // <description>") so the scroller cycles metadata -> format ->
+            // back. When there is no embedded message/info the format line is
+            // all there is to show. Leading/trailing dots give clean gaps
+            // between sections. Radio streams have no meaningful module format,
+            // so skip it there.
+            if (!isRadio)
+                m = appendFormatInfo(m, currentInfo);
         }
-        // Append the format info ("Platform - Name (EXT) ... <trackers> -
-        // <description>") so the scroller cycles metadata -> format -> back.
-        // When there is no embedded message/info the format line is all there
-        // is to show. Leading/trailing dots give clean gaps between sections.
-        // Radio streams have no meaningful module format, so skip it there.
-        if (!isRadio)
-            m = appendFormatInfo(m, currentInfo);
         if (scrollText != m) {
             scrollEffect.set("scrolltext", m);
             scrollText = m;
@@ -883,6 +1156,7 @@ void ChipMachine::update()
         songField.add = 0.0;
         Tween::make().sine().to(songField.add, 1.0).seconds(0.5);
         currentInfo = player.getInfo();
+        currentSongPlatform = MusicDatabase::platformScreenshotName(currentInfo);
         currentInfo.format = MusicDatabase::describeFormat(currentInfo);
         auto sub_title = player.getMeta("sub_title");
         xinfoField.setText(sub_title);

@@ -92,6 +92,8 @@ enum Formats
 
     YOUTUBE,
 
+    PODCAST, // Podcast episodes (RSS feeds / archive.org rips; "podcast" type)
+
     PC,
     JPFM, // Japanese FM computers: NEC PC-98, Sharp X68000, Fujitsu FM Towns
 
@@ -152,7 +154,9 @@ public:
     {
         // std::lock_guard lock{dbMutex};
         int f;
-        if (index >= PLAYLIST_INDEX)
+        if (index >= PODCAST_SHOW_INDEX)
+            f = PODCAST;
+        else if (index >= PLAYLIST_INDEX)
             f = PLAYLIST;
         else
             f = formats[index];
@@ -161,6 +165,22 @@ public:
     }
     // Get full data, may require SQL query
     SongInfo getSongInfo(int index) const;
+
+    // True while a platform filter (F9) is active.
+    bool hasFormatFilter() const { return formatFilterActive; }
+    // Position of a song's sub-format among the distinct formats present in the
+    // active filter, in [0,1) -- used to spread hues evenly so few-format
+    // platforms separate as much as many-format ones. Returns -1 when there is
+    // nothing to distinguish (no filter, <2 formats, or not a filtered song).
+    float formatSpread(int index) const
+    {
+        if (filterHueCount < 2 || index < 0 ||
+            index >= (int)formatHue.size())
+            return -1.0f;
+        auto it = filterHueRank.find(formatHue[index]);
+        if (it == filterHueRank.end()) return -1.0f;
+        return (it->second + 0.5f) / (float)filterHueCount;
+    }
 
     // Unified one-line description of a song's format for the now-playing
     // screen: "Platform - Format name (EXT)", e.g. "Amiga - Soundtracker (MOD)".
@@ -176,13 +196,33 @@ public:
     static uint8_t classifyFormat(std::string const& fmt,
                                   std::string const& path);
 
+    // Filesystem-safe platform name for a song, used to pick a per-platform
+    // logo at data/misc/platformscreenshots/<name>.png|jpg. Returns "" for
+    // songs without a real hardware platform (MP3, OGG, Radio, YouTube,
+    // Podcast, Playlist, unknown). '/' in display names is replaced with '-'.
+    static std::string platformScreenshotName(SongInfo const& s);
+
+    // The full set of distinct platform names (slugs) that can carry a
+    // per-platform logo. Used at startup to warn about missing images.
+    static std::vector<std::string> platformScreenshotNames();
+
     // Number of indexed songs (excluding products) per format byte (0..255).
     // Used to show per-platform tune counts on the F9 filter screen.
     std::vector<int> getFormatByteCounts() const;
 
+    // Number of distinct podcast shows (collections containing PODCAST-format
+    // episodes). Used to label the F9 Podcasts filter ("9 Podcasts [...]").
+    int getPodcastShowCount() const;
+
     std::string getTitle(int index) const
     {
         std::lock_guard lock{ dbMutex };
+        if (index >= PODCAST_SHOW_INDEX) {
+            int rowid = index - PODCAST_SHOW_INDEX;
+            for (auto const& s : podcastShowList)
+                if (s.first == rowid) return s.second;
+            return "";
+        }
         if (index >= PLAYLIST_INDEX)
             return playLists[index - PLAYLIST_INDEX].name;
         return titleIndex.getString(index);
@@ -274,6 +314,40 @@ private:
     void initDatabase(utils::path const& workDir, Variables& vars);
     void generateIndex();
 
+    // --- Podcast live-feed refresh (Q4) ---------------------------------
+    // A podcast whose episode list can be augmented from a live RSS feed.
+    struct PodcastFeed
+    {
+        std::string id;         // collection id (also the cache file stem)
+        std::string songList;   // shipped back-catalogue file (data/<id>.xml)
+        std::string remoteList; // live feed URL (https)
+    };
+    std::vector<PodcastFeed> podcastFeeds;
+
+    // Resolve a podcast's index source: the writable augmented copy in the
+    // cache (back catalogue + merged live episodes) if present, else the
+    // shipped file. Seeds the cache copy from the shipped file on first use.
+    std::string podcastSource(utils::path const& workDir,
+                              std::string const& id,
+                              std::string const& songList) const;
+
+    // Seed cache copies, detect whether a previous background refresh left new
+    // episodes (returns true -> caller forces a reindex), and kick off a
+    // throttled background fetch+merge for any feed not checked in ~24h.
+    // Never blocks launch on the network.
+    bool preparePodcasts(utils::path const& workDir);
+
+    // Background worker: fetch remoteList, merge any new <item>s into the cache
+    // copy (union by enclosure URL), and drop a .dirty marker when it changed.
+    static void refreshPodcastFeed(utils::path cacheDir, std::string id,
+                                   std::string remoteList);
+
+    // Append episodes present in a podcast's cache XML but not yet in the song
+    // table (without dropping/re-parsing other collections). Called instead of
+    // a full reindex when a background refresh added episodes; the caller then
+    // rebuilds just the search index from the table.
+    void syncPodcastSongs();
+
     struct Collection
     {
         int id;
@@ -319,6 +393,26 @@ private:
 
     static constexpr int PLAYLIST_INDEX = 0x10000000;
 
+public:
+    // Synthetic result indices for podcast SHOW rows (one per podcast
+    // collection) shown when the Podcasts filter is active with an empty query.
+    // index = PODCAST_SHOW_INDEX + collection ROWID. Kept above PLAYLIST_INDEX
+    // and checked first wherever indices are dispatched.
+    static constexpr int PODCAST_SHOW_INDEX = 0x18000000;
+
+    // Podcast browse: list of (collection ROWID, name) for each podcast show,
+    // sorted by name; populated when the Podcasts format filter activates.
+    std::vector<std::pair<int, std::string>> const& podcastShows() const
+    {
+        return podcastShowList;
+    }
+    // Drill into one show (its ROWID) so an empty query lists that show's
+    // episodes; pass -1 to go back to the show list.
+    void setPodcastShow(int rowid) { podcastShowFilter = rowid; }
+    int podcastShow() const { return podcastShowFilter; }
+    bool podcastFilterActive_() const { return podcastFilterActive; }
+
+private:
     RemoteLoader& remoteLoader;
     utils::path workDir;
 
@@ -351,6 +445,12 @@ private:
     // the ordinal is NOT the ROWID; getSongInfo() must map ordinal -> ROWID via
     // this table to fetch the correct product.
     std::vector<int> productRowid;
+    // Per-entry sub-format key (16-bit hash of the format string), aligned with
+    // `formats`. Distinct formats within a platform are ranked from these and
+    // spread evenly across the hue range (see setFormatFilter / formatSpread).
+    // 16-bit so the few formats in a platform don't collide to the same color.
+    // 0 = neutral (products).
+    std::vector<uint16_t> formatHue;
 
     // When a platform filter (F9) is active, the set of titleIndex indices that
     // pass it, precomputed in setFormatFilter(). Lets short queries (< 3 chars)
@@ -359,6 +459,15 @@ private:
     // keystroke. Empty / false when no platform filter is active.
     std::vector<int> filteredCandidates;
     bool formatFilterActive = false;
+    // Podcast browse state (see PODCAST_SHOW_INDEX / podcastShows()).
+    bool podcastFilterActive = false;                     // PODCAST filter on
+    int podcastShowFilter = -1;                           // drilled-in ROWID
+    std::vector<std::pair<int, std::string>> podcastShowList; // (ROWID,name)
+    // Rank (0..N-1) of each distinct sub-format hue present in the active
+    // filter, and the count N. Built in setFormatFilter() so renderSong can
+    // spread hues evenly across however many formats the platform actually has.
+    std::map<uint16_t, int> filterHueRank;
+    int filterHueCount = 0;
 
     mutable std::mutex chkMutex;
     mutable std::mutex dbMutex;

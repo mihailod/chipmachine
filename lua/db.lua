@@ -55,7 +55,33 @@
 -- 52: (above corrected) -- v51 first shipped a MULTI: umbrella of N identical-file
 --     URLs, which reloaded the same file each step and replayed subsong 0 ("always
 --     1st tune", slow); switched to the single-file form so subsong nav is instant.
-VERSION = 52;
+-- 55: CPC-Power YM audiotheque (small Wayback subset). Amstrad CPC game .ym rips
+--     (AY-3-8912), LHA-wrapped; stsoundplugin depacks them natively. Full set has
+--     no browsable index (/YM/ is 403), so only the ~51 Wayback-known files are
+--     indexed, with URLs pointing at the live /YM/ files (fetched on demand).
+--     Built by tools/build_cpcpower.py; format "Amstrad CPC" -> AMSTRAD filter.
+-- 56: Zophar's Domain pilot -- Sega Genesis VGM gamerips (the genuinely net-new
+--     slice; modland already has SNES/GB/PS/N64/Saturn/NES/Dreamcast but NO VGM
+--     and NO arcade). Each row's path is a "<game> (EMU).zophar.zip" of per-track
+--     .vgm files; MusicPlayerList detects the ZIP by magic, extracts it, and plays
+--     the tracks as local subsongs. Built by tools/build_zophar.py (dedup vs the
+--     265 modland Megadrive GYM games). format "Sega Genesis" -> MEGADRIVE filter.
+-- 57: zophar.txt deduped properly. v56 wrongly deduped Genesis only vs "Megadrive
+--     GYM" (265) and missed modland's huge "Video Game Music/Sega Megadrive" tree
+--     (10961 files / 621 games), so 480 of the 815 were dups. Now dedups vs the
+--     Video Game Music Sega dirs -> 335 genuinely-new games (215 MD + 119 Sega CD
+--     + 1 32X). Also fixed the libcurl HTTP/2 prune crash (web.cpp FORBID_REUSE)
+--     and the ZipFile extractor (archive.cpp) that this collection first exposed.
+-- 58: Vampi's MDX Database (mdx.vampi.tech) -- Sharp X68000 MDX. Vampi has 9321
+--     MDX vs modland's 7449, so we onboard ONLY the net-new ones: best-effort
+--     dedup by (basename,size) vs modland MDX -> 6872 kept, 2449 dups skipped.
+--     Built by tools/build_vampi.py; path = data/<filename> (verified .mdx);
+--     format "MDX" -> JPFM (X68000/FM Towns filter); plays via mdxplugin.
+-- 64: four more music podcasts (type=podcast, live remote_list + shipped
+--     snapshot, per-episode itunes:image art): This Week in Chiptune (Dj
+--     CUTMAN), Pixelated Audio, GameFuel + Nitro Game Injection (KNGI). All
+--     show under the F9 Podcasts category alongside C64 Take-away / CU Podcast.
+VERSION = 64;
 
 DB = {
 {
@@ -64,6 +90,37 @@ DB = {
 	source = "ftp://files.exotica.org.uk/pub/exotica/media/audio/UnExoticA",
 	song_list = "data/unexotica.txt",
         song_template = "title game format composer path",
+	color = 0xfffff
+},
+{
+	-- Vampi's MDX Database (Sharp X68000). Net-new-vs-modland subset; path is a
+	-- full mdx.vampi.tech/data/<file> URL (source empty). Plays via mdxplugin.
+	name = "Vampi MDX",
+	id =  "vampi",
+	source = "",
+	song_list = "data/vampi.txt",
+	song_template = "title composer format path ext",
+	color = 0xfffff
+},
+{
+	-- Zophar's Domain (pilot: Sega Genesis VGM). Each path is a full EMU zip URL
+	-- on the fi.zophar.net CDN; the host extracts it and plays the .vgm tracks as
+	-- subsongs. source empty (full URLs in the path column).
+	name = "Zophar",
+	id =  "zophar",
+	source = "",
+	song_list = "data/zophar.txt",
+	song_template = "title composer format path ext",
+	color = 0xfffff
+},
+{
+	-- CPC-Power Amstrad CPC YM audiotheque (Wayback-known subset). Full URLs in
+	-- the path column point at the live cpc-power /YM/ files; source is empty.
+	name = "CPC-Power",
+	id =  "cpcpower",
+	source = "",
+	song_list = "data/cpcpower.txt",
+	song_template = "title composer format path ext",
 	color = 0xfffff
 },
 {
@@ -230,6 +287,7 @@ DB = {
 	id =  "demovibes",
 	source = "https://www.demovibes.org/downloads/",
 	song_list = "data/demovibes.txt",
+	podcast = "yes",
 	color = 0xfffff
 },
 {
@@ -238,6 +296,8 @@ DB = {
 	source = "https://stats.podcloud.fr/amigavibes/",
 	song_list = "data/amigavibes.txt",
 	song_template = "title format path",
+	podcast = "yes",
+	artwork = "https://uploads.podcloud.fr/uploads/covers/e6/6d/e66d7d3ce5a7b589acff2df7809904bcdcdfed7d.jpg",
 	color = 0xfffff
 },
 {
@@ -291,6 +351,8 @@ DB = {
 	song_list = "data/syntax.txt",
 	song_template = "path title",
 	format = "MP3",
+	podcast = "yes",
+	artwork = "https://archive.org/services/img/podcast_syntax-error-podcast_1481271871",
 	-- presenter = "Sol"
 	color = 0xfffff
 },
@@ -311,6 +373,65 @@ DB = {
 	type =  "podcast",
 	source = "",
 	song_list = "data/c64takeaway.xml",
+	remote_list = "https://c64takeaway.com/feed/",
+	artwork = "https://c64takeaway.com/assets/C64Takeaway-banner-6581-1400x1400.png",
+	color = 0xfffff
+},
+{
+	name = "Completely Unnecessary Podcast",
+	id = "cupodcast",
+	type = "podcast",
+	source = "",
+	-- Full catalogue (395 eps, 2013-) snapshotted from the live Anchor feed;
+	-- per-episode artwork comes from each item's <itunes:image>. Newer
+	-- episodes are merged in at startup from remote_list (union by URL).
+	song_list = "data/cupodcast.xml",
+	remote_list = "https://anchor.fm/s/37360560/podcast/rss",
+	artwork = "https://archive.org/services/img/completely-unnecessary-podcast-series",
+	color = 0xfffff
+},
+{
+	-- Chiptune music-mix show (Dj CUTMAN); ran 2013-2017, full archive.
+	name = "This Week in Chiptune",
+	id = "twic",
+	type = "podcast",
+	source = "",
+	song_list = "data/twic.xml",
+	remote_list = "http://thisweekinchiptune.libsyn.com/rss",
+	artwork = "https://static.libsyn.com/p/assets/a/e/1/e/ae1e0001ed40227a/This-Week-In-Chiptune-Podcast-art-2015.jpg",
+	color = 0xfffff
+},
+{
+	-- Video game music podcast: discussion + tracks, with interviews.
+	name = "Pixelated Audio",
+	id = "pixelated",
+	type = "podcast",
+	source = "",
+	song_list = "data/pixelated.xml",
+	remote_list = "https://pixelatedaudio.com/feed/podcast",
+	artwork = "http://www.pixelatedaudio.com/wp-content/uploads/2016/04/2016-PA-PodcastCover-final-boosted.jpg",
+	color = 0xfffff
+},
+{
+	-- KNGI Network VGM music show (original tracks, OSTs, chiptunes).
+	name = "GameFuel",
+	id = "gamefuel",
+	type = "podcast",
+	source = "",
+	song_list = "data/gamefuel.xml",
+	remote_list = "https://feeds.feedburner.com/GameFuel",
+	artwork = "https://kngi.org/public_html/wp-content/uploads/GameFuelAlbum2016-1-1024x1024.png",
+	color = 0xfffff
+},
+{
+	-- KNGI Network video game music + remixes show.
+	name = "Nitro Game Injection",
+	id = "nitro",
+	type = "podcast",
+	source = "",
+	song_list = "data/nitro.xml",
+	remote_list = "https://feeds.feedburner.com/NitroGameInjection",
+	artwork = "http://kngi.org/public_html/wp-content/uploads/powerpress/NGI2015AlbumArtiTunes1400-808.jpg",
 	color = 0xfffff
 },
 {

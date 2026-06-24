@@ -1,5 +1,7 @@
 #include "MusicPlayerList.h"
 #include "LhaArchive.h"
+#include <archive/archive.h>
+#include <set>
 
 #include <algorithm>
 #include <cctype>
@@ -230,7 +232,69 @@ bool MusicPlayerList::playFile(utils::path fileName)
                                        return l == "" || l[0] == '#';
                                    }),
                     lines.end());
-        currentInfo.path = lines[0];
+        if (lines.empty()) {
+            errors.emplace_back("Empty playlist");
+            SET_STATE(Error);
+            return false;
+        }
+        std::string first = lines[0];
+        if (!first.empty() && first.back() == '\r') first.pop_back();
+
+        // Modland's console collections (SGC/KSS/NSF/GBS/HES/...) expose each
+        // subtune as a tiny GME-style .m3u that points at a SHARED module file:
+        //   "Alien Syndrome.sgc::KSS,0,<title>,<len>,..."
+        // i.e. "<filename>[::<type>],<track>,...". These are NOT radio
+        // playlists -- resolve to the sibling module in the same remote
+        // directory and start the named subtune, rather than streaming the
+        // playlist text to ffmpeg (which yields "No such file"). Radio .m3u
+        // entries are always http(s) URLs, so they skip this branch.
+        bool isUrl = startsWith(toLower(first), "http://") ||
+                     startsWith(toLower(first), "https://");
+        auto sep = first.find("::");
+        std::string fileField, rest;
+        if (sep != std::string::npos) {
+            fileField = first.substr(0, sep);
+            rest = first.substr(sep + 2); // "<type>,<track>,..."
+            auto c = rest.find(',');      // drop the "::type" token
+            rest = (c == std::string::npos) ? "" : rest.substr(c + 1);
+        } else {
+            auto c = first.find(',');
+            fileField = (c == std::string::npos) ? first : first.substr(0, c);
+            rest = (c == std::string::npos) ? "" : first.substr(c + 1);
+        }
+        std::string fext = toLower(path_extension(fileField));
+        bool subtuneM3u = !isUrl && !fileField.empty() && !fext.empty() &&
+                          fext != ".m3u" && fext != ".mp3" && fext != ".ogg";
+        if (subtuneM3u) {
+            // Leading integer of the remaining fields = the 0-based subtune.
+            int track = 0;
+            size_t i = 0;
+            while (i < rest.size() && rest[i] == ' ') i++;
+            size_t j = i;
+            while (j < rest.size() && std::isdigit((unsigned char)rest[j])) j++;
+            if (j > i) track = std::stoi(rest.substr(i, j - i));
+
+            // Resolve the sibling module's URL, preserving the source prefix so
+            // remoteLoader.load() fetches it from the same collection/host.
+            std::string prefix, rel;
+            auto pp = split(currentInfo.path, std::string("::"), size_t(2));
+            if (pp.size() == 2) {
+                prefix = pp[0];
+                rel = pp[1];
+            } else
+                rel = currentInfo.path;
+            std::string dir = path_directory(rel);
+            std::string modRel = dir.empty() ? fileField : dir + "/" + fileField;
+            currentInfo.path = prefix.empty() ? modRel : prefix + "::" + modRel;
+            currentInfo.ext = fext.substr(1);    // "sgc"
+            currentInfo.format = fext.substr(1); // routed/described by extension
+            currentInfo.starttune = track;
+            currentInfo.numtunes = 0;
+            playCurrent();
+            return false;
+        }
+
+        currentInfo.path = first;
         // Pick the codec from the resolved stream URL so non-mp3 radio streams
         // (e.g. Kohina's .ogg) are tagged correctly; the actual decoder is
         // chosen by extension in playCurrent().
@@ -272,12 +336,15 @@ bool MusicPlayerList::playFile(utils::path fileName)
 
 void MusicPlayerList::cancelStreaming()
 {
+    //LOGD("TEARDOWN: cancelStreaming begin");
     remoteLoader.cancel();
+    //LOGD("TEARDOWN: remoteLoader.cancel done");
     // quit() (not clear()) the fifo: if the web thread is blocked in put()
     // feeding a stream we're abandoning, only quitting unblocks it -- otherwise
     // it would wedge curl_multi_perform and stall every transfer. streamFile()
     // allocates a fresh fifo for the next song.
     mp.abortStream();
+    //LOGD("TEARDOWN: abortStream done");
 }
 
 // Stream a remote, finite, ffmpeg-decodable file: curl fetches it into a fifo
@@ -286,7 +353,9 @@ void MusicPlayerList::cancelStreaming()
 // player could be created (caller falls back to a direct ffmpeg URL).
 bool MusicPlayerList::streamRemoteFile(const std::string& path)
 {
+    LOGD("TEARDOWN: streamRemoteFile begin %s", path.c_str());
     if (!mp.streamFile(path)) return false;
+    LOGD("TEARDOWN: streamFile created player");
 
     auto weakPlayer = mp.getPlayer();
     auto fifo = mp.getStreamFifo();
@@ -498,6 +567,12 @@ void MusicPlayerList::playCurrent()
     }
 
     auto ext = path_extension(path);
+    // Strip any URL query (".mp3?p=f" -> "mp3") so the streamable test and the
+    // decoder see the real codec. Some podcast feeds (AmigaVibes via podCloud)
+    // append a query to the enclosure URL, which otherwise left ext empty and
+    // dropped the episode onto the no-extension full-download path (no decoder).
+    auto qpos = ext.find('?');
+    if (qpos != std::string::npos) ext = ext.substr(0, qpos);
     makeLower(ext);
 
     detectSilence = true;
@@ -566,23 +641,33 @@ void MusicPlayerList::playCurrent()
     // the direct-ffmpeg-URL path, which handles ICY/redirects/endless streams.
     bool isRadioStream = (toLower(currentInfo.format) == "mp3" ||
                           toLower(currentInfo.format) == "ogg");
-    if (currentInfo.format != "M3U" && (extStreamable || isRadioStream)) {
+    // Podcasts are always streamed (their enclosure URLs sometimes lack a
+    // detectable extension), via the switch-safe streamRemoteFile path below.
+    bool isPodcast = MusicDatabase::classifyFormat(currentInfo.format,
+                                                   currentInfo.path) == PODCAST;
+    if (currentInfo.format != "M3U" &&
+        (extStreamable || isRadioStream || isPodcast)) {
 
         // Resolve "prefix::relpath" to the full URL (source.url + relpath) the
         // way stream()/load() would, so ffmpeg gets a fetchable URL. Passing the
         // raw currentInfo.path would feed ffmpeg the "radio::" prefix ("Protocol
         // not found"), and the bare relpath would be a non-existent local file.
         if (isRadioStream) {
-            // Radio: let ffmpeg fetch and decode the resolved stream URL directly
-            // (handles bare "ICY 200 OK" mounts the curl path rejects).
+            // Endless radio: let ffmpeg fetch and decode the resolved URL
+            // directly (handles bare "ICY 200 OK" mounts the curl path rejects).
             if (mp.streamUrl(remoteLoader.resolveUrl(currentInfo.path))) {
                 SET_STATE(Playstarted);
             }
             return;
         }
-        // A finite remote file (real .mp3/.ogg/... in a collection): stream it
-        // progressively through curl->fifo->ffmpeg so it plays after a short
-        // prebuffer. Fall back to a direct ffmpeg URL if that can't start.
+        // Any finite remote file -- a real .mp3/.ogg/... in a collection, OR a
+        // podcast episode: stream it progressively through curl->fifo->ffmpeg so
+        // it plays after a short prebuffer instead of a full download. This path
+        // is now switch-safe: aborting an in-flight transfer (RemoteLoader::cancel
+        // + MusicPlayer::abortStream) detaches and frees the curl handle under the
+        // web mutex, so a 100MB+ download can be cancelled mid-flight without
+        // racing the next track's transfer. Fall back to a direct ffmpeg URL if
+        // the progressive stream can't start.
         if (streamRemoteFile(currentInfo.path) ||
             mp.streamUrl(remoteLoader.resolveUrl(currentInfo.path))) {
             SET_STATE(Playstarted);
@@ -599,6 +684,53 @@ void MusicPlayerList::playCurrent()
             SET_STATE(Error);
             files--;
             return;
+        }
+
+        // --- Zophar's Domain console gamerips: the downloaded file is a .zip of
+        // per-track native files (e.g. Sega Genesis = 01.vgm, 02.vgm, ...).
+        // Detect the ZIP by magic (PK\x03\x04), extract every member next to the
+        // cache file, and present the music tracks as local subsongs (multiSongs).
+        // Switching tracks then plays an already-extracted local file -- no
+        // re-download. Any shared lib (usflib/gsflib) extracts alongside.
+        {
+            bool isZip = false;
+            if (FILE* fp = fopen(f0.getName().c_str(), "rb")) {
+                unsigned char m[4] = { 0 };
+                isZip = fread(m, 1, 4, fp) == 4 && m[0] == 'P' && m[1] == 'K' &&
+                        m[2] == 3 && m[3] == 4;
+                fclose(fp);
+            }
+            if (isZip) {
+                static const std::set<std::string> musicExt = {
+                    "vgm", "vgz", "nsf", "nsfe", "spc", "gbs", "hes", "kss",
+                    "sgc", "ay", "gym", "usf", "miniusf", "gsf", "minigsf",
+                    "psf", "minipsf", "2sf", "mini2sf" };
+                std::string dir = f0.getName() + "_x";
+                utils::makedirs(dir);
+                std::vector<std::string> tracks;
+                try {
+                    auto* a = utils::Archive::open(f0.getName(), dir);
+                    for (auto const& m : *a) {
+                        auto ef = a->extract(m);
+                        if (musicExt.count(toLower(path_extension(m))) > 0)
+                            tracks.push_back(ef.getName());
+                    }
+                } catch (...) {}
+                std::sort(tracks.begin(), tracks.end());
+                if (tracks.empty()) {
+                    errors.emplace_back("No playable tracks in archive");
+                    SET_STATE(Error);
+                    files--;
+                    return;
+                }
+                multiSongs = tracks; // local extracted paths (no source prefix)
+                multiSongNo = 0;
+                currentInfo.numtunes = (int)tracks.size();
+                currentInfo.path = tracks[0];
+                loadedFile = tracks[0];
+                files--;
+                return;
+            }
         }
         // The cached file has a URL-encoded name (e.g. "downloads.php%3fmoduleid=1")
         // which may contain bogus extensions like ".php". Use the format field

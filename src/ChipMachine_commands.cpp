@@ -156,7 +156,15 @@ void ChipMachine::setupCommands()
 
     cmd("enque_song", [=] {
         if (haveSelection()) {
-            player.addSong(getSelectedSong());
+            auto song = getSelectedSong();
+            // On a podcast SHOW row, drill into its episodes (nothing to enque).
+            if (utils::startsWith(song.path, "podcastshow::")) {
+                musicDatabase.setPodcastShow(std::stoi(song.path.substr(13)));
+                songList.select(0);
+                searchUpdated = true;
+                return;
+            }
+            player.addSong(song);
             songList.select(songList.selected() + 1);
         }
     });
@@ -198,7 +206,15 @@ void ChipMachine::setupCommands()
 
     cmd("play_song", [=] {
         if (haveSelection()) {
-            player.playSong(getSelectedSong());
+            auto song = getSelectedSong();
+            // A podcast SHOW row: drill into its episodes instead of playing.
+            if (utils::startsWith(song.path, "podcastshow::")) {
+                musicDatabase.setPodcastShow(std::stoi(song.path.substr(13)));
+                songList.select(0);
+                searchUpdated = true;
+                return;
+            }
+            player.playSong(song);
             showScreen(MAIN_SCREEN);
         }
     });
@@ -222,6 +238,14 @@ void ChipMachine::setupCommands()
     });
 
     cmd("clear_search", [=] {
+        // Inside a drilled-in podcast show: ESC pops back to the show list
+        // rather than leaving the search screen.
+        if (musicDatabase.podcastShow() >= 0 && searchField.getText() == "") {
+            musicDatabase.setPodcastShow(-1);
+            songList.select(0);
+            searchUpdated = true;
+            return;
+        }
         if (searchField.getText() == "")
             showScreen(MAIN_SCREEN);
         else {

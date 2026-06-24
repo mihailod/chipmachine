@@ -294,6 +294,14 @@ void ChipMachine::updateKeys()
         // "(TITLE)" / "(TITLE_AND_INGAME)" parenthetical. song.format already names
         // the real format (CUSTOM, NOISE PACKER 3.X), so drop the parenthetical.
         if (utils::startsWith(song.path, "unexotica::")) ext = "";
+        // Podcasts are streamed audio; the enclosure "extension" is derived from
+        // the URL and may carry a query string (".mp3?p=f"). Drop it -> "Podcast".
+        if (MusicDatabase::classifyFormat(song.format, song.path) == PODCAST)
+            ext = "";
+        // Drop a redundant extension that just repeats the format, so we show
+        // "MP3" / "M3U" rather than "MP3 (MP3)" / "M3U (M3U)" (and likewise for
+        // any song whose format string already equals its file extension).
+        if (utils::toLower(ext) == utils::toLower(song.format)) ext = "";
 
         bool isoffline = remoteLoader.isOffline(song.path);
 	bool islocal = RemoteLoader::isLocalAsset(song.path);
