@@ -242,6 +242,8 @@ private:
 
     void nextScreenshot();
     void loadScreenshot(const std::string& shot);
+    // Falls back to the program icon when a song has no screenshot/cover art.
+    void showDefaultScreenshot();
 
     utils::path workDir;
 
@@ -428,6 +430,8 @@ private:
     std::vector<NamedBitmap> screenshots;
     uint64_t setShotAt = 0;
     std::string currentScreenshot;
+    // Lazily-loaded program icon shown when a song has no screenshot.
+    image::bitmap defaultShot;
 
     // The defensive thread barrier for application destruction
     std::atomic<bool> isShuttingDown{false};

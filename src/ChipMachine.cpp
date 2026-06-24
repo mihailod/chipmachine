@@ -675,7 +675,22 @@ void ChipMachine::loadScreenshot(const std::string& shot)
     }
 
     // Called from Playstarted (immediate) and from the Playing poll (late arrival).
-    // Guards against re-loading the same URL and against loading an empty shot.
+    if (shot == "") {
+        // Song has no screenshot/cover art — fall back to the program icon.
+        // Keep currentScreenshot empty so the Playing poll can still upgrade to
+        // a real screenshot URL that arrives late. Don't reload (and re-fade)
+        // the icon if it is already the thing on screen.
+        currentScreenshot = "";
+        bool alreadyDefault = screenshots.size() == 1 &&
+                              screenshots[0].name == "icon.png";
+        if (!alreadyDefault) {
+            screenShotIcon.clear();
+            showDefaultScreenshot();
+        }
+        return;
+    }
+
+    // Guards against re-loading the same URL.
     if (shot == currentScreenshot) {
         // Already loaded or loading — just advance to next frame
         nextScreenshot();
@@ -685,8 +700,6 @@ void ChipMachine::loadScreenshot(const std::string& shot)
     screenShotIcon.clear();
     screenshots.clear();
     currentScreenshot = shot;
-
-    if (shot == "") return;
 
     auto parts = utils::split(shot, ";");
     int total = parts.size();
@@ -731,6 +744,25 @@ void ChipMachine::loadScreenshot(const std::string& shot)
     };
     for (auto& p : parts)
         webutils::Web::getInstance().getFile(p, cb);
+}
+
+void ChipMachine::showDefaultScreenshot()
+{
+    if (defaultShot.width() == 0 || defaultShot.height() == 0) {
+        try {
+            auto ic = workDir / "data" / "misc" / "icon.png";
+            defaultShot = image::load_image(ic.string());
+        } catch (image::image_exception& e) {
+            LOGD("Failed to load default icon");
+            return;
+        }
+    }
+    if (defaultShot.width() == 0 || defaultShot.height() == 0) return;
+
+    screenshots.clear();
+    screenshots.emplace_back("icon.png", defaultShot);
+    currentShot = 0;
+    nextScreenshot();
 }
 
 void ChipMachine::nextScreenshot()
