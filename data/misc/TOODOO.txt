@@ -2,6 +2,8 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+! ted music takes forever to load... maybe just deliver it locally it is small
+
 ! [web.cpp:291] CODE 200
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Picatune2/BeRo/acidhouse.pt2
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune2%2fBeRo/acidhouse.pt2
