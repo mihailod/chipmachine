@@ -190,6 +190,43 @@ else
     fi
 fi
 
+# *** 4c. Bundle HVTC .prg tracks into Contents/Resources/music/hvtc/ ***
+#
+# HVTC (Commodore 16/116/+4 TED music) was pivoted from the flaky online
+# plus4world/Wayback mirror to a shipped local store, exactly like music/Console
+# for .nsfe. The runtime resolves these via local_dir = "music/hvtc" (db.lua),
+# so the destination layout (sub-dirs demos/ games/ musicians/ other/) is
+# preserved verbatim. Without this, .prg playback would fall back to the network.
+# -----------------------------------------------------------------
+HVTC_SRC="${CHIPMACHINE_DIR}/music/hvtc"
+HVTC_DEST="${RESOURCES_DIR}/music/hvtc"
+
+if [ -d "${HVTC_SRC}" ]; then
+    PRG_COUNT=$(find "${HVTC_SRC}" -name "*.prg" | wc -l | tr -d '[:space:]')
+    if [ "${PRG_COUNT}" -eq 0 ]; then
+        echo "WARNING: music/hvtc/ exists but contains no .prg files. HVTC bundle will be empty."
+    else
+        echo "-> Bundling ${PRG_COUNT} HVTC .prg track(s) into ${HVTC_DEST} ..."
+    fi
+
+    mkdir -p "${HVTC_DEST}"
+
+    # Preserve the demos/ games/ musicians/ other/ sub-directory hierarchy.
+    cp -R "${HVTC_SRC}/." "${HVTC_DEST}/"
+
+    BUNDLED_PRG_COUNT=$(find "${HVTC_DEST}" -name "*.prg" | wc -l | tr -d '[:space:]')
+    echo "   Verified ${BUNDLED_PRG_COUNT} .prg file(s) present inside bundle."
+else
+    if $RELEASE_IT; then
+        echo "CRITICAL ERROR: music/hvtc source directory not found at ${HVTC_SRC}!"
+        echo "               A release build MUST include bundled HVTC .prg tracks."
+        exit 1
+    else
+        echo "WARNING: music/hvtc not found at ${HVTC_SRC}. Skipping HVTC bundling (dry-run mode)."
+        echo "         End-users will have no bundled HVTC tracks. Set up music/hvtc before --releaseit."
+    fi
+fi
+
 # 5. Fix Native ARM64 Dynamic Library Linkages Deeply
 echo "-> Resolving recursive dynamic library paths..."
 

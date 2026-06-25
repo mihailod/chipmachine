@@ -240,7 +240,19 @@ void ChipMachine::updateKeys()
         screen.key_pressed(keycodes::ALT_RIGHT))
         event |= ALT;
 
-    if ((event & (CTRL | SHIFT)) == 0 && currentList) currentList->onKey(key);
+    if ((event & (CTRL | SHIFT)) == 0 && currentList) {
+        // The F9 platform list wraps around: Up from the first entry goes to the
+        // last, Down from the last goes back to the first.
+        int n = advancedList.size();
+        if (currentScreen == ADVANCED_SCREEN && key == keycodes::UP &&
+            advancedList.selected() == 0)
+            advancedList.select(n - 1);
+        else if (currentScreen == ADVANCED_SCREEN && key == keycodes::DOWN &&
+                 advancedList.selected() == n - 1)
+            advancedList.select(0);
+        else
+            currentList->onKey(key);
+    }
 
     if (event == (keycodes::RIGHT | SHIFT)) event = keycodes::LEFT;
 

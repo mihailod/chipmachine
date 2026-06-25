@@ -12,11 +12,11 @@
 [MusicPlayerList.cpp:738] Detected ext: 
 MusicPlayer: Plugin 'Ayfly ZX' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune2%2fBeRo/acidhouse.pt2'. Error: Not an AY file
 
-- formats menu up down should wrap around
-
-- /Demo/Beyonder/Welcome_On_Amiga.lha/8svx.Welcome On Amiga
+! /Demo/Beyonder/Welcome_On_Amiga.lha/8svx.Welcome On Amiga
 starts and then stops playback (silent) after several seconds and locks the program
 then the lock goes away and it is just silent
+
+- .ftm shared between NES and ST, description is goofy (more shared extensions exist -- investigate/address)
 
 - can we add screenshots for more formats?
 

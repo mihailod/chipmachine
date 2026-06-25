@@ -131,6 +131,7 @@ set(MUSICPLAYER_PLUGINS
     kssplugin quartetplugin wsrplugin zxtuneplugin pokeynoiseplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin mgtplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin
+    famitrackerplugin
 )
 add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
 add_subdirectory(${MUSICPLAYER}/src/psf psf)
@@ -334,6 +335,16 @@ if(APPLE)
            message(STATUS \"-> Bundled music/Console into Resources\")
        else()
            message(WARNING \"music/Console not found — bundle will have no built-in .nsfe tracks\")
+       endif()
+
+       # HVTC (Commodore 16/116/+4 TED .prg) was pivoted from the online
+       # plus4world mirror to a shipped local store, same as music/Console.
+       if(EXISTS \"\${CMAKE_SOURCE_DIR}/music/hvtc\")
+           file(COPY \"\${CMAKE_SOURCE_DIR}/music/hvtc\"
+                DESTINATION Chipmachine.app/Contents/Resources/music/)
+           message(STATUS \"-> Bundled music/hvtc into Resources\")
+       else()
+           message(WARNING \"music/hvtc not found — bundle will have no built-in HVTC .prg tracks\")
        endif()
 
        include(BundleUtilities)

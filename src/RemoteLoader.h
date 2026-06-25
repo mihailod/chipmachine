@@ -70,10 +70,11 @@ public:
         // the path prefix is actually db name prefix
         // eg modland::Soundtracker/SLL/sll1.mod
         // so need a map of dbs which are local
-        // and for now only the nsfe one is...
-        // eg: nsfe::31_orange_painting.nsfe
-        // for now, if it starts with "nsfe::" it is local
-        return path.find("nsfe::") == 0;
+        // for now the locally-shipped collections are nsfe (music/Console)
+        // and hvtc (music/hvtc) -- both ship their files in the .app bundle, so
+        // a song from either is always served from disk, never the network.
+        // eg: nsfe::31_orange_painting.nsfe / hvtc::demos/crazy_scroll_89.prg
+        return path.find("nsfe::") == 0 || path.find("hvtc::") == 0;
     }
 
 private:

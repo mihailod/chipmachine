@@ -1,15 +1,20 @@
-Compy Xmas 2 Mtv		Unknown	TED	demos/compy_xmas_2_mtv.prg
+Compy Xmas 2 MTV		Unknown	TED	demos/compy_xmas_2_mtv.prg
 Crazy Scroll 89		Unknown	TED	demos/crazy_scroll_89.prg
 Culture Demo II		Unknown	TED	demos/culture_demo_ii.prg
-Game-pictures		Unknown	TED	demos/game-pictures.prg
+Dancing Rock N Roll		Unknown	TED	demos/dancing_rock_n_roll.prg
+Drive Demo		Unknown	TED	demos/drive_demo.prg
+Game-Pictures		Unknown	TED	demos/game-pictures.prg
 Interrupt Programmed Music		Unknown	TED	demos/interrupt_programmed_music.prg
 Magnificient Plus4 Part 9		Unknown	TED	demos/magnificient_plus4_part_9.prg
+Mxm		Unknown	TED	demos/mxm.prg
 Oltic Sound Box 3		Unknown	TED	demos/oltic_sound_box_3.prg
 Pink Panther 2		Unknown	TED	demos/pink_panther_2.prg
 Sound2 A Titokzatos Zona		Unknown	TED	demos/sound2_a_titokzatos_zona.prg
-3d Glooper		Unknown	TED	games/3d_glooper.prg
+Tapper Miracle Pack		Unknown	TED	demos/tapper_miracle_pack.prg
+3D Glooper		Unknown	TED	games/3d_glooper.prg
 A Fonevek Reszeshatarozos Esete		Unknown	TED	games/a_fonevek_reszeshatarozos_esete.prg
 A Helyhatarozo		Unknown	TED	games/a_helyhatarozo.prg
+A Kerdo Es Mutato Nevmasok		Unknown	TED	games/a_kerdo_es_mutato_nevmasok.prg
 A Szavak Szotari Alakja		Unknown	TED	games/a_szavak_szotari_alakja.prg
 A Tagadas Kifejezese		Unknown	TED	games/a_tagadas_kifejezese.prg
 Aardvark		Unknown	TED	games/aardvark.prg
@@ -20,23 +25,23 @@ Artur Kalandjai Text		Unknown	TED	games/artur_kalandjai_text.prg
 Artur Kalandjai Title		Unknown	TED	games/artur_kalandjai_title.prg
 Auf Wiedersehen Monty		Unknown	TED	games/auf_wiedersehen_monty.prg
 Blockbusters		Unknown	TED	games/blockbusters.prg
+Blockbusters Goldrun		Unknown	TED	games/blockbusters_goldrun.prg
 Breki		Unknown	TED	games/breki.prg
+Bridgehead SFX		Unknown	TED	games/bridgehead_sfx.prg
 Corman Death		Unknown	TED	games/corman_death.prg
 Corman Ingame		Unknown	TED	games/corman_ingame.prg
 Csodalatos Simon Jingle		Unknown	TED	games/csodalatos_simon_jingle.prg
 Csodalatos Simon Title		Unknown	TED	games/csodalatos_simon_title.prg
 Demolition		Unknown	TED	games/demolition.prg
-Dudaorru Patric Ingame		Unknown	TED	games/dudaorru_patric_ingame.prg
-Dudaorru Patric Intro		Unknown	TED	games/dudaorru_patric_intro.prg
-Dudaorru Patric Title		Unknown	TED	games/dudaorru_patric_title.prg
 Elvarazsolt Kastely		Unknown	TED	games/elvarazsolt_kastely.prg
+Enigma		Unknown	TED	games/enigma.prg
 European Games		Unknown	TED	games/european_games.prg
 European Soccer Finals		Unknown	TED	games/european_soccer_finals.prg
 Exorcist		Unknown	TED	games/exorcist.prg
 Flipper		Unknown	TED	games/flipper.prg
 Footballer Of The Year		Unknown	TED	games/footballer_of_the_year.prg
 Fortress Underground		Unknown	TED	games/fortress_underground.prg
-Fussball-profi		Unknown	TED	games/fussball-profi.prg
+Fussball-Profi		Unknown	TED	games/fussball-profi.prg
 Ghost Town		Unknown	TED	games/ghost_town.prg
 Golf Royal		Unknown	TED	games/golf_royal.prg
 Gunslinger		Unknown	TED	games/gunslinger.prg
@@ -49,32 +54,34 @@ Indoor Sports Darts		Unknown	TED	games/indoor_sports_darts.prg
 Jet Set Willy II		Unknown	TED	games/jet_set_willy_ii.prg
 Kane		Unknown	TED	games/kane.prg
 Kaputoro		Unknown	TED	games/kaputoro.prg
-Karate +		Unknown	TED	games/karate_+.prg
 Karate King		Unknown	TED	games/karate_king.prg
-Kerdo Es Mutato Nevmasok		Unknown	TED	games/kerdo_es_mutato_nevmasok.prg
+Karate King SFX		Unknown	TED	games/karate_king_sfx.prg
 Keresd A Gyemantot		Unknown	TED	games/keresd_a_gyemantot.prg
 Kis Professzor		Unknown	TED	games/kis_professzor.prg
+Kondi Krush		Unknown	TED	games/kondi_krush.prg
+Kondi Krush Jingle		Unknown	TED	games/kondi_krush_jingle.prg
+Labirintus		Unknown	TED	games/labirintus.prg
 Leaper Intro		Unknown	TED	games/leaper_intro.prg
 Locomotion		Unknown	TED	games/locomotion.prg
 Mc Stoney		Unknown	TED	games/mc_stoney.prg
-Mozaik		Unknown	TED	games/mozaik.prg
+Mushroom Mania		Unknown	TED	games/mushroom_mania.prg
 Oblido		Unknown	TED	games/oblido.prg
 Oliver Otthona Ingame		Unknown	TED	games/oliver_otthona_ingame.prg
 Oliver Otthona Title		Unknown	TED	games/oliver_otthona_title.prg
-On Ona		Unknown	TED	games/on_ona.prg
+On Ona Ono		Unknown	TED	games/on_ona_ono.prg
 Pheenix		Unknown	TED	games/pheenix.prg
 Platina		Unknown	TED	games/platina.prg
 Pokoli Torony Ingame		Unknown	TED	games/pokoli_torony_ingame.prg
 Pokoli Torony Instructions		Unknown	TED	games/pokoli_torony_instructions.prg
 Pokoli Torony Title		Unknown	TED	games/pokoli_torony_title.prg
 Pyramide		Unknown	TED	games/pyramide.prg
-Rablo Rulett		Unknown	TED	games/rablo_rulett.prg
+Rablo-Rulett		Unknown	TED	games/rablo-rulett.prg
+Rablo-Rulett Loader		Unknown	TED	games/rablo-rulett_loader.prg
 Return Of Rockman		Unknown	TED	games/return_of_rockman.prg
 Roll		Unknown	TED	games/roll.prg
 Saboteur		Unknown	TED	games/saboteur.prg
 Saloon Shootout		Unknown	TED	games/saloon_shootout.prg
 Skyhawk		Unknown	TED	games/skyhawk.prg
-Split Personalities		Unknown	TED	games/split_personalities.prg
 Strangers		Unknown	TED	games/strangers.prg
 Terra Nova		Unknown	TED	games/terra_nova.prg
 Terra Nova Digi		Unknown	TED	games/terra_nova_digi.prg
@@ -82,463 +89,950 @@ The Champs		Unknown	TED	games/the_champs.prg
 The Chip Factory		Unknown	TED	games/the_chip_factory.prg
 Tom Thumb		Unknown	TED	games/tom_thumb.prg
 Tom Thumb Early		Unknown	TED	games/tom_thumb_early.prg
-Trailblazer 2 Jingle		Unknown	TED	games/trailblazer_2_jingle.prg
-Trailblazer 2 Title		Unknown	TED	games/trailblazer_2_title.prg
 Tron		Unknown	TED	games/tron.prg
+Tud Nem Tud		Unknown	TED	games/tud_nem_tud.prg
 Tuzolto C16		Unknown	TED	games/tuzolto_c16.prg
 Ufovadasz Crack		Unknown	TED	games/ufovadasz_crack.prg
 Under Haupt		Unknown	TED	games/under_haupt.prg
+Viduzzles		Unknown	TED	games/viduzzles.prg
+Voidrunner		Unknown	TED	games/voidrunner.prg
 Walaki		Unknown	TED	games/walaki.prg
 Way Of The Exploding Fist		Unknown	TED	games/way_of_the_exploding_fist.prg
 Xadium		Unknown	TED	games/xadium.prg
 Xargon Wars		Unknown	TED	games/xargon_wars.prg
 Zagan Warrior		Unknown	TED	games/zagan_warrior.prg
 Zip		Unknown	TED	games/zip.prg
-Ikaruga		4-mat	TED	musicians/4-mat/ikaruga.prg
-Lunar Blitz		4-mat	TED	musicians/4-mat/lunar_blitz.prg
-Radiant		4-mat	TED	musicians/4-mat/radiant.prg
-Ted Storm		4-mat	TED	musicians/4-mat/ted_storm.prg
-Ted Storm Note		4-mat	TED	musicians/4-mat/ted_storm_note.prg
-Ikaruga V2		4-mat	TED	musicians/4-mat/unreleased/ikaruga_v2.prg
-Radiant V2		4-mat	TED	musicians/4-mat/unreleased/radiant_v2.prg
-Rose		4-mat	TED	musicians/4-mat/unreleased/rose.prg
-Ultra		4-mat	TED	musicians/4-mat/unreleased/ultra.prg
-Look		4-mat	TED	musicians/4-mat/worktunes/look.prg
-Melon V1		4-mat	TED	musicians/4-mat/worktunes/melon_v1.prg
-Multisp4		4-mat	TED	musicians/4-mat/worktunes/multisp4.prg
-Multispd		4-mat	TED	musicians/4-mat/worktunes/multispd.prg
-Reaxion V1		4-mat	TED	musicians/4-mat/worktunes/reaxion_v1.prg
-Easy-going		5tarbuck	TED	musicians/5tarbuck/easy-going.prg
+1942 April Fools		ulysses777	TED	musicians/ulysses777/1942_april_fools.prg
+19X		nitrofurano	TED	musicians/nitrofurano/19x.prg
+2020 By The Numbers		csabo	TED	musicians/csabo/2020_by_the_numbers.prg
+2048 Octaluxe		luca	TED	musicians/luca/2048_octaluxe.prg
+5G		5tarbuck	TED	musicians/5tarbuck/5g.prg
+6Fx		csabo	TED	musicians/csabo/6fx.prg
+8Sob Ati		csabo	TED	musicians/csabo/8sob_ati.prg
+8Sob Bubis		csabo	TED	musicians/csabo/8sob_bubis.prg
+8Sob Dcd		csabo	TED	musicians/csabo/8sob_dcd.prg
+8Sob Menu		csabo	TED	musicians/csabo/8sob_menu.prg
+8Sob Mermaid		luca	TED	musicians/luca/8sob_mermaid.prg
+8Sob Murphy		csabo	TED	musicians/csabo/8sob_murphy.prg
+8Sob Optika		csabo	TED	musicians/csabo/8sob_optika.prg
+8Sob Skoro		csabo	TED	musicians/csabo/8sob_skoro.prg
+95Calling		degauss	TED	musicians/degauss/95calling.prg
+A Small Adventure		kleeder	TED	musicians/kleeder/a_small_adventure.prg
+A Titan Emerges		3-up	TED	musicians/3-up/a_titan_emerges.prg
+A-07		braintron	TED	musicians/braintron/a-07.prg
+Adventure Park		csabo	TED	musicians/csabo/adventure_park.prg
+Adventures In Time 2 Preview		csabo	TED	musicians/csabo/adventures_in_time_2_preview.prg
+Adventures In Time Advertisement		luca	TED	musicians/luca/adventures_in_time_advertisement.prg
+Adventures In Time Ending		luca	TED	musicians/luca/adventures_in_time_ending.prg
+Adventures In Time Game Over		luca	TED	musicians/luca/adventures_in_time_game_over.prg
+Adventures In Time Ingame		luca	TED	musicians/luca/adventures_in_time_ingame.prg
+Adventures In Time Intro		luca	TED	musicians/luca/adventures_in_time_intro.prg
+Adventures In Time SFX		luca	TED	musicians/luca/adventures_in_time_sfx.prg
+Adventures In Time Title		luca	TED	musicians/luca/adventures_in_time_title.prg
+Adventurous Trail		kleeder	TED	musicians/kleeder/adventurous_trail.prg
+Aerial		inufuto	TED	musicians/inufuto/aerial.prg
+After Hours		tobikomi	TED	musicians/tobikomi/after_hours.prg
+Air Attack! Ending		spotlessmind1975	TED	musicians/spotlessmind1975/air_attack!_ending.prg
+Air Attack! Intro		spotlessmind1975	TED	musicians/spotlessmind1975/air_attack!_intro.prg
+Alf 1		alf	TED	musicians/alf/alf_1.prg
+Alf 2		alf	TED	musicians/alf/alf_2.prg
+Alfred		wiedle bernd	TED	musicians/wiedle_bernd/alfred.prg
+Alien Invasion		forster martina	TED	musicians/forster_martina/alien_invasion.prg
+Alien Invasion Intro		forster martina	TED	musicians/forster_martina/alien_invasion_intro.prg
+Aliens Demo		ko-ko	TED	musicians/ko-ko/aliens_demo.prg
+Alpharay 01 Omikron		5tarbuck	TED	musicians/5tarbuck/alpharay_01_omikron.prg
+Alpharay 02 Syntex		5tarbuck	TED	musicians/5tarbuck/alpharay_02_syntex.prg
+Alpharay 03 Cyberane		5tarbuck	TED	musicians/5tarbuck/alpharay_03_cyberane.prg
+Alpharay 04 Psyba		5tarbuck	TED	musicians/5tarbuck/alpharay_04_psyba.prg
+Alpharay 05 Cynex		5tarbuck	TED	musicians/5tarbuck/alpharay_05_cynex.prg
+Alpharay 06 Fleet		5tarbuck	TED	musicians/5tarbuck/alpharay_06_fleet.prg
+Alpharay Boss 01		5tarbuck	TED	musicians/5tarbuck/alpharay_boss_01.prg
+Alpharay Boss 02		5tarbuck	TED	musicians/5tarbuck/alpharay_boss_02.prg
+Alpharay Boss 03		5tarbuck	TED	musicians/5tarbuck/alpharay_boss_03.prg
+Alpharay Boss 04		5tarbuck	TED	musicians/5tarbuck/alpharay_boss_04.prg
+Alpharay Boss 05		5tarbuck	TED	musicians/5tarbuck/alpharay_boss_05.prg
+Alpharay Boss 06		5tarbuck	TED	musicians/5tarbuck/alpharay_boss_06.prg
+Alpharay Highscore 3Ch		5tarbuck	TED	musicians/5tarbuck/alpharay_highscore_3ch.prg
+Alpharay Intro		5tarbuck	TED	musicians/5tarbuck/alpharay_intro.prg
+Alpharay Staff Roll		5tarbuck	TED	musicians/5tarbuck/alpharay_staff_roll.prg
+Alpharay Story		5tarbuck	TED	musicians/5tarbuck/alpharay_story.prg
+Alpharay Story Trailerversion		5tarbuck	TED	musicians/5tarbuck/alpharay_story_trailerversion.prg
+Alpharay Titelscreen		5tarbuck	TED	musicians/5tarbuck/alpharay_titelscreen.prg
+Amelie		bozsik istvan	TED	musicians/bozsik_istvan/amelie.prg
+Antiair		inufuto	TED	musicians/inufuto/antiair.prg
+Archaeologist		oconnor liam	TED	musicians/oconnor_liam/archaeologist.prg
+Archivum Ingame		bozsik istvan	TED	musicians/bozsik_istvan/archivum_ingame.prg
+Area 16		tobikomi	TED	musicians/tobikomi/area_16.prg
+Arkanoid		csabo	TED	musicians/csabo/arkanoid.prg
+Arkanoid Intro		csabo	TED	musicians/csabo/arkanoid_intro.prg
+Arrival Of Commodore Theodore		funute	TED	musicians/funute/arrival_of_commodore_theodore.prg
+Arthur Noid Ingame		southern shaun	TED	musicians/southern_shaun/arthur_noid_ingame.prg
+Arthur Noid Title		southern shaun	TED	musicians/southern_shaun/arthur_noid_title.prg
+Ascend		inufuto	TED	musicians/inufuto/ascend.prg
+At The Speed Of Snow		tobikomi	TED	musicians/tobikomi/at_the_speed_of_snow.prg
+Athanor Ending		rotteroy	TED	musicians/rotteroy/athanor_ending.prg
+Athanor Ingame		rotteroy	TED	musicians/rotteroy/athanor_ingame.prg
+Athanor Intro		rotteroy	TED	musicians/rotteroy/athanor_intro.prg
+Athanor Title		rotteroy	TED	musicians/rotteroy/athanor_title.prg
+Atlantis		manthorpe sam	TED	musicians/manthorpe_sam/atlantis.prg
+Atlantis Power Pack Anco		manthorpe sam	TED	musicians/manthorpe_sam/atlantis_power_pack_anco.prg
+Attack Of The Mutant Hot Dogs		tobikomi	TED	musicians/tobikomi/attack_of_the_mutant_hot_dogs.prg
+Attack Of The Petscii Robots		aman amelie	TED	musicians/aman_amelie/attack_of_the_petscii_robots.prg
+Attack Of The Petscii Robots Petscii		ko-ko	TED	musicians/ko-ko/attack_of_the_petscii_robots_petscii.prg
+Attempt		sean	TED	musicians/sean/attempt.prg
+Auriga		howlin mad	TED	musicians/howlin_mad/auriga.prg
+Auto Zone		howlin mad	TED	musicians/howlin_mad/auto_zone.prg
+Autobahn		strassen patrick	TED	musicians/strassen_patrick/autobahn.prg
+Avoval		gotoandplay	TED	musicians/gotoandplay/avoval.prg
+Aztapaszta		chabee	TED	musicians/chabee/aztapaszta.prg
+Baby Cry Because Of The Mos Technology Ted		arceus413	TED	musicians/arceus413/baby_cry_because_of_the_mos_technology_ted.prg
+Bandits At Zero		southern shaun	TED	musicians/southern_shaun/bandits_at_zero.prg
+Barbarian		ern0	TED	musicians/ern0/barbarian.prg
+Barbarian Stars Letter Adress 1		ern0	TED	musicians/ern0/barbarian_stars_letter_adress_1.prg
+Battle Star		waugh ian	TED	musicians/waugh_ian/battle_star.prg
+Battlot		inufuto	TED	musicians/inufuto/battlot.prg
+Beggars Arent Choosers 1		zapac	TED	musicians/zapac/beggars_arent_choosers_1.prg
+Beggars Arent Choosers 2		zapac	TED	musicians/zapac/beggars_arent_choosers_2.prg
+Beggars Arent Choosers Note		zapac	TED	musicians/zapac/beggars_arent_choosers_note.prg
+Bengbeng Sa		degauss	TED	musicians/degauss/bengbeng_sa.prg
+Berks Four		williams jon	TED	musicians/williams_jon/berks_four.prg
+Bernat A Nyomozo Menu		kabo	TED	musicians/kabo/bernat_a_nyomozo_menu.prg
+Bernat A Nyomozo Title		kabo	TED	musicians/kabo/bernat_a_nyomozo_title.prg
+Big Bass Cracktro		csabo	TED	musicians/csabo/big_bass_cracktro.prg
+Big Mac		kelly tony	TED	musicians/kelly_tony/big_mac.prg
+Binary Battle Overcast Redux		csabo	TED	musicians/csabo/binary_battle_overcast_redux.prg
+Binary Beats		ma2e	TED	musicians/ma2e/binary_beats.prg
+Black Thunder		braintron	TED	musicians/braintron/black_thunder.prg
+Blackbelt+Tune		george	TED	musicians/george/blackbelt+tune.prg
+Blaze		douglas craig	TED	musicians/douglas_craig/blaze.prg
+Bleeter		dsm5	TED	musicians/dsm5/bleeter.prg
+Blobfox		delest	TED	musicians/delest/blobfox.prg
+Blobfox Dark Level		delest	TED	musicians/delest/blobfox_dark_level.prg
+Blobfox Game Over		delest	TED	musicians/delest/blobfox_game_over.prg
+Bob Driving		ott hartmut	TED	musicians/ott_hartmut/bob_driving.prg
+Bobted		irrlicht project	TED	musicians/irrlicht_project/bobted.prg
+Boldog Szep Napok		ern0	TED	musicians/ern0/boldog_szep_napok.prg
+Bombtank Game		5tarbuck	TED	musicians/5tarbuck/bombtank_game.prg
+Bombtank Instructions		5tarbuck	TED	musicians/5tarbuck/bombtank_instructions.prg
+Bombtank Menu		5tarbuck	TED	musicians/5tarbuck/bombtank_menu.prg
+Bongo		gertz brigitte	TED	musicians/gertz_brigitte/bongo.prg
+Bongo Alternative		gertz brigitte	TED	musicians/gertz_brigitte/bongo_alternative.prg
+Boogie-Woogie Spiders		braintron	TED	musicians/braintron/boogie-woogie_spiders.prg
+Bootskell		inufuto	TED	musicians/inufuto/bootskell.prg
+Booty		moughtin kevin	TED	musicians/moughtin_kevin/booty.prg
+Borgok Kincse		billy yards	TED	musicians/billy_yards/borgok_kincse.prg
+Brainwash 01		elvis	TED	musicians/elvis/brainwash_01.prg
+Brainwash 02		elvis	TED	musicians/elvis/brainwash_02.prg
+Brainwash 03		degauss	TED	musicians/degauss/brainwash_03.prg
+Brainwash 04		degauss	TED	musicians/degauss/brainwash_04.prg
+Brainwash 05		elvis	TED	musicians/elvis/brainwash_05.prg
+Brainwash 06		elvis	TED	musicians/elvis/brainwash_06.prg
+Brainwash 07		elvis	TED	musicians/elvis/brainwash_07.prg
+Break Dance		kardos attila	TED	musicians/kardos_attila/break_dance.prg
+Bridgehead		forster martina	TED	musicians/forster_martina/bridgehead.prg
+Bridgehead Intro		forster martina	TED	musicians/forster_martina/bridgehead_intro.prg
+Bruce Lee		csabo	TED	musicians/csabo/bruce_lee.prg
+Bruce Lee Sounds		csabo	TED	musicians/csabo/bruce_lee_sounds.prg
+Bubble Fusion		collidy	TED	musicians/collidy/bubble_fusion.prg
+Burglar Ending		basic komputer program	TED	musicians/basic_komputer_program/burglar_ending.prg
+Burglar Ingame		basic komputer program	TED	musicians/basic_komputer_program/burglar_ingame.prg
+By The Fireplace		5tarbuck	TED	musicians/5tarbuck/by_the_fireplace.prg
+C16 Shit		heinzi-games	TED	musicians/heinzi-games/c16_shit.prg
+Cacorm		inufuto	TED	musicians/inufuto/cacorm.prg
+Candy Dots Big Fat Megamix		csabo	TED	musicians/csabo/candy_dots_big_fat_megamix.prg
+Cannibal Salsa		fade	TED	musicians/fade/cannibal_salsa.prg
+Captain Slim Ending		csabo	TED	musicians/csabo/captain_slim_ending.prg
+Carted Fast Lane		5tarbuck	TED	musicians/5tarbuck/carted_fast_lane.prg
+Carted Rush		5tarbuck	TED	musicians/5tarbuck/carted_rush.prg
+Cauldron II		csabo	TED	musicians/csabo/cauldron_ii.prg
+Cauldron II Cracktro		csabo	TED	musicians/csabo/cauldron_ii_cracktro.prg
+Cauldron II Intro		csabo	TED	musicians/csabo/cauldron_ii_intro.prg
+Cauldron II Sounds		csabo	TED	musicians/csabo/cauldron_ii_sounds.prg
+Cauldron II Title		csabo	TED	musicians/csabo/cauldron_ii_title.prg
+Cave Fighter		clark richard	TED	musicians/clark_richard/cave_fighter.prg
+Caveman		sherman nick	TED	musicians/sherman_nick/caveman.prg
+Cavit		inufuto	TED	musicians/inufuto/cavit.prg
+Cd3		elvis	TED	musicians/elvis/cd3.prg
+Cd4		csabo	TED	musicians/csabo/cd4.prg
+Cd5 Ati		csabo	TED	musicians/csabo/cd5_ati.prg
+Cd5 Bauknecht		degauss	TED	musicians/degauss/cd5_bauknecht.prg
+Cd5 Bubis		csabo	TED	musicians/csabo/cd5_bubis.prg
+Cd5 Csabo		csabo	TED	musicians/csabo/cd5_csabo.prg
+Cd5 Intro		csabo	TED	musicians/csabo/cd5_intro.prg
+Cd5 Intro 2		gerliczer	TED	musicians/gerliczer/cd5_intro_2.prg
+Cd5 Kichy		csabo	TED	musicians/csabo/cd5_kichy.prg
+Cd5 Luca		luca	TED	musicians/luca/cd5_luca.prg
+Cd5 Ninja		csabo	TED	musicians/csabo/cd5_ninja.prg
+Cd5 Skoro		csabo	TED	musicians/csabo/cd5_skoro.prg
+Cd5 Spektro		csabo	TED	musicians/csabo/cd5_spektro.prg
+Cd5 Tek		degauss	TED	musicians/degauss/cd5_tek.prg
+Cd5 The End		csabo	TED	musicians/csabo/cd5_the_end.prg
+Cd5 Unreal		csabo	TED	musicians/csabo/cd5_unreal.prg
+Championship Wrestling Choose		medgyesi tamas	TED	musicians/medgyesi_tamas/championship_wrestling_choose.prg
+Championship Wrestling Intro		medgyesi tamas	TED	musicians/medgyesi_tamas/championship_wrestling_intro.prg
+Championship Wrestling SFX		medgyesi tamas	TED	musicians/medgyesi_tamas/championship_wrestling_sfx.prg
+Chipy		zill norbert	TED	musicians/zill_norbert/chipy.prg
+Choosing The Wrong Way		tripplep	TED	musicians/tripplep/choosing_the_wrong_way.prg
+Chopped Liver		tobikomi	TED	musicians/tobikomi/chopped_liver.prg
+Christmas Is Awesome 4		fuzzweed	TED	musicians/fuzzweed/christmas_is_awesome_4.prg
+Chromatic Admiration		hoffman	TED	musicians/hoffman/chromatic_admiration.prg
+Chromatic Destination		jammer	TED	musicians/jammer/chromatic_destination.prg
+Chromatic Distortion		hoffman	TED	musicians/hoffman/chromatic_distortion.prg
+Chromatic Distortion Final		hoffman	TED	musicians/hoffman/chromatic_distortion_final.prg
+Clone		csabo	TED	musicians/csabo/clone.prg
+Clone Ingame		csabo	TED	musicians/csabo/clone_ingame.prg
+Clone Title		csabo	TED	musicians/csabo/clone_title.prg
+Club Info 100 Intro		csabo	TED	musicians/csabo/club_info_100_intro.prg
+Club Info 133		csabo	TED	musicians/csabo/club_info_133.prg
+Club Info 136		csabo	TED	musicians/csabo/club_info_136.prg
+Club Info 150		csabo	TED	musicians/csabo/club_info_150.prg
+Cobs Odyssey		tripplep	TED	musicians/tripplep/cobs_odyssey.prg
+Cocom Demo 1		bodor dezso	TED	musicians/bodor_dezso/cocom_demo_1.prg
+Cocom Demo 2		bodor dezso	TED	musicians/bodor_dezso/cocom_demo_2.prg
+Cocom Demo 3		bodor dezso	TED	musicians/bodor_dezso/cocom_demo_3.prg
+Colodrio		csabo	TED	musicians/csabo/colodrio.prg
+Colodrio Remix		csabo	TED	musicians/csabo/colodrio_remix.prg
+Columns Ingame		elvis	TED	musicians/elvis/columns_ingame.prg
+Columns Title		elvis	TED	musicians/elvis/columns_title.prg
+Commodore Minus		squarewave	TED	musicians/squarewave/commodore_minus.prg
+Courage		spektro	TED	musicians/spektro/courage.prg
+Crackers Demo 3 Lod		tom	TED	musicians/tom/crackers_demo_3_lod.prg
+Cracktro 16K		csabo	TED	musicians/csabo/cracktro_16k.prg
+Cracktro 16K 2		csabo	TED	musicians/csabo/cracktro_16k_2.prg
+Cracktro 16K 3		luca	TED	musicians/luca/cracktro_16k_3.prg
+Cracktro 16K 4		luca	TED	musicians/luca/cracktro_16k_4.prg
+Cracky		inufuto	TED	musicians/inufuto/cracky.prg
+Crystalline Skip		funute	TED	musicians/funute/crystalline_skip.prg
+Csillagharcos		ern0	TED	musicians/ern0/csillagharcos.prg
+Daley Thompsons Star Events		galway martin	TED	musicians/galway_martin/daley_thompsons_star_events.prg
+Danger Zone		whittaker david	TED	musicians/whittaker_david/danger_zone.prg
+Danger-Willi Ingame		potsch michael	TED	musicians/potsch_michael/danger-willi_ingame.prg
+De-		collidy	TED	musicians/collidy/de-.prg
+Death Planet		lueneburg bernd	TED	musicians/lueneburg_bernd/death_planet.prg
+Defender Of The Crown V7		sch	TED	musicians/sch/defender_of_the_crown_v7.prg
+Defiance		csabo	TED	musicians/csabo/defiance.prg
+Degauss Player		degauss	TED	musicians/degauss/degauss_player.prg
+Deli Sa		degauss	TED	musicians/degauss/deli_sa.prg
+Delighted		5tarbuck	TED	musicians/5tarbuck/delighted.prg
+Delighted Extended		5tarbuck	TED	musicians/5tarbuck/delighted_extended.prg
+Demo Mine I Part1		kiraly peter	TED	musicians/kiraly_peter/demo_mine_i_part1.prg
+Demo Mine I Part2		gaia	TED	musicians/gaia/demo_mine_i_part2.prg
+Demonok Birodalma		pitecus	TED	musicians/pitecus/demonok_birodalma.prg
+Demonok Birodalma Credits		pitecus	TED	musicians/pitecus/demonok_birodalma_credits.prg
+Demonok Birodalma Intro		pitecus	TED	musicians/pitecus/demonok_birodalma_intro.prg
+Digits Sounds		csabo	TED	musicians/csabo/digits_sounds.prg
+Dingbat		southern shaun	TED	musicians/southern_shaun/dingbat.prg
+Distance		collidy	TED	musicians/collidy/distance.prg
+Dizasterblaster Ingame		southern shaun	TED	musicians/southern_shaun/dizasterblaster_ingame.prg
+Dizasterblaster Title		southern shaun	TED	musicians/southern_shaun/dizasterblaster_title.prg
+Dizzy		ulysses777	TED	musicians/ulysses777/dizzy.prg
+Dizzy II		ulysses777	TED	musicians/ulysses777/dizzy_ii.prg
+Dizzy V		ulysses777	TED	musicians/ulysses777/dizzy_v.prg
+Dk Title		csabo	TED	musicians/csabo/dk_title.prg
+Dodo Ending		hajdu gyula	TED	musicians/hajdu_gyula/dodo_ending.prg
+Domino Deluxe		csabo	TED	musicians/csabo/domino_deluxe.prg
+Donkey Kong Sounds		csabo	TED	musicians/csabo/donkey_kong_sounds.prg
+Dont Take Me For A Mannequin		fade	TED	musicians/fade/dont_take_me_for_a_mannequin.prg
+Dork Dave And The Dirty Trick		misfit	TED	musicians/misfit/dork_dave_and_the_dirty_trick.prg
+Dreamtime 2K17		csabo	TED	musicians/csabo/dreamtime_2k17.prg
+Dreamtime 2K18		csabo	TED	musicians/csabo/dreamtime_2k18.prg
+Drum Mix 3		csabo	TED	musicians/csabo/drum_mix_3.prg
+Dudaorru Patric Ingame		kabo	TED	musicians/kabo/dudaorru_patric_ingame.prg
+Dudaorru Patric Intro		kabo	TED	musicians/kabo/dudaorru_patric_intro.prg
+Dudaorru Patric Title		kabo	TED	musicians/kabo/dudaorru_patric_title.prg
+Easy-Going		5tarbuck	TED	musicians/5tarbuck/easy-going.prg
+Egon		grueber sebastian	TED	musicians/grueber_sebastian/egon.prg
+Ehes Kigyo		markus csaba	TED	musicians/markus_csaba/ehes_kigyo.prg
+Elfmeter-Schiessen		potsch michael	TED	musicians/potsch_michael/elfmeter-schiessen.prg
+Emerald Mine		klawer oliver	TED	musicians/klawer_oliver/emerald_mine.prg
+Emerald Mine 2		forster martina	TED	musicians/forster_martina/emerald_mine_2.prg
+Evening		5tarbuck	TED	musicians/5tarbuck/evening.prg
+Every Coin Has Two Sides		fade	TED	musicians/fade/every_coin_has_two_sides.prg
 Excited		5tarbuck	TED	musicians/5tarbuck/excited.prg
+Fairlight Petscii Intro		mermaid	TED	musicians/mermaid/fairlight_petscii_intro.prg
+Fangry		delest	TED	musicians/delest/fangry.prg
+Fast		basic komputer program	TED	musicians/basic_komputer_program/fast.prg
+Fight In The Desert		ott hartmut	TED	musicians/ott_hartmut/fight_in_the_desert.prg
+First Music		ern0	TED	musicians/ern0/first_music.prg
+First Tune 01		elvis	TED	musicians/elvis/first_tune_01.prg
+First Tune 02		elvis	TED	musicians/elvis/first_tune_02.prg
+Firsta		corpsicle	TED	musicians/corpsicle/firsta.prg
+Fixed Points		hermit	TED	musicians/hermit/fixed_points.prg
+Flashback		csabo	TED	musicians/csabo/flashback.prg
+Flickerfish		4-mat	TED	musicians/4-mat/flickerfish.prg
+Flopp		csirmaz gyula	TED	musicians/csirmaz_gyula/flopp.prg
+Flottenmanoever		steiner helge	TED	musicians/steiner_helge/flottenmanoever.prg
+Flowing		delest	TED	musicians/delest/flowing.prg
+Foggy Days		big bear	TED	musicians/big_bear/foggy_days.prg
+Formula 1 Simulator		southern shaun	TED	musicians/southern_shaun/formula_1_simulator.prg
+Freescaped		luca	TED	musicians/luca/freescaped.prg
+Freestyle 1		csonti	TED	musicians/csonti/freestyle_1.prg
+Freestyle 2		csonti	TED	musicians/csonti/freestyle_2.prg
+Fresh Air		goulart raphael	TED	musicians/goulart_raphael/fresh_air.prg
+Frog Systems		ferro roberto	TED	musicians/ferro_roberto/frog_systems.prg
+Fukwitteddy		sire	TED	musicians/sire/fukwitteddy.prg
+G-Man		whittaker david	TED	musicians/whittaker_david/g-man.prg
+Gate Of Power		csabo	TED	musicians/csabo/gate_of_power.prg
+Genius 2 Jingles		twinspirit32	TED	musicians/twinspirit32/genius_2_jingles.prg
+Genius 2 Level1		twinspirit32	TED	musicians/twinspirit32/genius_2_level1.prg
+Genius 2 Level2		twinspirit32	TED	musicians/twinspirit32/genius_2_level2.prg
+Genius 2 Level3		twinspirit32	TED	musicians/twinspirit32/genius_2_level3.prg
+Genius 2 Level4		twinspirit32	TED	musicians/twinspirit32/genius_2_level4.prg
+Genius 2 Level5		twinspirit32	TED	musicians/twinspirit32/genius_2_level5.prg
+Genius 2 Level6		twinspirit32	TED	musicians/twinspirit32/genius_2_level6.prg
+Genius 2 Level7		twinspirit32	TED	musicians/twinspirit32/genius_2_level7.prg
+Genius 2 Level8		twinspirit32	TED	musicians/twinspirit32/genius_2_level8.prg
+Genius 2 Level81		twinspirit32	TED	musicians/twinspirit32/genius_2_level81.prg
+Genius 3 Jingles		twinspirit32	TED	musicians/twinspirit32/genius_3_jingles.prg
+Genius 3 Level1		twinspirit32	TED	musicians/twinspirit32/genius_3_level1.prg
+Genius 3 Level2		twinspirit32	TED	musicians/twinspirit32/genius_3_level2.prg
+Genius 3 Level3		twinspirit32	TED	musicians/twinspirit32/genius_3_level3.prg
+Genius 3 Level4		twinspirit32	TED	musicians/twinspirit32/genius_3_level4.prg
+Genius 3 Level5		twinspirit32	TED	musicians/twinspirit32/genius_3_level5.prg
+Genius 3 Level6		twinspirit32	TED	musicians/twinspirit32/genius_3_level6.prg
+Genius 3 Level7		twinspirit32	TED	musicians/twinspirit32/genius_3_level7.prg
+Genius 3 Level8		twinspirit32	TED	musicians/twinspirit32/genius_3_level8.prg
+Genius 3 Level81		twinspirit32	TED	musicians/twinspirit32/genius_3_level81.prg
+Genius Jingles		twinspirit32	TED	musicians/twinspirit32/genius_jingles.prg
+Genius Level1		twinspirit32	TED	musicians/twinspirit32/genius_level1.prg
+Genius Level2		twinspirit32	TED	musicians/twinspirit32/genius_level2.prg
+Genius Level3		twinspirit32	TED	musicians/twinspirit32/genius_level3.prg
+Genius Level4		twinspirit32	TED	musicians/twinspirit32/genius_level4.prg
+Genius Level5		twinspirit32	TED	musicians/twinspirit32/genius_level5.prg
+Genius Level6		twinspirit32	TED	musicians/twinspirit32/genius_level6.prg
+Genius Level7		twinspirit32	TED	musicians/twinspirit32/genius_level7.prg
+Genius Level8		twinspirit32	TED	musicians/twinspirit32/genius_level8.prg
+Genius Level81		twinspirit32	TED	musicians/twinspirit32/genius_level81.prg
+Genius Release 04 Jingles		twinspirit32	TED	musicians/twinspirit32/genius_release_04_jingles.prg
+Genius Release 04 Level1		twinspirit32	TED	musicians/twinspirit32/genius_release_04_level1.prg
+Genius Release 04 Level2		twinspirit32	TED	musicians/twinspirit32/genius_release_04_level2.prg
+Genius Release 04 Level3		twinspirit32	TED	musicians/twinspirit32/genius_release_04_level3.prg
+Genius Release 04 Level4		twinspirit32	TED	musicians/twinspirit32/genius_release_04_level4.prg
+Genius Release 04 Level5		twinspirit32	TED	musicians/twinspirit32/genius_release_04_level5.prg
+Genius Release 04 Level6		twinspirit32	TED	musicians/twinspirit32/genius_release_04_level6.prg
+Genius Release 04 Level7		twinspirit32	TED	musicians/twinspirit32/genius_release_04_level7.prg
+Genius Release 04 Level8		twinspirit32	TED	musicians/twinspirit32/genius_release_04_level8.prg
+Genius Release 04 Level81		twinspirit32	TED	musicians/twinspirit32/genius_release_04_level81.prg
+German Xmas 1992		elvis	TED	musicians/elvis/german_xmas_1992.prg
+Get It		csabo	TED	musicians/csabo/get_it.prg
+Ggg		tripplep	TED	musicians/tripplep/ggg.prg
+Ghost Town Usa		mcinnis stacy	TED	musicians/mcinnis_stacy/ghost_town_usa.prg
+Giana Sisters		csabo	TED	musicians/csabo/giana_sisters.prg
+Giana Sisters Remix		csabo	TED	musicians/csabo/giana_sisters_remix.prg
+Giana Sisters Title		csabo	TED	musicians/csabo/giana_sisters_title.prg
+Gigantoo		delest	TED	musicians/delest/gigantoo.prg
+Going Back		kleeder	TED	musicians/kleeder/going_back.prg
+Good Ol Fashioned North Korean Necromancy		fade	TED	musicians/fade/good_ol_fashioned_north_korean_necromancy.prg
+Goose Grinder		chabee	TED	musicians/chabee/goose_grinder.prg
+Gravity Boy		csabo	TED	musicians/csabo/gravity_boy.prg
+Gravity Boy Intro		csabo	TED	musicians/csabo/gravity_boy_intro.prg
+Greased Lightning		5tarbuck	TED	musicians/5tarbuck/greased_lightning.prg
+Gridiron		stinaris	TED	musicians/stinaris/gridiron.prg
+Gridiron V1 1		stinaris	TED	musicians/stinaris/gridiron_v1_1.prg
+Gridiron V1 2		stinaris	TED	musicians/stinaris/gridiron_v1_2.prg
+Gridtrap		delves mike	TED	musicians/delves_mike/gridtrap.prg
+Groove		blast brothers	TED	musicians/blast_brothers/groove.prg
+Grooving Gnome		5tarbuck	TED	musicians/5tarbuck/grooving_gnome.prg
+Gunfright		cross saul	TED	musicians/cross_saul/gunfright.prg
+Guntus		inufuto	TED	musicians/inufuto/guntus.prg
+Harvey Headbanger		moughtin kevin	TED	musicians/moughtin_kevin/harvey_headbanger.prg
+Haunted House		jonkaruzu	TED	musicians/jonkaruzu/haunted_house.prg
+Have Yourself A Merry Little Christmas		5tarbuck	TED	musicians/5tarbuck/have_yourself_a_merry_little_christmas.prg
+Haziasan		degauss	TED	musicians/degauss/haziasan.prg
+Hcs Cracktro		csabo	TED	musicians/csabo/hcs_cracktro.prg
+Hcs Cracktro 2025		csabo	TED	musicians/csabo/hcs_cracktro_2025.prg
+Heartlight		charlemagne	TED	musicians/charlemagne/heartlight.prg
+Heebie Jeebies		hall stuart	TED	musicians/hall_stuart/heebie_jeebies.prg
+Hektik		ellis martin	TED	musicians/ellis_martin/hektik.prg
+Helix		akbiyik hakan	TED	musicians/akbiyik_hakan/helix.prg
+Hercules Redux		dmx87	TED	musicians/dmx87/hercules_redux.prg
+Hes Not A Diver		csabo	TED	musicians/csabo/hes_not_a_diver.prg
+Hexaeder		bozsik istvan	TED	musicians/bozsik_istvan/hexaeder.prg
+Hexaeder Ending		bozsik istvan	TED	musicians/bozsik_istvan/hexaeder_ending.prg
+Holly Jolly Xmas		5tarbuck	TED	musicians/5tarbuck/holly_jolly_xmas.prg
+Hollywood Poker		gehrmann holger	TED	musicians/gehrmann_holger/hollywood_poker.prg
+Homeogene		chabee	TED	musicians/chabee/homeogene.prg
+Hopman		inufuto	TED	musicians/inufuto/hopman.prg
+Hoseng Sa		degauss	TED	musicians/degauss/hoseng_sa.prg
+Hugohunt		engel jens	TED	musicians/engel_jens/hugohunt.prg
+Hustler		cavanagh damien	TED	musicians/cavanagh_damien/hustler.prg
+Hutlen		tom	TED	musicians/tom/hutlen.prg
+Hyperion		tlc	TED	musicians/tlc/hyperion.prg
+Hypnotic Caves		shelmie	TED	musicians/shelmie/hypnotic_caves.prg
+I Licke You		hermit	TED	musicians/hermit/i_licke_you.prg
+I Love Theodore Very Much		amelia	TED	musicians/amelia/i_love_theodore_very_much.prg
+I Should Be So Lucky		ern0	TED	musicians/ern0/i_should_be_so_lucky.prg
+Icecream		mik	TED	musicians/mik/icecream.prg
+Icicle Works		turner doug	TED	musicians/turner_doug/icicle_works.prg
+Icicle Works Xmas		csabo	TED	musicians/csabo/icicle_works_xmas.prg
+Idoutazo Ingame		kabo	TED	musicians/kabo/idoutazo_ingame.prg
+Idoutazo Title		kabo	TED	musicians/kabo/idoutazo_title.prg
+Igaku 1		spiikki	TED	musicians/spiikki/igaku_1.prg
+Igaku 2		spiikki	TED	musicians/spiikki/igaku_2.prg
+Ikaruga		4-mat	TED	musicians/4-mat/ikaruga.prg
+Ikaruga V2		4-mat (unreleased)	TED	musicians/4-mat/unreleased/ikaruga_v2.prg
+Impetus		inufuto	TED	musicians/inufuto/impetus.prg
+Impossible Mission +4 Sounds		csabo	TED	musicians/csabo/impossible_mission_+4_sounds.prg
+In Da House		aki	TED	musicians/aki/in_da_house.prg
+Insted		response	TED	musicians/response/insted.prg
+Intermusik		hickel reiner	TED	musicians/hickel_reiner/intermusik.prg
+Interrupt-Sound		panz olaf	TED	musicians/panz_olaf/interrupt-sound.prg
+Into The Eagles Nest		csabo	TED	musicians/csabo/into_the_eagles_nest.prg
+Into The Eagles Nest Sounds		csabo	TED	musicians/csabo/into_the_eagles_nest_sounds.prg
+Invade-A-Load		ulysses777	TED	musicians/ulysses777/invade-a-load.prg
+Its So Much Fun		kleeder	TED	musicians/kleeder/its_so_much_fun.prg
+Jackdance		spektro	TED	musicians/spektro/jackdance.prg
+Jail Break Start		gannon martin j	TED	musicians/gannon_martin_j/jail_break_start.prg
+Jail Break Title		gannon martin j	TED	musicians/gannon_martin_j/jail_break_title.prg
+Japan Sea C16		sasa soft	TED	musicians/sasa_soft/japan_sea_c16.prg
+Jerry 2		mucsi	TED	musicians/mucsi/jerry_2.prg
+Jetbrix		southern shaun	TED	musicians/southern_shaun/jetbrix.prg
+Jobbatro		csabo	TED	musicians/csabo/jobbatro.prg
+Jogeirs-Betl		5tarbuck	TED	musicians/5tarbuck/jogeirs-betl.prg
+Jolly Good Fellow		fresen tom	TED	musicians/fresen_tom/jolly_good_fellow.prg
+Jumbo		ko-ko	TED	musicians/ko-ko/jumbo.prg
+Kaktus		cotton brian	TED	musicians/cotton_brian/kaktus.prg
+Karacsony		pigmy	TED	musicians/pigmy/karacsony.prg
+Karate		medgyesi tamas	TED	musicians/medgyesi_tamas/karate.prg
+Karate Game		medgyesi tamas	TED	musicians/medgyesi_tamas/karate_game.prg
+Karate Intro		medgyesi tamas	TED	musicians/medgyesi_tamas/karate_intro.prg
+Karate King Intro-Demo		woelk robert	TED	musicians/woelk_robert/karate_king_intro-demo.prg
+Karting Grand Prix 101 		luca	TED	musicians/luca/karting_grand_prix_101_.prg
+Kazik And The Ghosts		braintron	TED	musicians/braintron/kazik_and_the_ghosts.prg
+Kikstart		southern shaun	TED	musicians/southern_shaun/kikstart.prg
+Kikstart Messe-Soft		meissner michael	TED	musicians/meissner_michael/kikstart_messe-soft.prg
+King Of Kings		ott hartmut	TED	musicians/ott_hartmut/king_of_kings.prg
+Kinky Kinski		degauss	TED	musicians/degauss/kinky_kinski.prg
+Kitaros Silk Road		gerliczer	TED	musicians/gerliczer/kitaros_silk_road.prg
+Kitores		csirmaz gyula	TED	musicians/csirmaz_gyula/kitores.prg
+Knaeckewhaecked		lint huffer	TED	musicians/lint_huffer/knaeckewhaecked.prg
+Koldokbolt		hermit	TED	musicians/hermit/koldokbolt.prg
+Kraftwerk Sa		degauss	TED	musicians/degauss/kraftwerk_sa.prg
+Kresz +4		medgyesi tamas	TED	musicians/medgyesi_tamas/kresz_+4.prg
+Kutato		tfss	TED	musicians/tfss/kutato.prg
+Kye		cobbpg	TED	musicians/cobbpg/kye.prg
+Labyrinthitis Ingame		billy yards	TED	musicians/billy_yards/labyrinthitis_ingame.prg
+Labyrinthitis Title		billy yards	TED	musicians/billy_yards/labyrinthitis_title.prg
+Lady Tut Sounds		csabo	TED	musicians/csabo/lady_tut_sounds.prg
+Lady Tut Title		csabo	TED	musicians/csabo/lady_tut_title.prg
+Lamento 1		5tarbuck	TED	musicians/5tarbuck/lamento_1.prg
+Lancess Priya		dr terrorz	TED	musicians/dr_terrorz/lancess_priya.prg
+Last Christmas		csabo	TED	musicians/csabo/last_christmas.prg
+Laza!		southern shaun	TED	musicians/southern_shaun/laza!.prg
+Leaper		gannon martin j	TED	musicians/gannon_martin_j/leaper.prg
+Leapin Louie		sibly mark	TED	musicians/sibly_mark/leapin_louie.prg
+Legyel Te Is Burzsuj Ending 2		delest	TED	musicians/delest/legyel_te_is_burzsuj_ending_2.prg
+Legyel Te Is Burzsuj Select Language		delest	TED	musicians/delest/legyel_te_is_burzsuj_select_language.prg
+Lemmings		csabo	TED	musicians/csabo/lemmings.prg
+Lift Inufuto		inufuto	TED	musicians/inufuto/lift_inufuto.prg
+Llama Polka		tobikomi	TED	musicians/tobikomi/llama_polka.prg
+Lod Is Back		csabo	TED	musicians/csabo/lod_is_back.prg
+Lodplay Old		csabo	TED	musicians/csabo/lodplay_old.prg
+Lodplay V1 Demo		luca	TED	musicians/luca/lodplay_v1_demo.prg
+Lodplay2 Demo		csabo	TED	musicians/csabo/lodplay2_demo.prg
+Look		4-mat (worktunes)	TED	musicians/4-mat/worktunes/look.prg
+Look Ted I Learneded A New Thing!		defensemechanism	TED	musicians/defensemechanism/look_ted_i_learneded_a_new_thing!.prg
+Love Bond		chabee	TED	musicians/chabee/love_bond.prg
+Lunar Blitz		4-mat	TED	musicians/4-mat/lunar_blitz.prg
+Lunchtimeted		delest	TED	musicians/delest/lunchtimeted.prg
+Lykia Battle		5tarbuck	TED	musicians/5tarbuck/lykia_battle.prg
+Lykia Boss		5tarbuck	TED	musicians/5tarbuck/lykia_boss.prg
+Lykia Chapel		5tarbuck	TED	musicians/5tarbuck/lykia_chapel.prg
+Lykia City		5tarbuck	TED	musicians/5tarbuck/lykia_city.prg
+Lykia Crypt		5tarbuck	TED	musicians/5tarbuck/lykia_crypt.prg
+Lykia Death Continue		5tarbuck	TED	musicians/5tarbuck/lykia_death_continue.prg
+Lykia Dungeon 1		5tarbuck	TED	musicians/5tarbuck/lykia_dungeon_1.prg
+Lykia Dungeon 2		5tarbuck	TED	musicians/5tarbuck/lykia_dungeon_2.prg
+Lykia Enchanted		5tarbuck	TED	musicians/5tarbuck/lykia_enchanted.prg
+Lykia Ending		5tarbuck	TED	musicians/5tarbuck/lykia_ending.prg
+Lykia Final Dungeon		5tarbuck	TED	musicians/5tarbuck/lykia_final_dungeon.prg
+Lykia House-Calm Theme		5tarbuck	TED	musicians/5tarbuck/lykia_house-calm_theme.prg
+Lykia House-Shop		5tarbuck	TED	musicians/5tarbuck/lykia_house-shop.prg
+Lykia House-Theme3		5tarbuck	TED	musicians/5tarbuck/lykia_house-theme3.prg
+Lykia Intro Part1		5tarbuck	TED	musicians/5tarbuck/lykia_intro_part1.prg
+Lykia Intro Part2		5tarbuck	TED	musicians/5tarbuck/lykia_intro_part2.prg
+Lykia Map		5tarbuck	TED	musicians/5tarbuck/lykia_map.prg
+Lykia Mode7 Sequence		5tarbuck	TED	musicians/5tarbuck/lykia_mode7_sequence.prg
+Lykia Night		5tarbuck	TED	musicians/5tarbuck/lykia_night.prg
+Lykia Overworld		5tarbuck	TED	musicians/5tarbuck/lykia_overworld.prg
+Lykia Shadow City		5tarbuck	TED	musicians/5tarbuck/lykia_shadow_city.prg
+Lykia Shadow World-Map		5tarbuck	TED	musicians/5tarbuck/lykia_shadow_world-map.prg
+Lykia The Well		5tarbuck	TED	musicians/5tarbuck/lykia_the_well.prg
+Lykia Titelscreen		5tarbuck	TED	musicians/5tarbuck/lykia_titelscreen.prg
+Lykia Victory Jingle		5tarbuck	TED	musicians/5tarbuck/lykia_victory_jingle.prg
+Lykia Woods		5tarbuck	TED	musicians/5tarbuck/lykia_woods.prg
+Lykia Writer		5tarbuck	TED	musicians/5tarbuck/lykia_writer.prg
+Mad Mamba		janssen dirk	TED	musicians/janssen_dirk/mad_mamba.prg
+Mad Maze		axel computing	TED	musicians/axel_computing/mad_maze.prg
+Mad Pod Race		csabo	TED	musicians/csabo/mad_pod_race.prg
+Magical Llama		tobikomi	TED	musicians/tobikomi/magical_llama.prg
 Majesty Of Sprites 1-1 Forest Of Dreams		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_1-1_forest_of_dreams.prg
 Majesty Of Sprites 1-2 The Clearing		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_1-2_the_clearing.prg
 Majesty Of Sprites 2-1 Cloud Castle		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_2-1_cloud_castle.prg
 Majesty Of Sprites 2-2 Village Of Skies		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_2-2_village_of_skies.prg
 Majesty Of Sprites 3-1 Prehistoric Isle		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_3-1_prehistoric_isle.prg
 Majesty Of Sprites 3-2 Danger Caves		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_3-2_danger_caves.prg
+Majesty Of Sprites 4-1 Spacecraft		luca	TED	musicians/luca/majesty_of_sprites_4-1_spacecraft.prg
+Majesty Of Sprites 4-2 The Corridor		luca	TED	musicians/luca/majesty_of_sprites_4-2_the_corridor.prg
 Majesty Of Sprites 5-1 Another Planet		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_5-1_another_planet.prg
 Majesty Of Sprites 5-2 Katy Hurry Up		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_5-2_katy_hurry_up.prg
 Majesty Of Sprites 6 Skylight Tales		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_6_skylight_tales.prg
+Majesty Of Sprites 7 Diamond Caves		degauss	TED	musicians/degauss/majesty_of_sprites_7_diamond_caves.prg
 Majesty Of Sprites 8 Where Is Clara		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_8_where_is_clara.prg
+Majesty Of Sprites Ending		degauss	TED	musicians/degauss/majesty_of_sprites_ending.prg
 Majesty Of Sprites Game Over		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_game_over.prg
 Majesty Of Sprites Hall Of Fame		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_hall_of_fame.prg
+Majesty Of Sprites Introtune		degauss	TED	musicians/degauss/majesty_of_sprites_introtune.prg
 Majesty Of Sprites Level		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_level.prg
+Majesty Of Sprites Loading		degauss	TED	musicians/degauss/majesty_of_sprites_loading.prg
 Majesty Of Sprites The Story		5tarbuck	TED	musicians/5tarbuck/majesty_of_sprites_the_story.prg
+Major Blink Deluxe		csabo	TED	musicians/csabo/major_blink_deluxe.prg
+Maniac Slider		shelmie	TED	musicians/shelmie/maniac_slider.prg
+Maniax		klawer oliver	TED	musicians/klawer_oliver/maniax.prg
+Manipulator		csabo	TED	musicians/csabo/manipulator.prg
+Manomania		boomby	TED	musicians/boomby/manomania.prg
+Marching Around With Beary		quirby64	TED	musicians/quirby64/marching_around_with_beary.prg
+Marci A Benzinkutas		boomby	TED	musicians/boomby/marci_a_benzinkutas.prg
+Master Mind Ice		elvis	TED	musicians/elvis/master_mind_ice.prg
+Matte Black		3-up	TED	musicians/3-up/matte_black.prg
+Maythe4S		5tarbuck	TED	musicians/5tarbuck/maythe4s.prg
+Mazy		inufuto	TED	musicians/inufuto/mazy.prg
+Mazy2		inufuto	TED	musicians/inufuto/mazy2.prg
+Megabolts		cross stuart	TED	musicians/cross_stuart/megabolts.prg
+Megacom Anleitung		adling ralf	TED	musicians/adling_ralf/megacom_anleitung.prg
+Melon V1		4-mat (worktunes)	TED	musicians/4-mat/worktunes/melon_v1.prg
+Memento		csabo	TED	musicians/csabo/memento.prg
+Memoria		csernak gergely	TED	musicians/csernak_gergely/memoria.prg
+Meno Jeno		boomby	TED	musicians/boomby/meno_jeno.prg
+Merk-As		hanoldt michael	TED	musicians/hanoldt_michael/merk-as.prg
+Merry Christmas 2015		csabo	TED	musicians/csabo/merry_christmas_2015.prg
+Merry Christmas 2016		csabo	TED	musicians/csabo/merry_christmas_2016.prg
+Merry Christmas 2017		csabo	TED	musicians/csabo/merry_christmas_2017.prg
+Merry Christmas 2024		csabo	TED	musicians/csabo/merry_christmas_2024.prg
+Metamerism		degauss	TED	musicians/degauss/metamerism.prg
+Mieyen		inufuto	TED	musicians/inufuto/mieyen.prg
+Minedetector		charlemagne	TED	musicians/charlemagne/minedetector.prg
+Miner 410Er		panz olaf	TED	musicians/panz_olaf/miner_410er.prg
+Mini Ik Interpretation		csabo	TED	musicians/csabo/mini_ik_interpretation.prg
+Minipedes		horwood tony	TED	musicians/horwood_tony/minipedes.prg
+Mms Xmas 2009		csabo	TED	musicians/csabo/mms_xmas_2009.prg
+Mob City		stinaris	TED	musicians/stinaris/mob_city.prg
+Molecule Man +4		csabo	TED	musicians/csabo/molecule_man_+4.prg
+More Than Business		3-up	TED	musicians/3-up/more_than_business.prg
+Mozaik		gulyas laszlo	TED	musicians/gulyas_laszlo/mozaik.prg
+Mozaik Hrh		hrh	TED	musicians/hrh/mozaik_hrh.prg
+Mr Angry Dude		misfit	TED	musicians/misfit/mr_angry_dude.prg
+Mr Mind		csabo	TED	musicians/csabo/mr_mind.prg
+Mr Mind SFX		csabo	TED	musicians/csabo/mr_mind_sfx.prg
+Mr Mind Title		csabo	TED	musicians/csabo/mr_mind_title.prg
+Mr Puniverse		kelly tony	TED	musicians/kelly_tony/mr_puniverse.prg
+Multisp4		4-mat (worktunes)	TED	musicians/4-mat/worktunes/multisp4.prg
+Multispd		4-mat (worktunes)	TED	musicians/4-mat/worktunes/multispd.prg
+Murphology		hermit	TED	musicians/hermit/murphology.prg
+Music Maze		braintron	TED	musicians/braintron/music_maze.prg
+Musik-Compiler Demo		suer martin	TED	musicians/suer_martin/musik-compiler_demo.prg
+Musikus Demo		meyer bernd	TED	musicians/meyer_bernd/musikus_demo.prg
+Muzax 1		hoffmann markus	TED	musicians/hoffmann_markus/muzax_1.prg
+My Beautiful Network		tobikomi	TED	musicians/tobikomi/my_beautiful_network.prg
+My First Electric Dildo But It Was Broken And Didnt Reach		zlew	TED	musicians/zlew/my_first_electric_dildo_but_it_was_broken_and_didnt_reach.prg
+Mysterious Mansion		kleeder	TED	musicians/kleeder/mysterious_mansion.prg
+Natale 1		jackson	TED	musicians/jackson/natale_1.prg
+Natale 2		jackson	TED	musicians/jackson/natale_2.prg
+Nautilus		ern0	TED	musicians/ern0/nautilus.prg
+Nautilus Intro		ern0	TED	musicians/ern0/nautilus_intro.prg
+Nest Of Fleas SFX		billy yards	TED	musicians/billy_yards/nest_of_fleas_sfx.prg
+Nest Of Fleas Title		billy yards	TED	musicians/billy_yards/nest_of_fleas_title.prg
+Neuras		inufuto	TED	musicians/inufuto/neuras.prg
+New Life		ern0	TED	musicians/ern0/new_life.prg
+Newday		tlc	TED	musicians/tlc/newday.prg
+Next Time Id Like To Swim With The Toxic Jellyfishes Please		kleeder	TED	musicians/kleeder/next_time_id_like_to_swim_with_the_toxic_jellyfishes_please.prg
+Nike Hawk		bentivoglio carlo alberto	TED	musicians/bentivoglio_carlo_alberto/nike_hawk.prg
+Nitrofurcore As Usual		nitrofurano	TED	musicians/nitrofurano/nitrofurcore_as_usual.prg
+No Extensions		irrlicht project	TED	musicians/irrlicht_project/no_extensions.prg
+Nothing		ern0	TED	musicians/ern0/nothing.prg
+Notizen Aus Der Provinz		degauss	TED	musicians/degauss/notizen_aus_der_provinz.prg
+Nu Pogodi! Theme		csabo	TED	musicians/csabo/nu_pogodi!_theme.prg
+Nyan Cat		csabo	TED	musicians/csabo/nyan_cat.prg
+Nyan Cat Digi		csabo	TED	musicians/csabo/nyan_cat_digi.prg
+Old Xmas Joke Go Petscii		rotteroy	TED	musicians/rotteroy/old_xmas_joke_go_petscii.prg
+Olympic Skier		southern shaun	TED	musicians/southern_shaun/olympic_skier.prg
+One Man And His Droid		sexton martin	TED	musicians/sexton_martin/one_man_and_his_droid.prg
+Osotos		inufuto	TED	musicians/inufuto/osotos.prg
+Oszkar A Lovag		bartha sandor	TED	musicians/bartha_sandor/oszkar_a_lovag.prg
+Out On A Limb		manthorpe sam	TED	musicians/manthorpe_sam/out_on_a_limb.prg
+Outrun II Sb		csabo	TED	musicians/csabo/outrun_ii_sb.prg
+Overcast		csabo	TED	musicians/csabo/overcast.prg
+Pac Man SFX		apos	TED	musicians/apos/pac_man_sfx.prg
+Pac Man Title		apos	TED	musicians/apos/pac_man_title.prg
+Pac-Pac		csabo	TED	musicians/csabo/pac-pac.prg
+Pac-Pac Ingame		csabo	TED	musicians/csabo/pac-pac_ingame.prg
+Pac-Pac Title		csabo	TED	musicians/csabo/pac-pac_title.prg
+Pacmania		southern shaun	TED	musicians/southern_shaun/pacmania.prg
+Pancho		barthelemy olivier	TED	musicians/barthelemy_olivier/pancho.prg
+Pandacock		pandavova	TED	musicians/pandavova/pandacock.prg
+Paratroopers Fall Again!		csabo	TED	musicians/csabo/paratroopers_fall_again!.prg
+Patt Ball		herman	TED	musicians/herman/patt_ball.prg
+Pellucid Effluvium		andy	TED	musicians/andy/pellucid_effluvium.prg
+Pengo Cutscene		moldi	TED	musicians/moldi/pengo_cutscene.prg
+Pengo Ingame		moldi	TED	musicians/moldi/pengo_ingame.prg
+Pentagram		cross saul	TED	musicians/cross_saul/pentagram.prg
+Perfect Visions 2		csabo	TED	musicians/csabo/perfect_visions_2.prg
+Perfect Visions 3		csabo	TED	musicians/csabo/perfect_visions_3.prg
+Perfecto		delest	TED	musicians/delest/perfecto.prg
+Pets Rescue Boss		luca	TED	musicians/luca/pets_rescue_boss.prg
+Pets Rescue Castle		degauss	TED	musicians/degauss/pets_rescue_castle.prg
+Pets Rescue Combo Jingles		luca	TED	musicians/luca/pets_rescue_combo_jingles.prg
+Pets Rescue Dungeon Underground		5tarbuck	TED	musicians/5tarbuck/pets_rescue_dungeon_underground.prg
+Pets Rescue Egypt		5tarbuck	TED	musicians/5tarbuck/pets_rescue_egypt.prg
+Pets Rescue Forest		5tarbuck	TED	musicians/5tarbuck/pets_rescue_forest.prg
+Pets Rescue Game SFX		mad	TED	musicians/mad/pets_rescue_game_sfx.prg
+Pets Rescue Gameover		luca	TED	musicians/luca/pets_rescue_gameover.prg
+Pets Rescue Highscore		5tarbuck	TED	musicians/5tarbuck/pets_rescue_highscore.prg
+Pets Rescue Intro		luca	TED	musicians/luca/pets_rescue_intro.prg
+Pets Rescue Laboratory		5tarbuck	TED	musicians/5tarbuck/pets_rescue_laboratory.prg
+Pets Rescue Outro		luca	TED	musicians/luca/pets_rescue_outro.prg
+Pets Rescue Sewer		5tarbuck	TED	musicians/5tarbuck/pets_rescue_sewer.prg
+Pets Rescue Shadow		degauss	TED	musicians/degauss/pets_rescue_shadow.prg
+Pets Rescue Space		luca	TED	musicians/luca/pets_rescue_space.prg
+Pets Rescue Swamp		5tarbuck	TED	musicians/5tarbuck/pets_rescue_swamp.prg
+Pets Rescue Title Tune		degauss	TED	musicians/degauss/pets_rescue_title_tune.prg
+Pets Rescue Treetop		5tarbuck	TED	musicians/5tarbuck/pets_rescue_treetop.prg
+Pets Rescue Underwater		5tarbuck	TED	musicians/5tarbuck/pets_rescue_underwater.prg
+Pets Rescue Winter Day		5tarbuck	TED	musicians/5tarbuck/pets_rescue_winter_day.prg
+Pets Rescue Winter Night		5tarbuck	TED	musicians/5tarbuck/pets_rescue_winter_night.prg
+Phantom		waugh ian	TED	musicians/waugh_ian/phantom.prg
+Phoenix		braintron	TED	musicians/braintron/phoenix.prg
+Phoenix Recovered		sorbas2020	TED	musicians/sorbas2020/phoenix_recovered.prg
+Phosphorizer		hoffman	TED	musicians/hoffman/phosphorizer.prg
+Piccy Demo		kichy	TED	musicians/kichy/piccy_demo.prg
+Pilot X		engel jens	TED	musicians/engel_jens/pilot_x.prg
+Pimp My Part		csabo	TED	musicians/csabo/pimp_my_part.prg
+Planet Search		pick simon	TED	musicians/pick_simon/planet_search.prg
+Plink		csabo	TED	musicians/csabo/plink.prg
+Plink Hidden Greets		csabo	TED	musicians/csabo/plink_hidden_greets.prg
+Plus 44		csabo	TED	musicians/csabo/plus_44.prg
+Plus4 Xl Part 1		csabo	TED	musicians/csabo/plus4_xl_part_1.prg
+Plus4 Xl Part 2		csabo	TED	musicians/csabo/plus4_xl_part_2.prg
+Pod		southern shaun	TED	musicians/southern_shaun/pod.prg
+Pogo Pete		strassen patrick	TED	musicians/strassen_patrick/pogo_pete.prg
+Pop-Business		flor matthias	TED	musicians/flor_matthias/pop-business.prg
+Power-Ball Gameover		wirbelauer peter	TED	musicians/wirbelauer_peter/power-ball_gameover.prg
+Power-Ball Title		wirbelauer peter	TED	musicians/wirbelauer_peter/power-ball_title.prg
+Prince Of Persia		csabo	TED	musicians/csabo/prince_of_persia.prg
+Prince Of Persia Cutscenes		csabo	TED	musicians/csabo/prince_of_persia_cutscenes.prg
+Prince Of Persia Embrace		csabo	TED	musicians/csabo/prince_of_persia_embrace.prg
+Prince Of Persia Princess		csabo	TED	musicians/csabo/prince_of_persia_princess.prg
+Prince Of Persia Sounds		csabo	TED	musicians/csabo/prince_of_persia_sounds.prg
+Project Wipeout 02		5tarbuck	TED	musicians/5tarbuck/project_wipeout_02.prg
+Punchy		parton evan	TED	musicians/parton_evan/punchy.prg
+Puppys		aimetti paolo	TED	musicians/aimetti_paolo/puppys.prg
+Purple Turtles		moore richard	TED	musicians/moore_richard/purple_turtles.prg
+Pyramid		eagle-soft	TED	musicians/eagle-soft/pyramid.prg
+Q-Bert		gichtbrock bernd	TED	musicians/gichtbrock_bernd/q-bert.prg
+Quadrillion		csabo	TED	musicians/csabo/quadrillion.prg
+Radar Rat Race		csabo	TED	musicians/csabo/radar_rat_race.prg
+Radiant		4-mat	TED	musicians/4-mat/radiant.prg
+Radiant V2		4-mat (unreleased)	TED	musicians/4-mat/unreleased/radiant_v2.prg
+Raffles Completed		robbins chris	TED	musicians/robbins_chris/raffles_completed.prg
+Raffles Title		robbins chris	TED	musicians/robbins_chris/raffles_title.prg
+Rahan Boot Hartzosh		kabo	TED	musicians/kabo/rahan_boot_hartzosh.prg
+Rahan Boot Mamlas		kabo	TED	musicians/kabo/rahan_boot_mamlas.prg
+Rahan Boot Title		kabo	TED	musicians/kabo/rahan_boot_title.prg
+Raid Over Moscow		csabo	TED	musicians/csabo/raid_over_moscow.prg
+Raid Over Moscow Sounds		csabo	TED	musicians/csabo/raid_over_moscow_sounds.prg
+Rainbow Trout		britelite	TED	musicians/britelite/rainbow_trout.prg
+Rakontakota		rado andras	TED	musicians/rado_andras/rakontakota.prg
+Raster Madness		csabo	TED	musicians/csabo/raster_madness.prg
+Raster Madness Prelude		csabo	TED	musicians/csabo/raster_madness_prelude.prg
+Reaxion		connolly sean	TED	musicians/connolly_sean/reaxion.prg
+Reaxion V1		4-mat (worktunes)	TED	musicians/4-mat/worktunes/reaxion_v1.prg
+Robocop Petscii Plus4 Ingame		andy	TED	musicians/andy/robocop_petscii_plus4_ingame.prg
+Robocop Petscii Plus4 Title		andy	TED	musicians/andy/robocop_petscii_plus4_title.prg
+Rockman Ingame		srebalius mark	TED	musicians/srebalius_mark/rockman_ingame.prg
+Rockman Title		srebalius mark	TED	musicians/srebalius_mark/rockman_title.prg
+Rockstar Ate My Border		csabo	TED	musicians/csabo/rockstar_ate_my_border.prg
+Rodman		misfit	TED	musicians/misfit/rodman.prg
+Rose		4-mat (unreleased)	TED	musicians/4-mat/unreleased/rose.prg
+Ruptus		inufuto	TED	musicians/inufuto/ruptus.prg
+Rush		dippy	TED	musicians/dippy/rush.prg
+Rush!		csabo	TED	musicians/csabo/rush!.prg
+Sabre Wulf		gc841	TED	musicians/gc841/sabre_wulf.prg
+Sailing Into A Mysterious Ocean Near The End Of The World		tripplep	TED	musicians/tripplep/sailing_into_a_mysterious_ocean_near_the_end_of_the_world.prg
+Sandgreen		aki	TED	musicians/aki/sandgreen.prg
+Santa 2020		5tarbuck	TED	musicians/5tarbuck/santa_2020.prg
+Santas Piano		hege	TED	musicians/hege/santas_piano.prg
+Sarabande		spektro	TED	musicians/spektro/sarabande.prg
+Save New York Start		mucsi	TED	musicians/mucsi/save_new_york_start.prg
+Save New York Title		mucsi	TED	musicians/mucsi/save_new_york_title.prg
+Sck Intro		hypnosis	TED	musicians/hypnosis/sck_intro.prg
+Score Hunt		meyer bernd	TED	musicians/meyer_bernd/score_hunt.prg
+Scramble Ingame		genot jean-paul	TED	musicians/genot_jean-paul/scramble_ingame.prg
+Scrupulous Boogie		fade	TED	musicians/fade/scrupulous_boogie.prg
+Senseless 01		elvis	TED	musicians/elvis/senseless_01.prg
+Senseless 02		elvis	TED	musicians/elvis/senseless_02.prg
+Senseless 03		elvis	TED	musicians/elvis/senseless_03.prg
+Sgt Helmet Zero		csabo	TED	musicians/csabo/sgt_helmet_zero.prg
+Shogun		panz olaf	TED	musicians/panz_olaf/shogun.prg
+Short		5tarbuck	TED	musicians/5tarbuck/short.prg
+Shorteddy		freqvibes	TED	musicians/freqvibes/shorteddy.prg
+Shorty01		5tarbuck	TED	musicians/5tarbuck/shorty01.prg
+Sidelsa		javierglez	TED	musicians/javierglez/sidelsa.prg
+Sir Knight		robbins chris	TED	musicians/robbins_chris/sir_knight.prg
+Sir Knight C16		dmx87	TED	musicians/dmx87/sir_knight_c16.prg
+Sire Fire Ending		tsm	TED	musicians/tsm/sire_fire_ending.prg
+Sire Fire Titlescreen		tsm	TED	musicians/tsm/sire_fire_titlescreen.prg
+Skateboarding		ott hartmut	TED	musicians/ott_hartmut/skateboarding.prg
+Skyremake 1		delest	TED	musicians/delest/skyremake_1.prg
+Skyremake 2		delest	TED	musicians/delest/skyremake_2.prg
+Skyremake 3		delest	TED	musicians/delest/skyremake_3.prg
+Skyremake 4		delest	TED	musicians/delest/skyremake_4.prg
+Skyremake 5		delest	TED	musicians/delest/skyremake_5.prg
+Skyremake Intro		delest	TED	musicians/delest/skyremake_intro.prg
+Skyremake Title		delest	TED	musicians/delest/skyremake_title.prg
+Sleepwalk		spektro	TED	musicians/spektro/sleepwalk.prg
 Slipshod		5tarbuck	TED	musicians/5tarbuck/slipshod.prg
+Slipstream Bauknecht		degauss	TED	musicians/degauss/slipstream_bauknecht.prg
 Slipstream End		5tarbuck	TED	musicians/5tarbuck/slipstream_end.prg
+Slipstream Gameover		degauss	TED	musicians/degauss/slipstream_gameover.prg
 Slipstream Highscore		5tarbuck	TED	musicians/5tarbuck/slipstream_highscore.prg
+Slipstream Level1		degauss	TED	musicians/degauss/slipstream_level1.prg
+Slipstream Level2		degauss	TED	musicians/degauss/slipstream_level2.prg
+Slipstream Level3		degauss	TED	musicians/degauss/slipstream_level3.prg
+Slipstream Level4		degauss	TED	musicians/degauss/slipstream_level4.prg
+Slipstream Level5		degauss	TED	musicians/degauss/slipstream_level5.prg
+Slipstream Passage		degauss	TED	musicians/degauss/slipstream_passage.prg
+Slipstream Title		degauss	TED	musicians/degauss/slipstream_title.prg
+Small Sknack		sean	TED	musicians/sean/small_sknack.prg
+Smells Like Happy Birthday		luca	TED	musicians/luca/smells_like_happy_birthday.prg
+Soko-Ban Mc		markus csaba	TED	musicians/markus_csaba/soko-ban_mc.prg
+Sollerman		hedgewizard	TED	musicians/hedgewizard/sollerman.prg
+Somethin		srb2er	TED	musicians/srb2er/somethin.prg
+Something		aki	TED	musicians/aki/something.prg
+Sos Dolgozat		gulyas laszlo	TED	musicians/gulyas_laszlo/sos_dolgozat.prg
+Sound Box Vi		ern0	TED	musicians/ern0/sound_box_vi.prg
+Soundtracker		boomby	TED	musicians/boomby/soundtracker.prg
+Space Night		wirbelauer peter	TED	musicians/wirbelauer_peter/space_night.prg
+Space Sweep		whittaker david	TED	musicians/whittaker_david/space_sweep.prg
+Speed King		southern shaun	TED	musicians/southern_shaun/speed_king.prg
+Speed King 06E1		southern shaun	TED	musicians/southern_shaun/speed_king_06e1.prg
+Speed King Jingle		southern shaun	TED	musicians/southern_shaun/speed_king_jingle.prg
+Speedy Snow Shuffle		quirby64	TED	musicians/quirby64/speedy_snow_shuffle.prg
+Spikes Cplus4		majikeyric	TED	musicians/majikeyric/spikes_cplus4.prg
+Spionagelehrling		ott hartmut	TED	musicians/ott_hartmut/spionagelehrling.prg
+Split Personalities		naylor richard	TED	musicians/naylor_richard/split_personalities.prg
+Spooky		yung gotenks	TED	musicians/yung_gotenks/spooky.prg
+Squirm		kelly tony	TED	musicians/kelly_tony/squirm.prg
+Squirm 16		csabo	TED	musicians/csabo/squirm_16.prg
+St Jupat		simon otto	TED	musicians/simon_otto/st_jupat.prg
+States United		degauss	TED	musicians/degauss/states_united.prg
+Stick Man		csabo	TED	musicians/csabo/stick_man.prg
+Stick Man Ending		csabo	TED	musicians/csabo/stick_man_ending.prg
+Stone Stomp		kleeder	TED	musicians/kleeder/stone_stomp.prg
+Stonk Donk		baron knoxburry	TED	musicians/baron_knoxburry/stonk_donk.prg
+Stop The Express		csabo	TED	musicians/csabo/stop_the_express.prg
+Strange Building		batya	TED	musicians/batya/strange_building.prg
+Stressed Smile		squarewave	TED	musicians/squarewave/stressed_smile.prg
+Summer Events Butterfly		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_butterfly.prg
+Summer Events Closing		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_closing.prg
+Summer Events Cycling		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_cycling.prg
+Summer Events Ddr Menu		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_ddr_menu.prg
+Summer Events Intro		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_intro.prg
+Summer Events Javelin		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_javelin.prg
+Summer Events Menu		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_menu.prg
+Summer Events Opening		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_opening.prg
+Summer Events Platform Diving		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_platform_diving.prg
+Summer Events Pole Vault		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_pole_vault.prg
+Summer Events Skeet Shooting		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_skeet_shooting.prg
+Summer Events Weight Lifting		gertz brigitte	TED	musicians/gertz_brigitte/summer_events_weight_lifting.prg
+Sun Street Ingame		fresen tom	TED	musicians/fresen_tom/sun_street_ingame.prg
+Sun Street Title		fresen tom	TED	musicians/fresen_tom/sun_street_title.prg
+Super Star Ted		3-up	TED	musicians/3-up/super_star_ted.prg
+Svellas		inufuto	TED	musicians/inufuto/svellas.prg
+Sweet Dfli C16		gerliczer	TED	musicians/gerliczer/sweet_dfli_c16.prg
+Sweet Dfli C16 Ntsc		gerliczer	TED	musicians/gerliczer/sweet_dfli_c16_ntsc.prg
+Switched Circles		kleeder	TED	musicians/kleeder/switched_circles.prg
+Swordfight		luca	TED	musicians/luca/swordfight.prg
+Swords		kardos attila	TED	musicians/kardos_attila/swords.prg
+T-Rex Run		csabo	TED	musicians/csabo/t-rex_run.prg
+T-Rex Run Title		csabo	TED	musicians/csabo/t-rex_run_title.prg
+T3D +4		th4 d34d	TED	musicians/th4_d34d/t3d_+4.prg
+Tapper		braintron	TED	musicians/braintron/tapper.prg
+Tayd		n1k-o	TED	musicians/n1k-o/tayd.prg
+Tazz		midcalf paul	TED	musicians/midcalf_paul/tazz.prg
+Technific		squarewave	TED	musicians/squarewave/technific.prg
+Ted Damnson Vs Surf Ninjas		warlord	TED	musicians/warlord/ted_damnson_vs_surf_ninjas.prg
+Ted Dies		chip champion	TED	musicians/chip_champion/ted_dies.prg
+Ted Screams		chip champion	TED	musicians/chip_champion/ted_screams.prg
+Ted Shred		cabbage drop	TED	musicians/cabbage_drop/ted_shred.prg
+Ted Storm		4-mat	TED	musicians/4-mat/ted_storm.prg
+Ted Storm Note		4-mat	TED	musicians/4-mat/ted_storm_note.prg
+Tedhno		lonestar1147	TED	musicians/lonestar1147/tedhno.prg
+Tedious		jammer	TED	musicians/jammer/tedious.prg
+Tedious Mission 4		tobikomi	TED	musicians/tobikomi/tedious_mission_4.prg
+Tedle Away In The Wind		kleeder	TED	musicians/kleeder/tedle_away_in_the_wind.prg
+Tedphase		agargara	TED	musicians/agargara/tedphase.prg
+Tedsuxxlol3		tennisers	TED	musicians/tennisers/tedsuxxlol3.prg
+Tedtrified		zangolf	TED	musicians/zangolf/tedtrified.prg
+Tedzakker Bare Player Example		hermit	TED	musicians/hermit/tedzakker_bare_player_example.prg
+Tedzakker Demo Player Example		hermit	TED	musicians/hermit/tedzakker_demo_player_example.prg
+Tedzakker Extra Player Example		hermit	TED	musicians/hermit/tedzakker_extra_player_example.prg
+Tedzakker Light Player Example		hermit	TED	musicians/hermit/tedzakker_light_player_example.prg
+Tedzakker Medium Player Example		hermit	TED	musicians/hermit/tedzakker_medium_player_example.prg
+Tedzakker Normal Player Example		chabee	TED	musicians/chabee/tedzakker_normal_player_example.prg
+Tekblah		elvis	TED	musicians/elvis/tekblah.prg
+Terra Cognita		whittaker david	TED	musicians/whittaker_david/terra_cognita.prg
+Terror News 32 Intro		squarewave	TED	musicians/squarewave/terror_news_32_intro.prg
+Thalassa		luca	TED	musicians/luca/thalassa.prg
+The Beatles		jackson	TED	musicians/jackson/the_beatles.prg
+The Economic Universe		grumskiz	TED	musicians/grumskiz/the_economic_universe.prg
+The Elevator Ending		spotlessmind1975	TED	musicians/spotlessmind1975/the_elevator_ending.prg
+The Empire Strikes Back		csabo	TED	musicians/csabo/the_empire_strikes_back.prg
+The Empire Strikes Back Sounds		csabo	TED	musicians/csabo/the_empire_strikes_back_sounds.prg
+The Empire Strikes Back Title		csabo	TED	musicians/csabo/the_empire_strikes_back_title.prg
+The Frog		engel jens	TED	musicians/engel_jens/the_frog.prg
+The Idea		kleeder	TED	musicians/kleeder/the_idea.prg
+The It Crowd		luca	TED	musicians/luca/the_it_crowd.prg
+The Lands Of Zador 1 The Adventure Begins		luca	TED	musicians/luca/the_lands_of_zador_1_the_adventure_begins.prg
 The Lands Of Zador 2 The Hidden Castle		5tarbuck	TED	musicians/5tarbuck/the_lands_of_zador_2_the_hidden_castle.prg
+The Lands Of Zador 3 Zadors Skylands		luca	TED	musicians/luca/the_lands_of_zador_3_zadors_skylands.prg
 The Lands Of Zador 4 The Future		5tarbuck	TED	musicians/5tarbuck/the_lands_of_zador_4_the_future.prg
+The Lands Of Zador 5 The Elevator		degauss	TED	musicians/degauss/the_lands_of_zador_5_the_elevator.prg
+The Lands Of Zador 6 The Space Laboratory		luca	TED	musicians/luca/the_lands_of_zador_6_the_space_laboratory.prg
+The Lands Of Zador 7 The Seas Of Fortune		luca	TED	musicians/luca/the_lands_of_zador_7_the_seas_of_fortune.prg
+The Lands Of Zador 8 Trithium Mines		luca	TED	musicians/luca/the_lands_of_zador_8_trithium_mines.prg
+The Lands Of Zador Ending		luca	TED	musicians/luca/the_lands_of_zador_ending.prg
 The Lands Of Zador Intro		5tarbuck	TED	musicians/5tarbuck/the_lands_of_zador_intro.prg
 The Lands Of Zador Loader		5tarbuck	TED	musicians/5tarbuck/the_lands_of_zador_loader.prg
 The Lands Of Zador Title		5tarbuck	TED	musicians/5tarbuck/the_lands_of_zador_title.prg
+The Pit Dual Voice		luca	TED	musicians/luca/the_pit_dual_voice.prg
+The Pit Manic Miner		mik	TED	musicians/mik/the_pit_manic_miner.prg
+The Pit Single Voice		luca	TED	musicians/luca/the_pit_single_voice.prg
+The Pit Title		mik	TED	musicians/mik/the_pit_title.prg
+The Super-Writer Mcb 1		ern0	TED	musicians/ern0/the_super-writer_mcb_1.prg
+The Super-Writer Mcb 2		ern0	TED	musicians/ern0/the_super-writer_mcb_2.prg
+The Super-Writer Mcb 3		ern0	TED	musicians/ern0/the_super-writer_mcb_3.prg
+The Tale Of Captain Slim		csabo	TED	musicians/csabo/the_tale_of_captain_slim.prg
+Theme From The Zodiac		csabo	TED	musicians/csabo/theme_from_the_zodiac.prg
+Throbbin You		tobikomi	TED	musicians/tobikomi/throbbin_you.prg
+Timberman		csabo	TED	musicians/csabo/timberman.prg
+Times Up Buttercup!		fade	TED	musicians/fade/times_up_buttercup!.prg
+Titel Story		5tarbuck	TED	musicians/5tarbuck/titel_story.prg
+Tkt02		nitrofurano	TED	musicians/nitrofurano/tkt02.prg
+To The Batcave		spektro	TED	musicians/spektro/to_the_batcave.prg
+Toccata And Fuga In D Minor		ern0	TED	musicians/ern0/toccata_and_fuga_in_d_minor.prg
+Tom And The Apple-Farm		ott hartmut	TED	musicians/ott_hartmut/tom_and_the_apple-farm.prg
+Tom Thumb Deluxe		csabo	TED	musicians/csabo/tom_thumb_deluxe.prg
+Torpedo Run		kent robert	TED	musicians/kent_robert/torpedo_run.prg
+Totto! Ending		spotlessmind1975	TED	musicians/spotlessmind1975/totto!_ending.prg
+Totto! Intro		spotlessmind1975	TED	musicians/spotlessmind1975/totto!_intro.prg
+Trailblazer 2 Jingle		boomby	TED	musicians/boomby/trailblazer_2_jingle.prg
+Trailblazer 2 Title		boomby	TED	musicians/boomby/trailblazer_2_title.prg
+Trailblazer Jingle		southern shaun	TED	musicians/southern_shaun/trailblazer_jingle.prg
+Trailblazer Title		southern shaun	TED	musicians/southern_shaun/trailblazer_title.prg
+Treasure Island		whittaker david	TED	musicians/whittaker_david/treasure_island.prg
+Triangles To Murphy		gerliczer	TED	musicians/gerliczer/triangles_to_murphy.prg
+Tron +4		csabo	TED	musicians/csabo/tron_+4.prg
+Tronix Demo II		ern0	TED	musicians/ern0/tronix_demo_ii.prg
+Trouble For Bubble		ott hartmut	TED	musicians/ott_hartmut/trouble_for_bubble.prg
+Tune 01		csabo	TED	musicians/csabo/tune_01.prg
+Tune 128		csabo	TED	musicians/csabo/tune_128.prg
+Tunel Galactico Ending		garcia g cesar joel	TED	musicians/garcia_g_cesar_joel/tunel_galactico_ending.prg
+Turbo Outrun Congrats		csabo	TED	musicians/csabo/turbo_outrun_congrats.prg
+Turbo Outrun Intermission		csabo	TED	musicians/csabo/turbo_outrun_intermission.prg
+Turbo Outrun Intro		csabo	TED	musicians/csabo/turbo_outrun_intro.prg
+Turbo Outrun Overworld		csabo	TED	musicians/csabo/turbo_outrun_overworld.prg
+Turbo Outrun Title		csabo	TED	musicians/csabo/turbo_outrun_title.prg
+Turbo Outrun Track 1		csabo	TED	musicians/csabo/turbo_outrun_track_1.prg
+Turbo Outrun Track 2		csabo	TED	musicians/csabo/turbo_outrun_track_2.prg
+Turbo Outrun Track 3		csabo	TED	musicians/csabo/turbo_outrun_track_3.prg
+Turbo Outrun Track 4		csabo	TED	musicians/csabo/turbo_outrun_track_4.prg
+Turbo Outrun Track 4 Game		csabo	TED	musicians/csabo/turbo_outrun_track_4_game.prg
+Turbo Outrun Transmission		csabo	TED	musicians/csabo/turbo_outrun_transmission.prg
+Tutti Frutti		southern shaun	TED	musicians/southern_shaun/tutti_frutti.prg
+Tutti Frutti Gameover		southern shaun	TED	musicians/southern_shaun/tutti_frutti_gameover.prg
+Tutti Frutti Win		southern shaun	TED	musicians/southern_shaun/tutti_frutti_win.prg
+Tv Jatek		kormos sandor	TED	musicians/kormos_sandor/tv_jatek.prg
+Two Days To The Race		luca	TED	musicians/luca/two_days_to_the_race.prg
+U-Jaeger		potsch michael	TED	musicians/potsch_michael/u-jaeger.prg
+Ufovadasz		medgyesi tamas	TED	musicians/medgyesi_tamas/ufovadasz.prg
+Ufovadasz Jingle		medgyesi tamas	TED	musicians/medgyesi_tamas/ufovadasz_jingle.prg
+Ultra		4-mat (unreleased)	TED	musicians/4-mat/unreleased/ultra.prg
+Uncertain Future Part 1		csabo	TED	musicians/csabo/uncertain_future_part_1.prg
+Uncertain Future Part 2		csabo	TED	musicians/csabo/uncertain_future_part_2.prg
+Unwrap The Gifts		5tarbuck	TED	musicians/5tarbuck/unwrap_the_gifts.prg
+Uranus		braintron	TED	musicians/braintron/uranus.prg
+Urkaland		herman	TED	musicians/herman/urkaland.prg
+Urpok Level		medgyesi tamas	TED	musicians/medgyesi_tamas/urpok_level.prg
+Urpok Title		medgyesi tamas	TED	musicians/medgyesi_tamas/urpok_title.prg
+Usa Usagyuuun 8Bit		sirhadisen	TED	musicians/sirhadisen/usa_usagyuuun_8bit.prg
+Uwol		csabo	TED	musicians/csabo/uwol.prg
+Vancouver 2010		csabo	TED	musicians/csabo/vancouver_2010.prg
+Vancouver 2010 Hidden Part		csabo	TED	musicians/csabo/vancouver_2010_hidden_part.prg
+Varmit		howlin mad	TED	musicians/howlin_mad/varmit.prg
+Vegas Jackpot		southern shaun	TED	musicians/southern_shaun/vegas_jackpot.prg
+Verem		kormos sandor	TED	musicians/kormos_sandor/verem.prg
+Vestec Bezejmennych		nitrofurano	TED	musicians/nitrofurano/vestec_bezejmennych.prg
+Video Meanies		kelly tony	TED	musicians/kelly_tony/video_meanies.prg
+Videobreak Video Basic 02		jackson	TED	musicians/jackson/videobreak_video_basic_02.prg
+Videobreak Video Basic 03		jackson	TED	musicians/jackson/videobreak_video_basic_03.prg
+Videobreak Video Basic 04		jackson	TED	musicians/jackson/videobreak_video_basic_04.prg
+Viktor A Piktor		korsos istvan	TED	musicians/korsos_istvan/viktor_a_piktor.prg
+Volbass		csabo	TED	musicians/csabo/volbass.prg
+Volbass 5X		csabo	TED	musicians/csabo/volbass_5x.prg
+Voracious Eater		meyer bernd	TED	musicians/meyer_bernd/voracious_eater.prg
+Wacky Painter		fancey jonathan	TED	musicians/fancey_jonathan/wacky_painter.prg
+Wangerogge Sa		degauss	TED	musicians/degauss/wangerogge_sa.prg
+War Ingame		ott hartmut	TED	musicians/ott_hartmut/war_ingame.prg
+War Jingles		ott hartmut	TED	musicians/ott_hartmut/war_jingles.prg
+War Title		ott hartmut	TED	musicians/ott_hartmut/war_title.prg
+Warrior Of Ras Volume I Dunzhin SFX		csabo	TED	musicians/csabo/warrior_of_ras_volume_i_dunzhin_sfx.prg
+Warrior Of Ras Volume I Dunzhin Title		csabo	TED	musicians/csabo/warrior_of_ras_volume_i_dunzhin_title.prg
+Wayfarer		skydev	TED	musicians/skydev/wayfarer.prg
+Wcdtz2		nitrofurano	TED	musicians/nitrofurano/wcdtz2.prg
+Weird Hot Things		kleeder	TED	musicians/kleeder/weird_hot_things.prg
+Well Deserved Treasure		csabo	TED	musicians/csabo/well_deserved_treasure.prg
+White Max		tomhx	TED	musicians/tomhx/white_max.prg
+Who Dares Wins II		waugh ian	TED	musicians/waugh_ian/who_dares_wins_ii.prg
+Why Did I Bother Resubmitting This Garbage		tennisers	TED	musicians/tennisers/why_did_i_bother_resubmitting_this_garbage.prg
+Winter Events Biathlon		gertz brigitte	TED	musicians/gertz_brigitte/winter_events_biathlon.prg
+Winter Events Bobsled		gertz brigitte	TED	musicians/gertz_brigitte/winter_events_bobsled.prg
+Winter Events Ddr Menu		gertz brigitte	TED	musicians/gertz_brigitte/winter_events_ddr_menu.prg
+Winter Events Down Hill		gertz brigitte	TED	musicians/gertz_brigitte/winter_events_down_hill.prg
+Winter Events Menu		gertz brigitte	TED	musicians/gertz_brigitte/winter_events_menu.prg
+Winter Events Opening		gertz brigitte	TED	musicians/gertz_brigitte/winter_events_opening.prg
+Winter Events Ski Jump		gertz brigitte	TED	musicians/gertz_brigitte/winter_events_ski_jump.prg
+Winter Events Slalom		gertz brigitte	TED	musicians/gertz_brigitte/winter_events_slalom.prg
+Winter Events Speed Skating		gertz brigitte	TED	musicians/gertz_brigitte/winter_events_speed_skating.prg
+Winter Olympics		reynolds derek	TED	musicians/reynolds_derek/winter_olympics.prg
+Winter Walk		5tarbuck	TED	musicians/5tarbuck/winter_walk.prg
+Wizard Of Wor Intro		csabo	TED	musicians/csabo/wizard_of_wor_intro.prg
+Wizard Of Wor Sounds		csabo	TED	musicians/csabo/wizard_of_wor_sounds.prg
+Wizball Title Tune		luca	TED	musicians/luca/wizball_title_tune.prg
 Woodymania		5tarbuck	TED	musicians/5tarbuck/woodymania.prg
-Puppys		Paolo Aimetti	TED	musicians/aimetti_paolo/puppys.prg
-Helix		Hakan Akbiyik	TED	musicians/akbiyik_hakan/helix.prg
-Alf 1		Alf	TED	musicians/alf/alf_1.prg
-Alf 2		Alf	TED	musicians/alf/alf_2.prg
-Pellucid Effluvium		Andy	TED	musicians/andy/pellucid_effluvium.prg
-Pac Man Sfx		Apos	TED	musicians/apos/pac_man_sfx.prg
-Pac Man Title		Apos	TED	musicians/apos/pac_man_title.prg
-Mad Maze		Computing Axel	TED	musicians/axel_computing/mad_maze.prg
-Oszkar A Lovag		Sandor Bartha	TED	musicians/bartha_sandor/oszkar_a_lovag.prg
-Pancho		Olivier Barthelemy	TED	musicians/barthelemy_olivier/pancho.prg
-Strange Building		Batya	TED	musicians/batya/strange_building.prg
-Nike Hawk		Alberto Carlo Bentivoglio	TED	musicians/bentivoglio_carlo_alberto/nike_hawk.prg
-Foggy Days		Bear Big	TED	musicians/big_bear/foggy_days.prg
-Borgok Kincse		Billy Yards	TED	musicians/billy_yards/borgok_kincse.prg
-Labyrinthitis Ingame		Billy Yards	TED	musicians/billy_yards/labyrinthitis_ingame.prg
-Labyrinthitis Title		Billy Yards	TED	musicians/billy_yards/labyrinthitis_title.prg
-Nest Of Fleas Sfx		Billy Yards	TED	musicians/billy_yards/nest_of_fleas_sfx.prg
-Nest Of Fleas Title		Billy Yards	TED	musicians/billy_yards/nest_of_fleas_title.prg
-Aliens Demo		Boomby	TED	musicians/boomby/aliens_demo.prg
-Soundtracker		Boomby	TED	musicians/boomby/soundtracker.prg
-Archivum Ingame		Istvan Bozsik	TED	musicians/bozsik_istvan/archivum_ingame.prg
-Hexaeder		Istvan Bozsik	TED	musicians/bozsik_istvan/hexaeder.prg
-A-07		Braintron	TED	musicians/braintron/a-07.prg
-Black Thunder		Braintron	TED	musicians/braintron/black_thunder.prg
-Boogie Woogie Spiders		Braintron	TED	musicians/braintron/boogie_woogie_spiders.prg
-Kazik And The Ghosts		Braintron	TED	musicians/braintron/kazik_and_the_ghosts.prg
-Music Maze		Braintron	TED	musicians/braintron/music_maze.prg
-Phoenix		Braintron	TED	musicians/braintron/phoenix.prg
-Tapper		Braintron	TED	musicians/braintron/tapper.prg
-Uranus		Braintron	TED	musicians/braintron/uranus.prg
-Rainbow Trout		Britelite	TED	musicians/britelite/rainbow_trout.prg
-Hustler		Damien Cavanagh	TED	musicians/cavanagh_damien/hustler.prg
-Tedzakker Normal Player Example		Chabee	TED	musicians/chabee/tedzakker_normal_player_example.prg
-Cave Fighter		Richard Clark	TED	musicians/clark_richard/cave_fighter.prg
-Firsta		Corpsicle	TED	musicians/corpsicle/firsta.prg
-Kaktus		Brian Cotton	TED	musicians/cotton_brian/kaktus.prg
-Gunfright		Saul Cross	TED	musicians/cross_saul/gunfright.prg
-Pentagram		Saul Cross	TED	musicians/cross_saul/pentagram.prg
-Megabolts		Stuart Cross	TED	musicians/cross_stuart/megabolts.prg
-Memory V2		Gergely Csernak	TED	musicians/csernak_gergely/memory_v2.prg
-Flopp		Gyula Csirmaz	TED	musicians/csirmaz_gyula/flopp.prg
-Kitores		Gyula Csirmaz	TED	musicians/csirmaz_gyula/kitores.prg
-Gridtrap		Mike Delves	TED	musicians/delves_mike/gridtrap.prg
-Blaze		Craig Douglas	TED	musicians/douglas_craig/blaze.prg
-Pyramid		Eagle-soft	TED	musicians/eagle-soft/pyramid.prg
-Hektik		Martin Ellis	TED	musicians/ellis_martin/hektik.prg
-Hugohunt		Jens Engel	TED	musicians/engel_jens/hugohunt.prg
-Pilot X		Jens Engel	TED	musicians/engel_jens/pilot_x.prg
-The Frog		Jens Engel	TED	musicians/engel_jens/the_frog.prg
-Barbarian		Ern0	TED	musicians/ern0/barbarian.prg
-Boldog Szep Napok		Ern0	TED	musicians/ern0/boldog_szep_napok.prg
-Csillagharcos		Ern0	TED	musicians/ern0/csillagharcos.prg
-First Music		Ern0	TED	musicians/ern0/first_music.prg
-I Should Be So Lucky		Ern0	TED	musicians/ern0/i_should_be_so_lucky.prg
-Nautilus		Ern0	TED	musicians/ern0/nautilus.prg
-Nautilus Intro		Ern0	TED	musicians/ern0/nautilus_intro.prg
-New Life		Ern0	TED	musicians/ern0/new_life.prg
-Nothing		Ern0	TED	musicians/ern0/nothing.prg
-Sound Box Vi		Ern0	TED	musicians/ern0/sound_box_vi.prg
-The Super-writer Mcb 1		Ern0	TED	musicians/ern0/the_super-writer_mcb_1.prg
-The Super-writer Mcb 2		Ern0	TED	musicians/ern0/the_super-writer_mcb_2.prg
-The Super-writer Mcb 3		Ern0	TED	musicians/ern0/the_super-writer_mcb_3.prg
-Toccata And Fuga In D Minor		Ern0	TED	musicians/ern0/toccata_and_fuga_in_d_minor.prg
-Tronix Demo II		Ern0	TED	musicians/ern0/tronix_demo_ii.prg
-Wow Demo		Ern0	TED	musicians/ern0/wow_demo.prg
-Xmas		Ern0	TED	musicians/ern0/xmas.prg
-Wacky Painter		Jonathan Fancey	TED	musicians/fancey_jonathan/wacky_painter.prg
-Pop-business		Matthias Flor	TED	musicians/flor_matthias/pop-business.prg
-Alien Invasion		Martina Forster	TED	musicians/forster_martina/alien_invasion.prg
-Alien Invasion Intro		Martina Forster	TED	musicians/forster_martina/alien_invasion_intro.prg
-Bridgehead		Martina Forster	TED	musicians/forster_martina/bridgehead.prg
-Bridgehead Intro		Martina Forster	TED	musicians/forster_martina/bridgehead_intro.prg
-Emerald Mine 2		Martina Forster	TED	musicians/forster_martina/emerald_mine_2.prg
-Shorteddy		Freqvibes	TED	musicians/freqvibes/shorteddy.prg
-Jolly Good Fellow		Tom Fresen	TED	musicians/fresen_tom/jolly_good_fellow.prg
-Sun Street Ingame		Tom Fresen	TED	musicians/fresen_tom/sun_street_ingame.prg
-Sun Street Title		Tom Fresen	TED	musicians/fresen_tom/sun_street_title.prg
-Daley Thompsons Star Events		Martin Galway	TED	musicians/galway_martin/daley_thompsons_star_events.prg
-Jail Break Start		J Martin Gannon	TED	musicians/gannon_martin_j/jail_break_start.prg
-Jail Break Title		J Martin Gannon	TED	musicians/gannon_martin_j/jail_break_title.prg
-Leaper		J Martin Gannon	TED	musicians/gannon_martin_j/leaper.prg
-Hollywood Poker		Holger Gehrmann	TED	musicians/gehrmann_holger/hollywood_poker.prg
-Scramble Ingame		Jean-paul Genot	TED	musicians/genot_jean-paul/scramble_ingame.prg
-Blackbelt+tune		George	TED	musicians/george/blackbelt+tune.prg
-Cd5 Intro 2		Gerliczer	TED	musicians/gerliczer/cd5_intro_2.prg
-Bongo		Brigitte Gertz	TED	musicians/gertz_brigitte/bongo.prg
-Bongo Alternative		Brigitte Gertz	TED	musicians/gertz_brigitte/bongo_alternative.prg
-Summer Events Butterfly		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_butterfly.prg
-Summer Events Closing		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_closing.prg
-Summer Events Cycling		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_cycling.prg
-Summer Events Ddr Menu		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_ddr_menu.prg
-Summer Events Intro		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_intro.prg
-Summer Events Javelin		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_javelin.prg
-Summer Events Menu		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_menu.prg
-Summer Events Opening		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_opening.prg
-Summer Events Platform Diving		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_platform_diving.prg
-Summer Events Pole Vault		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_pole_vault.prg
-Summer Events Skeet Shooting		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_skeet_shooting.prg
-Summer Events Weight Lifting		Brigitte Gertz	TED	musicians/gertz_brigitte/summer_events_weight_lifting.prg
-Winter Events Biathlon		Brigitte Gertz	TED	musicians/gertz_brigitte/winter_events_biathlon.prg
-Winter Events Bobsled		Brigitte Gertz	TED	musicians/gertz_brigitte/winter_events_bobsled.prg
-Winter Events Ddr Menu		Brigitte Gertz	TED	musicians/gertz_brigitte/winter_events_ddr_menu.prg
-Winter Events Down Hill		Brigitte Gertz	TED	musicians/gertz_brigitte/winter_events_down_hill.prg
-Winter Events Menu		Brigitte Gertz	TED	musicians/gertz_brigitte/winter_events_menu.prg
-Winter Events Opening		Brigitte Gertz	TED	musicians/gertz_brigitte/winter_events_opening.prg
-Winter Events Ski Jump		Brigitte Gertz	TED	musicians/gertz_brigitte/winter_events_ski_jump.prg
-Winter Events Slalom		Brigitte Gertz	TED	musicians/gertz_brigitte/winter_events_slalom.prg
-Winter Events Speed Skating		Brigitte Gertz	TED	musicians/gertz_brigitte/winter_events_speed_skating.prg
-Q-bert		Bernd Gichtbrock	TED	musicians/gichtbrock_bernd/q-bert.prg
-Egon		Sebastian Grueber	TED	musicians/grueber_sebastian/egon.prg
-Dodo Ending		Gyula Hajdu	TED	musicians/hajdu_gyula/dodo_ending.prg
-Merk-as		Michael Hanoldt	TED	musicians/hanoldt_michael/merk-as.prg
-C16 Shit		Heinzi-games	TED	musicians/heinzi-games/c16_shit.prg
-Patt Ball		Herman	TED	musicians/herman/patt_ball.prg
-Urkaland		Herman	TED	musicians/herman/urkaland.prg
-Tedzakker Bare Player Example		Hermit	TED	musicians/hermit/tedzakker_bare_player_example.prg
-Tedzakker Demo Player Example		Hermit	TED	musicians/hermit/tedzakker_demo_player_example.prg
-Tedzakker Extra Player Example		Hermit	TED	musicians/hermit/tedzakker_extra_player_example.prg
-Tedzakker Light Player Example		Hermit	TED	musicians/hermit/tedzakker_light_player_example.prg
-Tedzakker Medium Player Example		Hermit	TED	musicians/hermit/tedzakker_medium_player_example.prg
-Minipedes		Tony Horwood	TED	musicians/horwood_tony/minipedes.prg
-Auriga		Mad Howlin	TED	musicians/howlin_mad/auriga.prg
-Auto Zone		Mad Howlin	TED	musicians/howlin_mad/auto_zone.prg
-Varmit		Mad Howlin	TED	musicians/howlin_mad/varmit.prg
-Natale 1		Jackson	TED	musicians/jackson/natale_1.prg
-Natale 2		Jackson	TED	musicians/jackson/natale_2.prg
-The Beatles		Jackson	TED	musicians/jackson/the_beatles.prg
-Videobreak Video Basic 02		Jackson	TED	musicians/jackson/videobreak_video_basic_02.prg
-Videobreak Video Basic 03		Jackson	TED	musicians/jackson/videobreak_video_basic_03.prg
-Videobreak Video Basic 04		Jackson	TED	musicians/jackson/videobreak_video_basic_04.prg
-Mad Mamba		Dirk Janssen	TED	musicians/janssen_dirk/mad_mamba.prg
-Bernat A Nyomozo Menu		Kabo	TED	musicians/kabo/bernat_a_nyomozo_menu.prg
-Bernat A Nyomozo Title		Kabo	TED	musicians/kabo/bernat_a_nyomozo_title.prg
-Idoutazo Ingame		Kabo	TED	musicians/kabo/idoutazo_ingame.prg
-Idoutazo Title		Kabo	TED	musicians/kabo/idoutazo_title.prg
-Rahan Boot Hartzosh		Kabo	TED	musicians/kabo/rahan_boot_hartzosh.prg
-Rahan Boot Mamlas		Kabo	TED	musicians/kabo/rahan_boot_mamlas.prg
-Rahan Boot Title		Kabo	TED	musicians/kabo/rahan_boot_title.prg
-Break Dance		Attila Kardos	TED	musicians/kardos_attila/break_dance.prg
-Swords		Attila Kardos	TED	musicians/kardos_attila/swords.prg
-Big Mac		Tony Kelly	TED	musicians/kelly_tony/big_mac.prg
-Mr Puniverse		Tony Kelly	TED	musicians/kelly_tony/mr_puniverse.prg
-Squirm		Tony Kelly	TED	musicians/kelly_tony/squirm.prg
-Video Meanies		Tony Kelly	TED	musicians/kelly_tony/video_meanies.prg
-Torpedo Run		Robert Kent	TED	musicians/kent_robert/torpedo_run.prg
-Demo Mine I Part1		Peter Kiraly	TED	musicians/kiraly_peter/demo_mine_i_part1.prg
-Demo Mine I Part2		Peter Kiraly	TED	musicians/kiraly_peter/demo_mine_i_part2.prg
-Emerald Mine		Oliver Klawer	TED	musicians/klawer_oliver/emerald_mine.prg
-Maniax		Oliver Klawer	TED	musicians/klawer_oliver/maniax.prg
-Jumbo		Koko	TED	musicians/koko/jumbo.prg
-Tv Jatek		Sandor Kormos	TED	musicians/kormos_sandor/tv_jatek.prg
-Verem		Sandor Kormos	TED	musicians/kormos_sandor/verem.prg
-Viktor A Piktor		Istvan Korsos	TED	musicians/korsos_istvan/viktor_a_piktor.prg
-6fx		Legion Of Doom	TED	musicians/legion_of_doom/csabo/6fx.prg
-8sob Ati		Legion Of Doom	TED	musicians/legion_of_doom/csabo/8sob_ati.prg
-8sob Bubis		Legion Of Doom	TED	musicians/legion_of_doom/csabo/8sob_bubis.prg
-8sob Dcd		Legion Of Doom	TED	musicians/legion_of_doom/csabo/8sob_dcd.prg
-8sob Menu		Legion Of Doom	TED	musicians/legion_of_doom/csabo/8sob_menu.prg
-8sob Murphy		Legion Of Doom	TED	musicians/legion_of_doom/csabo/8sob_murphy.prg
-8sob Optika		Legion Of Doom	TED	musicians/legion_of_doom/csabo/8sob_optika.prg
-8sob Skoro		Legion Of Doom	TED	musicians/legion_of_doom/csabo/8sob_skoro.prg
-Cd4		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cd4.prg
-Cd5 Ati		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cd5_ati.prg
-Cd5 Bubis		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cd5_bubis.prg
-Cd5 Csabo		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cd5_csabo.prg
-Cd5 Intro		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cd5_intro.prg
-Cd5 Kichy		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cd5_kichy.prg
-Cd5 Ninja		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cd5_ninja.prg
-Cd5 Skoro		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cd5_skoro.prg
-Cd5 Spektro		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cd5_spektro.prg
-Cd5 The End		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cd5_the_end.prg
-Cd5 Unreal		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cd5_unreal.prg
-Clone Ingame		Legion Of Doom	TED	musicians/legion_of_doom/csabo/clone_ingame.prg
-Clone Title		Legion Of Doom	TED	musicians/legion_of_doom/csabo/clone_title.prg
-Club Info 100 Intro		Legion Of Doom	TED	musicians/legion_of_doom/csabo/club_info_100_intro.prg
-Club Info 133		Legion Of Doom	TED	musicians/legion_of_doom/csabo/club_info_133.prg
-Club Info 136		Legion Of Doom	TED	musicians/legion_of_doom/csabo/club_info_136.prg
-Cracktro 16k		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cracktro_16k.prg
-Cracktro 16k 2		Legion Of Doom	TED	musicians/legion_of_doom/csabo/cracktro_16k_2.prg
-Drum Mix 3		Legion Of Doom	TED	musicians/legion_of_doom/csabo/drum_mix_3.prg
-Flashback		Legion Of Doom	TED	musicians/legion_of_doom/csabo/flashback.prg
-Gate Of Power		Legion Of Doom	TED	musicians/legion_of_doom/csabo/gate_of_power.prg
-Get It		Legion Of Doom	TED	musicians/legion_of_doom/csabo/get_it.prg
-Lod Is Back		Legion Of Doom	TED	musicians/legion_of_doom/csabo/lod_is_back.prg
-Memento		Legion Of Doom	TED	musicians/legion_of_doom/csabo/memento.prg
-Merry Christmas 2015		Legion Of Doom	TED	musicians/legion_of_doom/csabo/merry_christmas_2015.prg
-Merry Christmas 2016		Legion Of Doom	TED	musicians/legion_of_doom/csabo/merry_christmas_2016.prg
-Mms Xmas 2009		Legion Of Doom	TED	musicians/legion_of_doom/csabo/mms_xmas_2009.prg
-Nyan Cat		Legion Of Doom	TED	musicians/legion_of_doom/csabo/nyan_cat.prg
-Nyan Cat Digi		Legion Of Doom	TED	musicians/legion_of_doom/csabo/nyan_cat_digi.prg
-Pac-pac Ingame		Legion Of Doom	TED	musicians/legion_of_doom/csabo/pac-pac_ingame.prg
-Pac-pac Title		Legion Of Doom	TED	musicians/legion_of_doom/csabo/pac-pac_title.prg
-Perfect Visions 2		Legion Of Doom	TED	musicians/legion_of_doom/csabo/perfect_visions_2.prg
-Perfect Visions 3		Legion Of Doom	TED	musicians/legion_of_doom/csabo/perfect_visions_3.prg
-Pimp My Part		Legion Of Doom	TED	musicians/legion_of_doom/csabo/pimp_my_part.prg
-Plink		Legion Of Doom	TED	musicians/legion_of_doom/csabo/plink.prg
-Plink Hidden Greets		Legion Of Doom	TED	musicians/legion_of_doom/csabo/plink_hidden_greets.prg
-Quadrillion		Legion Of Doom	TED	musicians/legion_of_doom/csabo/quadrillion.prg
-Rockstar Ate My Border		Legion Of Doom	TED	musicians/legion_of_doom/csabo/rockstar_ate_my_border.prg
-Sgt Helmet Zero		Legion Of Doom	TED	musicians/legion_of_doom/csabo/sgt_helmet_zero.prg
-Tune 01		Legion Of Doom	TED	musicians/legion_of_doom/csabo/tune_01.prg
-Tune 128		Legion Of Doom	TED	musicians/legion_of_doom/csabo/tune_128.prg
-Uwol		Legion Of Doom	TED	musicians/legion_of_doom/csabo/uwol.prg
-Vancouver 2010		Legion Of Doom	TED	musicians/legion_of_doom/csabo/vancouver_2010.prg
-Vancouver 2010 Hidden Part		Legion Of Doom	TED	musicians/legion_of_doom/csabo/vancouver_2010_hidden_part.prg
-Warrior Of Ras Volume I Dunzhin Sfx		Legion Of Doom	TED	musicians/legion_of_doom/csabo/warrior_of_ras_volume_i_dunzhin_sfx.prg
-Warrior Of Ras Volume I Dunzhin Title		Legion Of Doom	TED	musicians/legion_of_doom/csabo/warrior_of_ras_volume_i_dunzhin_title.prg
-Xplode Man Game		Legion Of Doom	TED	musicians/legion_of_doom/csabo/xplode_man_game.prg
-Xplode Man Title		Legion Of Doom	TED	musicians/legion_of_doom/csabo/xplode_man_title.prg
-Crackers Demo 3 Lod		Legion Of Doom	TED	musicians/legion_of_doom/tom/crackers_demo_3_lod.prg
-Hutlen		Legion Of Doom	TED	musicians/legion_of_doom/tom/hutlen.prg
-Genius Jingles		Dan Liverani	TED	musicians/liverani_dan/genius_jingles.prg
-Genius Level1		Dan Liverani	TED	musicians/liverani_dan/genius_level1.prg
-Genius Level2		Dan Liverani	TED	musicians/liverani_dan/genius_level2.prg
-Genius Level3		Dan Liverani	TED	musicians/liverani_dan/genius_level3.prg
-Genius Level4		Dan Liverani	TED	musicians/liverani_dan/genius_level4.prg
-Genius Level5		Dan Liverani	TED	musicians/liverani_dan/genius_level5.prg
-Genius Level6		Dan Liverani	TED	musicians/liverani_dan/genius_level6.prg
-Genius Level7		Dan Liverani	TED	musicians/liverani_dan/genius_level7.prg
-Genius Level8		Dan Liverani	TED	musicians/liverani_dan/genius_level8.prg
-Genius Level81		Dan Liverani	TED	musicians/liverani_dan/genius_level81.prg
-8sob Mermaid		Luca	TED	musicians/luca/8sob_mermaid.prg
-Adventures In Time Advertisement		Luca	TED	musicians/luca/adventures_in_time_advertisement.prg
-Adventures In Time Ending		Luca	TED	musicians/luca/adventures_in_time_ending.prg
-Adventures In Time Game Over		Luca	TED	musicians/luca/adventures_in_time_game_over.prg
-Adventures In Time Ingame		Luca	TED	musicians/luca/adventures_in_time_ingame.prg
-Adventures In Time Intro		Luca	TED	musicians/luca/adventures_in_time_intro.prg
-Adventures In Time Sfx		Luca	TED	musicians/luca/adventures_in_time_sfx.prg
-Adventures In Time Title		Luca	TED	musicians/luca/adventures_in_time_title.prg
-Cd5 Luca		Luca	TED	musicians/luca/cd5_luca.prg
-Limited 2 Restro		Luca	TED	musicians/luca/limited_2_restro.prg
-Lodplay V1 Demo		Luca	TED	musicians/luca/lodplay_v1_demo.prg
-Majesty Of Sprites 4-1 Spacecraft		Luca	TED	musicians/luca/majesty_of_sprites_4-1_spacecraft.prg
-Majesty Of Sprites 4-2 The Corridor		Luca	TED	musicians/luca/majesty_of_sprites_4-2_the_corridor.prg
-Sabrina Digi 2010		Luca	TED	musicians/luca/sabrina_digi_2010.prg
-Smells Like Happy Birthday		Luca	TED	musicians/luca/smells_like_happy_birthday.prg
-Thalassa		Luca	TED	musicians/luca/thalassa.prg
-The It Crowd		Luca	TED	musicians/luca/the_it_crowd.prg
-The Lands Of Zador 1 The Adventure Begins		Luca	TED	musicians/luca/the_lands_of_zador_1_the_adventure_begins.prg
-The Lands Of Zador 3 Zadors Skylands		Luca	TED	musicians/luca/the_lands_of_zador_3_zadors_skylands.prg
-The Lands Of Zador 6 The Space Laboratory		Luca	TED	musicians/luca/the_lands_of_zador_6_the_space_laboratory.prg
-The Lands Of Zador 7 The Seas Of Fortune		Luca	TED	musicians/luca/the_lands_of_zador_7_the_seas_of_fortune.prg
-The Lands Of Zador 8 Trithium Mines		Luca	TED	musicians/luca/the_lands_of_zador_8_trithium_mines.prg
-The Lands Of Zador Ending		Luca	TED	musicians/luca/the_lands_of_zador_ending.prg
-Xmp		Luca	TED	musicians/luca/xmp.prg
-Death Planet		Bernd Lueneburg	TED	musicians/lueneburg_bernd/death_planet.prg
-Atlantis		Sam Manthorpe	TED	musicians/manthorpe_sam/atlantis.prg
-Out On A Limb		Sam Manthorpe	TED	musicians/manthorpe_sam/out_on_a_limb.prg
-Ehes Kigyo		Csaba Markus	TED	musicians/markus_csaba/ehes_kigyo.prg
-Soko-ban Mc		Csaba Markus	TED	musicians/markus_csaba/soko-ban_mc.prg
-Ghost Town Usa		Stacy Mcinnis	TED	musicians/mcinnis_stacy/ghost_town_usa.prg
-Championship Wrestling Choose		Tamas Medgyesi	TED	musicians/medgyesi_tamas/championship_wrestling_choose.prg
-Championship Wrestling Intro		Tamas Medgyesi	TED	musicians/medgyesi_tamas/championship_wrestling_intro.prg
-Championship Wrestling Sfx		Tamas Medgyesi	TED	musicians/medgyesi_tamas/championship_wrestling_sfx.prg
-Karate Game		Tamas Medgyesi	TED	musicians/medgyesi_tamas/karate_game.prg
-Karate Intro		Tamas Medgyesi	TED	musicians/medgyesi_tamas/karate_intro.prg
-Ufovadasz		Tamas Medgyesi	TED	musicians/medgyesi_tamas/ufovadasz.prg
-Urpok Level		Tamas Medgyesi	TED	musicians/medgyesi_tamas/urpok_level.prg
-Urpok Title		Tamas Medgyesi	TED	musicians/medgyesi_tamas/urpok_title.prg
-Kikstart Messe-soft		Michael Meissner	TED	musicians/meissner_michael/kikstart_messe-soft.prg
-Score Hunt		Bernd Meyer	TED	musicians/meyer_bernd/score_hunt.prg
-Voracious Eater		Bernd Meyer	TED	musicians/meyer_bernd/voracious_eater.prg
-Tazz		Paul Midcalf	TED	musicians/midcalf_paul/tazz.prg
-Icecream		Mik	TED	musicians/mik/icecream.prg
-Dork Dave And The Dirty Trick		Misfit	TED	musicians/misfit/dork_dave_and_the_dirty_trick.prg
-Mr Angry Dude		Misfit	TED	musicians/misfit/mr_angry_dude.prg
-Purple Turtles		Richard Moore	TED	musicians/moore_richard/purple_turtles.prg
-Booty		Kevin Moughtin	TED	musicians/moughtin_kevin/booty.prg
-Harvey Headbanger		Kevin Moughtin	TED	musicians/moughtin_kevin/harvey_headbanger.prg
-Save New York Start		Mucsi	TED	musicians/mucsi/save_new_york_start.prg
-Save New York Title		Mucsi	TED	musicians/mucsi/save_new_york_title.prg
-Bob Driving		Hartmut Ott	TED	musicians/ott_hartmut/bob_driving.prg
-Fight In The Desert		Hartmut Ott	TED	musicians/ott_hartmut/fight_in_the_desert.prg
-King Of Kings		Hartmut Ott	TED	musicians/ott_hartmut/king_of_kings.prg
-Skateboarding		Hartmut Ott	TED	musicians/ott_hartmut/skateboarding.prg
-Spionagelehrling		Hartmut Ott	TED	musicians/ott_hartmut/spionagelehrling.prg
-Tom And The Apple-farm		Hartmut Ott	TED	musicians/ott_hartmut/tom_and_the_apple-farm.prg
-Trouble For Bubble		Hartmut Ott	TED	musicians/ott_hartmut/trouble_for_bubble.prg
-War Ingame		Hartmut Ott	TED	musicians/ott_hartmut/war_ingame.prg
-War Jingles		Hartmut Ott	TED	musicians/ott_hartmut/war_jingles.prg
-War Title		Hartmut Ott	TED	musicians/ott_hartmut/war_title.prg
-Interrupt-sound		Olaf Panz	TED	musicians/panz_olaf/interrupt-sound.prg
-Miner 410er		Olaf Panz	TED	musicians/panz_olaf/miner_410er.prg
-Shogun		Olaf Panz	TED	musicians/panz_olaf/shogun.prg
-Planet Search		Simon Pick	TED	musicians/pick_simon/planet_search.prg
-Demonok Birodalma		Pitecus	TED	musicians/pitecus/demonok_birodalma.prg
-Demonok Birodalma Credits		Pitecus	TED	musicians/pitecus/demonok_birodalma_credits.prg
-Demonok Birodalma Intro		Pitecus	TED	musicians/pitecus/demonok_birodalma_intro.prg
-Danger-willi Ingame		Michael Potsch	TED	musicians/potsch_michael/danger-willi_ingame.prg
-Elfmeter-schiessen		Michael Potsch	TED	musicians/potsch_michael/elfmeter-schiessen.prg
-U-jaeger		Michael Potsch	TED	musicians/potsch_michael/u-jaeger.prg
-Rakontakota		Andras Rado	TED	musicians/rado_andras/rakontakota.prg
-Raffles Completed		Chris Robbins	TED	musicians/robbins_chris/raffles_completed.prg
-Raffles Title		Chris Robbins	TED	musicians/robbins_chris/raffles_title.prg
-Sir Knight		Chris Robbins	TED	musicians/robbins_chris/sir_knight.prg
-Defender Of The Crown V7		Sch	TED	musicians/sch/defender_of_the_crown_v7.prg
-Reaxion		Sean	TED	musicians/sean/reaxion.prg
-One Man And His Droid		Martin Sexton	TED	musicians/sexton_martin/one_man_and_his_droid.prg
-Hypnotic Caves		Shelmie	TED	musicians/shelmie/hypnotic_caves.prg
-Maniac Slider		Shelmie	TED	musicians/shelmie/maniac_slider.prg
-Leapin Louie		Mark Sibly	TED	musicians/sibly_mark/leapin_louie.prg
-St Jupat		Otto Simon	TED	musicians/simon_otto/st_jupat.prg
-Fukwitteddy		Sire	TED	musicians/sire/fukwitteddy.prg
-Arthur Noid Ingame		Shaun Southern	TED	musicians/southern_shaun/arthur_noid_ingame.prg
-Arthur Noid Title		Shaun Southern	TED	musicians/southern_shaun/arthur_noid_title.prg
-Bandits At Zero		Shaun Southern	TED	musicians/southern_shaun/bandits_at_zero.prg
-Dingbat		Shaun Southern	TED	musicians/southern_shaun/dingbat.prg
-Dizasterblaster Ingame		Shaun Southern	TED	musicians/southern_shaun/dizasterblaster_ingame.prg
-Dizasterblaster Title		Shaun Southern	TED	musicians/southern_shaun/dizasterblaster_title.prg
-Formula 1 Simulator		Shaun Southern	TED	musicians/southern_shaun/formula_1_simulator.prg
-Jetbrix		Shaun Southern	TED	musicians/southern_shaun/jetbrix.prg
-Kikstart		Shaun Southern	TED	musicians/southern_shaun/kikstart.prg
-Laza!		Shaun Southern	TED	musicians/southern_shaun/laza!.prg
-Olympic Skier		Shaun Southern	TED	musicians/southern_shaun/olympic_skier.prg
-Pacmania		Shaun Southern	TED	musicians/southern_shaun/pacmania.prg
-Pod		Shaun Southern	TED	musicians/southern_shaun/pod.prg
-Speed King		Shaun Southern	TED	musicians/southern_shaun/speed_king.prg
-Speed King Jingle		Shaun Southern	TED	musicians/southern_shaun/speed_king_jingle.prg
-Trailblazer Jingle		Shaun Southern	TED	musicians/southern_shaun/trailblazer_jingle.prg
-Trailblazer Title		Shaun Southern	TED	musicians/southern_shaun/trailblazer_title.prg
-Tutti Frutti		Shaun Southern	TED	musicians/southern_shaun/tutti_frutti.prg
-Tutti Frutti Gameover		Shaun Southern	TED	musicians/southern_shaun/tutti_frutti_gameover.prg
-Tutti Frutti Win		Shaun Southern	TED	musicians/southern_shaun/tutti_frutti_win.prg
-Vegas Jackpot		Shaun Southern	TED	musicians/southern_shaun/vegas_jackpot.prg
-Jackdance		Spektro	TED	musicians/spektro/jackdance.prg
-Sleepwalk		Spektro	TED	musicians/spektro/sleepwalk.prg
-Rockman Ingame		Mark Srebalius	TED	musicians/srebalius_mark/rockman_ingame.prg
-Rockman Title		Mark Srebalius	TED	musicians/srebalius_mark/rockman_title.prg
-Flottenmanoever		Helge Steiner	TED	musicians/steiner_helge/flottenmanoever.prg
-Autobahn		Patrick Strassen	TED	musicians/strassen_patrick/autobahn.prg
-Pogo Pete		Patrick Strassen	TED	musicians/strassen_patrick/pogo_pete.prg
-Musik-compiler Demo		Martin Suer	TED	musicians/suer_martin/musik-compiler_demo.prg
-Kutato		Tfss	TED	musicians/tfss/kutato.prg
-95calling		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/95calling.prg
-Bengbeng Sa		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/bengbeng_sa.prg
-Brainwash 03		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/brainwash_03.prg
-Brainwash 04		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/brainwash_04.prg
-Cd5 Bauknecht		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/cd5_bauknecht.prg
-Cd5 Tek		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/cd5_tek.prg
-Deli Sa		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/deli_sa.prg
-Haziasan		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/haziasan.prg
-Hoseng Sa		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/hoseng_sa.prg
-Kinky Kinski		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/kinky_kinski.prg
-Kraftwerk Sa		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/kraftwerk_sa.prg
-Majesty Of Sprites 7 Diamond Caves		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/majesty_of_sprites_7_diamond_caves.prg
-Majesty Of Sprites Ending		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/majesty_of_sprites_ending.prg
-Majesty Of Sprites Introtune		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/majesty_of_sprites_introtune.prg
-Majesty Of Sprites Loading		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/majesty_of_sprites_loading.prg
-Metamerism		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/metamerism.prg
-Notizen Aus Der Provinz		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/notizen_aus_der_provinz.prg
-Slipstream Bauknecht		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/slipstream_bauknecht.prg
-Slipstream Gameover		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/slipstream_gameover.prg
-Slipstream Level1		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/slipstream_level1.prg
-Slipstream Level2		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/slipstream_level2.prg
-Slipstream Level3		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/slipstream_level3.prg
-Slipstream Level4		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/slipstream_level4.prg
-Slipstream Level5		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/slipstream_level5.prg
-Slipstream Title		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/slipstream_title.prg
-States United		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/states_united.prg
-The Lands Of Zador 5 The Elevator		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/the_lands_of_zador_5_the_elevator.prg
-Wangerogge Sa		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/wangerogge_sa.prg
-Zenith Of Puberty		The Electronic Knights	TED	musicians/the_electronic_knights/degauss/zenith_of_puberty.prg
-Brainwash 01		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/brainwash_01.prg
-Brainwash 02		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/brainwash_02.prg
-Brainwash 05		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/brainwash_05.prg
-Brainwash 06		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/brainwash_06.prg
-Brainwash 07		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/brainwash_07.prg
-Cd3		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/cd3.prg
-Columns Ingame		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/columns_ingame.prg
-Columns Title		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/columns_title.prg
-First Tune 02		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/first_tune_02.prg
-German Xmas 1992		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/german_xmas_1992.prg
-Master Mind Ice		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/master_mind_ice.prg
-Senseless 02		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/senseless_02.prg
-Senseless 03		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/senseless_03.prg
-Tekblah		The Electronic Knights	TED	musicians/the_electronic_knights/elvis/tekblah.prg
-First Tune 01		The Electronic Knights	TED	musicians/the_electronic_knights/first_tune_01.prg
-Senseless 01		The Electronic Knights	TED	musicians/the_electronic_knights/senseless_01.prg
-Hyperion		Tlc	TED	musicians/tlc/hyperion.prg
-Newday		Tlc	TED	musicians/tlc/newday.prg
-White Max		Tomhx	TED	musicians/tomhx/white_max.prg
-Icicle Works		Doug Turner	TED	musicians/turner_doug/icicle_works.prg
-1942 April Fools		Ulysses777	TED	musicians/ulysses777/1942_april_fools.prg
-Battle Star		Ian Waugh	TED	musicians/waugh_ian/battle_star.prg
-Phantom		Ian Waugh	TED	musicians/waugh_ian/phantom.prg
-Who Dares Wins II		Ian Waugh	TED	musicians/waugh_ian/who_dares_wins_ii.prg
-Danger Zone		David Whittaker	TED	musicians/whittaker_david/danger_zone.prg
-G-man		David Whittaker	TED	musicians/whittaker_david/g-man.prg
-Space Sweep		David Whittaker	TED	musicians/whittaker_david/space_sweep.prg
-Terra Cognita		David Whittaker	TED	musicians/whittaker_david/terra_cognita.prg
-Treasure Island		David Whittaker	TED	musicians/whittaker_david/treasure_island.prg
-Alfred		Bernd Wiedle	TED	musicians/wiedle_bernd/alfred.prg
-Power-ball Gameover		Peter Wirbelauer	TED	musicians/wirbelauer_peter/power-ball_gameover.prg
-Power-ball Title		Peter Wirbelauer	TED	musicians/wirbelauer_peter/power-ball_title.prg
-Beggars Arent Choosers 1		Zapac	TED	musicians/zapac/beggars_arent_choosers_1.prg
-Beggars Arent Choosers 2		Zapac	TED	musicians/zapac/beggars_arent_choosers_2.prg
-Beggars Arent Choosers Note		Zapac	TED	musicians/zapac/beggars_arent_choosers_note.prg
+Woohoo		tennisers	TED	musicians/tennisers/woohoo.prg
+Wow Demo		ern0	TED	musicians/ern0/wow_demo.prg
+X-Massacre		misfit	TED	musicians/misfit/x-massacre.prg
+Xmas		ern0	TED	musicians/ern0/xmas.prg
+Xmas Feeling		5tarbuck	TED	musicians/5tarbuck/xmas_feeling.prg
+Xmp		luca	TED	musicians/luca/xmp.prg
+Xplode Man Game		csabo	TED	musicians/csabo/xplode_man_game.prg
+Xplode Man Title		csabo	TED	musicians/csabo/xplode_man_title.prg
+Yewdow		inufuto	TED	musicians/inufuto/yewdow.prg
+Zenith Of Puberty		degauss	TED	musicians/degauss/zenith_of_puberty.prg
+Zodiac Intro		csabo	TED	musicians/csabo/zodiac_intro.prg
 C16 Tutor		Unknown	TED	other/c16_tutor.prg
 Cyborg Fx Intro Boss		Unknown	TED	other/cyborg_fx_intro_boss.prg
-Horror Castle Demo-designer		Unknown	TED	other/horror_castle_demo-designer.prg
-Klassik Demo-designer		Unknown	TED	other/klassik_demo-designer.prg
-Music-16 Badinerie		Unknown	TED	other/music-16_badinerie.prg
-Music-16 Musette		Unknown	TED	other/music-16_musette.prg
+Horror Castle Demo-Designer		Unknown	TED	other/horror_castle_demo-designer.prg
+Klassik Demo-Designer		Unknown	TED	other/klassik_demo-designer.prg
 Music Master Andante In C		Unknown	TED	other/music_master_andante_in_c.prg
 Music Master Bouree Bach		Unknown	TED	other/music_master_bouree_bach.prg
 Music Master Ode To Joy		Unknown	TED	other/music_master_ode_to_joy.prg
 Music Master Passion Choral		Unknown	TED	other/music_master_passion_choral.prg
-Music Master Tritsch-tratsch		Unknown	TED	other/music_master_tritsch-tratsch.prg
+Music Master Tritsch-Tratsch		Unknown	TED	other/music_master_tritsch-tratsch.prg
+Music Syntesiser		Unknown	TED	other/music_syntesiser.prg
+Music-16 Badinerie		Unknown	TED	other/music-16_badinerie.prg
+Music-16 Musette		Unknown	TED	other/music-16_musette.prg
 Plus4 Power 6		Unknown	TED	other/plus4_power_6.prg
+Pluvi 02		Unknown	TED	other/pluvi_02.prg
+Pluvi 03		Unknown	TED	other/pluvi_03.prg
+Way By Numbers Demo-Designer IIi		Unknown	TED	other/way_by_numbers_demo-designer_iii.prg
