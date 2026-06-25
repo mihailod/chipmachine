@@ -16,13 +16,12 @@ MusicPlayer: Plugin 'Ayfly ZX' failed to load '/Users/mihailod/Library/Caches/ch
 starts and then stops playback (silent) after several seconds and locks the program
 then the lock goes away and it is just silent
 
-- SEGA taxonomy messed up -- clarify / split
-- separate PC-98 and X68000
-- in generic console screenshot should be keyed off the extension
+- create generic console pics per extension
+- SEGA taxonomy messed up -- clarify / split / unify
 
 - .ftm shared between NES and ST, description is goofy (more shared extensions exist -- investigate/address)
 
-- can we add screenshots for more formats?
+- can we add game/song screenshots for more formats?
 
 - revisit cpcpower database
 - revisit zophar arcade

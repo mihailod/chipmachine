@@ -2909,6 +2909,135 @@ TEST_CASE("priority_map", "[.]")
     printf("------------------------------\n");
 }
 
+TEST_CASE("extension_to_platform_map", "[.]")
+{
+    using std::string;
+    musix::ChipPlugin::createPlugins("data");
+    auto& plugins = musix::ChipPlugin::getPlugins();
+
+    // The platform an extension belongs to follows the plugin that actually
+    // plays it in the app -- i.e. the highest-priority plugin claiming it (same
+    // rule as priority_map / the GUI). Most plugins target a single hardware
+    // platform; the few that span several get per-extension handling below.
+    static const std::map<string, string> pluginPlatform = {
+        { "UADE", "Amiga" },
+        { "AdPlug", "PC AdLib" },
+        { "Ayfly ZX", "ZX Spectrum 128" },
+        { "ZX Spectrum (ZXTune)", "ZX Spectrum 128" },
+        { "RSNPlugin", "Nintendo SNES" },
+        { "MSX (libkss)", "MSX" },
+        { "HEPlugin", "PlayStation" },
+        { "libvice", "Commodore 64" },
+        { "SC68", "Atari ST/STE" },
+        { "FMPPlugin", "PC-98 / X68000" },
+        { "V2Plugin", "PC" },
+        { "USFPlugin", "Nintendo 64" },
+        { "StSound", "Atari ST/STE" },
+        { "STarKos", "Amstrad CPC" },
+        { "Quartet", "Atari ST/STE" },
+        { "PxTone Collage Player", "PC" },
+        { "NDSPlugin", "Nintendo DS" },
+        { "HivelyPlugin", "Amiga" },
+        { "Gameboy Advance", "Nintendo Game Boy" },
+        { "WonderSwan (in_wsr)", "WonderSwan" },
+        { "Tedplay", "Commodore 16/+4" },
+        { "SunVox Player", "PC" },
+        { "SoundSmith", "Apple IIGS" },
+        { "SBStudio", "PC" },
+        { "S98", "PC-98 / X68000" },
+        { "PokeyNoise", "Atari XL/XE" },
+        { "Organya Player", "PC" },
+        { "NerdTracker2", "Nintendo NES" },
+        { "Monotone", "PC" },
+        { "MikMod", "Amiga" },
+        { "Megatracker", "Atari ST/STE" },
+        { "MaxTrax", "Amiga" },
+        { "MDX", "PC-98 / X68000" },
+        { "JayTrax", "PC" },
+        { "IXS", "PC" },
+        { "Euphony", "PC-98 / X68000" },
+        { "Coconizer", "Acorn Archimedes" },
+        { "BBSong", "ZX Spectrum 16/48" },
+        { "Archimedes Tracker", "Acorn Archimedes" },
+        { "SCC-Musixx", "MSX" },
+    };
+    // Multi-platform plugins (GME, HTPlugin, Audio Overload, ffmpeg) carry
+    // unrelated systems under one plugin, so the *extension* picks the platform.
+    static const std::map<string, string> extPlatform = {
+        // Game Music Engine
+        { "nsf", "Nintendo NES" }, { "nsfe", "Nintendo NES" },
+        { "spc", "Nintendo SNES" }, { "gbs", "Nintendo Game Boy" },
+        { "gbr", "Nintendo Game Boy" }, { "gym", "Sega Mega Drive" },
+        { "vgm", "Sega Mega Drive" }, { "vgz", "Sega Mega Drive" },
+        { "sgc", "Sega 8-bit" }, { "hes", "PC Engine" }, { "kss", "MSX" },
+        { "ay", "ZX Spectrum 128" }, { "emul", "ZX Spectrum 128" },
+        { "sap", "Atari XL/XE" },
+        // HTPlugin / Audio Overload
+        { "dsf", "Sega Dreamcast" }, { "minidsf", "Sega Dreamcast" },
+        { "ssf", "Sega Saturn" }, { "minissf", "Sega Saturn" },
+        { "qsf", "Sega Saturn" }, { "miniqsf", "Sega Saturn" },
+        { "spu", "PlayStation" },
+        // ffmpeg
+        { "mp3", "MP3" }, { "ogg", "OGG" }, { "8svx", "Amiga" },
+        { "aac", "PC" }, { "m4a", "PC" }, { "mp4", "PC" },
+        // .cop is SAA1099 Sam Coupe, not the ZX Spectrum its plugin otherwise serves
+        { "cop", "Sam Coupe" },
+    };
+
+    // ext -> highest-priority plugin claiming it (the one that plays in the app).
+    std::map<string, string> extPrimary;
+    std::map<string, int> extPriority;
+    for (auto const& plugin : plugins) {
+        for (auto const& raw : plugin->getSupportedExtensions()) {
+            auto ext = utils::toLower(raw);
+            if (!extPrimary.count(ext) || plugin->priority() > extPriority[ext]) {
+                extPrimary[ext] = plugin->name();
+                extPriority[ext] = plugin->priority();
+            }
+        }
+    }
+
+    std::map<string, std::vector<string>> platformExts;
+    std::vector<string> uncovered;
+    for (auto const& [ext, primary] : extPrimary) {
+        string platform;
+        if (extPlatform.count(ext)) {
+            platform = extPlatform.at(ext);
+        } else if (primary == "OpenMPT") {
+            // OpenMPT tracker formats split Amiga (mod/med/okt/...) vs PC
+            // (xm/s3m/it/...); the format classifier knows which is which.
+            platform = chipmachine::MusicDatabase::platformForExtension(ext);
+            if (platform.empty()) { platform = "PC"; }
+        } else if (pluginPlatform.count(primary)) {
+            platform = pluginPlatform.at(primary);
+        }
+        if (platform.empty()) {
+            uncovered.push_back(ext + " (" + primary + ")");
+        } else {
+            platformExts[platform].push_back(ext);
+        }
+    }
+
+    printf("\n--- EXTENSION -> PLATFORM MAP ---\n");
+    for (auto const& [platform, exts] : platformExts) {
+        printf("%-18s (%3zu): ", platform.c_str(), exts.size());
+        for (size_t i = 0; i < exts.size(); i++) {
+            printf(".%s%s", exts[i].c_str(), (i + 1 == exts.size()) ? "" : ", ");
+        }
+        printf("\n");
+    }
+    printf("---------------------------------\n");
+    if (uncovered.empty()) {
+        printf("\033[32mAll %zu extensions map to a platform.\033[0m\n",
+               extPrimary.size());
+    } else {
+        printf("\033[31m%zu extension(s) NOT covered by any platform:\033[0m\n",
+               uncovered.size());
+        for (auto const& u : uncovered) { printf("  .%s\n", u.c_str()); }
+    }
+    REQUIRE(uncovered.empty());
+}
+
 TEST_CASE("coverage", "[music]")
 {
     printf("======================================================\n");
@@ -3099,7 +3228,8 @@ TEST_CASE("coverage", "[music]")
         printf("-------------------------------------------\n");
     }
 
-    printf("\n>>> Hint: run cmtest priority_map to see the plugin handling priority map for each extension\n\n");
+    printf("\n>>> Hint: run cmtest priority_map to see the plugin handling priority map for each extension\n");
+    printf(">>> Hint: run cmtest extension_to_platform_map to see mapping of extensions to platforms\n\n");
 
     auto const& unsupported = notSupportedExts();
     if (!unsupported.empty()) {

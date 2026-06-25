@@ -306,6 +306,9 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     // Preload per-platform logos (and warn about any that are missing) so they
     // are ready to rotate into the screenshot area when a song plays.
     loadPlatformScreenshots();
+    // Preload per-extension screenshots; reports extensions not covered by a
+    // platform logo. Must run after loadPlatformScreenshots().
+    loadExtensionScreenshots();
 
     musicDatabase.initFromLuaAsync(this->workDir);
 
@@ -764,9 +767,30 @@ void ChipMachine::loadScreenshot(const std::string& shot)
         webutils::Web::getInstance().getFile(p, cb);
 }
 
+// Lowercased file extension of a song: prefer the DB ext, fall back to the path.
+static std::string songExtension(const SongInfo& s)
+{
+    std::string ext = utils::toLower(s.ext);
+    if (ext.empty())
+        ext = utils::toLower(utils::path_extension(s.path));
+    if (!ext.empty() && ext[0] == '.')
+        ext = ext.substr(1);
+    return ext;
+}
+
 void ChipMachine::appendLogoScreenshots()
 {
-    // Per-platform logo for the current song, when one is installed.
+    // 1) Per-extension screenshot (e.g. mod.png, sid.png) takes priority over
+    //    the platform logo when the song has no real screenshot.
+    if (!currentSongExt.empty()) {
+        auto it = extensionShots.find(currentSongExt);
+        if (it != extensionShots.end() && it->second.width() > 0) {
+            screenshots.emplace_back("ext:" + currentSongExt, it->second);
+            LOGD("Screenshot logos: ext='%s' logo=yes", currentSongExt);
+            return;
+        }
+    }
+    // 2) Per-platform logo for the current song, when one is installed.
     bool havePlatform = false;
     if (!currentPlatformSlug.empty()) {
         auto it = platformShots.find(currentPlatformSlug);
@@ -832,6 +856,59 @@ void ChipMachine::loadPlatformScreenshots()
             list += (list.empty() ? "" : ", ") + m;
         LOGW("Missing %d platform logo(s) in %s (add <name>.png or .jpg): %s",
              (int)missing.size(), dir.string(), list);
+    }
+}
+
+void ChipMachine::loadExtensionScreenshots()
+{
+    // Load whatever per-extension images are present (keyed by lowercased
+    // basename, e.g. "mod.png" -> "mod"). The black-key matches the platform
+    // logos so black-background images go transparent too.
+    auto dir = workDir / "data" / "misc" / "extensionscreenshots";
+    if (utils::File::exists(dir.string())) {
+        for (auto& f : utils::File(dir.string()).listFiles()) {
+            auto fn = f.getFileName();
+            auto e = utils::toLower(utils::path_extension(fn));
+            if (e != ".png" && e != ".jpg" && e != ".jpeg")
+                continue;
+            auto key = utils::toLower(fn.substr(0, fn.size() - e.size()));
+            try {
+                auto bm = image::load_image(f.getName());
+                for (auto& px : bm)
+                    if ((px & 0xffffff) == 0) px &= 0xffffff;
+                extensionShots[key] = bm;
+            } catch (image::image_exception& ex) {
+                LOGW("Could not decode extension screenshot %s", f.getName());
+            }
+        }
+    }
+    LOGD("Loaded %d extension screenshots from %s",
+         (int)extensionShots.size(), dir.string());
+
+    // Report extensions that have NO extension screenshot and whose platform
+    // also has NO platform logo -- i.e. the ones the platform fallback can't
+    // cover, so they would land on the app icon. Extensions covered by a
+    // platform logo are intentionally omitted.
+    std::vector<std::string> uncovered;
+    for (auto& [ext, plats] : musicDatabase.extensionPlatforms()) {
+        if (extensionShots.count(ext))
+            continue; // already has its own screenshot
+        bool coveredByPlatform = false;
+        for (auto& p : plats)
+            if (!p.empty() && platformShots.count(p)) {
+                coveredByPlatform = true;
+                break;
+            }
+        if (!coveredByPlatform)
+            uncovered.push_back(ext);
+    }
+    if (!uncovered.empty()) {
+        std::string list;
+        for (auto& e : uncovered)
+            list += (list.empty() ? "" : ", ") + e;
+        LOGW("%d extension(s) have no screenshot and no platform logo "
+             "(add data/misc/extensionscreenshots/<ext>.png): %s",
+             (int)uncovered.size(), list);
     }
 }
 
@@ -1010,6 +1087,7 @@ void ChipMachine::update()
         // rewrites it into a display string ("Amiga - Soundtracker (MOD)"),
         // which would no longer classify.
         currentSongPlatform = MusicDatabase::platformScreenshotName(currentInfo);
+        currentSongExt = songExtension(currentInfo);
         currentInfo.format = MusicDatabase::describeFormat(currentInfo);
         dbInfo = player.getDBInfo();
         screen.setTitle(utils::format("%s / %s (" PROGRAM_NAME " " VERSION_STR ")",
@@ -1157,6 +1235,7 @@ void ChipMachine::update()
         Tween::make().sine().to(songField.add, 1.0).seconds(0.5);
         currentInfo = player.getInfo();
         currentSongPlatform = MusicDatabase::platformScreenshotName(currentInfo);
+        currentSongExt = songExtension(currentInfo);
         currentInfo.format = MusicDatabase::describeFormat(currentInfo);
         auto sub_title = player.getMeta("sub_title");
         xinfoField.setText(sub_title);

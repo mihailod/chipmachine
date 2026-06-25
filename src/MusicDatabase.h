@@ -13,6 +13,7 @@
 #include <future>
 #include <map>
 #include <mutex>
+#include <set>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -196,6 +197,13 @@ public:
     static uint8_t classifyFormat(std::string const& fmt,
                                   std::string const& path);
 
+    // Human-readable platform name (the F9-filter label, e.g. "Amiga",
+    // "Commodore 64", "MSX") for a bare file extension. Returns "" when the
+    // extension maps to no hardware platform. Used by the cmtest
+    // extension_to_platform_map report to verify every playable extension is
+    // classifiable.
+    static std::string platformForExtension(std::string const& ext);
+
     // Filesystem-safe platform name for a song, used to pick a per-platform
     // logo at data/misc/platformscreenshots/<name>.png|jpg. Returns "" for
     // songs without a real hardware platform (MP3, OGG, Radio, YouTube,
@@ -205,6 +213,12 @@ public:
     // The full set of distinct platform names (slugs) that can carry a
     // per-platform logo. Used at startup to warn about missing images.
     static std::vector<std::string> platformScreenshotNames();
+
+    // Distinct file extension (lowercased) -> the set of platform slugs its
+    // songs classify to, read from the song DB. Used at startup to report which
+    // extensions need a dedicated screenshot because no platform logo covers
+    // them. Returns empty when the DB doesn't exist yet.
+    std::map<std::string, std::set<std::string>> extensionPlatforms();
 
     // Number of indexed songs (excluding products) per format byte (0..255).
     // Used to show per-platform tune counts on the F9 filter screen.

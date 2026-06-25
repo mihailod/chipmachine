@@ -245,6 +245,9 @@ private:
     void loadScreenshot(const std::string& shot);
     // Loads the per-platform logos at startup and warns about missing ones.
     void loadPlatformScreenshots();
+    // Loads per-extension screenshots and reports extensions that have neither
+    // an extension image nor a covering platform logo.
+    void loadExtensionScreenshots();
     // Appends the current song's platform logo (if any) and the ChipMachine
     // logo to the screenshots rotation, so it is never empty.
     void appendLogoScreenshots();
@@ -441,6 +444,12 @@ private:
     // data/misc/platformscreenshots/<platform>.png|jpg. Missing ones are simply
     // absent (warned about at startup, never fatal).
     std::map<std::string, image::bitmap> platformShots;
+    // Per-extension screenshots loaded from data/misc/extensionscreenshots/
+    // <ext>.png|jpg (keyed by lowercased extension, e.g. "mod","sid"). Tried
+    // before the platform logo when a song has no real screenshot.
+    std::map<std::string, image::bitmap> extensionShots;
+    // File extension (lowercased) of the playing song, for the ext screenshot.
+    std::string currentSongExt;
     // Platform slug of the song currently shown; lets loadScreenshot avoid
     // rebuilding (and re-fading) the logo-only set between same-platform songs.
     std::string currentPlatformSlug;

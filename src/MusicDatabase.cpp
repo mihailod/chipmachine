@@ -2061,7 +2061,27 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
         else if (startsWith(f, "gameboy"))
             l = GAMEBOY;
         if (f.find("megadrive") != std::string::npos) l = MEGADRIVE;
+
+        // Cache only format-string-derived results: the key is the format
+        // string f, so caching an extension-derived byte here would mis-route
+        // later songs that share f but have a different extension.
         if (l != UNKNOWN_FORMAT) format_map[f] = l;
+
+        // Last resort: classify by the file extension. format_map keys many
+        // extensions directly (mdx, s98, sgc, hes, ...), so a song whose stored
+        // format string is missing or non-canonical still lands on the right
+        // platform. This guarantees e.g. every .mdx is JPFM (PC-98/X68000/FM
+        // Towns) regardless of how its source spelled the format. Not cached
+        // under f (see above).
+        if (l == UNKNOWN_FORMAT && !path.empty()) {
+            std::string ext = toLower(utils::path_extension(path));
+            if (!ext.empty() && ext[0] == '.') ext = ext.substr(1);
+            if (!ext.empty()) {
+                auto it = format_map.find(ext);
+                if (it != format_map.end() && it->second != 0)
+                    l = it->second;
+            }
+        }
         // fprintf(stderr, "%s\n", f.c_str());
     }
     return l;
@@ -2129,6 +2149,15 @@ uint8_t MusicDatabase::classifyFormat(std::string const& fmt,
     return formatToByte(fmt, path, 0);
 }
 
+std::string MusicDatabase::platformForExtension(std::string const& ext)
+{
+    auto e = toLower(ext);
+    // Drive classification by the extension itself: format_map keys many
+    // extensions directly, and a "dummy.<ext>" path lets the extension-based
+    // fallbacks fire too.
+    return platformName(formatToByte(e, "dummy." + e, 0));
+}
+
 // Map a format byte to a filesystem-safe platform slug for the per-platform
 // logo lookup, or "" for "platforms" that are really streaming/meta sources
 // (no hardware screenshot makes sense for them).
@@ -2174,6 +2203,28 @@ std::vector<std::string> MusicDatabase::platformScreenshotNames()
         if (slug.empty() || seen.count(slug)) continue;
         seen.insert(slug);
         out.push_back(slug);
+    }
+    return out;
+}
+
+std::map<std::string, std::set<std::string>> MusicDatabase::extensionPlatforms()
+{
+    std::map<std::string, std::set<std::string>> out;
+    try {
+        sqlite3db::Database db{
+            (Environment::getCacheDir() / "music.db").string()
+        };
+        auto q = db.query<std::string, std::string>(
+            "SELECT DISTINCT ext, format FROM song");
+        std::string ext, fmt;
+        while (q.step()) {
+            std::tie(ext, fmt) = q.get_tuple();
+            ext = toLower(ext);
+            if (ext.empty()) continue;
+            out[ext].insert(platformSlugForByte(formatToByte(fmt, "", 0)));
+        }
+    } catch (...) {
+        // No cached DB yet (first run) or it is mid-reindex -- skip the report.
     }
     return out;
 }
