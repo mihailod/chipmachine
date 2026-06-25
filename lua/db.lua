@@ -81,7 +81,10 @@
 --     snapshot, per-episode itunes:image art): This Week in Chiptune (Dj
 --     CUTMAN), Pixelated Audio, GameFuel + Nitro Game Injection (KNGI). All
 --     show under the F9 Podcasts category alongside C64 Take-away / CU Podcast.
-VERSION = 64;
+-- 65: HVTC (Commodore 16/116/+4 TED .prg) pivoted from the flaky online
+--     plus4world/Wayback mirror to a shipped local store (music/hvtc), like
+--     nsfe -> music/Console. Forces a reindex so the new local_dir is stored.
+VERSION = 65;
 
 DB = {
 {
@@ -206,7 +209,8 @@ DB = {
 	id =  "hvtc",
 	source = "http://plus4world.powweb.com/feat/tedsound/hvtc/",
 	song_list = "data/hvtc.txt",
-	local_dir = "/opt/Music/hvtc",
+	-- this one has local files! (like nsfe -> music/Console)
+	local_dir = "music/hvtc",
 	color = 0xfffff
  },
  {
