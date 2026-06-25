@@ -508,6 +508,14 @@ Support for **MikMod UNITRK** / **UNIMOD** modules (`.uni`) — MikMod's own on-
 
 Extensions: `.uni`
 
+### FamiTracker (NES / Famicom)
+
+Support for **FamiTracker** modules (`.ftm`), jsr's tracker for the Nintendo NES / Famicom 2A03 (RP2A03) and its expansion chips — the dominant modern tool for new NES chiptunes (the modland `FamiTracker/` corpus). Played in-process by a vendored, boost-free slice of the cross-platform **FamiTracker CX** engine (nukep), driven synchronously at 44100 Hz; the NES APU + VRC6 / VRC7 / MMC5 / FDS emulation renders mono, duplicated to stereo for the host. See `famitracker-cx/PROVENANCE.md`.
+
+The `.ftm` extension is shared with the Atari **Face The Music** format (magic `FTMN`), which the OpenMPT plugin handles; FamiTracker is content-gated to its own magic (`FamiTracker Module`) so the two coexist. Namco 163 (N163) and Sunsoft 5B modules are not yet driven — upstream never wired their channel handlers — and decline gracefully (Skip).
+
+Extensions: `.ftm` (FamiTracker; Face The Music `.ftm` routes to OpenMPT)
+
 ### AudioOverload
 
 Support for Sega Saturn and Capcom Q music

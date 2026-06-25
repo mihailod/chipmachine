@@ -771,6 +771,24 @@ TEST_CASE("NerdTracker2", "[music]") { testPlugin<musix::NEDPlugin>("testmus/ned
 TEST_CASE("PlayerPRO", "[music]") { testPlugin<musix::PlayerProPlugin>("testmus/playerpro", ""); }
 TEST_CASE("JayTrax", "[music]") { testPlugin<musix::JxsPlugin>("testmus/jxs", ""); }
 TEST_CASE("IXS", "[music]") { testPlugin<musix::IXSPlugin>("testmus/ixs", ""); }
+TEST_CASE("FamiTracker", "[music]") { testPlugin<musix::FamiTrackerPlugin>("testmus/famitracker", ""); }
+
+// .ftm is two unrelated formats: NES FamiTracker (magic "FamiTracker Module")
+// vs Atari "Face The Music" (magic "FTMN", handled by OpenMPT). The two plugins
+// must content-gate so each claims only its own files. Guards the routing split.
+TEST_CASE("FamiTracker vs FaceTheMusic routing", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::FamiTrackerPlugin fami;
+    musix::OpenMPTPlugin ompt;
+
+    std::string const ftm = "testmus/famitracker/2a03_hfrth.ftm"; // FamiTracker
+    std::string const ftmn = "testmus/openmpt/andreab.ftm";       // Face The Music
+
+    REQUIRE(fami.canHandle(ftm));        // FamiTracker claims its module
+    REQUIRE_FALSE(fami.canHandle(ftmn)); // and declines Face The Music
+    REQUIRE(ompt.canHandle(ftmn));       // OpenMPT still owns Face The Music
+}
 
 // PlayerPRO ".mad" (Macintosh tracker, "MADG"/"MADF"/"MADK") plays via the
 // vendored public-domain MADDriver. The ".mad" extension collides with AdPlug's

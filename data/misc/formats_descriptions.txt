@@ -545,7 +545,7 @@ adl	Westwood ADL
 The AdLib/OPL music format used by Westwood Studios games such as Dune II and the Kyrandia series.
 
 ftm	FamiTracker
-FamiTracker (by jsr, 2005) module data for the NES 2A03 and its expansion chips; the dominant modern tool for composing new NES/Famicom music.
+FamiTracker (by jsr, 2005) module data for the NES 2A03 and its expansion chips; the dominant modern tool for composing new NES/Famicom music. Note that the .ftm extension is shared with the Atari Face The Music format (magic FTMN) so you could be listening an Atari song as well... not a big deal ;) maybe one day i fix this too... enjoy!
 
 ahx	AHX
 Abyss' Highest Experience, a synthetic Amiga chiptune format (no samples) by Dexter & Pink of Abyss, prized for its tiny, classic 8-bit Amiga sound.
