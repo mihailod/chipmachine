@@ -1932,6 +1932,7 @@ void initFormats()
     format_map["benn daglish sid"] = SID;
     format_map["playstation 2 sound format"] = PLAYSTATION2;
     format_map["sgc"] = SEGAMS;             // SG-1000 / Coleco / SMS rips
+    format_map["gc"] = SEGAMS;              // some rips carry ext "gc" for .sgc
     format_map["saturn sound format"] = SATURN;
     format_map["wonderswan"] = WONDERSWAN;
     format_map["ogg vorbis"] = OGG;
@@ -2147,7 +2148,21 @@ static std::string platformSlugForByte(uint8_t b)
 
 std::string MusicDatabase::platformScreenshotName(SongInfo const& s)
 {
-    return platformSlugForByte(formatToByte(s.format, s.path, 0));
+    std::string slug = platformSlugForByte(formatToByte(s.format, s.path, 0));
+    if (!slug.empty())
+        return slug;
+    // The format string can be empty/unknown for streamed console rips whose DB
+    // row carries no format name (e.g. .sgc served over HTTP). Fall back to the
+    // file extension, which format_map also keys (sgc, gc, hes, mdx, ...).
+    std::string ext = toLower(s.ext);
+    if (ext.empty()) {
+        ext = toLower(utils::path_extension(s.path));
+        if (!ext.empty() && ext[0] == '.')
+            ext = ext.substr(1);
+    }
+    if (!ext.empty())
+        slug = platformSlugForByte(formatToByte(ext, s.path, 0));
+    return slug;
 }
 
 std::vector<std::string> MusicDatabase::platformScreenshotNames()
@@ -2216,6 +2231,15 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     std::string ext = s.ext;
     if (ext.empty()) ext = utils::path_extension(s.path);
     for (auto& c : ext) c = (char)toupper((unsigned char)c);
+
+    // When the format string didn't classify (empty/unknown), reclassify by the
+    // file extension so streamed rips that carry no format name still get a real
+    // platform (e.g. ".sgc"/"gc" -> Sega 8-bit) instead of a bare "GC".
+    if (platformName(b).empty() && !ext.empty()) {
+        std::string le = toLower(ext);
+        if (le[0] == '.') le = le.substr(1);
+        b = formatToByte(le, s.path, 0);
+    }
 
     // Many songs (e.g. from ModArchive) carry a bare format code as their format
     // string (MOD, XM, IT, ...) which would otherwise render as "MOD (MOD)".
