@@ -450,6 +450,13 @@ private:
     std::map<std::string, image::bitmap> extensionShots;
     // File extension (lowercased) of the playing song, for the ext screenshot.
     std::string currentSongExt;
+    // Raw (lowercased) format string of the playing song, captured before
+    // describeFormat() rewrites it; used to pick a per-system Console logo.
+    std::string currentSongFormat;
+    // Identity of the fallback (logo-only) set currently displayed ("ext|plat"),
+    // so consecutive songs that need a DIFFERENT fallback image rebuild instead
+    // of being suppressed by the same-platform anti-flicker guard.
+    std::string shownLogoKey;
     // Platform slug of the song currently shown; lets loadScreenshot avoid
     // rebuilding (and re-fading) the logo-only set between same-platform songs.
     std::string currentPlatformSlug;

@@ -688,16 +688,20 @@ void ChipMachine::loadScreenshot(const std::string& shot)
 
     // Called from Playstarted (immediate) and from the Playing poll (late arrival).
     if (shot == "") {
-        // Song has no screenshot/cover art — rotate just the platform logo and
-        // the ChipMachine logo. Keep currentScreenshot empty so the Playing poll
-        // can still upgrade to a real screenshot URL that arrives late. Avoid
-        // rebuilding (and re-fading) when we are already showing the logo-only
-        // set for this same platform.
-        if (currentScreenshot == "" && slug == currentPlatformSlug &&
+        // Song has no screenshot/cover art — rotate the extension/platform logo.
+        // Keep currentScreenshot empty so the Playing poll can still upgrade to a
+        // real screenshot URL that arrives late. Avoid rebuilding (and re-fading)
+        // only when we are already showing the SAME fallback set: same extension
+        // AND same platform (two formats can share a platform, e.g. vgz and
+        // miniqsf both -> Console, yet need different extension images).
+        std::string logoKey =
+            currentSongExt + "|" + slug + "|" + currentSongFormat;
+        if (currentScreenshot == "" && logoKey == shownLogoKey &&
             !screenshots.empty())
             return;
         currentScreenshot = "";
         currentPlatformSlug = slug;
+        shownLogoKey = logoKey;
         screenShotIcon.clear();
         screenshots.clear();
         appendLogoScreenshots();
@@ -778,6 +782,20 @@ static std::string songExtension(const SongInfo& s)
     return ext;
 }
 
+// Songs that classify to the generic "Console" platform can optionally use a
+// per-system logo (e.g. vectrex.png) instead of the generic Console.png. Maps
+// the raw (lowercased) format string to the image base name in
+// data/misc/platformscreenshots/.
+static const std::map<std::string, std::string>& consoleSubLogos()
+{
+    static const std::map<std::string, std::string> m = {
+        { "vectrex", "vectrex" },
+        { "colecovision", "colecovision" },
+        { "capcom q-sound format", "capcom" },
+    };
+    return m;
+}
+
 void ChipMachine::appendLogoScreenshots()
 {
     // 1) Per-extension screenshot (e.g. mod.png, sid.png) takes priority over
@@ -791,17 +809,24 @@ void ChipMachine::appendLogoScreenshots()
         }
     }
     // 2) Per-platform logo for the current song, when one is installed.
+    //    For the generic "Console" platform, prefer a per-system logo
+    //    (vectrex.png, colecovision.png, capcom.png) when one is present.
+    std::string logoSlug = currentPlatformSlug;
+    if (currentPlatformSlug == "Console") {
+        auto sub = consoleSubLogos().find(currentSongFormat);
+        if (sub != consoleSubLogos().end() && platformShots.count(sub->second))
+            logoSlug = sub->second;
+    }
     bool havePlatform = false;
-    if (!currentPlatformSlug.empty()) {
-        auto it = platformShots.find(currentPlatformSlug);
+    if (!logoSlug.empty()) {
+        auto it = platformShots.find(logoSlug);
         if (it != platformShots.end() && it->second.width() > 0) {
-            screenshots.emplace_back("platform:" + currentPlatformSlug,
-                                     it->second);
+            screenshots.emplace_back("platform:" + logoSlug, it->second);
             havePlatform = true;
         }
     }
-    LOGD("Screenshot logos: platform='%s' logo=%s", currentPlatformSlug,
-         havePlatform ? "yes" : "none");
+    LOGD("Screenshot logos: platform='%s' logo='%s' have=%s", currentPlatformSlug,
+         logoSlug, havePlatform ? "yes" : "none");
     // Only when there is no platform logo, fall back to the ChipMachine icon so
     // the area isn't blank. When a platform logo exists, show only that.
     if (havePlatform)
@@ -824,9 +849,8 @@ void ChipMachine::loadPlatformScreenshots()
     // data/misc/platformscreenshots/<platform>.png (or .jpg). Missing files are
     // not fatal: collect them and emit a single warning so they can be added.
     auto dir = workDir / "data" / "misc" / "platformscreenshots";
-    std::vector<std::string> missing;
-    for (auto& name : MusicDatabase::platformScreenshotNames()) {
-        bool loaded = false;
+    // Probe <name>.png|jpg|jpeg, black-key it, store under `key`; return found.
+    auto load = [&](const std::string& key, const std::string& name) {
         for (auto ext : { ".png", ".jpg", ".jpeg" }) {
             auto p = dir / (name + ext);
             if (!utils::File::exists(p.string()))
@@ -838,16 +862,24 @@ void ChipMachine::loadPlatformScreenshots()
                 // through. (Real RGBA alpha is preserved either way.)
                 for (auto& px : bm)
                     if ((px & 0xffffff) == 0) px &= 0xffffff;
-                platformShots[name] = bm;
-                loaded = true;
-                break;
+                platformShots[key] = bm;
+                return true;
             } catch (image::image_exception& e) {
                 LOGW("Could not decode platform logo %s", p.string());
             }
         }
-        if (!loaded)
+        return false;
+    };
+
+    std::vector<std::string> missing;
+    for (auto& name : MusicDatabase::platformScreenshotNames())
+        if (!load(name, name))
             missing.push_back(name);
-    }
+    // Optional per-system logos for the generic "Console" platform (not part of
+    // the platform list, so absence is never reported as missing).
+    for (auto& [fmt, base] : consoleSubLogos())
+        load(base, base);
+
     LOGD("Loaded %d platform logos from %s", (int)platformShots.size(),
          dir.string());
     if (!missing.empty()) {
@@ -868,10 +900,12 @@ void ChipMachine::loadExtensionScreenshots()
     if (utils::File::exists(dir.string())) {
         for (auto& f : utils::File(dir.string()).listFiles()) {
             auto fn = f.getFileName();
+            // path_extension() returns the extension WITHOUT the dot.
             auto e = utils::toLower(utils::path_extension(fn));
-            if (e != ".png" && e != ".jpg" && e != ".jpeg")
+            if (e != "png" && e != "jpg" && e != "jpeg")
                 continue;
-            auto key = utils::toLower(fn.substr(0, fn.size() - e.size()));
+            // Strip ".<ext>" (extension length + the dot) to get the key.
+            auto key = utils::toLower(fn.substr(0, fn.size() - e.size() - 1));
             try {
                 auto bm = image::load_image(f.getName());
                 for (auto& px : bm)
@@ -1088,6 +1122,7 @@ void ChipMachine::update()
         // which would no longer classify.
         currentSongPlatform = MusicDatabase::platformScreenshotName(currentInfo);
         currentSongExt = songExtension(currentInfo);
+        currentSongFormat = utils::toLower(currentInfo.format);
         currentInfo.format = MusicDatabase::describeFormat(currentInfo);
         dbInfo = player.getDBInfo();
         screen.setTitle(utils::format("%s / %s (" PROGRAM_NAME " " VERSION_STR ")",
@@ -1236,6 +1271,7 @@ void ChipMachine::update()
         currentInfo = player.getInfo();
         currentSongPlatform = MusicDatabase::platformScreenshotName(currentInfo);
         currentSongExt = songExtension(currentInfo);
+        currentSongFormat = utils::toLower(currentInfo.format);
         currentInfo.format = MusicDatabase::describeFormat(currentInfo);
         auto sub_title = player.getMeta("sub_title");
         xinfoField.setText(sub_title);
