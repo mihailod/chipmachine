@@ -2,6 +2,8 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+- youtube and mp3 and ogg files are not all classified properly. many already know the platform they belong to and should be reindexes as such.
+
 - .ftm shared between NES and ST, description is goofy (more shared extensions exist -- investigate/address)
 
 - can we add game/song screenshots for more formats?
@@ -22,6 +24,8 @@
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
 
+* AMP (Amiga Music Preservation): A long-standing, focused archive dedicated specifically to preserving Amiga-originated music files.
+
 * NEO KOBE NEC PC-98 LIBRARY
   - URL: https://archive.org/details/neo-kobe-nec-pc-9801-2017-11-17-archive
   - Platforms/Chips: NEC PC-9801/8801 (YM2608 OPNA / YM2203 OPN)
@@ -35,13 +39,6 @@
   - Key Formats: .vgm (OPL logs)
   - Notes: Houses thousands of non-game OPL tracks (demoscene, covers, standalone trackers).
     Provides direct browser playback and a structured directory tree of OPL-logged chiptunes.
-
-* IN PROGRES (PESIC) --- SCENIC / SCENE.ORG MUSIC VAULT == IN PROGESS........
-  - URL: https://www.scene.org
-  - Community: Demoscene releases, music packs, musicdisk records
-  - Key Formats: .mod, .xm, .it, .mp3
-  - Notes: The central file storage for the global demoscene. Houses thousands of
-    party music competition archives and scene-released musicdisks.
 
 * VGMRips
 URL: [https://vgmrips.net](https://vgmrips.net)
@@ -109,6 +106,13 @@ A massive historical repository of ZX Spectrum chiptunes. While heavily populate
     for games where native chips cannot be easily emulated (e.g. modern Arcade/PS3/PS4).
 
 ------ DATABASES DONE / RESOLVED / ABANDONED IN THIS PASS BELOW ----------
+
+* 3284 new DONE SCENIC / SCENE.ORG MUSIC VAULT
+  - URL: https://www.scene.org
+  - Community: Demoscene releases, music packs, musicdisk records
+  - Key Formats: .mod, .xm, .it, .mp3
+  - Notes: The central file storage for the global demoscene. Houses thousands of
+    party music competition archives and scene-released musicdisks.
 
 * DONE 30K songs 40K screenshots -- DONE
 URL: [https://demozoo.org](https://demozoo.org)

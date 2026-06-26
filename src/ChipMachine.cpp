@@ -62,9 +62,9 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "PC-98/X68000/FM Towns", { JPFM } },
     { "PC Engine/TurboGrafx-16", { HES } },
     { "WonderSwan", { WONDERSWAN } },
-    { "Other Consoles", { CONSOLE } },
-    { "MP3/OGG", { MP3, OGG } },
-    { "YouTube Audio", { YOUTUBE } },
+    { "Other Platforms", { CONSOLE } },
+    { "Unclassified MP3/OGG", { MP3, OGG } },
+    { "Unclassified YouTube Audio", { YOUTUBE } },
     { "Podcasts", { PODCAST } },
     { "Radio Stations", { RADIO } }
 };

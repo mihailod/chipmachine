@@ -103,7 +103,21 @@
 --     http:// mirror, which the in-app curl can't follow: RemoteLoader CODE -1 /
 --     hang) to archive.scene.org/pub/ (direct HTTPS 200). The song URLs are
 --     stored in the indexed DB, so this needs a reindex -> the bump forces it.
-VERSION = 67;
+-- 68: scene.org tracker modules (.mod/.xm/.it/.s3m). These four formats are the
+--     most-mirrored content we ship (modland ~165k + modarchive ~155k of exactly
+--     these), so onboarding all ~9k of scene.org would be almost pure dup. Scoped
+--     (user choice) to the slice modland/modarchive cover WORST: the Spanish
+--     demoscene mirror (mirrors/scenesp.org/) + the party archive (parties/).
+--     Built by tools/build_sceneorg.py from the shipped TSV dumps in
+--     data/misc/scene.org/. No md5 exists anywhere (TSV / files.scene.org view
+--     page / API), so dedup is by lowercased basename vs allmods (modland),
+--     modarchive.txt and our own demozoo.txt -> 3278 net-new kept of 6838 in
+--     scope. composer = the party/artist dir the file sits in (provenance);
+--     format MOD/XM/IT/S3M routes into the existing per-format filters. URLs are
+--     archive.scene.org/pub/<path> (direct HTTPS 200, same lesson as v67); a few
+--     are .mod.zip etc. (ext "zip", host-extracted by magic). source empty. The
+--     bump forces a reindex so the new rows land.
+VERSION = 68;
 
 DB = {
 {
@@ -157,6 +171,19 @@ DB = {
 	id =  "demozoo",
 	source = "",
 	song_list = "data/demozoo.txt",
+	song_template = "title composer format path ext",
+	color = 0xfffff
+},
+{
+	-- scene.org tracker modules (Spanish scenesp.org mirror + party archive),
+	-- the net-new-vs-modland/modarchive slice. Each path is a full
+	-- archive.scene.org/pub/ URL (source empty); .zip rows hold a lone module
+	-- extracted by magic. composer = party/artist provenance. Built by
+	-- tools/build_sceneorg.py from data/misc/scene.org/*.tsv.
+	name = "scene.org",
+	id =  "sceneorg",
+	source = "",
+	song_list = "data/sceneorg.txt",
 	song_template = "title composer format path ext",
 	color = 0xfffff
 },
