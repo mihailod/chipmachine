@@ -2278,6 +2278,8 @@ static bool isContainerExt(std::string e)
     return k.count(e) > 0;
 }
 
+MusicDatabase* MusicDatabase::self = nullptr;
+
 std::string MusicDatabase::resolveExtension(SongInfo const& s)
 {
     // Prefer the stored ext, but never a container wrapper.
@@ -2285,15 +2287,13 @@ std::string MusicDatabase::resolveExtension(SongInfo const& s)
     if (!ext.empty() && ext[0] == '.') ext = ext.substr(1);
     if (!ext.empty() && !isContainerExt(ext)) return ext;
 
-    // Derive from the path. For an ".lha/<member>" path use the member -- it
-    // carries the real (modland prefix-form) name; otherwise the file name.
+    // Derive from the path. For an ".lha/<member>" path use the member's FILE
+    // NAME: members can live in a subdir (e.g. "Custom_Version/cust.ingame"),
+    // and the subdir must not pollute the prefix/suffix tokens below.
     std::string path = s.path;
-    std::string leaf;
     auto lpos = toLower(path).find(".lha/");
-    if (lpos != std::string::npos)
-        leaf = path.substr(lpos + 5);
-    else
-        leaf = utils::path_filename(path);
+    std::string member = (lpos != std::string::npos) ? path.substr(lpos + 5) : path;
+    std::string leaf = utils::path_filename(member);
 
     // Strip a URL query string ("song.mod?id=1" -> "song.mod").
     auto q = leaf.find('?');
@@ -2310,11 +2310,30 @@ std::string MusicDatabase::resolveExtension(SongInfo const& s)
         }
     }
 
-    // getTypeAndBase resolves both suffix-form ("song.mod" -> "mod") and
-    // modland prefix-form ("mod.song" -> "mod") names.
+    // Modland/UnExoticA names come in suffix-form ("song.mod" -> "mod") and
+    // prefix-form ("cust.ingame", "mod.song" -> "cust"/"mod"). Prefer whichever
+    // token the formats_descriptions table actually recognizes, so prefix-form
+    // custom players resolve to their real format ("cust") rather than the
+    // meaningless song-name suffix ("ingame"). This applies to ALL songs, not
+    // just compressed ones.
+    auto firstDot = leaf.find_first_of('.');
+    auto lastDot = leaf.find_last_of('.');
+    std::string suffix =
+        lastDot != std::string::npos ? toLower(leaf.substr(lastDot + 1)) : "";
+    std::string prefix =
+        firstDot != std::string::npos ? toLower(leaf.substr(0, firstDot)) : "";
+    auto described = [](std::string const& e) {
+        return self != nullptr && !e.empty() && !isContainerExt(e) &&
+               !self->describeExtension(e).empty();
+    };
+    if (described(suffix)) return suffix;
+    if (described(prefix)) return prefix;
+
+    // Neither token is a described format. getTypeAndBase still resolves the
+    // core modland prefixes ("mdat", "smp", ...); else fall back to the suffix.
     std::string type = toLower(getTypeFromName(leaf));
     if (!type.empty() && !isContainerExt(type)) return type;
-    return "";
+    return (!suffix.empty() && !isContainerExt(suffix)) ? suffix : "";
 }
 
 std::string MusicDatabase::describeFormat(SongInfo const& s)

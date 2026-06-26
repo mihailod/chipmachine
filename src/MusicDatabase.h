@@ -135,6 +135,7 @@ public:
           reindexNeeded(false)
     {
         createTables();
+        self = this;
     }
 
     bool initFromLua(utils::path const& workDir);
@@ -452,6 +453,11 @@ private:
     // data/misc/formats_descriptions.txt by describeExtension().
     std::map<std::string, std::string> formatDescriptions;
     bool formatDescriptionsLoaded = false;
+
+    // The (singleton) instance, so the static resolveExtension()/describeFormat()
+    // helpers can consult the instance-loaded formats_descriptions table to tell
+    // a real format prefix ("cust.ingame" -> "cust") from a song-name token.
+    static MusicDatabase* self;
 
     SearchIndex composerIndex;
     SearchIndex titleIndex;
