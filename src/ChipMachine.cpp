@@ -774,12 +774,10 @@ void ChipMachine::loadScreenshot(const std::string& shot)
 // Lowercased file extension of a song: prefer the DB ext, fall back to the path.
 static std::string songExtension(const SongInfo& s)
 {
-    std::string ext = utils::toLower(s.ext);
-    if (ext.empty())
-        ext = utils::toLower(utils::path_extension(s.path));
-    if (!ext.empty() && ext[0] == '.')
-        ext = ext.substr(1);
-    return ext;
+    // Use the REAL inner format, never a container wrapper (.zip/.gz/.lha): a
+    // compressed song's screenshot logo / ext key must match the wrapped module
+    // (e.g. "mod"), not the archive.
+    return MusicDatabase::resolveExtension(s);
 }
 
 // Songs that classify to the generic "Console" platform can optionally use a

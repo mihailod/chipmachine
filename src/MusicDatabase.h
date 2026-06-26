@@ -187,6 +187,17 @@ public:
     // screen: "Platform - Format name (EXT)", e.g. "Amiga - Soundtracker (MOD)".
     static std::string describeFormat(SongInfo const& s);
 
+    // The song's REAL (inner) file extension, lowercased and without a leading
+    // dot. Compressed/archived songs (.zip/.gz/.lha/...) carry the container
+    // extension in SongInfo::ext, but the actual format lives in the wrapped
+    // file -- this strips container wrappers and (for ".lha/<member>" paths and
+    // modland prefix-form names) resolves the inner type, so callers always get
+    // the playable format (e.g. "mod" for "rubbergoat.zip"), never "zip". Falls
+    // back to "" when the inner format can't be determined (e.g. an unextracted
+    // ".zip" whose member name isn't yet known). Used by describeFormat() and by
+    // the now-playing screen for the scroller/format line and screenshot logos.
+    static std::string resolveExtension(SongInfo const& s);
+
     // Trackers + prose description for a file extension, read from
     // data/misc/formats_descriptions.txt (lazily loaded/cached). Returns
     // "<trackers> - <description>", or "" when the extension isn't listed.

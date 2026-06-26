@@ -2267,6 +2267,56 @@ int MusicDatabase::getPodcastShowCount() const
     return (int)shows.size();
 }
 
+// Compression/archive extensions that wrap a real module. They must never be
+// surfaced as a song's format -- the playable format lives in the inner file.
+static bool isContainerExt(std::string e)
+{
+    if (!e.empty() && e[0] == '.') e = e.substr(1);
+    e = toLower(e);
+    static const std::set<std::string> k = { "lha", "gz",  "zip", "rar",
+                                             "lzh", "lzx", "z",   "7z" };
+    return k.count(e) > 0;
+}
+
+std::string MusicDatabase::resolveExtension(SongInfo const& s)
+{
+    // Prefer the stored ext, but never a container wrapper.
+    std::string ext = toLower(s.ext);
+    if (!ext.empty() && ext[0] == '.') ext = ext.substr(1);
+    if (!ext.empty() && !isContainerExt(ext)) return ext;
+
+    // Derive from the path. For an ".lha/<member>" path use the member -- it
+    // carries the real (modland prefix-form) name; otherwise the file name.
+    std::string path = s.path;
+    std::string leaf;
+    auto lpos = toLower(path).find(".lha/");
+    if (lpos != std::string::npos)
+        leaf = path.substr(lpos + 5);
+    else
+        leaf = utils::path_filename(path);
+
+    // Strip a URL query string ("song.mod?id=1" -> "song.mod").
+    auto q = leaf.find('?');
+    if (q != std::string::npos) leaf = leaf.substr(0, q);
+
+    // Strip trailing container wrappers ("x.sid.gz" -> "x.sid").
+    for (bool stripped = true; stripped;) {
+        stripped = false;
+        auto d = leaf.find_last_of('.');
+        if (d == std::string::npos) break;
+        if (isContainerExt(leaf.substr(d + 1))) {
+            leaf = leaf.substr(0, d);
+            stripped = true;
+        }
+    }
+
+    // getTypeAndBase resolves both suffix-form ("song.mod" -> "mod") and
+    // modland prefix-form ("mod.song" -> "mod") names.
+    std::string type = toLower(getTypeFromName(leaf));
+    if (!type.empty() && !isContainerExt(type)) return type;
+    return "";
+}
+
 std::string MusicDatabase::describeFormat(SongInfo const& s)
 {
     uint8_t b = formatToByte(s.format, s.path, 0);
@@ -2288,9 +2338,10 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     // skip the "(EXT)" suffix entirely and just label them "Podcast".
     if (b == PODCAST) return "Podcast";
 
-    // Extension (uppercase, no dot); prefer the stored ext, fall back to path.
-    std::string ext = s.ext;
-    if (ext.empty()) ext = utils::path_extension(s.path);
+    // Extension (uppercase, no dot). resolveExtension() gives the REAL inner
+    // format, so a compressed song shows "(MOD)" not "(ZIP)" -- and never the
+    // container wrapper.
+    std::string ext = resolveExtension(s);
     for (auto& c : ext) c = (char)toupper((unsigned char)c);
 
     // When the format string didn't classify (empty/unknown), reclassify by the
