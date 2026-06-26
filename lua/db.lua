@@ -84,7 +84,26 @@
 -- 65: HVTC (Commodore 16/116/+4 TED .prg) pivoted from the flaky online
 --     plus4world/Wayback mirror to a shipped local store (music/hvtc), like
 --     nsfe -> music/Console. Forces a reindex so the new local_dir is stored.
-VERSION = 65;
+-- 66: Demozoo (demozoo.org). Built by tools/build_demozoo.py from the daily
+--     Postgres dump (data.demozoo.org/demozoo-export.sql.gz). Onboards only
+--     net-new demoscene *music* (supertype=music): a production is dropped if
+--     any of its download links is one we already mirror -- a ModlandFile, or a
+--     BaseUrl on a host we ship as its own DB (HVSC/sndh/asma/AMP/csdb/zxart/
+--     cpc-power). Kept buckets: media.demozoo.org + files.zxdemo.org (BaseUrl),
+--     scene.org via archive.scene.org direct HTTPS (validated lone-module compo
+--     zips, host-extracted by magic; NOT files.scene.org/get which 302s to http),
+--     and the Fujiology Atari/Amiga archive. Chip tunes route into existing
+--     filters (Commodore 64 / Amiga / Atari ST / Atari 8Bit / ZX Spectrum) by
+--     demozoo platform, or by file extension when untagged; the cross-platform
+--     / streamed remainder lands in a new "Demoscene" category. Per-tune
+--     screenshots (the production's own media.demozoo.org screens) load from
+--     data/demozoo_screenshots.txt keyed by the song URL (like zxart). Full
+--     URLs in the path column -> source empty.
+-- 67: demozoo scene.org URLs repointed from files.scene.org/get/ (302 -> plain
+--     http:// mirror, which the in-app curl can't follow: RemoteLoader CODE -1 /
+--     hang) to archive.scene.org/pub/ (direct HTTPS 200). The song URLs are
+--     stored in the indexed DB, so this needs a reindex -> the bump forces it.
+VERSION = 67;
 
 DB = {
 {
@@ -123,6 +142,21 @@ DB = {
 	id =  "cpcpower",
 	source = "",
 	song_list = "data/cpcpower.txt",
+	song_template = "title composer format path ext",
+	color = 0xfffff
+},
+{
+	-- Demozoo (demozoo.org) net-new demoscene music. Each path is a full URL
+	-- (media.demozoo.org / files.zxdemo.org / files.scene.org / Fujiology), so
+	-- source is empty. scene.org compo entries are zips containing a lone module
+	-- that MusicPlayerList extracts by magic. Screenshots in
+	-- data/demozoo_screenshots.txt, keyed by the song URL (handled in
+	-- MusicDatabase::getSongScreenshots, like zxart). Built by
+	-- tools/build_demozoo.py.
+	name = "Demozoo",
+	id =  "demozoo",
+	source = "",
+	song_list = "data/demozoo.txt",
 	song_template = "title composer format path ext",
 	color = 0xfffff
 },

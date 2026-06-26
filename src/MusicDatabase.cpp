@@ -1541,21 +1541,20 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         LOGV("Got pouet shot %s", shot);
     } else if (collection == "hvtc" || collection == "sndh" ||
                collection == "unexotica" || collection == "modland" ||
-               collection == "zxart") {
-        // Game screenshots matched offline against an external database and
-        // served via the Wayback mirror: hvtc -> Plus/4 World (keyed by
-        // "games/<name>.prg"), sndh -> Atari Mania (keyed by
-        // "<composer>/<game>.sndh"), unexotica -> Hall of Light (keyed by the
-        // per-game "/Game/<composer>/<game>.lha" identifier), modland -> the ZX
-        // Spectrum subset matched against ZXDB / World of Spectrum (keyed by the
-        // full song path), zxart -> zxart.ee ZX game tunes matched against ZXDB
-        // by game title (keyed by the full zxart.ee song URL). Full URLs in
-        // data/<file>_screenshots.txt; no match -> blank (most songs aren't ZX
-        // games, so they get nothing).
+               collection == "hvsc" || collection == "asma" ||
+               collection == "zxart" || collection == "demozoo") {
+        // Game/production screenshots matched offline against an external
+        // database, keyed by the song path/URL in data/<file>_screenshots.txt:
+        // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
+        // ("<composer>/<game>.sndh"), unexotica -> Hall of Light (the per-game
+        // "/Game/<composer>/<game>.lha" id), zxart -> zxart.ee ZX game tunes vs
+        // ZXDB (full zxart.ee URL), demozoo -> the production's own
+        // media.demozoo.org screens (full song URL). modland/hvsc/sndh/asma are
+        // additionally augmented from Demozoo: a tune is matched to the demos
+        // that use it as soundtrack and borrows that production's screenshot
+        // (built by tools/build_demozoo.py --augment, keyed by the full song
+        // path). No match -> blank.
         std::string key = parts[1];
-        // The ZX screenshots only cover the modland ZX-AY subset, kept in its
-        // own data file rather than a giant modland_screenshots.txt.
-        std::string file = (collection == "modland") ? "zxspectrum" : collection;
         if (collection == "unexotica") {
             // The song path is one (or a MULTI: list of) module path(s) inside
             // the game's .lha; reduce it to the shared "/Game/.../<game>.lha"
@@ -1565,12 +1564,23 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
             if (game != std::string::npos && lha != std::string::npos)
                 key = key.substr(game, lha + 4 - game);
         }
-        auto const& shots = getFileShots(file);
-        auto it = shots.find(key);
-        if (it != shots.end()) {
-            shot = it->second;
-            s.metadata[SongInfo::SCREENSHOT] = shot;
-            LOGV("Got %s shot %s", collection, shot);
+        // Files to consult, in priority order. modland has two: the curated ZX
+        // subset (zxspectrum, matched via ZXDB / World of Spectrum -- a
+        // title-accurate match, so it wins) plus the larger demozoo-derived set.
+        std::vector<std::string> files;
+        if (collection == "modland")
+            files = { "zxspectrum", "modland" };
+        else
+            files = { collection };
+        for (auto const& file : files) {
+            auto const& shots = getFileShots(file);
+            auto it = shots.find(key);
+            if (it != shots.end()) {
+                shot = it->second;
+                s.metadata[SongInfo::SCREENSHOT] = shot;
+                LOGV("Got %s shot %s", collection, shot);
+                break;
+            }
         }
     } else if (classifyFormat(s.format, s.path) == PODCAST) {
         // Podcast episode artwork. Prefer per-episode art where the enclosure

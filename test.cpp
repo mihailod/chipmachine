@@ -394,6 +394,16 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
                                 break;
                             }
                             count--;
+                        } else if (rc == 0) {
+                            // No PCM yet, but not end-of-stream: the FFMPEG plugin
+                            // spawns the ffmpeg binary and returns immediately
+                            // (non-blocking), so the first getSamples() calls come
+                            // back empty while the subprocess warms up. Wait a beat
+                            // and retry within the count budget instead of giving
+                            // up (which reported a spurious "NO SOUND"). rc < 0 is
+                            // a real SONG_END and still breaks.
+                            utils::sleepms(20);
+                            count--;
                         } else
                             break;
                     }

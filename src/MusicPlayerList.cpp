@@ -686,12 +686,14 @@ void MusicPlayerList::playCurrent()
             return;
         }
 
-        // --- Zophar's Domain console gamerips: the downloaded file is a .zip of
-        // per-track native files (e.g. Sega Genesis = 01.vgm, 02.vgm, ...).
-        // Detect the ZIP by magic (PK\x03\x04), extract every member next to the
-        // cache file, and present the music tracks as local subsongs (multiSongs).
-        // Switching tracks then plays an already-extracted local file -- no
-        // re-download. Any shared lib (usflib/gsflib) extracts alongside.
+        // --- ZIP-by-magic: the downloaded file is a .zip of playable members --
+        // Zophar's Domain console gamerips (01.vgm, 02.vgm, ...) AND Demozoo
+        // scene.org compo entries (a lone .mod/.xm/.it/.sid/... or a streamed
+        // .mp3/.ogg, plus a readme). Detect the ZIP by magic (PK\x03\x04),
+        // extract every member next to the cache file (so a module's companion
+        // samples / a shared usflib/gsflib land alongside), and present the
+        // playable tracks as local subsongs (multiSongs). Switching tracks then
+        // plays an already-extracted local file -- no re-download.
         {
             bool isZip = false;
             if (FILE* fp = fopen(f0.getName().c_str(), "rb")) {
@@ -701,21 +703,42 @@ void MusicPlayerList::playCurrent()
                 fclose(fp);
             }
             if (isZip) {
-                static const std::set<std::string> musicExt = {
+                // "Song" members (chip/console rips + Amiga/PC tracker modules)
+                // we prefer; "audio" members (streamed renderings) are the
+                // fallback so a compo zip shipping a module + its .mp3 preview
+                // plays the module, while a pure-.mp3/.ogg zip still plays.
+                // Anything else (nfo/diz/txt/exe/sample.wav) is ignored.
+                static const std::set<std::string> songExt = {
                     "vgm", "vgz", "nsf", "nsfe", "spc", "gbs", "hes", "kss",
                     "sgc", "ay", "gym", "usf", "miniusf", "gsf", "minigsf",
-                    "psf", "minipsf", "2sf", "mini2sf" };
+                    "psf", "minipsf", "2sf", "mini2sf", "ssf", "dsf", "sid",
+                    "psid", "sndh", "sap", "ym", "sc68", "pt3", "pt2", "pt1",
+                    "stc", "stp", "sqt", "asc", "vtx", "psc", "mod", "xm", "it",
+                    "s3m", "mtm", "669", "far", "okt", "med", "mmd0", "mmd1",
+                    "mmd2", "mmd3", "dbm", "digi", "ahx", "hvl", "thx", "dmf",
+                    "ptm", "stm", "ult", "amf", "psm", "mt2", "gt2", "dtm", "fc",
+                    "fc13", "fc14", "aon", "smod", "dw", "cust", "mptm" };
+                static const std::set<std::string> audioExt = {
+                    "mp3", "ogg", "flac", "wav", "mp2", "m4a", "aac", "opus" };
                 std::string dir = f0.getName() + "_x";
                 utils::makedirs(dir);
-                std::vector<std::string> tracks;
+                std::vector<std::string> songs, audio;
                 try {
                     auto* a = utils::Archive::open(f0.getName(), dir);
                     for (auto const& m : *a) {
+                        // Skip macOS resource forks and dotfiles -- their ext
+                        // would otherwise spoof a bogus track (e.g. ._x.mp3).
+                        if (m.rfind("__MACOSX/", 0) == 0) continue;
+                        if (path_filename(m).rfind(".", 0) == 0) continue;
                         auto ef = a->extract(m);
-                        if (musicExt.count(toLower(path_extension(m))) > 0)
-                            tracks.push_back(ef.getName());
+                        auto ext = toLower(path_extension(m));
+                        if (songExt.count(ext) > 0)
+                            songs.push_back(ef.getName());
+                        else if (audioExt.count(ext) > 0)
+                            audio.push_back(ef.getName());
                     }
                 } catch (...) {}
+                std::vector<std::string>& tracks = songs.empty() ? audio : songs;
                 std::sort(tracks.begin(), tracks.end());
                 if (tracks.empty()) {
                     errors.emplace_back("No playable tracks in archive");
