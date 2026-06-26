@@ -1,0 +1,76 @@
+* DONE 30K songs 40K screenshots -- DONE
+URL: [https://demozoo.org](https://demozoo.org)
+What it is: Pouet is great for comments and quick links, but Demozoo is the modern, highly structured relational database for the demoscene. It maps productions, groups, parties, and specific scene musicians across all platforms (including retro and modern PC).
+Demozoo is a highly structured database. Scraping the raw HTML pages is a waste of time and parsing energy. They provide a completely open, fully documented JSON API for bulk data synchronization.
+API Base: https://demozoo.org/api/v1/
+To extract all demoscene music production links programmatically, loop through the productions endpoint filtering by the music type:
+Bash
+curl -H "Accept: application/json" "https://demozoo.org/api/v1/productions/?production_type=music"
+Iterate through the paginated JSON responses to extract data fields natively instead of writing brittle regex scrapers.
+
+* DONE VAMPI'S MDX DATABASE
+  - URL: http://mdx.vampi.tech
+  - Platforms/Chips: Sharp X68000 (YM2151 OPM & OKIM6258 ADPCM)
+  - Key Formats: .mdx + .pdx
+  - Notes: An organized, relational database indexing thousands of MDX chiptunes
+    with composers, track timings, and game titles. Offers a direct web search API.
+MDX files 9,321 -- before dedup against modland's 7,449
+6,872 net-new MDX (X68000/FM Towns filter)
+Vampi has 9,321 MDX vs modland's 7,449. I kept only the genuinely-new ones — best-effort dedup by (basename, size) against modland's MDX → 6,872 kept, 2,449 dropped as modland dups. It's imperfect (modland descriptively-renames some files, so a few dups slip through; md5 dedup wasn't possible since allmods has size but no md5) — exactly the trade-off we accepted.
+
+* OVERCLOCKED REMIX (OCREMIX)
+  - URL: https://ocremix.org
+  - Community: Arranged game music & remixes
+  - Key Formats: .mp3
+  - Notes: The premier repository for fan-made arranged game soundtracks. Contains
+    highly structured metadata (game, original composer, remixer, year).
+
+* VGMdb (METADATA ONLY -- no songs)
+  - URL: https://vgmdb.net
+  - Platforms: All gaming platforms
+  - Key Formats: Catalog metadata only (Tracklists, composers, labels)
+  - Notes: A massive community-driven wiki cataloging albums, game music history,
+    and composer metadata. Useful for scraping high-quality metadata, composer
+    aliases, and cross-linking tracks.
+
+* ......... DONE FOR SEGA GENESIS.........ZOPHAR'S DOMAIN MUSIC ARCHIVE
+  - URL: https://www.zophar.net/music.html
+  - Platforms/Chips: NES, SNES, GB, GBA, N64, Genesis, SMS, Turbografx-16, PS1, Saturn, Arcade
+  - Key Formats: .nsf, .spc, .gbs, .gsf, .usf, .vgm, .hes, .psf, .ssf
+  - Notes: One of the oldest and largest consolidated vaults of native-format console
+    gamerips. Rips are organized by game title in predictable platform directories.
+modland already covers essentially all of Zophar, comprehensively
+The one genuine gap: modland has no VGM (only 265 "Megadrive GYM", an older format) and no arcade at all. Zophar's VGM platforms — Sega Genesis, Master System, Game Gear, and Arcade — are therefore genuinely net-new (and all play via GME). 
+The genuine net-new gap is confirmed: Sega Genesis/Mega Drive, Master System, Game Gear, and Arcade (VGM/SGC) — modland has no VGM and no arcade. Everything else duplicates modland's tens of thousands.
+So we pivot Sega Genesis VGM (the biggest genuine gap), with dedup against modland's 265 "Megadrive GYM" games.
+DONE: SEGA GENESIS: 335 new
+parked: arcade (mp3, needs full scan)
+
+* ABANDONED   APPLE IIGS MUSIC PRESERVATION
+brutaldeluxe.fr is software preservation, not a song archive. 
+The actual SoundSmith songs are already onboarded: soundsmithplugin (SHIPPED) plays them, and modland has 486 SoundSmith tunes indexed and playable under the "Apple IIGS" filter.
+  - URL: https://www.brutaldeluxe.fr
+  - Sound Chips: Ensoniq ES5503 DOC (Wavetable)
+  - Key Formats: SoundSmith ($D5/$0007), NoiseTracker
+  - Notes: Apple IIGS trackers utilized the advanced Ensoniq wavetable chip.
+    SoundSmith and NinjaTracker files are preserved inside raw ProDOS disk
+    images (.2mg / .po) and ShrinkIt archives (.shk).
+
+10. DONE https://zxart.ee/eng/music/top-100/beeper/
+29,312 rows, all cleanly 5-column (title · composer · format · path · ext).
+•Playback split: 27,750 native / 1,562 ogg fallback.
+•Categories: Spectrum AY 28,480 · Sam Coupe 593 · Spectrum Beeper 138 · OGG 101.
+
+5. DONE -- NO IMPORT joshw.info.
+https://snesmusic.org/hoot/html/
+Focuses heavily on Japanese PC-88, PC-98, Sharp X68000, and FM-towns game music logs.
+we need to onboard this using archive/wayback links and integrate into formats structure
+We already have ~29k playable PC-88/PC-98/X68000/FM Towns tunes via modland.
+joshw would mostly duplicate those. 
+The genuinely net-new things joshw could add are the systems modland lacks (e.g. X1, MSX-specific, PC Engine CD, arcade/M1 rips), not the four core FM platforms.
+Targeting only net-new systems.
+nothing new discovered -- PARK
+
+1. DONE ALREADY Kestra BitWorld
+URL: [http://bitworld.bitfellas.org](http://bitworld.bitfellas.org)
+What it is: A sprawling, searchable database completely dedicated to tracking individual tracking artists, their releases, group affiliations, and scene history.
