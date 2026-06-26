@@ -512,6 +512,7 @@ private:
     bool reindexNeeded;
     bool rebuildForced = false;
     uint32_t totalSongs = 0;
+    std::string checkingNames;
 
     uint16_t dbVersion{};
     uint16_t indexVersion{};

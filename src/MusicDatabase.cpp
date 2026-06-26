@@ -905,7 +905,8 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
     auto remote_list = vars["remote_list"];
     auto description = vars["description"];
 
-    LOGD("Checking %s", name);
+    if (!checkingNames.empty()) checkingNames += ", ";
+    checkingNames += name;
 
     // Return if this collection has already been indexed in this version
     auto cq =
@@ -2849,6 +2850,7 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
         reindexNeeded = true;
     }
 
+    checkingNames.clear();
     try {
         auto res = lua.safe_script(R"(
             for a,b in pairs(DB) do
@@ -2870,6 +2872,8 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
     } catch (...) {
         LOGE("Unknown exception during DB creation");
     }
+
+    LOGD("Initialized DBs: %s", checkingNames);
 
     if (totalSongs > 0) {
         print_fmt("Total songs count: %d\n", totalSongs);
