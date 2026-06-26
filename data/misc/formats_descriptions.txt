@@ -50,7 +50,7 @@ core	Core Design
 A music and fx format used in early Core Design games, possibly created by Ben 'Benn' Daglish.
 
 cust	Custom
-DeliTracker's format for Amiga music that's not in any known format.  Custom tunes include both the music data and the player code needed to replay it.  Other Amiga music players, like EaglePlayer, DeliPlayer and UADE, recognise the DeliTracker Custom format.
+DeliTracker's format for Amiga music that's not in any other known format.  Custom tunes include both the music data and the player code needed to replay it.
 
 dat	Paul Robotham
 A MIDI-like music format created by Pete Barnett and used by Paul Robotham.
@@ -62,7 +62,7 @@ di	Digital Illusions
 A module packer with subsong support, created by The Silents for their pinball games. Also known as GrapeTracker.
 
 digi	DIGI Booster
-An eight channel tracker for the Amiga created in 1997 by Tomasz and Waldemar Piasta.  Later followed by DIGI Booster PRO, much respected by Amiga musicians for its built-in Roland TB303 emulator.
+An 8-channel tracker for Amiga created in 1997 by Tomasz and Waldemar Piasta.  Later followed by DIGI Booster PRO, much respected by Amiga musicians for its built-in Roland TB303 emulator.
 
 dl	Dave Lowe
 A music format created by Dave Lowe (Uncle Art).
@@ -83,10 +83,10 @@ dsr	Desire
 A music format created by Dentons in 1993.
 
 dum	Infogrames
-A music format that was mainly used in games published by Infogrames. Each song file (.dum) has a separate sample file(.ins), but multiple song files can share the same sample file. The majority of the music is also composed by Charles Callet. The delitracker replayer for this format called it "Rob Hubbard 2", but as far as we know there is no connection between Rob Hubbard and this audio format or the music. It is possible the previous naming was due to some similarities between the replayer code. The creator of this music format is currently unknown.
+A music format that was mainly used in games published by Infogrames. Each song file (.dum) has a separate sample file (.ins), but multiple song files can share the same sample file. The majority of the music is also composed by Charles Callet. The delitracker replayer for this format called it "Rob Hubbard 2", but the consensus is that there is no connection between Rob Hubbard and this audio format or the music. It is possible the previous naming was due to some similarities between the replayer code. The creator of this music format is currently unknown.
 
 dw	David Whittaker
-A music format created by the prolific David Whittaker.
+A music format created by David Whittaker.
 
 dz	Darius Zendeh
 A music format created by Darius Zendeh (Mark II/Quadlite). It is basically his old Mark II Sound-System format with support for subsongs.
@@ -125,7 +125,7 @@ hd	Howie Davies
 A music format created by Gary Antcliffe and Howie Davies in 1990, used in PAL Developments games.
 
 hip	Hippel
-A music format created by Jochen Hippel (Mad Max/The Exceptions).  This can also include Hippel 7V (seven voices) music. sog. is a more modern prefix for the latest replayer.
+A music format created by legendary Jochen Hippel (Mad Max/The Exceptions).  This can also include Hippel 7V (seven voices) music. sog. is a more modern prefix for the latest replayer.
 
 hipc	Hippel-COSO
 A variant of the Hippel music format.  This also includes Hippel COSO 7V (seven voices) music. COSO means "crunched datablock", i.e. the music data is compressed.  The Hippel-COSO file format can be decrunched into the regular Hippel format. soc. is a more modern prefix for the latest replayer.
@@ -191,7 +191,7 @@ mmdc	MMDC
 A module packer created by Tony Crowther.
 
 mod	SoundTracker / SoundTracker 2.6 / NoiseTracker / Protracker / StarTrekker / ChipTracker
-The original legendary tracker music editor, created by Karsten Obarski (and the most common extension). The 2.6 version by Mnemotron/Spreadpoint differs from Sound/Noise/ProTracker in that each pattern is no longer made up from 4 joined tracks, but instead channel uses its own sub-patterns. This enables you to create a drum beat and repeat that without having to copy and paste it into each track. File format is similar to that of Protracker. NoiseTracker is an evolution of the Soundtracker format by Per Tufvesson (Mahoney/Northstar) and Anders Berkeman (Kaktus/Silents). Protracker is the venerable successor of Noisetracker, originally created by the Amiga Freelancers (Lars and Anders Hamre, Sven Vahsen and Rune Johnsrud), followed by Peter Hanning and Anders Ramsay for version 2.1 to 2.3, then by the Cryptoburners (Ivar Just Olsen, Tom Bech and Bjarte Andreaeassen). StarTrekker is a Soundtracker clone created in 1990 by Björn Wesen (Exolon/Fairlight).  The "4AM" replayer can play synthetic sound samples. ChipTracker (also known as KRIS Tracker) is a module packer created by KRIS/Anarchy for use by Matthew Simmonds (4-Mat/Anarchy).
+The original legendary tracker music editor, created by Karsten Obarski (and the most common extension). The 2.6 version by Mnemotron/Spreadpoint differs from Sound/Noise/ProTracker in that each pattern is no longer made up from 4 joined tracks, but instead channel uses its own sub-patterns. This enables you to create a drum beat and repeat that without having to copy and paste it into each track. File format is similar to that of Protracker. NoiseTracker is an evolution of the Soundtracker format by Per Tufvesson (Mahoney/Northstar) and Anders Berkeman (Kaktus/Silents). Protracker is the venerable successor of Noisetracker, originally created by the Amiga Freelancers (Lars and Anders Hamre, Sven Vahsen and Rune Johnsrud), followed by Peter Hanning and Anders Ramsay for version 2.1 to 2.3, then by the Cryptoburners (Ivar Just Olsen, Tom Bech and Bjarte Andreaeassen). StarTrekker is a Soundtracker clone created in 1990 by Björn Wesen (Exolon/Fairlight).  The "4AM" replayer can play synthetic sound samples. ChipTracker (also known as KRIS Tracker) is a module packer created by KRIS/Anarchy for use by Matthew Simmonds (4-Mat/Anarchy). If you read all this text give yourself a pat on the back!
 
 mok	Silmarils
 A music format created by Michel Pernot.
@@ -203,7 +203,7 @@ mp2	ISO-MPEG Audio Layer-2
 A substitute audio compression format used in place of very sizeable CDDA tracks,
 
 mp3	ISO-MPEG Audio Layer-3
-A substitute audio compression format used in place of very sizeable CDDA tracks.  More commonly known as MP3.
+Audio compression format used in place of very sizeable CDDA tracks.  More commonly known as MP3. Could be considered cheating (Scandal! Scandal!) but many songs are only available in this format.
 
 mug	Mugician
 Also known as "Digital Mugician", this music format was created by Reiner van Vliet (Rhino/Team Hoi).
@@ -230,6 +230,9 @@ ogg	Ogg Vorbis
 A substitute audio compression format used in place of very sizeable CDDA tracks.
 
 okt	Oktalyzer
+An eight channel music editor by Armin Sander (TIP/The New Masters).
+
+okta	Oktalyzer
 An eight channel music editor by Armin Sander (TIP/The New Masters).
 
 osp	Synth Pack
