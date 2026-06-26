@@ -1543,18 +1543,20 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
     } else if (collection == "hvtc" || collection == "sndh" ||
                collection == "unexotica" || collection == "modland" ||
                collection == "hvsc" || collection == "asma" ||
-               collection == "zxart" || collection == "demozoo") {
+               collection == "zxart" || collection == "demozoo" ||
+               collection == "sceneorg") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
         // ("<composer>/<game>.sndh"), unexotica -> Hall of Light (the per-game
         // "/Game/<composer>/<game>.lha" id), zxart -> zxart.ee ZX game tunes vs
         // ZXDB (full zxart.ee URL), demozoo -> the production's own
-        // media.demozoo.org screens (full song URL). modland/hvsc/sndh/asma are
-        // additionally augmented from Demozoo: a tune is matched to the demos
-        // that use it as soundtrack and borrows that production's screenshot
-        // (built by tools/build_demozoo.py --augment, keyed by the full song
-        // path). No match -> blank.
+        // media.demozoo.org screens (full song URL). modland/hvsc/sndh/asma/
+        // sceneorg are additionally augmented from Demozoo: a tune is matched to
+        // the demos that use it as soundtrack and borrows that production's
+        // screenshot (built by tools/build_demozoo.py --augment, keyed by the
+        // full song path; sceneorg matched by its archive.scene.org URL). No
+        // match -> blank.
         std::string key = parts[1];
         if (collection == "unexotica") {
             // The song path is one (or a MULTI: list of) module path(s) inside

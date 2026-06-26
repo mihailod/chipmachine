@@ -1186,6 +1186,7 @@ Fasttracker 2/Edzes/coop-Auricom/related memories.xm	https://media.demozoo.org/s
 Fasttracker 2/Edzes/coop-Auricom/stimpy's camelrace.xm	https://media.demozoo.org/screens/s/8a/09/c372.153239.jpg
 Fasttracker 2/Edzes/coop-Loonie/ulfs vibrator.xm	https://media.demozoo.org/screens/s/8a/09/c372.153239.jpg
 Fasttracker 2/Edzes/coop-Phillie/rebels rocks.xm	https://media.demozoo.org/screens/s/8a/09/c372.153239.jpg
+Fasttracker 2/Edzes/coop-Zabutom/64-the magic number.xm	https://media.demozoo.org/screens/s/6b/5b/41c5.153240.jpg
 Fasttracker 2/Edzes/cute little teddy.xm	https://media.demozoo.org/screens/s/8d/11/e175.342463.jpg
 Fasttracker 2/Edzes/millenium 2000-chip.xm	https://media.demozoo.org/screens/s/8d/11/e175.342463.jpg
 Fasttracker 2/Edzes/winterjamming.xm	https://media.demozoo.org/screens/s/8a/09/c372.153239.jpg
@@ -4520,6 +4521,7 @@ HVSC/MUSICIANS/F/Fanta/Coma_Light_13_tune_4.sid	https://media.demozoo.org/screen
 HVSC/MUSICIANS/F/Fanta/Comaland_tune_1.sid	https://media.demozoo.org/screens/s/b0/06/47d3.88417.png
 HVSC/MUSICIANS/F/Fanta/Comaland_tune_4.sid	https://media.demozoo.org/screens/s/b0/06/47d3.88417.png
 HVSC/MUSICIANS/F/Fanta/Dedication_to_Linus_with_Love.sid	https://media.demozoo.org/screens/s/a6/db/a03d.43662.png
+HVSC/MUSICIANS/F/Fanta/Deep.sid	https://media.demozoo.org/screens/s/13/29/2d61.384486.jpg
 HVSC/MUSICIANS/F/Fanta/Desert_Dream.sid	https://media.demozoo.org/screens/s/bf/70/69ea.53593.png
 HVSC/MUSICIANS/F/Fanta/Ferrero.sid	https://media.demozoo.org/screens/s/86/48/66a8.178176.png
 HVSC/MUSICIANS/F/Fanta/Finetuning.sid	https://media.demozoo.org/screens/s/cc/bf/3390.283403.png

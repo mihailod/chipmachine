@@ -2,6 +2,34 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+- [Scroller.h:46] SCROLL:  A MALC JENNINGS PRODUCTION 2001 Presenting another rmx <FIRST SAMURAI> <EXTENDED VERSION!> Original by: Tim Wright Remixed by: Malc Jennings Feel free to distribute this and any of those @ Amiga Legal Emulation. We have moved location btw so update yerself! http://ale.emuunlim.com More coming soon!  ... PC - Impulsetracker (IT) ... Impulse Tracker - Jeffrey Lim's 1995 DOS tracker, an evolution of Scream Tracker 3 adding 16-bit samples, instruments with envelopes and a resonant filter. Long the gold standard of PC tracking; open-sourced in 2014. ...
+[ChipMachine.cpp:782] Screenshot logos: platform='PC' logo='PC' have=yes
+[SearchIndex.cpp:234] words: [[first samurai]}]
+[SearchIndex.cpp:276] ## OTHER PARTS
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Delitracker Custom/- unknown/firstsamurai.cus
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDelitracker Custom%2f- unknown/firstsamurai.cus
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Delitracker%20Custom/-%20unknown/firstsamurai.cus
+[web.cpp:291] CODE 550
+[RemoteLoader.cpp:159] CODE 550
+
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Ad Lib/MUS/Nick Jones/first samurai.mus
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.mus
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Ad%20Lib/MUS/Nick%20Jones/first%20samurai.mus
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:761] Detected ext: 
+openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
+MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.mus'. Error: Could not load module
+MusicPlayer: Plugin 'libvice' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.mus'. Error: Not a sid file
+[UADEPlugin.cpp:752] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
+[UADEPlugin.cpp:25] Starting thread
+[UADEPlugin.cpp:301] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.mus
+[UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.BANK' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
+[UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.BANK
+[UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/SMP.set' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
+[UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/SMP.set
+uade warning: Song ended prematurely due to error: score died
+
 - youtube and mp3 and ogg files are not all classified properly. many already know the platform they belong to and should be reindexes as such.
 
 - .ftm shared between NES and ST, description is goofy (more shared extensions exist -- investigate/address)
