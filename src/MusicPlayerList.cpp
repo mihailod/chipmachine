@@ -755,6 +755,38 @@ void MusicPlayerList::playCurrent()
                 return;
             }
         }
+
+        // --- LHA-by-magic for StSound (.ym/.mix) ------------------------------
+        // CPC-Power's Amstrad CPC .ym game rips are LHA archives wrapping a
+        // single inner YM stream. StSound's built-in LZH depacker only handles
+        // level-0 LHA headers, so the level-1 archives some rips use (e.g.
+        // "BeTiled!") make its load fail outright -- it can't depack them and the
+        // tune won't play (and used to crash on the resulting NULL song name).
+        // Extract the inner member with lhasa (extractLha handles every LHA
+        // level), which yields the bare YM stream StSound then plays directly.
+        // Level-0 archives pass through here too and play identically, so the
+        // route is uniform. The Content-Disposition ext-rename block below
+        // re-tags the extracted member (".ym5") as ".ym" so it routes to StSound.
+        if (ext == "ym" || ext == "mix") {
+            unsigned char m[7] = { 0 };
+            bool isLha = false;
+            if (FILE* fp = fopen(f0.getName().c_str(), "rb")) {
+                isLha = fread(m, 1, 7, fp) == 7 && m[2] == '-' &&
+                        m[3] == 'l' && m[4] == 'h' && m[6] == '-';
+                fclose(fp);
+            }
+            if (isLha) {
+                std::string dir = f0.getName() + "_lha";
+                for (auto const& rel : extractLha(f0.getName(), dir)) {
+                    File member = File(dir + "/" + rel);
+                    if (member.exists()) {
+                        // One YM stream per rip -- play the first member.
+                        f0 = member;
+                        break;
+                    }
+                }
+            }
+        }
         // The cached file has a URL-encoded name (e.g. "downloads.php%3fmoduleid=1")
         // which may contain bogus extensions like ".php". Use the format field
         // from the database (e.g. "XM") as the real extension.
