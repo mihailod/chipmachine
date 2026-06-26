@@ -2,16 +2,6 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-! [web.cpp:291] CODE 200
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Picatune2/BeRo/acidhouse.pt2
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune2%2fBeRo/acidhouse.pt2
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Picatune2/BeRo/acidhouse.pt2
-[MusicDatabase.cpp:1502] Loaded 796 zxspectrum screenshots
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:738] Detected ext: 
-MusicPlayer: Plugin 'Ayfly ZX' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune2%2fBeRo/acidhouse.pt2'. Error: Not an AY file
-
 - .ftm shared between NES and ST, description is goofy (more shared extensions exist -- investigate/address)
 
 - can we add game/song screenshots for more formats?
@@ -46,7 +36,7 @@ MusicPlayer: Plugin 'Ayfly ZX' failed to load '/Users/mihailod/Library/Caches/ch
   - Notes: Houses thousands of non-game OPL tracks (demoscene, covers, standalone trackers).
     Provides direct browser playback and a structured directory tree of OPL-logged chiptunes.
 
-* SCENIC / SCENE.ORG MUSIC VAULT
+* IN PROGRES (PESIC) --- SCENIC / SCENE.ORG MUSIC VAULT == IN PROGESS........
   - URL: https://www.scene.org
   - Community: Demoscene releases, music packs, musicdisk records
   - Key Formats: .mod, .xm, .it, .mp3
@@ -95,16 +85,6 @@ Maintained by Sergey Bulba (author of Ay_Emul), this archive contains the histor
 * https://zxtunes.com -- a Russian site
 A massive historical repository of ZX Spectrum chiptunes. While heavily populated by standard AY tracking formats, its index includes extensive mappings of older, undocumented internal-beeper game routines that were ripped and isolated by early scene groups.
 
-* Demozoo -- IN PROGRESS: PESIC...
-URL: [https://demozoo.org](https://demozoo.org)
-What it is: Pouet is great for comments and quick links, but Demozoo is the modern, highly structured relational database for the demoscene. It maps productions, groups, parties, and specific scene musicians across all platforms (including retro and modern PC).
-Demozoo is a highly structured database. Scraping the raw HTML pages is a waste of time and parsing energy. They provide a completely open, fully documented JSON API for bulk data synchronization.
-API Base: https://demozoo.org/api/v1/
-To extract all demoscene music production links programmatically, loop through the productions endpoint filtering by the music type:
-Bash
-curl -H "Accept: application/json" "https://demozoo.org/api/v1/productions/?production_type=music"
-Iterate through the paginated JSON responses to extract data fields natively instead of writing brittle regex scrapers.
-
 --- MP3 / FLAC - not sure - we focus on real chip music - but already have some - maybe -----
 
 * GYUSYABU PC-98 SOUNDTRACKS
@@ -129,6 +109,16 @@ Iterate through the paginated JSON responses to extract data fields natively ins
     for games where native chips cannot be easily emulated (e.g. modern Arcade/PS3/PS4).
 
 ------ DATABASES DONE / RESOLVED / ABANDONED IN THIS PASS BELOW ----------
+
+* DONE 30K songs 40K screenshots -- DONE
+URL: [https://demozoo.org](https://demozoo.org)
+What it is: Pouet is great for comments and quick links, but Demozoo is the modern, highly structured relational database for the demoscene. It maps productions, groups, parties, and specific scene musicians across all platforms (including retro and modern PC).
+Demozoo is a highly structured database. Scraping the raw HTML pages is a waste of time and parsing energy. They provide a completely open, fully documented JSON API for bulk data synchronization.
+API Base: https://demozoo.org/api/v1/
+To extract all demoscene music production links programmatically, loop through the productions endpoint filtering by the music type:
+Bash
+curl -H "Accept: application/json" "https://demozoo.org/api/v1/productions/?production_type=music"
+Iterate through the paginated JSON responses to extract data fields natively instead of writing brittle regex scrapers.
 
 * DONE VAMPI'S MDX DATABASE
   - URL: http://mdx.vampi.tech

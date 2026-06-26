@@ -639,3 +639,5 @@ A music format for the TurboSound FM expansion (twin AY plus a Yamaha YM2203-cla
 
 cop	Sam Coupe COP
 A music format for the SAM Coupé home computer, driving its Philips SAA1099 stereo sound chip.
+
+prg	.prg file is a standard Commodore executable file. Unlike structural music formats (eg .sid), a .prg contains the actual machine code player, the music data tracks, and often a visual driver or presentation interface meant to be loaded and run directly on a real machine or emulator. To play a .prg file containing TED music, a software player cannot simply parse a data stream like an MP3 or MIDI file. Because a .prg is a raw Commodore 16/116/+4 binary executable, the player must actually execute 6502/7501 machine code and emulate the specific sound hardware.
