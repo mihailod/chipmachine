@@ -1544,14 +1544,17 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                collection == "unexotica" || collection == "modland" ||
                collection == "hvsc" || collection == "asma" ||
                collection == "zxart" || collection == "demozoo" ||
-               collection == "sceneorg") {
+               collection == "sceneorg" || collection == "zophar") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
         // ("<composer>/<game>.sndh"), unexotica -> Hall of Light (the per-game
         // "/Game/<composer>/<game>.lha" id), zxart -> zxart.ee ZX game tunes vs
         // ZXDB (full zxart.ee URL), demozoo -> the production's own
-        // media.demozoo.org screens (full song URL). modland/hvsc/sndh/asma/
+        // media.demozoo.org screens (full song URL), zophar -> the game's
+        // soundcover image on Zophar's Domain (full song URL, keyed by the
+        // fi.zophar.net .zip URL; built by build_zophar.py --screenshots).
+        // modland/hvsc/sndh/asma/
         // sceneorg are additionally augmented from Demozoo: a tune is matched to
         // the demos that use it as soundtrack and borrows that production's
         // screenshot (built by tools/build_demozoo.py --augment, keyed by the
