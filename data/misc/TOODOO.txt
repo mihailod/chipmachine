@@ -2,6 +2,66 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+- scroll must be perfectly smooth, it is stuttering now when music playing, probably some threading issue?
+
+- dsym shuold be reclassified as acorn archimedes
+
+- extensions description missing:
+
+
+gtk	55
+gt2	53
+dsm	38
+c67	36
+bam	29
+pis	28
+sat	27
+ams	27
+dmo	26
+tcb	24
+dfm	21
+mtr	18
+mix	14
+A2M	13
+mkj	12
+m	12
+cba	11
+xmf	9
+xad	9
+sdb	9
+jbm	9
+fmt	9
+agd	9
+etx	8
+plm	7
+as3m	7
+xms	6
+sqx	6
+
+
+- dtm (115 songs in db) --- NO PLAYBACK! (but cmtests work) 
+.dtm many i tried cannot play but cmtests work -- investigate. examples from GUI:
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Digital Tracker DTM/Adamsky/real dreams.dtm
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fAdamsky/real dreams.dtm
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Digital%20Tracker%20DTM/Adamsky/real%20dreams.dtm
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fAdamsky/real dreams.dtm'. Error: 
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Digital Tracker DTM/Bitmaps/five changes.dtm
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fBitmaps/five changes.dtm
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Digital%20Tracker%20DTM/Bitmaps/five%20changes.dtm
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fBitmaps/five changes.dtm'. Error: 
+
+
+
+- apple II GS soundsmith sounds wrong
+- .w not picked up for scroll ([MusicPlayerList.cpp:793] Detected ext: )
+- macintosh tracker classified as apple ii gs?
+
 - [Scroller.h:46] SCROLL:  A MALC JENNINGS PRODUCTION 2001 Presenting another rmx <FIRST SAMURAI> <EXTENDED VERSION!> Original by: Tim Wright Remixed by: Malc Jennings Feel free to distribute this and any of those @ Amiga Legal Emulation. We have moved location btw so update yerself! http://ale.emuunlim.com More coming soon!  ... PC - Impulsetracker (IT) ... Impulse Tracker - Jeffrey Lim's 1995 DOS tracker, an evolution of Scream Tracker 3 adding 16-bit samples, instruments with envelopes and a resonant filter. Long the gold standard of PC tracking; open-sourced in 2014. ...
 [ChipMachine.cpp:782] Screenshot logos: platform='PC' logo='PC' have=yes
 [SearchIndex.cpp:234] words: [[first samurai]}]

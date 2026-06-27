@@ -194,7 +194,7 @@ mmdc	MMDC
 A module packer created by Tony Crowther.
 
 mod	SoundTracker / SoundTracker 2.6 / NoiseTracker / Protracker / StarTrekker / ChipTracker
-The original legendary tracker music editor, created by Karsten Obarski (and the most common extension). The 2.6 version by Mnemotron/Spreadpoint differs from Sound/Noise/ProTracker in that each pattern is no longer made up from 4 joined tracks, but instead channel uses its own sub-patterns. This enables you to create a drum beat and repeat that without having to copy and paste it into each track. File format is similar to that of Protracker. NoiseTracker is an evolution of the Soundtracker format by Per Tufvesson (Mahoney/Northstar) and Anders Berkeman (Kaktus/Silents). Protracker is the venerable successor of Noisetracker, originally created by the Amiga Freelancers (Lars and Anders Hamre, Sven Vahsen and Rune Johnsrud), followed by Peter Hanning and Anders Ramsay for version 2.1 to 2.3, then by the Cryptoburners (Ivar Just Olsen, Tom Bech and Bjarte Andreaeassen). StarTrekker is a Soundtracker clone created in 1990 by Björn Wesen (Exolon/Fairlight).  The "4AM" replayer can play synthetic sound samples. ChipTracker (also known as KRIS Tracker) is a module packer created by KRIS/Anarchy for use by Matthew Simmonds (4-Mat/Anarchy). If you read all this text give yourself a pat on the back!
+The original legendary tracker music editor, created by Karsten Obarski (and the most common extension). The MOD format was the first file format for tracked music on the Commodore Amiga. A very basic version of this format (with only very few pattern commands and short samples supported) was introduced by Karsten Obarski’s Ultimate SoundTracker. It was designed to use 4 channels each with one voice. Ultimate SoundTracker was soon superseded by NoiseTracker and ProTracker, which allowed for more tracker commands (effects), longer samples, more patterns and other improvements. Later, variants of the MOD format that appeared on the Personal Computer extended the number of channels, added panning commands (the Amiga’s four hardware channels had a pre-defined stereo setup) and expanded the Amiga’s frequency limit, allowing for more octaves of notes to be supported. Arguably one of the most widespread tracker formats (also due to its use in many computer games and demos), it is also one of the simplest to use, but also only provides few pattern commands to use. Instruments cannot be used in the MOD format, only 8-bit samples with a maximum size of 128 KB per sample and with a limited set of parameters. Initial tempo, number of rows (always 64), and the “time signature” cannot be defined (always uses the highlight values provided in the Display setup). There is limited sample control and few global settings. The 2.6 version by Mnemotron/Spreadpoint differs from Sound/Noise/ProTracker in that each pattern is no longer made up from 4 joined tracks, but instead channel uses its own sub-patterns. This enables you to create a drum beat and repeat that without having to copy and paste it into each track. File format is similar to that of Protracker. NoiseTracker is an evolution of the Soundtracker format by Per Tufvesson (Mahoney/Northstar) and Anders Berkeman (Kaktus/Silents). Protracker is the venerable successor of Noisetracker, originally created by the Amiga Freelancers (Lars and Anders Hamre, Sven Vahsen and Rune Johnsrud), followed by Peter Hanning and Anders Ramsay for version 2.1 to 2.3, then by the Cryptoburners (Ivar Just Olsen, Tom Bech and Bjarte Andreaeassen). StarTrekker is a Soundtracker clone created in 1990 by Björn Wesen (Exolon/Fairlight).  The "4AM" replayer can play synthetic sound samples. ChipTracker (also known as KRIS Tracker) is a module packer created by KRIS/Anarchy for use by Matthew Simmonds (4-Mat/Anarchy). If you read all this text give yourself a pat on the back!
 
 mok	Silmarils
 A music format created by Michel Pernot.
@@ -299,7 +299,7 @@ rk	Ron Klaren
 A music and fx format created by Yvo Zoer and Ron Klaren.  Files in this format have an eagleplayer specific header.
 
 s3m	ScreamTracker 3
-A multi-channel PC music editor created by Sami Tammilehto (PSI/Future Crew).
+A multi-channel PC music editor created by Sami Tammilehto (PSI/Future Crew). Scream Tracker 3′s S3M format added sample tuning (defining the exact frequency of the middle C for samples), increased the number of playback channels, made use of an extra column specifically for volume control (which was extended by other trackers to handle panning commands as well), and compressed pattern data for smaller file sizes. Other improvements include the ability to set the initial tempo and speed (ticks per row), initial global and sample volume as well as initial channel panning. Compared to MOD, there is also a different, expanded set of effect commands. A unique feature of the S3M format is the ability to make use of samples and synthesized FM instruments (via the Yamaha OPL2 chip) at the same time.
 
 s7g	Hippel 7V
 This is the first Amiga music format to support seven voices. The song data can also be compressed as COSO.
@@ -383,7 +383,7 @@ wb	Wally Beben
 Music composed by Wally Beben using the Ariston replay routine.
 
 xm	FastTracker 2.0
-A multi-channel PC music editor by Magnus Högdahl and Fredrik Huss.
+A multi-channel PC music editor by Magnus Högdahl and Fredrik Huss. With the XM format, Fasttracker 2 introduced the concept of “instruments”, which applied volume and panning envelopes to samples. It also added the ability to map several samples to the same instrument for multi-sampled instruments or drum sets. XM uses instrument-based panning – instrument numbers in patterns always reset the channel’s panning to the current sample’s initial panning. It uses MOD effect command letters, plus a few of its own for more sound control. You can define initial tempos and speeds; provide envelopes to samples by assigning them to instruments; set sample looping and apply automatic sample vibrato oscillation; and with OpenMPT, apply VST plugins to instruments, channels, or the whole track to spice up your old XM compositions.
 
 nsf	NES Sound Format
 Music ripped from Nintendo NES/Famicom games, devised by Kevin Horton in 1999 (originally "NESM"); the 6502 sound code plus a small header, replayed on an emulated 2A03. Hugely popular for original chiptune composition.
@@ -469,8 +469,9 @@ The Pro Tracker 2 AY module format for the ZX Spectrum, a staple of the Russian 
 pt3	Pro Tracker 3 (ZX)
 Pro Tracker 3, the most widespread ZX Spectrum AY format; also the save target of Vortex Tracker. The reference format of the Spectrum chip scene.
 
-stp	Sound Tracker Pro (ZX)
-A ZX Spectrum AY format from the Sound Tracker Pro editor lineage.
+stp	STP/STP2 formats are vintage chiptune module files created by the Sound Tracker Pro and Sound Tracker Pro 2 music editors (originally ported by KSA Software/Pentagram in the 1990s) for the ZX Spectrum. These files contain sequenced, multi-channel pattern data that drives the AY-3-8910/12 sound chip.
+
+stp2	STP/STP2 formats are vintage chiptune module files created by the Sound Tracker Pro and Sound Tracker Pro 2 music editors (originally ported by KSA Software/Pentagram in the 1990s) for the ZX Spectrum. These files contain sequenced, multi-channel pattern data that drives the AY-3-8910/12 sound chip.
 
 sqt	SQ-Tracker (ZX)
 An AY module format produced by SQ-Tracker on the ZX Spectrum.
@@ -491,7 +492,7 @@ s98	S98 (PC-98)
 A register-log format (close kin to VGM) for capturing FM sound from NEC PC-98 games and other Japanese hardware.
 
 it	Impulse Tracker
-Jeffrey Lim's 1995 DOS tracker, an evolution of Scream Tracker 3 adding 16-bit samples, instruments with envelopes and a resonant filter. Long the gold standard of PC tracking; open-sourced in 2014.
+Jeffrey Lim's 1995 DOS tracker, an evolution of Scream Tracker 3 adding 16-bit samples, instruments with envelopes and a resonant filter. Long the gold standard of PC tracking; open-sourced in 2014. Impulse Tracker introduced the IT format, which, in comparison to the XM format, allows instruments to also specify the transposition of assigned samples depending on the note being played, applying resonant filters to samples, and defining “New Note Actions” (NNAs) for instruments to release playing notes on a pattern channel while a new note is already playing, which helps to keep the number of pattern channels at a manageable amount while still being able to have a high polyphony. Like S3M files (and contrary to XM files), panning is channel-based, meaning that channels have an initial pan position which can be overridden by panning commands or instruments’ and samples’ default panning settings.
 
 stm	Scream Tracker 2
 The module format of Future Crew's Scream Tracker 2, an influential early PC tracker that paved the way for S3M and the whole DOS tracking scene.
@@ -524,7 +525,9 @@ mo3	MO3
 A compressed module container that stores tracker patterns plus MP3/OGG-encoded samples, shrinking MOD/XM/IT/S3M files for distribution.
 
 mptm	OpenMPT
-OpenMPT's native format, extending the IT format with modern features (more channels, plugins, advanced envelopes).
+OpenMPT's native format, extending the IT format with modern features (more channels, plugins, advanced envelopes). It is based on the IT format, with added capabilities of custom sample tunings, Parameter Control events, multiple Pattern Sequences, tempo swing, fractional tempos, global resampling settings and many more features.
+
+Compared to IT, this format also adds back support for the OPL chip as found in the S3M format with several useful additions, such as being able to use the additional OPL3 waveforms, apply instrument envelopes to FM instruments or controlling the modulator intensity through sample filter cutoff.
 
 d00	EdLib (Vibrants)
 The AdLib OPL music format of EdLib by Vibrants (JCH), used in several scene productions and games on the AdLib/Sound Blaster.
@@ -649,3 +652,49 @@ A music format for the SAM Coupé home computer, driving its Philips SAA1099 ste
 prg	.prg file is a standard Commodore executable file. Unlike structural music formats (eg .sid), a .prg contains the actual machine code player, the music data tracks, and often a visual driver or presentation interface meant to be loaded and run directly on a real machine or emulator. To play a .prg file containing TED music, a software player cannot simply parse a data stream like an MP3 or MIDI file. Because a .prg is a raw Commodore 16/116/+4 binary executable, the player must actually execute 6502/7501 machine code and emulate the specific sound hardware.
 
 mso	.mso is a tracker music module format created by Paul van der Valk as the successor to his Future Player format on the Commodore Amiga.
+
+w	SoundSmith is the well-known and most widely used music tracker on the Apple IIgs. Originally written by Huibert Aalbers as a member of the F.U.N. group, then distributed by European Software Partners, then sold by Seven Hills Software, the new v2 supports the 4soniq quadri/octo-phonic card by Manila Gear.
+
+sun	zeg (from Germany) said on abime (01 July 2012): No editor for this. Each soundtrack comes with a modified version of the replay, with additions, changes. P. Kunath arranged the Delitracker custom songs. It was a hard work. The suntronic files were meant not to come to public. Yes, all given floppy disks have been archived for preparing the delicustoms. And yes, all the data on the disks are messy. bye bye
+
+dsym	The DSym (.dsym) file format is a legacy music module and tracker format native to the Acorn Archimedes and RISC OS systems, originally developed by Oregan Developments. Similar to Amiga MOD or Scream Tracker, it contains digital audio samples and sequencer data (notes, tempo, effects)
+
+ptcop	.ptcop and .pttune are native file formats for PxTone Collage, a freeware music sequencer created by Daisuke Amaya (Pixel), the developer of Cave Story. .ptcop (PxTone Collage Project) is the primary, editable project file. It contains all of the raw composition data, arrangement units, sequence events, and local instrument references. .pttune (PxTone Tune) is a compiled, read-only format designed strictly for audio playback. It packages the composition along with its compiled instruments, but typically cannot be edited or modified natively.
+
+pttune	.ptcop and .pttune are native file formats for PxTone Collage, a freeware music sequencer created by Daisuke Amaya (Pixel), the developer of Cave Story. .ptcop (PxTone Collage Project) is the primary, editable project file. It contains all of the raw composition data, arrangement units, sequence events, and local instrument references. .pttune (PxTone Tune) is a compiled, read-only format designed strictly for audio playback. It packages the composition along with its compiled instruments, but typically cannot be edited or modified natively.
+
+sgc	The .sgc / .gc formats are used by Sega Genesis/Mega Drive chiptunes. It typically contains compressed or structured data designed to be read by a specific sound engine or player emulator that interprets the chip's register writes for music playback.
+
+gc 	The .sgc / .gc formats are used by Sega Genesis/Mega Drive chiptunes. It typically contains compressed or structured data designed to be read by a specific sound engine or player emulator that interprets the chip's register writes for music playback.
+
+OVI	FMPMD (Professional Music Driver) sound system for the NEC PC-98. The driver for this sound file is called FMP, which compiles or interprets the music macro language (MML) into active audio. In the PC-98 scene, game music is typically handled via specific music macro language (MML) compilers that route audio to the Yamaha OPN/OPNA (YM2203 / YM2608) sound chips. The ecosystem is made of Compiled Music (.M or .OPI: the base melodic composition) and Rhythm Modules (.OVI: custom external PCM samples used to drive percussion tracks).
+
+OPI	FMPMD (Professional Music Driver) sound system for the NEC PC-98. The driver for this sound file is called FMP, which compiles or interprets the music macro language (MML) into active audio. In the PC-98 scene, game music is typically handled via specific music macro language (MML) compilers that route audio to the Yamaha OPN/OPNA (YM2203 / YM2608) sound chips. The ecosystem is made of Compiled Music (.M or .OPI: the base melodic composition) and Rhythm Modules (.OVI: custom external PCM samples used to drive percussion tracks).
+
+M	FMPMD (Professional Music Driver) sound system for the NEC PC-98. The driver for this sound file is called FMP, which compiles or interprets the music macro language (MML) into active audio. In the PC-98 scene, game music is typically handled via specific music macro language (MML) compilers that route audio to the Yamaha OPN/OPNA (YM2203 / YM2608) sound chips. The ecosystem is made of Compiled Music (.M or .OPI: the base melodic composition) and Rhythm Modules (.OVI: custom external PCM samples used to drive percussion tracks).
+
+rsn	An .rsn file is a packed archive containing a Super Nintendo game’s complete soundtrack. Essentially, it is just a collection of .spc files (SNES audio dumps) bundled together as a RAR archive and renamed with an .rsn extension to allow emulators and media players to recognize them as soundtracks.
+
+OZI	The .ozi file extension is a proprietary compiled music macro language (MML) format associated with the FMPMD (FMP) driver series used for NEC PC-98 chiptune music. It contains code that instructs the Yamaha YM2608 (OPNA) FM sound chip found on PC-98 soundboards (like the PC-9801-86).
+
+a2m	AdLib Tracker 2 module format for FM synthesis music on DOS systems. It targets OPL2/OPL3 sound chips used in Sound Blaster and AdLib hardware.
+
+lds	LOUDNESS Sound System module format created by composer Andras Molnar (known as Disturbed). It was a highly advanced DOS-based tracker system designed for the Yamaha YM3812 (AdLib/OPL2) sound chips. LDS files are celebrated for pushing the standard OPL2 chip to produce complex, DX7-like synth tones. LDS audio engine uses FM synthesis registers to deliver rich, multi-operator, and multi-channel sound. Most famous for its use in the soundtrack for the classic DOS space shooter, Tyrian.
+
+4v	The Quartet tracker (developed by Kevin Cowton and Rob Povey for Microdeal) saves music into separate component files rather than a single module like ProTracker. A typical Quartet arrangement requires a .4V score file (the 4-voice sequence) alongside a .SET instrument file (the raw samples). .4V files store the actual composition data (notes, tempo, channel triggers). The format uses traditional staves for input rather than the vertical-scrolling tracker grid. .SET files store the digital instrument samples (the 8-bit audio data) used by the song. A .SET file can be referenced by multiple .4V songs. .4Q files are archive bundle files which contain the song, sample data, and metadata merged into a single archive.
+
+wsr	WonderSwan R file format is a container used for chiptune and audio ripped directly from the ROMs of Bandai WonderSwan and WonderSwan Color games. It stores the system's actual sound-driver code and register writes, allowing accurate playback of the original hardware’s audio. The system utilized 4 hardware sound channels capable of playing back 4-bit wavetables (32 bytes), raw 8-bit unsigned PCM samples, and LFSR (Linear Feedback Shift Register) noise. WonderSwan Color models featured an upgraded "Hyper Voice" capability, which routed dedicated 16-bit stereo PCM audio to the headphone jack.
+
+symmod	A legacy Amiga tracker music format created by the tracker application Symphonie / Symphonie Pro. Unlike traditional hardware-limited 4-channel Amiga trackers (like ProTracker), Symphonie was built for higher-end, expanded Amigas. It relies entirely on samples (rather than chiptune synths), but natively supports large, high-quality 16-bit stereo samples. Internally, the player natively performed resonant filtering, oversampling, and effects processing on the samples.
+
+OPX	Native music and sound data format used on the MSX family of computers. It is specifically associated with the MSX-MUSIC standard (also known as FM-PAC), containing sequenced FM synthesizer data designed to be played back through the Yamaha YM2413 (OPLL) sound chip. OPX files trigger the 9-channel FM synthesis capabilities or 5-channel rhythm/drum modes of the MSX-MUSIC standard. Similar to other classic MSX music formats like MGS or BGM, an OPX file contains register dumps or music driver-specific data rather than raw digital audio, resulting in very small file sizes.
+
+MBM	MoonBlaster Module file format is a native chiptune module created with MoonBlaster, a popular MSX tracker. It typically contains FM synthesis data (primarily for the Yamaha YM2413 MSX-MUSIC chip), MSX-AUDIO data, and PSG percussion channels. MoonBlaster saves files in either EDIT mode (larger file sizes with all channel information intact for tracking) or USER mode (optimized and compressed for playback). They are designed to be played back on classic MSX hardware or compatible emulators. Successors to MoonBlaster introduced related formats like MFM (MoonBlaster FM) and MWM (MoonBlaster Wave).
+
+rad	Reality Adlib Tracker, a retro music tracker originally created in the 1990s and updated to sequence Yamaha OPL2/OPL3 FM synthesis. It generates classic retro chip music and sound effects, utilizing incredibly compact file sizes by sending digital instructions to the soundcard. Like traditional trackers, .RAD files are sequence-based, containing lists of notes, instruments, and playback effects that directly program the sound chip. Originally designed for the classic AdLib and Sound Blaster 16 sound cards, the later RAD v2 update added OPL3 support for stereo sound and more channels. RAD files hold up to 127 custom instruments and 128 patterns, playing across 9 distinct channels.
+
+dtm	Digital Tracker Module. A legacy tracker music file originally created for the DigiTrakker software on the Amiga and Atari ST platforms. Like other module formats (e.g., MOD, XM, IT), it contains a sequenced pattern of notes and instrument samples rather than pre-recorded audio.
+
+ptm	Poly Tracker Module. A tracker music file format developed in the mid-1990s by Lone Ranger of AcmE as a successor to ScreamTracker. Designed to expand upon the capabilities of ScreamTracker by offering more complex effects and patterns. Closely related to .s3m (ScreamTracker) and .mod formats, it stores sequence data, pattern effects, and sound samples all in a single file.
+
+mt2	MadTracker 2, a popular Windows-based music tracker software originally released in the early 2000s. Unlike older tracker formats (like .MOD or .XM), .mt2 files natively support VST instruments and effects. They store envelope data for track volumes, built-in DSP effects, and VST parameters. It utilizes up to 64 tracks with 4 polyphony channels per track, stereo samples, and advanced panning.

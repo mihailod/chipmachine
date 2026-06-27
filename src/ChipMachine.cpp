@@ -496,7 +496,11 @@ std::string ChipMachine::appendFormatInfo(std::string const& text,
     // "Platform - Name (EXT)" plus, if listed, "<trackers> - <description>".
     std::string fmt = info.format;
     auto desc = musicDatabase.describeExtension(formatKey(info));
-    if (!desc.empty()) fmt += " ... " + desc;
+    if (!desc.empty()) {
+	 // redundant to prepend: scroll the format description straight away
+	 //fmt += " ... " + desc;
+	 return desc;
+    }
 
     // Dots give a clean gap between sections and before the line repeats.
     if (text.empty()) return "... " + fmt + " ...";
