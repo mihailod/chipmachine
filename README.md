@@ -10,14 +10,12 @@ But this is far more than a simple port!
 
 While ensuring the player runs on modern Apple hardware, my passion for it has expanded its compatibility and scale:
 
-* 50+ Plugins: Supporting over 300 retro and chip music formats
-* Massive Index: Currently approaching 600,000 indexed items
+* ~60 plugins supporting ~350 music formats
+* ~600,000 indexed songs
 
-The Roadmap
+**The mission statement: support every single format and index all retro/chip music databases.**
 
-The mission statement: implement every viable format and index every known retro/chip music database in existence.
-
-Despite the massive expansion under the hood, the core experience remains untouched: instant, incremental autocomplete search across the entire global library, delivering zero-latency playback from a single, unified interface.
+Despite the massive expansion under the hood, the core experience remains untouched: instant, incremental autocomplete search across the entire global library, delivering instant zero-latency (for cached songs) playback from a single, simple, unified interface.
 
 **(Screenshots might show features from dev in progress (not released) code.)**
 [![Screenshot](data/misc/amegas.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
