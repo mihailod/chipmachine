@@ -46,7 +46,7 @@ Binaries for macOS (tested on Tahoe) are available under [*Releases*](https://gi
 
 ### Running on Mac (Gatekeeper Authorization)
 
-The app is distributed with an ad-hoc code signature and macOS Gatekeeper will block it.
+For now, the app is distributed with an ad-hoc code signature and macOS Gatekeeper will block it (official Mac App Store release coming soon).
 
 This is standard behavior for open-source binaries distributed outside the official Mac App Store ecosystem.
 
@@ -66,7 +66,7 @@ To authorize and run the application on your Mac, follow these steps:
 12. The final confirmation prompt will appear.
 13. Click **Open**.
 
-*Note: You only need to perform this authorization once. Subsequent launches will boot instantly.*
+*Note: You only need to perform this authorization once per release. Subsequent launches will boot instantly.*
 
 ## Prerequisites for development (Tested on macOS 26 / Tahoe only)
 
@@ -104,7 +104,6 @@ ninja
 
 * Running the app from the build folder: ./chipmachine (-h for all options)
 * Packaging the app: [package_app.sh](package_app.sh)
-* Database update info: [scripts/DB_UPDATE_PROCESS.txt](scripts/DB_UPDATE_PROCESS.txt)
 * AI tools used to help with the porting: Claude, Gemini, Antigravity, Codex
 
 ## Using the application
@@ -125,6 +124,8 @@ ninja
 
 ### Chip Music Collections
 
+Metadata from these databases is ingested, normalized, deduped and cross-checked for screenshots.
+
 * Modland - https://ftp.modland.com
 * High Voltage SID collection - https://www.hvsc.c64.org
 * Gamebase64 - http://www.gb64.com
@@ -140,19 +141,27 @@ ninja
 * Exotica - https://www.exotica.org.uk
 * CSDb - https://csdb.dk
 * ZX Art - https://zxart.ee/eng/music
-* CPC-Power - https://www.cpc-power.com
+* CPC-Power (partial archive.org mirror) - https://www.cpc-power.com
 * Zophar's Domain (Sega Genesis only) - https://www.zophar.net
 * Vampi's MDX Collection (Sharp X68000) - https://mdx.vampi.tech
+* Demozoo - https://demozoo.org
+* Scene.org - https://scene.org
+
+### Remixes (MP3)
+
+* Amiga remix (MP3) - http://amigaremix.com
+* Sounds of Scenesat - https://scenesat.com
+
+### Youtube Audio
+* Pouet - https://www.pouet.net
 
 ### Podcasts
 
-Podcasts are a first-class category — press *F9* and pick **Podcasts** to
-browse/filter only podcast episodes. Shows backed by a live RSS feed ship with
+Press *F9* and pick **Podcasts** to browse/filter only podcast episodes.
+Shows backed by a live RSS feed ship with
 a snapshot of their back catalogue and are refreshed from the feed in the
 background at startup (throttled to roughly once a day), so newly published
-episodes are merged in automatically without a full re-index; the remaining
-shows are curated track lists. Episodes show per-episode cover art when the
-feed provides it, otherwise the show's cover.
+episodes are merged in automatically without a full re-index.
 
 * C64 Take-away — Commodore 64 remixes & original SID (complete, ended 2025) - https://c64takeaway.com
 * This Week in Chiptune — chiptune mixes (Dj CUTMAN, 2013–2017 archive) - https://thisweekinchiptune.com
@@ -166,14 +175,6 @@ feed provides it, otherwise the show's cover.
 And one not related to retro music but dear to my heart so here it is:
 
 * Completely Unnecessary Podcast — retro gaming (Pat "The NES Punk" Contri & Ian Ferguson) - https://cupodcast.podbean.com
-
-### Remixes (MP3)
-
-* Amiga remix (MP3) - http://amigaremix.com
-* Sounds of Scenesat - https://scenesat.com
-
-### Youtube Audio
-* Pouet - https://www.pouet.net
 
 ### Shoutcast Radio Streams
 
@@ -235,7 +236,7 @@ Extensions: `.spc` `.nsf` `.nsfe` `.gbs` `.gbr` `.ay` `.gym` `.sap` `.vgm` `.vgz
 
 > `.gbr` is the older Game Boy rip format (predecessor of `.gbs`).
 > GBR carries no "first song" field and many rips keep a silent stop-track
-> at song 0 — use the subsong controls if a tune starts silent.
+> at song 0 — use the subsong controls (LEFT-RIGHT cursor keys) if a tune starts silent.
 
 ### SC68
 
@@ -259,51 +260,9 @@ Extensions: `.ym` `.mix`
 
 Support for retro audio format hardware simulation
 
-* AdLib Tracker 2 by subz3ro, 
-AdLib MIDI Music Format by Ad Lib Inc., 
-AdLib MIDIPlay File by Ad Lib Inc., 
-AdLib MSCplay, 
-AdLib Visual Composer by AdLib Inc., 
-AMUSIC Adlib Tracker by Elyssis, 
-Apogee IMF File Format, 
-Beni Tracker (PIS), 
-Bob's Adlib Music Format, 
-BoomTracker 4.0 by CUD, 
-Coktel Vision AdLib Music, 
-Creative Music File Format by Creative Technology, 
-DeFy Adlib Tracker by DeFy, 
-Digital-FM by R.Verhaag, 
-DOSBox Raw OPL Format (v0.1 and v2.0), 
-Easy AdLib 1.0 by The Brain (BMF), 
-eXotic ADlib Format by Riven the Mage (incl. Flash, Hybrid, Hypnosis, PSI, rat), 
-eXtra Simple Music by Davey W Taylor, 
-God of Thunder Music by Roy Davis (Adept Software), 
-Herbulot AdLib System / HERAD by Remi Herbulot, 
-HSC Adlib Composer by Hannes Seifert, HSC-Tracker by Electronic Rats, 
-HSC Packed by Number Six / Aegis Corp., 
-JBM Adlib Music Format, 
-Ken Silverman's Music Format, 
-LOUDNESS Sound System, 
-LucasArts AdLib Audio File Format by LucasArts, 
-Master Tracker, 
-MIDI Audio File Format, 
-MKJamz by M \ K Productions, 
-Mlat Adlib Tracker, 
-MPU-401 Trakker by SuBZeR0, 
-Note Sequencer by Lee Ho Bum (sopepos), 
-Origin AdLib Music Format (Ultima 6), 
-Packed EdLib by Vibrants, 
-PALLADIX Sound System, 
-RdosPlay RAW file format by RDOS, 
-Reality ADlib Tracker by Reality (incl. RAD v2), 
-Screamtracker 3 by Future Crew, 
-Sierra's AdLib Audio File Format, 
-Softstar RIX OPL Music Format, 
-Surprise! Adlib Tracker by Surprise! Productions, 
-Surprise! Adlib Tracker 2 by Surprise! Productions, 
-Twin TrackPlayer by TwinTeam, 
-Westwood ADL File Format, 
-XMS-Tracker by MaDoKaN/E.S.G, 
+* AdLib Tracker 2 by subz3ro, AdLib MIDI Music Format by Ad Lib Inc., AdLib MIDIPlay File by Ad Lib Inc., AdLib MSCplay, AdLib Visual Composer by AdLib Inc., AMUSIC Adlib Tracker by Elyssis, Apogee IMF File Format, Beni Tracker (PIS), Bob's Adlib Music Format, BoomTracker 4.0 by CUD, Coktel Vision AdLib Music, Creative Music File Format by Creative Technology, DeFy Adlib Tracker by DeFy, Digital-FM by R.Verhaag, DOSBox Raw OPL Format (v0.1 and v2.0), Easy AdLib 1.0 by The Brain (BMF), eXotic ADlib Format by Riven the Mage (incl. Flash, Hybrid, Hypnosis, PSI, rat), eXtra Simple Music by Davey W Taylor, God of Thunder Music by Roy Davis (Adept Software), Herbulot AdLib System / HERAD by Remi Herbulot, HSC Adlib Composer by Hannes Seifert, HSC-Tracker by Electronic Rats, HSC Packed by Number Six / Aegis Corp., JBM Adlib Music Format, 
+Ken Silverman's Music Format, LOUDNESS Sound System, LucasArts AdLib Audio File Format by LucasArts, Master Tracker, MIDI Audio File Format, MKJamz by M \ K Productions, 
+Mlat Adlib Tracker, MPU-401 Trakker by SuBZeR0, Note Sequencer by Lee Ho Bum (sopepos), Origin AdLib Music Format (Ultima 6), Packed EdLib by Vibrants, PALLADIX Sound System, RdosPlay RAW file format by RDOS, Reality ADlib Tracker by Reality (incl. RAD v2), Screamtracker 3 by Future Crew, Sierra's AdLib Audio File Format, Softstar RIX OPL Music Format, Surprise! Adlib Tracker by Surprise! Productions, Surprise! Adlib Tracker 2 by Surprise! Productions, Twin TrackPlayer by TwinTeam, Westwood ADL File Format, XMS-Tracker by MaDoKaN/E.S.G, 
 
 Extensions: `.a2m` `.a2t` `.adl` `.adlib` `.agd` `.amd` `.as3m` `.bam` `.bmf` `.cff` `.cmf` `.d00` `.dfm` `.dmo` `.dro` `.dtm` `.got` `.ha2` `.hsc` `.hsp` `.hsq` `.imf` `.jbm` `.ksm` `.laa` `.lds` `.m` `.mad` `.mdi` `.mdy` `.mid` `.mkf` `.mkj` `.msc` `.mtk` `.mtr` `.pis` `.plx` `.rac` `.rad` `.raw` `.rix` `.rol` `.sa2` `.sat` `.sci` `.sdb` `.snd` `.sop` `.sqx` `.wlf` `.xad` `.xms` `.xsm`
 
