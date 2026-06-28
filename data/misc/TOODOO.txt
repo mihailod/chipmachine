@@ -2,11 +2,19 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+= !!! .pmd not playing! Piece Music Driver
+
 - scroll must be perfectly smooth, it is stuttering now when music playing, probably some threading issue?
 
-- add falcon to Atari ST image
+- add falcon to Atari ST image?
 
-- dtm (115 songs in db) --- NO PLAYBACK! (but cmtests work) 
+- check all classifications, probably many are misclassified, see if some fall to unknown
+
+- apple II GS soundsmith sounds wrong
+
+- .w not picked up for scroll ([MusicPlayerList.cpp:793] Detected ext: )
+
+- !!! dtm (115 songs in db) --- NO PLAYBACK! (but cmtests work) 
 .dtm many i tried cannot play but cmtests work -- investigate. examples from GUI:
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Digital Tracker DTM/Adamsky/real dreams.dtm
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fAdamsky/real dreams.dtm
@@ -24,10 +32,19 @@ MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chip
 MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fBitmaps/five changes.dtm'. Error: 
 
 
-
-- apple II GS soundsmith sounds wrong
-- .w not picked up for scroll ([MusicPlayerList.cpp:793] Detected ext: )
-- macintosh tracker classified as apple ii gs?
+- i think .set files should not be indexed 
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Quartet ST/Steve Wetherill/Projectyle (Amiga)/Projectyle 1.4v
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fQuartet ST%2fSteve Wetherill%2fProjectyle (Amiga)/Projectyle 1.4v
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Quartet%20ST/Steve%20Wetherill/Projectyle%20%28Amiga%29/Projectyle%201.4v
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Quartet ST/Steve Wetherill/Projectyle (Amiga)/Projectyle 1.set
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fQuartet ST%2fSteve Wetherill%2fProjectyle (Amiga)/Projectyle 1.set
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Quartet%20ST/Steve%20Wetherill/Projectyle%20%28Amiga%29/Projectyle%201.set
+[web.cpp:291] CODE 550
+[RemoteLoader.cpp:159] CODE 550
+[MusicPlayerList.cpp:928] Could not load secondary file modland::Quartet ST/Steve Wetherill/Projectyle (Amiga)/Projectyle 1.set
 
 - [Scroller.h:46] SCROLL:  A MALC JENNINGS PRODUCTION 2001 Presenting another rmx <FIRST SAMURAI> <EXTENDED VERSION!> Original by: Tim Wright Remixed by: Malc Jennings Feel free to distribute this and any of those @ Amiga Legal Emulation. We have moved location btw so update yerself! http://ale.emuunlim.com More coming soon!  ... PC - Impulsetracker (IT) ... Impulse Tracker - Jeffrey Lim's 1995 DOS tracker, an evolution of Scream Tracker 3 adding 16-bit samples, instruments with envelopes and a resonant filter. Long the gold standard of PC tracking; open-sourced in 2014. ...
 [ChipMachine.cpp:782] Screenshot logos: platform='PC' logo='PC' have=yes
