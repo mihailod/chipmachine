@@ -4,9 +4,9 @@
 
 - scroll must be perfectly smooth, it is stuttering now when music playing, probably some threading issue?
 
-- dsym should be reclassified as acorn archimedes
-
 - add falcon to Atari ST image
+
+- dsym should be reclassified as acorn archimedes
 
 - gt2 should be reclassified to IBM PC (not Atari ST)
 
