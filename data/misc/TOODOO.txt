@@ -4,40 +4,15 @@
 
 - scroll must be perfectly smooth, it is stuttering now when music playing, probably some threading issue?
 
-- dsym shuold be reclassified as acorn archimedes
+- dsym should be reclassified as acorn archimedes
 
-- extensions description missing:
+- add falcon to Atari ST image
 
+- gt2 should be reclassified to IBM PC (not Atari ST)
 
-gtk	55
-gt2	53
-dsm	38
-c67	36
-bam	29
-pis	28
-sat	27
-ams	27
-dmo	26
-tcb	24
-dfm	21
-mtr	18
-mix	14
-A2M	13
-mkj	12
-m	12
-cba	11
-xmf	9
-xad	9
-sdb	9
-jbm	9
-fmt	9
-agd	9
-etx	8
-plm	7
-as3m	7
-xms	6
-sqx	6
+- mix should be Atari ST/STE/Falcon
 
+- plm should be IBM PC
 
 - dtm (115 songs in db) --- NO PLAYBACK! (but cmtests work) 
 .dtm many i tried cannot play but cmtests work -- investigate. examples from GUI:

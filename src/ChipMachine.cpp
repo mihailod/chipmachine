@@ -37,7 +37,7 @@ namespace chipmachine {
 const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "[show all]", {} },
     { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER } },
-    { "Atari ST/STE (YM/PCM)", { ATARI } },
+    { "Atari ST/STE/Falcon", { ATARI } },
     { "Atari XL/XE (POKEY)", { POKEY } },
     { "Commodore 64 (SID)", { SID, STR } },
     { "Commodore 16/116/+4 (TED)", { PRG } },
@@ -496,11 +496,7 @@ std::string ChipMachine::appendFormatInfo(std::string const& text,
     // "Platform - Name (EXT)" plus, if listed, "<trackers> - <description>".
     std::string fmt = info.format;
     auto desc = musicDatabase.describeExtension(formatKey(info));
-    if (!desc.empty()) {
-	 // redundant to prepend: scroll the format description straight away
-	 //fmt += " ... " + desc;
-	 return desc;
-    }
+    if (!desc.empty()) fmt += " ... " + desc;
 
     // Dots give a clean gap between sections and before the line repeats.
     if (text.empty()) return "... " + fmt + " ...";
