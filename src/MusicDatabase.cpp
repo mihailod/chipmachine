@@ -1819,6 +1819,11 @@ void initFormats()
     format_map["digital symphony"] = ACORN;
     format_map["archimedes tracker"] = ACORN;
     format_map["coconizer"] = ACORN;
+    // dsym: DSym module format, native to Acorn Archimedes / RISC OS (Oregan
+    // Developments). modland tags these "Digital Symphony" (above), but key the
+    // bare extension too so the extension-fallback / platformForExtension path
+    // classifies a .dsym correctly instead of returning UNKNOWN.
+    format_map["dsym"] = ACORN;
 
     // --- zxart.ee music collection: chip-family format strings emitted by
     // tools/build_zxart.py (see that script's classify()). The collection routes
@@ -1850,6 +1855,11 @@ void initFormats()
     format_map["special fx st"] = ATARI;
     format_map["tcb tracker"] = ATARI;
     format_map["hippel st"] = ATARI;
+    // mix: Atari ST/STE/Falcon digital sample tracker (Digital Tracker /
+    // Digi-Mix). modland "Atari Digi-Mix" already lands on ATARI via the
+    // startsWith("atari") fallback; key the bare extension so demozoo .mix tunes
+    // (tagged "Amiga"/"Demoscene", which don't resolve) classify as Atari too.
+    format_map["mix"] = ATARI;
     // --- Atari XL/XE 8-bit (POKEY), distinct chip from the ST line ---
     // startsWith("atari") would otherwise lump "Atari 8Bit" (.sap) in with the
     // ST tunes; this explicit entry keeps POKEY separate.
@@ -1905,7 +1915,9 @@ void initFormats()
         format_map[f] = PCTRACKER;
     // Ambiguous/cross-platform trackers -> generic TRACKER (stays under Amiga).
     format_map["dtm"] = TRACKER; // Digital Tracker (Atari Falcon / Amiga)
-    format_map["plm"] = TRACKER;
+    // plm: Disorder Tracker 2, an MS-DOS chiptune tracker (Statix/Psychic Link,
+    // 1995), close cousin of Scream Tracker 3 -> IBM PC, not Amiga.
+    format_map["plm"] = PCTRACKER;
     // Amiga (native trackers, custom players, packers, composer rips).
     for (char const* f :
          { "med",        "octamed mmdc", "mmdc",        "iff-smus",
@@ -2003,7 +2015,10 @@ void initFormats()
     format_map["tfmx st"] = ATARI;           // Atari ST TFMX variant
     format_map["rob hubbard st"] = ATARI;    // Atari ST Rob Hubbard
     format_map["graoumf tracker"] = ATARI;   // Graoumf Tracker (Atari ST/Falcon)
-    format_map["graoumf tracker 2"] = ATARI;
+    // Graoumf Tracker 2 (.gt2) is the Windows successor -> IBM PC, not Atari.
+    // (Most .gt2 tunes reach the classifier with the demozoo "Atari ST" category
+    // string, handled by the extension override at the top of formatToByte.)
+    format_map["graoumf tracker 2"] = PCTRACKER;
     format_map["megatracker"] = ATARI;       // mgt: "Atari ST sample tracker by Cream"
     // IBM PC trackers (DOS/Windows, sample-based).
     format_map["imago orpheus"] = PCTRACKER; // DOS tracker (.imf Imago Orpheus)
@@ -2052,6 +2067,19 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
     }
 
     std::string f = toLower(fmt);
+
+    // Extension-authoritative overrides: a few formats are reliably identified
+    // by their file extension even when the source collection mis-tags the
+    // platform. e.g. demozoo/Fujiology tag Graoumf Tracker 2 (.gt2) tunes
+    // "Atari ST" (which would resolve to ATARI below), but GT2 is the Windows
+    // successor to the Atari Graoumf Tracker -> IBM PC. Here the extension wins
+    // over the format string; the bulk format-string map handles everything else.
+    if (!path.empty()) {
+        std::string ext = toLower(utils::path_extension(path));
+        if (!ext.empty() && ext[0] == '.') ext = ext.substr(1);
+        if (ext == "gt2") return PCTRACKER; // Graoumf Tracker 2 (Windows)
+    }
+
     uint8_t l = format_map[f];
     if (l == 0) {
 

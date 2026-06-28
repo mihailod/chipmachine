@@ -6,14 +6,6 @@
 
 - add falcon to Atari ST image
 
-- dsym should be reclassified as acorn archimedes
-
-- gt2 should be reclassified to IBM PC (not Atari ST)
-
-- mix should be Atari ST/STE/Falcon
-
-- plm should be IBM PC
-
 - dtm (115 songs in db) --- NO PLAYBACK! (but cmtests work) 
 .dtm many i tried cannot play but cmtests work -- investigate. examples from GUI:
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Digital Tracker DTM/Adamsky/real dreams.dtm
