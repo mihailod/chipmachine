@@ -2,58 +2,20 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+- scroll must be perfectly smooth, it is stuttering now when music playing, probably some threading issue?
 - [window_pc.cpp:48] SCROLL 0.000000, 0.200000
    let mouse influenct the scrolling stars!
-
 - every other screenshot fade-in make it wave like a flag, like effects in amiga intros
-
 - from time to time make the scroll do the sine effect like in amiga intros
 
-- resolve this, str should not be indexed
-mus	4583 -- i think no support, there is an error down to investigate 
-
-- also do not index files with extensions in this file: data/misc/not_supported_extensions.txt
+- do not index files with extensions in this file: data/misc/not_supported_extensions.txt
   and log a line when the program starts: "NOT INDEXING FOLLOWING UNSUPPORTED EXTENSIONS: <extensions>..."
-
-- gtk (Graoumf) should say Atari Falcon, not Atari ST/STE
-
-- scroll must be perfectly smooth, it is stuttering now when music playing, probably some threading issue?
 
 - check all classifications, probably many are misclassified, see if some fall to unknown
 
 - apple II GS soundsmith sounds wrong
 
 - .w extension description not picked up for scroll ([MusicPlayerList.cpp:793] Detected ext: )
-
-
-
-- .gtk -- 55 songs, groumf
-doesn't play!
-openmpt plays in cmtest:
-Trying testmus/openmpt/song8.gtk ... playback OK
-uade doesn't
-Skipping testmus/uade/song2.gtk
-Skipping testmus/uade/song8.gtk
-Skipping testmus/uade/demo.gtk
-should we reroute?
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Beaver Sweeper/Steffo/goathack.gtk
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/goathack.gtk
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Beaver%20Sweeper/Steffo/goathack.gtk
-[MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
-[MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
-MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/goathack.gtk'. Error: Could not load module
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Beaver Sweeper/Steffo/jern stal auw.gtk
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/jern stal auw.gtk
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Beaver%20Sweeper/Steffo/jern%20stal%20auw.gtk
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
-MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/jern stal auw.gtk'. Error: Could not load module
 
 = .pmd not playing! Piece Music Driver -- 36 songs in the db
 
@@ -316,7 +278,7 @@ amp	8,640	Demozoo augment (tunes used in demos)	Medium — AMP itself has compos
 modarchive	155,703	Demozoo augment (demoscene subset only)	Low ROI — huge corpus, mostly non-game music
 amigavibes	116	Demozoo	Low priority (tiny)
 
-- cmtest: added more extensions, some fail/skip, investigate why
+- cmtest: added more extensions, some fail/skip, investigate why -- make it all clean again
 
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 

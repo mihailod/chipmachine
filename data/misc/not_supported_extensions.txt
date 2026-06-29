@@ -18,6 +18,15 @@
 # zx spectrum flash tracker -- nothing exists to decode
 .fls
 
+# beaver sweeper (modland "Beaver Sweeper", author Steffo, 4 .gtk tunes, magic
+# "+SNT"). NOT a live ext-line: .gtk is owned by OpenMPT for Graoumf Tracker
+# (magic "GTK"), which plays fine. the +SNT files are an unrelated, undocumented
+# format with no open replayer anywhere (OpenMPT/UADE/libxmp/NostalgicPlayer);
+# UADE's PTK-Prowiz routes them via the snt prefix but renders pure silence.
+# OpenMPTPlugin::canHandle content-gates .gtk on "GTK" so these Skip cleanly
+# instead of hard-FAILing. documented here, intentionally commented out.
+# .gtk
+
 # .MUS upper case fcatrin/fstr (MIT), is x86 real-mode asm
 # targeting AdLib OPL2 (wrong chip, not portable C). 
 # commented but documented due to .mus lowercase clash
