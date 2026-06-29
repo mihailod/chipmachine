@@ -17,67 +17,95 @@ mus	4583 -- i think no support, there is an error down to investigate
 
 - gtk (Graoumf) should say Atari Falcon, not Atari ST/STE
 
-- extensions missing description:
-sm3	18
-sc	18
-mm4	17
-hot	17
-emod	17
-synmod	16
-sog	16
-glue	16
-aero	16
-plx	15
-dtl	15
-kt	14
-kdm	13
-ims	13
-tss	12
-liq	12
-buz2	12
-bsf	12
-vt	11
-mvm	11
-fmf	11
-lion	10
-smpro	9
-plist	9
-ma	9
-trk	8
-t0ast	8
-ftf	8
-arp	8
-vss	7
-vge	7
-fnk	7
-fmk	7
-dsyn	7
-cff	6
-syn	5
-msm	5
-hst	5
-gym	5
-dm	5
-0cc	5
+- scroll must be perfectly smooth, it is stuttering now when music playing, probably some threading issue?
 
-- .brt berotracker doesn't play
-[web.cpp:161] Curl Getting https://scenestream.net/static/media/logos/nectarine.png
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/BeRoTracker/BeRo/heyduda2.brt
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeRoTracker%2fBeRo/heyduda2.brt
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/BeRoTracker/BeRo/heyduda2.brt
+- check all classifications, probably many are misclassified, see if some fall to unknown
+
+- apple II GS soundsmith sounds wrong
+
+- .w extension description not picked up for scroll ([MusicPlayerList.cpp:793] Detected ext: )
+
+- .edl doesn't play 179 songs
+Ad Lib/EdLib Packed format
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Ad Lib/EdLib Packed/Drax/coop-Metal/lollypop - candy1.edl
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fEdLib Packed%2fDrax%2fcoop-Metal/lollypop - candy1.edl
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Ad%20Lib/EdLib%20Packed/Drax/coop-Metal/lollypop%20-%20candy1.edl
 [MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
 [MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
 [web.cpp:291] CODE 226
 [RemoteLoader.cpp:159] CODE 226
 [MusicPlayerList.cpp:793] Detected ext: 
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/BeRoTracker/BeRo/heydudaa.brt
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeRoTracker%2fBeRo/heydudaa.brt
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/BeRoTracker/BeRo/heydudaa.brt
+[MusicDatabase.cpp:2491] Loaded 284 format descriptions
+[SearchIndex.cpp:234] words: [[metal loll]}]
+[SearchIndex.cpp:276] ## OTHER PARTS
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Ad Lib/EdLib Packed/Drax/coop-Metal/lollypop - canhill4.edl
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fEdLib Packed%2fDrax%2fcoop-Metal/lollypop - canhill4.edl
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Ad%20Lib/EdLib%20Packed/Drax/coop-Metal/lollypop%20-%20canhill4.edl
 [web.cpp:291] CODE 226
 [RemoteLoader.cpp:159] CODE 226
 [MusicPlayerList.cpp:793] Detected ext: 
 
-- .smufi Picatune no playback
+- !!! dtm (115 songs in db) --- NO PLAYBACK! (but cmtests work) 
+.dtm many i tried cannot play but cmtests work -- investigate. examples from GUI:
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Digital Tracker DTM/Adamsky/real dreams.dtm
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fAdamsky/real dreams.dtm
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Digital%20Tracker%20DTM/Adamsky/real%20dreams.dtm
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fAdamsky/real dreams.dtm'. Error: 
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Digital Tracker DTM/Bitmaps/five changes.dtm
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fBitmaps/five changes.dtm
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Digital%20Tracker%20DTM/Bitmaps/five%20changes.dtm
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fBitmaps/five changes.dtm'. Error: 
+
+- .sm1 (48 songs) .sm2 (85 songs) don't play. that's FAC Soundtracker, investigate:
+also it looks like sm2 is morphed into sm1 during processing (?)
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/FAC SoundTracker/Elko Duijm/BRONSKI.SM1
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fElko Duijm/BRONSKI.SM1
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/FAC%20SoundTracker/Elko%20Duijm/BRONSKI.SM1
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/FAC SoundTracker/Robosoft/TJAKKE.SM1
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fRobosoft/TJAKKE.SM1
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/FAC%20SoundTracker/Robosoft/TJAKKE.SM1
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+
+- .gtk -- 55 songs, groumf
+doesn't play!
+openmpt plays in cmtest:
+Trying testmus/openmpt/song8.gtk ... playback OK
+uade doesn't
+Skipping testmus/uade/song2.gtk
+Skipping testmus/uade/song8.gtk
+Skipping testmus/uade/demo.gtk
+should we reroute?
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Beaver Sweeper/Steffo/goathack.gtk
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/goathack.gtk
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Beaver%20Sweeper/Steffo/goathack.gtk
+[MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
+[MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
+MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/goathack.gtk'. Error: Could not load module
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Beaver Sweeper/Steffo/jern stal auw.gtk
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/jern stal auw.gtk
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Beaver%20Sweeper/Steffo/jern%20stal%20auw.gtk
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
+MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/jern stal auw.gtk'. Error: Could not load module
+
+= .pmd not playing! Piece Music Driver -- 36 songs in the db
+
+- .smufi Picatune no playback (20 songs)
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Picatune/BeRo/popcorn4k.smufi
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune%2fBeRo/popcorn4k.smufi
 [web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Picatune/BeRo/popcorn4k.smufi
@@ -90,6 +118,23 @@ dm	5
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Picatune/- unknown/afrcan.smufi
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune%2f- unknown/afrcan.smufi
 [web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Picatune/-%20unknown/afrcan.smufi
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+
+- .brt berotracker doesn't play (19 songs)
+[web.cpp:161] Curl Getting https://scenestream.net/static/media/logos/nectarine.png
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/BeRoTracker/BeRo/heyduda2.brt
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeRoTracker%2fBeRo/heyduda2.brt
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/BeRoTracker/BeRo/heyduda2.brt
+[MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
+[MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/BeRoTracker/BeRo/heydudaa.brt
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeRoTracker%2fBeRo/heydudaa.brt
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/BeRoTracker/BeRo/heydudaa.brt
 [web.cpp:291] CODE 226
 [RemoteLoader.cpp:159] CODE 226
 [MusicPlayerList.cpp:793] Detected ext: 
@@ -108,19 +153,6 @@ MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chi
 [web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Protracker/Robyn%20Powell/Robyn%20Powell.zip
 [MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
 [MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-
-- .sm1 .sm2 don't play. that's FAC Soundtracker, investigate:
-also it looks like sm2 is morphed into sm1 during processing (?)
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/FAC SoundTracker/Elko Duijm/BRONSKI.SM1
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fElko Duijm/BRONSKI.SM1
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/FAC%20SoundTracker/Elko%20Duijm/BRONSKI.SM1
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/FAC SoundTracker/Robosoft/TJAKKE.SM1
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fRobosoft/TJAKKE.SM1
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/FAC%20SoundTracker/Robosoft/TJAKKE.SM1
 [web.cpp:291] CODE 226
 [RemoteLoader.cpp:159] CODE 226
 
@@ -176,28 +208,6 @@ MusicPlayer: Plugin 'libvice' failed to load '/Users/mihailod/Library/Caches/chi
 openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
 MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fFresh Ferry/Impaccen en Wegwezen Theme III.MUS'. Error: Could not load module
 MusicPlayer: Plugin 'libvice' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fFresh Ferry/Impaccen en Wegwezen Theme III.MUS'. Error: Not a sid file
-
-$$$$$$$$$$$$$$$
-
-- .edl doesn't play
-Ad Lib/EdLib Packed format
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Ad Lib/EdLib Packed/Drax/coop-Metal/lollypop - candy1.edl
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fEdLib Packed%2fDrax%2fcoop-Metal/lollypop - candy1.edl
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Ad%20Lib/EdLib%20Packed/Drax/coop-Metal/lollypop%20-%20candy1.edl
-[MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
-[MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-[MusicDatabase.cpp:2491] Loaded 284 format descriptions
-[SearchIndex.cpp:234] words: [[metal loll]}]
-[SearchIndex.cpp:276] ## OTHER PARTS
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Ad Lib/EdLib Packed/Drax/coop-Metal/lollypop - canhill4.edl
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fEdLib Packed%2fDrax%2fcoop-Metal/lollypop - canhill4.edl
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Ad%20Lib/EdLib%20Packed/Drax/coop-Metal/lollypop%20-%20canhill4.edl
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
 
 $$$$$$$$$$$$$$$$$$$$$
 
@@ -330,65 +340,6 @@ uade warning: Song ended prematurely due to error: score died
 
 $$$$$$$$$$$$$$$$$$$$$$
 
-- .gtk
-doesn't play!
-openmpt plays in cmtest:
-Trying testmus/openmpt/song8.gtk ... playback OK
-uade doesn't
-Skipping testmus/uade/song2.gtk
-Skipping testmus/uade/song8.gtk
-Skipping testmus/uade/demo.gtk
-should we reroute?
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Beaver Sweeper/Steffo/goathack.gtk
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/goathack.gtk
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Beaver%20Sweeper/Steffo/goathack.gtk
-[MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
-[MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
-MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/goathack.gtk'. Error: Could not load module
-=====
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Beaver Sweeper/Steffo/jern stal auw.gtk
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/jern stal auw.gtk
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Beaver%20Sweeper/Steffo/jern%20stal%20auw.gtk
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
-MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeaver Sweeper%2fSteffo/jern stal auw.gtk'. Error: Could not load module
-
-= !!! .pmd not playing! Piece Music Driver
-
-- scroll must be perfectly smooth, it is stuttering now when music playing, probably some threading issue?
-
-- add falcon to Atari ST image?
-
-- check all classifications, probably many are misclassified, see if some fall to unknown
-
-- apple II GS soundsmith sounds wrong
-
-- .w not picked up for scroll ([MusicPlayerList.cpp:793] Detected ext: )
-
-- !!! dtm (115 songs in db) --- NO PLAYBACK! (but cmtests work) 
-.dtm many i tried cannot play but cmtests work -- investigate. examples from GUI:
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Digital Tracker DTM/Adamsky/real dreams.dtm
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fAdamsky/real dreams.dtm
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Digital%20Tracker%20DTM/Adamsky/real%20dreams.dtm
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fAdamsky/real dreams.dtm'. Error: 
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Digital Tracker DTM/Bitmaps/five changes.dtm
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fBitmaps/five changes.dtm
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Digital%20Tracker%20DTM/Bitmaps/five%20changes.dtm
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fBitmaps/five changes.dtm'. Error: 
-
-
 - i think .set files should not be indexed 
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Quartet ST/Steve Wetherill/Projectyle (Amiga)/Projectyle 1.4v
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fQuartet ST%2fSteve Wetherill%2fProjectyle (Amiga)/Projectyle 1.4v
@@ -413,7 +364,7 @@ MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chip
 [web.cpp:291] CODE 550
 [RemoteLoader.cpp:159] CODE 550
 
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Ad Lib/MUS/Nick Jones/first samurai.mus
+- [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Ad Lib/MUS/Nick Jones/first samurai.mus
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.mus
 [web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Ad%20Lib/MUS/Nick%20Jones/first%20samurai.mus
 [web.cpp:291] CODE 226
@@ -442,10 +393,12 @@ MusicPlayer: Plugin 'libvice' failed to load '/Users/mihailod/Library/Caches/chi
 
 - .ftm shared between NES and ST, description is goofy (more shared extensions exist -- investigate/address)
 
-- can we add game/song screenshots for more formats?
-
-- revisit cpcpower database
-- revisit zophar arcade
+- finish adding game/song screenshots:
+rko	5,217	Borrow source-game shot via HVSC/gb64 (C64 remixes)	Medium — needs orig-title link
+amiremix	1,711	Borrow source demo/game shot via Demozoo	Medium
+amp	8,640	Demozoo augment (tunes used in demos)	Medium — AMP itself has composer photos, not game shots
+modarchive	155,703	Demozoo augment (demoscene subset only)	Low ROI — huge corpus, mostly non-game music
+amigavibes	116	Demozoo	Low priority (tiny)
 
 - cmtest: added more extensions, some fail/skip, investigate why
 
@@ -455,6 +408,52 @@ MusicPlayer: Plugin 'libvice' failed to load '/Users/mihailod/Library/Caches/chi
  - option a: remove from index
  - option b: use filter
  - option c (i think the best): augment search deduping to also remove the non-supported results from the search
+
+- extensions still missing format description:
+sm3	18
+sc	18
+mm4	17
+hot	17
+emod	17
+synmod	16
+sog	16
+glue	16
+aero	16
+plx	15
+dtl	15
+kt	14
+kdm	13
+ims	13
+tss	12
+liq	12
+buz2	12
+bsf	12
+vt	11
+mvm	11
+fmf	11
+lion	10
+smpro	9
+plist	9
+ma	9
+trk	8
+t0ast	8
+ftf	8
+arp	8
+vss	7
+vge	7
+fnk	7
+fmk	7
+dsyn	7
+cff	6
+syn	5
+msm	5
+hst	5
+gym	5
+dm	5
+0cc	5
+
+- revisit cpcpower database (was afraid of killing the site)
+- revisit zophar arcade
 
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
