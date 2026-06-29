@@ -25,26 +25,6 @@ mus	4583 -- i think no support, there is an error down to investigate
 
 - .w extension description not picked up for scroll ([MusicPlayerList.cpp:793] Detected ext: )
 
-- .edl doesn't play 179 songs
-Ad Lib/EdLib Packed format
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Ad Lib/EdLib Packed/Drax/coop-Metal/lollypop - candy1.edl
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fEdLib Packed%2fDrax%2fcoop-Metal/lollypop - candy1.edl
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Ad%20Lib/EdLib%20Packed/Drax/coop-Metal/lollypop%20-%20candy1.edl
-[MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
-[MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-[MusicDatabase.cpp:2491] Loaded 284 format descriptions
-[SearchIndex.cpp:234] words: [[metal loll]}]
-[SearchIndex.cpp:276] ## OTHER PARTS
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Ad Lib/EdLib Packed/Drax/coop-Metal/lollypop - canhill4.edl
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fEdLib Packed%2fDrax%2fcoop-Metal/lollypop - canhill4.edl
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Ad%20Lib/EdLib%20Packed/Drax/coop-Metal/lollypop%20-%20canhill4.edl
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-
 - !!! dtm (115 songs in db) --- NO PLAYBACK! (but cmtests work) 
 .dtm many i tried cannot play but cmtests work -- investigate. examples from GUI:
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Digital Tracker DTM/Adamsky/real dreams.dtm

@@ -115,6 +115,21 @@
 # so those files Skip cleanly instead of false-positiving as a silent "ok". Re-open
 # if a player for the "AST 00xx" native format lands.
 
+# edlib packed (.edl, modland "Ad Lib/EdLib Packed", ~179 tunes; JCH/Vibrants'
+# 1994 DOS AdLib/OPL2 tracker). EdLib has TWO formats: .d00 is the EXPORTED,
+# documented, playable file (magic 'JCH'\x26\x02\x66, played by AdPlug's d00.cpp
+# "Packed EdLib"), while .edl is the tracker's NATIVE editor PROJECT file --
+# undocumented (the modland format doc covers only .d00) and not a disguised D00:
+# flash2.edl has no 'JCH' magic, fails Cd00Player v0/v1 validation, and its
+# verbatim-repeating 15-byte byte patterns rule out it being an aPLib/LZ-packed
+# D00 (so adding .edl to adplugin supported_ext would NOT help). No open replayer
+# or .edl decoder exists anywhere. The replayer for the OUTPUT already ships
+# (AdPlug d00.cpp); the only gap is .edl->.d00 conversion, which EdLib 1.05a
+# itself does deterministically. Fix = OFFLINE batch-convert the corpus to .d00
+# (DOSBox EdLib, or RE the native format against the editor's in/out) then onboard
+# the .d00 -- data-only, zero new in-app code. Parked; not worth an in-app decoder.
+.edl
+
 # forgotten worlds game music (.fw, magic "FWMP", modland "Forgotten Worlds/
 # Mark Cooksey", ARC Developments / adapted by Psygore). NOTE: no bare ".fw"
 # line -- UADE has a ForgottenWorlds_Game eagleplayer (prefix fw) that LOADS and
