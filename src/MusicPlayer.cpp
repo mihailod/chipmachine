@@ -413,9 +413,19 @@ std::vector<std::string> MusicPlayer::getSecondaryFiles(const std::string& name)
     // were already in a local mirror on a case-insensitive filesystem).
     utils::File file{ name };
     if (file.exists()) {
+        // Several plugins can claim the same extension -- ".mus" alone is FAC
+        // SoundTracker (MSX, needs .SM1/.SM2 drumkits), C64 Sidplayer and UFO
+        // Amiga. fromFile() tries the claimers in order until one actually
+        // LOADS, so the plugin that ends up playing is not necessarily the first
+        // canHandle match. If we returned the first match's companions we would
+        // fetch the wrong (usually empty) list and the real player would then
+        // fail for want of its side files. Return the first NON-EMPTY companion
+        // list among the claimers instead, so e.g. KSSPlugin's FAC drumkits are
+        // fetched even though OpenMPT/libvice claim ".mus" first and need none.
         for (auto& plugin : musix::ChipPlugin::getPlugins()) {
             if (plugin->canHandle(name)) {
-                return plugin->getSecondaryFiles(name);
+                auto secondary = plugin->getSecondaryFiles(name);
+                if (!secondary.empty()) { return secondary; }
             }
         }
     }

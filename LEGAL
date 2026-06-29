@@ -340,6 +340,27 @@ Notice: The original ~1.5 KB Z80 replayer (REPLAY.BIN) is embedded verbatim and
         executed on the GME Z80 core; the Konami SCC is emulated by emu2212
         (MIT, see above). Shipped with attribution to Tyfoon-Software.
 
+Component: FAC SoundTracker mus2kss converter (MSX, .mus)
+Author: Ported from rePlayer's ReplayNEZplugMUS2KSS.cpp (Arnaud Neny), itself a
+        port of Juergen Wothke's mus_converter.js (the "webnez" project,
+        https://bitbucket.org/wothke/webnez). Vendored at
+        musicplayer/src/plugins/kssplugin/FacMus2Kss.cpp.
+License: The webnez/nezplug++ lineage is Public Domain / MIT-0; used with
+        attribution.
+Notice: Converts a FAC SoundTracker .mus song (+ its .SM1/.SM2 drumkit sample
+        banks) into a KSS image that libkss plays.
+
+Component: FAC SoundTracker 2.0 replay routine (MSX, .mus)
+Author: Federation Against Commodore (FAC), 1990/1991. Embedded as fac_player[]
+        in FacMus2Kss.cpp (carries the in-binary string
+        "FAC Soundtracker 2.0 music routine V1.0 (C)1990/1991 FAC").
+License: Freeware. FAC SoundTracker is scene freeware, distributed via the MSX
+         Resource Center / scene archives.
+Notice: The original ~2 KB Z80 replay routine is embedded verbatim and executed
+        on libkss's Z80 core (PSG via emu2149); the song's percussion comes from
+        its .SM1/.SM2 drumkit sample banks. Shipped with attribution to FAC, the
+        same arrangement as the MGSDRV and REPLAY.BIN driver blobs above.
+
 Component: SAASound (Philips SAA1099 sound chip emulator, .cop)
 Author: Dave Hooper <dave@beermex.com>, with Simon Owen.
         https://github.com/stripwax/SAASound

@@ -25,18 +25,7 @@ mus	4583 -- i think no support, there is an error down to investigate
 
 - .w extension description not picked up for scroll ([MusicPlayerList.cpp:793] Detected ext: )
 
-- .sm1 (48 songs) .sm2 (85 songs) don't play. that's FAC Soundtracker, investigate:
-also it looks like sm2 is morphed into sm1 during processing (?)
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/FAC SoundTracker/Elko Duijm/BRONSKI.SM1
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fElko Duijm/BRONSKI.SM1
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/FAC%20SoundTracker/Elko%20Duijm/BRONSKI.SM1
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/FAC SoundTracker/Robosoft/TJAKKE.SM1
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fRobosoft/TJAKKE.SM1
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/FAC%20SoundTracker/Robosoft/TJAKKE.SM1
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
+
 
 - .gtk -- 55 songs, groumf
 doesn't play!
@@ -135,42 +124,6 @@ MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chi
 involuntary audio output start
 uade warning: uade_get_event returned UADE_EVENT_EAGAIN which is not handled before playloop.
 [MusicDatabase.cpp:2491] Loaded 293 format descriptions
-
-$$$$$$$$$$ .mus triage
-
-- .mus error - AD LIB variant
-%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.mus'. Error: Not a sid file
-[UADEPlugin.cpp:752] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
-[UADEPlugin.cpp:25] Starting thread
-[UADEPlugin.cpp:301] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.mus
-[UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.BANK' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
-[UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.BANK
-[UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/SMP.set' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
-[UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/SMP.set
-uade warning: Song ended prematurely due to error: score died
-
-- MULTI:FAC SoundTracker/BDD (Ben den Dulk)/Impaccable/Castle Music.MUS	
-FAC Soundtracker
-This is msx soundtracker and the playback code is here: https://github.com/fcatrin/fstr
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/FAC SoundTracker/BDD (Ben den Dulk)/Impaccen & Wegwezen/32 Color.MUS
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fBDD (Ben den Dulk)%2fImpaccen & Wegwezen/32 Color.MUS
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/FAC%20SoundTracker/BDD%20%28Ben%20den%20Dulk%29/Impaccen%20%26%20Wegwezen/32%20Color.MUS
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
-MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fBDD (Ben den Dulk)%2fImpaccen & Wegwezen/32 Color.MUS'. Error: Could not load module
-MusicPlayer: Plugin 'libvice' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fBDD (Ben den Dulk)%2fImpaccen & Wegwezen/32 Color.MUS'. Error: Not a sid file
-[SearchIndex.cpp:234] words: [[impaccen]}]
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/FAC SoundTracker/Fresh Ferry/Impaccen en Wegwezen Theme III.MUS
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fFresh Ferry/Impaccen en Wegwezen Theme III.MUS
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/FAC%20SoundTracker/Fresh%20Ferry/Impaccen%20en%20Wegwezen%20Theme%20III.MUS
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
-MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fFresh Ferry/Impaccen en Wegwezen Theme III.MUS'. Error: Could not load module
-MusicPlayer: Plugin 'libvice' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fFresh Ferry/Impaccen en Wegwezen Theme III.MUS'. Error: Not a sid file
 
 $$$$$$$$$$$$$$$$$$$$$
 

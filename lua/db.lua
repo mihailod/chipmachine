@@ -117,7 +117,17 @@
 --     archive.scene.org/pub/<path> (direct HTTPS 200, same lesson as v67); a few
 --     are .mod.zip etc. (ext "zip", host-extracted by magic). source empty. The
 --     bump forces a reindex so the new rows land.
-VERSION = 68;
+-- 69: FAC SoundTracker .sm1/.sm2 excluded as songs (parseModland secondary set):
+--     they are the drumkit SAMPLE BANKS a .mus song loads, not standalone tunes,
+--     and showed in the GUI as ~666 bogus entries that download then can't play.
+--     Fetched at play time via KSSPlugin::getSecondaryFiles (<DRUMKIT>.SM1/.SM2)
+--     now that FAC .mus plays. All 666 .sm1/.sm2 on Modland are FAC drumkits, so
+--     the exclusion is global. Bump forces a reindex so the rows drop.
+--     Also skips two .mus orphans no open replayer decodes, parked so they stop
+--     showing as broken GUI entries: "Ad Lib/MUS/" (1 file, Nick Jones/first
+--     samurai.mus -- AdPlug's MUS loader rejects it, OpenMPT/UADE/Vice all fail)
+--     and "MVS Tracker/" (2 files, magic MVSM1 -- nothing in our stack handles it).
+VERSION = 69;
 
 DB = {
 {

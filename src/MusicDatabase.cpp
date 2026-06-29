@@ -562,7 +562,15 @@ bool MusicDatabase::parseModland(
                                                      // song, fetched via
                                                      // getSecondaryFiles, never a
                                                      // standalone tune
-                                                     "w" };
+                                                     "w",
+                                                     // FAC SoundTracker drumkit
+                                                     // sample banks (.sm1/.sm2) --
+                                                     // the percussion companions a
+                                                     // .mus song loads (fetched via
+                                                     // KSSPlugin::getSecondaryFiles),
+                                                     // not standalone tunes. All 666
+                                                     // on Modland are FAC drumkits.
+                                                     "sm1", "sm2" };
     static const std::set<std::string> secondary_pref = { "smpl", "smp" };
     static const std::set<std::string> hasSubFormats = { "Spectrum", "Ad Lib",
                                                          "Video Game Music" };
@@ -608,6 +616,21 @@ bool MusicDatabase::parseModland(
             if (toLower(song.path).find("/instruments/") != std::string::npos) {
                 continue;
             }
+
+            // Modland "Ad Lib/MUS" is a single orphan file (Nick Jones/first
+            // samurai.mus) in an unidentified AdLib format that no open replayer
+            // decodes: AdPlug's own MUS loader rejects it (it needs version 1.0,
+            // the file is 0x67.0x03 -- an offset-table layout, not AdLib-MIDI),
+            // and OpenMPT/UADE/Vice all fail too. Not worth a decoder for one
+            // file; skip it so it doesn't show in the GUI as a broken entry that
+            // downloads then can't play.
+            if (startsWith(song.path, "Ad Lib/MUS/")) { continue; }
+
+            // Modland "MVS Tracker" is 2 files (Kaneda/arktest.mus, entertn.mus),
+            // a sample tracker (magic "MVSM1") that no open replayer in our stack
+            // decodes (OpenMPT/UADE/Vice/libxmp/ZXTune all reject it). Parked --
+            // skip so they don't show as broken GUI entries.
+            if (startsWith(song.path, "MVS Tracker/")) { continue; }
 
             auto [ext, base] = getTypeAndBase(song.path);
 

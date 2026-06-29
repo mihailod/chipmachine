@@ -79,7 +79,7 @@ static bool shouldIgnoreFile(const std::string& name)
         "ins", "bnk", "dat", "dtl", "edl", "fmf", "cal", "d01", "vib", "003",
         "fmb", "pmb", "pvi", "mbk", "pdx", "gsflib", "2sflib", "qsflib",
         "ssflib", "usflib", "psflib", "psf2lib", "opm", "ss", "instr", "inst",
-        "dsflib", "smpl", "ip"
+        "dsflib", "smpl", "ip", "sm1", "sm2"
     };
     auto ext = utils::toLower(utils::path_extension(name));
     if (ignoredExts.count(ext) > 0) return true;
@@ -196,6 +196,24 @@ TEST_CASE("musicplayer", "")
     ap->get(data);
     auto sum = std::accumulate(data.begin(), data.end(), (int64_t)0);
     REQUIRE(sum != 0);
+}
+
+// A drummed FAC SoundTracker ".mus" is claimed by OpenMPT and libvice (both
+// registered before KSSPlugin and needing no companions) as well as by
+// KSSPlugin (which needs the song's .SM1/.SM2 drumkit banks). fromFile() tries
+// claimers until one LOADS -- KSSPlugin -- so the host's getSecondaryFiles must
+// not just return the FIRST claimer's (empty) list, or the drumkits never get
+// fetched and KSSPlugin then fails "missing SM1/SM2". Regression for that GUI
+// bug: getSecondaryFiles must surface KSSPlugin's drumkits despite the earlier
+// claimers. (Plugin-isolation tests can't catch this -- it's host routing.)
+TEST_CASE("MusicPlayer fetches the playing plugin's secondary files", "[music]")
+{
+    auto ap = std::make_shared<AudioPlayerNull>();
+    musix::ChipPlugin::createPlugins("data");
+    chipmachine::MusicPlayer mp{ ap };
+    auto sec = mp.getSecondaryFiles("testmus/fac/32 color.mus");
+    REQUIRE(std::find(sec.begin(), sec.end(), "DRUMKIT1.SM1") != sec.end());
+    REQUIRE(std::find(sec.begin(), sec.end(), "DRUMKIT1.SM2") != sec.end());
 }
 
 // Exercises the *registered-plugin* host path (createPlugins -> MusicPlayer::
@@ -2635,6 +2653,68 @@ TEST_CASE("MBM plays sound", "[music]")
 
     REQUIRE(energy != 0);
 }
+// FAC SoundTracker (.mus, MSX PSG + sampled drumkit). The plugin converts the
+// song -- plus its <DRUMKIT>.SM1/.SM2 companion sample banks -- into a KSS
+// carrying FAC's own Z80 replay routine and plays it via libkss. The .sm1/.sm2
+// drumkits are companions (ignored by shouldIgnoreFile), not standalone tunes.
+TEST_CASE("FAC SoundTracker", "[music]")
+{
+    testPlugin<musix::KSSPlugin>("testmus/fac", "");
+}
+// Both code paths must render non-zero audio: a drummed song (needs its SM1/SM2
+// drumkits, surfaced via getSecondaryFiles) and a "NO DRUMS" song (self
+// contained). Fails if the FAC player blob / mus2kss buffer build regresses, the
+// content gate stops claiming .mus, or the drumkit pairing breaks.
+TEST_CASE("FAC SoundTracker MUS plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::KSSPlugin plugin;
+
+    auto renders = [&](const std::string& path) {
+        INFO(path);
+        REQUIRE(plugin.canHandle(path));
+        auto* player = plugin.fromFile(path);
+        REQUIRE(player != nullptr);
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+        REQUIRE(energy != 0);
+    };
+
+    // Drummed song: header names drumkit "DRUMKIT1"; the plugin must surface
+    // both banks (Modland's exact UPPERCASE case) so the host fetches them.
+    std::string const drummed = "testmus/fac/32 color.mus";
+    auto secondary = plugin.getSecondaryFiles(drummed);
+    REQUIRE(std::find(secondary.begin(), secondary.end(), "DRUMKIT1.SM1") !=
+            secondary.end());
+    REQUIRE(std::find(secondary.begin(), secondary.end(), "DRUMKIT1.SM2") !=
+            secondary.end());
+    renders(drummed);
+
+    // "NO DRUMS" song needs no companions.
+    std::string const noDrums = "testmus/fac/because (no drums).mus";
+    REQUIRE(plugin.getSecondaryFiles(noDrums).empty());
+    renders(noDrums);
+
+    // Larger-size variant: many FAC saves append trailing padding (16392 /
+    // 16512 / 16513 bytes), so the content gate must accept size >= the page,
+    // not exactly 16391 -- a strict equality dropped ~20% of the corpus. This
+    // 16512-byte drummed song (drumkit "AFRIKA") must still pair and render.
+    std::string const big = "testmus/fac/afrika (16512).mus";
+    auto bigSecondary = plugin.getSecondaryFiles(big);
+    REQUIRE(std::find(bigSecondary.begin(), bigSecondary.end(), "AFRIKA.SM1") !=
+            bigSecondary.end());
+    REQUIRE(std::find(bigSecondary.begin(), bigSecondary.end(), "AFRIKA.SM2") !=
+            bigSecondary.end());
+    renders(big);
+}
 // One file of each non-MGS libkss format must be detected by canHandle and
 // render non-zero audio with no external files -- this fails if any of the
 // KINROU/OPX/MPK driver blobs is dropped or a detector regresses.
@@ -3110,7 +3190,7 @@ TEST_CASE("coverage", "[music]")
     // five MSX formats, each filed under its own extension directory.
     std::unordered_map<std::string, std::vector<std::string>> pluginDirsMulti = {
         {"MSX (libkss)", {"testmus/mgs", "testmus/bgm", "testmus/opx",
-                          "testmus/mpk", "testmus/mbm"}},
+                          "testmus/mpk", "testmus/mbm", "testmus/fac"}},
         // PxTone Collage handles two extensions (.ptcop and .pttune), each
         // filed under its own fixture dir -- the same dirs the PxTone/PxTune
         // playback tests read.
