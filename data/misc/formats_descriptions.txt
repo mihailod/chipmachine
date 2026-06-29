@@ -703,7 +703,7 @@ MBM	MoonBlaster Module file format is a native chiptune module created with Moon
 
 rad	Reality Adlib Tracker, a retro music tracker originally created in the 1990s and updated to sequence Yamaha OPL2/OPL3 FM synthesis. It generates classic retro chip music and sound effects, utilizing incredibly compact file sizes by sending digital instructions to the soundcard. Like traditional trackers, .RAD files are sequence-based, containing lists of notes, instruments, and playback effects that directly program the sound chip. Originally designed for the classic AdLib and Sound Blaster 16 sound cards, the later RAD v2 update added OPL3 support for stereo sound and more channels. RAD files hold up to 127 custom instruments and 128 patterns, playing across 9 distinct channels.
 
-dtm	Digital Tracker (also known as Digital Home Studio), an Atari ST / Falcon tracker format developed by Softjee specifically for the Atari ST / Falcon line of computers.
+dtm	Atari Falcon Digital Tracker & Digital Home Studio, two popular music creation programs developed by Softjee in the 1990s. Known for utilizing the Falcon's powerful DSP capabilities to produce high-quality digital sample-based music. Handles up to 32 sample channels, utilizing much larger samples and higher octaves than standard Amiga MOD files. (Format clash, it could also be DeFy AdLib DOS-era Tracker.)
 
 ptm	Poly Tracker Module. A tracker music file format developed in the mid-1990s by Lone Ranger of AcmE as a successor to ScreamTracker. Designed to expand upon the capabilities of ScreamTracker by offering more complex effects and patterns. Closely related to .s3m (ScreamTracker) and .mod formats, it stores sequence data, pattern effects, and sound samples all in a single file.
 

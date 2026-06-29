@@ -3335,6 +3335,14 @@ TEST_CASE("coverage", "[music]")
     //
     // 2026-06-17 (j): skips 11->10. macOS hidden files (.DS_Store, ._*) are now
     // silently skipped before any reporting (not Skipped/Ignored, not counted).
+    //
+    // 2026-06-29: ".dtm" is a three-way collision. AdPlug content-gates DeFy DTM
+    // ("DeFy DTM ") and OpenMPT now content-gates Digital Tracker ("D.T.") -- the
+    // big modland "Digital Tracker DTM" corpus that previously hard-FAILED in
+    // AdPlug now plays via OpenMPT (real dreams.dtm fixture). The third format,
+    // DigiTrekker (MS-DOS, chunked "SONG"/..., modland "Digitrekker", ~2 tunes)
+    // has no open replayer, so demorave.dtm is now claimed by nobody and Skips
+    // cleanly instead of erroring -- one new intentional skip, cap 27->28.
     REQUIRE(g_errors <= 28);
-    REQUIRE(g_skips <= 27);
+    REQUIRE(g_skips <= 28);
 }

@@ -25,23 +25,6 @@ mus	4583 -- i think no support, there is an error down to investigate
 
 - .w extension description not picked up for scroll ([MusicPlayerList.cpp:793] Detected ext: )
 
-- !!! dtm (115 songs in db) --- NO PLAYBACK! (but cmtests work) 
-.dtm many i tried cannot play but cmtests work -- investigate. examples from GUI:
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Digital Tracker DTM/Adamsky/real dreams.dtm
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fAdamsky/real dreams.dtm
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Digital%20Tracker%20DTM/Adamsky/real%20dreams.dtm
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fAdamsky/real dreams.dtm'. Error: 
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Digital Tracker DTM/Bitmaps/five changes.dtm
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fBitmaps/five changes.dtm
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Digital%20Tracker%20DTM/Bitmaps/five%20changes.dtm
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-MusicPlayer: Plugin 'AdPlug' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDigital Tracker DTM%2fBitmaps/five changes.dtm'. Error: 
-
 - .sm1 (48 songs) .sm2 (85 songs) don't play. that's FAC Soundtracker, investigate:
 also it looks like sm2 is morphed into sm1 during processing (?)
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/FAC SoundTracker/Elko Duijm/BRONSKI.SM1

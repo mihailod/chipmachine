@@ -1915,8 +1915,12 @@ void initFormats()
            "multitracker", "x-tracker", "polytracker", "ultratracker",
            "digitrakker" })
         format_map[f] = PCTRACKER;
-    // Ambiguous/cross-platform trackers -> generic TRACKER (stays under Amiga).
-    format_map["dtm"] = TRACKER; // Digital Tracker (Atari Falcon / Amiga)
+    // dtm: predominantly Digital Tracker, native to the Atari Falcon/ST/STE
+    // (modland "Digital Tracker DTM"); the DeFy DTM (AdLib) and DigiTrekker
+    // outliers carry non-resolving format strings and fall through to this
+    // extension key. -> Atari ST/STE/Falcon.
+    format_map["dtm"] = ATARI;
+    format_map["digital tracker dtm"] = ATARI; // explicit (robust for empty-path calls)
     // plm: Disorder Tracker 2, an MS-DOS chiptune tracker (Statix/Psychic Link,
     // 1995), close cousin of Scream Tracker 3 -> IBM PC, not Amiga.
     format_map["plm"] = PCTRACKER;
