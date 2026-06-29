@@ -28,8 +28,9 @@ A music format created for Ben 'Benn' Daglish by Colin 'Fungus the Bogeyman' Doo
 bds	Benn Daglish SID
 A music format created by Ben 'Benn' Daglish based on his C64 version.
 
-bp	SoundMon 2.0 / SoundMon 2.2
-A music editor created by Brian Postma.
+bp	SoundMon 2.X, music editor created by Brian Postma.
+
+bp3	SoundMon 3.X, music editor created by Brian Postma.
 
 bss	Beathoven Synthesizer
 A music format created by Thomas Lopatic (Dr.Nobody/HQC) 1987, often used in Rainbow Arts and Tristar productions from 1987-88.
@@ -49,8 +50,9 @@ A music and fx format created by Yvo Zoer and Ron Klaren.
 core	Core Design
 A music and fx format used in early Core Design games, possibly created by Ben 'Benn' Daglish.
 
-cust	Custom
-DeliTracker's format for Amiga music that's not in any other known format.  Custom tunes include both the music data and the player code needed to replay it.
+cust	The .cust (or .cus) is a catch-all Amiga music format primarily associated with the vintage DeliTracker music player. It is basically a meta-format that's not in any other known format. It is essentially a compiled "plug-in" that combines custom music data with its own specific playback and replay code. On the Amiga, there were hundreds of different tracking software and proprietary game music engines. When players like DeliTracker or EaglePlayer didn't have a native plug-in for a particular obscure tune, they used the .cus/.cust format. This allowed the player to execute the developer's raw audio and assembly code just as the original game or application did.
+
+cus	The .cus (or .cust) is a catch-all Amiga music format primarily associated with the vintage DeliTracker music player. It is basically a meta-format that's not in any other known format. It is essentially a compiled "plug-in" that combines custom music data with its own specific playback and replay code. On the Amiga, there were hundreds of different tracking software and proprietary game music engines. When players like DeliTracker or EaglePlayer didn't have a native plug-in for a particular obscure tune, they used the .cus/.cust format. This allowed the player to execute the developer's raw audio and assembly code just as the original game or application did.
 
 dat	Paul Robotham
 A MIDI-like music format created by Pete Barnett and used by Paul Robotham.
@@ -184,6 +186,14 @@ A music format created in 1989 by Mike Davies, often used in Tiertex games.
 med	MED
 Music EDitor by Tejio Kinnunen. MED was originally available as freeware, with a commercial eight channel version called OctaMED.  The latest version of MED is OctaMED Sound Studio.  This format was very popular with musicians, but it was not used much in games because the complexity of the format required too much CPU time.
 
+mmd0	OctaMED and MMD (MED Music Data)OctaMED (originally just MED, short for Music EDitor) was developed by Teijo Kinnunen. It became one of the most powerful and flexible trackers on the Amiga, eventually allowing up to 64 channels and MIDI support. The internal module data (MMD) was iteratively updated: MMD0 / MMD1 are older versions of the MED file format. MMD1 introduced multi-module features and expanded block data. In MMD-based formats, multi-part songs often include identifying tags like MCNT, MCN1, MCN2, or MCN3 within the file.
+
+mmd1	OctaMED and MMD (MED Music Data)OctaMED (originally just MED, short for Music EDitor) was developed by Teijo Kinnunen. It became one of the most powerful and flexible trackers on the Amiga, eventually allowing up to 64 channels and MIDI support. The internal module data (MMD) was iteratively updated: MMD0 / MMD1 are older versions of the MED file format. MMD1 introduced multi-module features and expanded block data. In MMD-based formats, multi-part songs often include identifying tags like MCNT, MCN1, MCN2, or MCN3 within the file.
+
+mmd2	MMD2 / MMD3: Later iterations of the OctaMed MMD format. The structures for MMD2 and MMD3 are virtually identical and support complex effects, extended instruments, and a large number of channels. In MMD-based formats, multi-part songs often include identifying tags like MCNT, MCN1, MCN2, or MCN3 within the file.
+
+mmd3	MMD2 / MMD3: Later iterations of the OctaMed MMD format. The structures for MMD2 and MMD3 are virtually identical and support complex effects, extended instruments, and a large number of channels. In MMD-based formats, multi-part songs often include identifying tags like MCNT, MCN1, MCN2, or MCN3 within the file.
+
 mfp	Magnetic Fields Packer
 A module packer created by Shaun Southern.
 
@@ -233,10 +243,10 @@ ogg	Ogg Vorbis
 A substitute audio compression format used in place of very sizeable CDDA tracks.
 
 okt	Oktalyzer
-An eight channel music editor by Armin Sander (TIP/The New Masters).
+Oktalyzer Formats (.okt / .okta) Oktalyzer was created by Walter Quintus and Martin Koch in the early 1990s. It is famous for implementing software mixing to achieve up to 8 channels on the standard 4-channel Amiga Paula chip. .OKT files follow a memory-dump model and .OKTA files use an IFF-like structure. Oktalyzer could mix down to virtual channels to output 8 tracks at the expense of audio quality and CPU overhead.
 
 okta	Oktalyzer
-An eight channel music editor by Armin Sander (TIP/The New Masters).
+Oktalyzer Formats (.okt / .okta) Oktalyzer was created by Walter Quintus and Martin Koch in the early 1990s. It is famous for implementing software mixing to achieve up to 8 channels on the standard 4-channel Amiga Paula chip. .OKT files follow a memory-dump model and .OKTA files use an IFF-like structure. Oktalyzer could mix down to virtual channels to output 8 tracks at the expense of audio quality and CPU overhead.
 
 osp	Synth Pack
 A music format created in 1989 by Karsten Obarski.
@@ -516,7 +526,7 @@ ult	UltraTracker
 The native module of MAS UltraTracker by Marc Andre Schallehn, a DOS tracker built around the Gravis Ultrasound.
 
 mdl	DigiTrakker
-The module format of DigiTrakker (n-Factor), a DOS tracker supporting larger sample sets.
+The module format of DigiTrakker (n-Factor), a DOS tracker supporting larger sample sets created by Prodatron for MS-DOS (PC). Unlike standard MOD files which only support basic 8-bit samples, .mdl modules take advantage of DigiTrakker's expanded instrument headers (29 bytes) and internal envelope features. The file format can sometimes be difficult to auto-detect because DigiTrakker stored custom artist names directly inside the tracker ID.
 
 669	Composer 669
 Tran's Composer 669 module (named for its "if" magic bytes), one of the earliest PC trackers, popular in the early-90s European scene.
@@ -693,7 +703,7 @@ MBM	MoonBlaster Module file format is a native chiptune module created with Moon
 
 rad	Reality Adlib Tracker, a retro music tracker originally created in the 1990s and updated to sequence Yamaha OPL2/OPL3 FM synthesis. It generates classic retro chip music and sound effects, utilizing incredibly compact file sizes by sending digital instructions to the soundcard. Like traditional trackers, .RAD files are sequence-based, containing lists of notes, instruments, and playback effects that directly program the sound chip. Originally designed for the classic AdLib and Sound Blaster 16 sound cards, the later RAD v2 update added OPL3 support for stereo sound and more channels. RAD files hold up to 127 custom instruments and 128 patterns, playing across 9 distinct channels.
 
-dtm	Digital Tracker Module. A legacy tracker music file originally created for the DigiTrakker software on the Amiga and Atari ST platforms. Like other module formats (e.g., MOD, XM, IT), it contains a sequenced pattern of notes and instrument samples rather than pre-recorded audio.
+dtm	Digital Tracker (also known as Digital Home Studio), an Atari ST / Falcon tracker format developed by Softjee specifically for the Atari ST / Falcon line of computers.
 
 ptm	Poly Tracker Module. A tracker music file format developed in the mid-1990s by Lone Ranger of AcmE as a successor to ScreamTracker. Designed to expand upon the capabilities of ScreamTracker by offering more complex effects and patterns. Closely related to .s3m (ScreamTracker) and .mod formats, it stores sequence data, pattern effects, and sound samples all in a single file.
 
@@ -758,3 +768,38 @@ xms	The .xms (eXtra Simple Music or XMS-Tracker) file is a tracker module format
 sqx	The .sqx music format (often corresponding with .hsq, .sdb, or .agd files) belongs to the HERAD (Herbulot AdLib) Music System.This proprietary audio system was created in the early 1990s by Remi Herbulot (co-founder and lead programmer of Cryo Interactive Entertainment) and legendary video game composer Stéphane Picq. It was built to push the limits of FM synthesis on OPL2 and OPL3 sound chips, most notably featured in classic MS-DOS games like Dune (1992), KGB (1992), and MegaRace (1993). Unlike standard AdLib formats that rely purely on basic MIDI commands, HERAD utilizes advanced "macros". These control real-time internal register changes like automatic pitch bends, instrument feedback, and modulator/carrier output level tweaks linked to note velocity. This gave Cryo games their distinctively rich, atmospheric, and "expressive" synthesized soundtrack. The .sqx extension represents song data compressed using Cryo's custom SQX packing algorithm (closely related to their .hsq / Herbulot Squeeze format). Cryo compressed these tracks to bypass tight floppy disk storage limits without sacrificing the complexity of the arrangement. Tracks marked for the .sdb container target standard OPL2-compatible hardware like the Sound Blaster. Tracks marked for .agd target the advanced, short-lived AdLib Gold (OPL3) sound card to utilize extra channels and surround-sound features.
 
 pmd	Professional Music Driver (PMD), created by Masahiro Kajihara (KAJA) in 1989, is a classic Music Macro Language (MML) driver primarily used for Japanese PC-98 games and Yamaha FM sound chips. You write PMD music using human-readable MML text. Notes, lengths, and effects are typed as plain text (e.g., A l8 cdefgab>c4) and mapped to specific sound channels. The PMD compiler converts your text script into a binary format. The .M extension is for standard tracks, .M2 is heavily used for OPNA (Yamaha YM2608) tracks, and .MZ is used for tracks utilizing custom PCM/ADPCM.
+
+str	YES! STEREO SID! The .str and .mus formats are legacy music files created for Compute!'s Sidplayer system on the Commodore 64. While .mus files hold the first three voices (channels), .str files hold the extra voices (4-6) to create a Stereo SID effect across hard left/right channels. Mythical Commodore 65 (C65) was the only commercial computer supposed to actually have dual SID chips for stereo playback. It is estimated that between 50 to 2,000 units were ever made. Developed as a prototype successor to the C64, the project was cancelled in 1991, and surviving units were liquidated during Commodore's 1994 bankruptcy. Because it was never officially mass-produced or released, exactly how many units exist is debated. The exact production figures are typically estimated based on Fred Bowen (the chief designer of the C65) statement that only 50 units were built. However some independent estimates and collector groups (like the Commodore 64 Wiki) suggest that the number could range anywhere from 50 to 2,000 prototypes. Because of this extreme scarcity, original C65 prototypes are highly sought after by collectors and can sell for massive sums ($20,000 - $38,000) on the open market and eBay. The new retro-inspired FPGA computer MEGA65 includes an advanced audio subsystem featuring four internal FPGA soft-SID chips, providing a total of 12 independent voices. This allows the system to natively handle single-SID, dual-SID, and quad-SID songs out of the box with built-in stereo panning. Phew!
+
+emul	The .emul file format is a native module used by the Ay_Emul software for Windows and Linux. It is an internal wrapper format that contains compiled Zilog Z80 processor code and data specifically designed to drive the AY-3-8912 sound chip used in the Sinclair ZX Spectrum 128. The .emul file is an .ay file variant characterized by the 'ZXAY' file identifier and the 'EMUL' (Emulation) type identifier. Instead of just logging register changes, it requires a Z80 virtual emulator to run the code snippets, which subsequently send signals to the AY sound chip. The file contains a header that specifies the file version and required player version, followed by relative pointers to blocks of memory. It handles all three programmable sound generator voices, noise channels, and even emulates the ZX Spectrum's 1-bit beeper!
+
+ml	The .ml format is a proprietary native file extension used by the Musicline Editor (originally created on the Commodore Amiga). It contains fully synthetic tracker modules that store sequence lists, instruments, and real-time waveform processing data. .ml FilesSynth playback retains envelopes, arpeggios, sample loops, and real-time waveform effects (like phasing, resonance, and filters). It supports up to 256 subtunes (songbooks) per module and can play 4-, 5-, 7-, and 8-channel compositions.
+
+sng	Massively overlapping extension used by multiple formats on multiple platforms: Synder SNG-Player, Synder Tracker, Zoundmonitor, SCC-Musixx, Sam Coupe SNG, Richard Joseph, GoatTracker, Ad Lib SNG Player, Ad Lib Faust Music Creator.
+
+v2m	Audio format associated with the Farbrausch V2 synthesizer, rather than a traditional tracker or module format like .xm or .it. It contains custom instrument data built for the V2 engine, acting like a highly restructured MIDI file with synthesized stems.
+
+raw	An Ad Lib OPL .raw capture is a low-level, register-by-register recording of the commands sent to a Yamaha YM3812 (OPL2) or OPL3 sound chip. Instead of containing digital audio wave data like an MP3, .raw files record the instrument parameters, note triggers, and frequency changes used by classic DOS games.
+
+bgm	The .bgm MSX / MuSICA format refers to a compiled Background Music sequence file. It contains compiled Music Macro Language (MML) data specifically designed to be played back using ASCII's MuSICA driver alongside standard MSX sound chips, the Yamaha YM2413 (MSX-MUSIC), and Konami's SCC. The .bgm files were often compiled using MSX compiler tools (like mml2msd) to translate the text-based MML into the system's raw playback format.
+
+aon	The .aon format is a native song file produced by Art of Noise, a 4-channel and 8-channel tracker music software created for the Commodore Amiga between 1993 and 1996. These proprietary modules merged standard PCM samples with rudimentary 2-operator FM synthesis. Art of Noise was developed as a freeware tracker that distinguished itself from other popular, widespread trackers. Instead of relying entirely on static samples, it allowed users to modulate loop start and endpoints while a sample played, bringing wavetable synthesis techniques to the Amiga platform. It featured a built-in drum-sequencer, a large number of instrument slots, and an array of effect commands. While native .aon files have unique features, the pattern sizes and layouts were generally designed to remain compatible with older "MOD"/Protracker-style structures.
+
+edl	The Ad Lib/EdLib packed format, typically seen with .edl or .d00 file extensions, is a legacy OPL2/OPL3 FM tracker format popularized by JCH/Vibrants in DOS. It is a compiled, read-only version of a song module that is stripped of the tracker's editor interface for lightweight playback. Created using the EdLib DOS tracker. Used interchangeably with .d00 (and sometimes .d01 for versions that contain external digital sample data). Because the format is "packed" for the standalone player, these files cannot be imported back into EdLib for editing once they are compiled. It outputs register writes directly to the Yamaha OPL (YM3812) sound chip, retaining the crisp, classic hardware sound of 90s PC DOS games and demoscene productions.
+
+minigsf	The .minigsf format is a highly compressed audio format used specifically for Game Boy Advance (GBA) music. It acts as an emulated sound format, storing the sequence of musical notes and instructions sent to the console's audio chip rather than traditional pre-recorded audio. .minigsf file contains the specific track data, such as notes and sequencing, for an individual song, while the corresponding .gsflib file contains the actual instrument samples. A .minigsf file cannot play on its own -- it must be in the same directory as its corresponding .gsflib file for the audio to play properly.
+
+dmu	The .dmu file format is a proprietary music module format created for the Digital Mugician (sometimes called Mugician) tracker on the Commodore Amiga. Developed by Thalamus Software in 1990 by Reinier van Vliet and Metin Seven, it is a highly capable format that allows musicians to mix standard sampled 8-bit sounds with custom synthesizer parameters.
+
+mus	The .mus format is most often associated with Compute!'s Sidplayer music system (created in 1984 by Craig Chamberlain) rather than the standard .sid (PSID/RSID) format. Unlike standard SID files (which contain compiled 6502 machine code and play routines), .mus files store raw command streams that control the C64's SID chip frequencies and envelopes. This is most common extension but it is also overloaded: FAC Soundtracker for MSX used .mus as well.
+
+fls	The .fls file format is used by the Flash Tracker chiptune utility on the ZX Spectrum. It is used to sequence music for the onboard 1-bit beeper or AY-3-8910 sound chip. Developed in the Russian demoscene, Flash Tracker (and its contemporary, Fast Tracker) provided a way to compose tracker-style module music for the standard 48K or 128K ZX Spectrum. The .fls format is primarily native to these older DOS/Spectrum utilities. It is not widely used for modern compositions because it is hardware-tied to the Z80’s specific CPU timing and sound routing.
+
+prt	.prt is a proprietary format used by Pretracker. Developed by Pink/Abyss, PreTracker is a cross-development tracker used on Windows that precalculates synth instruments on song startup to create authentic, memory-efficient chip-music tailored for the Commodore Amiga. Unlike standard Amiga tracker formats like ProTracker (.MOD) or Scream Tracker which rely on raw 8-bit PCM audio samples, the .prt format functions more like a hardware synthesizer: instead of loading multi-kilobyte audio files, the software precomputes waveforms and instrument parameters before playback. It takes structural and sonic inspiration from the classic AHX (Abyss / HivelyTracker) format, producing a crunchy, "C64-style" sound on real Amiga hardware. It allows for highly polyphonic, complex melodies but without the memory limits associated with massive sample sets.
+
+dss	.dss (Digital Sound Studio) is an Amiga audio/tracker format. It was used by the Digital Sound Studio software, which originally shipped with the GVP (Great Valley Products) DSS8 and DSS8+ parallel port sound samplers. The software included both an 8-bit sound sampler and a built-in tracker for composing. It stored custom tracked music data (similar to standard .MOD module files). While native to the DSS software, the tracker could often export instruments and patterns into standard Amiga formats like RAW or IFF-8SVX.
+
+mm8	Amiga Music Maker v8 is a peculiar tracker used to create both algorithmic and sequenced chiptunes. The files are highly specialized to that software and cannot be played directly by standard media players. Its sister program is Music Maker v4. They were created by Thomas Shuriger as tracker/algorithmic music generators. Instead of writing every note manually, users could seed the software with algorithms that would auto-generate patterns, basslines, and melodies to create sequenced compositions. The .mm8 file acts as the native project and sequence container. These files contain pattern and sequencing data alongside references to the 8-bit PCM audio samples used to play the instruments.
+
+mm4	Amiga Music Maker v4, predecessor of v8 (.mm8). 
+
