@@ -803,3 +803,30 @@ mm8	Amiga Music Maker v8 is a peculiar tracker used to create both algorithmic a
 
 mm4	Amiga Music Maker v4, predecessor of v8 (.mm8). 
 
+sm1	The .sm1 and .sm2 files are music formats created by the FAC Soundtracker software on MSX computers. These trackers compose music using numerical trackers and pre-defined 8-bit audio samples, much like classic Commodore Amiga MOD files. FAC Soundtracker was originally developed for the MSX system and allowed users to sequence music across multiple vertical timelines. The .sm1 and .sm2 file extensions represent the tracker modules (music data, pattern sequences, and instrument properties). They contain tracker pattern data (notes, octaves, volume, and special pitch/command effects) and instrument/sample configurations mapped to the MSX's PSG (Programmable Sound Generator) or MSX-MUSIC chips.
+
+sm2	The .sm1 and .sm2 files are music formats created by the FAC Soundtracker software on MSX computers. These trackers compose music using numerical trackers and pre-defined 8-bit audio samples, much like classic Commodore Amiga MOD files. FAC Soundtracker was originally developed for the MSX system and allowed users to sequence music across multiple vertical timelines. The .sm1 and .sm2 file extensions represent the tracker modules (music data, pattern sequences, and instrument properties). They contain tracker pattern data (notes, octaves, volume, and special pitch/command effects) and instrument/sample configurations mapped to the MSX's PSG (Programmable Sound Generator) or MSX-MUSIC chips.
+
+mms	Roman Werner, a prominent Swiss Amiga developer and musician, developed the .mms (MultiMedia Sound) tracker music format. In 1992, he co-created the music software MMS Tracker (published by Linel and Tension Software), which utilized this custom format to compose tracked module files on Amiga. MultiMedia Sound (MMS Tracker) was released in 1992–1994 as an alternative to mainstream Amiga trackers like ProTracker or OctaMED. Like standard Amiga .mod files, the .mms format is a module format combining custom sequencer data (patterns, notes, and effects) with raw, 8-bit digital instrument samples.
+
+hip7	Created by legendary Amiga and Atari ST composer Jochen Hippel ("Mad Max"). The .hip7 extension specifically refers to his advanced 7-voice (7V) replay routine, which squeezed seven channels of audio out of the Amiga's native 4-channel hardware. The .hip7 format (along with its crunched/compressed variant .hipc) uses a mix of three standard hardware channels and four software-mixed channels. This clever routing provided incredible chip-music dynamics for games like Lethal Xcess and Wings of Death. Unlike standard .MOD files, .hip files are not just a collection of patterns and raw samples. They contain the music data embedded directly into an assembler playback routine.
+
+hipc	The .hipc (Hippel-COSO) format was used in classic Commodore Amiga and Atari ST games. Developed by the legendary demoscene and video game composer Jochen Hippel ("Mad Max"), the format is a specialized tracker module that plays raw digital sound samples and synth routines. During the late 80s and early 90s, composers like Hippel needed to extract the maximum audio quality possible from the limited hardware of 16-bit computers. The COSO format (along with the related TFMX format) allowed games to play incredibly rich, 4-to-7 channel soundtracks utilizing crunch-style 8-bit samples. The .hipc file essentially contains these custom sound clips alongside the programmed notes and playback commands used to trigger them in real-time.
+
+minipsf	A .minipsf file is a compressed music format used for PlayStation (PSX) and PlayStation 2 games. It contains the sequence data for a song and relies on a .psflib file in the same directory to provide the actual instrument samples and driver code.
+
+doda	Special FX tracker for Atari ST (?) -- couldn't find anything more on the internet about this format except plenty of AI hallucinations.
+
+mk2	The Mark II Sound-System (.mk2, .mkii) is a classic Amiga tracker and music format created by Darius Zendeh. Unlike later tracker formats that used a standalone GUI, the music was originally hand-written in Assembly language and uses distinct sound and instrument envelopes.
+
+mkii	The Mark II Sound-System (.mkii, .mk2) is a classic Amiga tracker and music format created by Darius Zendeh. Unlike later tracker formats that used a standalone GUI, the music was originally hand-written in Assembly language and uses distinct sound and instrument envelopes.
+
+mpk	An MPK file is MSX-specific chiptune music format associated with the MPK/MPK2 tracker and replayers. It primarily utilizes the PSG (AY-3-8910) and SCC sound chips and is often played back using MSX-DOS drivers like MPX or Multimente.
+
+avp	The Activision Pro format, a custom Amiga music and sound format utilized in games composed by Martin Walker. Unlike standard modules (such as .MOD), .avp files are not self-contained datasets. Instead, the music data is hardcoded and embedded directly into an assembler playback routine.
+
+smufi	A .SMUFI file is a Picatune Soundtrack file. That's about it. Nothing more available on the internet about this peculiar format. Cheers!
+
+jb	A music format created by Jason C Brooke. Aaaand... that's about it. Enjoy it!
+
+brt	The .brt file format is the native project and sequence format for BeRoTracker, a classic music tracker created by developer Benjamin "BeRo" Rosseaux. Unlike traditional sound formats that only output the final audio, a .brt file contains the complete editable arrangement, instrument data, pattern sequences, and audio samples. Like other module formats, it bundles the music's sequence and sample data together into a single file. BeRoTracker is well-known for its MIDI import feature, allowing users to convert standard MIDI files into tracker sequences and save them as .brt.

@@ -2,33 +2,22 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+- [window_pc.cpp:48] SCROLL 0.000000, 0.200000
+   let mouse influenct the scrolling stars!
+
+- every other screenshot fade-in make it wave like a flag, like effects in amiga intros
+
+- from time to time make the scroll do the sine effect like in amiga intros
+
 - resolve this, str should not be indexed
 mus	4583 -- i think no support, there is an error down to investigate 
 
 - also do not index files with extensions in this file: data/misc/not_supported_extensions.txt
   and log a line when the program starts: "NOT INDEXING FOLLOWING UNSUPPORTED EXTENSIONS: <extensions>..."
 
-- gtk should say Atari Falcon, not Atari ST
+- gtk (Graoumf) should say Atari Falcon, not Atari ST/STE
 
 - extensions missing description:
-SM2	46
-SM1	46
-mms	43
-minipsf	36
-doda	36
-mk2	34
-MPK	32
-sps	31
-spm	31
-skm	28
-ct	26
-avp	26
-sn2	25
-mgb	25
-axs	22
-smufi	19
-jb	19
-brt	19
 sm3	18
 sc	18
 mm4	17
@@ -62,18 +51,78 @@ vss	7
 vge	7
 fnk	7
 fmk	7
-dux	7
 dsyn	7
-670	7
-hip7	6
 cff	6
-zip	5
 syn	5
 msm	5
 hst	5
 gym	5
 dm	5
 0cc	5
+
+- .brt berotracker doesn't play
+[web.cpp:161] Curl Getting https://scenestream.net/static/media/logos/nectarine.png
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/BeRoTracker/BeRo/heyduda2.brt
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeRoTracker%2fBeRo/heyduda2.brt
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/BeRoTracker/BeRo/heyduda2.brt
+[MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
+[MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/BeRoTracker/BeRo/heydudaa.brt
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fBeRoTracker%2fBeRo/heydudaa.brt
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/BeRoTracker/BeRo/heydudaa.brt
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+
+- .smufi Picatune no playback
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Picatune/BeRo/popcorn4k.smufi
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune%2fBeRo/popcorn4k.smufi
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Picatune/BeRo/popcorn4k.smufi
+[MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
+[MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+[MusicDatabase.cpp:2491] Loaded 303 format descriptions
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Picatune/- unknown/afrcan.smufi
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune%2f- unknown/afrcan.smufi
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Picatune/-%20unknown/afrcan.smufi
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+
+- zipped dmf not playing, maybe worth a look:
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Deflemask/CrazySoundEnginer/Sonic 1 Dreamcast Edition.zip
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDeflemask%2fCrazySoundEnginer/Sonic 1 Dreamcast Edition.zip
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Deflemask/CrazySoundEnginer/Sonic%201%20Dreamcast%20Edition.zip
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDeflemask%2fCrazySoundEnginer/Sonic 1 Dreamcast Edition.zip_x/Sonic 1 Dreamcast Edition/Green Hill Zone (Dreamcast).dmf'. Error: File not found: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDeflemask%2fCrazySoundEnginer/Sonic 1 Dreamcast Edition.zip_x/Sonic 1 Dreamcast Edition/Green Hill Zone (Dreamcast).dmf
+
+- zipped mod not playing, maybe worth a look:
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Protracker/Robyn Powell/Robyn Powell.zip
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fProtracker%2fRobyn Powell/Robyn Powell.zip
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Protracker/Robyn%20Powell/Robyn%20Powell.zip
+[MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
+[MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+
+- .sm1 .sm2 don't play. that's FAC Soundtracker, investigate:
+also it looks like sm2 is morphed into sm1 during processing (?)
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/FAC SoundTracker/Elko Duijm/BRONSKI.SM1
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fElko Duijm/BRONSKI.SM1
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/FAC%20SoundTracker/Elko%20Duijm/BRONSKI.SM1
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/FAC SoundTracker/Robosoft/TJAKKE.SM1
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fRobosoft/TJAKKE.SM1
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/FAC%20SoundTracker/Robosoft/TJAKKE.SM1
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
 
 - some mm4 songs fail, some play, investigate
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/MusicMaker V8/- unknown/tribal dance.mm4

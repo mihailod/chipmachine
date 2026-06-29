@@ -231,17 +231,17 @@ void IncrementalQuery::search()
     words.erase(remove_if(words.begin(), words.end(),
                           [&](const std::string& a) { return a.size() == 0; }),
                 words.end());
-    LOGD("words: [%s]", words);
+    //LOGD("words: [%s]", words);
 
     if (oldWords.size() == 0 || oldWords[0] != words[0]) {
-        LOGD("## First word changed");
+        //LOGD("## First word changed");
         // First word has changed
         //  - If something was just added, we can filter our firstResult more
         //  - Otherwise do a new search
         if (words[0].size() > 4 && oldWords.size() > 0 &&
             words[0].find(oldWords[0]) == 0) {
             // Erase things that don't match from existing result
-            LOGD("## FAST: Filter prevous result");
+            //LOGD("## FAST: Filter prevous result");
             firstResult.erase(
                 std::remove_if(firstResult.begin(), firstResult.end(),
                                [=](const int& index) -> bool {
@@ -256,7 +256,7 @@ void IncrementalQuery::search()
             // In chipmachine this is a proxy that searches in two separate
             // providers This will do the 3L 16bit lookup and grep for the word
             // in all hits. May take time
-            LOGD("## SLOW: Full search");
+            //LOGD("## SLOW: Full search");
             provider->search(words[0], firstResult, searchLimit);
         }
     }
@@ -273,7 +273,7 @@ void IncrementalQuery::search()
 
     // TODO: Parallellize this!
 
-    LOGD("## OTHER PARTS");
+    //LOGD("## OTHER PARTS");
     for (auto& index : firstResult) {
         // string rc = r;
         // makeLower(rc);
@@ -412,7 +412,7 @@ int SearchIndex::search(const std::string& q, std::vector<int>& result,
             else
                 result.insert(result.end(), tv.begin(), tv.end());
         } else {
-            LOGD("## SLOW: First word filtering");
+            //LOGD("## SLOW: First word filtering");
 
 #ifdef USE_THREADS
             result = worker.reduce(tv, [=](int i) {
