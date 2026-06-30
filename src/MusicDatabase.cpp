@@ -1838,9 +1838,10 @@ void initFormats()
     format_map["chip tracker"] = ZXAY;
 
     // --- MSX (Z80 + AY/SCC/OPLL/FM) ---
-    // Several of these (kss, face the music, mvs tracker, the musical
-    // enlightenment) are listed in uade_formats; these explicit entries override
-    // that Amiga default so they group as MSX.
+    // Several of these (kss, mvs tracker, the musical enlightenment) are listed
+    // in uade_formats; these explicit entries override that Amiga default so
+    // they group as MSX. (Note: "face the music" was previously in this list by
+    // mistake -- it is an Amiga format; see the correction below.)
     format_map["mgsdrv"] = MSX;
     format_map["kss"] = MSX;
     format_map["musica"] = MSX;
@@ -1849,7 +1850,6 @@ void initFormats()
     format_map["oplldrv"] = MSX;
     format_map["mpk"] = MSX;
     format_map["scc-musixx"] = MSX;
-    format_map["face the music"] = MSX;
     format_map["fac soundtracker"] = MSX;
     format_map["mvs tracker"] = MSX;
     format_map["the musical enlightenment"] = MSX;
@@ -1999,6 +1999,13 @@ void initFormats()
            "kefrens sound machine", "musicline", "steve turner",
            "midi-loriciel" })
         format_map[f] = AMIGA;
+    // Face The Music: an 8-voice AMIGA tracker (magic "FTMN", played by
+    // openmptplugin's Load_ftm.cpp, which sets SONG_ISAMIGA / MOD_TYPE_MOD).
+    // It is NOT MSX (where it was mis-grouped) and NOT Atari (as
+    // formats_descriptions.txt claimed); verified 2026-06-30 against the loader
+    // and Exotica/Aminet (mods/8voic). The other .ftm format, FamiTracker
+    // (magic "FamiTracker Module"), is NES and routes to famitrackerplugin.
+    format_map["face the music"] = AMIGA;
     // AdLib / OPL (PC).
     for (char const* f : { "raw opl capture", "edlib packed", "edlib d00",
                            "edlib d01", "herad music system", "imf",
