@@ -149,3 +149,18 @@
 # declines the FWMP magic (isForgottenWorlds) so they Skip cleanly instead of
 # reporting NO SOUND. Re-open if a working ForgottenWorlds player lands upstream.
 .fw
+
+# picatune (.smufi, modland "Picatune", 20 tunes by BeRo/FreQvibez/Lyzzard).
+# BeRo's (Benjamin Rosseaux) Picatune / Picatune 2 is a CLOSED-source freeware
+# Win32 synth-sequencer; the .smufi ("Picatune Soundtrack") is an XML PROJECT
+# file describing a softsynth patch graph -- <operator> nodes (master/delay/
+# compressor/generator), <oscillator> waveforms with ADSR, and <order>/<pattern>
+# sequencing. There is NO sample/PCM data: every voice is produced by Picatune's
+# built-in DSP, so playback needs the closed engine. No open replayer exists
+# anywhere (UADE/OpenMPT/libxmp/ZXTune/AdPlug/rePlayer none parse this XML synth)
+# and the synth semantics (oscillator modes, waveform tables, x/y operator
+# routing, phasefactor/color params) are undocumented -- same dead-end as
+# .axs/.psy. Without this line each .smufi just downloads (FTP CODE 226) then
+# stalls with no decoder. NOTE: unrelated to Shiru's ZX-beeper "Picatune2"
+# (.pt2). Re-open if BeRo opens the engine or a portable player lands.
+.smufi

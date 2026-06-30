@@ -22,25 +22,6 @@ zsh: segmentation fault  ./chipmachine -d
 
 - do we have more 2600/vcs? should go to atari-8bit...
 
-= .pmd not playing! Piece Music Driver -- 36 songs in the db
-
-- .smufi Picatune no playback (20 songs)
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Picatune/BeRo/popcorn4k.smufi
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune%2fBeRo/popcorn4k.smufi
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Picatune/BeRo/popcorn4k.smufi
-[MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
-[MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-[MusicDatabase.cpp:2491] Loaded 303 format descriptions
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Picatune/- unknown/afrcan.smufi
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fPicatune%2f- unknown/afrcan.smufi
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Picatune/-%20unknown/afrcan.smufi
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-
 - .brt berotracker doesn't play (19 songs)
 [web.cpp:161] Curl Getting https://scenestream.net/static/media/logos/nectarine.png
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/BeRoTracker/BeRo/heyduda2.brt
