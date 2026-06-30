@@ -494,23 +494,18 @@ std::string ChipMachine::appendFormatInfo(std::string const& text,
     if (info.format.empty()) return text;
 
     // "Platform - Name (EXT)" plus, if listed, "<trackers> - <description>".
+    // Use the pre-resolved currentSongExt rather than re-deriving from
+    // info.format: by the time this runs, both callers have already overwritten
+    // info.format with the describeFormat() DISPLAY string ("Apple IIGS -
+    // SoundSmith (W)"), which no longer resolves to a key. currentSongExt was set
+    // from the RAW format just before, via songExtension()/resolveExtension().
     std::string fmt = info.format;
-    auto desc = musicDatabase.describeExtension(formatKey(info));
+    auto desc = musicDatabase.describeExtension(currentSongExt);
     if (!desc.empty()) fmt += " ... " + desc;
 
     // Dots give a clean gap between sections and before the line repeats.
     if (text.empty()) return "... " + fmt + " ...";
     return text + " ... " + fmt + " ...";
-}
-
-// Resolve the extension key used to look up a format description. Delegates to
-// MusicDatabase::resolveExtension(), which strips compression/archive wrappers
-// (.lha members, .gz/.zip) and resolves both suffix-form ("song.mod" -> "mod")
-// and modland/UnExoticA prefix-form ("cust.ingame" -> "cust") names to the real
-// inner format -- so the scroller's format description matches the actual tune.
-std::string ChipMachine::formatKey(SongInfo const& info)
-{
-    return MusicDatabase::resolveExtension(info);
 }
 
 void ChipMachine::initLua()

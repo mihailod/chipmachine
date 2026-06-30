@@ -1317,6 +1317,19 @@ TEST_CASE("SoundSmith plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// SoundSmith songs are bare-named on Modland (no on-disk extension) and carry no
+// ext in the DB, so resolveExtension() can't derive a key from the path. It must
+// fall back to mapping the DB format NAME ("SoundSmith") to the canonical "w"
+// extension, otherwise the scroller finds no format description (the "w" entry in
+// formats_descriptions.txt). Regresses if the format-name fallback is dropped.
+TEST_CASE("SoundSmith format resolves to w", "[music]")
+{
+    SongInfo info;
+    info.format = "SoundSmith";
+    info.path = "SoundSmith/- unknown/Amiga remakes/End Theme (Obarski)";
+    REQUIRE(chipmachine::MusicDatabase::resolveExtension(info) == "w");
+}
+
 // Ixalance (.ixs). A synth tracker from the defunct Shortcut Software: it stores
 // no PCM, instead synthesizing + zlib-compressing its own wavetables (songs are
 // only a few KB). Played via the vendored webixs core (Wothke's RE of the lost

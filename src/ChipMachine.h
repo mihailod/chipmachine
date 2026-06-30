@@ -151,10 +151,6 @@ private:
     // there is to show.
     std::string appendFormatInfo(std::string const& text, SongInfo const& info);
 
-    // Resolve the extension key for a format-description lookup, seeing past
-    // compressed containers (.lha members, .gz/.zip) to the inner file.
-    std::string formatKey(SongInfo const& info);
-
     enum Screen
     {
         NO_SCREEN = -1,

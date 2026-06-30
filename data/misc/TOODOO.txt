@@ -9,18 +9,18 @@
 
 - check all classifications, probably many are misclassified, see if some fall to unknown
 
---------------------
-- apple II GS soundsmith songs sound wrong. they play superfast and have weird artefacts. can we revisit how we sourced the player for it and whether we did anything wrong by porting it to apple arm chip (there were issues with this before) example: these songs play super fast: 
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/SoundSmith/- unknown/Amiga remakes/End Theme (Obarski).W
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSoundSmith%2f- unknown%2fAmiga remakes/End Theme (Obarski).W
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/SoundSmith/-%20unknown/Amiga%20remakes/End%20Theme%20%28Obarski%29.W
-and others play weird
+- 2nd level menu drill on more platforms with subplatforms?
 
-- Apple II SoundSmith .w extension description not picked up for scroll ([MusicPlayerList.cpp:793] Detected ext: )
-soundsmith has no extension in the db, not sure where .w is coming from but i need somehow that to be detected so it can append the metadata for the scroll from formats_descriptions.txt (there is "w" format there described)
-------------------------
+- crash and also this is atari vcs!?
+[RemoteLoader.cpp:138] Local path: /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/https://ftp.untergrund.net/users/ltk_tscc/fujiology/VCS/ASR/SMELLS.ZIP
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/https%3a%2f%2fftp.untergrund.net%2fusers%2fltk_tscc%2ffujiology%2fVCS%2fASR/SMELLS.ZIP
+[web.cpp:161] Curl Getting https://ftp.untergrund.net/users/ltk_tscc/fujiology/VCS/ASR/SMELLS.ZIP
+[MusicDatabase.cpp:1550] Loaded 1133 demozoo screenshots
+[web.cpp:291] CODE 200
+[RemoteLoader.cpp:159] CODE 200
+zsh: segmentation fault  ./chipmachine -d
+
+- do we have more 2600/vcs? should go to atari-8bit...
 
 = .pmd not playing! Piece Music Driver -- 36 songs in the db
 
