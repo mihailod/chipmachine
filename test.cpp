@@ -2895,9 +2895,10 @@ TEST_CASE("Quartet plays sound", "[music]")
     REQUIRE(plugin.canHandle("foo.4q"));
     REQUIRE_FALSE(plugin.canHandle("foo.mod"));
 
-    // The .4v declares its .set voiceset companion as a secondary file.
+    // The .4v declares its per-song ".set" voiceset plus the shared "SMP.set"
+    // bank some directories use instead; the missing one is ignored at load.
     REQUIRE(plugin.getSecondaryFiles(fourv) ==
-            std::vector<std::string>{ "Bangkok.set" });
+            (std::vector<std::string>{ "Bangkok.set", "SMP.set" }));
 
     auto* player = plugin.fromFile(fourv);
     REQUIRE(player != nullptr);

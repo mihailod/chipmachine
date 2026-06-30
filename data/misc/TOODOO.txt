@@ -69,15 +69,6 @@ soundsmith has no extension in the db, not sure where .w is coming from but i ne
 [RemoteLoader.cpp:159] CODE 226
 MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDeflemask%2fCrazySoundEnginer/Sonic 1 Dreamcast Edition.zip_x/Sonic 1 Dreamcast Edition/Green Hill Zone (Dreamcast).dmf'. Error: File not found: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDeflemask%2fCrazySoundEnginer/Sonic 1 Dreamcast Edition.zip_x/Sonic 1 Dreamcast Edition/Green Hill Zone (Dreamcast).dmf
 
-- zipped mod not playing, maybe worth a look:
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Protracker/Robyn Powell/Robyn Powell.zip
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fProtracker%2fRobyn Powell/Robyn Powell.zip
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Protracker/Robyn%20Powell/Robyn%20Powell.zip
-[MusicDatabase.cpp:1503] Loaded 796 zxspectrum screenshots
-[MusicDatabase.cpp:1503] Loaded 31777 modland screenshots
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-
 - some mm4 songs fail, some play, investigate
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/MusicMaker V8/- unknown/tribal dance.mm4
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMusicMaker V8%2f- unknown/tribal dance.mm4
@@ -225,20 +216,6 @@ uade warning: Song ended prematurely due to error: score died
 uade warning: Song ended prematurely due to error: score died
 
 $$$$$$$$$$$$$$$$$$$$$$
-
-- i think .set files should not be indexed 
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Quartet ST/Steve Wetherill/Projectyle (Amiga)/Projectyle 1.4v
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fQuartet ST%2fSteve Wetherill%2fProjectyle (Amiga)/Projectyle 1.4v
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Quartet%20ST/Steve%20Wetherill/Projectyle%20%28Amiga%29/Projectyle%201.4v
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Quartet ST/Steve Wetherill/Projectyle (Amiga)/Projectyle 1.set
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fQuartet ST%2fSteve Wetherill%2fProjectyle (Amiga)/Projectyle 1.set
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Quartet%20ST/Steve%20Wetherill/Projectyle%20%28Amiga%29/Projectyle%201.set
-[web.cpp:291] CODE 550
-[RemoteLoader.cpp:159] CODE 550
-[MusicPlayerList.cpp:928] Could not load secondary file modland::Quartet ST/Steve Wetherill/Projectyle (Amiga)/Projectyle 1.set
 
 - youtube and mp3 and ogg files are not all classified properly. many already know the platform they belong to and should be reindexes as such.
 
