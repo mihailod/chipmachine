@@ -3426,3 +3426,5 @@ TEST_CASE("coverage", "[music]")
     REQUIRE(g_errors <= 28);
     REQUIRE(g_skips <= 28);
 }
+
+

@@ -1881,9 +1881,12 @@ void initFormats()
     format_map["tcb tracker"] = ATARI;
     format_map["hippel st"] = ATARI;
     // mix: Atari ST/STE/Falcon digital sample tracker (Digital Tracker /
-    // Digi-Mix). modland "Atari Digi-Mix" already lands on ATARI via the
-    // startsWith("atari") fallback; key the bare extension so demozoo .mix tunes
-    // (tagged "Amiga"/"Demoscene", which don't resolve) classify as Atari too.
+    // Digi-Mix). The modland format string "Atari Digi-Mix" is listed in
+    // uade_formats, so the loop above pre-seeds it to UADE (->"Amiga"); that
+    // non-zero entry short-circuits the startsWith("atari") fallback, so it must
+    // be overridden explicitly here. Also key the bare extension so demozoo .mix
+    // tunes (tagged "Amiga"/"Demoscene", which don't resolve) classify as Atari.
+    format_map["atari digi-mix"] = ATARI; // override uade_formats UADE default
     format_map["mix"] = ATARI;
     // --- Atari XL/XE 8-bit (POKEY), distinct chip from the ST line ---
     // startsWith("atari") would otherwise lump "Atari 8Bit" (.sap) in with the
@@ -2475,6 +2478,18 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     } else {
         plat = platformName(b);
         name = s.format;
+    }
+    // Atari Falcon sub-label. The YM2149 ST chiptune formats (sndh/ym/sc68/TCB/
+    // Hippel ST/Quartet/Special FX...) keep "Atari ST/STE", but the Falcon-native
+    // sample trackers -- Graoumf Tracker (.gtk), Digital Tracker (.dtm), Digi-Mix
+    // (.mix) -- show "Atari Falcon" instead. They stay the ATARI platform byte
+    // (same F9 "Atari ST/STE/Falcon" filter and classification); only the
+    // displayed platform word changes. Keyed on ext under b==ATARI, so the
+    // unrelated .dtm variants (DeFy AdLib / DigiTrekker) -- which classify as
+    // PC/AdLib, not ATARI -- are never relabelled. The Falcon logo is already
+    // handled separately by the per-extension screenshots (gtk/dtm/mix.png).
+    if (b == ATARI && (ext == "GTK" || ext == "DTM" || ext == "MIX")) {
+        plat = "Atari Falcon";
     }
     if (name.empty()) name = ext.empty() ? "Unknown" : ext;
 
