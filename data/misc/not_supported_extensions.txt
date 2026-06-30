@@ -164,3 +164,17 @@
 # stalls with no decoder. NOTE: unrelated to Shiru's ZX-beeper "Picatune2"
 # (.pt2). Re-open if BeRo opens the engine or a portable player lands.
 .smufi
+
+# berotracker (.brt, modland "BeRoTracker", 19 tunes). BeRo's (Benjamin
+# Rosseaux) own module tracker -- closed-source Delphi/FreePascal Win32 app,
+# source never published (not among his ~50 github.com/BeRo1985 repos). The
+# .brt format itself diverged from IT into its own engine and is undocumented;
+# OpenMPT's own open feature request for it (bugs.openmpt.org #1483) has sat
+# unresolved since the maintainer judged BRT "more advanced than OpenMPT in
+# several ways," making any reimplementation "almost guaranteed to be a lossy
+# conversion" -- their suggested fix was BeRo adding an in-app BRT->IT
+# exporter, not something we control. No open replayer parses .brt anywhere
+# (UADE/OpenMPT/libxmp/ZXTune/AdPlug/rePlayer). Same dead-end shape as BeRo's
+# other closed format above (.smufi). Re-open if BeRo publishes the format or
+# a portable player lands.
+.brt
