@@ -2515,6 +2515,12 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     if (b == ATARI && (ext == "GTK" || ext == "DTM" || ext == "MIX")) {
         plat = "Atari Falcon";
     }
+
+    if (b == APPLE && ext == "MAD") {
+        plat = "Macintosh";
+    }
+
+
     if (name.empty()) name = ext.empty() ? "Unknown" : ext;
 
     // Build "Platform - Name (EXT)", dropping any piece that just repeats
