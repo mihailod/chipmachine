@@ -7,9 +7,6 @@
 - every other screenshot fade-in make it wave like a flag, like effects in amiga intros
 - from time to time make the scroll do the sine effect like in amiga intros
 
-- do not index files with extensions in this file: data/misc/not_supported_extensions.txt
-  and log a line when the program starts: "NOT INDEXING FOLLOWING UNSUPPORTED EXTENSIONS: <extensions>..."
-
 - check all classifications, probably many are misclassified, see if some fall to unknown
 
 --------------------
@@ -384,14 +381,6 @@ It's the Wayback subset (51 tunes), not the full audiotheque — cpc-power has n
 **************************
 * PLAYBACK BUGS / ISSUES *
 **************************
-
-- soundtrekker -- .mus (?)
-This is an MSX tune, not an Amiga module — and chipmachine has no FAC SoundTracker replayer.
-Look at the file header: 00000000: fe00 80ff bf00 8000 ...
-FE 00 80 FF BF 00 80 is an MSX BSAVE binary header: marker 0xFE, start 0x8000, end 0xBFFF, exec 0x8000. FAC SoundTracker is an MSX PSG music editor, and its .MUS files are raw Z80/MSX binaries — nothing to do with the Amiga.
-.mus is an overloaded modland extension — it's used by UFO (Amiga) and FAC SoundTracker (MSX), among others. canHandle only checks the extension, with no content sniffing, so UADE accepts this MSX file, hands the Z80 binary to the 68k UFO player, and the player immediately crashes.
-SOLUTION: Add FAC SoundTracker support via libkss — write a fac2kss converter (analogous to the existing bgm2kss/mgs2kss) wrapping the FAC replayer, and route .mus MSX files there. This is the only path to actually hearing the tune.
-The one open replayer, fcatrin/fstr (MIT), is unusable for porting — x86 real-mode asm targeting AdLib OPL2 (wrong chip, not portable C). 
 
 - .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM). (related to parlour? -- only some subsongs play):
 [RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/SGC/Masatomo Miyamoto/Parlour Games [SMS].sgc

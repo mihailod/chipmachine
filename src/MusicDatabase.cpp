@@ -913,6 +913,22 @@ bool MusicDatabase::parseStandard(
     return true;
 }
 
+// The extension a song path would route on, lowercased and without the leading
+// dot, for matching against the not_supported_extensions list. Handles MULTI:
+// groups (the first member decides) and URL query strings (".ay?x" -> "ay").
+static std::string routingExtension(std::string p)
+{
+    if (startsWith(p, "MULTI:")) {
+        p = p.substr(6);
+        auto tab = p.find('\t');
+        if (tab != std::string::npos) p = p.substr(0, tab);
+    }
+    auto ext = toLower(utils::path_extension(p));
+    auto q = ext.find('?');
+    if (q != std::string::npos) ext = ext.substr(0, q);
+    return ext;
+}
+
 void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
 {
 
@@ -1054,6 +1070,14 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
             if (!parser) parser = &MusicDatabase::parseStandard;
 
             (this->*parser)(vars, listFile, [&](SongInfo const& song) {
+                // Drop songs whose extension is listed (uncommented) in
+                // data/misc/not_supported_extensions.txt: we have no decoder for
+                // them, so indexing them only yields broken GUI entries that
+                // download then can't play.
+                if (!unsupportedExts.empty() &&
+                    unsupportedExts.count(routingExtension(song.path)) > 0) {
+                    return;
+                }
                 query
                     .bind(song.title, song.game, song.composer, song.format,
                           song.path, collection_id,
@@ -2806,9 +2830,33 @@ void MusicDatabase::initFromLuaAsync(utils::path const& workDir)
     });
 }
 
+void MusicDatabase::loadUnsupportedExtensions(utils::path const& workDir)
+{
+    unsupportedExts.clear();
+    auto f = findFile(workDir.string(), "data/misc/not_supported_extensions.txt");
+    if (!f) {
+        LOGW("not_supported_extensions.txt not found; indexing all extensions");
+        return;
+    }
+    std::string shown;
+    for (auto line : utils::File{ *f }.getLines()) {
+        auto a = line.find_first_not_of(" \t\r\n");
+        if (a == std::string::npos) continue; // blank
+        auto b = line.find_last_not_of(" \t\r\n");
+        line = line.substr(a, b - a + 1);
+        if (line[0] == '#') continue;       // commented-out -> stays indexable
+        if (line[0] == '.') line.erase(0, 1); // strip leading dot
+        if (line.empty()) continue;
+        auto ext = toLower(line);
+        if (unsupportedExts.insert(ext).second) shown += " ." + ext;
+    }
+    LOGI("INDEX SKIPPED UNSUPPORTED EXTENSIONS:%s", shown.c_str());
+}
+
 bool MusicDatabase::initFromLua(utils::path const& workDir)
 {
     this->workDir = workDir;
+    loadUnsupportedExtensions(workDir);
     auto playlistPath = Environment::getConfigDir() / "playlists";
     utils::create_directory(playlistPath);
     bool favFound = false;

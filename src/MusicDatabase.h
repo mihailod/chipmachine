@@ -340,6 +340,13 @@ private:
     void initDatabase(utils::path const& workDir, Variables& vars);
     void generateIndex();
 
+    // Extensions the indexer must NOT add as playable songs, loaded from
+    // data/misc/not_supported_extensions.txt at startup. Active (uncommented)
+    // ".ext" lines land here (lowercased, no leading dot); commented-out lines
+    // ("# .gtk") are ignored, so those extensions stay indexable.
+    std::set<std::string> unsupportedExts;
+    void loadUnsupportedExtensions(utils::path const& workDir);
+
     // --- Podcast live-feed refresh (Q4) ---------------------------------
     // A podcast whose episode list can be augmented from a live RSS feed.
     struct PodcastFeed
