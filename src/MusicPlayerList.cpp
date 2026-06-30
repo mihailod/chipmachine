@@ -379,9 +379,17 @@ bool MusicPlayerList::streamRemoteFile(const std::string& path)
 
 void MusicPlayerList::update()
 {
+    // Refill the audio FIFO WITHOUT holding plMutex. The decode loop in
+    // mp.update() can take several milliseconds for emulated chips; holding
+    // plMutex across it stalls the render thread, which acquires the same lock
+    // every frame to read metadata (getInfo/getMeta/getVolume). That stall is
+    // what made the scroller stutter while music was playing. mp owns its own
+    // synchronization (the FIFO is thread-safe and its flags are atomic), and
+    // it is only ever decoded from this thread, so it is safe to run unlocked.
+    mp.update();
+
     LOCK_GUARD(plMutex);
 
-    mp.update();
     remoteLoader.update();
 
     if (state == Playnow) {
@@ -474,6 +482,11 @@ void MusicPlayerList::update()
         subtitle = mp.getMeta("sub_title");
         subtitlePtr = subtitle.c_str();
     }
+
+    // Snapshot the decoder message under the lock (we are on the same thread
+    // that wrote mp.message in mp.update() above, so this read is safe) so the
+    // render thread can serve getMeta("message") from this cache.
+    message = mp.getMeta("message");
 }
 
 void MusicPlayerList::playCurrent()

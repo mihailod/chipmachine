@@ -23,7 +23,7 @@ Y1 = SCREEN_HEIGHT - 10
 
 background = 0x808080
 
-SCROLL_SPEED = 3
+SCROLL_SPEED = 7
 
 if true then
  TEXT_COLOR = 0xffe0e080

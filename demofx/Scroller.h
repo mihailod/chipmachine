@@ -72,8 +72,22 @@ public:
 			xpos = target.width() + 100;
 
 		scr.clear(0x00000000);
+		// Advance by a constant on-screen velocity (pixels per second) rather
+		// than a fixed step per frame. scrollspeed is calibrated for 60 FPS, so
+		// scale it by the real frame time. This keeps the scroll perfectly
+		// smooth even when frame pacing is irregular (vsync/present jitter) --
+		// a fixed per-frame step turned that jitter directly into stutter.
+		// delta is clamped so a one-off long frame (e.g. after a window resize
+		// or load hitch) can't teleport the text.
+		float dt = (float)delta;
+		if(dt > 50.0f) dt = 50.0f;
+		// Scale the step by gscale -- the same factor the glyphs are scaled by --
+		// so the scroll moves at a consistent VISUAL speed regardless of window
+		// size. A fixed pixel step looks fast in a small window and slow in a big
+		// one, because the text grows with the window but the movement didn't.
+		xpos -= scrollspeed * gscale * (dt / (1000.0f / 60.0f));
 		// Render text using dynamic scale factor; baseline centred in texture.
-		scr.text(font, scrollText, xpos-=scrollspeed, texH / 2.0f, 0xffffffff, dynScale);
+		scr.text(font, scrollText, xpos, texH / 2.0f, 0xffffffff, dynScale);
 		program.use();
 		static float uvs[] = { 0,0,1,0,0,1,1,1 };
 		target.draw(scr, 0.0F, scrolly - texH / 2.0f, target.width(), texH, uvs, program);
@@ -81,7 +95,10 @@ public:
 
 	float alpha = 1.0;
 
-	int scrollspeed = 4;
+	// Pixels advanced per 60 FPS-frame (scaled by real frame time in render()).
+	// NOTE: this default is overridden at startup by SCROLL_SPEED in
+	// lua/screen.lua (via Settings.scroll) -- tune the speed THERE, not here.
+	int scrollspeed = 8;
 	int scrolly = 0;
 	float scrollsize = 4.0;
 
@@ -90,7 +107,7 @@ private:
 	grappix::Font font;
 	grappix::Program program;
 	grappix::Program fprogram;
-	int xpos = -9999;
+	float xpos = -9999;
 	grappix::Texture scr;
 	std::string scrollText;
 	int scrollLen{};

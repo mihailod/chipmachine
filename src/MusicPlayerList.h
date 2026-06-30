@@ -87,6 +87,14 @@ public:
             std::string sub = std::string(subtitlePtr);
             return sub;
         }
+        // "message" is snapshotted by the player thread in update() so the
+        // render thread never has to reach into the decoder (mp) here. The
+        // decode now runs outside plMutex, so mp.message can be written
+        // concurrently -- reading it directly would be a data race.
+        if (what == "message") {
+            LOCK_GUARD(plMutex);
+            return message;
+        }
         LOCK_GUARD(plMutex);
         LOGD("META %s", what);
         return mp.getMeta(what);
@@ -274,6 +282,10 @@ private:
     std::shared_ptr<CueSheet> cueSheet;
     std::string subtitle;
     std::atomic<const char*> subtitlePtr{ nullptr };
+
+    // Snapshot of the decoder's "message" metadata, refreshed by the player
+    // thread under plMutex so the render thread can read it without touching mp.
+    std::string message;
 
     int multiSongNo = 0;
     std::vector<std::string> multiSongs;

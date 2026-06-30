@@ -461,9 +461,9 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
 
     scrollText = "INITIAL_TEXT";
     scrollEffect.set("scrolltext",
-      " . . . type to search . . UP/DOWN/ENTER to navigate & play"
-        " . . F9 for all formats"
-        " . . TAB for help . . . "
+        "Type to search . . UP+DOWN/ENTER navigate/play"
+        " . . F9=formats"
+        " . . TAB=help . . . "
         PROGRAM_NAME " " VERSION_STR
       " . . ."
     );

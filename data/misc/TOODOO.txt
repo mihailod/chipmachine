@@ -2,7 +2,6 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- scroll must be perfectly smooth, it is stuttering now when music playing, probably some threading issue?
 - [window_pc.cpp:48] SCROLL 0.000000, 0.200000
    let mouse influenct the scrolling stars!
 - every other screenshot fade-in make it wave like a flag, like effects in amiga intros
@@ -13,9 +12,18 @@
 
 - check all classifications, probably many are misclassified, see if some fall to unknown
 
-- apple II GS soundsmith sounds wrong
+--------------------
+- apple II GS soundsmith songs sound wrong. they play superfast and have weird artefacts. can we revisit how we sourced the player for it and whether we did anything wrong by porting it to apple arm chip (there were issues with this before) example: these songs play super fast: 
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:793] Detected ext: 
+[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/SoundSmith/- unknown/Amiga remakes/End Theme (Obarski).W
+[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSoundSmith%2f- unknown%2fAmiga remakes/End Theme (Obarski).W
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/SoundSmith/-%20unknown/Amiga%20remakes/End%20Theme%20%28Obarski%29.W
+and others play weird
 
 - .w extension description not picked up for scroll ([MusicPlayerList.cpp:793] Detected ext: )
+soundsmith has no extension in the db, not sure where .w is coming from but i need somehow that to be detected so it can append the metadata for the scroll from formats_descriptions.txt (there s w format there described)
+------------------------
 
 = .pmd not playing! Piece Music Driver -- 36 songs in the db
 
@@ -231,41 +239,6 @@ $$$$$$$$$$$$$$$$$$$$$$
 [web.cpp:291] CODE 550
 [RemoteLoader.cpp:159] CODE 550
 [MusicPlayerList.cpp:928] Could not load secondary file modland::Quartet ST/Steve Wetherill/Projectyle (Amiga)/Projectyle 1.set
-
-- [Scroller.h:46] SCROLL:  A MALC JENNINGS PRODUCTION 2001 Presenting another rmx <FIRST SAMURAI> <EXTENDED VERSION!> Original by: Tim Wright Remixed by: Malc Jennings Feel free to distribute this and any of those @ Amiga Legal Emulation. We have moved location btw so update yerself! http://ale.emuunlim.com More coming soon!  ... PC - Impulsetracker (IT) ... Impulse Tracker - Jeffrey Lim's 1995 DOS tracker, an evolution of Scream Tracker 3 adding 16-bit samples, instruments with envelopes and a resonant filter. Long the gold standard of PC tracking; open-sourced in 2014. ...
-[ChipMachine.cpp:782] Screenshot logos: platform='PC' logo='PC' have=yes
-[SearchIndex.cpp:234] words: [[first samurai]}]
-[SearchIndex.cpp:276] ## OTHER PARTS
-[RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Delitracker Custom/- unknown/firstsamurai.cus
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDelitracker Custom%2f- unknown/firstsamurai.cus
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Delitracker%20Custom/-%20unknown/firstsamurai.cus
-[web.cpp:291] CODE 550
-[RemoteLoader.cpp:159] CODE 550
-
-- [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Ad Lib/MUS/Nick Jones/first samurai.mus
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.mus
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Ad%20Lib/MUS/Nick%20Jones/first%20samurai.mus
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:761] Detected ext: 
-openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
-MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.mus'. Error: Could not load module
-MusicPlayer: Plugin 'libvice' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.mus'. Error: Not a sid file
-[UADEPlugin.cpp:752] UADE data /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data
-[UADEPlugin.cpp:25] Starting thread
-[UADEPlugin.cpp:301] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.mus
-[UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.BANK' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
-[UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/first samurai.BANK
-[UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/SMP.set' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
-[UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fAd Lib%2fMUS%2fNick Jones/SMP.set
-uade warning: Song ended prematurely due to error: score died
-
-- [web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:793] Detected ext: 
-openmpt: openmpt_module_create_from_memory2: ERROR: error loading file
-MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fFireball/Fire Power.MUS'. Error: Could not load module
-MusicPlayer: Plugin 'libvice' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fFAC SoundTracker%2fFireball/Fire Power.MUS'. Error: Not a sid file
 
 - youtube and mp3 and ogg files are not all classified properly. many already know the platform they belong to and should be reindexes as such.
 
