@@ -15,6 +15,9 @@
 
 - 2nd level menu drill on more platforms with subplatforms?
 
+- platform screenshots from mp3? for example jaguar... maybe more
+  same for ogg... 
+
 - AMP Pull request
 
 $$$$$$$$$$$$$$$$$$$$$

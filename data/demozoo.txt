@@ -29668,7 +29668,6 @@ Aerial Bondage Club	Dascon	Amiga	https://archive.scene.org/pub/parties/2018/revi
 Cover Story	Gasman	ZX Spectrum	https://files.zxdemo.org/f/201904/gasman_-_cover_story.pt3	pt3
 Robot Bar	Curt Cool	Amiga	https://archive.scene.org/pub/parties/2018/revision18/oldskool-music/robot_bar.zip	zip
 Nicolas Cache	Virgill & DJ Joge	Amiga	https://archive.scene.org/pub/parties/2018/revision18/oldskool-music/nicolas_cache.zip	zip
-RoboTIA	Tronimal	Atari 2600 Video Computer System (VCS)	https://ftp.untergrund.net/users/ltk_tscc/fujiology/VCS/TRONIMAL/ROBOTIA.ZIP	zip
 BEinbrekkern deluxe	Tullefanten	Demoscene	https://archive.scene.org/pub/parties/2018/thegathering18/fast_music/beinbrekkern_deluxe_by_tullefanten.flac	flac
 Best	mort96	Demoscene	https://archive.scene.org/pub/parties/2018/thegathering18/fast_music/best_by_mort96.flac	flac
 Garagy Thing	SliZer	Demoscene	https://archive.scene.org/pub/parties/2018/thegathering18/fast_music/garagy_thing_by_slizer.flac	flac
