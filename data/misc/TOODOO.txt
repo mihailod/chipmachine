@@ -9,10 +9,6 @@
 
 - maybe try another scroll font?
 
-- check all classifications, probably many are misclassified, see if some fall to unknown
-  consult the formats_descriptions.txt file
-  for example i see some .mod under Atari XL/XE (swallow.mod)
-
 - 2nd level menu drill on more platforms with subplatforms?
 
 - platform screenshots from mp3? for example jaguar... maybe more

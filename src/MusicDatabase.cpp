@@ -1887,6 +1887,21 @@ void initFormats()
     format_map["sam coupe cop"] = SAMCOUPE;
     format_map["sam coupe sng"] = SAMCOUPE;
 
+    // ZX Spectrum AY-3-8910/12 module formats keyed by EXTENSION. These are the
+    // last-resort ext fallback (only consulted when the format string didn't
+    // resolve), so they don't disturb zxart -- which already tags its tunes
+    // "spectrum ay"/"spectrum beeper" above -- and instead rescue demozoo tunes
+    // carrying the bare "ZX Spectrum" platform tag (which resolves to nothing),
+    // routing them into the "ZX Spectrum 128K (AY)" filter. All AY per
+    // data/misc/formats_descriptions.txt. NOTE: .psm is left out (the extension
+    // also means PC Epic MASI); .fls is left out (beeper/AY ambiguous, parked,
+    // no replayer). .pt2 is nominally shared with the parked Picatune2 beeper
+    // XML, but every real .pt2 here is Pro Tracker 2 (AY), so AY is correct.
+    for (char const* e :
+         { "pt1", "pt2", "pt3", "asc", "stc", "stp", "stp2", "st11", "st13",
+           "sqt", "psc", "vtx", "vt2", "ay", "psg", "ftc", "fxm", "chi", "gtr" })
+        format_map[e] = ZXAY;
+
     format_map["super nintendo"] = SNES;
     format_map["hes"] = HES;
     format_map["mp3"] = MP3;
@@ -1939,6 +1954,13 @@ void initFormats()
     format_map["ultra64 sound format"] = NINTENDO64;
     format_map["nintendo ds sound format"] = NDS;
     format_map["nintendo sound format"] = NES;
+    // demozoo console platform tags (verbose names, incl. the .zip game-rips the
+    // host extracts). Route to the matching console byte instead of UNKNOWN.
+    format_map["nintendo entertainment system (nes)"] = NES;
+    format_map["nintendo game boy (gb)"] = GAMEBOY;
+    format_map["nintendo game boy color (gbc)"] = GAMEBOY;
+    format_map["nintendo snes/super famicom"] = SNES;
+    format_map["nec pc engine"] = HES;
     // Sega 8-bit (SN76489 PSG): Master System, Game Gear, SG-1000, SC-3000
     format_map["sega master system"] = SEGAMS;
     format_map["sega game gear"] = SEGAMS;
@@ -2006,7 +2028,8 @@ void initFormats()
            "astroidea xmf", "easytrax", "m.o.n new", "m.o.n old",
            "trackerpacker 3", "musicmaker v8 old", "ac1d-dc1a packer",
            "ashley hogg", "mugician", "mugician ii", "pha packer",
-           "propacker 2.1", "synth pack", "alcatraz packer", "digital illusions",
+           "propacker 2.1", "propacker 3.0", "synth pack", "alcatraz packer",
+           "digital illusions",
            "digital sound creations", "rob hubbard old", "fred editor",
            "peter verswyvelen packer", "promizer", "sfx", "sidmon ii", "sidmon",
            "actionamics sound tool", "andrew parton", "art & magic",
@@ -2015,6 +2038,9 @@ void initFormats()
            "kefrens sound machine", "musicline", "steve turner",
            "midi-loriciel" })
         format_map[f] = AMIGA;
+    // .aon = Art Of Noise (Amiga, UADE-played). Extension key rescues demozoo
+    // "Amiga"-tagged .aon tunes (that tag doesn't resolve) from UNKNOWN.
+    format_map["aon"] = AMIGA;
     // Face The Music: an 8-voice AMIGA tracker (magic "FTMN", played by
     // openmptplugin's Load_ftm.cpp, which sets SONG_ISAMIGA / MOD_TYPE_MOD).
     // It is NOT MSX (where it was mis-grouped) and NOT Atari (as

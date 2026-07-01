@@ -56,7 +56,7 @@ void runConsole(std::shared_ptr<bbs::Console> console, ChipInterface& ci)
         static const std::map<uint32_t, int> colors = {
             { NOT_SET, Console::PURPLE },  { PLAYLIST, Console::GREY },
             { OTHER, Console::RED },     { SID, Console::BROWN },
-            { ZXBEEPER, Console::PINK },   { ZXAY, Console::PURPLE },
+            { ZXBEEPER, Console::PINK },   { ZXAY, Console::PURPLE },   { SPECTRUM, Console::PURPLE },
             { MSX, Console::BLUE },        { AMSTRAD, Console::LIGHT_GREY },
             { ACORN, Console::WHITE },     { SAMCOUPE, Console::PINK },
             { ATARI, Console::YELLOW },    { POKEY, Console::ORANGE },
