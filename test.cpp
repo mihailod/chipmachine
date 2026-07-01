@@ -1276,6 +1276,15 @@ TEST_CASE("SCC-Musixx", "[music]")
     REQUIRE_FALSE(scc.canHandle("testmus/uade/cannon fodder (intro).sng"));
     REQUIRE_FALSE(uade.canHandle("testmus/sccmusixx/outrun.SNG"));
     REQUIRE_FALSE(uade.canHandle("testmus/sccmusixx/outrun_lower.sng"));
+
+    // UADE plays only the Richard Joseph .sng family; every other .sng chip
+    // (GoatTracker/Synder SID, Sam Coupe SAA1099, sample-less ZoundMonitor)
+    // otherwise fell through to the ZoundMonitor 68k player and died with
+    // "score died" -- a hard FAIL. They must now be declined so they Skip. An
+    // AdLib .sng (Faust "FMC!") in particular routes to AdPlug, not UADE.
+    musix::AdPlugin adp{"data"};
+    REQUIRE_FALSE(uade.canHandle("testmus/adlib/sanxion.sng"));
+    REQUIRE(adp.canHandle("testmus/adlib/sanxion.sng"));
 }
 
 // Apple IIgs SoundSmith. A tune is a PAIR: a bare-named song file (patterns/
