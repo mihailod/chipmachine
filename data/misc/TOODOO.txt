@@ -15,9 +15,7 @@
 
 - 2nd level menu drill on more platforms with subplatforms?
 
-- Atari VCS subclassification in playback
-  now it says Atari XL/XE - Atari 2600 Video Computer System (VCS)
-should be Atari 2600 
+- AMP Pull request
 
 $$$$$$$$$$$$$$$$$$$$$
 

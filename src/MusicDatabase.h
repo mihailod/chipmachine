@@ -38,7 +38,7 @@ enum Formats
     NO_FORMAT,
     PLAYLIST,
 
-    CONSOLE,
+    OTHER,
 
     HES,
 

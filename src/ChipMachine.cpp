@@ -38,7 +38,7 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "[show all]", {} },
     { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER } },
     { "Atari ST/STE/Falcon", { ATARI } },
-    { "Atari XL/XE (POKEY)", { POKEY } },
+    { "Atari 8bit (POKEY/TIA)", { POKEY } },
     { "Commodore 64 (SID)", { SID, STR } },
     { "Commodore 16/116/+4 (TED)", { PRG } },
     { "ZX Spectrum 16K/48K (Beeper)", { ZXBEEPER } },
@@ -62,7 +62,7 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "PC-98/X68000/FM Towns", { JPFM } },
     { "PC Engine/TurboGrafx-16", { HES } },
     { "WonderSwan", { WONDERSWAN } },
-    { "Other Platforms", { CONSOLE } },
+    { "Other Platforms", { OTHER } },
     { "Unclassified MP3/OGG", { MP3, OGG } },
     { "Unclassified YouTube Audio", { YOUTUBE } },
     { "Podcasts", { PODCAST } },
@@ -75,7 +75,7 @@ static uint32_t formatColor(int f)
 {
     static const std::map<uint32_t, uint32_t> colors = {
         { NOT_SET, 0xffff00ff }, { PLAYLIST, 0xffffff88 },
-        { CONSOLE, 0xffdd3355 },
+        { OTHER, 0xffdd3355 },
         { HES, 0xffee7766 },
         { NES, 0xffe05555 },     { SNES, 0xff9a7bd0 },
         { GAMEBOY, 0xff9bbc0f },  { GBA, 0xff9bbc0f },

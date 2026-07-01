@@ -1925,6 +1925,14 @@ void initFormats()
     // them under Atari 8Bit for now via this explicit override (checked before
     // the fallback). Revisit if a proper VCS/TIA category is added.
     format_map["atari 2600 video computer system (vcs)"] = POKEY;
+    // Atari Jaguar demozoo/Fujiology entries: game-soundtrack rips (mostly MP3
+    // recordings, a few .xm/.mod modules), NOT ST chiptunes -- but "atari jaguar"
+    // would hit the startsWith("atari") fallback and pollute the Atari ST/STE
+    // filter. The Jaguar has no native chip music format and there's no
+    // dedicated filter, so bucket it under OTHER ("Other Platforms"). (The few
+    // .mod among these are genuine Amiga ProTracker modules and get pulled to
+    // Amiga by the .mod correction near the end of formatToByte.)
+    format_map["atari jaguar"] = OTHER;
     format_map["soundsmith"] = APPLE; // Apple IIgs SoundSmith
     format_map["playerpro"] = APPLE;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
     format_map["jaytrax"] = TRACKER;  // JayTrax (.jxs), cross-platform synth tracker -- not UADE/Amiga
@@ -2043,9 +2051,9 @@ void initFormats()
     format_map["iso-mpeg audio layer-3"] = MP3;
     format_map["hippel st coso"] = ATARI;   // Atari ST Hippel
     format_map["bbc micro"] = ACORN;        // Acorn 8-bit (close enough)
-    // Misc small consoles/arcade -> generic CONSOLE ("Other Consoles" filter).
+    // Misc small consoles/arcade -> generic OTHER ("Other Platforms" filter).
     for (char const* f : { "vectrex", "colecovision", "capcom q-sound format" })
-        format_map[f] = CONSOLE;
+        format_map[f] = OTHER;
 
     // Correct cross-platform formats that the generic fallbacks (endsWith
     // "tracker" -> TRACKER, uade_formats -> UADE) would otherwise mis-file under
@@ -2202,6 +2210,25 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
         }
         // fprintf(stderr, "%s\n", f.c_str());
     }
+
+    // Some demoscene sources (demozoo / scene.org) tag a module with the
+    // *release* platform of the production it appeared in ("Atari 8Bit",
+    // "Atari Jaguar", "MS-Dos", ...), which misfiles it under a foreign chip
+    // that can't even play it. For module formats whose platform is fixed by the
+    // format itself, the extension is authoritative:
+    //   .mod -> Amiga ProTracker -- but only if it landed off-Amiga; Amiga-family
+    //           bytes (AMIGA/PROTRACKER/SOUNDTRACKER/UADE/TRACKER) are left alone
+    //           to preserve the modland Protracker-vs-Soundtracker distinction.
+    //   .xm  -> FastTracker II (IBM PC), always -- .xm has no platform variants.
+    if (!path.empty()) {
+        std::string ext = toLower(utils::path_extension(path));
+        if (!ext.empty() && ext[0] == '.') ext = ext.substr(1);
+        if (ext == "mod" && l != AMIGA && l != PROTRACKER && l != SOUNDTRACKER &&
+            l != UADE && l != TRACKER)
+            l = PROTRACKER;
+        else if (ext == "xm")
+            l = FASTTRACKER;
+    }
     return l;
 }
 
@@ -2247,7 +2274,7 @@ static std::string platformName(uint8_t b)
     case PLAYSTATION:
     case PLAYSTATION2: return "PlayStation";
     case HES: return "PC Engine";
-    case CONSOLE: return "Console";
+    case OTHER: return "Other";
     case ADPLUG: return "PC AdLib";
     case PC: return "PC";
     case MP3: return "MP3";
@@ -2479,6 +2506,16 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     // skip the "(EXT)" suffix entirely and just label them "Podcast".
     if (b == PODCAST) return "Podcast";
 
+    // Atari 2600 (VCS / TIA) demoscene rips carry the verbose platform string
+    // "Atari 2600 Video Computer System (VCS)" and are bucketed under POKEY
+    // (Atari 8Bit) for the F9 filter -- but that string is a machine descriptor,
+    // not a tracker name, and the files are zip/gz/mp3 rips with no meaningful
+    // inner format. Surface the concise machine name (like YouTube/Podcast
+    // above), so it reads "Atari 2600" instead of the misleading
+    // "Atari XL/XE - Atari 2600 Video Computer System (VCS)".
+    if (toLower(s.format) == "atari 2600 video computer system (vcs)")
+        return "Atari 2600";
+
     // Extension (uppercase, no dot). resolveExtension() gives the REAL inner
     // format, so a compressed song shows "(MOD)" not "(ZIP)" -- and never the
     // container wrapper.
@@ -2548,6 +2585,13 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     if (b == APPLE && ext == "MAD") {
         plat = "Macintosh";
     }
+
+    // A .mod is an Amiga ProTracker module. Some demoscene rips carry a stale
+    // release-platform tag as their format string (reclassified to Amiga in
+    // formatToByte), which would otherwise render as the name -- e.g. the
+    // contradictory "Amiga - Atari 8Bit (MOD)". Surface "ProTracker" instead.
+    if (b == PROTRACKER && ext == "MOD") name = "ProTracker";
+    if (b == FASTTRACKER && ext == "XM") name = "FastTracker II";
 
 
     if (name.empty()) name = ext.empty() ? "Unknown" : ext;
