@@ -19,12 +19,6 @@
   now it says Atari XL/XE - Atari 2600 Video Computer System (VCS)
 should be Atari 2600 
 
-- once demozoo cleaning done, demozoo screenshots revisiting
-mihailod@Mac chipmachine % wc -l data/demozoo_screenshots.txt 
-    1133 data/demozoo_screenshots.txt
-mihailod@Mac chipmachine % wc -l data/demozoo.txt            
-   41929 data/demozoo.txt
-
 $$$$$$$$$$$$$$$$$$$$$
 
 SNG TRIAGE:
