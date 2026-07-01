@@ -32919,8 +32919,6 @@ Serious Damage Bringers	Rubbish	Demoscene	https://ftp.untergrund.net/users/ltk_t
 Soft-NES	Rubbish	Demoscene	https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RUBBISH/MP3/RUBBISH-SOFT_NES.MP3	mp3
 Syntax Banana Man	Alpharisc	Demoscene	https://media.demozoo.org/music/81/35/syntax22.it	it
 Cheezish	cTrix	Amiga	https://media.demozoo.org/music/da/39/me.mod	mod
-Midnight Rider	PG	Atari 8Bit	https://archive.scene.org/pub/parties/2022/lostparty22/music/midnight.xex	xex
-Walley Of The Sun	Poison	Atari 8Bit	https://archive.scene.org/pub/parties/2022/lostparty22/music/walley_of_the_sun.xex	xex
 Journey Of Solos	Ryan	Demoscene	https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RYAN_TR/MP3/NEZGAR-JOURNEY_OF_SOLOS.MP3	mp3
 Enchanted Lands (Vineleaf Remix)	Ryan	Demoscene	https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RYAN_TR/MP3/RYAN-ENCHANTED_LANDS-VINELEAF_REMIX.MP3	mp3
 Enchanted Lands	Ryan	Demoscene	https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RYAN_TR/MP3/RYAN-ENCHANTED_LANDS.MP3	mp3
@@ -32980,7 +32978,6 @@ Only Built 4 Atari Links	SH3	Atari ST	https://ftp.untergrund.net/users/ltk_tscc/
 Olympic (St4)	SH3	Atari ST	https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/S/SH3/GTK/OLYMPIC.GTK	gtk
 Imperial Junglist Stormtroopers	SH3	Atari ST	https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/S/SH3/GTK/RADIORAD.GTK	gtk
 Suspicious Carbon	SH3	Atari ST	https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/S/SH3/GTK/S_CARBON.GTK	gtk
-Zetnij Wuosy	ZoltarX	Atari 8Bit	https://archive.scene.org/pub/parties/2022/lostparty22/music/zetnij_wuosy.xex	xex
 Lunapark Of Zombies	Miker	Atari 8Bit	https://archive.scene.org/pub/parties/2022/lostparty22/music/zomblu.asc	asc
 Maikel Rapsody 4	Felisuco	Demoscene	https://archive.scene.org/pub/parties/2022/euskal22/music_multichannel/felisuco.zip	zip
 Posthuman Frame of Reference	Ham	Demoscene	https://archive.scene.org/pub/parties/2022/euskal22/music_multichannel/ham-posthuman_frame_of_reference.zip	zip
