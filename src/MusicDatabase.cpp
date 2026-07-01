@@ -2816,12 +2816,29 @@ void MusicDatabase::generateIndex()
         uint8_t b = formatToByte(fmt, path, collection);
         if (collection == radioColl) b = RADIO;
         formats.push_back(b | (collection << 8));
-        // Hue key: normally per-format, but podcasts all share the format
-        // "Podcast" -- key them by their show (collection) so episodes of one
-        // podcast share a hue and differ from another's.
-        formatHue.push_back(fmt == "Podcast"
-                                ? hueSeed("podcast#" + std::to_string(collection))
-                                : hueSeed(fmt));
+        // Hue key: the sub-format, so each distinct format gets its own hue
+        // (spread evenly across the platform filter). Same format = same colour
+        // (e.g. every .pt2 tune matches, and differs from .pt3 / .asc). Two
+        // exceptions:
+        //  - Podcasts all share the format "Podcast" -> key by show (collection)
+        //    so episodes of one podcast share a hue and differ from another's.
+        //  - zxart tags every tune with a coarse chip name ("Spectrum AY",
+        //    "Spectrum Beeper", "Sam Coupe") and demozoo tags them "ZX Spectrum"
+        //    -- one string for a dozen distinct sub-formats. For these, key by
+        //    the file EXTENSION (the real sub-format: pt3/pt2/asc/vtx/stc/...)
+        //    so each format gets its own hue instead of all sharing one.
+        std::string hueKey;
+        if (fmt == "Podcast") {
+            hueKey = "podcast#" + std::to_string(collection);
+        } else {
+            std::string lf = toLower(fmt);
+            if (lf == "spectrum ay" || lf == "spectrum beeper" ||
+                lf == "sam coupe" || lf == "zx spectrum")
+                hueKey = lf + "|" + toLower(utils::path_extension(path));
+            else
+                hueKey = fmt;
+        }
+        formatHue.push_back(hueSeed(hueKey));
 
         if (game != "") {
             if (title != "")

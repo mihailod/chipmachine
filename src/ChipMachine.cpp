@@ -127,11 +127,16 @@ static uint32_t shiftColorBySpread(uint32_t argb, float t)
         else h = (r - g) / d + 4.f;
         h *= 60.f;
     }
-    h += (t - 0.5f) * 150.f; // +-75 deg, evenly spread across the formats
+    h += (t - 0.5f) * 200.f; // +-100 deg, evenly spread across the formats
     if (h < 0.f) h += 360.f;
     if (h >= 360.f) h -= 360.f;
-    v *= 0.70f + 0.30f * (1.f - t); // brightness gradient over the spread
-    s *= 0.72f + 0.28f * t;         // saturation gradient over the spread
+    v *= 0.72f + 0.28f * (1.f - t); // brightness gradient over the spread
+    // Lift saturation to a vivid floor (still varied by t) so the hue steps read
+    // as distinct colours even when the platform's base is a washed-out tint
+    // (e.g. the ZX lavender) -- otherwise adjacent formats look like the same
+    // muted shade. Only raises saturation, never lowers an already-vivid base.
+    float sfloor = 0.55f + 0.30f * t;
+    if (s < sfloor) s = sfloor;
     if (v > 1.f) v = 1.f;
     if (s > 1.f) s = 1.f;
     float cc = v * s;
