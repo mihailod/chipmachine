@@ -178,3 +178,6 @@
 # other closed format above (.smufi). Re-open if BeRo publishes the format or
 # a portable player lands.
 .brt
+
+# atari exexutable, pruned from db but just in case:
+.xex
