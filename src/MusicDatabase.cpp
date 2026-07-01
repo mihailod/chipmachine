@@ -1917,6 +1917,14 @@ void initFormats()
     // ST tunes; this explicit entry keeps POKEY separate.
     format_map["atari 8bit"] = POKEY;
     format_map["pokeynoise"] = POKEY; // Atari 8-bit POKEY (.pn), not Amiga
+    // Atari 2600/VCS (TIA chip) demoscene tunes from demozoo/Fujiology carry the
+    // platform string "Atari 2600 Video Computer System (VCS)". That starts with
+    // "atari", so the generic startsWith("atari") fallback below would lump them
+    // in with the Atari ST/STE line -- wrong machine. The TIA is its own chip
+    // (not POKEY either), but there's no dedicated 2600 filter yet, so bucket
+    // them under Atari 8Bit for now via this explicit override (checked before
+    // the fallback). Revisit if a proper VCS/TIA category is added.
+    format_map["atari 2600 video computer system (vcs)"] = POKEY;
     format_map["soundsmith"] = APPLE; // Apple IIgs SoundSmith
     format_map["playerpro"] = APPLE;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
     format_map["jaytrax"] = TRACKER;  // JayTrax (.jxs), cross-platform synth tracker -- not UADE/Amiga
@@ -2920,9 +2928,17 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
         try {
             initDatabase(workDir, dbmap);
         } catch (std::exception& e) {
-            LOGE("Error creating database '%s': %s", db_name, e.what());
+            // A throw here aborts indexing of the WHOLE collection partway (e.g.
+            // a stoi crash on one bad row left Demozoo at ~3k of ~42k songs), and
+            // the only symptom is this one line at boot. Make it impossible to
+            // miss: bright-red, banner-prefixed (ANSI \x1b[1;31m ... \x1b[0m).
+            LOGE("\x1b[1;31m!!!!!!!!!!!!!!! Error creating database '%s': "
+                 "%s\x1b[0m",
+                 db_name, e.what());
         } catch (...) {
-            LOGE("Unknown error creating database '%s'", db_name);
+            LOGE("\x1b[1;31m!!!!!!!!!!!!!!! Unknown error creating database "
+                 "'%s'\x1b[0m",
+                 db_name);
         }
         dbmap.clear();
     };

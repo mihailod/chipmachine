@@ -7,27 +7,33 @@
 - every other screenshot fade-in make it wave like a flag, like effects in amiga intros
 - from time to time make the scroll do the sine effect like in amiga intros
 
+- maybe try another scroll font?
+
 - check all classifications, probably many are misclassified, see if some fall to unknown
   consult the formats_descriptions.txt file
+  for example i see some .mod under Atari XL/XE (swallow.mod)
 
 - 2nd level menu drill on more platforms with subplatforms?
 
-- crash and also this is atari vcs!?
-[RemoteLoader.cpp:138] Local path: /Users/mihailod/Documents/chipmachine-as/build/../chipmachine/https://ftp.untergrund.net/users/ltk_tscc/fujiology/VCS/ASR/SMELLS.ZIP
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/https%3a%2f%2fftp.untergrund.net%2fusers%2fltk_tscc%2ffujiology%2fVCS%2fASR/SMELLS.ZIP
-[web.cpp:161] Curl Getting https://ftp.untergrund.net/users/ltk_tscc/fujiology/VCS/ASR/SMELLS.ZIP
-[MusicDatabase.cpp:1550] Loaded 1133 demozoo screenshots
-[web.cpp:291] CODE 200
-[RemoteLoader.cpp:159] CODE 200
-zsh: segmentation fault  ./chipmachine -d
+- Atari VCS subclassification in playback
+  now it says Atari XL/XE - Atari 2600 Video Computer System (VCS)
+should be Atari 2600 
 
-- do we have more 2600/vcs? should go to atari-8bit...
+- once demozoo cleaning done, demozoo screenshots revisiting
+mihailod@Mac chipmachine % wc -l data/demozoo_screenshots.txt 
+    1133 data/demozoo_screenshots.txt
+mihailod@Mac chipmachine % wc -l data/demozoo.txt            
+   41929 data/demozoo.txt
 
 $$$$$$$$$$$$$$$$$$$$$
 
 SNG TRIAGE:
 
-- only 4 sam coupe .sng
+there is a complex situation with .sng extension.
+it can be multiple things
+look at these logs:
+
+1. - we have only 4 sam coupe .sng
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Sam Coupe SNG/Ziutek/ofc2.sng
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSam Coupe SNG%2fZiutek/ofc2.sng
 [web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Sam%20Coupe%20SNG/Ziutek/ofc2.sng
@@ -48,7 +54,7 @@ SNG TRIAGE:
 [UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSam Coupe SNG%2fZiutek/Samples/~0!??^,V?S?,~2'?,^,V?~O#~2??@> ?2?#~2(??@>0 ?2?#?	0!~2Q?#^#?y
 uade warning: Song ended prematurely due to error: score died
 
-- .sng (several formats), the GOAT TRACKER 2 variant cannot play
+2. - .sng (several formats), the GOAT TRACKER 2 variant cannot play
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/GoatTracker 2/Kalachnikov/sid-warrior.sng
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fGoatTracker 2%2fKalachnikov/sid-warrior.sng
 [web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/GoatTracker%202/Kalachnikov/sid-warrior.sng
@@ -69,7 +75,7 @@ uade warning: Song ended prematurely due to error: score died
 [UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fGoatTracker 2%2fKalachnikov/Samples/arrior
 uade warning: Song ended prematurely due to error: score died
 
-- synder sng misclassified as scc-musixx, maybe trivial to fix
+3. - synder sng misclassified as scc-musixx, maybe trivial to fix
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Synder SNG-Player/Brite-Lite/other side.sng
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSynder SNG-Player%2fBrite-Lite/other side.sng
 [web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Synder%20SNG-Player/Brite-Lite/other%20side.sng
@@ -90,7 +96,7 @@ uade warning: Song ended prematurely due to error: score died
 [UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSynder SNG-Player%2fBrite-Lite/Samples/dence
 uade warning: Song ended prematurely due to error: score died
 
-- sng synder sng-player AND synder tracker (most frequent!)
+4. - sng synder sng-player AND synder tracker (most frequent!)
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Synder Tracker/Micromachina/syn01-1.sng
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSynder Tracker%2fMicromachina/syn01-1.sng
 [web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Synder%20Tracker/Micromachina/syn01-1.sng
@@ -131,7 +137,7 @@ uade warning: Song ended prematurely due to error: score died
 [UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSynder Tracker%2fMicromachina/Samples/?
 uade warning: Song ended prematurely due to error: score died
 
-- sng zoundmonitor
+5. - sng zoundmonitor
 [RemoteLoader.cpp:138] Local path: /opt/Music/MODLAND/Zoundmonitor/The Balance/maddick.sng
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fZoundmonitor%2fThe Balance/maddick.sng
 [web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Zoundmonitor/The%20Balance/maddick.sng
@@ -151,6 +157,9 @@ uade warning: Song ended prematurely due to error: score died
 [UADEPlugin.cpp:87] Trying to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fZoundmonitor%2fThe Balance/Samples/Backingstr' from '/Users/mihailod/Documents/chipmachine-as/build/../chipmachine/data/uade/players'
 [UADEPlugin.cpp:117] Actually loading /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fZoundmonitor%2fThe Balance/Samples/Backingstr
 uade warning: Song ended prematurely due to error: score died
+
+invetigate all these and report what is going on here and what would be the path forward
+
 
 $$$$$$$$$$$$$$$$$$$$$$
 

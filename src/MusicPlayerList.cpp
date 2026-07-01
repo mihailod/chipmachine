@@ -738,6 +738,10 @@ void MusicPlayerList::playCurrent()
                 std::vector<std::string> songs, audio;
                 try {
                     auto* a = utils::Archive::open(f0.getName(), dir);
+                    // open() returns null for an unrecognised container. We got
+                    // here by ZIP magic, so it should be a ZipFile -- but never
+                    // dereference null (a SIGSEGV here is NOT caught by catch).
+                    if (a == nullptr) { throw std::runtime_error("archive open failed"); }
                     for (auto const& m : *a) {
                         // Skip macOS resource forks and dotfiles -- their ext
                         // would otherwise spoof a bogus track (e.g. ._x.mp3).
