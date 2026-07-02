@@ -2351,11 +2351,14 @@ TEST_CASE("FTC routing", "[music]")
     REQUIRE(winner == "ZX Spectrum (ZXTune)");
     REQUIRE(musix::AyflyPlugin().canHandle("x.ftc") == false);
 }
-// Sam Coupe COP (the modland "Sam Coupe COP" corpus): SAM Coupé music for the
-// SAA1099, played by running the song's embedded Z80 replayer (or the shared
-// E-Tracker replayer) on the GME Z80 core with Dave Hooper's SAASound. The
-// fixture set covers both layouts: bd/e11 are raw-Z80 "compiled" songs, duck1/
-// duck2 are E-Tracker data files.
+// Sam Coupe COP/SNG: SAM Coupé music for the SAA1099, played by running the
+// song's embedded Z80 replayer (or the shared E-Tracker replayer) on the GME Z80
+// core with Dave Hooper's SAASound. The modland "Sam Coupe COP" (.cop) and "Sam
+// Coupe SNG" (.sng) corpora are the same replayer family, so one plugin plays
+// both. Fixtures cover the revisions: bd/e11 raw-Z80 "compiled" songs and duck1/
+// duck2 E-Tracker data (.cop), plus five .sng -- ddtitl (compiled 0x21..0xc3),
+// kapsa3 (E-Tracker data), music1 (Fuka), ofc2 (Ziutek "3e..3d c2 23 81") and
+// tetris (compiled "JP #81xx").
 TEST_CASE("Sam Coupe COP", "[music]")
 {
     testPlugin<musix::CopPlugin>("testmus/cop", "");
@@ -2377,6 +2380,14 @@ TEST_CASE("COP routing", "[music]")
     REQUIRE(winner("testmus/cop/duck1.cop") == "Sam Coupe (COP)"); // E-Tracker
     REQUIRE_FALSE(musix::ZXTunePlugin().canHandle("testmus/cop/bd.cop"));
     REQUIRE_FALSE(musix::ZXTunePlugin().canHandle("testmus/cop/duck1.cop"));
+    // Sam Coupe .sng routes here too (content-gated), and CopPlugin must NOT
+    // grab the other .sng chips -- their headers fail looksLikeSamCoupeCop.
+    REQUIRE(winner("testmus/cop/ddtitl.sng") == "Sam Coupe (COP)");
+    REQUIRE(winner("testmus/cop/kapsa3.sng") == "Sam Coupe (COP)");
+    musix::CopPlugin cop;
+    REQUIRE_FALSE(cop.canHandle("testmus/goattracker/sid-warrior.sng"));   // GTS5
+    REQUIRE_FALSE(cop.canHandle("testmus/uade/aquatic games.sng"));        // RJP1SMOD
+    REQUIRE_FALSE(cop.canHandle("testmus/zoundmonitor/maddick.sng"));      // ZoundMonitor
 }
 // .mus is overloaded on modland: UADE's UFO eagleplayer owns the Amiga variant,
 // but the extension is also used by FAC SoundTracker, an MSX PSG format the
