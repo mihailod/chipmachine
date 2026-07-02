@@ -270,7 +270,7 @@ bool MusicDatabase::parseRss(
         if (img.valid()) song.metadata[SongInfo::SCREENSHOT] = img.attr("href");
         callback(song);
     }
-    LOGD("Done");
+    //LOGD("Done");
     return true;
 }
 
@@ -569,6 +569,15 @@ bool MusicDatabase::parseModland(
             // a playable song, so never index it as one.
             if (endsWith(toLower(song.path), ".info")) { continue; }
 
+            // ".txt" files scattered through Modland are documentation/lyrics/
+            // format notes (readme.txt, "...CHI format.en.txt", song lyrics,
+            // game index.txt), never playable songs -- no song in the whole
+            // catalogue uses a .txt extension. The shallow ones were logged as
+            // "bad format"/"bad file"; the deeper ones (e.g. "S98/.../index.txt",
+            // "Video Game Music/MSX1/.../Galaga.txt") were being indexed as bogus
+            // tracks that download but can't play. Drop them all uniformly.
+            if (endsWith(toLower(song.path), ".txt")) { continue; }
+
             // KrisHatlelid (.kh) songs pair with a fixed-name "songplay" driver
             // file in the same game dir; it is a companion (fetched via
             // UADEPlugin::getSecondaryFiles), never a standalone tune. It has no
@@ -616,10 +625,31 @@ bool MusicDatabase::parseModland(
 
             std::vector<std::string> parts = split(song.path, "/");
             int l = parts.size();
-            if (l < 3) {
-                LOGD("%s", song.path);
+
+            // A few real formats live flat on Modland: the format directory
+            // holds the "<prefix>.<song>" files directly, with no composer
+            // subdirectory (only 2 path segments), so the generic
+            // Format/Composer/title parse below rejects them. "Ashley Hogg" is
+            // one -- a genuine UADE custom format (Codemasters Amiga game music,
+            // eagleplayer prefixes=ash). Index it directly: the composer is the
+            // format's namesake, the title is the prefix-stripped base, and the
+            // real 2-segment path is preserved verbatim so the FTP download URL
+            // (source.url + path) still resolves. The "smp.<song>" sample
+            // companions are already dropped as secondary above and fetched by
+            // UADEPlugin::getSecondaryFiles at play time.
+            static const std::set<std::string> flatFormats = { "Ashley Hogg" };
+            bool flat = (l == 2 && flatFormats.count(parts[0]) > 0);
+
+            if (l < 3 && !flat) {
+                LOGD("SKIPPED (bad format): %s", song.path);
                 continue;
             }
+
+            if (flat) {
+                song.format = parts[0];
+                song.composer = parts[0];
+                song.title = base;
+            } else {
 
             int i = 0;
             song.format = parts[i++];
@@ -630,6 +660,18 @@ bool MusicDatabase::parseModland(
             // secondary file at play time. (The mono "Sidplayer" collection,
             // which has standalone ".mus" files, is unaffected.)
             if (song.format == "Stereo Sidplayer" && ext == "mus") continue;
+
+            if (i == l - 1) {
+                // Orphan song sitting directly in the format directory with no
+                // composer subdir -- only the filename token is left. Happens
+                // under the sub-formats (which eat two tokens), e.g.
+                // "Spectrum/ASC Sound Master/soldfut0.asc" or
+                // "Spectrum/Pro Tracker 2/cappella.pt2". Index it with an unknown
+                // composer instead of consuming the filename as the composer and
+                // then failing the "bad file" guard below. (Also avoids a stray
+                // out-of-bounds parts[i] read in the composer logic.)
+                song.composer = "?";
+            } else {
 
             song.composer = parts[i++];
 
@@ -646,8 +688,10 @@ bool MusicDatabase::parseModland(
             // std::string game;
             if (l - i >= 2) song.game = parts[i++];
 
+            } // end composer/game parse (skipped for composer-less orphans)
+
             if (i == l) {
-                LOGD("Bad file %s", song.path);
+                LOGD("SKIPPED (bad file): %s", song.path);
                 continue;
             }
 
@@ -655,6 +699,8 @@ bool MusicDatabase::parseModland(
                 parts[i] = parts[i].substr(0, parts[i].length() - 4);
 
             song.title = base;
+
+            } // end non-flat parse
             if (exclude.count(song.format) > 0) continue;
             if (song.game != "" && song.game == lastSong.game &&
                 song.composer == lastSong.composer) {
@@ -961,7 +1007,7 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
         dontIndex[collection_id] = 1;
     }
 
-    LOGD("Workdir:%s", workDir);
+    //LOGD("Workdir:%s", workDir);
     File listFile;
     bool writeListFile = false;
     webutils::Web web{ (Environment::getCacheDir() / "_webfiles").string() };
@@ -1004,7 +1050,10 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
         auto parser = parsers[type];
         // if(!parser)
         // parser = &MusicDatabase::parseStandard;
-        LOGD("Parsing %s from %s", type, listFile.getName());
+        // Log the short source path (e.g. "data/Games.csv") to match the
+        // "Creating '...' DB, source: ..." line the other databases print,
+        // rather than the fully-resolved absolute path.
+        //LOGD("Parsing %s from %s", type, song_list);
 
         (this->*parser)(vars, listFile.getName(), [&](Product const& prod) {
             query

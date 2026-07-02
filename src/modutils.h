@@ -28,7 +28,7 @@ getTypeAndBase(std::string const& filename)
     // Modland prefix-form names ("<type>.<song>"). MUST stay sorted: looked up
     // with std::lower_bound below. "pn" is PokeyNoise (e.g. "pn.jetsetwilly").
     constexpr char const* knownExts[] = {
-        "jpn", "mdat", "mod", "pn", "smp", "smpl", "sng",
+        "ash", "jpn", "mdat", "mod", "pn", "smp", "smpl", "sng",
     };
 
     auto base = getBaseName(filename);

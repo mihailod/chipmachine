@@ -186,7 +186,10 @@ int main(int argc, char* argv[])
 
     // work_dir is the resource root — the parent of data/, lua/, and music/.
     // All downstream asset paths are constructed relative to this.
-    auto work_dir = data_dir->parent_path();
+    // Normalize away any "build/.." style prefix so logs and downstream path
+    // comparisons show the real root (e.g. .../chipmachine/data, not
+    // .../build/../chipmachine/data). Purely lexical -- no behavior change.
+    auto work_dir = data_dir->parent_path().lexically_normal();
 
     // Emit a diagnostic early if music/Console is missing from the resolved
     // root. This surfaces packaging regressions immediately at launch rather
