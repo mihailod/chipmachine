@@ -557,7 +557,7 @@ DB = {
 	id =  "manualpatch",
 	source = "",
 	song_list = "data/manualDatabasePatch.txt",
-	song_template = "title format composer path screenshot",
+	song_template = "title format composer path screenshot info",
 	color = 0xfffff
 }
 };

@@ -770,6 +770,8 @@ bool MusicDatabase::parseStandard(
                 extIndex = i;
             else if (p == "screenshot")
                 screenshotIndex = i;
+            else if (p == "info")
+                metaIndex = i;
             i++;
         }
         columns = i;
