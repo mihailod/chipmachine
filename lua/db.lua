@@ -158,7 +158,11 @@
 --     full URL stored verbatim per song (new `screenshot` song_template keyword
 --     in parseStandard -> song.artwork column -> getSongScreenshots fast path).
 --     Bump forces a reindex so the rows land.
-VERSION = 73;
+-- 74: Manual patch rows gained a 6th column, a free-text description that scrolls
+--     while the tune plays (like a module's embedded message). New `info`
+--     song_template keyword maps it to metaIndex -> song.metadata[INFO], which
+--     ChipMachine's scroller already renders. Bump forces a reindex.
+VERSION = 74;
 
 DB = {
 {

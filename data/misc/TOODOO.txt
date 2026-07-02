@@ -3,20 +3,11 @@
 **************************************************
 
 - finish adding game/song screenshots:
-amiremix	1,711	Borrow source demo/game shot via Demozoo	Medium
 amp	8,640	Demozoo augment (tunes used in demos)	Medium — AMP itself has composer photos, not game shots
 modarchive	155,703	Demozoo augment (demoscene subset only)	Low ROI — huge corpus, mostly non-game music
 amigavibes	116	Demozoo	Low priority (tiny)
 
 - AMP Pull request
-
-- revisit this
-.SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM). (related to parlour? -- only some subsongs play):
-[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/SGC/Masatomo Miyamoto/Parlour Games [SMS].sgc
-[web.h:307] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSGC%2fMasatomo Miyamoto/Parlour Games [SMS].sgc
-[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/SGC/Masatomo%20Miyamoto/Parlour%20Games%20%5BSMS%5D.sgc
-[web.cpp:176] CODE 226
-[RemoteLoader.cpp:90] CODE 226
 
 - 2nd level menu drill on more platforms with subplatforms?
 
@@ -28,11 +19,6 @@ amigavibes	116	Demozoo	Low priority (tiny)
 - cmtest: added more extensions, some fail/skip, investigate why -- make it all clean again
 
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
-
-- in general genuinely bad or missing files should not be surfacing:
- - option a: remove from index
- - option b: use filter
- - option c (i think the best): augment search deduping to also remove the non-supported results from the search
 
 - extensions still missing format description:
 

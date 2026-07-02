@@ -473,9 +473,8 @@ TEST_CASE("GME", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme", "nowor
 // USE_GME_SGC scaffolding was left behind but the Sgc_* sources were missing).
 // It was added back -- Sgc_Emu/Impl/Core/Cpu plus the Z80_Cpu core, Gme_Loader
 // and Sms_Fm_Apu it depends on -- and "sgc" registered in GMEPlugin. This plays
-// a real .sgc PSG tune and checks for audio. (The YM2413/OPLL FM chip is a stub
-// in this copy, so SMS FM is reported unsupported; Game Gear tunes like this one
-// are PSG-only and play fully.) Fails if SGC routing or the emulator regresses.
+// a real .sgc PSG tune and checks for audio. Fails if SGC routing or the
+// emulator regresses. (SMS FM is covered separately below.)
 TEST_CASE("GME SGC plays sound", "[music]")
 {
     logging::setLevel(logging::Level::Warning);
@@ -499,6 +498,45 @@ TEST_CASE("GME SGC plays sound", "[music]")
     delete player;
 
     REQUIRE(energy != 0);
+}
+
+// Regression test for SMS FM (YM2413 / OPLL). The vendored Game_Music_Emu
+// shipped a no-op Ym2413_Emu stub, so Sms_Fm_Apu::supported() returned false and
+// Sgc_Core skipped FM init: SMS titles whose subsongs use the FM Sound Unit
+// played back silent (Game Gear/PSG subsongs were unaffected). Ym2413_Emu now
+// wraps a real OPLL (vendored emu2413). Parlour Games [SMS] has FM subsongs that
+// were previously silent; this renders every subsong and requires that they all
+// produce audio, which fails if the FM core regresses back to a stub.
+TEST_CASE("GME SGC SMS FM plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::GMEPlugin plugin;
+
+    std::string const sgc = "testmus/gme/Parlour Games [SMS].sgc";
+    REQUIRE(plugin.canHandle(sgc));
+
+    auto* player = plugin.fromFile(sgc);
+    REQUIRE(player != nullptr);
+
+    int const songs = static_cast<int>(std::get<uint32_t>(player->meta("songs")));
+    REQUIRE(songs > 1); // multi-subsong; some are FM-only
+
+    for (int song = 0; song < songs; ++song) {
+        player->seekTo(song, -1);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        INFO("subsong " << song);
+        REQUIRE(energy != 0);
+    }
+    delete player;
 }
 
 // Regression test for GBR (the older Game Boy rip format, predecessor of GBS).
