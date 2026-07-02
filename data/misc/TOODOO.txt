@@ -3,7 +3,6 @@
 **************************************************
 
 - finish adding game/song screenshots:
-rko	5,217	Borrow source-game shot via HVSC/gb64 (C64 remixes)	Medium — needs orig-title link
 amiremix	1,711	Borrow source demo/game shot via Demozoo	Medium
 amp	8,640	Demozoo augment (tunes used in demos)	Medium — AMP itself has composer photos, not game shots
 modarchive	155,703	Demozoo augment (demoscene subset only)	Low ROI — huge corpus, mostly non-game music
@@ -30,7 +29,6 @@ spectrum cyberun
 delta project
 
 - youtube and mp3 and ogg files are not all classified properly. many already know the platform they belong to and should be reclassified as such.
-
 
 - cmtest: added more extensions, some fail/skip, investigate why -- make it all clean again
 
