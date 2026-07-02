@@ -647,6 +647,17 @@ void MusicPlayerList::playCurrent()
         return;
     }
 
+    // Any YouTube-backed entry (Pouet, Manual Patch, ...): hand the raw watch
+    // URL straight to the youtube plugin (canHandle matches http+youtu; it
+    // resolves the audio stream via on_parse_youtube/yt-dlp). Downloading the
+    // URL as if it were a module file yields an extension-less HTML page that
+    // no decoder can play.
+    if (startsWith(path, "http") && path.find("youtu") != std::string::npos) {
+        loadedFile = path;
+        files = 0;
+        return;
+    }
+
     bool extStreamable = (ext == "mp3" || ext == "ogg" || ext == "aac" ||
                           ext == "m4a" || ext == "mp4");
     // A bare "MP3"/"OGG" codec tag is set only by .pls/.m3u resolution, i.e. a

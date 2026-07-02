@@ -744,7 +744,7 @@ bool MusicDatabase::parseStandard(
 {
 
     int pathIndex = 4, gameIndex = 1, titleIndex = 0, composerIndex = 2,
-        formatIndex = 3, metaIndex = 5, extIndex = -1;
+        formatIndex = 3, metaIndex = 5, extIndex = -1, screenshotIndex = -1;
     auto templ = vars["song_template"];
     // if(temp == "")
     //  templ = "title game composer format path meta";
@@ -768,6 +768,8 @@ bool MusicDatabase::parseStandard(
                 gameIndex = i;
             else if (p == "ext")
                 extIndex = i;
+            else if (p == "screenshot")
+                screenshotIndex = i;
             i++;
         }
         columns = i;
@@ -865,6 +867,12 @@ bool MusicDatabase::parseStandard(
                 song = SongInfo(parts[pathIndex], gameField, titleField,
                                 composerField, formatField, metadata,
                                 extIndex >= 0 ? parts[extIndex] : "");
+                // `screenshot` template column -> per-song artwork stored verbatim
+                // (a full URL, e.g. an img.youtube.com thumbnail). Flows through
+                // the song.artwork DB column and is used directly by
+                // getSongScreenshots (its SCREENSHOT-already-set fast path).
+                if (screenshotIndex >= 0 && (int)parts.size() > screenshotIndex)
+                    song.metadata[SongInfo::SCREENSHOT] = parts[screenshotIndex];
                 callback(song);
                 continue;
             }
@@ -1484,7 +1492,12 @@ SongInfo MusicDatabase::getSongInfo(int index) const
 
     index++;
     // LOGD("ID %d vs PROD %d", index, productStartIndex);
-    if (index >= productStartIndex) {
+    // Songs occupy 0-based search positions [0, productStartIndex); after the
+    // ++ the last song's index equals productStartIndex, so this must be a
+    // strict ">" -- ">=" misroutes the very last song into the product branch
+    // (product ROWID 0 -> no row -> not_found_exception thrown below). This bit
+    // whichever song was indexed last (previously the final Pouet entry).
+    if (index > productStartIndex) {
         // index is now ordinal+1 (the ++ above); map the ordinal to the real
         // product ROWID -- it is NOT the ordinal because single-song products
         // are skipped during indexing.
@@ -2529,6 +2542,12 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
         if (open != std::string::npos && close != std::string::npos &&
             close > open + 1)
             return "YouTube - " + s.format.substr(open + 1, close - open - 1);
+        // Collections that store a real platform in the format field (e.g. the
+        // Manual Patch: "Amiga AGA", "ZX Spectrum Beeper") -- surface it as
+        // "YouTube - <platform>" instead of a bare "YouTube".
+        if (!s.format.empty() &&
+            toLower(s.format).find("youtube") == std::string::npos)
+            return "YouTube - " + s.format;
         return "YouTube";
     }
 

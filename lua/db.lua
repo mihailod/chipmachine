@@ -151,7 +151,14 @@
 --     601 with NO playable member (2600 ROMs/.xex exes/disk-images like snakepit.bin,
 --     staxx_goldrunner.xex, kk_tia_filler.bin). Demoscene/Amiga zips (module/mp3
 --     compo entries) left untouched. demozoo.txt 41789->41188. Bump forces reindex.
-VERSION = 72;
+-- 73: Manual database patch (data/manualDatabasePatch.txt) -- a hand-maintained
+--     list of extra items indexed alongside every other collection. Each row is
+--     "name<TAB>platform<TAB>author<TAB>youtube_link<TAB>screenshot_link". Plays
+--     the YouTube link like the Pouet/Youtube collection; the screenshot is a
+--     full URL stored verbatim per song (new `screenshot` song_template keyword
+--     in parseStandard -> song.artwork column -> getSongScreenshots fast path).
+--     Bump forces a reindex so the rows land.
+VERSION = 73;
 
 DB = {
 {
@@ -539,6 +546,18 @@ DB = {
 	source = "",
 	song_list = "data/pouet.txt",
 	screen_source = "http://content.pouet.net/files/screenshots/",
+	color = 0xfffff
+},
+{
+	-- Hand-maintained extras. Each row is
+	-- "name<TAB>platform<TAB>author<TAB>youtube_link<TAB>screenshot_link".
+	-- Plays the YouTube link like Pouet; screenshot_link is a full URL stored
+	-- verbatim per song (song_template `screenshot` keyword). source empty.
+	name = "Manual Patch",
+	id =  "manualpatch",
+	source = "",
+	song_list = "data/manualDatabasePatch.txt",
+	song_template = "title format composer path screenshot",
 	color = 0xfffff
 }
 };

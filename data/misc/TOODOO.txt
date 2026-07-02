@@ -23,11 +23,6 @@ amigavibes	116	Demozoo	Low priority (tiny)
 - platform screenshots from mp3? for example jaguar... maybe more
   same for ogg... 
 
-- ability to ingest a custom file with custom pointers i add by hand
-amiga extreme push 64K demo
-spectrum cyberun
-delta project
-
 - youtube and mp3 and ogg files are not all classified properly. many already know the platform they belong to and should be reclassified as such.
 
 - cmtest: added more extensions, some fail/skip, investigate why -- make it all clean again
