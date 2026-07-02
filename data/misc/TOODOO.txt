@@ -8,6 +8,7 @@ modarchive	155,703	Demozoo augment (demoscene subset only)	Low ROI — huge corp
 amigavibes	116	Demozoo	Low priority (tiny)
 
 - 2nd level menu drill on more platforms with subplatforms?
+  especially on other
 
 - platform screenshots from mp3? for example jaguar... maybe more
   same for ogg... 

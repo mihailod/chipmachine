@@ -49,7 +49,7 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "Amstrad CPC", { AMSTRAD } },
     { "Sam Coupe", { SAMCOUPE } },
     { "Acorn Archimedes", { ACORN } },
-    { "Apple Macintosh/IIGS/MacOS", { APPLE } },
+    { "Apple Mac/IIGS/MacOS/iOS", { APPLE } },
     { "Sony PlayStation 1/2", { PLAYSTATION, PLAYSTATION2 } },
     { "Nintendo NES", { NES } },
     { "Nintendo SNES", { SNES } },
@@ -627,6 +627,30 @@ void ChipMachine::updateScreenshotArea()
 
 bool ChipMachine::noImages = false;
 
+// Base thumbnail URL ("https://img.youtube.com/vi/<id>/") for a YouTube
+// watch/short URL, or "" if it isn't a YouTube link. Used as the screenshot
+// fallback for YouTube songs: if the "better" external screenshot we matched
+// (pouet, etc.) is dead (403/404) we drop to the video's own thumbnail rather
+// than the platform logo -- which is often wrong now that YouTube items classify
+// to a platform. Guarantees every YouTube item shows a real, on-topic picture.
+static std::string youtubeThumbBase(const std::string& url)
+{
+    if (url.find("youtube.com/") == std::string::npos &&
+        url.find("youtu.be/") == std::string::npos)
+        return "";
+    std::string id;
+    auto v = url.find("v=");
+    if (v != std::string::npos)
+        id = url.substr(v + 2, 11);
+    else {
+        auto sl = url.rfind('/');
+        if (sl != std::string::npos && sl + 1 < url.size())
+            id = url.substr(sl + 1, 11);
+    }
+    if (id.size() != 11) return "";
+    return "https://img.youtube.com/vi/" + id + "/";
+}
+
 void ChipMachine::loadScreenshot(const std::string& shot)
 {
     // --donotloadimages: never attempt any screenshot download.
@@ -716,8 +740,29 @@ void ChipMachine::loadScreenshot(const std::string& shot)
                                           screenshots.end(), ""),
                               screenshots.end());
             sort(screenshots.begin(), screenshots.end());
-            if (screenshots.empty())
+            if (screenshots.empty()) {
+                // Every download failed. For a YouTube song, walk the video's own
+                // thumbnails before the (often mis-guessed) platform logo, so the
+                // picture stays on-topic: matched external art -> sddefault ->
+                // hqdefault (present for every video) -> logo. Comparing against
+                // `shot` tells us which rung just failed, so we step down without
+                // looping.
+                std::string base = youtubeThumbBase(currentInfo.path);
+                if (!base.empty()) {
+                    std::string sd = base + "sddefault.jpg";
+                    std::string hq = base + "hqdefault.jpg";
+                    if (shot != sd && shot != hq) {
+                        loadScreenshot(sd);
+                        return;
+                    }
+                    if (shot == sd) {
+                        loadScreenshot(hq);
+                        return;
+                    }
+                    // shot == hq: even the guaranteed thumbnail failed -> logo.
+                }
                 appendLogoScreenshots();
+            }
             currentShot = -1;
             nextScreenshot();
         }

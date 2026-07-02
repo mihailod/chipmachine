@@ -2293,7 +2293,7 @@ static uint8_t platformNameToByte(std::string s)
         { "amstrad cpc", AMSTRAD },  { "amstrad plus", AMSTRAD },
         { "apple ii", APPLE },       { "apple ii gs", APPLE },
         { "macos", APPLE },          { "macosx intel", APPLE },
-        { "macosx ppc", APPLE },
+        { "macosx ppc", APPLE },     { "ios", APPLE },
         { "acorn", ACORN },          { "bbc micro", ACORN },
         { "msx", MSX },              { "msx 2", MSX },
         { "msx turbo-r", MSX },
@@ -2326,16 +2326,32 @@ static uint8_t platformNameToByte(std::string s)
         { "virtual boy", OTHER },    { "pokemon mini", OTHER },
         { "nintendo wii", OTHER },   { "gamecube", OTHER },
         { "xbox", OTHER },           { "xbox 360", OTHER },
+        // No hardware chip identity of their own (fantasy consoles, web/VM,
+        // mobile, calculators, compo buckets) -> "Other Platforms".
+        { "wild", OTHER },           { "javascript", OTHER },
+        { "java", OTHER },           { "flash", OTHER },
+        { "android", OTHER },        { "pocketpc", OTHER },
+        { "mobile phone", OTHER },   { "raspberry pi", OTHER },
+        { "tic-80", OTHER },         { "pico-8", OTHER },
+        { "microw8", OTHER },        { "ti-8x (z80)", OTHER },
+        { "ti-8x (68k)", OTHER },    { "gamepark gp32", OTHER },
+        { "gamepark gp2x", OTHER },
     };
     std::string whole = trim(s);
     auto it = m.find(whole);
     if (it != m.end()) return it->second;
-    // Combo string ("A,B,C"): first recognised platform wins.
+    // Combo string ("A,B,C"): a specific chip/computer platform wins over the
+    // generic OTHER tags (Wild, JavaScript, fantasy consoles...), so e.g.
+    // "Wild,Amiga AGA" resolves to Amiga rather than Other.
+    uint8_t generic = 0;
     for (auto const& tok : split(whole, ",")) {
         auto j = m.find(trim(tok));
-        if (j != m.end()) return j->second;
+        if (j != m.end()) {
+            if (j->second != OTHER) return j->second;
+            if (generic == 0) generic = OTHER;
+        }
     }
-    return 0;
+    return generic;
 }
 
 static uint8_t formatToByte(std::string const& fmt, std::string const& path,
@@ -2437,6 +2453,29 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
             l = PROTRACKER;
         else if (ext == "xm")
             l = FASTTRACKER;
+    }
+
+    // Demoscene MP3/OGG rips (mainly demozoo) whose format string is the source
+    // platform ("ZX Spectrum", "Amiga", "Windows", ...) rather than a codec:
+    // file them under that platform instead of the unclassified MP3/OGG bucket.
+    // Gated on the extension having classified them as MP3/OGG, so real chip
+    // tunes and the module entries (which carry the same category strings) are
+    // untouched. Generic tags with no hardware ("Demoscene", "Mobile"->Other)
+    // are handled per the table; unlisted ones stay MP3/OGG.
+    if (l == MP3 || l == OGG) {
+        static const std::map<std::string, uint8_t> cat = {
+            { "zx spectrum", SPECTRUM },
+            { "amiga", AMIGA },      { "amiga ppc/rtg", AMIGA },
+            { "windows", PC },       { "msx", MSX },
+            { "nintendo game boy advance (gba)", GBA },
+            { "nintendo ds (nds)", NDS },
+            { "mobile", OTHER },     { "neo geo", OTHER },
+            { "sony playstation portable (psp)", OTHER },
+            { "ms-dos", OTHER },     { "linux", OTHER },
+            { "gamepark gp2x", OTHER }, { "custom hardware", OTHER },
+        };
+        auto it = cat.find(f);
+        if (it != cat.end()) l = it->second;
     }
     return l;
 }
@@ -2707,15 +2746,31 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     // AMIGA, ...) so they group under that F9 filter instead of "unclassified".
     if (s.path.find("youtube.com/") != std::string::npos ||
         s.path.find("youtu.be/") != std::string::npos) {
+        // Friendlier playback labels for a few tags (the raw pouet tag is terse
+        // or ambiguous): shown as "YouTube - <designator>".
+        static const std::map<std::string, std::string> designator = {
+            { "wild", "Wild Compo" },
+            { "tic-80", "TIC-80 Fantasy Console" },
+            { "pico-8", "PICO-8 Fantasy Console" },
+            { "microw8", "MicroW8 Fantasy Console" },
+            { "mobile phone", "Misc Mobile Phone" },
+            { "ti-8x (z80)", "TI Calculator" },
+            { "ti-8x (68k)", "TI Calculator" },
+            { "gamepark gp32", "GamePark GP32" },
+            { "gamepark gp2x", "GamePark GP32" },
+        };
+        std::string inner;
         auto open = s.format.find('(');
         auto close = s.format.rfind(')');
         if (open != std::string::npos && close != std::string::npos &&
             close > open + 1)
-            return "YouTube - " + s.format.substr(open + 1, close - open - 1);
-        if (!s.format.empty() &&
-            toLower(s.format).find("youtube") == std::string::npos)
-            return "YouTube - " + s.format;
-        return "YouTube";
+            inner = s.format.substr(open + 1, close - open - 1);
+        else if (!s.format.empty() &&
+                 toLower(s.format).find("youtube") == std::string::npos)
+            inner = s.format; // manualDatabasePatch bare platform name
+        if (inner.empty()) return "YouTube";
+        auto d = designator.find(toLower(inner));
+        return "YouTube - " + (d != designator.end() ? d->second : inner);
     }
 
     // Podcasts are streamed audio; the enclosure "extension" is derived from the
