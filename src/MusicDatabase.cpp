@@ -1608,7 +1608,7 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                collection == "zxart" || collection == "demozoo" ||
                collection == "sceneorg" || collection == "zophar" ||
                collection == "cpcpower" || collection == "vampi" ||
-               collection == "rko") {
+               collection == "rko" || collection == "amigaremix") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
@@ -1626,7 +1626,9 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         // game's gb64 screenshot (else a demo shot), keyed by the remix id (the
         // rko song path); the remix's original HVSC SID (rko.txt col2) links to
         // gb64 Games.csv SidFilename; built by build_rko.py --screenshots.
-        // modland/hvsc/sndh/asma/
+        // amigaremix -> the source Amiga game's Wikipedia box-art, keyed by the
+        // "<id>/<file>.mp3" song path (source-stripped); built by
+        // build_amiremix.py --screenshots. modland/hvsc/sndh/asma/
         // sceneorg are additionally augmented from Demozoo: a tune is matched to
         // the demos that use it as soundtrack and borrows that production's
         // screenshot (built by tools/build_demozoo.py --augment, keyed by the
