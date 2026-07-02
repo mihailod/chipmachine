@@ -2,6 +2,23 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+what is this
+[MusicDatabase.cpp:620] Ashley Hogg/ash.cj in the usa
+[MusicDatabase.cpp:620] Ashley Hogg/ash.cosmic spacehead
+[MusicDatabase.cpp:620] Ashley Hogg/ash.fantastic dizzy
+[MusicDatabase.cpp:620] Ashley Hogg/ash.nobby the aardvark
+[MusicDatabase.cpp:620] Ashley Hogg/ash.spikey in transylvania
+[MusicDatabase.cpp:620] Ashley Hogg/ash.stuntman seymour
+[MusicDatabase.cpp:620] FM sound driver (FMP)/fmp.txt
+[MusicDatabase.cpp:620] Noise Tracker GS 1/Noise Tracker GS 1.txt
+[MusicDatabase.cpp:650] Bad file Spectrum/ASC Sound Master/soldfut0.asc
+[MusicDatabase.cpp:650] Bad file Spectrum/Chip Tracker/Alone Coder's Chip Tracker .CHI format.en.txt
+[MusicDatabase.cpp:650] Bad file Spectrum/Chip Tracker/Alone Coder's Chip Tracker .CHI format.ru.txt
+[MusicDatabase.cpp:650] Bad file Spectrum/Pro Tracker 2/bas.elem.pt2
+[MusicDatabase.cpp:650] Bad file Spectrum/Pro Tracker 2/cappella.pt2
+[MusicDatabase.cpp:620] Zoundmonitor/readme.txt
+
+
 - finish adding game/song screenshots:
 amp	8,640	Demozoo augment (tunes used in demos)	Medium — AMP itself has composer photos, not game shots
 modarchive	155,703	Demozoo augment (demoscene subset only)	Low ROI — huge corpus, mostly non-game music
@@ -12,8 +29,6 @@ amigavibes	116	Demozoo	Low priority (tiny)
 - platform screenshots from mp3? for example jaguar... maybe more
   same for ogg... 
 
-- youtube and mp3 and ogg files are not all classified properly. many already know the platform they belong to and should be reclassified as such.
-
 - cmtest: added more extensions, some fail/skip, investigate why -- make it all clean again
 
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
@@ -23,8 +38,6 @@ amigavibes	116	Demozoo	Low priority (tiny)
 query most frequent extensions and add more verbose text for them
 example: sid has a short one...
 
-mus	4580
-stc	3567
 mmd1	2605
 dmf	2138
 OVI	1801
@@ -177,7 +190,7 @@ A massive historical repository of ZX Spectrum chiptunes. While heavily populate
 ------ DATABASES DONE / RESOLVED / ABANDONED IN THIS PASS BELOW ----------
 --------------------------------------------------------------------------
 
-* Amiga Music Preservation -- 58,432 new
+* DONE Amiga Music Preservation -- 58,432 new
 
 * 3284 new DONE SCENIC / SCENE.ORG MUSIC VAULT
   - URL: https://www.scene.org

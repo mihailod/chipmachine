@@ -49,7 +49,7 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "Amstrad CPC", { AMSTRAD } },
     { "Sam Coupe", { SAMCOUPE } },
     { "Acorn Archimedes", { ACORN } },
-    { "Apple Macintosh/IIGS", { APPLE } },
+    { "Apple Macintosh/IIGS/MacOS", { APPLE } },
     { "Sony PlayStation 1/2", { PLAYSTATION, PLAYSTATION2 } },
     { "Nintendo NES", { NES } },
     { "Nintendo SNES", { SNES } },

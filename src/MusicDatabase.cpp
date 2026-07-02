@@ -2203,6 +2203,92 @@ static uint16_t hueSeed(std::string const& fmt)
     return v == 0 ? 1 : v; // reserve 0 for products
 }
 
+// Resolve a human platform name to its format byte. Used to rescue the
+// "unclassified" audio buckets (YouTube videos, MP3/OGG rips) whose format
+// string names a platform even though the URL/extension would otherwise bucket
+// them as unclassified. Handles the pouet "Youtube (<platform>)" wrapper, bare
+// manualDatabasePatch names ("ZX Spectrum Beeper", "Amiga AGA", "Other"), and
+// multi-platform combos ("Atari STe,Atari ST" -> first recognised). Returns 0
+// when the tag isn't a hardware platform we file (Wild, Animation/Video,
+// JavaScript, ...), so the caller keeps its unclassified fallback.
+static uint8_t platformNameToByte(std::string s)
+{
+    s = toLower(s);
+    // Strip a "youtube (...)" wrapper, if present (pouet).
+    if (startsWith(s, "youtube")) {
+        auto op = s.find('(');
+        auto cp = s.rfind(')');
+        if (op != std::string::npos && cp != std::string::npos && cp > op)
+            s = s.substr(op + 1, cp - op - 1);
+    }
+    auto trim = [](std::string x) {
+        size_t a = x.find_first_not_of(" \t");
+        if (a == std::string::npos) return std::string();
+        return x.substr(a, x.find_last_not_of(" \t") - a + 1);
+    };
+    static const std::map<std::string, uint8_t> m = {
+        { "amiga", AMIGA },          { "amiga ocs/ecs", AMIGA },
+        { "amiga aga", AMIGA },      { "amiga ppc/rtg", AMIGA },
+        { "commodore 64", SID },     { "c64", SID },
+        { "c64 dtv", SID },          { "commodore 128", SID },
+        { "c64dx/c65/mega65", SID },
+        { "c16/116/plus4", PRG },    { "commodore plus/4", PRG },
+        { "commodore 16", PRG },
+        { "atari st", ATARI },       { "atari ste", ATARI },
+        { "atari falcon 030", ATARI },{ "atari falcon", ATARI },
+        { "atari tt 030", ATARI },
+        { "atari xl/xe", POKEY },    { "atari vcs", POKEY },
+        { "zx spectrum", SPECTRUM }, { "zx enhanced", SPECTRUM },
+        { "zx-81", SPECTRUM },       { "spectrum", SPECTRUM },
+        { "zx spectrum beeper", ZXBEEPER },
+        { "amstrad cpc", AMSTRAD },  { "amstrad plus", AMSTRAD },
+        { "apple ii", APPLE },       { "apple ii gs", APPLE },
+        { "macos", APPLE },          { "macosx intel", APPLE },
+        { "macosx ppc", APPLE },
+        { "acorn", ACORN },          { "bbc micro", ACORN },
+        { "msx", MSX },              { "msx 2", MSX },
+        { "msx turbo-r", MSX },
+        { "sam coupe", SAMCOUPE },   { "sam coupé", SAMCOUPE },
+        { "sega genesis/mega drive", MEGADRIVE },
+        { "sega megadrive/genesis", MEGADRIVE },
+        { "sega master system", SEGAMS },
+        { "sega game gear", SEGAMS },{ "dreamcast", DREAMCAST },
+        { "nes/famicom", NES },      { "snes/super famicom", SNES },
+        { "nintendo 64", NINTENDO64 },{ "nintendo ds", NDS },
+        { "gameboy", GAMEBOY },      { "gameboy color", GAMEBOY },
+        { "gameboy advance", GBA },
+        { "nec turbografx/pc engine", HES }, { "nec pc engine", HES },
+        { "playstation", PLAYSTATION }, { "playstation 2", PLAYSTATION },
+        { "playstation 3", PLAYSTATION }, { "playstation portable", PLAYSTATION },
+        { "windows", PC },           { "ms-dos", PC },
+        { "ms-dos/gus", PC },        { "linux", PC },
+        { "audiosurf", PC },
+        // Real hardware, but no dedicated F9 filter -> "Other Platforms".
+        { "other", OTHER },          { "atari jaguar", OTHER },
+        { "atari lynx", OTHER },     { "atari 7800", OTHER },
+        { "vectrex", OTHER },        { "intellivision", OTHER },
+        { "vic 20", OTHER },         { "commodore pet", OTHER },
+        { "oric", OTHER },           { "thomson", OTHER },
+        { "enterprise", OTHER },     { "sinclair ql", OTHER },
+        { "vector-06c", OTHER },     { "bk-0010/11m", OTHER },
+        { "sharp mz", OTHER },       { "kc-85", OTHER },
+        { "trs-80/coco/dragon", OTHER }, { "spectravideo 3x8", OTHER },
+        { "wonderswan", OTHER },     { "neogeo pocket", OTHER },
+        { "virtual boy", OTHER },    { "pokemon mini", OTHER },
+        { "nintendo wii", OTHER },   { "gamecube", OTHER },
+        { "xbox", OTHER },           { "xbox 360", OTHER },
+    };
+    std::string whole = trim(s);
+    auto it = m.find(whole);
+    if (it != m.end()) return it->second;
+    // Combo string ("A,B,C"): first recognised platform wins.
+    for (auto const& tok : split(whole, ",")) {
+        auto j = m.find(trim(tok));
+        if (j != m.end()) return j->second;
+    }
+    return 0;
+}
+
 static uint8_t formatToByte(std::string const& fmt, std::string const& path,
                             int coll)
 {
@@ -2234,7 +2320,13 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
 
         if ((path.find("youtube.com/") != std::string::npos) ||
             (path.find("youtu.be/") != std::string::npos)) {
-            return YOUTUBE;
+            // The format string names the source platform (pouet's
+            // "Youtube (<platform>)" or a hand-curated manualDatabasePatch name
+            // like "ZX Spectrum Beeper"). File the video under that platform;
+            // only genuinely non-hardware tags (Wild, Animation/Video, web...)
+            // fall through to the unclassified YouTube bucket.
+            uint8_t p = platformNameToByte(fmt);
+            return p ? p : YOUTUBE;
         }
 
         if (endsWith(f, "tracker")) l = TRACKER;
@@ -2320,6 +2412,7 @@ static std::string platformName(uint8_t b)
     case PRG: return "Commodore 16/+4";
     case ATARI: return "Atari ST/STE";
     case POKEY: return "Atari XL/XE";
+    case SPECTRUM: return "ZX Spectrum";
     case ZXBEEPER: return "ZX Spectrum 16/48";
     case ZXAY: return "ZX Spectrum 128";
     case SAMCOUPE: return "Sam Coupe";
@@ -2558,17 +2651,18 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     uint8_t b = formatToByte(s.format, s.path, 0);
 
     // YouTube videos have no module format/extension. The format string carries
-    // the source platform(s) in parentheses (e.g. "Youtube (ZX Spectrum)");
-    // surface that as "YouTube - ZX Spectrum".
-    if (b == YOUTUBE) {
+    // the source platform(s) in parentheses (e.g. "Youtube (ZX Spectrum)") or a
+    // bare platform name (manualDatabasePatch: "Amiga AGA", "ZX Spectrum
+    // Beeper"); surface it as "YouTube - <platform>". Keyed on the URL, not the
+    // format byte, because these now classify to their real platform (SID,
+    // AMIGA, ...) so they group under that F9 filter instead of "unclassified".
+    if (s.path.find("youtube.com/") != std::string::npos ||
+        s.path.find("youtu.be/") != std::string::npos) {
         auto open = s.format.find('(');
         auto close = s.format.rfind(')');
         if (open != std::string::npos && close != std::string::npos &&
             close > open + 1)
             return "YouTube - " + s.format.substr(open + 1, close - open - 1);
-        // Collections that store a real platform in the format field (e.g. the
-        // Manual Patch: "Amiga AGA", "ZX Spectrum Beeper") -- surface it as
-        // "YouTube - <platform>" instead of a bare "YouTube".
         if (!s.format.empty() &&
             toLower(s.format).find("youtube") == std::string::npos)
             return "YouTube - " + s.format;
@@ -2834,17 +2928,34 @@ void MusicDatabase::generateIndex()
         if (cq.step()) radioColl = cq.get();
     } catch (...) {}
 
+    // Collections whose MP3/OGG rips carry a fixed "MP3"/"OGG" format string but
+    // a known platform affinity (they're renders/remixes of that platform's
+    // music). Resolve their ROWIDs so the index loop can file them under that
+    // platform instead of the unclassified MP3/OGG bucket.
+    auto collId = [&](char const* id) -> int {
+        try {
+            auto cq = db.query<int>(
+                "SELECT ROWID FROM collection WHERE id = ?", id);
+            if (cq.step()) return cq.get();
+        } catch (...) {}
+        return -1;
+    };
+    int rkoColl = collId("rko");             // C64 SID remixes (Remix.Kwed.Org)
+    int amiremixColl = collId("amigaremix"); // Amiga remixes
+    int unexoticaColl = collId("unexotica"); // Amiga games music (mp3 rips)
+    int zxartColl = collId("zxart");         // ZX tunes rendered to ogg
+
     int count = 0;
     // int maxTotal = 3;
     int cindex = 0;
 
-    titleToComposer.reserve(438000);
-    composerToTitle.reserve(37000);
-    titleIndex.reserve(438000);
-    composerIndex.reserve(37000);
-    formats.reserve(438000);
+    titleToComposer.reserve(50000);
+    composerToTitle.reserve(50000);
+    titleIndex.reserve(700000);
+    composerIndex.reserve(60000);
+    formats.reserve(700000);
 
-    int step = 438000 / 20;
+    int step = 700000 / 5;
 
     std::unordered_map<std::string, std::vector<uint32_t>> composers;
 
@@ -2862,7 +2973,15 @@ void MusicDatabase::generateIndex()
         tie(title, game, fmt, composer, path, collection) = query.get_tuple();
 
         uint8_t b = formatToByte(fmt, path, collection);
-        if (collection == radioColl) b = RADIO;
+        if (collection == radioColl)
+            b = RADIO;
+        else if (b == MP3 && collection == rkoColl)
+            b = SID; // C64 SID remixes
+        else if (b == MP3 &&
+                 (collection == amiremixColl || collection == unexoticaColl))
+            b = AMIGA; // Amiga remixes / rips
+        else if (b == OGG && collection == zxartColl)
+            b = SPECTRUM; // ZX ogg fallbacks -> ZX Spectrum (AY filter)
         formats.push_back(b | (collection << 8));
         // Hue key: the sub-format, so each distinct format gets its own hue
         // (spread evenly across the platform filter). Same format = same colour
