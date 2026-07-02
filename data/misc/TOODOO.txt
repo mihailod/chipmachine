@@ -2,19 +2,27 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- [window_pc.cpp:48] SCROLL 0.000000, 0.200000
-   let mouse influenct the scrolling stars!
-- every other screenshot fade-in make it wave like a flag, like effects in amiga intros
-- from time to time make the scroll do the sine effect like in amiga intros
+- finish adding game/song screenshots:
+rko	5,217	Borrow source-game shot via HVSC/gb64 (C64 remixes)	Medium — needs orig-title link
+amiremix	1,711	Borrow source demo/game shot via Demozoo	Medium
+amp	8,640	Demozoo augment (tunes used in demos)	Medium — AMP itself has composer photos, not game shots
+modarchive	155,703	Demozoo augment (demoscene subset only)	Low ROI — huge corpus, mostly non-game music
+amigavibes	116	Demozoo	Low priority (tiny)
 
-- maybe try another scroll font?
+- AMP Pull request
+
+- revisit this
+.SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM). (related to parlour? -- only some subsongs play):
+[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/SGC/Masatomo Miyamoto/Parlour Games [SMS].sgc
+[web.h:307] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSGC%2fMasatomo Miyamoto/Parlour Games [SMS].sgc
+[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/SGC/Masatomo%20Miyamoto/Parlour%20Games%20%5BSMS%5D.sgc
+[web.cpp:176] CODE 226
+[RemoteLoader.cpp:90] CODE 226
 
 - 2nd level menu drill on more platforms with subplatforms?
 
 - platform screenshots from mp3? for example jaguar... maybe more
   same for ogg... 
-
-- AMP Pull request
 
 - ability to ingest a custom file with custom pointers i add by hand
 amiga extreme push 64K demo
@@ -23,12 +31,6 @@ delta project
 
 - youtube and mp3 and ogg files are not all classified properly. many already know the platform they belong to and should be reclassified as such.
 
-- finish adding game/song screenshots:
-rko	5,217	Borrow source-game shot via HVSC/gb64 (C64 remixes)	Medium — needs orig-title link
-amiremix	1,711	Borrow source demo/game shot via Demozoo	Medium
-amp	8,640	Demozoo augment (tunes used in demos)	Medium — AMP itself has composer photos, not game shots
-modarchive	155,703	Demozoo augment (demoscene subset only)	Low ROI — huge corpus, mostly non-game music
-amigavibes	116	Demozoo	Low priority (tiny)
 
 - cmtest: added more extensions, some fail/skip, investigate why -- make it all clean again
 
@@ -44,10 +46,6 @@ amigavibes	116	Demozoo	Low priority (tiny)
 query most frequent extensions and add more verbose text for them
 example: sid has a short one...
 
-pt2	6060
-sndh	5895
-ym	4858
-nsf	4858
 mus	4580
 stc	3567
 mmd1	2605
@@ -67,10 +65,9 @@ nsfe	1214
 OZI	1152
 ftm	1041
 
+--- more here with less than 1000 -- investigate which ones are missing / are short
 
-
-
-
+these are confirmed missng but small:
 sm3	18
 sc	18
 mm4	17
@@ -222,30 +219,25 @@ full scan needed, will take hours and DOS the site maybe...
 a small subset was found on wayback and added (51 songs)
 It's the Wayback subset (51 tunes), not the full audiotheque — cpc-power has no browsable music index (/YM/ is 403, games DB is ~10/page over ~30k entries), so the complete set needs a heavy multi-thousand-request crawl you declined. The builder uses the ~51 files Wayback captured, with URLs pointing at the live /YM/ files. I documented in memory exactly how to expand it later (rate-limited crawl of the zicym tabs) if you ever want the full ~1–3k.
 
-**************************
-* PLAYBACK BUGS / ISSUES *
-**************************
-
-- .SGC implementation Note: [SMS] titles that lean on the YM2413 FM will be partially/fully quiet (FM stub); Game Gear titles play in full. If you want real SMS FM later, that's a separate task — swapping the stub Ym2413_Emu for a real OPLL core (which would also light up FM for VGM). (related to parlour? -- only some subsongs play):
-[RemoteLoader.cpp:77] Local path: /opt/Music/MODLAND/SGC/Masatomo Miyamoto/Parlour Games [SMS].sgc
-[web.h:307] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSGC%2fMasatomo Miyamoto/Parlour Games [SMS].sgc
-[web.cpp:80] Curl Getting ftp://ftp.modland.com/pub/modules/SGC/Masatomo%20Miyamoto/Parlour%20Games%20%5BSMS%5D.sgc
-[web.cpp:176] CODE 226
-[RemoteLoader.cpp:90] CODE 226
-
 *********
 * OTHER *
 *********
 
 - packaging: the app should offer to os handling of all extensions it can play, package_app.sh should be augmented with plist writer for it. then the application needs to handle the file passed in (standard mac way exists)
 
-- can we detect "video unavailable" for youtube and show / print that?
+- can we detect "video unavailable" for youtube and show / print that?, same for 404s -- not our fault, present message "file not present anymore or something"
 
 - do not treat extensions which are none in db as missing, only the present in db (currently none that missing are present so the test is 100% covering all but cmtest prints missing formats... once they appear maybe from new databases it should fire again)
 
+cosmetic/low priority:
+- [window_pc.cpp:48] SCROLL 0.000000, 0.200000
+   let mouse influenct the scrolling stars!
+- every other screenshot fade-in make it wave like a flag, like effects in amiga intros
+- from time to time make the scroll do the sine effect like in amiga intros
+- maybe try another scroll font?
+
 product/process
 ===============
-- use some IDE (with integrated AI?) for development?
 - move all plugins into musicplayer/src/plugins and unify into one repo, it is becoming silly with clones... and we don't ship anything independently anyway so it is pointless 
 
 major new features

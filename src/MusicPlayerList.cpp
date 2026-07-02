@@ -891,26 +891,55 @@ void MusicPlayerList::playCurrent()
                                  ? (char)std::toupper((unsigned char)alt[0])
                                  : (char)std::tolower((unsigned char)alt[0]);
                 }
-                auto fetchInto = [=](const std::string& dir,
+                // Fetch each listed member from <baseUrl>/<dir>, always placing
+                // it in the song's own <dir> (parentDir/dir) where the player
+                // looks -- baseUrl may be the song's dir OR its parent.
+                auto fetchFrom = [=](const std::string& baseUrl,
+                                     const std::string& dir,
                                      const std::vector<std::string>& names) {
                     for (const auto& n : names) {
-                        loadSecondaryFile(dir + n, parentDir, songDirUrl);
+                        loadSecondaryFile(dir + n, parentDir, baseUrl);
                     }
+                };
+                // Some collections keep a single shared companion dir at the
+                // GROUP root rather than beside each song (e.g. modland
+                // ZoundMonitor: samples live in "Zoundmonitor/Samples/", one
+                // level above each artist's song folder). So if the song's own
+                // <dir> lists empty (in either case), fall back to the parent's
+                // <dir>. Members still land in the song's <dir> for the player.
+                std::string parentUrl = path_directory(songDirUrl);
+                auto tryParent = [=]() {
+                    if (parentUrl.empty() || parentUrl == songDirUrl) {
+                        files--;
+                        return;
+                    }
+                    remoteLoader.listDirectory(
+                        parentUrl + "/" + s,
+                        [=](std::vector<std::string> names3) {
+                            fetchFrom(parentUrl, s, names3);
+                            files--;
+                        });
                 };
                 remoteLoader.listDirectory(
                     songDirUrl + "/" + s,
                     [=](std::vector<std::string> names) {
-                        if (!names.empty() || alt == s) {
-                            fetchInto(s, names);
+                        if (!names.empty()) {
+                            fetchFrom(songDirUrl, s, names);
                             files--;
                             return;
                         }
-                        // Requested case was empty -- try the flipped case.
+                        if (alt == s) { tryParent(); return; }
+                        // Requested case was empty -- try the flipped case,
+                        // then the parent dir.
                         remoteLoader.listDirectory(
                             songDirUrl + "/" + alt,
                             [=](std::vector<std::string> names2) {
-                                fetchInto(alt, names2);
-                                files--;
+                                if (!names2.empty()) {
+                                    fetchFrom(songDirUrl, alt, names2);
+                                    files--;
+                                    return;
+                                }
+                                tryParent();
                             });
                     });
             } else {

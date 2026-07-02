@@ -1318,6 +1318,29 @@ TEST_CASE("GoatTracker", "[music]")
     REQUIRE(musix::ChipPlugin::getPlugin("GoatTracker") != nullptr);
 }
 
+// ZoundMonitor (.sng, Amiga). UADE genuinely has this player; the tunes load
+// their instruments by name from a shared "Samples/" directory (on modland one
+// level above the song, at the collection root -- fetched via the parent-dir
+// fallback in MusicPlayerList's whole-dir companion handling). The fixture ships
+// maddick.sng with its Samples/ already in place, so testPlugin exercises real
+// playback; the routing REQUIREs cover the content-based claim.
+TEST_CASE("ZoundMonitor", "[music]")
+{
+    testPlugin<musix::UADEPlugin>("testmus/zoundmonitor", "", "data");
+
+    musix::UADEPlugin uade{"data"};
+    // Claimed by its structural signature (no magic), and its shared Samples/
+    // dir is surfaced as a whole-directory companion.
+    REQUIRE(uade.canHandle("testmus/zoundmonitor/maddick.sng"));
+    auto sec = uade.getSecondaryFiles("testmus/zoundmonitor/maddick.sng");
+    REQUIRE(std::find(sec.begin(), sec.end(), "Samples/") != sec.end());
+    // The signature must not misfire on other .sng chips, and GoatTracker must
+    // not grab a ZoundMonitor tune.
+    REQUIRE_FALSE(uade.canHandle("testmus/goattracker/sid-warrior.sng"));
+    musix::GoatTrackerPlugin gtz;
+    REQUIRE_FALSE(gtz.canHandle("testmus/zoundmonitor/maddick.sng"));
+}
+
 // Apple IIgs SoundSmith. A tune is a PAIR: a bare-named song file (patterns/
 // orders) and a separate "<song>.W" wavebank holding the 64KB of Ensoniq 5503
 // sound RAM + instrument table. canHandle() identifies the song by its header

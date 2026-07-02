@@ -394,8 +394,7 @@ Music composed by Wally Beben using the Ariston replay routine.
 xm	FastTracker 2.0
 A multi-channel PC music editor by Magnus Högdahl and Fredrik Huss. With the XM format, Fasttracker 2 introduced the concept of “instruments”, which applied volume and panning envelopes to samples. It also added the ability to map several samples to the same instrument for multi-sampled instruments or drum sets. XM uses instrument-based panning – instrument numbers in patterns always reset the channel’s panning to the current sample’s initial panning. It uses MOD effect command letters, plus a few of its own for more sound control. You can define initial tempos and speeds; provide envelopes to samples by assigning them to instruments; set sample looping and apply automatic sample vibrato oscillation; and with OpenMPT, apply VST plugins to instruments, channels, or the whole track to spice up your old XM compositions.
 
-nsf	NES Sound Format
-Music ripped from Nintendo NES/Famicom games, devised by Kevin Horton in 1999 (originally "NESM"); the 6502 sound code plus a small header, replayed on an emulated 2A03. Hugely popular for original chiptune composition.
+nsf	NES Sound Format: music ripped from Nintendo NES/Famicom games, devised by Kevin Horton in 1999 (originally "NESM"); the 6502 sound code plus a small header, replayed on an emulated 2A03. Hugely popular for original chiptune composition. It is the definitive standard for preserving and composing Nintendo Entertainment System chiptunes. It isolates the audio data from a game ROM, allowing the music to play without running the actual game. Contains the original MOS Technology 6502 machine code instructions and register writes that drive the audio.Target Hardware: Replayed by emulating the Ricoh 2A03 (NTSC) or 2A07 (PAL) microprocessors, which contain the NES Programmable Sound Generator (PSG). It stores metadata like song count, starting track, load/init/play addresses, game title, artist, and copyright strings. Kevin Horton, known prominently online by his handle Kevtris, is a legendary hardware hacker and electrical engineer who single-handedly invented the NES Sound Format (NSF) spec. He originally dubbed the file extension .NESM (NES Music) when he designed it, before the community universally shortened the extension to .NSF. Kevtris is currently (2026) Director of FPGA Development at Analogue. He designed the internal core logic from scratch for the Analogue Nt Mini, Super Nt, Mega Sg, and Analogue Pocket. He also engineered HiDef NES: the popular internal hardware mod that allows original NES consoles to output pixel-perfect, lag-free 1080p video and audio via HDMI.
 
 nsfe	NES Sound Format (Extended)
 An extended NSF variant using named chunks to carry per-track titles, times and metadata that the original NESM header could not hold.
@@ -442,14 +441,12 @@ A PSF sub-format for Sega Saturn music, emulating the console's SCSP sound syste
 qsf	Capcom Q-Sound Format
 A PSF sub-format for Capcom arcade boards using the QSound chip, reproduced through emulation.
 
-sndh	SNDH (Atari ST)
-The standard Atari ST chip-music archive, devised by Jochen "BDC" Knaus: the original 68000 driver code prefixed by an "SNDH" header of tags, usually Pack-ICE compressed.
+sndh	SNDH is the definitive audio file format used for archiving and playing back chiptune music from the Atari ST. Devised and standard-coded by Jochen "BDC" Knaus of the ST music group Brainstorm. Contains the original Motorola 68000 machine code assembly driver required to run the song directly on the Atari ST's hardware. Prefixed with an ASCII "SNDH" metadata header containing tags for title, artist, year, and replay speed. Files are traditionally compressed using Pack-ICE, a popular data packer from the Atari demoscene era. Specifically written to command the Atari ST's internal Yamaha YM2149 Programmable Sound Generator (PSG) chip.
 
 sc68	sc68 (Atari ST / Amiga)
 A unified container for Atari ST and Amiga chip music created by Benjamin Gerard, packaging the original 680x0 replay code for emulated playback.
 
-ym	YM (StSound)
-A register dump of an AY-3-8910 / YM2149 tune captured 50 times a second, designed by Arnaud Carre (Leonard/Oxygene) for his ST-Sound player. Covers Atari ST, Amstrad CPC and ZX Spectrum chip tunes; LHA-compressed.
+ym	ST-Sound (.YM) is a register-dump audio file format designed to capture and play back chiptunes from systems using the AY-3-8910 or YM2149 sound chips. Created by Arnaud Carré (known as Leonard of the demogroup Oxygene) specifically for his emulator, ST-Sound. Rather than storing executable code, it records a raw dump of the sound chip's internal registers, typically sampled 50 times per second (50 Hz). Covers music from multiple vintage 8-bit and 16-bit computers, including the Atari ST, Amstrad CPC, and ZX Spectrum. Files are natively compressed using LHA (.lha/.lh1) compression to significantly reduce the size of the repetitive register data. Unlike SNDH, YM files do not require a Motorola 68000 CPU emulator to play, making them much easier to implement in lightweight, cross-platform modern players. YM1-YM3 were early, uncompressed and basic structural formats. YM5 is the most widely adopted version, introducing advanced header information, loop points, and precise clock speed settings for different computers (e.g., 2 MHz for Atari ST vs. 1.77 MHz for ZX Spectrum). YM6 added support for digital drums and special sound effects.
 
 ymst	YM (stereo)
 A stereo variant of the YM AY-3-8910/YM2149 register-dump format, replayed by the same StSound-style engine.
@@ -469,11 +466,9 @@ A ZX Spectrum AY tracker format, one of the classic native Spectrum chip-music e
 stc	Sound Tracker (ZX)
 An early ZX Spectrum AY tracker format from the Sound Tracker family of editors.
 
-pt1	Pro Tracker 1 (ZX)
-A first-generation ZX Spectrum Pro Tracker AY module format.
+pt1	Pro Tracker 1 is a classic 3-channel chiptune music format created for the 8-bit Sinclair ZX Spectrum home computer. It compiles musical data specifically to be played back using the AY-3-8910 chip. Supports exactly 3 independent audio channels (A, B, and C). Features square wave generation, noise generation, and hardware volume envelopes. Uses a standard tracker architecture comprising a sequence player list, modular patterns, and distinct sample/ornament definitions. Pro Tracker 1 represents an early phase in the prolific Soviet and Eastern European ZX Spectrum demoscene of the 1990s. It was later succeeded by more advanced versions like Pro Tracker 2 (PT2) and the highly popular Pro Tracker 3 (PT3), which optimized the file structure and added more complex effects.
 
-pt2	Pro Tracker 2 (ZX)
-The Pro Tracker 2 AY module format for the ZX Spectrum, a staple of the Russian Spectrum demoscene.
+pt2	Pro Tracker 2 for the ZX Spectrum is an iconic tracker designed for the AY-3-8910 sound chip. It was a cornerstone of the legendary Russian demoscene, heavily popularized on the 128k Spectrum and its clones like the Pentagon. Heavily inspired by Amiga trackers.
 
 pt3	Pro Tracker 3 (.pt3) format is the de-facto standard for chiptune music on the ZX Spectrum (and its clones) equipped with the AY-3-8910 sound chip. Originally developed in the 1990s as part of the Pro Tracker family, PT3 files contain sequence and ornament data that directly drive the 3-channel AY sound chip rather than storing raw audio.
 
