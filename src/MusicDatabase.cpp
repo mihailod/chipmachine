@@ -201,36 +201,6 @@ bool MusicDatabase::parsePouet(
     return true;
 }
 
-bool MusicDatabase::parseAmp(
-    Variables& vars, std::string const& listFile,
-    std::function<void(SongInfo const&)> const& callback)
-{
-    File f{ listFile };
-
-    for (auto const& s : f.getLines()) {
-        SongInfo song;
-        auto path = urldecode(s, "");
-        auto parts = split(path, "/");
-        if (parts.size() < 3) {
-            LOGD("%s (%s) broken", s, path);
-            continue;
-        }
-        int l = parts.size();
-        std::vector<std::string> titleParts = split(parts[l - 1], ".");
-        if (titleParts.size() < 2) {
-            LOGD("%s broken", s);
-            continue;
-        }
-        titleParts[1][0] = toupper(titleParts[1][0]);
-        song.path = s;
-        song.composer = parts[l - 2];
-        song.title = titleParts[1];
-        song.format = titleParts[0] == "STK" ? "Soundtracker" : "Protracker";
-        callback(song);
-    }
-    return true;
-}
-
 bool MusicDatabase::parseRss(
     Variables& vars, std::string const& listFile,
     std::function<void(SongInfo const&)> const& callback)
@@ -1070,7 +1040,6 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
 
             std::map<std::string, ParseSongFun> parsers = {
                 { "pouet", &MusicDatabase::parseStandard },
-                { "amp", &MusicDatabase::parseAmp },
                 { "modland", &MusicDatabase::parseModland },
                 { "podcast", &MusicDatabase::parseRss },
                 { "standard", &MusicDatabase::parseStandard },
@@ -2070,6 +2039,21 @@ void initFormats()
     // and Exotica/Aminet (mods/8voic). The other .ftm format, FamiTracker
     // (magic "FamiTracker Module"), is NES and routes to famitrackerplugin.
     format_map["face the music"] = AMIGA;
+    // --- AMP (amp.dascene.net) short format codes ---------------------------
+    // AMP stores a short uppercase format code as the `format` string, and its
+    // path is a bare "downmod.php?index=" module id with NO file extension, so
+    // classifyFormat's extension fallback can't help. Map the AMP-specific
+    // codes that aren't already keyed by a shared ext above. Nearly all are
+    // Amiga native trackers/players/composer rips; the PC/Atari tracker codes
+    // (xm/it/s3m/stm/mtm/dmf/ptm/ult/far/ams/dsm/mptm/mt2/669/mdl/amf/plm/dtm)
+    // are already handled by their shared keys.
+    for (char const* f :
+         { "stk", "fst", "oss", "bp", "bp3", "gmc", "ml", "thx", "dss", "mm8",
+           "dmu", "dmu2", "emod", "jam", "sa", "fc13", "ast", "abk", "oct",
+           "prt", "sfx2", "ok", "hvl", "ftm", "st26", "stp", "stp2", "sid2",
+           "mom", "mod3" })
+        format_map[f] = AMIGA;
+    format_map["tcb"] = ATARI; // TCB Tracker (Atari ST); .tcb, played by openmpt
     // AdLib / OPL (PC).
     for (char const* f : { "raw opl capture", "edlib packed", "edlib d00",
                            "edlib d01", "herad music system", "imf",

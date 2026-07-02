@@ -7,8 +7,6 @@ amp	8,640	Demozoo augment (tunes used in demos)	Medium — AMP itself has compos
 modarchive	155,703	Demozoo augment (demoscene subset only)	Low ROI — huge corpus, mostly non-game music
 amigavibes	116	Demozoo	Low priority (tiny)
 
-- AMP Pull request
-
 - 2nd level menu drill on more platforms with subplatforms?
 
 - platform screenshots from mp3? for example jaguar... maybe more
@@ -96,8 +94,6 @@ dm	5
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
 
-* --- IN PROGRESS -- PESIC --- AMP (Amiga Music Preservation): A long-standing, focused archive dedicated specifically to preserving Amiga-originated music files.
-
 * NEO KOBE NEC PC-98 LIBRARY
   - URL: https://archive.org/details/neo-kobe-nec-pc-9801-2017-11-17-archive
   - Platforms/Chips: NEC PC-9801/8801 (YM2608 OPNA / YM2203 OPN)
@@ -180,6 +176,8 @@ A massive historical repository of ZX Spectrum chiptunes. While heavily populate
 --------------------------------------------------------------------------
 ------ DATABASES DONE / RESOLVED / ABANDONED IN THIS PASS BELOW ----------
 --------------------------------------------------------------------------
+
+* Amiga Music Preservation -- 58,432 new
 
 * 3284 new DONE SCENIC / SCENE.ORG MUSIC VAULT
   - URL: https://www.scene.org

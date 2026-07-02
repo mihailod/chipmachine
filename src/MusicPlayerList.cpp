@@ -13,9 +13,49 @@
 #include <coreutils/environment.h>
 #include <musicplayer/src/chipplayer.h>
 
+#include <zlib.h>
+
 using namespace utils;
 
 namespace chipmachine {
+
+// Inflate a gzip stream (infile) to outfile. Used for sources whose download
+// body is gzip-compressed but whose cache filename carries no ".gz" (so
+// GZPlugin never fires) -- notably AMP, where the DB path is a
+// "downmod.php?index=N" redirect that streams an application/x-gzip module
+// with no Content-Disposition. Returns true on a complete inflate.
+static bool gunzipToFile(const std::string& infile, const std::string& outfile)
+{
+    z_stream strm;
+    memset(&strm, 0, sizeof(strm));
+    if (inflateInit2(&strm, 16 + MAX_WBITS) != Z_OK) return false;
+    FILE* fp = fopen(infile.c_str(), "rb");
+    if (fp == nullptr) { inflateEnd(&strm); return false; }
+    FILE* fpo = fopen(outfile.c_str(), "wb");
+    if (fpo == nullptr) { fclose(fp); inflateEnd(&strm); return false; }
+    uint8_t in[32768];
+    uint8_t out[32768];
+    int ret = Z_OK;
+    do {
+        strm.avail_in = fread(in, 1, sizeof(in), fp);
+        if (ferror(fp) || strm.avail_in == 0) break;
+        strm.next_in = in;
+        do {
+            strm.avail_out = sizeof(out);
+            strm.next_out = out;
+            ret = inflate(&strm, Z_NO_FLUSH);
+            if (ret == Z_NEED_DICT) ret = Z_DATA_ERROR;
+            if (ret <= Z_DATA_ERROR) break;
+            int have = sizeof(out) - strm.avail_out;
+            if ((int)fwrite(out, 1, have, fpo) != have) { ret = Z_ERRNO; break; }
+        } while (strm.avail_out == 0 && ret != Z_STREAM_END);
+    } while (ret != Z_STREAM_END && ret > Z_DATA_ERROR);
+    fclose(fp);
+    fclose(fpo);
+    inflateEnd(&strm);
+    if (ret != Z_STREAM_END) { remove(outfile.c_str()); return false; }
+    return true;
+}
 
 MusicPlayerList::~MusicPlayerList()
 {
@@ -813,6 +853,27 @@ void MusicPlayerList::playCurrent()
                         break;
                     }
                 }
+            }
+        }
+        // --- gzip-by-magic ---------------------------------------------------
+        // AMP (amp.dascene.net) serves modules as an application/x-gzip stream
+        // behind a "downmod.php?index=N" 302 redirect, with no Content-Disposition
+        // and a cache name derived from the request URL -- so it carries no ".gz"
+        // and GZPlugin (extension-triggered) never fires. Detect the gzip magic
+        // (1F 8B), inflate in place, and let the ext-rename below tag the inflated
+        // file with the DB format extension (".it"/".mod"/...) so the
+        // extension-routed decoders (OpenMPT/UADE) pick it up.
+        {
+            unsigned char gm[2] = { 0, 0 };
+            bool isGz = false;
+            if (FILE* fp = fopen(f0.getName().c_str(), "rb")) {
+                isGz = fread(gm, 1, 2, fp) == 2 && gm[0] == 0x1f && gm[1] == 0x8b;
+                fclose(fp);
+            }
+            if (isGz) {
+                std::string outName = f0.getName() + ".ungz";
+                if (File::exists(outName) || gunzipToFile(f0.getName(), outName))
+                    f0 = File{ outName };
             }
         }
         // The cached file has a URL-encoded name (e.g. "downloads.php%3fmoduleid=1")

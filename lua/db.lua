@@ -162,7 +162,24 @@
 --     while the tune plays (like a module's embedded message). New `info`
 --     song_template keyword maps it to metaIndex -> song.metadata[INFO], which
 --     ChipMachine's scroller already renders. Bump forces a reindex.
-VERSION = 74;
+-- 75: AMP (Amiga Music Preservation, amp.dascene.net) rebuilt from the full
+--     178k catalogue scrape (data/misc/amp/MODULES.csv) into a real, indexed
+--     collection -- the old entry was `index = "no"` (unsearchable) and only
+--     half-played (MOD/STK routed via OpenMPT's prefix special-case; IT/XM/
+--     S3M/MED/... silently failed). tools/build_amp.py dedups vs modland +
+--     modarchive + demozoo + scene.org + unexotica on normalised (composer,
+--     title) -> 58432 net-new of 178032. Each path is a bare module id; the
+--     source appends it to "downmod.php?index=" (302 -> gzip module, no
+--     Content-Disposition). MusicPlayerList now inflates the gzip body by
+--     magic (1F 8B), then the `ext` column (mapped from AMP's short FORMAT
+--     code by build_amp.py) routes it to OpenMPT/UADE/hively -- the same
+--     id-URL pattern as modarchive. New AMP-specific short format codes
+--     (stk/fst/oss/bp/gmc/ml/... -> Amiga, tcb -> Atari) added to initFormats
+--     so classifyFormat lands them correctly despite the extension-less path.
+--     The legacy `parseAmp` parser (dispatched by type->id "amp", expected the
+--     old "L/Composer/FMT.title.gz" paths) was removed so AMP now parses via
+--     parseStandard like every other .txt collection. Bump forces a reindex.
+VERSION = 75;
 
 DB = {
 {
@@ -295,12 +312,16 @@ DB = {
 	color = 0xfffff
 },
 {
+	-- Amiga Music Preservation (amp.dascene.net). Full catalogue, deduped vs
+	-- modland/modarchive/demozoo/scene.org/unexotica (net-new only). Each path
+	-- is a bare module id; source appends it to the downmod.php endpoint, which
+	-- 302-redirects to the gzip module. MusicPlayerList inflates the gzip body
+	-- by magic, then the `ext` column routes it. Built by tools/build_amp.py.
 	name = "Amp",
 	id =  "amp",
-	source = "http://amp.dascene.net/modules/",
-	song_template = "path",
-	index = "no",
+	source = "http://amp.dascene.net/downmod.php?index=",
 	song_list = "data/amp.txt",
+	song_template = "title composer format path ext",
 	color = 0xfffff
 },
 {

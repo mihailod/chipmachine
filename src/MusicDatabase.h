@@ -414,8 +414,6 @@ private:
                   Callback<SongInfo> const& callback);
     bool parseModland(Variables& vars, std::string const& listFile,
                       Callback<SongInfo> const& callback);
-    bool parseAmp(Variables& vars, std::string const& listFile,
-                  Callback<SongInfo> const& callback);
     bool parseStandard(Variables& vars, std::string const& listFile,
                        Callback<SongInfo> const& callback);
 
