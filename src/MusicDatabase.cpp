@@ -1389,6 +1389,13 @@ SongInfo& MusicDatabase::lookup(SongInfo& song)
     std::lock_guard lock{ dbMutex };
     auto path = song.path;
 
+    // A song path may carry a "<collection.id>::<path>" prefix. Keep the
+    // collection so we can disambiguate below: different collections can store
+    // the SAME bare path (e.g. AMP and modarchive both use a bare module id, so
+    // "173770" exists in both) -- without filtering on the collection the
+    // WHERE song.path = ? query returns whichever row indexed first and plays
+    // the wrong tune from the wrong source.
+    std::string wantColl;
     std::vector<std::string> parts = split(path, "::");
     if (parts.size() > 1) {
         path = parts[1];
@@ -1398,26 +1405,55 @@ SongInfo& MusicDatabase::lookup(SongInfo& song)
             path = song.path;
             parts = split(path, "::");
             if (parts.size() > 1) {
+                wantColl = parts[0];
                 path = parts[1];
             }
+        } else {
+            wantColl = parts[0];
         }
         LOGV("INDEX %s %s", parts[0], path);
     }
 
-    auto q = db.query<std::string, std::string, std::string, std::string,
-                      std::string, std::string, std::string, std::string,
-                      std::string>(
-        "SELECT path, title, game, composer, format, collection.id, metadata, "
-        "ext, song.artwork "
-        "FROM song, collection "
-        "WHERE song.collection = collection.ROWID AND song.path = ?",
-        path);
+    bool found = false;
+    std::string coll;
+    if (!wantColl.empty()) {
+        auto q = db.query<std::string, std::string, std::string, std::string,
+                          std::string, std::string, std::string, std::string,
+                          std::string>(
+            "SELECT path, title, game, composer, format, collection.id, "
+            "metadata, ext, song.artwork "
+            "FROM song, collection "
+            "WHERE song.collection = collection.ROWID AND song.path = ? "
+            "AND collection.id = ?",
+            path, wantColl);
+        if (q.step()) {
+            tie(song.path, song.title, song.game, song.composer, song.format,
+                coll, song.metadata[SongInfo::INFO], song.ext,
+                song.metadata[SongInfo::SCREENSHOT]) = q.get_tuple();
+            found = true;
+        }
+    }
 
-    if (q.step()) {
-        std::string coll;
-        tie(song.path, song.title, song.game, song.composer, song.format, coll,
-            song.metadata[SongInfo::INFO], song.ext,
-            song.metadata[SongInfo::SCREENSHOT]) = q.get_tuple();
+    // Fall back to a collection-agnostic match (no prefix, or the prefixed row
+    // is gone) -- old behaviour for every non-colliding collection.
+    if (!found) {
+        auto q = db.query<std::string, std::string, std::string, std::string,
+                          std::string, std::string, std::string, std::string,
+                          std::string>(
+            "SELECT path, title, game, composer, format, collection.id, "
+            "metadata, ext, song.artwork "
+            "FROM song, collection "
+            "WHERE song.collection = collection.ROWID AND song.path = ?",
+            path);
+        if (q.step()) {
+            tie(song.path, song.title, song.game, song.composer, song.format,
+                coll, song.metadata[SongInfo::INFO], song.ext,
+                song.metadata[SongInfo::SCREENSHOT]) = q.get_tuple();
+            found = true;
+        }
+    }
+
+    if (found) {
         song.path = coll + "::" + song.path;
         //LOGD("LOOKUP '%s' became '%s'", path, song.path);
     } else {
