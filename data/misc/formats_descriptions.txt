@@ -338,8 +338,7 @@ A music format created in 1991 by Laurens 'Lotus' Tummers and John Tonnard.
 sfx	SoundFX
 A Soundtracker clone created by Christian Haller and Christian A. Weber.
 
-sid	Sidmon
-A music editor created by Reinier van Vliet (Rhino/Team Hoi).
+sid	.sid file format container used to play music from the Commodore 64. Unlike modern audio files (MP3 or WAV) which store digitized waveforms, or MIDI files which store raw musical notes, a .sid file contains actual MOS 6502/6510 machine language code. When you play a SID file, a dedicated player must emulate the C64's microprocessor and its specialized MOS Technology Sound Interface Device (SID) chip to execute the code and generate the sound in real time. The primary data block consists of the C64 assembler code (the music player routine) and the associated music data (patterns, instruments, and tracking notes). When executed by a player, the code directly modifies the 29 hardware registers of the SID chip 50 times (PAL systems) or 60 times (NTSC systems) per second to manipulate the oscillators, envelopes, and filters. A single .sid file can package multiple tracks or sound effects (often sharing the same instrument data), known as "subtunes". From 1990 to 1994, Sundell and Birk developed a SID player for their Amiga demo "The 100 Most Remembered 64 Game-Tunes" and for their tool PlaySID. Originally, a SID tune was spread over two files. Due to popular demand, a one-file format was introduced in PlaySID V2.2. This was the first version of the SID format.
 
 sid2	Sidmon II
 A music editor created by Michael Kleps (Unknown/D.O.C).
@@ -476,8 +475,7 @@ A first-generation ZX Spectrum Pro Tracker AY module format.
 pt2	Pro Tracker 2 (ZX)
 The Pro Tracker 2 AY module format for the ZX Spectrum, a staple of the Russian Spectrum demoscene.
 
-pt3	Pro Tracker 3 (ZX)
-Pro Tracker 3, the most widespread ZX Spectrum AY format; also the save target of Vortex Tracker. The reference format of the Spectrum chip scene.
+pt3	Pro Tracker 3 (.pt3) format is the de-facto standard for chiptune music on the ZX Spectrum (and its clones) equipped with the AY-3-8910 sound chip. Originally developed in the 1990s as part of the Pro Tracker family, PT3 files contain sequence and ornament data that directly drive the 3-channel AY sound chip rather than storing raw audio.
 
 stp	STP/STP2 formats are vintage chiptune module files created by the Sound Tracker Pro and Sound Tracker Pro 2 music editors (originally ported by KSA Software/Pentagram in the 1990s) for the ZX Spectrum. These files contain sequenced, multi-channel pattern data that drives the AY-3-8910/12 sound chip.
 

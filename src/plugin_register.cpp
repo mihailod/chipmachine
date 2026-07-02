@@ -53,6 +53,7 @@ extern "C" {
     void monotoneplugin_register(); // MONOTONE / PC-speaker tracker (.mon) via vendored PTPlayer (BSD-3)
     void mikmodplugin_register();  // MikMod UNITRK / UNIMOD (.uni) via vendored libmikmod slice
     void famitrackerplugin_register(); // FamiTracker (.ftm) NES 2A03 + expansions via vendored FamiTracker CX
+    void goattrackerplugin_register(); // GoatTracker (.sng) C64 SID via vendored GoatTracker player + reSID
 }
 
 void register_plugins() {
@@ -106,4 +107,5 @@ void register_plugins() {
     monotoneplugin_register();
     mikmodplugin_register();
     famitrackerplugin_register();
+    goattrackerplugin_register();
 }

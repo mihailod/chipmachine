@@ -1287,6 +1287,37 @@ TEST_CASE("SCC-Musixx", "[music]")
     REQUIRE(adp.canHandle("testmus/adlib/sanxion.sng"));
 }
 
+// GoatTracker (.sng, C64 SID, Lasse Oorni). Plays GoatTracker's own gplay.c
+// sequencer + gsid.cpp reSID interface on vendored reSID, via loadsong vendored
+// verbatim so it covers every song version. Fixtures span the formats: GTS5
+// (sid-warrior / alcorythm_ffff / alien funk), GTS2 (the consultant) and GTS!
+// v1 (metal warrior 4). testPlugin prints "---- GoatTracker ----" + a
+// "Trying <file> ... playback OK" per fixture.
+TEST_CASE("GoatTracker", "[music]")
+{
+    testPlugin<musix::GoatTrackerPlugin>("testmus/goattracker", "");
+
+    // ".sng" routing: GoatTracker owns the GTS-magic variant by content. UADE
+    // (tried for .sng first) must decline it -- otherwise the SID bytes crash
+    // its 68k engine -- and SCC-Musixx must not claim it either.
+    musix::GoatTrackerPlugin gt;
+    musix::UADEPlugin uade{"data"};
+    musix::SccMusixxPlugin scc;
+    REQUIRE(gt.canHandle("testmus/goattracker/sid-warrior.sng"));
+    REQUIRE_FALSE(uade.canHandle("testmus/goattracker/sid-warrior.sng"));
+    REQUIRE_FALSE(scc.canHandle("testmus/goattracker/sid-warrior.sng"));
+    // ...and GoatTracker must not grab a Richard Joseph .sng.
+    REQUIRE_FALSE(gt.canHandle("testmus/uade/aquatic games.sng"));
+
+    // The plugin must be wired into the GUI's registration path
+    // (chipmachine/src/plugin_register.cpp), not just instantiable directly.
+    // The testPlugin<> calls above construct the class straight up and so pass
+    // even when the register hook is missing -- which is exactly how the app
+    // ended up unable to play GoatTracker tunes. Guard the registration too.
+    musix::ChipPlugin::createPlugins("data");
+    REQUIRE(musix::ChipPlugin::getPlugin("GoatTracker") != nullptr);
+}
+
 // Apple IIgs SoundSmith. A tune is a PAIR: a bare-named song file (patterns/
 // orders) and a separate "<song>.W" wavebank holding the 64KB of Ensoniq 5503
 // sound RAM + instrument table. canHandle() identifies the song by its header

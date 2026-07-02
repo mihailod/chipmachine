@@ -40,6 +40,37 @@ amigavibes	116	Demozoo	Low priority (tiny)
  - option c (i think the best): augment search deduping to also remove the non-supported results from the search
 
 - extensions still missing format description:
+
+query most frequent extensions and add more verbose text for them
+example: sid has a short one...
+
+pt2	6060
+sndh	5895
+ym	4858
+nsf	4858
+mus	4580
+stc	3567
+mmd1	2605
+dmf	2138
+OVI	1801
+ptcop	1769
+sc68	1745
+mp3	1673
+asc	1656
+rsn	1513
+str	1391
+ymst	1378
+ahx	1337
+mmd0	1316
+OPI	1293
+nsfe	1214
+OZI	1152
+ftm	1041
+
+
+
+
+
 sm3	18
 sc	18
 mm4	17
