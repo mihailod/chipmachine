@@ -1276,6 +1276,69 @@ TEST_CASE("SCC-Musixx", "[music]")
     REQUIRE_FALSE(scc.canHandle("testmus/uade/cannon fodder (intro).sng"));
     REQUIRE_FALSE(uade.canHandle("testmus/sccmusixx/outrun.SNG"));
     REQUIRE_FALSE(uade.canHandle("testmus/sccmusixx/outrun_lower.sng"));
+
+    // UADE plays only the Richard Joseph .sng family; every other .sng chip
+    // (GoatTracker/Synder SID, Sam Coupe SAA1099, sample-less ZoundMonitor)
+    // otherwise fell through to the ZoundMonitor 68k player and died with
+    // "score died" -- a hard FAIL. They must now be declined so they Skip. An
+    // AdLib .sng (Faust "FMC!") in particular routes to AdPlug, not UADE.
+    musix::AdPlugin adp{"data"};
+    REQUIRE_FALSE(uade.canHandle("testmus/adlib/sanxion.sng"));
+    REQUIRE(adp.canHandle("testmus/adlib/sanxion.sng"));
+}
+
+// GoatTracker (.sng, C64 SID, Lasse Oorni). Plays GoatTracker's own gplay.c
+// sequencer + gsid.cpp reSID interface on vendored reSID, via loadsong vendored
+// verbatim so it covers every song version. Fixtures span the formats: GTS5
+// (sid-warrior / alcorythm_ffff / alien funk), GTS2 (the consultant) and GTS!
+// v1 (metal warrior 4). testPlugin prints "---- GoatTracker ----" + a
+// "Trying <file> ... playback OK" per fixture.
+TEST_CASE("GoatTracker", "[music]")
+{
+    testPlugin<musix::GoatTrackerPlugin>("testmus/goattracker", "");
+
+    // ".sng" routing: GoatTracker owns the GTS-magic variant by content. UADE
+    // (tried for .sng first) must decline it -- otherwise the SID bytes crash
+    // its 68k engine -- and SCC-Musixx must not claim it either.
+    musix::GoatTrackerPlugin gt;
+    musix::UADEPlugin uade{"data"};
+    musix::SccMusixxPlugin scc;
+    REQUIRE(gt.canHandle("testmus/goattracker/sid-warrior.sng"));
+    REQUIRE_FALSE(uade.canHandle("testmus/goattracker/sid-warrior.sng"));
+    REQUIRE_FALSE(scc.canHandle("testmus/goattracker/sid-warrior.sng"));
+    // ...and GoatTracker must not grab a Richard Joseph .sng.
+    REQUIRE_FALSE(gt.canHandle("testmus/uade/aquatic games.sng"));
+
+    // The plugin must be wired into the GUI's registration path
+    // (chipmachine/src/plugin_register.cpp), not just instantiable directly.
+    // The testPlugin<> calls above construct the class straight up and so pass
+    // even when the register hook is missing -- which is exactly how the app
+    // ended up unable to play GoatTracker tunes. Guard the registration too.
+    musix::ChipPlugin::createPlugins("data");
+    REQUIRE(musix::ChipPlugin::getPlugin("GoatTracker") != nullptr);
+}
+
+// ZoundMonitor (.sng, Amiga). UADE genuinely has this player; the tunes load
+// their instruments by name from a shared "Samples/" directory (on modland one
+// level above the song, at the collection root -- fetched via the parent-dir
+// fallback in MusicPlayerList's whole-dir companion handling). The fixture ships
+// maddick.sng with its Samples/ already in place, so testPlugin exercises real
+// playback; the routing REQUIREs cover the content-based claim.
+TEST_CASE("ZoundMonitor", "[music]")
+{
+    testPlugin<musix::UADEPlugin>("testmus/zoundmonitor", "", "data");
+
+    musix::UADEPlugin uade{"data"};
+    // Claimed by its structural signature (no magic), and its shared Samples/
+    // dir is surfaced as a whole-directory companion.
+    REQUIRE(uade.canHandle("testmus/zoundmonitor/maddick.sng"));
+    auto sec = uade.getSecondaryFiles("testmus/zoundmonitor/maddick.sng");
+    REQUIRE(std::find(sec.begin(), sec.end(), "Samples/") != sec.end());
+    // The signature must not misfire on other .sng chips, and GoatTracker must
+    // not grab a ZoundMonitor tune.
+    REQUIRE_FALSE(uade.canHandle("testmus/goattracker/sid-warrior.sng"));
+    musix::GoatTrackerPlugin gtz;
+    REQUIRE_FALSE(gtz.canHandle("testmus/zoundmonitor/maddick.sng"));
 }
 
 // Apple IIgs SoundSmith. A tune is a PAIR: a bare-named song file (patterns/
@@ -2288,11 +2351,14 @@ TEST_CASE("FTC routing", "[music]")
     REQUIRE(winner == "ZX Spectrum (ZXTune)");
     REQUIRE(musix::AyflyPlugin().canHandle("x.ftc") == false);
 }
-// Sam Coupe COP (the modland "Sam Coupe COP" corpus): SAM Coupé music for the
-// SAA1099, played by running the song's embedded Z80 replayer (or the shared
-// E-Tracker replayer) on the GME Z80 core with Dave Hooper's SAASound. The
-// fixture set covers both layouts: bd/e11 are raw-Z80 "compiled" songs, duck1/
-// duck2 are E-Tracker data files.
+// Sam Coupe COP/SNG: SAM Coupé music for the SAA1099, played by running the
+// song's embedded Z80 replayer (or the shared E-Tracker replayer) on the GME Z80
+// core with Dave Hooper's SAASound. The modland "Sam Coupe COP" (.cop) and "Sam
+// Coupe SNG" (.sng) corpora are the same replayer family, so one plugin plays
+// both. Fixtures cover the revisions: bd/e11 raw-Z80 "compiled" songs and duck1/
+// duck2 E-Tracker data (.cop), plus five .sng -- ddtitl (compiled 0x21..0xc3),
+// kapsa3 (E-Tracker data), music1 (Fuka), ofc2 (Ziutek "3e..3d c2 23 81") and
+// tetris (compiled "JP #81xx").
 TEST_CASE("Sam Coupe COP", "[music]")
 {
     testPlugin<musix::CopPlugin>("testmus/cop", "");
@@ -2314,6 +2380,14 @@ TEST_CASE("COP routing", "[music]")
     REQUIRE(winner("testmus/cop/duck1.cop") == "Sam Coupe (COP)"); // E-Tracker
     REQUIRE_FALSE(musix::ZXTunePlugin().canHandle("testmus/cop/bd.cop"));
     REQUIRE_FALSE(musix::ZXTunePlugin().canHandle("testmus/cop/duck1.cop"));
+    // Sam Coupe .sng routes here too (content-gated), and CopPlugin must NOT
+    // grab the other .sng chips -- their headers fail looksLikeSamCoupeCop.
+    REQUIRE(winner("testmus/cop/ddtitl.sng") == "Sam Coupe (COP)");
+    REQUIRE(winner("testmus/cop/kapsa3.sng") == "Sam Coupe (COP)");
+    musix::CopPlugin cop;
+    REQUIRE_FALSE(cop.canHandle("testmus/goattracker/sid-warrior.sng"));   // GTS5
+    REQUIRE_FALSE(cop.canHandle("testmus/uade/aquatic games.sng"));        // RJP1SMOD
+    REQUIRE_FALSE(cop.canHandle("testmus/zoundmonitor/maddick.sng"));      // ZoundMonitor
 }
 // .mus is overloaded on modland: UADE's UFO eagleplayer owns the Amiga variant,
 // but the extension is also used by FAC SoundTracker, an MSX PSG format the

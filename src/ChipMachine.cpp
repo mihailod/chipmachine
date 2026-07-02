@@ -38,11 +38,11 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "[show all]", {} },
     { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER } },
     { "Atari ST/STE/Falcon", { ATARI } },
-    { "Atari XL/XE (POKEY)", { POKEY } },
+    { "Atari 8bit (POKEY/TIA)", { POKEY } },
     { "Commodore 64 (SID)", { SID, STR } },
     { "Commodore 16/116/+4 (TED)", { PRG } },
     { "ZX Spectrum 16K/48K (Beeper)", { ZXBEEPER } },
-    { "ZX Spectrum 128K (AY)", { ZXAY } },
+    { "ZX Spectrum 128K (AY)", { ZXAY, SPECTRUM } },
     { "IBM PC (Trackers/DAWs)", { FASTTRACKER, IMPULSETRACKER, SCREAMTRACKER, PCTRACKER, PC } },
     { "IBM PC (AdLib/OPL)", { ADPLUG } },
     { "MSX", { MSX } },
@@ -62,7 +62,7 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "PC-98/X68000/FM Towns", { JPFM } },
     { "PC Engine/TurboGrafx-16", { HES } },
     { "WonderSwan", { WONDERSWAN } },
-    { "Other Platforms", { CONSOLE } },
+    { "Other Platforms", { OTHER } },
     { "Unclassified MP3/OGG", { MP3, OGG } },
     { "Unclassified YouTube Audio", { YOUTUBE } },
     { "Podcasts", { PODCAST } },
@@ -75,7 +75,7 @@ static uint32_t formatColor(int f)
 {
     static const std::map<uint32_t, uint32_t> colors = {
         { NOT_SET, 0xffff00ff }, { PLAYLIST, 0xffffff88 },
-        { CONSOLE, 0xffdd3355 },
+        { OTHER, 0xffdd3355 },
         { HES, 0xffee7766 },
         { NES, 0xffe05555 },     { SNES, 0xff9a7bd0 },
         { GAMEBOY, 0xff9bbc0f },  { GBA, 0xff9bbc0f },
@@ -86,7 +86,7 @@ static uint32_t formatColor(int f)
         { WONDERSWAN, 0xff88ccaa }, { PLAYSTATION, 0xffbbbbbb },
         { PLAYSTATION2, 0xffbbbbbb },
         { SID, 0xffcc8844 },     { PRG, 0xffbb66cc },
-        { ZXBEEPER, 0xffff88dd }, { ZXAY, 0xffbb88ff },
+        { ZXBEEPER, 0xffff88dd }, { ZXAY, 0xffbb88ff }, { SPECTRUM, 0xffbb88ff },
         { MSX, 0xff66ddaa },     { AMSTRAD, 0xff44aadd },
         { ACORN, 0xff88dd55 },   { SAMCOUPE, 0xffdd66aa },
         { ATARI, 0xffcccc33 },   { POKEY, 0xffee7711 },
@@ -127,11 +127,16 @@ static uint32_t shiftColorBySpread(uint32_t argb, float t)
         else h = (r - g) / d + 4.f;
         h *= 60.f;
     }
-    h += (t - 0.5f) * 150.f; // +-75 deg, evenly spread across the formats
+    h += (t - 0.5f) * 200.f; // +-100 deg, evenly spread across the formats
     if (h < 0.f) h += 360.f;
     if (h >= 360.f) h -= 360.f;
-    v *= 0.70f + 0.30f * (1.f - t); // brightness gradient over the spread
-    s *= 0.72f + 0.28f * t;         // saturation gradient over the spread
+    v *= 0.72f + 0.28f * (1.f - t); // brightness gradient over the spread
+    // Lift saturation to a vivid floor (still varied by t) so the hue steps read
+    // as distinct colours even when the platform's base is a washed-out tint
+    // (e.g. the ZX lavender) -- otherwise adjacent formats look like the same
+    // muted shade. Only raises saturation, never lowers an already-vivid base.
+    float sfloor = 0.55f + 0.30f * t;
+    if (s < sfloor) s = sfloor;
     if (v > 1.f) v = 1.f;
     if (s > 1.f) s = 1.f;
     float cc = v * s;

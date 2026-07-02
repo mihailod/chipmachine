@@ -744,7 +744,7 @@ bool MusicDatabase::parseStandard(
 {
 
     int pathIndex = 4, gameIndex = 1, titleIndex = 0, composerIndex = 2,
-        formatIndex = 3, metaIndex = 5, extIndex = -1;
+        formatIndex = 3, metaIndex = 5, extIndex = -1, screenshotIndex = -1;
     auto templ = vars["song_template"];
     // if(temp == "")
     //  templ = "title game composer format path meta";
@@ -768,6 +768,10 @@ bool MusicDatabase::parseStandard(
                 gameIndex = i;
             else if (p == "ext")
                 extIndex = i;
+            else if (p == "screenshot")
+                screenshotIndex = i;
+            else if (p == "info")
+                metaIndex = i;
             i++;
         }
         columns = i;
@@ -865,6 +869,12 @@ bool MusicDatabase::parseStandard(
                 song = SongInfo(parts[pathIndex], gameField, titleField,
                                 composerField, formatField, metadata,
                                 extIndex >= 0 ? parts[extIndex] : "");
+                // `screenshot` template column -> per-song artwork stored verbatim
+                // (a full URL, e.g. an img.youtube.com thumbnail). Flows through
+                // the song.artwork DB column and is used directly by
+                // getSongScreenshots (its SCREENSHOT-already-set fast path).
+                if (screenshotIndex >= 0 && (int)parts.size() > screenshotIndex)
+                    song.metadata[SongInfo::SCREENSHOT] = parts[screenshotIndex];
                 callback(song);
                 continue;
             }
@@ -1484,7 +1494,12 @@ SongInfo MusicDatabase::getSongInfo(int index) const
 
     index++;
     // LOGD("ID %d vs PROD %d", index, productStartIndex);
-    if (index >= productStartIndex) {
+    // Songs occupy 0-based search positions [0, productStartIndex); after the
+    // ++ the last song's index equals productStartIndex, so this must be a
+    // strict ">" -- ">=" misroutes the very last song into the product branch
+    // (product ROWID 0 -> no row -> not_found_exception thrown below). This bit
+    // whichever song was indexed last (previously the final Pouet entry).
+    if (index > productStartIndex) {
         // index is now ordinal+1 (the ++ above); map the ordinal to the real
         // product ROWID -- it is NOT the ordinal because single-song products
         // are skipped during indexing.
@@ -1592,7 +1607,8 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                collection == "hvsc" || collection == "asma" ||
                collection == "zxart" || collection == "demozoo" ||
                collection == "sceneorg" || collection == "zophar" ||
-               collection == "cpcpower" || collection == "vampi") {
+               collection == "cpcpower" || collection == "vampi" ||
+               collection == "rko") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
@@ -1606,7 +1622,11 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         // by the cpc-power.com /YM/ .ym URL; built by
         // build_cpcpower.py --screenshots), vampi -> the game's Wikipedia
         // infobox cover/flyer (full song URL, keyed by the mdx.vampi.tech .MDX
-        // URL; built by build_vampi.py --screenshots). modland/hvsc/sndh/asma/
+        // URL; built by build_vampi.py --screenshots), rko -> the source C64
+        // game's gb64 screenshot (else a demo shot), keyed by the remix id (the
+        // rko song path); the remix's original HVSC SID (rko.txt col2) links to
+        // gb64 Games.csv SidFilename; built by build_rko.py --screenshots.
+        // modland/hvsc/sndh/asma/
         // sceneorg are additionally augmented from Demozoo: a tune is matched to
         // the demos that use it as soundtrack and borrows that production's
         // screenshot (built by tools/build_demozoo.py --augment, keyed by the
@@ -1887,6 +1907,21 @@ void initFormats()
     format_map["sam coupe cop"] = SAMCOUPE;
     format_map["sam coupe sng"] = SAMCOUPE;
 
+    // ZX Spectrum AY-3-8910/12 module formats keyed by EXTENSION. These are the
+    // last-resort ext fallback (only consulted when the format string didn't
+    // resolve), so they don't disturb zxart -- which already tags its tunes
+    // "spectrum ay"/"spectrum beeper" above -- and instead rescue demozoo tunes
+    // carrying the bare "ZX Spectrum" platform tag (which resolves to nothing),
+    // routing them into the "ZX Spectrum 128K (AY)" filter. All AY per
+    // data/misc/formats_descriptions.txt. NOTE: .psm is left out (the extension
+    // also means PC Epic MASI); .fls is left out (beeper/AY ambiguous, parked,
+    // no replayer). .pt2 is nominally shared with the parked Picatune2 beeper
+    // XML, but every real .pt2 here is Pro Tracker 2 (AY), so AY is correct.
+    for (char const* e :
+         { "pt1", "pt2", "pt3", "asc", "stc", "stp", "stp2", "st11", "st13",
+           "sqt", "psc", "vtx", "vt2", "ay", "psg", "ftc", "fxm", "chi", "gtr" })
+        format_map[e] = ZXAY;
+
     format_map["super nintendo"] = SNES;
     format_map["hes"] = HES;
     format_map["mp3"] = MP3;
@@ -1917,12 +1952,35 @@ void initFormats()
     // ST tunes; this explicit entry keeps POKEY separate.
     format_map["atari 8bit"] = POKEY;
     format_map["pokeynoise"] = POKEY; // Atari 8-bit POKEY (.pn), not Amiga
+    // Atari 2600/VCS (TIA chip) demoscene tunes from demozoo/Fujiology carry the
+    // platform string "Atari 2600 Video Computer System (VCS)". That starts with
+    // "atari", so the generic startsWith("atari") fallback below would lump them
+    // in with the Atari ST/STE line -- wrong machine. The TIA is its own chip
+    // (not POKEY either), but there's no dedicated 2600 filter yet, so bucket
+    // them under Atari 8Bit for now via this explicit override (checked before
+    // the fallback). Revisit if a proper VCS/TIA category is added.
+    format_map["atari 2600 video computer system (vcs)"] = POKEY;
+    // Atari Jaguar demozoo/Fujiology entries: game-soundtrack rips (mostly MP3
+    // recordings, a few .xm/.mod modules), NOT ST chiptunes -- but "atari jaguar"
+    // would hit the startsWith("atari") fallback and pollute the Atari ST/STE
+    // filter. The Jaguar has no native chip music format and there's no
+    // dedicated filter, so bucket it under OTHER ("Other Platforms"). (The few
+    // .mod among these are genuine Amiga ProTracker modules and get pulled to
+    // Amiga by the .mod correction near the end of formatToByte.)
+    format_map["atari jaguar"] = OTHER;
     format_map["soundsmith"] = APPLE; // Apple IIgs SoundSmith
     format_map["playerpro"] = APPLE;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
     format_map["jaytrax"] = TRACKER;  // JayTrax (.jxs), cross-platform synth tracker -- not UADE/Amiga
     format_map["ultra64 sound format"] = NINTENDO64;
     format_map["nintendo ds sound format"] = NDS;
     format_map["nintendo sound format"] = NES;
+    // demozoo console platform tags (verbose names, incl. the .zip game-rips the
+    // host extracts). Route to the matching console byte instead of UNKNOWN.
+    format_map["nintendo entertainment system (nes)"] = NES;
+    format_map["nintendo game boy (gb)"] = GAMEBOY;
+    format_map["nintendo game boy color (gbc)"] = GAMEBOY;
+    format_map["nintendo snes/super famicom"] = SNES;
+    format_map["nec pc engine"] = HES;
     // Sega 8-bit (SN76489 PSG): Master System, Game Gear, SG-1000, SC-3000
     format_map["sega master system"] = SEGAMS;
     format_map["sega game gear"] = SEGAMS;
@@ -1990,7 +2048,8 @@ void initFormats()
            "astroidea xmf", "easytrax", "m.o.n new", "m.o.n old",
            "trackerpacker 3", "musicmaker v8 old", "ac1d-dc1a packer",
            "ashley hogg", "mugician", "mugician ii", "pha packer",
-           "propacker 2.1", "synth pack", "alcatraz packer", "digital illusions",
+           "propacker 2.1", "propacker 3.0", "synth pack", "alcatraz packer",
+           "digital illusions",
            "digital sound creations", "rob hubbard old", "fred editor",
            "peter verswyvelen packer", "promizer", "sfx", "sidmon ii", "sidmon",
            "actionamics sound tool", "andrew parton", "art & magic",
@@ -1999,6 +2058,9 @@ void initFormats()
            "kefrens sound machine", "musicline", "steve turner",
            "midi-loriciel" })
         format_map[f] = AMIGA;
+    // .aon = Art Of Noise (Amiga, UADE-played). Extension key rescues demozoo
+    // "Amiga"-tagged .aon tunes (that tag doesn't resolve) from UNKNOWN.
+    format_map["aon"] = AMIGA;
     // Face The Music: an 8-voice AMIGA tracker (magic "FTMN", played by
     // openmptplugin's Load_ftm.cpp, which sets SONG_ISAMIGA / MOD_TYPE_MOD).
     // It is NOT MSX (where it was mis-grouped) and NOT Atari (as
@@ -2035,9 +2097,9 @@ void initFormats()
     format_map["iso-mpeg audio layer-3"] = MP3;
     format_map["hippel st coso"] = ATARI;   // Atari ST Hippel
     format_map["bbc micro"] = ACORN;        // Acorn 8-bit (close enough)
-    // Misc small consoles/arcade -> generic CONSOLE ("Other Consoles" filter).
+    // Misc small consoles/arcade -> generic OTHER ("Other Platforms" filter).
     for (char const* f : { "vectrex", "colecovision", "capcom q-sound format" })
-        format_map[f] = CONSOLE;
+        format_map[f] = OTHER;
 
     // Correct cross-platform formats that the generic fallbacks (endsWith
     // "tracker" -> TRACKER, uade_formats -> UADE) would otherwise mis-file under
@@ -2194,6 +2256,25 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
         }
         // fprintf(stderr, "%s\n", f.c_str());
     }
+
+    // Some demoscene sources (demozoo / scene.org) tag a module with the
+    // *release* platform of the production it appeared in ("Atari 8Bit",
+    // "Atari Jaguar", "MS-Dos", ...), which misfiles it under a foreign chip
+    // that can't even play it. For module formats whose platform is fixed by the
+    // format itself, the extension is authoritative:
+    //   .mod -> Amiga ProTracker -- but only if it landed off-Amiga; Amiga-family
+    //           bytes (AMIGA/PROTRACKER/SOUNDTRACKER/UADE/TRACKER) are left alone
+    //           to preserve the modland Protracker-vs-Soundtracker distinction.
+    //   .xm  -> FastTracker II (IBM PC), always -- .xm has no platform variants.
+    if (!path.empty()) {
+        std::string ext = toLower(utils::path_extension(path));
+        if (!ext.empty() && ext[0] == '.') ext = ext.substr(1);
+        if (ext == "mod" && l != AMIGA && l != PROTRACKER && l != SOUNDTRACKER &&
+            l != UADE && l != TRACKER)
+            l = PROTRACKER;
+        else if (ext == "xm")
+            l = FASTTRACKER;
+    }
     return l;
 }
 
@@ -2239,7 +2320,7 @@ static std::string platformName(uint8_t b)
     case PLAYSTATION:
     case PLAYSTATION2: return "PlayStation";
     case HES: return "PC Engine";
-    case CONSOLE: return "Console";
+    case OTHER: return "Other";
     case ADPLUG: return "PC AdLib";
     case PC: return "PC";
     case MP3: return "MP3";
@@ -2463,6 +2544,12 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
         if (open != std::string::npos && close != std::string::npos &&
             close > open + 1)
             return "YouTube - " + s.format.substr(open + 1, close - open - 1);
+        // Collections that store a real platform in the format field (e.g. the
+        // Manual Patch: "Amiga AGA", "ZX Spectrum Beeper") -- surface it as
+        // "YouTube - <platform>" instead of a bare "YouTube".
+        if (!s.format.empty() &&
+            toLower(s.format).find("youtube") == std::string::npos)
+            return "YouTube - " + s.format;
         return "YouTube";
     }
 
@@ -2470,6 +2557,16 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     // URL and often carries a query string (".mp3?p=f", ".mp3?dest-id=..."), so
     // skip the "(EXT)" suffix entirely and just label them "Podcast".
     if (b == PODCAST) return "Podcast";
+
+    // Atari 2600 (VCS / TIA) demoscene rips carry the verbose platform string
+    // "Atari 2600 Video Computer System (VCS)" and are bucketed under POKEY
+    // (Atari 8Bit) for the F9 filter -- but that string is a machine descriptor,
+    // not a tracker name, and the files are zip/gz/mp3 rips with no meaningful
+    // inner format. Surface the concise machine name (like YouTube/Podcast
+    // above), so it reads "Atari 2600" instead of the misleading
+    // "Atari XL/XE - Atari 2600 Video Computer System (VCS)".
+    if (toLower(s.format) == "atari 2600 video computer system (vcs)")
+        return "Atari 2600";
 
     // Extension (uppercase, no dot). resolveExtension() gives the REAL inner
     // format, so a compressed song shows "(MOD)" not "(ZIP)" -- and never the
@@ -2540,6 +2637,13 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     if (b == APPLE && ext == "MAD") {
         plat = "Macintosh";
     }
+
+    // A .mod is an Amiga ProTracker module. Some demoscene rips carry a stale
+    // release-platform tag as their format string (reclassified to Amiga in
+    // formatToByte), which would otherwise render as the name -- e.g. the
+    // contradictory "Amiga - Atari 8Bit (MOD)". Surface "ProTracker" instead.
+    if (b == PROTRACKER && ext == "MOD") name = "ProTracker";
+    if (b == FASTTRACKER && ext == "XM") name = "FastTracker II";
 
 
     if (name.empty()) name = ext.empty() ? "Unknown" : ext;
@@ -2738,12 +2842,29 @@ void MusicDatabase::generateIndex()
         uint8_t b = formatToByte(fmt, path, collection);
         if (collection == radioColl) b = RADIO;
         formats.push_back(b | (collection << 8));
-        // Hue key: normally per-format, but podcasts all share the format
-        // "Podcast" -- key them by their show (collection) so episodes of one
-        // podcast share a hue and differ from another's.
-        formatHue.push_back(fmt == "Podcast"
-                                ? hueSeed("podcast#" + std::to_string(collection))
-                                : hueSeed(fmt));
+        // Hue key: the sub-format, so each distinct format gets its own hue
+        // (spread evenly across the platform filter). Same format = same colour
+        // (e.g. every .pt2 tune matches, and differs from .pt3 / .asc). Two
+        // exceptions:
+        //  - Podcasts all share the format "Podcast" -> key by show (collection)
+        //    so episodes of one podcast share a hue and differ from another's.
+        //  - zxart tags every tune with a coarse chip name ("Spectrum AY",
+        //    "Spectrum Beeper", "Sam Coupe") and demozoo tags them "ZX Spectrum"
+        //    -- one string for a dozen distinct sub-formats. For these, key by
+        //    the file EXTENSION (the real sub-format: pt3/pt2/asc/vtx/stc/...)
+        //    so each format gets its own hue instead of all sharing one.
+        std::string hueKey;
+        if (fmt == "Podcast") {
+            hueKey = "podcast#" + std::to_string(collection);
+        } else {
+            std::string lf = toLower(fmt);
+            if (lf == "spectrum ay" || lf == "spectrum beeper" ||
+                lf == "sam coupe" || lf == "zx spectrum")
+                hueKey = lf + "|" + toLower(utils::path_extension(path));
+            else
+                hueKey = fmt;
+        }
+        formatHue.push_back(hueSeed(hueKey));
 
         if (game != "") {
             if (title != "")
@@ -2920,9 +3041,17 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
         try {
             initDatabase(workDir, dbmap);
         } catch (std::exception& e) {
-            LOGE("Error creating database '%s': %s", db_name, e.what());
+            // A throw here aborts indexing of the WHOLE collection partway (e.g.
+            // a stoi crash on one bad row left Demozoo at ~3k of ~42k songs), and
+            // the only symptom is this one line at boot. Make it impossible to
+            // miss: bright-red, banner-prefixed (ANSI \x1b[1;31m ... \x1b[0m).
+            LOGE("\x1b[1;31m!!!!!!!!!!!!!!! Error creating database '%s': "
+                 "%s\x1b[0m",
+                 db_name, e.what());
         } catch (...) {
-            LOGE("Unknown error creating database '%s'", db_name);
+            LOGE("\x1b[1;31m!!!!!!!!!!!!!!! Unknown error creating database "
+                 "'%s'\x1b[0m",
+                 db_name);
         }
         dbmap.clear();
     };

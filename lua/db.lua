@@ -127,7 +127,38 @@
 --     showing as broken GUI entries: "Ad Lib/MUS/" (1 file, Nick Jones/first
 --     samurai.mus -- AdPlug's MUS loader rejects it, OpenMPT/UADE/Vice all fail)
 --     and "MVS Tracker/" (2 files, magic MVSM1 -- nothing in our stack handles it).
-VERSION = 69;
+-- 70: Fix partial Demozoo index. The SongInfo ctor treated "path;<suffix>" as a
+--     subtune selector and called stoi() on the suffix; 9 scene.org URLs in
+--     demozoo.txt carried a stray TRAILING ';' (empty suffix), so stoi("") threw
+--     "no conversion", an uncaught exception that aborted Demozoo indexing at the
+--     FIRST such row -- only ~3.2k of ~41.9k songs landed (e.g. the 67 Atari
+--     2600/VCS tunes were all past the cutoff). SongInfo now only parses an
+--     all-digit suffix; the 9 stray ';' were stripped from demozoo.txt (and
+--     build_demozoo.py rstrips them going forward). Bump forces a full reindex so
+--     the rest of Demozoo lands.
+-- 71: Dropped 140 Fujiology (ftp.untergrund.net) .zip rows that contain NO
+--     playable member -- native-platform disk-images/ROMs/executables (e.g.
+--     BOING.ZIP->BOING.ATR Atari 8-bit disk image, BATTLE.BIN Atari 2600 ROM,
+--     HAWKEYE.XEX). These showed as dead "No playable tracks" entries, mostly in
+--     the Atari/console F9 filters. tools/filter_demozoo_archives.py downloads the
+--     417 Fujiology zip rows and keeps only the 277 with a decodable member
+--     (module/mp3/etc., matching MusicPlayerList songExt+audioExt); demozoo.txt
+--     41929->41789. Also fixed nested-member zip extraction (audio in a subfolder
+--     now extracts; ZipFile::extract makedirs the parent + skips dir entries).
+-- 72: Extended the archive filter to scene.org too. tools/filter_demozoo_archives.py
+--     --all-hosts --native-only inspects the ~2005 non-Demoscene/non-Amiga .zip rows
+--     (native/console platforms, where program-only zips concentrate) and drops the
+--     601 with NO playable member (2600 ROMs/.xex exes/disk-images like snakepit.bin,
+--     staxx_goldrunner.xex, kk_tia_filler.bin). Demoscene/Amiga zips (module/mp3
+--     compo entries) left untouched. demozoo.txt 41789->41188. Bump forces reindex.
+-- 73: Manual database patch (data/manualDatabasePatch.txt) -- a hand-maintained
+--     list of extra items indexed alongside every other collection. Each row is
+--     "name<TAB>platform<TAB>author<TAB>youtube_link<TAB>screenshot_link". Plays
+--     the YouTube link like the Pouet/Youtube collection; the screenshot is a
+--     full URL stored verbatim per song (new `screenshot` song_template keyword
+--     in parseStandard -> song.artwork column -> getSongScreenshots fast path).
+--     Bump forces a reindex so the rows land.
+VERSION = 73;
 
 DB = {
 {
@@ -515,6 +546,18 @@ DB = {
 	source = "",
 	song_list = "data/pouet.txt",
 	screen_source = "http://content.pouet.net/files/screenshots/",
+	color = 0xfffff
+},
+{
+	-- Hand-maintained extras. Each row is
+	-- "name<TAB>platform<TAB>author<TAB>youtube_link<TAB>screenshot_link".
+	-- Plays the YouTube link like Pouet; screenshot_link is a full URL stored
+	-- verbatim per song (song_template `screenshot` keyword). source empty.
+	name = "Manual Patch",
+	id =  "manualpatch",
+	source = "",
+	song_list = "data/manualDatabasePatch.txt",
+	song_template = "title format composer path screenshot info",
 	color = 0xfffff
 }
 };
