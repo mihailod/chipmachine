@@ -184,13 +184,37 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
             text = utils::format("%s / %s", parts[0], parts[1]);
     }
     uint32_t base = formatColor(f);
-    // Inside a platform filter, vary the hue per sub-format/extension so the
-    // different formats in the result list are distinguishable. The variation
-    // is spread evenly across however many formats the platform has, so a
-    // 2-format platform separates as widely as a 20-format one. General
-    // (unfiltered) search keeps a single flat platform color as before.
-    if (musicDatabase.hasFormatFilter() && f != PLAYLIST && f != PRODUCT) {
-        float t = musicDatabase.formatSpread(std::stol(parts[2]));
+    long fullIndex = std::stol(parts[2]);
+    // Give each row its own hue from a hash of its label -- stable per row and
+    // independent of scroll position. Used where the format byte alone can't
+    // distinguish rows (see the Other Platforms cases below).
+    auto hashSpread = [](std::string const& s) {
+        uint32_t h = 2166136261u;
+        for (char ch : s) {
+            h ^= (uint8_t)ch;
+            h *= 16777619u;
+        }
+        return (h % 1000) / 1000.f;
+    };
+    if (fullIndex >= MusicDatabase::OTHER_PLATFORM_INDEX) {
+        // Other Platforms group row: the OTHER byte is one flat deep red, so
+        // give each sub-platform its own colour, spread evenly across all groups
+        // (in alphabetical order) so the list reads as a rainbow, not a wall.
+        int gid = (int)(fullIndex - MusicDatabase::OTHER_PLATFORM_INDEX);
+        int n = (int)musicDatabase.otherPlatforms().size();
+        base = shiftColorBySpread(base, n > 0 ? (gid + 0.5f) / (float)n : 0.5f);
+    } else if (f == OTHER && musicDatabase.hasFormatFilter()) {
+        // Songs under the Other Platforms filter all share the OTHER byte (they
+        // span many real platforms), so formatSpread can't tell them apart. Vary
+        // the hue per row from its label instead, for variety within the list.
+        base = shiftColorBySpread(base, hashSpread(text));
+    } else if (musicDatabase.hasFormatFilter() && f != PLAYLIST && f != PRODUCT) {
+        // Inside a platform filter, vary the hue per sub-format/extension so the
+        // different formats in the result list are distinguishable. The variation
+        // is spread evenly across however many formats the platform has, so a
+        // 2-format platform separates as widely as a 20-format one. General
+        // (unfiltered) search keeps a single flat platform color as before.
+        float t = musicDatabase.formatSpread(fullIndex);
         if (t >= 0.f) base = shiftColorBySpread(base, t);
     }
     c = Color(base) * 0.75f;
@@ -424,6 +448,10 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
             // "9 Podcasts  [1,497 episodes]".
             if (fmt0 == PODCAST && podcastShowCount > 0)
                 label = utils::format("%d %s", podcastShowCount, opt.name);
+            // Prefix the Other Platforms entry with the number of distinct
+            // sub-platforms, e.g. "23 Other Platforms  [N tunes]".
+            if (fmt0 == OTHER && otherPlatformCount > 0)
+                label = utils::format("%d %s", otherPlatformCount, opt.name);
             if (index < filterCounts.size()) {
                 if (fmt0 == RADIO) {
                     // Each radio entry IS one station, so just count-prefix the
@@ -1007,6 +1035,7 @@ void ChipMachine::computeFilterCounts()
         total += c;
     if (total == 0) return;
     podcastShowCount = musicDatabase.getPodcastShowCount();
+    otherPlatformCount = musicDatabase.getOtherPlatformCount();
     filterCounts.assign(filterOptions.size(), 0);
     for (size_t i = 0; i < filterOptions.size(); i++) {
         auto const& opt = filterOptions[i];

@@ -338,6 +338,9 @@ private:
     // Number of distinct podcast shows, used to prefix the F9 "Podcasts" label
     // ("9 Podcasts  [N episodes]"). Populated alongside filterCounts.
     int podcastShowCount = 0;
+    // Number of distinct sub-platforms among OTHER songs, used to prefix the F9
+    // "Other Platforms" label ("N Other Platforms"). Populated with filterCounts.
+    int otherPlatformCount = 0;
     // Tune count of the currently selected platform filter (0 = no filter);
     // used for the "type to search N songs" prompt hint on large filters.
     int activeFilterCount = 0;

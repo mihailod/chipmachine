@@ -156,7 +156,9 @@ public:
     {
         // std::lock_guard lock{dbMutex};
         int f;
-        if (index >= PODCAST_SHOW_INDEX)
+        if (index >= OTHER_PLATFORM_INDEX)
+            f = OTHER;
+        else if (index >= PODCAST_SHOW_INDEX)
             f = PODCAST;
         else if (index >= PLAYLIST_INDEX)
             f = PLAYLIST;
@@ -240,9 +242,22 @@ public:
     // episodes). Used to label the F9 Podcasts filter ("9 Podcasts [...]").
     int getPodcastShowCount() const;
 
+    // Number of distinct sub-platforms among "Other Platforms" (OTHER-format)
+    // songs. Used to label the F9 Other Platforms filter ("N Other Platforms").
+    int getOtherPlatformCount();
+
     std::string getTitle(int index) const
     {
         std::lock_guard lock{ dbMutex };
+        if (index >= OTHER_PLATFORM_INDEX) {
+            int gid = index - OTHER_PLATFORM_INDEX;
+            for (size_t i = 0; i < otherPlatformList.size(); i++)
+                if (otherPlatformList[i].first == gid)
+                    return utils::format("%s  [%d tunes]",
+                                         otherPlatformList[i].second,
+                                         otherGroupCount[i]);
+            return "";
+        }
         if (index >= PODCAST_SHOW_INDEX) {
             int rowid = index - PODCAST_SHOW_INDEX;
             for (auto const& s : podcastShowList)
@@ -443,6 +458,26 @@ public:
     int podcastShow() const { return podcastShowFilter; }
     bool podcastFilterActive_() const { return podcastFilterActive; }
 
+    // Synthetic result indices for "Other Platforms" GROUP rows (one per
+    // distinct sub-platform among OTHER-format songs) shown when the Other
+    // Platforms filter is active with an empty query and not drilled in.
+    // index = OTHER_PLATFORM_INDEX + groupId. Kept above PODCAST_SHOW_INDEX and
+    // checked first wherever indices are dispatched.
+    static constexpr int OTHER_PLATFORM_INDEX = 0x1C000000;
+
+    // Other-platforms browse: list of (groupId, name) for each sub-platform,
+    // sorted by name; populated when the Other Platforms format filter
+    // activates (see buildOtherPlatforms).
+    std::vector<std::pair<int, std::string>> const& otherPlatforms() const
+    {
+        return otherPlatformList;
+    }
+    // Drill into one sub-platform (its groupId) so an empty query lists that
+    // platform's songs; pass -1 to go back to the platform list.
+    void setOtherPlatform(int gid) { otherPlatformFilter = gid; }
+    int otherPlatform() const { return otherPlatformFilter; }
+    bool otherFilterActive_() const { return otherFilterActive; }
+
 private:
     RemoteLoader& remoteLoader;
     utils::path workDir;
@@ -499,6 +534,20 @@ private:
     bool podcastFilterActive = false;                     // PODCAST filter on
     int podcastShowFilter = -1;                           // drilled-in ROWID
     std::vector<std::pair<int, std::string>> podcastShowList; // (ROWID,name)
+
+    // Other-platforms browse state (see OTHER_PLATFORM_INDEX / otherPlatforms()).
+    // The OTHER format byte collapses many real platforms into one filter, so a
+    // song's sub-platform survives only as its DB format string. buildOtherPlatforms()
+    // recovers it with one scan (cached for the session) and groups by name.
+    bool otherFilterActive = false;                     // OTHER filter on
+    int otherPlatformFilter = -1;                       // drilled-in groupId
+    bool otherPlatformsBuilt = false;                   // grouping cached?
+    std::vector<std::pair<int, std::string>> otherPlatformList; // (groupId,name)
+    std::vector<int> otherGroupCount;                   // songs per group (by pos)
+    std::unordered_map<int, int> otherIndexToGroup;     // song index -> groupId
+    // Scan the song table (ROWID == search index + 1) once, classify OTHER songs
+    // by their format string, and populate the browse state above. Idempotent.
+    void buildOtherPlatforms();
     // Rank (0..N-1) of each distinct sub-format hue present in the active
     // filter, and the count N. Built in setFormatFilter() so renderSong can
     // spread hues evenly across however many formats the platform actually has.

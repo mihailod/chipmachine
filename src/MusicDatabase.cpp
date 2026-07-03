@@ -1217,6 +1217,11 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
                            allowedFormats[0] == PODCAST);
     podcastShowFilter = -1;
     podcastShowList.clear();
+    // Same reset for the Other-platforms browse; the grouping itself is built
+    // (and cached) on demand by buildOtherPlatforms() below.
+    otherFilterActive = (allowedFormats.size() == 1 &&
+                         allowedFormats[0] == OTHER);
+    otherPlatformFilter = -1;
     if (allowedFormats.empty()) {
         titleIndex.setFilter();
         formatFilterActive = false;
@@ -1280,6 +1285,9 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
                           return toLower(a.second) < toLower(b.second);
                       });
         }
+
+        // Build the Other-platforms grouping (cached across the session).
+        if (otherFilterActive) buildOtherPlatforms();
     }
 }
 
@@ -1296,7 +1304,9 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
         if (result.size() >= searchLimit) return false;
 
         std::string identity;
-        if (index >= PODCAST_SHOW_INDEX) {
+        if (index >= OTHER_PLATFORM_INDEX) {
+            identity = "OTHERP:" + std::to_string(index - OTHER_PLATFORM_INDEX);
+        } else if (index >= PODCAST_SHOW_INDEX) {
             identity = "SHOW:" + std::to_string(index - PODCAST_SHOW_INDEX);
         } else if (index >= PLAYLIST_INDEX) {
             identity = "PL:" + playLists[index - PLAYLIST_INDEX].name;
@@ -1314,6 +1324,15 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
             return true;
         }
         return false;
+    };
+
+    // When drilled into one Other-platform, restrict typed searches to that
+    // sub-platform's songs (mirrors the empty-query listing above).
+    auto passesOtherDrill = [&](int index) {
+        if (!(otherFilterActive && otherPlatformFilter >= 0)) return true;
+        auto it = otherIndexToGroup.find(index);
+        return it != otherIndexToGroup.end() &&
+               it->second == otherPlatformFilter;
     };
 
     std::string title_query = query;
@@ -1346,6 +1365,32 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
             for (int idx : filteredCandidates)
                 if ((formats[idx] >> 8) == podcastShowFilter)
                     if (!add_unique(idx) && result.size() >= searchLimit) break;
+            return result.size();
+        }
+        // Other-platforms browse: with no drilled-in platform, list the
+        // sub-platform GROUP rows; drilled in, list that platform's songs
+        // sorted alphabetically by title.
+        if (otherFilterActive && otherPlatformFilter < 0) {
+            for (auto const& g : otherPlatformList)
+                if (!add_unique(OTHER_PLATFORM_INDEX + g.first) &&
+                    result.size() >= searchLimit)
+                    break;
+            return result.size();
+        }
+        if (otherFilterActive && otherPlatformFilter >= 0) {
+            std::vector<int> songs;
+            for (int idx : filteredCandidates) {
+                auto it = otherIndexToGroup.find(idx);
+                if (it != otherIndexToGroup.end() &&
+                    it->second == otherPlatformFilter)
+                    songs.push_back(idx);
+            }
+            std::sort(songs.begin(), songs.end(), [&](int a, int b) {
+                return toLower(titleIndex.getString(a)) <
+                       toLower(titleIndex.getString(b));
+            });
+            for (int idx : songs)
+                if (!add_unique(idx) && result.size() >= searchLimit) break;
             return result.size();
         }
         if (formatFilterActive && !filteredCandidates.empty() &&
@@ -1393,7 +1438,8 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
                 SearchIndex::simplify(comp);
                 match = comp.find(cq) != std::string::npos;
             }
-            if (match && !add_unique(index) && result.size() >= searchLimit)
+            if (match && passesOtherDrill(index) && !add_unique(index) &&
+                result.size() >= searchLimit)
                 break;
         }
         return result.size();
@@ -1402,6 +1448,7 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
     std::vector<int> tresult;
     titleIndex.search(title_query, tresult, searchLimit);
     for (int index : tresult) {
+        if (!passesOtherDrill(index)) continue;
         if (!add_unique(index))
             if (result.size() >= searchLimit) break;
     }
@@ -1419,7 +1466,8 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
 
             if (collectionFilter == -1 ||
                 (formats[songindex] >> 8) == collectionFilter) {
-                if (!titleIndex.isFiltered(songindex)) {
+                if (!titleIndex.isFiltered(songindex) &&
+                    passesOtherDrill(songindex)) {
                     if (!add_unique(songindex))
                         if (result.size() >= searchLimit) break;
                 }
@@ -1524,6 +1572,20 @@ std::string MusicDatabase::getScreenshotURL(std::string const& collection)
 // Get SongInfo from the search result
 SongInfo MusicDatabase::getSongInfo(int index) const
 {
+
+    if (index >= OTHER_PLATFORM_INDEX) {
+        // An Other-platforms GROUP row: title = sub-platform name, path carries
+        // the groupId so the UI can drill in (it is not playable).
+        int gid = index - OTHER_PLATFORM_INDEX;
+        std::string name;
+        {
+            std::lock_guard lock{ dbMutex };
+            for (auto const& g : otherPlatformList)
+                if (g.first == gid) name = g.second;
+        }
+        return SongInfo("otherplatform::" + std::to_string(gid), "", name, "",
+                        "Other");
+    }
 
     if (index >= PODCAST_SHOW_INDEX) {
         // A podcast SHOW row: title = show name, path carries the collection
@@ -2650,6 +2712,69 @@ int MusicDatabase::getPodcastShowCount() const
     for (uint32_t i = 0; i < n; i++)
         if ((formats[i] & 0xff) == PODCAST) shows.insert(formats[i] >> 8);
     return (int)shows.size();
+}
+
+void MusicDatabase::buildOtherPlatforms()
+{
+    if (otherPlatformsBuilt) return;
+
+    uint32_t n = (productStartIndex > 0 &&
+                  productStartIndex <= (uint32_t)formats.size())
+                     ? productStartIndex
+                     : (uint32_t)formats.size();
+    // Not indexed yet: don't cache an empty result -- retry on the next call.
+    if (n == 0) return;
+
+    otherPlatformsBuilt = true;
+    otherPlatformList.clear();
+    otherGroupCount.clear();
+    otherIndexToGroup.clear();
+
+    auto trim = [](std::string x) {
+        size_t a = x.find_first_not_of(" \t");
+        if (a == std::string::npos) return std::string();
+        return x.substr(a, x.find_last_not_of(" \t") - a + 1);
+    };
+
+    // The OTHER format byte collapses many real platforms into one filter, so a
+    // song's sub-platform survives only as its DB format string. Recover it with
+    // one scan of the song table -- search position i maps to song.ROWID i+1
+    // (contiguous; see getSongInfo / syncPodcastSongs) -- and group by name.
+    std::map<std::string, std::vector<int>> byName;
+    auto q = db.query<int, std::string>("SELECT ROWID, format FROM song");
+    while (q.step()) {
+        int rowid;
+        std::string fmt;
+        tie(rowid, fmt) = q.get_tuple();
+        int idx = rowid - 1;
+        if (idx < 0 || idx >= (int)n) continue;
+        if ((formats[idx] & 0xff) != OTHER) continue;
+        std::string name = trim(fmt);
+        if (name.empty()) name = "Unknown";
+        byName[name].push_back(idx);
+    }
+
+    // Assign group ids in alphabetical (case-insensitive) name order, so the
+    // groupId equals the position in otherPlatformList / otherGroupCount.
+    std::vector<std::string> names;
+    names.reserve(byName.size());
+    for (auto const& kv : byName) names.push_back(kv.first);
+    std::sort(names.begin(), names.end(), [](auto const& a, auto const& b) {
+        return toLower(a) < toLower(b);
+    });
+    for (int gid = 0; gid < (int)names.size(); gid++) {
+        auto const& idxs = byName[names[gid]];
+        otherPlatformList.emplace_back(gid, names[gid]);
+        otherGroupCount.push_back((int)idxs.size());
+        for (int i : idxs) otherIndexToGroup[i] = gid;
+    }
+}
+
+int MusicDatabase::getOtherPlatformCount()
+{
+    std::lock_guard lock{ dbMutex };
+    buildOtherPlatforms();
+    return (int)otherPlatformList.size();
 }
 
 // Compression/archive extensions that wrap a real module. They must never be

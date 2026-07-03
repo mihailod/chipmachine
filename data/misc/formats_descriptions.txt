@@ -28,9 +28,9 @@ A music format created for Ben 'Benn' Daglish by Colin 'Fungus the Bogeyman' Doo
 bds	Benn Daglish SID
 A music format created by Ben 'Benn' Daglish based on his C64 version.
 
-bp	SoundMon 2.X, music editor created by Brian Postma.
+bp	SoundMon 2.X - bp and bp3 are Amiga tracker module file extensions associated with the Sound-Monitor music editors developed by Brian Postma. .bp (SoundMon 2.X) is used for tracking modules created in version 2.1 and 2.2 of the software. It features 4 audio channels and supports up to 15 instruments, which can be custom-drawn synth shapes or audio samples. .bp3 (SoundMon 3.X) is the updated file format. Unlike standard Amiga .mod trackers that relied purely on sampled audio, Brian Postma's SoundMon was known for its hybrid approach: it featured a dedicated drawing tool for waveform generation and 9 synthetic audio effects. Each audio channel maintained its own individual pattern sequence rather than a single global arrangement. Patterns could be dynamically transposed by note value or by instrument mid-playback.
 
-bp3	SoundMon 3.X, music editor created by Brian Postma.
+bp3	SoundMon 3.X - bp and bp3 are Amiga tracker module file extensions associated with the Sound-Monitor music editors developed by Brian Postma. .bp (SoundMon 2.X) is used for tracking modules created in version 2.1 and 2.2 of the software. It features 4 audio channels and supports up to 15 instruments, which can be custom-drawn synth shapes or audio samples. .bp3 (SoundMon 3.X) is the updated file format. Unlike standard Amiga .mod trackers that relied purely on sampled audio, Brian Postma's SoundMon was known for its hybrid approach: it featured a dedicated drawing tool for waveform generation and 9 synthetic audio effects. Each audio channel maintained its own individual pattern sequence rather than a single global arrangement. Patterns could be dynamically transposed by note value or by instrument mid-playback.
 
 bss	Beathoven Synthesizer
 A music format created by Thomas Lopatic (Dr.Nobody/HQC) 1987, often used in Rainbow Arts and Tristar productions from 1987-88.
@@ -87,8 +87,7 @@ A music format created by Dentons in 1993.
 dum	Infogrames
 A music format that was mainly used in games published by Infogrames. Each song file (.dum) has a separate sample file (.ins), but multiple song files can share the same sample file. The majority of the music is also composed by Charles Callet. The delitracker replayer for this format called it "Rob Hubbard 2", but the consensus is that there is no connection between Rob Hubbard and this audio format or the music. It is possible the previous naming was due to some similarities between the replayer code. The creator of this music format is currently unknown.
 
-dw	David Whittaker
-A music format created by David Whittaker.
+dw	.dw is Amiga music format developed by legendary chip-music composer David Whittaker. Unlike standard tracker modules (such as .mod or .s3m) that serve strictly as data containers, a .dw file is actually a raw Motorola 68000 assembly binary code block. The music data is natively baked directly into Whittaker’s custom playback engine. Because there is no standard file header, modern player plugins must scan the file's raw bytecode to find specific opcode sequences to initialize playback. David Whittaker never created or released a public user interface or "tracker" software for this format. Instead of composing visually, Whittaker created his iconic soundtracks by entering note arrays and hexadecimal instructions directly into a machine code monitor and assembler. This specific format powered some of the most famous games of the 16-bit era, including Shadow of the Beast, Obliterator, and Speedball.
 
 dz	Darius Zendeh
 A music format created by Darius Zendeh (Mark II/Quadlite). It is basically his old Mark II Sound-System format with support for subsongs.
@@ -183,8 +182,7 @@ mdat	TFMX / TFMX 7V / TFMX Pro
 md	Mike Davies
 A music format created in 1989 by Mike Davies, often used in Tiertex games.
 
-med	MED
-Music EDitor by Tejio Kinnunen. MED was originally available as freeware, with a commercial eight channel version called OctaMED.  The latest version of MED is OctaMED Sound Studio.  This format was very popular with musicians, but it was not used much in games because the complexity of the format required too much CPU time.
+med	The .med file extension represents the native tracker format of OctaMED (originally Music EDitor), one of the most famous, sophisticated, and commercially successful audio desktop applications on Amiga. Developed by Teijo Kinnunen, MED debuted in 1989 as a free 4-channel Amiga tracker. It evolved into a commercial release called OctaMED, which broke the standard Amiga 4-channel hardware barrier by using CPU-driven mixing to offer 8 or more simultaneous audio channels. The final major iteration, OctaMED Sound Studio (OSS), expanded the format to support up to 64 channels, 16-bit audio samples, direct-to-disk recording, and MIDI integration. While standard trackers like ProTracker (.mod) dominated the Amiga gaming landscape, .med took a completely different path optimized for studio musicians. However, because OctaMED mixed extra audio channels entirely in software rather than utilizing the Amiga's native Paula sound chip hardware, it required massive amounts of CPU time. This complexity made the format largely unviable for video games, which needed to reserve processing power for graphics and gameplay. The format was highly popular with mainstream electronic, breakbeat, and early jungle music producers (such as Urban Shakedown and Aphrodite). It featured a highly flexible tempo system, advanced command effects, and unparalleled MIDI control that allowed the Amiga to act as a central sequencer for external hardware synthesizers. Unlike standard linear trackers, .med files organized arrangements into highly customizable blocks that could vary drastically in length and tempo from one section to another.
 
 mmd0	OctaMED and MMD (MED Music Data)OctaMED (originally just MED, short for Music EDitor) was developed by Teijo Kinnunen. It became one of the most powerful and flexible trackers on the Amiga, eventually allowing up to 64 channels and MIDI support. The internal module data (MMD) was iteratively updated: MMD0 / MMD1 are older versions of the MED file format. MMD1 introduced multi-module features and expanded block data. In MMD-based formats, multi-part songs often include identifying tags like MCNT, MCN1, MCN2, or MCN3 within the file.
 
@@ -400,14 +398,12 @@ nsfe	The NSFE (NES Sound Format Extended) is an upgraded variant of the standard
 spc	SPC700 (Super Nintendo)
 A 64KB dump of the SNES SPC700/S-SMP sound RAM, so every tune is exactly 64K and self-contained. Carries ID666 tags; collections are often distributed RAR-packed as .rsn.
 
-gbs	Game Boy Sound System
-Nintendo Game Boy / Game Boy Color sound code ripped to a compact module with a descriptive header (spec by Scott Worley). The richer successor to the earlier GBR format.
+gbs	Game Boy Sound System format, a specialized chiptune rip format used to package audio code from Nintendo Game Boy and Game Boy Color games. Designed by Scott Worley in 1999, the specification improved upon the older Game Boy Rip (.gbr) format by introducing a structured, standardized descriptive file header. Like other video game sound formats (such as NES .nsf or Sega .vgm), a .gbs file is a compact machine code dump extracted directly from a game ROM. It contains the exact Z80-derivative assembly code instructions, instrumentation tables, and waveform data used by the original game.
 
 gbr	Game Boy (GBR)
 An early Game Boy music rip format with a small header; superseded by GBS, which added the detail needed to replay more advanced driver tricks.
 
-hes	NEC PC Engine (HES)
-Sound code ripped from NEC PC Engine / TurboGrafx-16 games, replayed on an emulated HuC6280 wavetable chip.
+hes	The .hes file extension stands for Hudson Entertainment Sound, the standard chiptune rip format used to store and play back audio code from the NEC PC Engine and TurboGrafx-16 consoles. A .hes file is a compiled binary data dump extracted directly from a game's HuCard or CD-ROM. It contains the exact machine code instructions and audio tables written by the game developers. Instead of streaming recorded audio, a .hes player emulates the console's primary CPU—the 8-bit HuC6280. This processor contains a built-in programmable sound generator (PSG) that synthesizes the music in real time. The audio capabilities of the PC Engine were highly advanced for the 8-bit era, giving .hes files a distinct, rich fidelity. The HuC6280 features 6 independent audio channels. Channels 1 through 4 use custom, user-defined 5-bit wavetables (32 bytes long) to create unique instrument timbres. Channels 5 and 6 can be switched to generate white noise for percussion. Channels 1 and 2 can be paired to create low-frequency oscillation (LFO) effects, enabling unique vibrato and tremolo sounds.
 
 vgm	Video Game Music log
 A sample-accurate log of the raw register writes sent to game sound chips (started for the Sega Master System, now covering dozens of chips). The de-facto standard for accurate retro hardware capture.
@@ -479,8 +475,7 @@ An AY-3-8910 tracker format for the ZX Spectrum (Fast Tracker / FTC), one of the
 zxs	ZX Spectrum (ZXS)
 A ZX Spectrum AY chip-music format handled by the AY emulation players.
 
-kss	KSS (MSX)
-MSX sound code ripped to a module supporting the FM-PAC (YM2413), MSX-AUDIO (Y8950), Konami SCC and AY-3-8910 chips. The general container for MSX game music.
+kss	The .kss file extension represents the standard KSS format, a comprehensive video game sound rip format used to encapsulate audio code and data from MSX home computers and related legacy hardware like the Sega Master System and Game Gear. Unlike single-chip audio formats, a .kss file serves as a multi-chip emulator module. It contains the raw Z80 assembly code, register writes, and sound tables extracted directly from game ROMs or disks. The format is uniquely complex because it can simultaneously target and coordinate multiple legendary sound chips found across the MSX ecosystem: AY-3-8910 (PSG) - The baseline MSX internal 3-channel programmable sound generator; Konami SCC / SCC+ - Konami's custom 5-channel wavetable synthesis chip, famous for its rich, full textures; YM2413 (FM-PAC) - A 9-channel or 6-channel plus percussion FM synthesis chip; Y8950 (MSX-AUDIO) - An advanced FM synthesis chip featuring ADPCM digital audio sampling capabilities.
 
 mgs	MGSDRV (MSX)
 An MSX music format played by the popular MGSDRV driver, supporting the PSG, SCC and FM chips of MSX machines.
@@ -534,8 +529,7 @@ Creative Technology's AdLib/OPL format, a MIDI-like stream bundling its own FM i
 rol	AdLib Visual Composer
 The native format of AdLib Inc.'s Visual Composer: MIDI-like FM music that pulls patches from an external .bnk instrument bank.
 
-laa	LucasArts AdLib
-The AdLib/OPL music format used by LucasArts' iMUSE-era games on the Sound Blaster and AdLib.
+laa	LucasArts AdLib format, a proprietary audio sequence format used during the golden age of PC DOS gaming to deliver music through Yamaha OPL2 and OPL3 FM synthesis chips. The .laa format was a core component of LucasArts’ revolutionary iMUSE (Interactive Music Streaming Engine). This engine allowed game music to transition dynamically based on a player's choices, actions, or location on screen. Instead of storing recorded digital audio, an .laa file contains MIDI-like sequence data alongside custom instrument patch definitions. When processed, this data instructs a Sound Blaster or AdLib sound card exactly how to synthesize the music in real time using FM (Frequency Modulation). This specific format powered the legendary PC versions of classic adventure games, including Monkey Island 2: LeChuck's Revenge, Indiana Jones and the Fate of Atlantis, and Day of the Tentacle. Standard MIDI files rely on a sound card’s built-in instruments. Conversely, .laa files embed custom LucasArts instrument parameters (multipliers, attack/decay/sustain/release curves, and feedback scaling) directly inside the file to guarantee identical audio output across different hardware models. The format tracks note values, tempo changes, and pitch-bend data across multiple channels, specifically optimized for the 9-channel limitation of the OPL2 chip (or the 18 channels of the OPL3).
 
 dro	DOSBox Raw OPL
 A raw capture of OPL chip register writes recorded by DOSBox; effectively a hardware log that replays any AdLib game music verbatim.

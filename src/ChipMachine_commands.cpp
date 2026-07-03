@@ -164,6 +164,13 @@ void ChipMachine::setupCommands()
                 searchUpdated = true;
                 return;
             }
+            // On an Other-platforms GROUP row, drill into its songs.
+            if (utils::startsWith(song.path, "otherplatform::")) {
+                musicDatabase.setOtherPlatform(std::stoi(song.path.substr(15)));
+                songList.select(0);
+                searchUpdated = true;
+                return;
+            }
             player.addSong(song);
             songList.select(songList.selected() + 1);
         }
@@ -214,6 +221,13 @@ void ChipMachine::setupCommands()
                 searchUpdated = true;
                 return;
             }
+            // An Other-platforms GROUP row: drill into its songs instead.
+            if (utils::startsWith(song.path, "otherplatform::")) {
+                musicDatabase.setOtherPlatform(std::stoi(song.path.substr(15)));
+                songList.select(0);
+                searchUpdated = true;
+                return;
+            }
             player.playSong(song);
             showScreen(MAIN_SCREEN);
         }
@@ -242,6 +256,13 @@ void ChipMachine::setupCommands()
         // rather than leaving the search screen.
         if (musicDatabase.podcastShow() >= 0 && searchField.getText() == "") {
             musicDatabase.setPodcastShow(-1);
+            songList.select(0);
+            searchUpdated = true;
+            return;
+        }
+        // Inside a drilled-in Other-platform: ESC pops back to the platform list.
+        if (musicDatabase.otherPlatform() >= 0 && searchField.getText() == "") {
+            musicDatabase.setOtherPlatform(-1);
             songList.select(0);
             searchUpdated = true;
             return;
