@@ -5,7 +5,7 @@
 - 2nd level menu drill on more platforms with subplatforms?
   especially on other
 
-- (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
+--------------
 
 - extensions still missing format description:
 
@@ -53,6 +53,8 @@ hst	5
 gym	5
 dm	5
 0cc	5
+
+------------------------
 
 - revisit cpcpower database (was afraid of killing the site)
 - revisit zophar arcade
@@ -172,6 +174,8 @@ cosmetic/low priority:
 - every other screenshot fade-in make it wave like a flag, like effects in amiga intros
 - from time to time make the scroll do the sine effect like in amiga intros
 - maybe try another scroll font?
+
+- (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 
 product/process
 ===============

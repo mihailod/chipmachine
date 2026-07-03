@@ -825,6 +825,30 @@ TEST_CASE("RSID plays sound", "[music]")
 
 TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", ".mod.nt", "data"); }
 
+// The TFMX family is filed on modland as "mdat.<song>"/"smpl.<song>" pairs (the
+// playback fixtures above use that real naming), but supported_ext also lists the
+// eagleplayer format tokens tfmx/tfmx7v/tfmxpro (Amiga) and tfhd7v/tfhdpro (Atari
+// ST) as recognised prefixes. Those synthetic prefixes never occur on disk, so we
+// don't keep duplicate playback fixtures for them -- but guard here that a name
+// carrying any of them still routes to UADE, so an edit to supported_ext can't
+// silently drop the extension. (NB: "tfmx1.5"/"tfhd1.5" can't match -- canHandle
+// keys on the substring before the FIRST dot, which is "tfmx1"/"tfhd1" -- so they
+// are intentionally absent here.)
+TEST_CASE("UADE claims TFMX-family prefixes", "[music]")
+{
+    // Names are directory-qualified: UADE keys the prefix on the substring
+    // between the last path separator and the first following dot, so a bare
+    // "mdat.song" (no separator) doesn't parse -- real fixtures always carry a
+    // directory, which is the case we're guarding.
+    musix::UADEPlugin uade{ "data" };
+    for (auto const* name : { "d/mdat.song", "d/tfmx.song", "d/tfmx7v.song",
+                              "d/tfmxpro.song", "d/tfhd7v.song",
+                              "d/tfhdpro.song" }) {
+        INFO(name);
+        REQUIRE(uade.canHandle(name));
+    }
+}
+
 // GUI sanity check for every multi-file fixture whose companion we bundled.
 // cmtest plays from local files, so a song would render fine here even if the
 // plugin couldn't NAME its companion -- but the GUI streams the song and fetches
@@ -847,6 +871,14 @@ TEST_CASE("secondary files resolve for multi-file fixtures", "[music]")
     check(uade, "testmus/uade/mdat.kraft", "smpl.kraft");                 // TFMX
     check(uade, "testmus/uade/mdat.avalon2-ongame", "smpl.avalon2-ongame");
     check(uade, "testmus/uade/mdat.hexuma-ice", "smpl.hexuma-ice");
+    check(uade, "testmus/uade/mdat.karamalz-titel", "smpl.karamalz-titel");
+    check(uade, "testmus/uade/mdat.abandonedplaces-part2.1",
+          "smpl.abandonedplaces-part2.1");
+    check(uade, "testmus/uade/thm.nightdawn", "smp.nightdawn");           // Thomas Hermann
+    check(uade, "testmus/uade/thm.blueangel69", "smp.blueangel69");
+    check(uade, "testmus/uade/uds.desert run ste", "smp.desert run ste"); // BladePacker
+    check(uade, "testmus/uade/uds.obsession loader ste",
+          "smp.obsession loader ste");
     check(uade, "testmus/uade/daisy.adsc", "daisy.adsc.as");             // AudioSculpture
     check(uade, "testmus/uade/jpn.empiresoccer94", "smp.empiresoccer94"); // Jason Page
     check(uade, "testmus/uade/dns.hollywoodpokerpro ingame",
@@ -3603,8 +3635,22 @@ TEST_CASE("coverage", "[music]")
     // DigiTrekker (MS-DOS, chunked "SONG"/..., modland "Digitrekker", ~2 tunes)
     // has no open replayer, so demorave.dtm is now claimed by nobody and Skips
     // cleanly instead of erroring -- one new intentional skip, cap 27->28.
-    REQUIRE(g_errors <= 28);
-    REQUIRE(g_skips <= 28);
+    //
+    // 2026-07-03: errors 26->0. The Jun-22 TFMX batch had regressed the suite
+    // (missing sample halves + synthetic tfmx7v/tfmxpro/tfhd7v/tfhdpro/*1.5
+    // prefixes that break UADE sample resolution). Fetched the real smpl./smp.
+    // companions from modland for the tunes that have them (thm.* Thomas Hermann,
+    // uds.* BladePacker, TFMX karamalz-titel/abandonedplaces-part2.1), collapsed
+    // each TFMX base to its real "mdat.<song>"+"smpl.<song>" pair, and dropped the
+    // fixtures that can't play: the synthetic prefix duplicates (never occur on
+    // disk -- routing now guarded by the canHandle test above), the TFMX-ST jim
+    // power set (no sample files exist anywhere on modland; TFMX-ST renders silent
+    // here) and four degenerate oddballs (bootsong.mod -> belongs to OpenMPT,
+    // "feud fake.dw"/jurassic "- null" = intentionally silent/empty, hardball2.kh
+    // needs a "songplay" that collides with the-cycles.kh in a flat dir).
+    // skips 25->19 (the removed tfmx1.5/tfhd1.5 duplicates had been skipping).
+    REQUIRE(g_errors <= 0);
+    REQUIRE(g_skips <= 19);
 }
 
 
