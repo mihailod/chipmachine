@@ -54,6 +54,7 @@ extern "C" {
     void mikmodplugin_register();  // MikMod UNITRK / UNIMOD (.uni) via vendored libmikmod slice
     void famitrackerplugin_register(); // FamiTracker (.ftm) NES 2A03 + expansions via vendored FamiTracker CX
     void goattrackerplugin_register(); // GoatTracker (.sng) C64 SID via vendored GoatTracker player + reSID
+    void dmfplugin_register();         // DefleMask (.dmf) multi-system chiptune via vendored Furnace engine
 }
 
 void register_plugins() {
@@ -108,4 +109,5 @@ void register_plugins() {
     mikmodplugin_register();
     famitrackerplugin_register();
     goattrackerplugin_register();
+    dmfplugin_register();
 }

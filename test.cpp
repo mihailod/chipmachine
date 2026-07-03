@@ -19,10 +19,13 @@ namespace di = boost::di;
 #include <musicplayer/src/plugins/ptkplugin/PTKPlugin.h>
 #include <musicplayer/src/plugins/openmptplugin/OpenMPTPlugin.h>
 #include <musicplayer/src/plugins/quartetplugin/QuartetPlugin.h>
+#include <musicplayer/src/plugins/dmfplugin/DMFPlugin.h>
 
 #include <algorithm>
 #include <array>
 #include <atomic>
+#include <memory>
+#include <pthread.h>
 #include <chrono>
 #include <cstdlib>
 #include <filesystem>
@@ -467,6 +470,57 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
 }
 
 TEST_CASE("GME", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme", "nowork"); }
+
+// DefleMask .dmf (multi-system chiptune) via the vendored Furnace engine. The
+// fixtures span the DefleMask systems proven first: Genesis (YM2612+PSG, ext
+// ch3), Sega Master System (SN76489 PSG) and Game Boy. Each must load through
+// DivEngine and produce non-silent audio. This also guards that the DefleMask
+// files reach dmfplugin and not OpenMPT's unrelated X-Tracker .dmf loader.
+TEST_CASE("DMF", "[music]") { testPlugin<musix::DMFPlugin>("testmus/dmf", "nowork"); }
+
+// Regression: chipmachine loads songs on a MusicPlayerList worker thread whose
+// default stack (~512 KB on macOS) is far smaller than the main thread's 8 MB.
+// DivEngine::loadDMF puts a ~744 KB DivSong on the stack, so loading a .dmf from
+// such a thread used to overflow and SIGBUS ("thread stack size exceeded").
+// DMFPlayer now runs the load on its own large-stack thread; verify a .dmf loads
+// and produces sound even when fromFile() is invoked from a 512 KB-stack thread.
+namespace {
+struct DmfStackProbe { bool ok = false; };
+void* dmfStackProbeFn(void* p)
+{
+    auto* probe = static_cast<DmfStackProbe*>(p);
+    try {
+        musix::DMFPlugin plugin;
+        const std::string f = "testmus/dmf/Spring Yard.dmf";
+        if (!plugin.canHandle(f)) { return nullptr; }
+        std::unique_ptr<musix::ChipPlayer> player{ plugin.fromFile(f) };
+        if (!player) { return nullptr; }
+        std::array<int16_t, 8192> buf{};
+        int64_t sum = 0;
+        for (int i = 0; i < 50 && sum == 0; i++) {
+            int rc = player->getSamples(buf.data(), buf.size());
+            if (rc <= 0) { break; }
+            for (int j = 0; j < rc; j++) { if (buf[j] != 0) { sum = 1; break; } }
+        }
+        probe->ok = (sum != 0);
+    } catch (...) {}
+    return nullptr;
+}
+} // namespace
+
+TEST_CASE("DMF loads on a small-stack worker thread", "[music]")
+{
+    DmfStackProbe probe;
+    pthread_attr_t attr;
+    REQUIRE(pthread_attr_init(&attr) == 0);
+    // Match the host's worker-thread stack that exposed the overflow.
+    REQUIRE(pthread_attr_setstacksize(&attr, 512 * 1024) == 0);
+    pthread_t th;
+    REQUIRE(pthread_create(&th, &attr, dmfStackProbeFn, &probe) == 0);
+    pthread_attr_destroy(&attr);
+    pthread_join(th, nullptr);
+    REQUIRE(probe.ok);
+}
 
 // Regression test for SGC (Sega Master System / Game Gear / ColecoVision)
 // support. The vendored Game_Music_Emu had the SGC emulator stripped out (the

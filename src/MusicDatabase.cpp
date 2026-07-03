@@ -1663,7 +1663,7 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                collection == "sceneorg" || collection == "zophar" ||
                collection == "cpcpower" || collection == "vampi" ||
                collection == "rko" || collection == "amigaremix" ||
-               collection == "amp") {
+               collection == "amp" || collection == "modarchive") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania

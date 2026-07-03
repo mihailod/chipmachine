@@ -2,19 +2,6 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- revisit deflemask support (not x-tracker but the other one)
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Deflemask/DevEd/darkman_bonus.dmf
-[MusicDatabase.cpp:1619] Loaded 796 zxspectrum screenshots
-[MusicDatabase.cpp:1619] Loaded 31786 modland screenshots
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:159] CODE 226
-[MusicPlayerList.cpp:882] Detected ext: 
-MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDeflemask%2fDevEd/darkman_bonus.dmf'. Error: Deflemask DMF format is unsupported
-
-
-- finish adding game/song screenshots:
-modarchive	155,703	Demozoo augment (demoscene subset only)	Low ROI — huge corpus, mostly non-game music
-
 - 2nd level menu drill on more platforms with subplatforms?
   especially on other
 
@@ -76,14 +63,7 @@ dm	5
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
 
-* NEO KOBE NEC PC-98 LIBRARY
-  - URL: https://archive.org/details/neo-kobe-nec-pc-9801-2017-11-17-archive
-  - Platforms/Chips: NEC PC-9801/8801 (YM2608 OPNA / YM2203 OPN)
-  - Key Formats: .m, .m2, .s98, .muz
-  - Notes: Although primarily a game preservation project, it contains the definitive
-    raw .m and .m2 (PMD) game soundtrack dumps. Can be bulk downloaded via Archive.org torrents.
-
-* THE OPL ARCHIVE
+* ......in progress... pesic .... THE OPL ARCHIVE
   - URL: https://www.oplarchive.com
   - Sound Chips: Yamaha OPL2 (YM3812) / OPL3 (YMF262)
   - Key Formats: .vgm (OPL logs)
