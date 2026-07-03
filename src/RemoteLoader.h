@@ -25,6 +25,12 @@ public:
     bool load(const std::string& path,
               std::function<void(utils::File)> done_cb);
 
+    // HTTP status of the most recent load() fetch, so a caller that received an
+    // empty File can tell a genuine 404 (file not on the host) apart from a
+    // connection/other failure and report it precisely. -1 means a local-cache
+    // hit (success), 0 means no response was received.
+    [[nodiscard]] long lastHttpCode() const { return last_http_code; }
+
     // Lists the files in a remote directory (e.g. an IFF-SMUS "Instruments/"
     // folder whose member names are unpredictable). The callback receives the
     // bare basenames. If the directory is already present in a local mirror, the
@@ -94,6 +100,7 @@ private:
 
     webutils::Web webgetter;
     std::shared_ptr<webutils::WebJob> lastSession;
+    long last_http_code = 0;
 };
 
 #endif // REMOTE_LOADER_H

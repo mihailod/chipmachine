@@ -157,6 +157,7 @@ bool RemoteLoader::load(const std::string& p, function<void(File f)> done_cb)
 
     auto finish = [=](webutils::WebJob job) {
         LOGD("CODE %d", job.code());
+        last_http_code = job.code();
         auto f = job.file();
         string fileName = f.getName();
         if (fileName.find("snesmusic.org") != string::npos) {

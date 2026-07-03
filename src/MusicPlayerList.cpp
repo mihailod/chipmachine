@@ -744,7 +744,9 @@ void MusicPlayerList::playCurrent()
     remoteLoader.load(currentInfo.path, [=](File f0) {
 
         if (!f0) {
-            errors.emplace_back("Could not load file");
+            errors.emplace_back(remoteLoader.lastHttpCode() == 404
+                                    ? "404 File Not Found"
+                                    : "Could not load file");
             SET_STATE(Error);
             files--;
             return;
