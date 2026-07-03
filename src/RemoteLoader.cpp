@@ -8,6 +8,40 @@
 using namespace std;
 using namespace utils;
 
+namespace {
+
+// Some hosts answer HTTP 200 with a tiny text error page instead of the
+// requested module. The web layer only rejects non-200 responses, so such a
+// page gets renamed into the cache as if it were the tune and every later play
+// re-reads the stale garbage (OpenMPT then reports "Data too short", UADE
+// pointlessly retries). The prime offender is api.modarchive.org's
+// downloads.php, which returns the 16-byte body "Invalid ID Error" for a
+// nonexistent/removed moduleid. Detect such a poisoned body so the caller can
+// drop it from the cache -- important because the real file may appear on the
+// server later, and a cached error page would mask it forever.
+bool isPoisonedDownload(const std::string& url, File& f)
+{
+    auto size = f.getSize();
+    if (size == 0) return true; // empty 200 body is never a playable tune
+    if (size > 512) return false; // large enough to be a real module
+
+    auto data = f.readAll();
+    f.close();
+    std::string body(data.begin(), data.end());
+
+    // The smallest valid tracker module modarchive serves is ~1KB (a MOD
+    // header alone is 1084 bytes), so anything this tiny from that host is an
+    // error page regardless of its exact wording.
+    if (url.find("modarchive.org") != std::string::npos && size < 128)
+        return true;
+    // Exact sentinel, matched host-agnostically for mirrors.
+    if (body.compare(0, 16, "Invalid ID Error") == 0) return true;
+
+    return false;
+}
+
+} // namespace
+
 RemoteLoader::RemoteLoader()
     : webgetter((Environment::getCacheDir() / "_webfiles").string())
 {
@@ -159,6 +193,21 @@ bool RemoteLoader::load(const std::string& p, function<void(File f)> done_cb)
         LOGD("CODE %d", job.code());
         last_http_code = job.code();
         auto f = job.file();
+        // Discard a cached error page served under a 200 (see
+        // isPoisonedDownload). Remove it so a later fetch re-downloads, and
+        // report failure the same way a non-200 does: hand back an empty File.
+        // A default-constructed File is falsy (operator bool tests the name),
+        // which the load callback checks (`if (!f0)`) before touching the path;
+        // handing back the removed file instead is truthy and crashes when the
+        // callback later copies/opens the now-missing path. last_http_code is
+        // cleared so callers don't treat this as OK.
+        if (job.code() == 200 && f.exists() && isPoisonedDownload(url, f)) {
+            LOGD("Poisoned 200 download, discarding cache: %s", f.getName());
+            last_http_code = 0;
+            f.remove();
+            done_cb(File{});
+            return;
+        }
         string fileName = f.getName();
         if (fileName.find("snesmusic.org") != string::npos) {
             auto newFile = fileName + ".rsn";

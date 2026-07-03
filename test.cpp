@@ -1167,6 +1167,50 @@ TEST_CASE("Megatracker plays sound", "[music]")
     REQUIRE(energy != 0);
 }
 
+// Old MED / Amiga "Music Editor" (.med, magic "MED\x02".."MED\x04") -- the
+// pre-OctaMED format, distinct from the MMD0..MMD3 OctaMED containers that
+// OpenMPT handles. UADE's MED eagleplayer crashes on these ("score crashed")
+// and libopenmpt only decodes MMD0..MMD3, so they were unplayable; libxmp's
+// med2/med3/med4 loaders decode them. medplugin adds only med2/3/4_load.c and
+// links musxplugin for the shared libxmp slice (same arrangement as
+// coco/mgtplugin). UADEPlugin::canHandle content-declines old MED so the host
+// falls through to medplugin.
+TEST_CASE("MED", "[music]") { testPlugin<musix::MedPlugin>("testmus/med", ""); }
+
+// Guards the loader wiring + the "MED\x02..\x04" magic gate, and that UADE
+// (which owns .med by extension for OctaMED) declines the old-MED variant.
+TEST_CASE("MED plays sound", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::MedPlugin plugin;
+
+    std::string const med = "testmus/med/fresnel.med";
+    REQUIRE(plugin.canHandle(med));
+    // A different payload on the same extension must be declined (OctaMED MMD0).
+    REQUIRE_FALSE(plugin.canHandle("testmus/openmpt/Vision.med"));
+
+    // UADE must decline old MED so the host reaches medplugin instead of
+    // crashing its 68k MED player.
+    musix::UADEPlugin uade{ "data" };
+    REQUIRE_FALSE(uade.canHandle(med));
+
+    auto* player = plugin.fromFile(med);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
 // SBStudio (.pac) -- a sample-based MS-DOS tracker by Henning Hellstroem (modland
 // SBStudio/) decoded by the vendored libpac (Thomas Pfaff, ISC). sbstudioplugin
 // compiles libpac directly to PCM; this guards the wiring + the PACG magic gate.
@@ -3253,6 +3297,7 @@ TEST_CASE("extension_to_platform_map", "[.]")
         { "Monotone", "PC" },
         { "MikMod", "Amiga" },
         { "Megatracker", "Atari ST/STE" },
+        { "MED", "Amiga" },
         { "MaxTrax", "Amiga" },
         { "MDX", "PC-98 / X68000" },
         { "JayTrax", "PC" },

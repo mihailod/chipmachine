@@ -42,6 +42,7 @@ extern "C" {
     void musxplugin_register();    // Acorn Archimedes Tracker (.musx) via libxmp arch_loader
     void cocoplugin_register();    // Coconizer / Acorn Archimedes (.coco) via libxmp coco_loader
     void mgtplugin_register();     // Megatracker / Atari ST (.mgt) via libxmp mgt_loader
+    void medplugin_register();     // Old MED / Amiga "Music Editor" (.med, magic MED\x02..\x04) via libxmp med2/3/4_loader
     void sbstudioplugin_register(); // SBStudio / MS-DOS (.pac) via vendored libpac
     void maxtraxplugin_register(); // MaxTrax / Amiga (.mxtx) via ScummVM MaxTrax+Paula
     void sksplugin_register();     // STarKos / Amstrad CPC (.sks) via Arkos Tracker 3
@@ -97,6 +98,7 @@ void register_plugins() {
     musxplugin_register();
     cocoplugin_register();
     mgtplugin_register();
+    medplugin_register();
     sbstudioplugin_register();
     maxtraxplugin_register();
     sksplugin_register();

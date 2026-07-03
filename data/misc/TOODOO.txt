@@ -2,17 +2,6 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- is .med working? i tried seveal (available in cache) and they crashed, example:
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Music%20Editor/-%20unknown/orage.med
-[UADEPlugin.cpp:301] UADE FILE /Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fMusic Editor%2f- unknown/orage.med
-[UADEPlugin.cpp:343] UADE SONG END: 0 1 1 score crashed
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Music%20Editor/-%20unknown/fresnel.med
-[UADEPlugin.cpp:343] UADE SONG END: 0 1 1 score crashed
-test more from the corpus and investigate
-btw the only cmtest file is reported working:
-Trying testmus/openmpt/Vision.med ... playback OK
-
-
 - 2nd level menu drill on more platforms with subplatforms?
 - unify some platforms on 1st level and do the drill?
 

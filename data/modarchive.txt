@@ -26431,7 +26431,6 @@ slightly.s3m//Something Slightly Silly	S3M	57461	S3M
 slipaway.s3m//the taste of your kiss	S3M	57462	S3M
 sliver.xm//<<Sliver>>	XM	57463	XM
 sll1.mod//sll1	MOD	57464	MOD
-sll2.mod//sll2	MOD	57465	MOD
 sll3.mod//sll3	MOD	57466	MOD
 sll4.mod//sll4	MOD	57467	MOD
 sll5.mod//sll5	MOD	57468	MOD
@@ -137108,7 +137107,6 @@ robric226.xm//Spectacle Day	XM	172943	XM
 tx-slsn.xm//the silly song!	XM	172944	XM
 miafan2010_-_twinkle_and_twinkle_remix.it//Twinkle&Twinkle RMX	IT	172945	IT
 stksll2.mod//sll2	MOD	172946	MOD
-sll2_semiborken.mod//sll2	MOD	172947	MOD
 hyo-x1_ahn.it//ENDLESS RAIN (X) short	IT	172948	IT
 u_cant_hack_me_i_got_norton.xm//i got norton	XM	172949	XM
 maran_project_-_stay_weird_121006.xm//stay weird	XM	172950	XM
