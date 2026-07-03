@@ -215,8 +215,7 @@ A music format created by Charles Deenen and Frédéric Hahn, used by the Maniac
 mp2	ISO-MPEG Audio Layer-2
 A substitute audio compression format used in place of very sizeable CDDA tracks,
 
-mp3	ISO-MPEG Audio Layer-3
-Audio compression format used in place of very sizeable CDDA tracks.  More commonly known as MP3. Could be considered cheating (Scandal! Scandal!) but many songs are only available in this format.
+mp3	ISO-MPEG Audio Layer-3: audio compression format historically used in place of very sizeable CDDA tracks. More commonly known as MP3. Could be considered cheating here (Scandal! Scandal!) but many amazing songs are only available in this format so pedants be damned!
 
 mug	Mugician
 Also known as "Digital Mugician", this music format was created by Reiner van Vliet (Rhino/Team Hoi).
@@ -240,7 +239,7 @@ ntp	NovoTrade Packer
 A module packer created by NovoTrade.
 
 ogg	Ogg Vorbis
-A substitute audio compression format used in place of very sizeable CDDA tracks.
+A substitute audio compression format often used in place of very sizeable CDDA tracks. Could be considered cheating here (Scandal! Scandal!) but many cool songs are only available in this format so trolls be damned!
 
 okt	Oktalyzer
 Oktalyzer Formats (.okt / .okta) Oktalyzer was created by Walter Quintus and Martin Koch in the early 1990s. It is famous for implementing software mixing to achieve up to 8 channels on the standard 4-channel Amiga Paula chip. .OKT files follow a memory-dump model and .OKTA files use an IFF-like structure. Oktalyzer could mix down to virtual channels to output 8 tracks at the expense of audio quality and CPU overhead.
@@ -396,8 +395,7 @@ A multi-channel PC music editor by Magnus Högdahl and Fredrik Huss. With the XM
 
 nsf	NES Sound Format: music ripped from Nintendo NES/Famicom games, devised by Kevin Horton in 1999 (originally "NESM"); the 6502 sound code plus a small header, replayed on an emulated 2A03. Hugely popular for original chiptune composition. It is the definitive standard for preserving and composing Nintendo Entertainment System chiptunes. It isolates the audio data from a game ROM, allowing the music to play without running the actual game. Contains the original MOS Technology 6502 machine code instructions and register writes that drive the audio.Target Hardware: Replayed by emulating the Ricoh 2A03 (NTSC) or 2A07 (PAL) microprocessors, which contain the NES Programmable Sound Generator (PSG). It stores metadata like song count, starting track, load/init/play addresses, game title, artist, and copyright strings. Kevin Horton, known prominently online by his handle Kevtris, is a legendary hardware hacker and electrical engineer who single-handedly invented the NES Sound Format (NSF) spec. He originally dubbed the file extension .NESM (NES Music) when he designed it, before the community universally shortened the extension to .NSF. Kevtris is currently (2026) Director of FPGA Development at Analogue. He designed the internal core logic from scratch for the Analogue Nt Mini, Super Nt, Mega Sg, and Analogue Pocket. He also engineered HiDef NES: the popular internal hardware mod that allows original NES consoles to output pixel-perfect, lag-free 1080p video and audio via HDMI.
 
-nsfe	NES Sound Format (Extended)
-An extended NSF variant using named chunks to carry per-track titles, times and metadata that the original NESM header could not hold.
+nsfe	The NSFE (NES Sound Format Extended) is an upgraded variant of the standard NSF (Nintendo Sound Format) container. The original NSF format stores raw audio code and data ripped directly from Nintendo Entertainment System (NES) games, but its rigid header severely limits metadata. NSFE solves this by using a flexible, chunk-based structure (similar to PNG files) to store rich, per-track information. The original NSF format only allows one global game title and author name for the entire file. NSFE supports unique titles, composers, and artists for every individual track. Standard NSF files rely on the player to guess when a track ends, often resulting in sudden cuts or infinite loops. NSFE embeds exact track lengths, fade-out times, and post-fade silence durations. Playlists can be customized, allowing tracks to be reordered logically (e.g., matching the game's soundtrack CD) rather than following the chaotic internal memory order of the ROM. It allows developers to flag and skip empty, unused, or duplicate sound effect tracks inside the file.
 
 spc	SPC700 (Super Nintendo)
 A 64KB dump of the SNES SPC700/S-SMP sound RAM, so every tune is exactly 64K and self-contained. Carries ID666 tags; collections are often distributed RAR-packed as .rsn.
@@ -443,13 +441,11 @@ A PSF sub-format for Capcom arcade boards using the QSound chip, reproduced thro
 
 sndh	SNDH is the definitive audio file format used for archiving and playing back chiptune music from the Atari ST. Devised and standard-coded by Jochen "BDC" Knaus of the ST music group Brainstorm. Contains the original Motorola 68000 machine code assembly driver required to run the song directly on the Atari ST's hardware. Prefixed with an ASCII "SNDH" metadata header containing tags for title, artist, year, and replay speed. Files are traditionally compressed using Pack-ICE, a popular data packer from the Atari demoscene era. Specifically written to command the Atari ST's internal Yamaha YM2149 Programmable Sound Generator (PSG) chip.
 
-sc68	sc68 (Atari ST / Amiga)
-A unified container for Atari ST and Amiga chip music created by Benjamin Gerard, packaging the original 680x0 replay code for emulated playback.
+sc68	Specialized unified audio file container format created by Benjamin Gerard designed to preserve and play back chip music from both the Atari ST and Commodore Amiga computers. Packages the original Motorola 68000 (680x0) assembly code directly alongside the music data. Utilizes a software emulator to run the original replay code, ensuring highly accurate sound reproduction. Emulates both the Atari ST's Yamaha YM2149 sound chip and the Amiga's Paula chip.
 
 ym	ST-Sound (.YM) is a register-dump audio file format designed to capture and play back chiptunes from systems using the AY-3-8910 or YM2149 sound chips. Created by Arnaud Carré (known as Leonard of the demogroup Oxygene) specifically for his emulator, ST-Sound. Rather than storing executable code, it records a raw dump of the sound chip's internal registers, typically sampled 50 times per second (50 Hz). Covers music from multiple vintage 8-bit and 16-bit computers, including the Atari ST, Amstrad CPC, and ZX Spectrum. Files are natively compressed using LHA (.lha/.lh1) compression to significantly reduce the size of the repetitive register data. Unlike SNDH, YM files do not require a Motorola 68000 CPU emulator to play, making them much easier to implement in lightweight, cross-platform modern players. YM1-YM3 were early, uncompressed and basic structural formats. YM5 is the most widely adopted version, introducing advanced header information, loop points, and precise clock speed settings for different computers (e.g., 2 MHz for Atari ST vs. 1.77 MHz for ZX Spectrum). YM6 added support for digital drums and special sound effects.
 
-ymst	YM (stereo)
-A stereo variant of the YM AY-3-8910/YM2149 register-dump format, replayed by the same StSound-style engine.
+ymst	YM (stereo) A stereo variant of the YM AY-3-8910/YM2149 register-dump format, replayed by the same StSound-style engine. While standard .ym files (created by Leonard/OXYGENE) contain interleaved register data for the YM2149 or AY-3-8910 chips, .ymst files usually indicate a modified version containing pre-rendered or specifically formatted stereo streams. Like the base .ym format, it does not store musical notation or machine code (like a .SID or .MOD file). Instead, it is a frame-by-frame dump of the exact register values required to synthesize the chiptune. Original AY/YM chips output 3 native mono channels. A stereo variant like .ymst splits these channels across left and right audio outputs (e.g., hard-panning channels A, B, and C) to create an enhanced spatial experience. Both the base .ym and .ymst variants are designed to be replayed directly by the StSound-style engine (created by Arnaud Carré). This highly optimized C++ library handles the CPU-free rendering of the chip's sound parameters. Because StSound acts as a universal emulator, these files allow modern systems to accurately recreate the iconic 8-bit chiptune sounds originally pioneered by platforms like the Atari ST and Amstrad CPC.
 
 mdx	MDX (Sharp X68000)
 The dominant Sharp X68000 music format, built on Music Macro Language for the Yamaha YM2151 (OPM); may carry a companion .pdx file of PCM samples. Default driver MXDRV by K. Maekawa & Missy.M.
@@ -460,8 +456,7 @@ A compact, LHA-packed AY-3-8910/YM2149 register-dump format with embedded metada
 vt2	Vortex Tracker II
 The native module of Vortex Tracker II, a Windows tracker by Sergey Bulba for the AY/YM chips of the ZX Spectrum and similar machines; saves to PT3 as well.
 
-asc	ASC Sound Master
-A ZX Spectrum AY tracker format, one of the classic native Spectrum chip-music editors.
+asc	ASC Sound Master was developed for the classic 48K and 128K ZX Spectrum by Andrei Sendetskiy (also known as "ASC" or Andrew Strikes Code). It is a native, tracker-style music editor designed to squeeze complex chiptunes out of the hardware's 1-bit beeper and the AY-3-8912 sound chip. The format operates on a traditional tracker matrix. Supports an 8-octave range for melodic control. Tracks up to 32 individual patterns with 1 to 64 rows per pattern. Features up to 16 user-definable samples and 16 ornaments, which act as frequency/pitch envelopes. Allows for 1 to 256 structural positions/sequences in a song.
 
 stc	ZX Sound Tracker is a file format used by the Sound Tracker series of audio editors on the Sinclair ZX Spectrum 128K computer. Introduced in the early 1990s, it allows musicians to compose three-channel music tailored specifically for the system's AY-3-8912 programmable sound generator (PSG) chip. Structural layout of an STC module includes: 8 available octaves, 1 to 256 structural positions, 1 to 32 separate patterns, 1 to 64 positions per individual pattern, 16 instrument samples, 16 pitch ornaments (used for arpeggios and fast chords). The .stc extension usually denotes files generated by the ST Song Compiler v1.2 or built directly into early compilations of Sound Tracker (versions 1.1 through 1.3). Variant trackers emerged around this ecosystem, resulting in high compatibility across the platform: Super Sonic (a tracker created by KLAV that outputs fully compatible Sound Tracker structures), and ZXMUS.EXE (Version 1.02 Beta created by Super Dima features a near-identical layout). Many .stc files carry a hardcoded internal identifier string (SOUND TRACKER v1.3). However, composers frequently overwrote this area with custom track names, metadata, or song lengths.
 
@@ -508,8 +503,7 @@ The native format of Farandole Composer (Daniel Potter), a DOS tracker notable f
 gdm	General Digital Music
 The General Digital Music format of the Bells, Whistles & Sound Boards (BWSB) library, used as a normalized container by some DOS games.
 
-dmf	X-Tracker (DMF)
-The Delusion/X-Tracker Digital Music File format, a DOS tracker module format from D-Lusion.
+dmf	DMF is used as a file extension for two completely different tracker module formats, which causes a lot of confusion: [ 1 ] X-Tracker / Delusion Music File (d-lusion) - a DOS-based tracker format created by D-Lusion in the 1990s, used primarily for standard digital sample-based music. [ 2 ] DefleMask Module Format (DefleMask) - format for DefleMask, a modern cross-platform chiptune tracker that writes music for retro soundchips (like those in the Sega Genesis, Game Boy, and NES). The developer of DefleMask was unaware the X-Tracker DMF format already existed when he chose the file extension.
 
 amf	DSMI (AMF)
 The Advanced Module Format used by the DSMI library / DMP player (Otto Chrons), and by the Asylum tracker; a common DOS playback container.
@@ -558,8 +552,7 @@ The AdLib/OPL music format used by Westwood Studios games such as Dune II and th
 ftm	FamiTracker
 FamiTracker (by jsr, 2005) module data for the NES 2A03 and its expansion chips; the dominant modern tool for composing new NES/Famicom music. Note that the .ftm extension is shared with the Amiga Face The Music format (an 8-voice tracker, magic FTMN) so you could be listening to an Amiga song as well... not a big deal ;) enjoy!
 
-ahx	AHX
-Abyss' Highest Experience, a synthetic Amiga chiptune format (no samples) by Dexter & Pink of Abyss, prized for its tiny, classic 8-bit Amiga sound.
+ahx	Abyss' Highest Experience Format - AHX - is a specialized synthetic sound format created for the Commodore Amiga. Developed in the mid-1990s by Martin "Dexter" Wall and Britney "Pink" of the Amiga demo group Abyss, it bypassed traditional sample-based tracking. Instead, it used real-time synthesis to mimic the classic 8-bit sound of the Commodore 64’s SID chip (no samples!). It generates sound entirely through software synthesis using basic waveforms (sine, square, triangle, sawtooth). Because it contains no audio samples, AHX song files are incredibly tiny, often weighing only 1 to 5 kilobytes. The format utilizes features like hard-wiring, ring modulation, and rapid arpeggios to reproduce the distinct retro texture of 8-bit chips. Musicians composed AHX files using a dedicated tracker interface on the Amiga, editing notes and synthesis parameters step-by-step.
 
 hvl	HivelyTracker
 An open evolution of the AHX engine; HivelyTracker adds extra channels and stereo while keeping the synthetic Amiga chiptune character.

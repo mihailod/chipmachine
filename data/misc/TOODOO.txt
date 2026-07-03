@@ -2,16 +2,21 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+- revisit deflemask support (not x-tracker but the other one)
+[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Deflemask/DevEd/darkman_bonus.dmf
+[MusicDatabase.cpp:1619] Loaded 796 zxspectrum screenshots
+[MusicDatabase.cpp:1619] Loaded 31786 modland screenshots
+[web.cpp:291] CODE 226
+[RemoteLoader.cpp:159] CODE 226
+[MusicPlayerList.cpp:882] Detected ext: 
+MusicPlayer: Plugin 'OpenMPT' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fDeflemask%2fDevEd/darkman_bonus.dmf'. Error: Deflemask DMF format is unsupported
+
+
 - finish adding game/song screenshots:
-amp	8,640	Demozoo augment (tunes used in demos)	Medium — AMP itself has composer photos, not game shots
 modarchive	155,703	Demozoo augment (demoscene subset only)	Low ROI — huge corpus, mostly non-game music
-amigavibes	116	Demozoo	Low priority (tiny)
 
 - 2nd level menu drill on more platforms with subplatforms?
   especially on other
-
-- platform screenshots from mp3? for example jaguar... maybe more
-  same for ogg... 
 
 - cmtest: added more extensions, some fail/skip, investigate why -- make it all clean again
 
@@ -19,29 +24,9 @@ amigavibes	116	Demozoo	Low priority (tiny)
 
 - extensions still missing format description:
 
-query most frequent extensions and add more verbose text for them
-example: sid has a short one...
+- query most frequent extensions and add more verbose text for them. covered all with 1000+ songs, todo: <1000 investigate which ones are missing / are short
 
-mmd1	2605
-dmf	2138
-OVI	1801
-ptcop	1769
-sc68	1745
-mp3	1673
-asc	1656
-rsn	1513
-str	1391
-ymst	1378
-ahx	1337
-mmd0	1316
-OPI	1293
-nsfe	1214
-OZI	1152
-ftm	1041
-
---- more here with less than 1000 -- investigate which ones are missing / are short
-
-these are confirmed missng but small:
+these are also confirmed missing but tiny corpus:
 sm3	18
 sc	18
 mm4	17
