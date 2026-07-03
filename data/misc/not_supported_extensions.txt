@@ -72,18 +72,22 @@
 # eagleplayer lands upstream.
 .dux
 
-# 670 (modland "Composer 670 (CDFM)", 7 tunes). Looks like it should map to
-# libopenmpt's c67 loader ("CDFM / Composer 670"), but the modland .670 files are
-# a DIFFERENT on-disk layout (tiny header byte0=speed 1-15, then a 32-bit
-# pattern-offset table) that Load_c67's ValidateHeader rejects -- it expects the
-# unpacked 1954-byte named header (32 sample names + 32 FM-instr names + 256
-# orders). Verified: all 3 sampled tunes (amnesia - intro / black glass ][ -
-# muzik1 / amnesia - shaded vectors) fail openmpt_module_create_from_memory ->
-# "error loading file". No vendored engine decodes this packed CDFM variant
-# (AdPlug's CdfmLoader is the unrelated "Digital-FM" .dfm). NOT claimed by OpenMPT
-# so it Skips instead of throwing a load EXCEPTION. Re-open if a CDFM/Composer 670
-# depacker or matching loader lands.
-.670
+# 670 (modland "Composer 670 (CDFM)", 7 tunes) -- SHIPPED, no longer unsupported.
+# The .670 is the demo/stripped layout of the C67 format: a compact 10-byte
+# header (byte0=speed 1-15, orderListLen, numPatterns, numDigInst, numOPLInst,
+# loopDest, u32 sampleOffset), no instrument names, and only a pattern *offset*
+# table -- so libopenmpt's Load_c67 (which wants the unpacked 1954-byte named
+# header + offset/length table) rejects it directly. But the pattern byte-stream
+# and the 16-byte PCM / 11-byte OPL instrument structs are byte-identical to C67,
+# so OpenMPTPlugin::convert670ToC67 repacks .670 -> C67 in memory (fill names
+# with zeros, synthesize the 128-entry length table, pad each pattern to >=3
+# bytes, lay patterns in index order so pattern 127 ends exactly at the sample
+# blob, append sum(sampleLengths) PCM bytes) and hands the result to libopenmpt.
+# canHandle content-gates on a clean conversion. Verified: all 7 modland tunes
+# convert and pass Load_c67's ValidateHeader + pattern/sample bounds (3421 note
+# events for amnesia-intro, sample region byte-exact). The old "no depacker
+# exists" verdict was wrong -- the format is fully documented (shikadi CDFM_Format)
+# and Composer's own 670TOC67 converter exists.
 
 # Skale Tracker for PC by Baktery: No open replayer and no public spec exist
 .skm

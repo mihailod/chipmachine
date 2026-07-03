@@ -702,6 +702,8 @@ dsm	Digital Sound Interface Kit file format is a tracker music module created in
 
 c67	Composer 670 (CDFM) tracker format was created by the demo group Renaissance. It notably powered the DOS game Zone 66. It uniquely combines two synthesis methods into one file: 4 channels of PCM (digital samples) and 9 channels of OPL2 (AdLib/FM) synthesis. The format supports far fewer pattern effects than standard trackers, primarily featuring commands to set note volume.
 
+670	Composer 670 (CDFM) tracker format was created by the demo group Renaissance. It notably powered the DOS game Zone 66. It uniquely combines two synthesis methods into one file: 4 channels of PCM (digital samples) and 9 channels of OPL2 (AdLib/FM) synthesis. The format supports far fewer pattern effects than standard trackers, primarily featuring commands to set note volume.
+
 bam	Bob's Adlib Music is a vintage, synthetic chiptune file format created by BriTech International and Hamster Republic Productions. It was specifically written to control the Yamaha YM3812 FM synthesis chip (better known as the OPL2 or "Adlib Chip") commonly found in legacy Sound Blaster sound cards. Unlike tracker formats that leverage the Adlib chip's percussion routines, BAM tracks strictly utilize the chip's "Melodic" playback mode. It contains zero digital audio samples. Instead, it uses small data commands to manipulate frequency modulation parameters to generate retro PC audio in real time.
 
 pis	Native module format for Beni Tracker, a retro MS-DOS music tracker used to compose chiptunes using AdLib/OPL2 FM-synthesis sound chips. The extension .pis originated from the tool's unreleased predecessor, "Psychisch Tracker"
