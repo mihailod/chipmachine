@@ -9,10 +9,7 @@
 
 - extensions still missing format description:
 
-- query most frequent extensions and add more verbose text for them. covered all with 1000+ songs, todo: <1000 investigate which ones are missing / are short
-
-
-under 200 chars:
+under 200 chars but >100 songs
 
 mgs
 mtm
@@ -151,13 +148,6 @@ URL: [http://www.mirsoft.info](http://www.mirsoft.info)
 What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.
 
 * https://chipmusic.org -- zx spectrum beeper music, maybe more...
-
-* https://bulba.untergrund.net/music_e.htm - PROJECT AY / AY-EMUL ARCHIVE
-Maintained by Sergey Bulba (author of Ay_Emul), this archive contains the historic Ironfist collection. Ironfist spent years manually ripping, disassembling, and packaging raw Z80 music engines directly from commercial 48K ZX Spectrum games into clean .ay file structures, complete with initialization addresses and entry vectors.
-  - URL: http://bulba.untergrund.net/music.htm
-  - Sound Chips: General Instrument AY-3-8910 / AY-3-8912
-  - Key Formats: .ay, .ym, .pt3, .stc
-  - this is the definitive repository for ZX Spectrum and Amstrad CPC raw machine-code player rips (the Ironfist collection).
 
 * https://zxtunes.com -- a Russian site
 A massive historical repository of ZX Spectrum chiptunes. While heavily populated by standard AY tracking formats, its index includes extensive mappings of older, undocumented internal-beeper game routines that were ripped and isolated by early scene groups.

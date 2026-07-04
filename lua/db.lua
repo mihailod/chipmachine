@@ -190,7 +190,22 @@
 --     URI-encoded wafflenet URL (source empty), kept as .vgz (libvgm reads gzip
 --     directly). format "OPL Archive" -> ADPLUG -> the "IBM PC (AdLib/OPL)"
 --     filter. Bump forces a reindex.
-VERSION = 76;
+-- 77: Project AY / AY-EMUL (Sergey Bulba, bulba.untergrund.net) -- 613 raw Z80
+--     machine-code music rips in the ZXAYEMUL (.ay) container: Ironfist's ZX
+--     Spectrum game rips (210) + Bulba's own (30) -> "Spectrum AY"/ZXAY, and
+--     SoLO/CORPSE's Amstrad CPC demo rips (373) -> "Amstrad CPC"/AMSTRAD.
+--     Shipped LOCAL (music/projectay, like nsfe->music/Console): Bulba only
+--     serves big archives and Ironfist's site is dead. Built by
+--     tools/build_projectay.py from embedded AY metadata (PAuthor=composer,
+--     PMisc=game). .ay is now owned by gmeplugin (Ay_Emul lineage plays ZX AND
+--     CPC; Ayfly, which renders CPC rips silent, no longer claims .ay and keeps
+--     pt3/stc/vtx/...). Not deduped: distinct "definitive" raw rips vs zxart's
+--     register-dumps (modland has zero .ay). Screenshots: ZX rips carry the real
+--     game name, so 198/240 match a World of Spectrum loading screen via ZXDB
+--     (scripts/update_projectay_screenshots.py -> data/projectay_screenshots.txt,
+--     keyed by the local song path); CPC demo rips get none. Bump forces a
+--     reindex.
+VERSION = 77;
 
 DB = {
 {
@@ -360,6 +375,22 @@ DB = {
 	song_list = "data/hvtc.txt",
 	-- this one has local files! (like nsfe -> music/Console)
 	local_dir = "music/hvtc",
+	color = 0xfffff
+ },
+ {
+	-- Project AY / AY-EMUL (Sergey Bulba). Raw Z80 machine-code music rips in
+	-- the ZXAYEMUL (.ay) container: Ironfist's ZX Spectrum game rips + Bulba's
+	-- own rips ("Spectrum AY" -> ZX AY filter) and SoLO/CORPSE's Amstrad CPC
+	-- demo rips ("Amstrad CPC" -> CPC filter). Shipped LOCAL (like nsfe/hvtc):
+	-- Bulba only offers big archives and Ironfist's site is gone. Built by
+	-- tools/build_projectay.py from the embedded AY metadata; .ay plays via
+	-- gmeplugin (Ayfly renders CPC rips silent). source empty (local files).
+	name = "Project AY",
+	id =  "projectay",
+	source = "",
+	song_list = "data/projectay.txt",
+	song_template = "title composer format path ext",
+	local_dir = "music/projectay",
 	color = 0xfffff
  },
  {

@@ -1725,7 +1725,8 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                collection == "sceneorg" || collection == "zophar" ||
                collection == "cpcpower" || collection == "vampi" ||
                collection == "rko" || collection == "amigaremix" ||
-               collection == "amp" || collection == "modarchive") {
+               collection == "amp" || collection == "modarchive" ||
+               collection == "projectay") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
@@ -1745,7 +1746,10 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         // gb64 Games.csv SidFilename; built by build_rko.py --screenshots.
         // amigaremix -> the source Amiga game's Wikipedia box-art, keyed by the
         // "<id>/<file>.mp3" song path (source-stripped); built by
-        // build_amiremix.py --screenshots. modland/hvsc/sndh/asma/
+        // build_amiremix.py --screenshots. projectay -> the ZX game's World of
+        // Spectrum loading screen (ZXDB match), keyed by the local song path
+        // ("ironfist/<game>.ay"); ZX rips only, CPC demo rips get no shot; built
+        // by scripts/update_projectay_screenshots.py. modland/hvsc/sndh/asma/
         // sceneorg are additionally augmented from Demozoo: a tune is matched to
         // the demos that use it as soundtrack and borrows that production's
         // screenshot (built by tools/build_demozoo.py --augment, keyed by the

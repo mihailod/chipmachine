@@ -54,6 +54,14 @@ public:
 
     bool isOffline(const std::string& p);
 
+    // True when this song is served straight from a local_dir mirror on disk --
+    // the SAME condition load()/inCache short-circuit on, so a local file is by
+    // construction never fetched into the web cache. The GUI marks these with a
+    // "+" (vs "*" for cached remote files). Preferred over the prefix-based
+    // isLocalAsset() below because it tracks the actual on-disk reality, so the
+    // "+" mark can never drift from the never-cached behaviour.
+    [[nodiscard]] bool isLocalFile(const std::string& p) const;
+
     void cancel()
     {
         if (lastSession) lastSession->stop();
@@ -76,11 +84,16 @@ public:
         // the path prefix is actually db name prefix
         // eg modland::Soundtracker/SLL/sll1.mod
         // so need a map of dbs which are local
-        // for now the locally-shipped collections are nsfe (music/Console)
-        // and hvtc (music/hvtc) -- both ship their files in the .app bundle, so
-        // a song from either is always served from disk, never the network.
-        // eg: nsfe::31_orange_painting.nsfe / hvtc::demos/crazy_scroll_89.prg
-        return path.find("nsfe::") == 0 || path.find("hvtc::") == 0;
+        // The locally-shipped collections bundle their files inside the .app
+        // (a music/<dir> local_dir), so a song from one is always served from
+        // disk, never the network. NB: only APP-SHIPPED collections belong here
+        // -- collections with a /opt/Music local_dir (modland, asma, rko, ...)
+        // are the user's own mirrors and are NOT present on most machines.
+        //   nsfe      -> music/Console     (nsfe::31_orange_painting.nsfe)
+        //   hvtc      -> music/hvtc  (TED)  (hvtc::demos/crazy_scroll_89.prg)
+        //   projectay -> music/projectay   (projectay::ironfist/arkanoid.ay)
+        return path.find("nsfe::") == 0 || path.find("hvtc::") == 0 ||
+               path.find("projectay::") == 0;
     }
 
 private:

@@ -316,7 +316,12 @@ void ChipMachine::updateKeys()
         if (utils::toLower(ext) == utils::toLower(song.format)) ext = "";
 
         bool isoffline = remoteLoader.isOffline(song.path);
-	bool islocal = RemoteLoader::isLocalAsset(song.path);
+	// "+" = served straight from a local_dir mirror on disk (thus never
+	// cached); "*" = a cached remote file. isLocalFile tracks the real on-disk
+	// condition load() serves from, with isLocalAsset's prefix check as a
+	// cheap belt-and-suspenders for the app-shipped collections.
+	bool islocal = remoteLoader.isLocalFile(song.path) ||
+	               RemoteLoader::isLocalAsset(song.path);
 	if (islocal) {
 	    topStatus.setText(utils::format("Format: %s (%s)%s", song.format,ext, "+"));	
 	} else {

@@ -270,6 +270,67 @@ TEST_CASE("OPL Archive routes to libvgm and plays", "[music]")
     }
 }
 
+// The GUI marks app-shipped local collections with a "+" (vs "*" for cached
+// remote files) via isLocalAsset, keyed by the "<collection>::" path prefix.
+// Guard that all three shipped collections -- nsfe, hvtc (TED .prg) and the new
+// projectay -- report local, and that a remote/URL song does not.
+TEST_CASE("isLocalAsset marks shipped collections", "[music]")
+{
+    REQUIRE(RemoteLoader::isLocalAsset("nsfe::31_orange_painting.nsfe"));
+    REQUIRE(RemoteLoader::isLocalAsset("hvtc::demos/crazy_scroll_89.prg"));
+    REQUIRE(RemoteLoader::isLocalAsset("projectay::ironfist/arkanoid.ay"));
+    REQUIRE(RemoteLoader::isLocalAsset("projectay::cpc/TribalMag5/TribalMag5_00.ay"));
+    REQUIRE_FALSE(RemoteLoader::isLocalAsset("zxart::https://zxart.ee/file/id:44417/x.ay"));
+    REQUIRE_FALSE(RemoteLoader::isLocalAsset("modland::AY/Foo/bar.ay"));
+}
+
+// A local file (served from a local_dir mirror) is served straight from disk by
+// load() and thus NEVER written to the web cache: isLocalFile mirrors the exact
+// File::exists(local_dir + path) condition load() short-circuits on. So marking
+// a song "+" (local) and "never cached" are one and the same test. Guards that a
+// real shipped file reports local while a missing member / remote source do not.
+TEST_CASE("local-dir files report local and are never cached", "[music]")
+{
+    RemoteLoader rl;
+    rl.registerSource("projectay", "", "music/projectay"); // empty remote source
+    // A real shipped .ay: local -> load() serves it from disk, no fetch/cache.
+    REQUIRE(rl.isLocalFile("projectay::ironfist/1999.ay"));
+    REQUIRE(rl.inCache("projectay::ironfist/1999.ay"));  // present; nothing to fetch
+    // A missing member is not local (would fall through to the network).
+    REQUIRE_FALSE(rl.isLocalFile("projectay::ironfist/no_such_tune.ay"));
+    // A purely-remote collection (no local_dir) is never "local".
+    rl.registerSource("zxart", "https://zxart.ee/", "");
+    REQUIRE_FALSE(rl.isLocalFile("zxart::file/id:1/x.ay"));
+    // Unknown collection prefix -> not local (no source, no crash).
+    REQUIRE_FALSE(rl.isLocalFile("bogus::whatever.ay"));
+}
+
+// Project AY (.ay ZXAYEMUL rips) routing: .ay is owned by GME, not Ayfly --
+// Ayfly renders Amstrad CPC .ay silent while GME's Ay_Emul-lineage core plays
+// both ZX and CPC. This drives the real app registration + MusicPlayer routing
+// and asserts a CPC rip (the one Ayfly plays silent) and a ZX Ironfist rip both
+// reach GME and produce non-silent audio.
+TEST_CASE("Project AY .ay routes to GME and plays", "[music]")
+{
+    auto ap = std::make_shared<AudioPlayerNull>();
+    const auto injector = di::make_injector(di::bind<utils::path>.to("."),
+                                            di::bind<AudioPlayer>.to(ap));
+    musix::ChipPlugin::createPlugins("data");
+    chipmachine::MusicPlayer mp{ ap };
+    for (auto const& ay : {"testmus/gme/cpc-tribalmag5.ay",
+                           "testmus/gme/ironfist-chasehq2.ay"}) {
+        REQUIRE(mp.playFile(ay));
+        int64_t sum = 0;
+        for (int i = 0; i < 30 && sum == 0; ++i) {
+            mp.update();
+            std::vector<int16_t> data(8192);
+            ap->get(data);
+            sum = std::accumulate(data.begin(), data.end(), (int64_t)0);
+        }
+        REQUIRE(sum != 0);
+    }
+}
+
 // Native Arkos Tracker songs (.aks) play through the very same AT3 SongLoader +
 // SongPlayer chain as STarKos .sks -- the loader transparently gunzips and auto-
 // detects the Arkos version (modland's .aks are gzip-compressed AT1 XML). Only

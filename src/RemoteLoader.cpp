@@ -156,6 +156,26 @@ bool RemoteLoader::isOffline(const std::string& p)
     return inCache(p) || File::exists(local_path);
 }
 
+bool RemoteLoader::isLocalFile(const std::string& p) const
+{
+    Source source;
+    string path = p;
+
+    auto parts = split(path, "::");
+    if (parts.size() > 1) {
+        auto it = sources.find(parts[0]);
+        if (it == sources.end()) return false;
+        source = it->second;
+        path = parts[1];
+    }
+
+    // Only a real local_dir mirror counts. Without this guard an empty local_dir
+    // would test File::exists(path) against the cwd and could false-positive on a
+    // relative song path. This mirrors load()'s serve-from-disk check exactly, so
+    // "local file" and "never cached" are one and the same condition.
+    return !source.local_dir.empty() && File::exists(source.local_dir + path);
+}
+
 bool RemoteLoader::load(const std::string& p, function<void(File f)> done_cb)
 {
 
@@ -168,9 +188,15 @@ bool RemoteLoader::load(const std::string& p, function<void(File f)> done_cb)
         path = parts[1];
     }
 
+    // A local_dir-mirrored file is served straight from disk (and thus never
+    // cached). NB: source.local_dir is only meaningful when non-empty -- for a
+    // purely-remote collection it resolves to the work dir, so `local_dir + path`
+    // is a nonsense "<workdir>/https://..." string; File::exists() is false there
+    // and we fall through to the fetch. Only log the local path when it is a real
+    // hit, so the log stops implying every remote song was looked up on disk.
     string local_path = source.local_dir + path;
-    LOGD("Local path: %s", local_path);
-    if (File::exists(local_path)) {
+    if (!source.local_dir.empty() && File::exists(local_path)) {
+        LOGD("Serving from local mirror: %s", local_path);
         schedule_callback([=]() { done_cb(File(local_path)); });
         return true;
     }

@@ -1,0 +1,63 @@
+1999	ironfist/1999.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/123/gif/1999.gif
+Aknadach	ironfist/aknadach.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Aknadach.gif
+Arkanoid	ironfist/arkanoid.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Arkanoid(ErbeSoftwareS.A.).gif
+Artura	ironfist/artura.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Artura.gif
+Athena	ironfist/athena.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Athena.gif
+Automania	ironfist/automan.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/Automania.gif
+Badlands	bulba/Rebuilt by Bulba/Badlands.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Badlands.gif
+Blackbeard	ironfist/bbeard.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BlackBeard.gif
+Booty	ironfist/booty.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Booty(Outlet).gif
+Bronx	ironfist/bronx.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bronx.gif
+Cavemania	ironfist/caveman.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cavemania.gif
+Coliseum	ironfist/coliseum.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Coliseum.gif
+Colony	ironfist/colony.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Colony.gif
+CombatSchool	bulba/Rebuilt by Bulba/CombatSchool.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+Cybex	ironfist/cybex.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/Cybex.gif
+Deactivators	bulba/Ripped by Bulba/Deactivators.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Deactivators.gif
+Desperado	ironfist/desper.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Desperado.gif
+Firefly	ironfist/firefly.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/Firefly.gif
+Gauntlet	ironfist/gauntlet.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gauntlet.gif
+Gunfighter	ironfist/gunfight.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gunfighter.gif
+Gunsmoke	ironfist/gunsmoke.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Desperado_2.gif
+Gutz	ironfist/gutz.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Gutz.gif
+Havoc	ironfist/havoc.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Havoc.gif
+Heartbroken	ironfist/heartbro.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Heartbroken.gif
+Humphrey	ironfist/hump.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Humphrey.gif
+Hundra	ironfist/hundra.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hundra.gif
+Hypaball	ironfist/hypa.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hypaball.gif
+Infection	ironfist/infect.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/Infection.gif
+Kaboom	bulba/Rebuilt by Bulba/Kaboom.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Kaboom.gif
+Klimax	bulba/Rebuilt by Bulba/Klimax.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Klimax.gif
+KnightRider	bulba/Rebuilt by Bulba/KnightRider.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightRider.gif
+Kosmos	ironfist/kosmos.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Kosmos.gif
+Kraal	ironfist/kraal.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Kraal.gif
+Krakout	ironfist/krakout.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/Krakout.gif
+Loopz	ironfist/loopz.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/Loopz.gif
+Nebulus	ironfist/nebulus.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Nebulus.gif
+Netherworld	ironfist/nworld.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/n/gif/Netherworld.gif
+Pang	bulba/Rebuilt by Bulba/Pang.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pang.gif
+Paperboy2	bulba/Rebuilt by Bulba/Paperboy2.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Paperboy2.gif
+Podraz3	bulba/Rebuilt by Bulba/Podraz3.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Podraz3.gif
+Pulsator	ironfist/pulsator.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pulsator.gif
+Pulsoid	ironfist/pulsoid.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Pulsoids.gif
+Ram	ironfist/ram.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/R.A.M..gif
+Ramparts	ironfist/ramparts.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/Ramparts.gif
+Sabrina	ironfist/sabrina.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sabrina.gif
+Seahawk	ironfist/seahawk.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Seahawk.gif
+Sidewize	ironfist/sidewize.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Sidewize.gif
+Snare	ironfist/snare.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Snare(different).gif
+Spirits	ironfist/spirits.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Spirits.gif
+Starbyte	ironfist/starbyte.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Starbyte.gif
+Starfox	ironfist/starfox.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Starfox.gif
+Steg	ironfist/steg.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Steg.gif
+Stormlord	ironfist/storm.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Stormlord.gif
+Supertrux	ironfist/suptrux.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SuperTrux128.gif
+Tetris	ironfist/tetris.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Tetris_2.gif
+Titanic	ironfist/titanic.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Titanic(YesSoftware).gif
+Transmuter	ironfist/trmuter.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Transmuter.gif
+Twinz	ironfist/twinz.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Twinz.gif
+Typhoon	ironfist/typhoon.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/Typhoon.gif
+UGH!	ironfist/ugh.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/u/gif/UGH.gif
+Vampire	bulba/Rebuilt by Bulba/Vampire.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/Phantomas2.gif
+Warlock	bulba/Rebuilt by Bulba/Warlock.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/w/gif/Warlock.gif
+Xenophobe	ironfist/xenophob.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/Xenophobe.gif

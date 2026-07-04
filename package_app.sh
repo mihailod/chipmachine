@@ -227,6 +227,44 @@ else
     fi
 fi
 
+# *** 4d. Bundle Project AY .ay tracks into Contents/Resources/music/projectay/ ***
+#
+# Project AY (Sergey Bulba / Ironfist raw Z80 .ay rips) is a locally-shipped
+# collection, exactly like music/Console (.nsfe) and music/hvtc (.prg). The
+# runtime resolves these via local_dir = "music/projectay" (db.lua) with an
+# EMPTY source, so if the .ay files are not bundled there is no network fallback
+# and every tune fails to load. The ironfist/ bulba/ cpc/ sub-directory
+# hierarchy is preserved verbatim (the DB song paths are relative to it).
+# -----------------------------------------------------------------
+PROJECTAY_SRC="${CHIPMACHINE_DIR}/music/projectay"
+PROJECTAY_DEST="${RESOURCES_DIR}/music/projectay"
+
+if [ -d "${PROJECTAY_SRC}" ]; then
+    AY_COUNT=$(find "${PROJECTAY_SRC}" -name "*.ay" | wc -l | tr -d '[:space:]')
+    if [ "${AY_COUNT}" -eq 0 ]; then
+        echo "WARNING: music/projectay/ exists but contains no .ay files. Project AY bundle will be empty."
+    else
+        echo "-> Bundling ${AY_COUNT} Project AY .ay track(s) into ${PROJECTAY_DEST} ..."
+    fi
+
+    mkdir -p "${PROJECTAY_DEST}"
+
+    # Preserve the ironfist/ bulba/ cpc/ sub-directory hierarchy.
+    cp -R "${PROJECTAY_SRC}/." "${PROJECTAY_DEST}/"
+
+    BUNDLED_AY_COUNT=$(find "${PROJECTAY_DEST}" -name "*.ay" | wc -l | tr -d '[:space:]')
+    echo "   Verified ${BUNDLED_AY_COUNT} .ay file(s) present inside bundle."
+else
+    if $RELEASE_IT; then
+        echo "CRITICAL ERROR: music/projectay source directory not found at ${PROJECTAY_SRC}!"
+        echo "               A release build MUST include bundled Project AY .ay tracks."
+        exit 1
+    else
+        echo "WARNING: music/projectay not found at ${PROJECTAY_SRC}. Skipping Project AY bundling (dry-run mode)."
+        echo "         End-users will have no bundled Project AY tracks. Set up music/projectay before --releaseit."
+    fi
+fi
+
 # 5. Fix Native ARM64 Dynamic Library Linkages Deeply
 echo "-> Resolving recursive dynamic library paths..."
 

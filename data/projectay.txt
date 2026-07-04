@@ -1,0 +1,613 @@
+Badlands	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/Badlands.ay	ay
+Bionic Commando	Tim Follin	Spectrum AY	bulba/Rebuilt by Bulba/BionicCommando.ay	ay
+Bosconian 87	Jaz. C. Brooke	Spectrum AY	bulba/Rebuilt by Bulba/Bosconian.ay	ay
+CombatSchool	Jas. C. Brooke	Spectrum AY	bulba/Rebuilt by Bulba/CombatSchool.ay	ay
+The Flintstones	Benn Daglish	Spectrum AY	bulba/Rebuilt by Bulba/FlintstonesThe.ay	ay
+Ghostbusters II	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/Ghostbusters2.ay	ay
+Kaboom	Frantisek Fuka	Spectrum AY	bulba/Rebuilt by Bulba/Kaboom.ay	ay
+Klimax	M.F.Valente	Spectrum AY	bulba/Rebuilt by Bulba/Klimax.ay	ay
+KnightRider	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/KnightRider.ay	ay
+Lotus Esprit Turbo Challenge	Ali Davidson	Spectrum AY	bulba/Rebuilt by Bulba/LotusEspritTurboChallenge.ay	ay
+The Ninjawarriors	Tiny Williams	Spectrum AY	bulba/Rebuilt by Bulba/NinjaWarriorsThe.ay	ay
+Pang	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/Pang.ay	ay
+Paperboy2	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/Paperboy2.ay	ay
+Podraz3	Frantisek Fuka	Spectrum AY	bulba/Rebuilt by Bulba/Podraz3.ay	ay
+The Real Ghost Busters	Data East Usa Inc.	Spectrum AY	bulba/Rebuilt by Bulba/RealGhostBustersThe.ay	ay
+Saboteur 2	Rob Hubbard	Spectrum AY	bulba/Rebuilt by Bulba/Saboteur2.ay	ay
+SuperTed-TheSearchForSpot	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/SuperTed-TheSearchForSpot.ay	ay
+Techted	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/Techted.ay	ay
+Turtle1	Sound Images	Spectrum AY	bulba/Rebuilt by Bulba/Turtle1.ay	ay
+Vampire	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/Vampire.ay	ay
+The Vindicator	Jonathan Dunn	Spectrum AY	bulba/Rebuilt by Bulba/Vindicator.ay	ay
+VIZ The Computer Game	Probe Software	Spectrum AY	bulba/Rebuilt by Bulba/Viz.ay	ay
+Warlock	Pennsoft	Spectrum AY	bulba/Rebuilt by Bulba/Warlock.ay	ay
+Winter Games	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/WinterGames.ay	ay
+1943TM	Unknown	Spectrum AY	bulba/Ripped by Bulba/1943TM.ay	ay
+Deactivators	Tigress Marketing	Spectrum AY	bulba/Ripped by Bulba/Deactivators.ay	ay
+Grell&Falla	Alistair Brimble	Spectrum AY	bulba/Ripped by Bulba/Grell&Falla.ay	ay
+Kwik Snax	Lyndon Sharp	Spectrum AY	bulba/Ripped by Bulba/Kwik Snax.ay	ay
+Loader	RST7/CB/PSG	Spectrum AY	bulba/Ripped by Bulba/Loader.ay	ay
+Time Scanner	Spidersoft	Spectrum AY	bulba/Ripped by Bulba/TimeScanner.ay	ay
+AudioIllusions AID01	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID01.ay	ay
+AudioIllusions AID02	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID02.ay	ay
+AudioIllusions AID03	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID03.ay	ay
+AudioIllusions AID04	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID04.ay	ay
+AudioIllusions AID05	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID05.ay	ay
+AudioIllusions AID06	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID06.ay	ay
+AudioIllusions AID07	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID07.ay	ay
+AudioIllusions AID08	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID08.ay	ay
+AudioIllusions AID09	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID09.ay	ay
+AudioIllusions AID10	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID10.ay	ay
+AudioIllusions AID11	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID11.ay	ay
+AudioIllusions AID12	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID12.ay	ay
+AudioIllusions AID13	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID13.ay	ay
+AudioIllusions AID14	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID14.ay	ay
+AudioIllusions AID15	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID15.ay	ay
+AudioIllusions AID16	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID16.ay	ay
+AudioIllusions AID17	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID17.ay	ay
+AudioIllusions AID18	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID18.ay	ay
+AudioIllusions AID19	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID19.ay	ay
+AudioIllusions AID20	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID20.ay	ay
+AudioIllusions AID21	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID21.ay	ay
+AudioIllusions AID22	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID22.ay	ay
+AudioIllusions AID23	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID23.ay	ay
+AudioIllusions AID24	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID24.ay	ay
+AudioIllusions AID25	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID25.ay	ay
+AudioIllusions AID26	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID26.ay	ay
+AudioIllusions AID28	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID28.ay	ay
+AudioIllusions AID29	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID29.ay	ay
+AudioIllusions AID30	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID30.ay	ay
+AudioIllusions AID31	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID31.ay	ay
+AudioIllusions AID32	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID32.ay	ay
+AudioIllusions AID33	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID33.ay	ay
+AudioIllusions AID34	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID34.ay	ay
+CFL5 CFL5 01	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_01.ay	ay
+CFL5 CFL5 02	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_02.ay	ay
+CFL5 CFL5 03	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_03.ay	ay
+CFL5 CFL5 04	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_04.ay	ay
+CFL5 CFL5 05	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_05.ay	ay
+CFL5 CFL5 06	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_06.ay	ay
+CFL5 CFL5 07	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_07.ay	ay
+CFL5 CFL5 08	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_08.ay	ay
+CFL5 CFL5 09	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_09.ay	ay
+CFL5 CFL5 10	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_10.ay	ay
+CFL5 CFL5 11	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_11.ay	ay
+CFL5 CFL5 12	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_12.ay	ay
+CFL5 CFL5 13	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_13.ay	ay
+CFL5 CFL5 14	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_14.ay	ay
+CFL5 CFL5 15	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_15.ay	ay
+CFL5 CFL5 16	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_16.ay	ay
+CFL5 CFL5 17	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_17.ay	ay
+CFL5 CFL5 18	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_18.ay	ay
+CFL5 CFL5 19	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_19.ay	ay
+CFL5 CFL5 20	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_20.ay	ay
+CFL5 CFL5 21	SoLO/CORPSE	Amstrad CPC	cpc/CFL5/CFL5_21.ay	ay
+CFL7 CFL7 1	SoLO/CORPSE	Amstrad CPC	cpc/CFL7/CFL7_1.ay	ay
+CFL7 CFL7 2	SoLO/CORPSE	Amstrad CPC	cpc/CFL7/CFL7_2.ay	ay
+CFL7 CFL7 3	SoLO/CORPSE	Amstrad CPC	cpc/CFL7/CFL7_3.ay	ay
+CFL7 CFL7 4	SoLO/CORPSE	Amstrad CPC	cpc/CFL7/CFL7_4.ay	ay
+CFL7 CFL7 5	SoLO/CORPSE	Amstrad CPC	cpc/CFL7/CFL7_5.ay	ay
+Discmac20 Discmac20 0	SoLO/CORPSE	Amstrad CPC	cpc/Discmac20/Discmac20_0.ay	ay
+Discmac20 Discmac20 1	SoLO/CORPSE	Amstrad CPC	cpc/Discmac20/Discmac20_1.ay	ay
+Discmac20 Discmac20 2	SoLO/CORPSE	Amstrad CPC	cpc/Discmac20/Discmac20_2.ay	ay
+Discmac20 Discmac20 3	SoLO/CORPSE	Amstrad CPC	cpc/Discmac20/Discmac20_3.ay	ay
+Discmac20 Discmac20 4	SoLO/CORPSE	Amstrad CPC	cpc/Discmac20/Discmac20_4.ay	ay
+Discmac20 Discmac20 5	SoLO/CORPSE	Amstrad CPC	cpc/Discmac20/Discmac20_5.ay	ay
+Dracula_fanz5 Dracula fanz5 0	SoLO/CORPSE	Amstrad CPC	cpc/Dracula_fanz5/Dracula_fanz5_0.ay	ay
+Dracula_fanz5 Dracula fanz5 1	SoLO/CORPSE	Amstrad CPC	cpc/Dracula_fanz5/Dracula_fanz5_1.ay	ay
+Dracula_fanz5 Dracula fanz5 10	SoLO/CORPSE	Amstrad CPC	cpc/Dracula_fanz5/Dracula_fanz5_10.ay	ay
+Dracula_fanz5 Dracula fanz5 2	SoLO/CORPSE	Amstrad CPC	cpc/Dracula_fanz5/Dracula_fanz5_2.ay	ay
+Dracula_fanz5 Dracula fanz5 3	SoLO/CORPSE	Amstrad CPC	cpc/Dracula_fanz5/Dracula_fanz5_3.ay	ay
+Dracula_fanz5 Dracula fanz5 4	SoLO/CORPSE	Amstrad CPC	cpc/Dracula_fanz5/Dracula_fanz5_4.ay	ay
+Dracula_fanz5 Dracula fanz5 5	SoLO/CORPSE	Amstrad CPC	cpc/Dracula_fanz5/Dracula_fanz5_5.ay	ay
+Dracula_fanz5 Dracula fanz5 6	SoLO/CORPSE	Amstrad CPC	cpc/Dracula_fanz5/Dracula_fanz5_6.ay	ay
+Dracula_fanz5 Dracula fanz5 7	SoLO/CORPSE	Amstrad CPC	cpc/Dracula_fanz5/Dracula_fanz5_7.ay	ay
+Dracula_fanz5 Dracula fanz5 8	SoLO/CORPSE	Amstrad CPC	cpc/Dracula_fanz5/Dracula_fanz5_8.ay	ay
+Dracula_fanz5 Dracula fanz5 9	SoLO/CORPSE	Amstrad CPC	cpc/Dracula_fanz5/Dracula_fanz5_9.ay	ay
+Epsilon_Anthology 2Unlimited	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/2Unlimited.ay	ay
+Epsilon_Anthology Ads1 mix94	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Ads1 mix94.ay	ay
+Epsilon_Anthology Ads2 mix94	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Ads2 mix94.ay	ay
+Epsilon_Anthology Amnesia	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Amnesia.ay	ay
+Epsilon_Anthology Antic World	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Antic World.ay	ay
+Epsilon_Anthology Antropia	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Antropia.ay	ay
+Epsilon_Anthology Best Of	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Best Of.ay	ay
+Epsilon_Anthology Big Joke	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Big Joke.ay	ay
+Epsilon_Anthology Blue Angels	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Blue Angels.ay	ay
+Epsilon_Anthology Bomb Bass	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Bomb Bass.ay	ay
+Epsilon_Anthology Cyber Power	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Cyber Power.ay	ay
+Epsilon_Anthology Death Star	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Death Star.ay	ay
+Epsilon_Anthology Entity	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Entity.ay	ay
+Epsilon_Anthology Escape	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Escape.ay	ay
+Epsilon_Anthology Eternity	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Eternity.ay	ay
+Epsilon_Anthology Eurodance	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Eurodance.ay	ay
+Epsilon_Anthology Fantasy	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Fantasy.ay	ay
+Epsilon_Anthology Frantic	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Frantic.ay	ay
+Epsilon_Anthology Fronty Mix95	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Fronty Mix95.ay	ay
+Epsilon_Anthology Fronty Mix96	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Fronty Mix96.ay	ay
+Epsilon_Anthology Funny	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Funny.ay	ay
+Epsilon_Anthology Fur Elise mix95	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Fur Elise mix95.ay	ay
+Epsilon_Anthology Fur Elise	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Fur Elise.ay	ay
+Epsilon_Anthology Happy New Year	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Happy New Year.ay	ay
+Epsilon_Anthology Hard Level	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Hard Level.ay	ay
+Epsilon_Anthology Harmony	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Harmony.ay	ay
+Epsilon_Anthology Heroic Fantasy	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Heroic Fantasy.ay	ay
+Epsilon_Anthology Human Killer	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Human Killer.ay	ay
+Epsilon_Anthology Intermed	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Intermed.ay	ay
+Epsilon_Anthology James Pond End theme	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/James Pond End theme.ay	ay
+Epsilon_Anthology La Peche Aux Moules	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/La Peche Aux Moules.ay	ay
+Epsilon_Anthology La Soupe Aux Choux mix96	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/La Soupe Aux Choux mix96.ay	ay
+Epsilon_Anthology Lastway	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Lastway.ay	ay
+Epsilon_Anthology Liquid theme1	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Liquid theme1.ay	ay
+Epsilon_Anthology Liquid theme2	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Liquid theme2.ay	ay
+Epsilon_Anthology Magical	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Magical.ay	ay
+Epsilon_Anthology Magnetic Field	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Magnetic Field.ay	ay
+Epsilon_Anthology Memory Full	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Memory Full.ay	ay
+Epsilon_Anthology Merry Christmas	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Merry Christmas.ay	ay
+Epsilon_Anthology Midnight Express mix95	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Midnight Express mix95.ay	ay
+Epsilon_Anthology Midnight Express mix96	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Midnight Express mix96.ay	ay
+Epsilon_Anthology Moon Spirit	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Moon Spirit.ay	ay
+Epsilon_Anthology Mystic	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Mystic.ay	ay
+Epsilon_Anthology Paranoia Theme 1	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Paranoia Theme 1.ay	ay
+Epsilon_Anthology Paranoia Theme2	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Paranoia Theme2.ay	ay
+Epsilon_Anthology Plasma Mix94	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Plasma Mix94.ay	ay
+Epsilon_Anthology Plumpy Mix95	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Plumpy Mix95.ay	ay
+Epsilon_Anthology Power Road	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Power Road.ay	ay
+Epsilon_Anthology Sacadd	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Sacadd.ay	ay
+Epsilon_Anthology Silents theme	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Silents theme.ay	ay
+Epsilon_Anthology Sky War	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Sky War.ay	ay
+Epsilon_Anthology Space Trouble	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Space Trouble.ay	ay
+Epsilon_Anthology Sun city	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Sun city.ay	ay
+Epsilon_Anthology T21	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/T21.ay	ay
+Epsilon_Anthology Tetris95 intro	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Tetris95 intro.ay	ay
+Epsilon_Anthology Tetris95	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Tetris95.ay	ay
+Epsilon_Anthology The End	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/The End.ay	ay
+Epsilon_Anthology The Last Battle	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/The Last Battle.ay	ay
+Epsilon_Anthology Turn Disc	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Turn Disc.ay	ay
+Epsilon_Anthology Windfield mix95	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Windfield mix95.ay	ay
+Epsilon_Anthology Windfield	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Windfield.ay	ay
+Epsilon_Anthology Wizard	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/Wizard.ay	ay
+Epsilon_Anthology X-ray	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/X-ray.ay	ay
+Epsilon_Anthology black shadow	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/black shadow.ay	ay
+Epsilon_Anthology conquest	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/conquest.ay	ay
+Epsilon_Anthology no life	SoLO/CORPSE	Amstrad CPC	cpc/Epsilon_Anthology/no life.ay	ay
+Jubilee Jubilee 1	SoLO/CORPSE	Amstrad CPC	cpc/Jubilee/Jubilee_1.ay	ay
+Jubilee Jubilee 2	SoLO/CORPSE	Amstrad CPC	cpc/Jubilee/Jubilee_2.ay	ay
+Jubilee Jubilee 3	SoLO/CORPSE	Amstrad CPC	cpc/Jubilee/Jubilee_3.ay	ay
+Jubilee Jubilee 4	SoLO/CORPSE	Amstrad CPC	cpc/Jubilee/Jubilee_4.ay	ay
+Jubilee Jubilee 5	SoLO/CORPSE	Amstrad CPC	cpc/Jubilee/Jubilee_5.ay	ay
+Jubilee Jubilee 6	SoLO/CORPSE	Amstrad CPC	cpc/Jubilee/Jubilee_6.ay	ay
+Megapartydemo92 Megapartydemo92 1	SoLO/CORPSE	Amstrad CPC	cpc/Megapartydemo92/Megapartydemo92_1.ay	ay
+Megapartydemo92 Megapartydemo92 2	SoLO/CORPSE	Amstrad CPC	cpc/Megapartydemo92/Megapartydemo92_2.ay	ay
+Megapartydemo92 Megapartydemo92 3	SoLO/CORPSE	Amstrad CPC	cpc/Megapartydemo92/Megapartydemo92_3.ay	ay
+Megapartydemo92 Megapartydemo92 4	SoLO/CORPSE	Amstrad CPC	cpc/Megapartydemo92/Megapartydemo92_4.ay	ay
+Megapartydemo92 Megapartydemo92 5	SoLO/CORPSE	Amstrad CPC	cpc/Megapartydemo92/Megapartydemo92_5.ay	ay
+Megapartydemo92 Megapartydemo92 6	SoLO/CORPSE	Amstrad CPC	cpc/Megapartydemo92/Megapartydemo92_6.ay	ay
+Other Babafan7 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/Babafan7_1.ay	ay
+Other Babafan7 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/Babafan7_2.ay	ay
+Other Babafan7 3	SoLO/CORPSE	Amstrad CPC	cpc/Other/Babafan7_3.ay	ay
+Other Bombastic music1	SoLO/CORPSE	Amstrad CPC	cpc/Other/Bombastic_music1.ay	ay
+Other Bombastic music2	SoLO/CORPSE	Amstrad CPC	cpc/Other/Bombastic_music2.ay	ay
+Other Bordelik4	SoLO/CORPSE	Amstrad CPC	cpc/Other/Bordelik4.ay	ay
+Other Byte96	SoLO/CORPSE	Amstrad CPC	cpc/Other/Byte96.ay	ay
+Other CFL4 music1	SoLO/CORPSE	Amstrad CPC	cpc/Other/CFL4_music1.ay	ay
+Other CFL4 music2	SoLO/CORPSE	Amstrad CPC	cpc/Other/CFL4_music2.ay	ay
+Other CPC-Telegramm16 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/CPC-Telegramm16_1.ay	ay
+Other CPC-Telegramm16 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/CPC-Telegramm16_2.ay	ay
+Other CPC-Telegramm17 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/CPC-Telegramm17_1.ay	ay
+Other CPC-Telegramm17 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/CPC-Telegramm17_2.ay	ay
+Other Crystal music1	SoLO/CORPSE	Amstrad CPC	cpc/Other/Crystal_music1.ay	ay
+Other Crystal music2	SoLO/CORPSE	Amstrad CPC	cpc/Other/Crystal_music2.ay	ay
+Other DemowarII 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/DemowarII_1.ay	ay
+Other DemowarII 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/DemowarII_2.ay	ay
+Other DigitalPress3 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/DigitalPress3_1.ay	ay
+Other DigitalPress3 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/DigitalPress3_2.ay	ay
+Other DigitalPress3 3	SoLO/CORPSE	Amstrad CPC	cpc/Other/DigitalPress3_3.ay	ay
+Other Epsilon1	SoLO/CORPSE	Amstrad CPC	cpc/Other/Epsilon1.ay	ay
+Other Epsilon2	SoLO/CORPSE	Amstrad CPC	cpc/Other/Epsilon2.ay	ay
+Other Epsilon3	SoLO/CORPSE	Amstrad CPC	cpc/Other/Epsilon3.ay	ay
+Other Epsilon4	SoLO/CORPSE	Amstrad CPC	cpc/Other/Epsilon4.ay	ay
+Other Focus1	SoLO/CORPSE	Amstrad CPC	cpc/Other/Focus1.ay	ay
+Other Kunst music	SoLO/CORPSE	Amstrad CPC	cpc/Other/Kunst_music.ay	ay
+Other Music14	SoLO/CORPSE	Amstrad CPC	cpc/Other/Music14.ay	ay
+Other OVL96	SoLO/CORPSE	Amstrad CPC	cpc/Other/OVL96.ay	ay
+Other Odyssey 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/Odyssey_1.ay	ay
+Other Odyssey 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/Odyssey_2.ay	ay
+Other Odyssey 3	SoLO/CORPSE	Amstrad CPC	cpc/Other/Odyssey_3.ay	ay
+Other Odyssey 4	SoLO/CORPSE	Amstrad CPC	cpc/Other/Odyssey_4.ay	ay
+Other PCAMCPC	SoLO/CORPSE	Amstrad CPC	cpc/Other/PCAMCPC.ay	ay
+Other PMD 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/PMD_1.ay	ay
+Other PMD 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/PMD_2.ay	ay
+Other PMD 3	SoLO/CORPSE	Amstrad CPC	cpc/Other/PMD_3.ay	ay
+Other PMD 4	SoLO/CORPSE	Amstrad CPC	cpc/Other/PMD_4.ay	ay
+Other PowerSystem 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/PowerSystem_1.ay	ay
+Other PowerSystem 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/PowerSystem_2.ay	ay
+Other PowerSystem 3	SoLO/CORPSE	Amstrad CPC	cpc/Other/PowerSystem_3.ay	ay
+Other PowerSystem 4	SoLO/CORPSE	Amstrad CPC	cpc/Other/PowerSystem_4.ay	ay
+Other PowerSystem 5	SoLO/CORPSE	Amstrad CPC	cpc/Other/PowerSystem_5.ay	ay
+Other PowerSystem 6	SoLO/CORPSE	Amstrad CPC	cpc/Other/PowerSystem_6.ay	ay
+Other Prehist	SoLO/CORPSE	Amstrad CPC	cpc/Other/Prehist.ay	ay
+Other Prophecy 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/Prophecy_1.ay	ay
+Other Prophecy 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/Prophecy_2.ay	ay
+Other Prophecy 3	SoLO/CORPSE	Amstrad CPC	cpc/Other/Prophecy_3.ay	ay
+Other Prophecy 4	SoLO/CORPSE	Amstrad CPC	cpc/Other/Prophecy_4.ay	ay
+Other RedStorm 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/RedStorm_1.ay	ay
+Other RedStorm 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/RedStorm_2.ay	ay
+Other SkidRow	SoLO/CORPSE	Amstrad CPC	cpc/Other/SkidRow.ay	ay
+Other Swab meeting93 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/Swab_meeting93_1.ay	ay
+Other Swab meeting93 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/Swab_meeting93_2.ay	ay
+Other Sweet 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/Sweet_1.ay	ay
+Other Sweet 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/Sweet_2.ay	ay
+Other Sweet 3	SoLO/CORPSE	Amstrad CPC	cpc/Other/Sweet_3.ay	ay
+Other Telepatique demo	SoLO/CORPSE	Amstrad CPC	cpc/Other/Telepatique_demo.ay	ay
+Other TenYears 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/TenYears_1.ay	ay
+Other TenYears 2	SoLO/CORPSE	Amstrad CPC	cpc/Other/TenYears_2.ay	ay
+Other TenYears 3	SoLO/CORPSE	Amstrad CPC	cpc/Other/TenYears_3.ay	ay
+Other Voyage93 0	SoLO/CORPSE	Amstrad CPC	cpc/Other/Voyage93_0.ay	ay
+Other Voyage93 1	SoLO/CORPSE	Amstrad CPC	cpc/Other/Voyage93_1.ay	ay
+Other Xmas	SoLO/CORPSE	Amstrad CPC	cpc/Other/Xmas.ay	ay
+Other music00	SoLO/CORPSE	Amstrad CPC	cpc/Other/music00.ay	ay
+Other music01	SoLO/CORPSE	Amstrad CPC	cpc/Other/music01.ay	ay
+Other music02	SoLO/CORPSE	Amstrad CPC	cpc/Other/music02.ay	ay
+Other music03	SoLO/CORPSE	Amstrad CPC	cpc/Other/music03.ay	ay
+Other music04	SoLO/CORPSE	Amstrad CPC	cpc/Other/music04.ay	ay
+Other music05	SoLO/CORPSE	Amstrad CPC	cpc/Other/music05.ay	ay
+Other music06	SoLO/CORPSE	Amstrad CPC	cpc/Other/music06.ay	ay
+Other music07	SoLO/CORPSE	Amstrad CPC	cpc/Other/music07.ay	ay
+Other music08	SoLO/CORPSE	Amstrad CPC	cpc/Other/music08.ay	ay
+Other music09	SoLO/CORPSE	Amstrad CPC	cpc/Other/music09.ay	ay
+Other music10	SoLO/CORPSE	Amstrad CPC	cpc/Other/music10.ay	ay
+Other music11	SoLO/CORPSE	Amstrad CPC	cpc/Other/music11.ay	ay
+Other music12	SoLO/CORPSE	Amstrad CPC	cpc/Other/music12.ay	ay
+Other music13	SoLO/CORPSE	Amstrad CPC	cpc/Other/music13.ay	ay
+From GOLDRUNNER (originally on Atari ST)	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/A-FLIGHT.ay	ay
+SoundHakker A	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/A.ay	ay
+SoundHakker ADDAMS1	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/ADDAMS1.ay	ay
+SoundHakker ADDAMS2	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/ADDAMS2.ay	ay
+From Zap't'Balls	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/AGENT6.ay	ay
+SoundHakker ALEX	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/ALEX.ay	ay
+SoundHakker AMIRIGHT	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/AMIRIGHT.ay	ay
+SoundHakker BADMAG2	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/BADMAG2.ay	ay
+SoundHakker BADMAG3	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/BADMAG3.ay	ay
+SoundHakker BADMAG4	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/BADMAG4.ay	ay
+SoundHakker BADMAG5	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/BADMAG5.ay	ay
+SoundHakker BADMAG6	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/BADMAG6.ay	ay
+SoundHakker BADMAG7	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/BADMAG7.ay	ay
+SoundHakker CAMOUFLA	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/CAMOUFLA.ay	ay
+From CASTLE DEMO by HJT	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/CASTLE1.ay	ay
+From CASTLE DEMO by HJT	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/CASTLE2.ay	ay
+From CASTLE DEMO by HJT	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/CASTLE3.ay	ay
+SoundHakker CAUSE	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/CAUSE.ay	ay
+SoundHakker CHANGE	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/CHANGE.ay	ay
+SoundHakker COMAGAIN	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/COMAGAIN.ay	ay
+SoundHakker COMMANDO	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/COMMANDO.ay	ay
+John Denver I believe	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/COUNTRYR.ay	ay
+From CPC Challenge Diskzine (hacked at the British Meeting!)	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/CPCCH12.ay	ay
+From Crazy Snake	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/CRAZY1.ay	ay
+SoundHakker CREST-1	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/CREST-1.ay	ay
+SoundHakker CRYSTAL	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/CRYSTAL.ay	ay
+SoundHakker DANIELE	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/DANIELE.ay	ay
+SoundHakker DASILVA	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/DASILVA.ay	ay
+Hacked from Amsof P.D Catalogue Disk	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/DELTWAT.ay	ay
+Hacked from Amsof P.D Catalogue Disk	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/DELTWAT1.ay	ay
+Hacked from Amsof P.D Catalogue Disk	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/DELTWAT3.ay	ay
+SoundHakker DEMO6	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/DEMO6.ay	ay
+From Fraggle & Duck demo 7	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/DEMO7.ay	ay
+SoundHakker DESERT	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/DESERT.ay	ay
+SoundHakker DOTTY	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/DOTTY.ay	ay
+SoundHakker DUCK	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/DUCK.ay	ay
+SoundHakker DUMMY	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/DUMMY.ay	ay
+SoundHakker ECHO	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/ECHO.ay	ay
+From Disk Full #8	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/EDITO.ay	ay
+SoundHakker EINMAL	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/EINMAL.ay	ay
+SoundHakker FARTY	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/FARTY.ay	ay
+SoundHakker FAST1	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/FAST1.ay	ay
+SoundHakker FAST2	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/FAST2.ay	ay
+SoundHakker FAST3	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/FAST3.ay	ay
+SoundHakker FAST4	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/FAST4.ay	ay
+From CPC Fastloader issue 6	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/FAST7.ay	ay
+It's the Final Countdown!	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/FINAL.ay	ay
+SoundHakker FLIEBE	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/FLIEBE.ay	ay
+SoundHakker FOLX	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/FOLX.ay	ay
+SoundHakker FUTURE	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/FUTURE.ay	ay
+SoundHakker HARD	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/HARD.ay	ay
+SoundHakker HLDTLINE	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/HLDTLINE.ay	ay
+SoundHakker HOPPELDI	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/HOPPELDI.ay	ay
+SoundHakker HURGA	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/HURGA.ay	ay
+From Zap 't' Balls	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/ICEWORLD.ay	ay
+SoundHakker ILOVEDH	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/ILOVEDH.ay	ay
+SoundHakker INSTRTAL	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/INSTRTAL.ay	ay
+SoundHakker JASS	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/JASS.ay	ay
+SoundHakker JM-JARRE	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/JM-JARRE.ay	ay
+SoundHakker KILLGUMP	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/KILLGUMP.ay	ay
+SoundHakker KLIMPER	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/KLIMPER.ay	ay
+SoundHakker KNOCKERS	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/KNOCKERS.ay	ay
+SoundHakker KOI-ZEID	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/KOI-ZEID.ay	ay
+Vauxhall Car Ad version	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/LAYLA.ay	ay
+Elmsoft likes this tune! From loader of Zap't'Balls	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/LOADER.ay	ay
+SoundHakker LOOSER	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/LOOSER.ay	ay
+SoundHakker LOVE	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/LOVE.ay	ay
+SoundHakker M-BASS	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/M-BASS.ay	ay
+SoundHakker MAGIC	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MAGIC.ay	ay
+SoundHakker MAXIWEST	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MAXIWEST.ay	ay
+SoundHakker MEGAINTR	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MEGAINTR.ay	ay
+From Mega Party demo Side A Part 2	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MEGAPAA2.ay	ay
+From Mega Party demo Side A Part 3	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MEGAPAA3.ay	ay
+SoundHakker MEGAPAA6	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MEGAPAA6.ay	ay
+SoundHakker MEGAPAB1	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MEGAPAB1.ay	ay
+SoundHakker MEGAPAB2	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MEGAPAB2.ay	ay
+From Mega Party demo Side B Part 4	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MEGAPAB4.ay	ay
+Very nice remix of MEGAPARTY 3a tune	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MEGREMIX.ay	ay
+SoundHakker MENUETT	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MENUETT.ay	ay
+SoundHakker MONEY	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MONEY.ay	ay
+SoundHakker MSMARPEL	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MSMARPEL.ay	ay
+SoundHakker MUNSTERS	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MUNSTERS.ay	ay
+SoundHakker MUSIC2	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MUSIC2.ay	ay
+SoundHakker MUSICAN	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MUSICAN.ay	ay
+SoundHakker MY-BOY	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/MY-BOY.ay	ay
+SoundHakker NAS	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/NAS.ay	ay
+SoundHakker NOBODY	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/NOBODY.ay	ay
+SoundHakker NOSOFEAR	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/NOSOFEAR.ay	ay
+Not the pink variety Im afraid.	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/PANTHER.ay	ay
+SoundHakker POPCORN	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/POPCORN.ay	ay
+SoundHakker PREVENTI	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/PREVENTI.ay	ay
+SoundHakker PYTHON	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/PYTHON.ay	ay
+Called so, because it's like a race!	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/RACE.ay	ay
+A remix of RACE.STK	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/RACENEW.ay	ay
+SoundHakker RAF-MEGA	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/RAF-MEGA.ay	ay
+From Disk Full #8	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/REPORT.ay	ay
+SoundHakker RUNNING	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/RUNNING.ay	ay
+SoundHakker SDEMO	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/SDEMO.ay	ay
+SoundHakker SIMONE	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/SIMONE.ay	ay
+SoundHakker SNAKE1	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/SNAKE1.ay	ay
+SoundHakker SNAKE2	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/SNAKE2.ay	ay
+From Crazy Snake Game	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/SNAKE3.ay	ay
+SoundHakker SNAKE4	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/SNAKE4.ay	ay
+From Super Cauldron (by EGS). Music by Weee!	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/SUPECAUL.ay	ay
+Blimey! That is good	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/SUPERBAS.ay	ay
+Sweet Child of Mine	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/SWTCHLDO.ay	ay
+From Amsof P.D Cat Disk (Twat!)	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/TECNO2.ay	ay
+Uzi Nine Millimetre	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/TERMIE-2.ay	ay
+SoundHakker TESTWEST	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/TESTWEST.ay	ay
+From Amsof P.D Catalogue Disk	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/THEBEAT.ay	ay
+From Amsof P.D Catalogue Disk	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/THEFROG.ay	ay
+SoundHakker THRILLER	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/THRILLER.ay	ay
+SoundHakker TITLEMUS	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/TITLEMUS.ay	ay
+From Amsof P.D Catalogue Disk	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/TODAY.ay	ay
+Written by Barney Rubble without the bloody manual! (First one.)	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/TURNIPS.ay	ay
+SoundHakker TURRICAN	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/TURRICAN.ay	ay
+SoundHakker UGLYKID1	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/UGLYKID1.ay	ay
+SoundHakker VERBANNT	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/VERBANNT.ay	ay
+From Voyage 93 Megademo by BENG!	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/VOYAGE1.ay	ay
+From Voyage 93 Megademo by BENG!	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/VOYAGE2.ay	ay
+A Winters Tale (very badly done I may add, sorry!)	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/WINTER.ay	ay
+SoundHakker XMAS	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/XMAS.ay	ay
+From Extreme Diskzine 7 part one	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/XTREME71.ay	ay
+SoundHakker YEAH	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/YEAH.ay	ay
+From ZAP T BENG demo, created by Doctor Fegg and The Equalizor	SoLO/CORPSE	Amstrad CPC	cpc/SoundHakker/ZAPTBENG.ay	ay
+TribalMag5 TribalMag5 00	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_00.ay	ay
+TribalMag5 TribalMag5 01	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_01.ay	ay
+TribalMag5 TribalMag5 02	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_02.ay	ay
+TribalMag5 TribalMag5 03	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_03.ay	ay
+TribalMag5 TribalMag5 04	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_04.ay	ay
+TribalMag5 TribalMag5 05	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_05.ay	ay
+TribalMag5 TribalMag5 06	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_06.ay	ay
+TribalMag5 TribalMag5 07	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_07.ay	ay
+TribalMag5 TribalMag5 08	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_08.ay	ay
+TribalMag5 TribalMag5 09	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_09.ay	ay
+TribalMag5 TribalMag5 10	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_10.ay	ay
+TribalMag5 TribalMag5 11	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_11.ay	ay
+TribalMag5 TribalMag5 12	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_12.ay	ay
+TribalMag5 TribalMag5 13	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_13.ay	ay
+TribalMag5 TribalMag5 14	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_14.ay	ay
+TribalMag5 TribalMag5 15	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_15.ay	ay
+TribalMag5 TribalMag5 16	SoLO/CORPSE	Amstrad CPC	cpc/TribalMag5/TribalMag5_16.ay	ay
+1999	Steve Corry & I.C.C.	Spectrum AY	ironfist/1999.ay	ay
+3D-Snooker	Unknown	Spectrum AY	ironfist/3dsnook.ay	ay
+Four Soccer Simulators	David Whittaker	Spectrum AY	ironfist/4soccer.ay	ay
+Fifth Quadrant	Unknown	Spectrum AY	ironfist/5quad.ay	ay
+Action Fighter	Unknown	Spectrum AY	ironfist/af.ay	ay
+Arcade Flight Simulator	David Whittaker	Spectrum AY	ironfist/aflight.ay	ay
+Aknadach	Unknown	Spectrum AY	ironfist/aknadach.ay	ay
+Alien Evolution	Unknown	Spectrum AY	ironfist/alienev.ay	ay
+Antics: Birds and the Bees 2	Unknown	Spectrum AY	ironfist/antics.ay	ay
+Arkanoid	Unknown	Spectrum AY	ironfist/arkanoid.ay	ay
+Artura	Benn Daglish	Spectrum AY	ironfist/artura.ay	ay
+Athena	Martin Galway	Spectrum AY	ironfist/athena.ay	ay
+Automania	Unknown	Spectrum AY	ironfist/automan.ay	ay
+Batman: A Bird in the Hand	Special Erase	Spectrum AY	ironfist/batman2.ay	ay
+Bubble Bobble the Adventure	Anton ze Player	Spectrum AY	ironfist/bbadv.ay	ay
+Blackbeard	Gominolas	Spectrum AY	ironfist/bbeard.ay	ay
+Bear A Grudge	Dave Rogers	Spectrum AY	ironfist/bear.ay	ay
+Beverly Hills Cop	David Whittaker	Spectrum AY	ironfist/beverly.ay	ay
+Beyond The Ice Palace	David Whittaker	Spectrum AY	ironfist/beyond.ay	ay
+Brian Bloodaxe	Unknown	Spectrum AY	ironfist/bloodaxe.ay	ay
+BMX Simulator	Unknown	Spectrum AY	ironfist/bmx.ay	ay
+Pro BMX Simulator 2	David Whittaker	Spectrum AY	ironfist/bmx2.ay	ay
+Booty	John F. Cain	Spectrum AY	ironfist/booty.ay	ay
+Bronx	Pablo Toledo	Spectrum AY	ironfist/bronx.ay	ay
+Back To The Future 2	David Whittaker	Spectrum AY	ironfist/bttf2.ay	ay
+Buratino	CopperFeet	Spectrum AY	ironfist/bura.ay	ay
+Butcher Hill	Benn Daglish	Spectrum AY	ironfist/butch.ay	ay
+Comando Quatro	Unknown	Spectrum AY	ironfist/c4.ay	ay
+Catch 23	Unknown	Spectrum AY	ironfist/catch23.ay	ay
+Cauldron 2	Richard Joseph	Spectrum AY	ironfist/cauldr2.ay	ay
+Cavemania	Adrian R. Shaw	Spectrum AY	ironfist/caveman.ay	ay
+Crime Busters	Unknown	Spectrum AY	ironfist/cbust.ay	ay
+Chase H.Q. 2	Unknown	Spectrum AY	ironfist/chasehq2.ay	ay
+CJ's Elephant Antics	Lyndon Sharp	Spectrum AY	ironfist/cj.ay	ay
+CJ in USA	Allister Brimble	Spectrum AY	ironfist/cjinusa.ay	ay
+Coliseum	Gominolas	Spectrum AY	ironfist/coliseum.ay	ay
+Colony	Unknown	Spectrum AY	ironfist/colony.ay	ay
+Combat School	David Whittaker	Spectrum AY	ironfist/combatsc.ay	ay
+Crystal Castles	Unknown	Spectrum AY	ironfist/crystal.ay	ay
+Cybex	Unknown	Spectrum AY	ironfist/cybex.ay	ay
+Dan Dare III	David Whittaker	Spectrum AY	ironfist/dandare3.ay	ay
+Double Dragon 2: The Revenge	Unknown	Spectrum AY	ironfist/dd2.ay	ay
+Double Dragon 3: Rosetta Stone	Unknown	Spectrum AY	ironfist/dd3.ay	ay
+Dizzy Down the Rapids	Allister Brimble	Spectrum AY	ironfist/ddtr.ay	ay
+Desperado	Gominolas	Spectrum AY	ironfist/desper.ay	ay
+Destiny Mission	Sound Images	Spectrum AY	ironfist/destiny.ay	ay
+DJ Puff's Volcanic Erruption	Allister Brimble	Spectrum AY	ironfist/djpuff.ay	ay
+Defender of the Crown	Unknown	Spectrum AY	ironfist/dotc.ay	ay
+Super Dragon Slayer	Unknown	Spectrum AY	ironfist/dragonsl.ay	ay
+Dark Sceptre	Unknown	Spectrum AY	ironfist/ds.ay	ay
+Double Take	Unknown	Spectrum AY	ironfist/dtake.ay	ay
+Count Duckula	Unknown	Spectrum AY	ironfist/duckula.ay	ay
+Elven Warrior	Sonic Graffiti	Spectrum AY	ironfist/elven.ay	ay
+Enchnater	Alberto Sampler	Spectrum AY	ironfist/ench.ay	ay
+Fallen Angel	Unknown	Spectrum AY	ironfist/fallen.ay	ay
+Fargo	Gominolas	Spectrum AY	ironfist/fargo.ay	ay
+Firefly	Special Erase	Spectrum AY	ironfist/firefly.ay	ay
+Future Knight	Benn Daglish	Spectrum AY	ironfist/fk.ay	ay
+The Flinstones	Benn Daglish	Spectrum AY	ironfist/flinston.ay	ay
+Frankie Goes to Hollywood	Unknown	Spectrum AY	ironfist/frank.ay	ay
+Freddy Hardest	Manuel Cubedo	Spectrum AY	ironfist/freddy.ay	ay
+Frost Byte	Nick Jones	Spectrum AY	ironfist/frosbyte.ay	ay
+Full Thorttle 2	Michael Batty	Spectrum AY	ironfist/ft2.ay	ay
+Game Over	Unknown	Spectrum AY	ironfist/gameover.ay	ay
+Gauntlet 2	Benn Daglish	Spectrum AY	ironfist/gaunt2.ay	ay
+Gauntlet	Unknown	Spectrum AY	ironfist/gauntlet.ay	ay
+Ghostbusters 2	D. Whittaker	Spectrum AY	ironfist/gb2.ay	ay
+G-Man	Peter Williamson	Spectrum AY	ironfist/gman.ay	ay
+Golden Axe	Sound Images	Spectrum AY	ironfist/golden.ay	ay
+Grand Prix Simulator	David Whittaker	Spectrum AY	ironfist/gps.ay	ay
+Grand Prix Simulator 2	David Whittaker	Spectrum AY	ironfist/gps2.ay	ay
+Gunfighter	Adrian R. Shaw	Spectrum AY	ironfist/gunfight.ay	ay
+Gun Fright	Unknown	Spectrum AY	ironfist/gunfrig.ay	ay
+Gunsmoke	Gominolas	Spectrum AY	ironfist/gunsmoke.ay	ay
+Great Gurianos	David Perry	Spectrum AY	ironfist/gurianos.ay	ay
+Gutz	Special Erase	Spectrum AY	ironfist/gutz.ay	ay
+H.A.T.E.	Benn Daglish	Spectrum AY	ironfist/hate.ay	ay
+Havoc	Sonic Graffiti	Spectrum AY	ironfist/havoc.ay	ay
+Heartbroken	Adrian R. Shaw	Spectrum AY	ironfist/heartbro.ay	ay
+Heman: Masters of the Universe	Benn Daglish	Spectrum AY	ironfist/heman.ay	ay
+Hudson Hawk	Keith Tinman	Spectrum AY	ironfist/hhawk.ay	ay
+Humphrey	Unknown	Spectrum AY	ironfist/hump.ay	ay
+Hunchback The Adventure	Fred Gray	Spectrum AY	ironfist/hunch.ay	ay
+Hundra	Roman Hergueta	Spectrum AY	ironfist/hundra.ay	ay
+Hypaball	Unknown	Spectrum AY	ironfist/hypa.ay	ay
+Hyper Active	Keith Tinman	Spectrum AY	ironfist/hyper.ay	ay
+Hyper Lane	Andy Brown	Spectrum AY	ironfist/hyplane.ay	ay
+Infection	David Whittaker	Spectrum AY	ironfist/infect.ay	ay
+International Ninja Rabbits	Unknown	Spectrum AY	ironfist/inr.ay	ay
+International Karate	Unknown	Spectrum AY	ironfist/intkar.ay	ay
+International Speedway	David Whittaker	Spectrum AY	ironfist/intspdw.ay	ay
+Jet Bike Simulator	David Whittaker	Spectrum AY	ironfist/jetbike.ay	ay
+Jet Set Willy	Matthew Smith	Spectrum AY	ironfist/jetset.ay	ay
+Jungle Warrior	Lete	Spectrum AY	ironfist/jw.ay	ay
+Kung-Fu Knights	Unknown	Spectrum AY	ironfist/kknights.ay	ay
+Kosmos	Adrian R. Shaw	Spectrum AY	ironfist/kosmos.ay	ay
+Kraal	Pedro Fortes	Spectrum AY	ironfist/kraal.ay	ay
+Krakout	Benn Daglish	Spectrum AY	ironfist/krakout.ay	ay
+Little Puff	D. Kelly	Spectrum AY	ironfist/litpuff.ay	ay
+Lonewolf: Mirror of Death	Unknown	Spectrum AY	ironfist/lonewolf.ay	ay
+Loopz	David Whittaker	Spectrum AY	ironfist/loopz.ay	ay
+Lost Caves	Paul Hiley	Spectrum AY	ironfist/lostcave.ay	ay
+MadMix 2	TPM	Spectrum AY	ironfist/madmix2.ay	ay
+Mag Max - Robo-Centurion	Unknown	Spectrum AY	ironfist/magmax.ay	ay
+Max Headroom	Unknown	Spectrum AY	ironfist/maxhdr.ay	ay
+The Music Box 128k	Mark Alexander	Spectrum AY	ironfist/mbox128.ay	ay
+Miami Chase	Allister Brimble	Spectrum AY	ironfist/miachase.ay	ay
+Miami Cobra GT	Nigel Speight	Spectrum AY	ironfist/miamco.ay	ay
+Mickey Mouse	Benn Daglish	Spectrum AY	ironfist/mickey.ay	ay
+Mig-29 Fighter	Richard Chaney	Spectrum AY	ironfist/mig29.ay	ay
+Moonlight Madness	John F. Cain	Spectrum AY	ironfist/moonligh.ay	ay
+Magic Story	W. Kapp	Spectrum AY	ironfist/ms.ay	ay
+Classic Muncher	Nick Jones	Spectrum AY	ironfist/muncher.ay	ay
+Wham! The Music Box	Mark Alexander	Spectrum AY	ironfist/musicbox.ay	ay
+Nebulus	Unknown	Spectrum AY	ironfist/nebulus.ay	ay
+Nemesis: The Final Challenge	Unknown	Spectrum AY	ironfist/nemesis.ay	ay
+Nether Earth	Unknown	Spectrum AY	ironfist/nether.ay	ay
+Night Shift	Dave Lowe	Spectrum AY	ironfist/nightshf.ay	ay
+Jack The Nipper! In Coconut Capers	Benn Daglish	Spectrum AY	ironfist/nipper2.ay	ay
+Nonamed	Unknown	Spectrum AY	ironfist/nonamed.ay	ay
+Netherworld	Dave Rogers	Spectrum AY	ironfist/nworld.ay	ay
+olli	Jerry Astley	Spectrum AY	ironfist/olli.ay	ay
+Olli & Lissa 2: Halloween	Jerry Danison	Spectrum AY	ironfist/olli2.ay	ay
+Operation Thunderbolt	Matthew Cannon	Spectrum AY	ironfist/opthund.ay	ay
+Operation Wolf	Jonathan Dunn	Spectrum AY	ironfist/opwolf.ay	ay
+Advanced Pinball Simulator	David Whittaker	Spectrum AY	ironfist/pinball.ay	ay
+Pixy The Microdot 2	David Box	Spectrum AY	ironfist/pixy2.ay	ay
+Power Drift	Dave Lowe	Spectrum AY	ironfist/powdrift.ay	ay
+Pulsator	Mark Alexander	Spectrum AY	ironfist/pulsator.ay	ay
+Pulsoid	Tiny Williams	Spectrum AY	ironfist/pulsoid.ay	ay
+Ram	TPM	Spectrum AY	ironfist/ram.ay	ay
+Rambo 2	Unknown	Spectrum AY	ironfist/rambo2.ay	ay
+Rambo 3	Jonathan Dunn	Spectrum AY	ironfist/rambo3.ay	ay
+Ramparts	Unknown	Spectrum AY	ironfist/ramparts.ay	ay
+The Rastan Saga	Jas C. Brooke	Spectrum AY	ironfist/rastan.ay	ay
+Raster Scan	Unknown	Spectrum AY	ironfist/raster.ay	ay
+Red Heat	Keith Tinman	Spectrum AY	ironfist/redheat.ay	ay
+Road Runner	Fred Gray	Spectrum AY	ironfist/roadrun.ay	ay
+Rock Star Ate My Hamster	Paul Hiley	Spectrum AY	ironfist/rock.ay	ay
+Round The Bend!	David Sanders	Spectrum AY	ironfist/round.ay	ay
+Ruff and Reddy	Sean Conran	Spectrum AY	ironfist/ruff.ay	ay
+Saboteur 2	Unknown	Spectrum AY	ironfist/sab2.ay	ay
+Sabrina	Unknown	Spectrum AY	ironfist/sabrina.ay	ay
+Sacred Sword	TPM	Spectrum AY	ironfist/sacred.ay	ay
+Saigon Combat Unit	Sonic Graffiti	Spectrum AY	ironfist/saigon.ay	ay
+Super Scramble Simulator	Benn Daglish	Spectrum AY	ironfist/scramble.ay	ay
+Seahawk	Adrian R. Shaw	Spectrum AY	ironfist/seahawk.ay	ay
+Sergeant Seymour Robotcop	Allister Brimble	Spectrum AY	ironfist/sergsey.ay	ay
+Seymour at the Movies	Lyndon Sharp	Spectrum AY	ironfist/seymour1.ay	ay
+Wild West Seymour	Allister Brimble	Spectrum AY	ironfist/seymour2.ay	ay
+Street Fighter 2	Unknown	Spectrum AY	ironfist/sf2.ay	ay
+Strike Force SAS	Nick Jones	Spectrum AY	ironfist/sfsas.ay	ay
+Street Gang Football	Unknown	Spectrum AY	ironfist/sgfoot.ay	ay
+Space Gun	Sonic Projects	Spectrum AY	ironfist/sgun.ay	ay
+Earth Shaker	Michael Batty	Spectrum AY	ironfist/shaker.ay	ay
+Shanghai Karate	Mike Brown & Andy Severn	Spectrum AY	ironfist/shang.ay	ay
+Shao Lin's Road	Unknown	Spectrum AY	ironfist/shaolin.ay	ay
+Short Circuit	Unknown	Spectrum AY	ironfist/short.ay	ay
+Spitting Image	David Whittaker	Spectrum AY	ironfist/si.ay	ay
+Sidewize	Steve Wetherill	Spectrum AY	ironfist/sidewize.ay	ay
+Simpsons: Bart vs the Space Mutants	Jonathan Dunn	Spectrum AY	ironfist/simpsons.ay	ay
+Sir Loin	Unknown	Spectrum AY	ironfist/sirloin.ay	ay
+Skatin USA	Adrian R. Shaw	Spectrum AY	ironfist/skatin.ay	ay
+Strip Logik	Unknown	Spectrum AY	ironfist/slog.ay	ay
+Snare	Andy Brown	Spectrum AY	ironfist/snare.ay	ay
+Spirits	Alejandro Andre	Spectrum AY	ironfist/spirits.ay	ay
+Silent Shadow	Gominolas	Spectrum AY	ironfist/sshadow.ay	ay
+Sword Slayer	Mike Brown & Andy Severn	Spectrum AY	ironfist/sslayer.ay	ay
+Sly Spy: Secret Agent	Geoff Follin	Spectrum AY	ironfist/sssa.ay	ay
+Stack Up	David Sanders	Spectrum AY	ironfist/stackup.ay	ay
+Starbyte	Unknown	Spectrum AY	ironfist/starbyte.ay	ay
+Starfox	Frantisek Fuka	Spectrum AY	ironfist/starfox.ay	ay
+Steg	Allister Brimble	Spectrum AY	ironfist/steg.ay	ay
+Stuntman Seymour	Gerard Gourley & Tau Zero	Spectrum AY	ironfist/stntsey.ay	ay
+Stormlord	Dave Rogers	Spectrum AY	ironfist/storm.ay	ay
+Stryker in the Crypt of Trogan	Andy Wynd	Spectrum AY	ironfist/stryker.ay	ay
+Superbike Trans-Am	Unknown	Spectrum AY	ironfist/supbike.ay	ay
+Super Robin Hood	David Whittaker	Spectrum AY	ironfist/suprobin.ay	ay
+Super Seymour Saves The Planet	Lyndon Sharp	Spectrum AY	ironfist/supsey.ay	ay
+Supertrux	Jas C. Brooke	Spectrum AY	ironfist/suptrux.ay	ay
+Survivior	Gominolas	Spectrum AY	ironfist/survivor.ay	ay
+Tai-Pan	Martin Galway	Spectrum AY	ironfist/taipan.ay	ay
+Tank Command	Adrian R. Shaw	Spectrum AY	ironfist/tankcom.ay	ay
+TAHKODPOM	Copper Feet	Spectrum AY	ironfist/tankodr.ay	ay
+Tai-Chi Tortoise	Michael Batty	Spectrum AY	ironfist/tct.ay	ay
+Terrormeter	David Whittaker	Spectrum AY	ironfist/terror.ay	ay
+Tetris	David Whittaker	Spectrum AY	ironfist/tetris.ay	ay
+Titanic	Gominolas	Spectrum AY	ironfist/titanic.ay	ay
+Toi Acid Game	J. V. Aranda, J. C. Rodriguez	Spectrum AY	ironfist/toi.ay	ay
+Tom & Jerry 2	G. Brandt, C. Grewe	Spectrum AY	ironfist/tomjer2.ay	ay
+Top Gun	Unknown	Spectrum AY	ironfist/topgun.ay	ay
+Toyota Celica GT Rally	Unknown	Spectrum AY	ironfist/toyota.ay	ay
+Transmuter	Unknown	Spectrum AY	ironfist/trmuter.ay	ay
+Twin Turbo V8	J. Preston	Spectrum AY	ironfist/ttv8.ay	ay
+The Tube	David Whittaker	Spectrum AY	ironfist/tube.ay	ay
+Turbo Esprit	Unknown	Spectrum AY	ironfist/turbo.ay	ay
+Twinz	Unknown	Spectrum AY	ironfist/twinz.ay	ay
+Typhoon	Jonathan Dunn	Spectrum AY	ironfist/typhoon.ay	ay
+UGH!	Unknown	Spectrum AY	ironfist/ugh.ay	ay
+Cosmic Wartoad	Unknown	Spectrum AY	ironfist/wartoad.ay	ay
+Wec Le Mans	Jonathan Dunn	Spectrum AY	ironfist/wecleman.ay	ay
+Wizard Willy	Unknown	Spectrum AY	ironfist/wizwilly.ay	ay
+Wild Water	Andy Brown	Spectrum AY	ironfist/wldwater.ay	ay
+Wrestling Superstars	Gerard Gourley	Spectrum AY	ironfist/ws.ay	ay
+WWF Wrestle Mania	Sean Conran	Spectrum AY	ironfist/wwfwm.ay	ay
+Xenophobe	Barry Leitch	Spectrum AY	ironfist/xenophob.ay	ay
+Yie Ar Kung-Fu	Martin Galway	Spectrum AY	ironfist/yieark.ay	ay
+Yogi Bear & Friends	Sean Conran	Spectrum AY	ironfist/yogibear.ay	ay
+Zona 0	Lords of Sound	Spectrum AY	ironfist/zona0.ay	ay
+Zone Trooper	Unknown	Spectrum AY	ironfist/zonetroo.ay	ay
