@@ -2,6 +2,9 @@
 #define SCOLLER_H
 
 #include "Effect.h"
+#include <cmath>
+#include <cstdlib>
+#include <string>
 
 #include <coreutils/file.h>
 #include <grappix/grappix.h>
@@ -14,15 +17,22 @@ public:
 	explicit Scroller(grappix::RenderTarget &target) : target(target), scr(grappix::screen.width()+10, 300) {
 		program = grappix::get_program(grappix::TEXTURED_PROGRAM).clone();
 
-		grappix::Resources::getInstance().load<std::string>((Environment::getCacheDir() / "sine_shader.glsl").string(),
-			[=](const std::shared_ptr<std::string>& source) {
-				try {
-					program.setFragmentSource(*source);
-				} catch(grappix::shader_exception &e) {
-					LOGD("ERROR");
-				}
-			}, sineShaderF);
-
+		// Load the sine-scroll fragment shader INLINE and synchronously, exactly
+		// like the font shader below. The previous implementation loaded it via
+		// Resources::load() from a cache file (getCacheDir()/sine_shader.glsl) --
+		// but that loader PREFERS an existing on-disk file over the inline default
+		// (see resources.h TypedResource::load). A stale cache file left over from
+		// an earlier build therefore silently overrides any change to sineShaderF,
+		// which is exactly why edits to this effect appeared to do "nothing". Bind
+		// the source directly so the compiled-in shader is always the one that runs.
+		try {
+			program.setFragmentSource(sineShaderF);
+		} catch(grappix::shader_exception &e) {
+			// Make failures LOUD: if this throws, `program` keeps the plain
+			// textured shader (no gradient, no wobble) and the scroll looks
+			// completely unchanged. Print the real GL log instead of swallowing it.
+			LOGD("SINE SCROLL SHADER FAILED TO COMPILE: %s", e.what());
+		}
 
 		fprogram = grappix::get_program(grappix::FONT_PROGRAM_DF).clone();
 		fprogram.setFragmentSource(fontShaderF);
@@ -41,6 +51,23 @@ public:
 		if(what == "font") {
 			font = grappix::Font(val, 120, 1024 | grappix::Font::DISTANCE_MAP);
 			font.set_program(fprogram);
+		} else if(what == "sine_amplitude") {
+			sine_amplitude = std::stof(val);
+		} else if(what == "sine_frequency") {
+			sine_frequency = std::stof(val);
+		} else if(what == "sine_speed") {
+			sine_speed = std::stof(val);
+		} else if(what == "sine_on") {
+			// The lua value arrives via std::to_string(double) as "1.000000",
+			// which is neither "true" nor "1" -- the old exact-string check turned
+			// the whole effect OFF and made it look like the feature did nothing.
+			// Parse numerically (atof never throws; returns 0.0 for "true", which
+			// the explicit check below still handles).
+			sine_on = (val == "true") || (atof(val.c_str()) != 0.0);
+		} else if(what == "sine_interval") {
+			sine_interval = std::stof(val);
+		} else if(what == "sine_transition") {
+			sine_transition = std::stof(val);
 		} else {
 			scrollText = val;
 			LOGD("SCROLL: %s", scrollText);
@@ -88,7 +115,34 @@ public:
 		xpos -= scrollspeed * gscale * (dt / (1000.0f / 60.0f));
 		// Render text using dynamic scale factor; baseline centred in texture.
 		scr.text(font, scrollText, xpos, texH / 2.0f, 0xffffffff, dynScale);
+
+		time_counter += dt / 1000.0f;
+		float cycle_time = 0.0f;
+		if (sine_interval > 0.0f) {
+			cycle_time = fmod(time_counter, 2.0f * sine_interval);
+		}
+		// Start the cycle in the SINE phase so the wobble is the first thing you
+		// see (cycle_time < sine_interval == first half of the period). Otherwise
+		// the first ~sine_interval seconds look identical to a plain flat scroll,
+		// which reads as "the effect isn't working".
+		float target_factor = (sine_on && (sine_interval <= 0.0f || cycle_time < sine_interval)) ? 1.0f : 0.0f;
+		if (sine_transition > 0.0f) {
+			if (current_amplitude_factor < target_factor) {
+				current_amplitude_factor += (dt / 1000.0f) / sine_transition;
+				if (current_amplitude_factor > target_factor) current_amplitude_factor = target_factor;
+			} else if (current_amplitude_factor > target_factor) {
+				current_amplitude_factor -= (dt / 1000.0f) / sine_transition;
+				if (current_amplitude_factor < target_factor) current_amplitude_factor = target_factor;
+			}
+		} else {
+			current_amplitude_factor = target_factor;
+		}
+
 		program.use();
+		program.setUniform("uTime", time_counter * sine_speed);
+		program.setUniform("uAmplitude", sine_amplitude * current_amplitude_factor);
+		program.setUniform("uFrequency", sine_frequency);
+
 		static float uvs[] = { 0,0,1,0,0,1,1,1 };
 		target.draw(scr, 0.0F, scrolly - texH / 2.0f, target.width(), texH, uvs, program);
 	}
@@ -101,6 +155,17 @@ public:
 	int scrollspeed = 8;
 	int scrolly = 0;
 	float scrollsize = 4.0;
+
+	// Tweakable parameters for sinusoid scroll
+	float sine_amplitude = 0.15f;
+	float sine_frequency = 8.0f;
+	float sine_speed = 4.0f;
+	bool sine_on = true;
+	float sine_interval = 10.0f;
+	float sine_transition = 1.0f;
+
+	float time_counter = 0.0f;
+	float current_amplitude_factor = 0.0f;
 
 private:
 	grappix::RenderTarget& target;
@@ -118,6 +183,9 @@ private:
 			precision highp float;
 		#endif
 		uniform sampler2D sTexture;
+		uniform float uTime;
+		uniform float uAmplitude;
+		uniform float uFrequency;
 
 		const vec4 color0 = vec4(1.0, 0.9, 0.2, 1.0); // Yellow/Orange
 		const vec4 color1 = vec4(0.5, 0.2, 1.0, 1.0); // Purple/Blue
@@ -125,11 +193,18 @@ private:
 		varying vec2 UV;
 
 		void main() {
-			// Center the gradient on the text (UV.y around 0.5)
-			float grad = smoothstep(0.3, 0.7, UV.y);
-			vec4 rgb = mix(color0, color1, grad);
-			vec4 color = texture2D(sTexture, UV);
-			gl_FragColor = rgb * color;
+			vec2 uv = UV;
+			// Apply sinusoid vertical displacement
+			uv.y += sin(uv.x * uFrequency + uTime) * uAmplitude;
+			
+			if (uv.y < 0.0 || uv.y > 1.0) {
+				gl_FragColor = vec4(0.0);
+			} else {
+				float grad = smoothstep(0.3, 0.7, uv.y);
+				vec4 rgb = mix(color0, color1, grad);
+				vec4 color = texture2D(sTexture, uv);
+				gl_FragColor = rgb * color;
+			}
 		}
 	)";
 

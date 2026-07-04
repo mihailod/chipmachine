@@ -116,6 +116,12 @@ void ChipMachine::setVariable(const std::string& name, int index,
             if (auto fontFile = findFile(path, val))
                 scrollEffect.set("font", fontFile->string());
         } break;
+        case 5: scrollEffect.set("sine_amplitude", val); break;
+        case 6: scrollEffect.set("sine_frequency", val); break;
+        case 7: scrollEffect.set("sine_speed", val); break;
+        case 8: scrollEffect.set("sine_on", val); break;
+        case 9: scrollEffect.set("sine_interval", val); break;
+        case 10: scrollEffect.set("sine_transition", val); break;
         }
     } else if (name == "hilight_color") {
         hilightColor = Color(stoll(val));

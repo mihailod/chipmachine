@@ -113,6 +113,7 @@ public:
 
     void initLua();
     void layoutScreen();
+    void updateTitleMarquee(uint32_t delta);
     void play(const SongInfo& si);
     void update();
     void render(uint32_t delta);
@@ -359,6 +360,14 @@ private:
     int numLines = 20;
 
     tween::Tween markTween;
+
+    // Per-frame marquee that bounce-scrolls a too-long song title so all of it
+    // becomes visible. Driven live in updateTitleMarquee() rather than by a baked
+    // tween, so the scroll distance always tracks the CURRENT window size (resize/
+    // maximize) instead of the value captured when the song started. Only active
+    // after the intro slide-in completes; inactive while a title fits.
+    bool titleMarqueeActive = false;
+    float titleMarqueePhase = 0.0f;
 
     Color timeColor;
     Color spectrumColor = 0xffffffff;

@@ -595,6 +595,52 @@ void ChipMachine::layoutScreen()
     volPos = { ((float)screen.width() - ww) / 2.0f,
                ((float)screen.height() - hh) / 2.0f, ww, hh };
     volumeIcon.setArea(volPos);
+
+    // No title-marquee rebuild needed here: updateTitleMarquee() recomputes the
+    // scroll extent from the live layout every frame, so a resize/maximize is
+    // picked up automatically.
+}
+
+// Bounce-scroll the song title each frame when it is too wide to fit, so the
+// whole title becomes visible. Recomputes the overflow from the CURRENT title
+// width and content bounds every call, which makes it correct across window
+// resizes (the previous baked-tween version kept the distance captured at song
+// start). Position is derived purely from titleMarqueePhase, so it can never get
+// "stuck" scrolled off to one side.
+void ChipMachine::updateTitleMarquee(uint32_t delta)
+{
+    if (!titleMarqueeActive)
+        return;
+
+    // The composer field keeps the un-scrolled left/base x of the title column.
+    float baseX = currentInfoField[1].pos.x;
+    int tw = currentInfoField.getWidth(0);
+    int overflow = tw - (downRight.x - topLeft.x - 20);
+
+    if (overflow <= 20) {
+        // Title fits (or nearly): pin it to the base, no scrolling.
+        currentInfoField[0].pos.x = baseX;
+        titleMarqueePhase = 0.0f;
+        return;
+    }
+
+    titleMarqueePhase += delta / 1000.0f;
+
+    // Constant on-screen scroll speed, independent of window size. The sweep
+    // time is distance / velocity, and the velocity scales with the window
+    // (gscale) exactly as the glyphs and the overflow distance do -- so growing
+    // the window increases the distance and the speed together, leaving the
+    // perceived scroll rate unchanged. (A fixed cycle time made bigger windows,
+    // which overflow more pixels, appear to crawl -- the same bug we fixed on the
+    // bottom scroller.) gscale matches Scroller.h: screen height / 576.
+    float gscale = screen.height() / 576.0f;
+    float speed = 330.0f * gscale;                            // px/sec; raise to go faster
+    float cycle = 2.0f * overflow / speed;                    // seconds per out-and-back
+    if (cycle < 1.0f) cycle = 1.0f;                           // gentle floor for near-fitting titles
+    float p = std::fmod(titleMarqueePhase, cycle) / cycle;    // 0..1
+    // Easing shape 0 -> 1 -> 0 over one cycle, dwelling briefly at each end.
+    float ease = 0.5f - 0.5f * std::cos(p * 6.28318530718f);
+    currentInfoField[0].pos.x = baseX - ease * overflow;
 }
 
 void ChipMachine::play(SongInfo const& si)
@@ -1192,6 +1238,11 @@ void ChipMachine::update()
 
         currentTween.finish();
         currentInfoField[0].pos.x = currentInfoField[1].pos.x;
+        // Suspend the title marquee during the intro slide-in (the tween below
+        // animates the field position); it is re-enabled in onComplete once the
+        // title has settled at its base.
+        titleMarqueeActive = false;
+        titleMarqueePhase = 0.0f;
         prevInfoField = currentInfoField;
 
         currentInfoField.setInfo(currentInfo);
@@ -1205,18 +1256,12 @@ void ChipMachine::update()
 
         auto sub_title = player.getMeta("sub_title");
 
-        int tw = currentInfoField.getWidth(0);
-
         auto f = [=]() {
             xinfoField.setText(sub_title);
-            int d = (tw - (downRight.x - topLeft.x - 20));
-            if (d > 20)
-                Tween::make()
-                    .sine()
-                    .repeating()
-                    .to(currentInfoField[0].pos.x,
-                        currentInfoField[0].pos.x - d)
-                    .seconds((d + 200) / 200.0f);
+            // Title has settled at its base -- hand control to the per-frame
+            // marquee, which scrolls it only if it doesn't fit.
+            titleMarqueeActive = true;
+            titleMarqueePhase = 0.0f;
         };
 
         updateFavorite();
@@ -1257,6 +1302,8 @@ void ChipMachine::update()
         player.stop();
         currentTween.finish();
         currentInfoField[0].pos.x = currentInfoField[1].pos.x;
+        titleMarqueeActive = false;
+        titleMarqueePhase = 0.0f;
 
         SongInfo song = player.getInfo();
         song.format = MusicDatabase::describeFormat(song);
@@ -1479,7 +1526,9 @@ void ChipMachine::render(uint32_t delta)
     }
 
     if (starsOn) starEffect.render(delta);
-    scrollEffect.render(delta);
+
+    // Update the title bounce-scroll before the screen draws currentInfoField.
+    updateTitleMarquee(delta);
 
     if (currentScreen == MAIN_SCREEN) {
         mainScreen.render(screenptr, delta);
@@ -1490,6 +1539,13 @@ void ChipMachine::render(uint32_t delta)
     } else {
         commandScreen.render(screenptr, delta);
     }
+
+    // Draw the scroller AFTER the screen content so it stays in the foreground.
+    // It was previously drawn before the screens, so the album-art cover (and
+    // other screen elements) painted over it whenever the sine wobble pushed the
+    // text up into their area. Kept below the modal overlay so dialogs/help still
+    // sit on top of the scroll.
+    scrollEffect.render(delta);
 
     overlay.render(screenptr, delta);
 

@@ -70,11 +70,28 @@ MONO_SPECW = SCREEN_WIDTH / EQ_SLOTS
 SPECW = (SCREEN_WIDTH - SPECTRUM_GAP) / (EQ_SLOTS * 2)
 SPECH = MONO_SPECW * 3.5
 
+--[[
+
+    Settings.scroll = {                                                                                              
+      Y1 - GSCALE * 130, -- 1. y position                                                                            
+      GSCALE * 2.0,      -- 2. vertical size scaling                                                                 
+      SCROLL_SPEED,      -- 3. horizontal scroll speed                                                               
+      "data/Bello.otf",  -- 4. font path                                                                             
+      0.15,              -- 5. sine_amplitude (height of the wave; 0.15 = 15% of scroller height)                    
+      8.0,               -- 6. sine_frequency (wavelength; higher is more compressed waves)                          
+      4.0,               -- 7. sine_speed (oscillation animation speed)                                              
+      1,                 -- 8. sine_on (1 = active/alternating, 0 = off/always flat)                                 
+      10.0,              -- 9. sine_interval (cycle time: 10s flat, 10s sine)                                        
+      1.0                -- 10. sine_transition (time in seconds to smoothly morph flat <-> sine)                    
+    }   
+
+]]
+
 if TV then
-  Settings.scroll = { Y1 - 100, GSCALE * 2.0, SCROLL_SPEED, "data/Bello.otf" }
+  Settings.scroll = { Y1 - 100, GSCALE * 2.0, SCROLL_SPEED, "data/Bello.otf", 0.15, 8.0, 4.0, 1, 10.0, 1.0 }
   Settings.spectrum = { X0-40, Y1+40, 28, 80.0, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 else
-  Settings.scroll = { Y1 - GSCALE * 130, GSCALE * 2.0, SCROLL_SPEED, "data/Bello.otf" }
+  Settings.scroll = { Y1 - GSCALE * 130, GSCALE * 2.0, SCROLL_SPEED, "data/Bello.otf", 0.15, 8.0, 4.0, 1, 10.0, 1.0 }
   -- Anchor spectrum firmly to the bottom of the window
   Settings.spectrum = { X0, SCREEN_HEIGHT - 10, SPECW, SPECH, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 end
