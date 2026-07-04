@@ -2,8 +2,6 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- bug in song title scroll left-right on the top of the screen. if song name cannot fit, this scroll is supposed to reveal the whole name (by scrolling it) but that works only if the window is small, if i make it larger or worst case maximize it the amount of scrolling doesn't get adjusted and the scroll does not show the whole song title anymore -- it scrolls back (to the right) before it had a chance to reveal the whole title by scrolling to the left
-
 - 2nd level menu drill on more platforms with subplatforms?
 - unify some platforms on 1st level and do the drill?
 
