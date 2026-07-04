@@ -144,6 +144,7 @@ Metadata from these databases is ingested, normalized, deduped and cross-checked
 * Vampi's MDX Collection (Sharp X68000) - https://mdx.vampi.tech
 * Demozoo - https://demozoo.org
 * Scene.org - https://scene.org
+* OPL Archive - https://opl.wafflenet.com
 
 ### Remixes (MP3)
 
