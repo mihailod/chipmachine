@@ -1479,7 +1479,6 @@ void ChipMachine::render(uint32_t delta)
     }
 
     if (starsOn) starEffect.render(delta);
-    scrollEffect.render(delta);
 
     if (currentScreen == MAIN_SCREEN) {
         mainScreen.render(screenptr, delta);
@@ -1490,6 +1489,13 @@ void ChipMachine::render(uint32_t delta)
     } else {
         commandScreen.render(screenptr, delta);
     }
+
+    // Draw the scroller AFTER the screen content so it stays in the foreground.
+    // It was previously drawn before the screens, so the album-art cover (and
+    // other screen elements) painted over it whenever the sine wobble pushed the
+    // text up into their area. Kept below the modal overlay so dialogs/help still
+    // sit on top of the scroll.
+    scrollEffect.render(delta);
 
     overlay.render(screenptr, delta);
 
