@@ -540,9 +540,9 @@ This is mostly a preservation effort. I am making this project for myself so I a
 My work here is mostly based around:
 
 * **Porting**: from Intel to ARM
-* **Integration**: with / adding of various new plugins that did not exist in Intel version
-* **Content curation**: updating / adding more songs and fixing their metadata from various databases)
-* **Administration**: maintenance, releasing, pull requests merging, support, promoting
+* **Integration**: with / adding of various new plugins that did not exist in the Intel version
+* **Content curation**: updating / adding more songs and fixing their metadata from various databases
+* **Administration**: maintenance, releasing, PR merging, support, promoting
 
 **I don't take or imply any credit for the original idea and implementation and actual players development (the hardest part IMO).**
 
