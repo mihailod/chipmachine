@@ -625,10 +625,20 @@ void ChipMachine::updateTitleMarquee(uint32_t delta)
     }
 
     titleMarqueePhase += delta / 1000.0f;
-    float cycle = (overflow + 200) / 200.0f;                  // seconds per out-and-back
+
+    // Constant on-screen scroll speed, independent of window size. The sweep
+    // time is distance / velocity, and the velocity scales with the window
+    // (gscale) exactly as the glyphs and the overflow distance do -- so growing
+    // the window increases the distance and the speed together, leaving the
+    // perceived scroll rate unchanged. (A fixed cycle time made bigger windows,
+    // which overflow more pixels, appear to crawl -- the same bug we fixed on the
+    // bottom scroller.) gscale matches Scroller.h: screen height / 576.
+    float gscale = screen.height() / 576.0f;
+    float speed = 330.0f * gscale;                            // px/sec; raise to go faster
+    float cycle = 2.0f * overflow / speed;                    // seconds per out-and-back
+    if (cycle < 1.0f) cycle = 1.0f;                           // gentle floor for near-fitting titles
     float p = std::fmod(titleMarqueePhase, cycle) / cycle;    // 0..1
-    // Same easing shape as the old tween's sine_fn: 0 -> 1 -> 0 over one cycle,
-    // dwelling briefly at each end. cos form avoids needing M_PI phase offsets.
+    // Easing shape 0 -> 1 -> 0 over one cycle, dwelling briefly at each end.
     float ease = 0.5f - 0.5f * std::cos(p * 6.28318530718f);
     currentInfoField[0].pos.x = baseX - ease * overflow;
 }
