@@ -10,8 +10,8 @@ But this is far more than a simple port!
 
 While ensuring the player runs on modern Apple hardware, my passion for it has expanded its compatibility and scale:
 
-* ~60 plugins supporting ~350 music formats
-* ~600,000 indexed songs
+* 60+ plugins supporting 350+ music formats
+* ~670,000 indexed songs and counting
 
 **The mission statement: support every single format and index all retro/chip music databases.**
 
