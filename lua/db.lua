@@ -179,7 +179,18 @@
 --     The legacy `parseAmp` parser (dispatched by type->id "amp", expected the
 --     old "L/Composer/FMT.title.gz" paths) was removed so AMP now parses via
 --     parseStandard like every other .txt collection. Bump forces a reindex.
-VERSION = 75;
+-- 76: The OPL Archive (opl.wafflenet.com) -- ~1341 non-game OPL2/OPL3 chiptunes
+--     (demoscene + covers) by 215 artists. Every file is a VGM log gzipped to
+--     .vgz; a random archive sample is 100% YM3812 (OPL2) / YMF262 (OPL3), the
+--     AdLib / Sound Blaster PC chips. GME's Vgm_Emu has no OPL cores (renders
+--     them silent, aborts on some OPL2), so a new libvgmplugin (ValleyBell
+--     libvgm, vendored at zxtune/3rdparty/vgm) plays them and GME declines any
+--     OPL-carrying VGM -- the ~14k non-OPL console VGZ stay on GME. Built by
+--     tools/build_oplarchive.py from data/misc/opl/files.csv; path = a full
+--     URI-encoded wafflenet URL (source empty), kept as .vgz (libvgm reads gzip
+--     directly). format "OPL Archive" -> ADPLUG -> the "IBM PC (AdLib/OPL)"
+--     filter. Bump forces a reindex.
+VERSION = 76;
 
 DB = {
 {
@@ -218,6 +229,17 @@ DB = {
 	id =  "cpcpower",
 	source = "",
 	song_list = "data/cpcpower.txt",
+	song_template = "title composer format path ext",
+	color = 0xfffff
+},
+{
+	-- The OPL Archive (opl.wafflenet.com). Non-game OPL2/OPL3 chiptunes; each
+	-- path is a full URI-encoded wafflenet .vgz URL (source empty). Plays via
+	-- libvgmplugin (GME can't decode OPL); format "OPL Archive" -> AdLib/OPL.
+	name = "OPL Archive",
+	id =  "oplarchive",
+	source = "",
+	song_list = "data/oplarchive.txt",
 	song_template = "title composer format path ext",
 	color = 0xfffff
 },

@@ -242,6 +242,34 @@ TEST_CASE("STarKos host path plays sound", "[music]")
     REQUIRE(sum != 0);
 }
 
+// OPL Archive routing regression: unlike the isolated LibVGM plugin test, this
+// drives the app's real createPlugins()/register_plugins() (plugin_register.cpp)
+// + MusicPlayer::fromFile path -- the one that first shipped broken because
+// libvgmplugin was registered only in musicplayer's reg.cpp, not the app's list.
+// Also feeds a DECOMPRESSED .vgz: the GUI's gzip-by-magic step inflates the
+// downloaded .vgz before the plugin sees it, so the router must still land it on
+// libvgm (GME declines OPL) and produce non-silent audio.
+TEST_CASE("OPL Archive routes to libvgm and plays", "[music]")
+{
+    auto ap = std::make_shared<AudioPlayerNull>();
+    const auto injector = di::make_injector(di::bind<utils::path>.to("."),
+                                            di::bind<AudioPlayer>.to(ap));
+    musix::ChipPlugin::createPlugins("data");
+    chipmachine::MusicPlayer mp{ ap };
+    for (auto const& vgz : {"testmus/libvgm/2a03fox - Snowgoons vs Acid (OPL2).vgz",
+                            "testmus/libvgm/Zero - Shinespark (OPL3).vgz"}) {
+        REQUIRE(mp.playFile(vgz));
+        int64_t sum = 0;
+        for (int i = 0; i < 30 && sum == 0; ++i) {
+            mp.update();
+            std::vector<int16_t> data(8192);
+            ap->get(data);
+            sum = std::accumulate(data.begin(), data.end(), (int64_t)0);
+        }
+        REQUIRE(sum != 0);
+    }
+}
+
 // Native Arkos Tracker songs (.aks) play through the very same AT3 SongLoader +
 // SongPlayer chain as STarKos .sks -- the loader transparently gunzips and auto-
 // detects the Arkos version (modland's .aks are gzip-compressed AT1 XML). Only
@@ -470,6 +498,13 @@ bool testPlugin(std::string const& dir, std::string const& exclude,
 }
 
 TEST_CASE("GME", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme", "nowork"); }
+
+// OPL-family VGM/VGZ (AdLib/Sound Blaster: YM3812 OPL2, YMF262 OPL3) via the
+// vendored libvgm. GME's Vgm_Emu has no OPL cores -- it renders these silent or
+// aborts (Blip_Buffer assertion), so LibVGMPlugin content-gates them away from
+// GME. The two fixtures are one OPL2 and one OPL3 log, each fed as gzipped .vgz
+// (libvgm reads gzip directly); both must load and produce non-silent audio.
+TEST_CASE("LibVGM", "[music]") { testPlugin<musix::LibVGMPlugin>("testmus/libvgm", "nowork"); }
 
 // DefleMask .dmf (multi-system chiptune) via the vendored Furnace engine. The
 // fixtures span the DefleMask systems proven first: Genesis (YM2612+PSG, ext

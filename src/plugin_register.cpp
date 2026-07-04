@@ -7,6 +7,7 @@ extern "C" {
     void aoplugin_register();      // Adlib Objective
     void ayflyplugin_register();   // ZX Spectrum / CPC (AY-3-8910)
     void gmeplugin_register();     // Game Music Emu (NES, SNES, etc.)
+    void libvgmplugin_register();  // OPL2/OPL3 VGM/VGZ (AdLib/SB) via libvgm
     void gsfplugin_register();     // Gameboy Advance
     void heplugin_register();      // PS1/PS2 Executables
     void hivelyplugin_register();  // Amiga HivelyTracker
@@ -62,6 +63,9 @@ void register_plugins() {
     adplugin_register();
     aoplugin_register();
     ayflyplugin_register();
+    // Before gmeplugin so OPL VGMs are claimed here first; the two canHandle
+    // gates are disjoint (GME declines OPL) so order is belt-and-braces.
+    libvgmplugin_register();
     gmeplugin_register();
     gsfplugin_register();
     heplugin_register();

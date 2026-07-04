@@ -28,7 +28,6 @@ stm
 sunvox
 vtx
 vt2
-vgz
 
 length not checked
 
@@ -121,13 +120,6 @@ dm	5
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
 
-* ......in progress... pesic .... THE OPL ARCHIVE
-  - URL: https://www.oplarchive.com
-  - Sound Chips: Yamaha OPL2 (YM3812) / OPL3 (YMF262)
-  - Key Formats: .vgm (OPL logs)
-  - Notes: Houses thousands of non-game OPL tracks (demoscene, covers, standalone trackers).
-    Provides direct browser playback and a structured directory tree of OPL-logged chiptunes.
-
 * VGMRips
 URL: [https://vgmrips.net](https://vgmrips.net)
 What it is: The premier home for .vgm (Video Game Music) file logs, focusing heavily on arcade boards (Capcom CPS1/2/3, Sega system 16, Neo Geo) and sound chips like the YM2612, YM2151, and AY-3-8910.
@@ -196,15 +188,6 @@ A massive historical repository of ZX Spectrum chiptunes. While heavily populate
 --------------------------------------------------------------------------
 ------ DATABASES DONE / RESOLVED / ABANDONED IN THIS PASS BELOW ----------
 --------------------------------------------------------------------------
-
-* DONE Amiga Music Preservation -- 58,432 new
-
-* 3284 new DONE SCENIC / SCENE.ORG MUSIC VAULT
-  - URL: https://www.scene.org
-  - Community: Demoscene releases, music packs, musicdisk records
-  - Key Formats: .mod, .xm, .it, .mp3
-  - Notes: The central file storage for the global demoscene. Houses thousands of
-    party music competition archives and scene-released musicdisks.
 
 * ... PARTIALLY DONE in 1.5 ....   CPC-POWER AUDIOTHEQUE
   - URL: https://www.cpc-power.com

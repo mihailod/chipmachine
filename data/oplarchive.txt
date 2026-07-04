@@ -1,0 +1,1341 @@
+Shelter	$pleen	OPL Archive	https://opl.wafflenet.com/vgm/%24pleen/Shelter.vgz	vgz
+Airy	$pleen	OPL Archive	https://opl.wafflenet.com/vgm/%24pleen/Airy.vgz	vgz
+Summer Fun	$pleen	OPL Archive	https://opl.wafflenet.com/vgm/%24pleen/Summer%20Fun.vgz	vgz
+Moon	$pleen	OPL Archive	https://opl.wafflenet.com/vgm/%24pleen/Moon.vgz	vgz
+Hi-Fly	$pleen	OPL Archive	https://opl.wafflenet.com/vgm/%24pleen/Hi-Fly.vgz	vgz
+Trance	$pleen	OPL Archive	https://opl.wafflenet.com/vgm/%24pleen/Trance.vgz	vgz
+Later for You	$pleen	OPL Archive	https://opl.wafflenet.com/vgm/%24pleen/Later%20for%20You.vgz	vgz
+8-Bit Keys - Oh No! More Square-Waves!	0x5066	OPL Archive	https://opl.wafflenet.com/vgm/0x5066/8-Bit%20Keys%20-%20Oh%20No%21%20More%20Square-Waves%21.vgz	vgz
+Snowgoons vs Acid	2a03fox	OPL Archive	https://opl.wafflenet.com/vgm/2a03fox/Snowgoons%20vs%20Acid.vgz	vgz
+Dream Chaser	2a03fox & TristEndo	OPL Archive	https://opl.wafflenet.com/vgm/2a03fox%20%26%20TristEndo/Dream%20Chaser.vgz	vgz
+Devil Hunter Yohko - Mangetsu no Shiwaza	44magnum	OPL Archive	https://opl.wafflenet.com/vgm/44magnum/Devil%20Hunter%20Yohko%20-%20Mangetsu%20no%20Shiwaza.vgz	vgz
+Black Bird - Rainy	A M 4 N	OPL Archive	https://opl.wafflenet.com/vgm/A%20M%204%20N/Black%20Bird%20-%20Rainy.vgz	vgz
+Fighting Layer - Janis Luciani's Theme	A M 4 N	OPL Archive	https://opl.wafflenet.com/vgm/A%20M%204%20N/Fighting%20Layer%20-%20Janis%20Luciani%27s%20Theme.vgz	vgz
+Restart	Abstract 64	OPL Archive	https://opl.wafflenet.com/vgm/Abstract%2064/Restart.vgz	vgz
+abs(sin(t))	Abstract 64	OPL Archive	https://opl.wafflenet.com/vgm/Abstract%2064/abs%28sin%28t%29%29.vgz	vgz
+RRThiel - VS GREEN BIKER DUDE	Abstract 64	OPL Archive	https://opl.wafflenet.com/vgm/Abstract%2064/RRThiel%20-%20VS%20GREEN%20BIKER%20DUDE.vgz	vgz
+Sonic Frontiers - Cyber Space 2-6 - Transparent Highway	Abstract 64	OPL Archive	https://opl.wafflenet.com/vgm/Abstract%2064/Sonic%20Frontiers%20-%20Cyber%20Space%202-6%20-%20Transparent%20Highway.vgz	vgz
+Error 56 - Samples are not required to play this module silly xD	Abstract 64	OPL Archive	https://opl.wafflenet.com/vgm/Abstract%2064/Error%2056%20-%20Samples%20are%20not%20required%20to%20play%20this%20module%20silly%20xD.vgz	vgz
+Laamaa - Keisari Micro	Abstract 64	OPL Archive	https://opl.wafflenet.com/vgm/Abstract%2064/Laamaa%20-%20Keisari%20Micro.vgz	vgz
+Sunday	ACat	OPL Archive	https://opl.wafflenet.com/vgm/ACat/Sunday.vgz	vgz
+News Brief	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/News%20Brief.vgz	vgz
+The City Hero	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/The%20City%20Hero.vgz	vgz
+Art Deco	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Art%20Deco.vgz	vgz
+Traditional - O Come, All Ye Faithful	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20O%20Come%2C%20All%20Ye%20Faithful.vgz	vgz
+Waiting For You	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Waiting%20For%20You.vgz	vgz
+Clockmaker	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Clockmaker.vgz	vgz
+Heavy Weather	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Heavy%20Weather.vgz	vgz
+Johann Sebastian Bach - Flute Sonata in E-flat Major, II - Siciliano	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Johann%20Sebastian%20Bach%20-%20Flute%20Sonata%20in%20E-flat%20Major%2C%20II%20-%20Siciliano.vgz	vgz
+Charles Gounod - Funeral March of a Marionette	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Charles%20Gounod%20-%20Funeral%20March%20of%20a%20Marionette.vgz	vgz
+Business Talk	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Business%20Talk.vgz	vgz
+Night Beat	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Night%20Beat.vgz	vgz
+Harvard Folk Song	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Harvard%20Folk%20Song.vgz	vgz
+Traditional - God Rest You Merry, Gentlemen	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20God%20Rest%20You%20Merry%2C%20Gentlemen.vgz	vgz
+Ocean Strains	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Ocean%20Strains.vgz	vgz
+Jacques Offenbach - The Tales of Hoffmann - Belle nuit, o nuit d'amour	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Jacques%20Offenbach%20-%20The%20Tales%20of%20Hoffmann%20-%20Belle%20nuit%2C%20o%20nuit%20d%27amour.vgz	vgz
+Ole' Pal	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Ole%27%20Pal.vgz	vgz
+Traditional - Yankee Doodle	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20Yankee%20Doodle.vgz	vgz
+Ambiguous Moments	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Ambiguous%20Moments.vgz	vgz
+Sky Waltz	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Sky%20Waltz.vgz	vgz
+Grandfather Dixit	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Grandfather%20Dixit.vgz	vgz
+Dance of the Caramels	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Dance%20of%20the%20Caramels.vgz	vgz
+Spatial Romance	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Spatial%20Romance.vgz	vgz
+Thin Roses	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Thin%20Roses.vgz	vgz
+Johann Sebastian Bach - Suite No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Johann%20Sebastian%20Bach%20-%20Suite%20No.%202%20in%20B%20Minor%20-%20Badinerie.vgz	vgz
+Lowell Mason - Mary Had a Little Lamb	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Lowell%20Mason%20-%20Mary%20Had%20a%20Little%20Lamb.vgz	vgz
+The Cat Dancer	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/The%20Cat%20Dancer.vgz	vgz
+Visions of Glory	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Visions%20of%20Glory.vgz	vgz
+Badman	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Badman.vgz	vgz
+Soft Acid Rain	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Soft%20Acid%20Rain.vgz	vgz
+Ludwig van Beethoven - Symphony No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Ludwig%20van%20Beethoven%20-%20Symphony%20No.%205%20in%20C%20Minor%20-%20Allegro%20Con%20Brio.vgz	vgz
+Crystal Eve	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Crystal%20Eve.vgz	vgz
+Danger	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Danger.vgz	vgz
+Information Society	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Information%20Society.vgz	vgz
+Black Jack	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Black%20Jack.vgz	vgz
+Johann Sebastian Bach - Brandenburg Concerto No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Johann%20Sebastian%20Bach%20-%20Brandenburg%20Concerto%20No.%203%20in%20G%20Major%2C%20I%20-%20Allegro%20Moderato.vgz	vgz
+Traditional - Deck the Halls	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20Deck%20the%20Halls.vgz	vgz
+Winter Lullaby	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Winter%20Lullaby.vgz	vgz
+Sea Gulls	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Sea%20Gulls.vgz	vgz
+Spinaker	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Spinaker.vgz	vgz
+James Ramsey Murray - Away in a Manger	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/James%20Ramsey%20Murray%20-%20Away%20in%20a%20Manger.vgz	vgz
+Pink Sadness	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Pink%20Sadness.vgz	vgz
+Franz Schubert - Marche Militaire No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Franz%20Schubert%20-%20Marche%20Militaire%20No.%201%20in%20D%20Major.vgz	vgz
+Modern Baroque	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Modern%20Baroque.vgz	vgz
+Johann Sebastian Bach - Herz und Mund und Tat und Leben	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Johann%20Sebastian%20Bach%20-%20Herz%20und%20Mund%20und%20Tat%20und%20Leben.vgz	vgz
+On Edge	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/On%20Edge.vgz	vgz
+Lay Down	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Lay%20Down.vgz	vgz
+Supermarket	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Supermarket.vgz	vgz
+Lowell Mason - Joy to the World	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Lowell%20Mason%20-%20Joy%20to%20the%20World.vgz	vgz
+Fragile Thoughts	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Fragile%20Thoughts.vgz	vgz
+Samba Moka	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Samba%20Moka.vgz	vgz
+Traditional - She'll Be Coming 'Round the Mountain	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20She%27ll%20Be%20Coming%20%27Round%20the%20Mountain.vgz	vgz
+Winning	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Winning.vgz	vgz
+Traditional - When the Saints Go Marching In	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20When%20the%20Saints%20Go%20Marching%20In.vgz	vgz
+Pyotr Ilyich Tchaikovsky - Children's Album, No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Pyotr%20Ilyich%20Tchaikovsky%20-%20Children%27s%20Album%2C%20No.%208%20-%20Waltz.vgz	vgz
+Traditional - Old King Cole	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20Old%20King%20Cole.vgz	vgz
+Antonio Vivaldi - The Four Seasons - Spring	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Antonio%20Vivaldi%20-%20The%20Four%20Seasons%20-%20Spring.vgz	vgz
+The Cloud	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/The%20Cloud.vgz	vgz
+Johann Sebastian Bach - Wachet auf, ruft uns die Stimme - Zion hort die Wachter singen	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Johann%20Sebastian%20Bach%20-%20Wachet%20auf%2C%20ruft%20uns%20die%20Stimme%20-%20Zion%20hort%20die%20Wachter%20singen.vgz	vgz
+John Henry Hopkins Jr	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/John%20Henry%20Hopkins%20Jr.%20-%20We%20Three%20Kings.vgz	vgz
+Railroad Story	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Railroad%20Story.vgz	vgz
+Bogey	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Bogey.vgz	vgz
+Pyotr Ilyich Tchaikovsky - The Nutcracker - Waltz of the Flowers	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Pyotr%20Ilyich%20Tchaikovsky%20-%20The%20Nutcracker%20-%20Waltz%20of%20the%20Flowers.vgz	vgz
+Joesph Haydn - Symphony No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Joesph%20Haydn%20-%20Symphony%20No.%2094%20in%20G%20Major%20-%20Andante%20%28Surprise%20Symphony%29.vgz	vgz
+Luigi Boccherini - String Quintet in E Major, Op	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Luigi%20Boccherini%20-%20String%20Quintet%20in%20E%20Major%2C%20Op.%2011%2C%20No.%205.vgz	vgz
+Critical Moves	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Critical%20Moves.vgz	vgz
+Robert Schumann - Humming Song, Op	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Robert%20Schumann%20-%20Humming%20Song%2C%20Op.%2068%2C%20No.%203.vgz	vgz
+Humdrum	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Humdrum.vgz	vgz
+Ludwig van Beethoven - Six Variations, Op	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Ludwig%20van%20Beethoven%20-%20Six%20Variations%2C%20Op.%2076%20-%20Turkish%20March.vgz	vgz
+Traditional - We Wish You a Merry Christmas	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20We%20Wish%20You%20a%20Merry%20Christmas.vgz	vgz
+Slow Cat	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Slow%20Cat.vgz	vgz
+Coffee Pot	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Coffee%20Pot.vgz	vgz
+Weekend	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Weekend.vgz	vgz
+Francois-Joseph Gossec - Gavotte Allegretto	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Francois-Joseph%20Gossec%20-%20Gavotte%20Allegretto.vgz	vgz
+Pedro's Train	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Pedro%27s%20Train.vgz	vgz
+Traditional - Greensleeves	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20Greensleeves.vgz	vgz
+Franz Schubert - Ellens Gesang III (Ave Maria)	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Franz%20Schubert%20-%20Ellens%20Gesang%20III%20%28Ave%20Maria%29.vgz	vgz
+Wolfgang Amadeus Mozart - Serenade No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Wolfgang%20Amadeus%20Mozart%20-%20Serenade%20No.%2013%20for%20Strings%20in%20G%20Major%20-%20Allegro%20%28Eine%20Kleine%20Nachtmusik%29.vgz	vgz
+Secret Destination	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Secret%20Destination.vgz	vgz
+Still Smoking	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Still%20Smoking.vgz	vgz
+Sun Sun Sun!	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Sun%20Sun%20Sun%21.vgz	vgz
+George Frideric Handel - Water Music - Suite in D Major, II - Alla Hornpipe	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/George%20Frideric%20Handel%20-%20Water%20Music%20-%20Suite%20in%20D%20Major%2C%20II%20-%20Alla%20Hornpipe.vgz	vgz
+Pyotr Ilyich Tchaikovsky - The Nutcracker - Dance of the Sugar Plum Fairy	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Pyotr%20Ilyich%20Tchaikovsky%20-%20The%20Nutcracker%20-%20Dance%20of%20the%20Sugar%20Plum%20Fairy.vgz	vgz
+Breathing	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Breathing.vgz	vgz
+Jean-Jacques Rousseau - Hush My Babe	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Jean-Jacques%20Rousseau%20-%20Hush%20My%20Babe.vgz	vgz
+Nikolai Rimsky-Korsakov - Flight of the Bumblebee	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Nikolai%20Rimsky-Korsakov%20-%20Flight%20of%20the%20Bumblebee.vgz	vgz
+Grey Zone	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Grey%20Zone.vgz	vgz
+Sandbox	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Sandbox.vgz	vgz
+James Lord Pierpont - Jingle Bells	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/James%20Lord%20Pierpont%20-%20Jingle%20Bells.vgz	vgz
+Blue Mirror Bossa	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Blue%20Mirror%20Bossa.vgz	vgz
+Antonio Vivaldi - The Four Seasons - Autumn	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Antonio%20Vivaldi%20-%20The%20Four%20Seasons%20-%20Autumn.vgz	vgz
+Do It!	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Do%20It%21.vgz	vgz
+Memories of Brazil	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Memories%20of%20Brazil.vgz	vgz
+Johann Sebastian Bach - Suite No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Johann%20Sebastian%20Bach%20-%20Suite%20No.%203%20in%20D%20Major%20-%20Air.vgz	vgz
+Traditional - The First Noel	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20The%20First%20Noel.vgz	vgz
+Long Nails	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Long%20Nails.vgz	vgz
+Quiet Trees	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Quiet%20Trees.vgz	vgz
+Ludwig van Beethoven - Symphony No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Ludwig%20van%20Beethoven%20-%20Symphony%20No.%209%20in%20D%20Minor%2C%20Op.%20125%2C%20IV%20-%20Finale%20%28Ode%20to%20Joy%29.vgz	vgz
+Guilty Impressions	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Guilty%20Impressions.vgz	vgz
+Round Around	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Round%20Around.vgz	vgz
+Urbanism	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Urbanism.vgz	vgz
+Johann Pachelbel - Canon and Gigue for 3 Violins and Basso Continuo	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Johann%20Pachelbel%20-%20Canon%20and%20Gigue%20for%203%20Violins%20and%20Basso%20Continuo.vgz	vgz
+Wolfgang Amadeus Mozart - Piano Concerto No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Wolfgang%20Amadeus%20Mozart%20-%20Piano%20Concerto%20No.%2021%20in%20C%20Major%2C%20II%20-%20Andante.vgz	vgz
+Cross-Country Drive	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Cross-Country%20Drive.vgz	vgz
+Glue Time	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Glue%20Time.vgz	vgz
+Wolfgang Amadeus Mozart - Symphony No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Wolfgang%20Amadeus%20Mozart%20-%20Symphony%20No.%2040%20in%20G%20Minor%2C%20I%20-%20Molto%20Allegro.vgz	vgz
+Traditional - O Tannenbaum	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20O%20Tannenbaum.vgz	vgz
+Spy's Eye	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Spy%27s%20Eye.vgz	vgz
+Morning Light Drizzle	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Morning%20Light%20Drizzle.vgz	vgz
+Soft Times	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Soft%20Times.vgz	vgz
+Traditional - London Bridge Is Falling Down	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20London%20Bridge%20Is%20Falling%20Down.vgz	vgz
+Traditional - Angels We Have Heard on High	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20Angels%20We%20Have%20Heard%20on%20High.vgz	vgz
+Passage of Time	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Passage%20of%20Time.vgz	vgz
+Frederic Chopin - Polonaise in A Major, Op	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Frederic%20Chopin%20-%20Polonaise%20in%20A%20Major%2C%20Op.%2040%2C%20No.%201%20%28Military%20Polonaise%29.vgz	vgz
+Dark Moon	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Dark%20Moon.vgz	vgz
+Traditional - Au Clair de La Lune	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20Au%20Clair%20de%20La%20Lune.vgz	vgz
+Late Snow	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Late%20Snow.vgz	vgz
+Space March	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Space%20March.vgz	vgz
+Childhood Medley	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Childhood%20Medley.vgz	vgz
+Singapore Sling	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Singapore%20Sling.vgz	vgz
+Johann Strauss II - Tritsch-Tratsch-Polka	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Johann%20Strauss%20II%20-%20Tritsch-Tratsch-Polka.vgz	vgz
+Niccolo Paganini - Caprice No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Niccolo%20Paganini%20-%20Caprice%20No.%2024%20in%20A%20Minor.vgz	vgz
+Running Shadows	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Running%20Shadows.vgz	vgz
+Talk Theme	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Talk%20Theme.vgz	vgz
+Elecrock	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Elecrock.vgz	vgz
+Ludwig van Beethoven - Piano Sonata No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Ludwig%20van%20Beethoven%20-%20Piano%20Sonata%20No.%208%2C%20II%20-%20Adagio%20Cantabile%20%28Pathetique%29.vgz	vgz
+Traditional - Rock-a-bye Baby	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20Rock-a-bye%20Baby.vgz	vgz
+Canadian Christmas Medley	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Canadian%20Christmas%20Medley.vgz	vgz
+Frederic Chopin - Prelude in A Major, Op	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Frederic%20Chopin%20-%20Prelude%20in%20A%20Major%2C%20Op.%2028%2C%20No.%207.vgz	vgz
+Modest Mussorgsky - Pictures at an Exhibition - Promenade	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Modest%20Mussorgsky%20-%20Pictures%20at%20an%20Exhibition%20-%20Promenade.vgz	vgz
+Monique and Paul	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Monique%20and%20Paul.vgz	vgz
+Pyotr Ilyich Tchaikovsky - Swan Lake - Act 2, No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Pyotr%20Ilyich%20Tchaikovsky%20-%20Swan%20Lake%20-%20Act%202%2C%20No.%2010%20-%20Moderato.vgz	vgz
+Traffix	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traffix.vgz	vgz
+Franz Xaver Gruber - Silent Night	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Franz%20Xaver%20Gruber%20-%20Silent%20Night.vgz	vgz
+Franz Liszt - Liebestraum No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Franz%20Liszt%20-%20Liebestraum%20No.%203.vgz	vgz
+M'am B	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/M%27am%20B.%20Steps.vgz	vgz
+The End of the Road	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/The%20End%20of%20the%20Road.vgz	vgz
+Smoky Ballroom	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Smoky%20Ballroom.vgz	vgz
+Georges Bizet - Carmen - L'amour est un oiseau rebelle (Habanera)	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Georges%20Bizet%20-%20Carmen%20-%20L%27amour%20est%20un%20oiseau%20rebelle%20%28Habanera%29.vgz	vgz
+Dance Beat	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Dance%20Beat.vgz	vgz
+All of Us	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/All%20of%20Us.vgz	vgz
+The Timeless Voyager	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/The%20Timeless%20Voyager.vgz	vgz
+Oh! You	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Oh%21%20You.vgz	vgz
+Johann Strauss II - Pizzicato Polka	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Johann%20Strauss%20II%20-%20Pizzicato%20Polka.vgz	vgz
+Frederic Chopin - Prelude, Op	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Frederic%20Chopin%20-%20Prelude%2C%20Op.%2028%2C%20No.%204.vgz	vgz
+Adolphe Adam - O Holy Night	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Adolphe%20Adam%20-%20O%20Holy%20Night.vgz	vgz
+Gioachino Rossini - William Tell Overture	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Gioachino%20Rossini%20-%20William%20Tell%20Overture.vgz	vgz
+Alessandro Marcello - Oboe Concerto in D Minor, II - Adagio	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Alessandro%20Marcello%20-%20Oboe%20Concerto%20in%20D%20Minor%2C%20II%20-%20Adagio.vgz	vgz
+Pyotr Ilyich Tchaikovsky - The Nutcracker - Tea (Chinese Dance)	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Pyotr%20Ilyich%20Tchaikovsky%20-%20The%20Nutcracker%20-%20Tea%20%28Chinese%20Dance%29.vgz	vgz
+Shopping Fever	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Shopping%20Fever.vgz	vgz
+Classy Night	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Classy%20Night.vgz	vgz
+Dawn Mist	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Dawn%20Mist.vgz	vgz
+Johann Strauss II - The Blue Danube	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Johann%20Strauss%20II%20-%20The%20Blue%20Danube.vgz	vgz
+Cooked	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Cooked.vgz	vgz
+Snow Flakes	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Snow%20Flakes.vgz	vgz
+Softblue	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Softblue.vgz	vgz
+Traditional - Twinkle, Twinkle, Little Star	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20Twinkle%2C%20Twinkle%2C%20Little%20Star.vgz	vgz
+Reckless Game	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Reckless%20Game.vgz	vgz
+Traditional - Good King Wenceslas	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Traditional%20-%20Good%20King%20Wenceslas.vgz	vgz
+Stratocumulus	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Stratocumulus.vgz	vgz
+Ludwig van Beethoven - Piano Sonata No	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Ludwig%20van%20Beethoven%20-%20Piano%20Sonata%20No.%2014%20-%20Adagio%20Sostenuto%20%28Moonlight%20Sonata%29.vgz	vgz
+Edvard Grieg - Peer Gynt - Anitra's Dance	Ad Lib, Inc	OPL Archive	https://opl.wafflenet.com/vgm/Ad%20Lib%2C%20Inc/Edvard%20Grieg%20-%20Peer%20Gynt%20-%20Anitra%27s%20Dance.vgz	vgz
+Frozen Cottage	Agargara	OPL Archive	https://opl.wafflenet.com/vgm/Agargara/Frozen%20Cottage.vgz	vgz
+My School Life	Ahn1979	OPL Archive	https://opl.wafflenet.com/vgm/Ahn1979/My%20School%20Life.vgz	vgz
+Dance With Me For Ever!!	Ahn1979	OPL Archive	https://opl.wafflenet.com/vgm/Ahn1979/Dance%20With%20Me%20For%20Ever%21%21.vgz	vgz
+Attack the Enemy's Heart	Ahn1979	OPL Archive	https://opl.wafflenet.com/vgm/Ahn1979/Attack%20the%20Enemy%27s%20Heart.vgz	vgz
+I Don't Want to Be Tied Down	Ahn1979	OPL Archive	https://opl.wafflenet.com/vgm/Ahn1979/I%20Don%27t%20Want%20to%20Be%20Tied%20Down.vgz	vgz
+Doom - Kitchen Ace (And Taking Names) (E1M4)	AmigaX	OPL Archive	https://opl.wafflenet.com/vgm/AmigaX/Doom%20-%20Kitchen%20Ace%20%28And%20Taking%20Names%29%20%28E1M4%29.vgz	vgz
+The Fascinating Life of You	ant1	OPL Archive	https://opl.wafflenet.com/vgm/ant1/The%20Fascinating%20Life%20of%20You.vgz	vgz
+The Technological Revolution of 2156	argarak	OPL Archive	https://opl.wafflenet.com/vgm/argarak/The%20Technological%20Revolution%20of%202156.vgz	vgz
+Northernmost Settlement	argarak	OPL Archive	https://opl.wafflenet.com/vgm/argarak/Northernmost%20Settlement.vgz	vgz
+Terraforming Sun Device	argarak	OPL Archive	https://opl.wafflenet.com/vgm/argarak/Terraforming%20Sun%20Device.vgz	vgz
+Hybridisation Process on Procyon-II	argarak	OPL Archive	https://opl.wafflenet.com/vgm/argarak/Hybridisation%20Process%20on%20Procyon-II.vgz	vgz
+OPERATOR	argarak	OPL Archive	https://opl.wafflenet.com/vgm/argarak/OPERATOR.vgz	vgz
+Artefact on Delta Vulpeculae II-C	argarak	OPL Archive	https://opl.wafflenet.com/vgm/argarak/Artefact%20on%20Delta%20Vulpeculae%20II-C.vgz	vgz
+Orbit Around Alpha Andromedae I	argarak	OPL Archive	https://opl.wafflenet.com/vgm/argarak/Orbit%20Around%20Alpha%20Andromedae%20I.vgz	vgz
+Final Fantasy V - Clash on the Big Bridge	Aspar	OPL Archive	https://opl.wafflenet.com/vgm/Aspar/Final%20Fantasy%20V%20-%20Clash%20on%20the%20Big%20Bridge.vgz	vgz
+Final Fantasy VI - Shadow's Theme	Aspar	OPL Archive	https://opl.wafflenet.com/vgm/Aspar/Final%20Fantasy%20VI%20-%20Shadow%27s%20Theme.vgz	vgz
+The King of Fighters '94 - Psycho Soldier 'K	Aspar	OPL Archive	https://opl.wafflenet.com/vgm/Aspar/The%20King%20of%20Fighters%20%2794%20-%20Psycho%20Soldier%20%27K.O.F%20Version%27.vgz	vgz
+Final Fantasy V - The Battle	Aspar	OPL Archive	https://opl.wafflenet.com/vgm/Aspar/Final%20Fantasy%20V%20-%20The%20Battle.vgz	vgz
+Super Street Fighter 2 - Cammy Stage	Aspar	OPL Archive	https://opl.wafflenet.com/vgm/Aspar/Super%20Street%20Fighter%202%20-%20Cammy%20Stage.vgz	vgz
+Kenet - Funky Bubbles	AURORA-FIELDS	OPL Archive	https://opl.wafflenet.com/vgm/AURORA-FIELDS/Kenet%20-%20Funky%20Bubbles.vgz	vgz
+Pipkasoft 64kB Intro II	Axe	OPL Archive	https://opl.wafflenet.com/vgm/Axe/Pipkasoft%2064kB%20Intro%20II.vgz	vgz
+Final Fantasy VI - The Decisive Battle (Piano Collections)	bahamute	OPL Archive	https://opl.wafflenet.com/vgm/bahamute/Final%20Fantasy%20VI%20-%20The%20Decisive%20Battle%20%28Piano%20Collections%29.vgz	vgz
+Final Fantasy - The Prelude (Remix)	bahamute	OPL Archive	https://opl.wafflenet.com/vgm/bahamute/Final%20Fantasy%20-%20The%20Prelude%20%28Remix%29.vgz	vgz
+Snatcher - One Night in Neo Kobe City	bahamute	OPL Archive	https://opl.wafflenet.com/vgm/bahamute/Snatcher%20-%20One%20Night%20in%20Neo%20Kobe%20City.vgz	vgz
+RADRUB	Baron Knoxburry	OPL Archive	https://opl.wafflenet.com/vgm/Baron%20Knoxburry/RADRUB.vgz	vgz
+RAD__ASS	Baron Knoxburry	OPL Archive	https://opl.wafflenet.com/vgm/Baron%20Knoxburry/RAD__ASS.vgz	vgz
+Sli Nahg Ha	Baron Knoxburry	OPL Archive	https://opl.wafflenet.com/vgm/Baron%20Knoxburry/Sli%20Nahg%20Ha.vgz	vgz
+Now That You're Gone	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Now%20That%20You%27re%20Gone.vgz	vgz
+Troubleshit Drugs	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Troubleshit%20Drugs.vgz	vgz
+Wood Village	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Wood%20Village.vgz	vgz
+NeuroPhobiaN	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/NeuroPhobiaN.vgz	vgz
+The World is Gonna Fall	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/The%20World%20is%20Gonna%20Fall.vgz	vgz
+FDance27	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/FDance27.vgz	vgz
+Running After the Clouds	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Running%20After%20the%20Clouds.vgz	vgz
+FMaven63b	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/FMaven63b.vgz	vgz
+High Tech Environment III	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/High%20Tech%20Environment%20III.vgz	vgz
+Down the Waterfalls	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Down%20the%20Waterfalls.vgz	vgz
+FMaven96	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/FMaven96.vgz	vgz
+Song 103	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Song%20103.vgz	vgz
+FMaven98	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/FMaven98.vgz	vgz
+Gates of the Northlands	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Gates%20of%20the%20Northlands.vgz	vgz
+Song 102	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Song%20102.vgz	vgz
+Song 105	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Song%20105.vgz	vgz
+FMaven97	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/FMaven97.vgz	vgz
+Trance Avec Filtres	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Trance%20Avec%20Filtres.vgz	vgz
+La Boite Speciale Daubes	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/La%20Boite%20Speciale%20Daubes.vgz	vgz
+FMaven94	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/FMaven94.vgz	vgz
+Far From Home	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Far%20From%20Home.vgz	vgz
+Song 108	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Song%20108.vgz	vgz
+Sonic the Hedgehog - Green Hill Zone	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Sonic%20the%20Hedgehog%20-%20Green%20Hill%20Zone.vgz	vgz
+Ultra Debil Oup Trop Fort	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Ultra%20Debil%20Oup%20Trop%20Fort.vgz	vgz
+Tanioll's Musik!	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Tanioll%27s%20Musik%21.vgz	vgz
+Recherche de Sons	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Recherche%20de%20Sons.vgz	vgz
+FDance06	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/FDance06.vgz	vgz
+Boss 8	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Boss%208.vgz	vgz
+FMaven95	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/FMaven95.vgz	vgz
+Song 100	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Song%20100.vgz	vgz
+Ballad	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Ballad.vgz	vgz
+High Tech Environment III (Early Version)	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/High%20Tech%20Environment%20III%20%28Early%20Version%29.vgz	vgz
+This is New Jack Daniel's!	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/This%20is%20New%20Jack%20Daniel%27s%21.vgz	vgz
+Global Alternative Trance	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Global%20Alternative%20Trance.vgz	vgz
+High Tech Environment II	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/High%20Tech%20Environment%20II.vgz	vgz
+Storm Riders (FM Version)	Benjamin Gerardin	OPL Archive	https://opl.wafflenet.com/vgm/Benjamin%20Gerardin/Storm%20Riders%20%28FM%20Version%29.vgz	vgz
+Sneakin'	Big Lumby	OPL Archive	https://opl.wafflenet.com/vgm/Big%20Lumby/Sneakin%27.vgz	vgz
+Fallen Into the Hall of Frozen Things	bigSmonkinLoser	OPL Archive	https://opl.wafflenet.com/vgm/bigSmonkinLoser/Fallen%20Into%20the%20Hall%20of%20Frozen%20Things.vgz	vgz
+Con Girl	Bird	OPL Archive	https://opl.wafflenet.com/vgm/Bird/Con%20Girl.vgz	vgz
+Time of Eternity	Bird	OPL Archive	https://opl.wafflenet.com/vgm/Bird/Time%20of%20Eternity.vgz	vgz
+Scene	Bird	OPL Archive	https://opl.wafflenet.com/vgm/Bird/Scene.vgz	vgz
+ByteTune	Bird	OPL Archive	https://opl.wafflenet.com/vgm/Bird/ByteTune.vgz	vgz
+She is in Trouble	Bird	OPL Archive	https://opl.wafflenet.com/vgm/Bird/She%20is%20in%20Trouble.vgz	vgz
+Poor Natalie	Bird	OPL Archive	https://opl.wafflenet.com/vgm/Bird/Poor%20Natalie.vgz	vgz
+Burn Her Down	Bird	OPL Archive	https://opl.wafflenet.com/vgm/Bird/Burn%20Her%20Down.vgz	vgz
+Innovate	Bird	OPL Archive	https://opl.wafflenet.com/vgm/Bird/Innovate.vgz	vgz
+Sorrows	Bird	OPL Archive	https://opl.wafflenet.com/vgm/Bird/Sorrows.vgz	vgz
+Cheap	Bird	OPL Archive	https://opl.wafflenet.com/vgm/Bird/Cheap.vgz	vgz
+Oh Zarking Fardwarks, Has No-One Done Anything Yet	birdrun	OPL Archive	https://opl.wafflenet.com/vgm/birdrun/Oh%20Zarking%20Fardwarks%2C%20Has%20No-One%20Done%20Anything%20Yet.vgz	vgz
+Funkay Moves	birdrun	OPL Archive	https://opl.wafflenet.com/vgm/birdrun/Funkay%20Moves.vgz	vgz
+The Battle of Olympus - Peloponnesus Forest	Bisqwit	OPL Archive	https://opl.wafflenet.com/vgm/Bisqwit/The%20Battle%20of%20Olympus%20-%20Peloponnesus%20Forest.vgz	vgz
+Star Trek - Deep Space Nine - Theme	Bisqwit	OPL Archive	https://opl.wafflenet.com/vgm/Bisqwit/Star%20Trek%20-%20Deep%20Space%20Nine%20-%20Theme.vgz	vgz
+Sta Pikku Klooni	Bisqwit	OPL Archive	https://opl.wafflenet.com/vgm/Bisqwit/Sta%20Pikku%20Klooni.vgz	vgz
+Blaster Master - Area 1	BlastlessAnthony	OPL Archive	https://opl.wafflenet.com/vgm/BlastlessAnthony/Blaster%20Master%20-%20Area%201.vgz	vgz
+Sonic the Hedgehog 3 & Knuckles - Flying Battery Zone Act 1	BlastlessAnthony	OPL Archive	https://opl.wafflenet.com/vgm/BlastlessAnthony/Sonic%20the%20Hedgehog%203%20%26%20Knuckles%20-%20Flying%20Battery%20Zone%20Act%201.vgz	vgz
+Deltarune Chapter 2 - Attack of the Killer Queen	BlastlessAnthony	OPL Archive	https://opl.wafflenet.com/vgm/BlastlessAnthony/Deltarune%20Chapter%202%20-%20Attack%20of%20the%20Killer%20Queen.vgz	vgz
+Undertale - Another Medium	BlastlessAnthony	OPL Archive	https://opl.wafflenet.com/vgm/BlastlessAnthony/Undertale%20-%20Another%20Medium.vgz	vgz
+Rivals of Aether - Main Menu	BlastlessAnthony	OPL Archive	https://opl.wafflenet.com/vgm/BlastlessAnthony/Rivals%20of%20Aether%20-%20Main%20Menu.vgz	vgz
+Trabant - Enter Spacebar (Bodenstandig 2000 Schwert Und Skelett Mix)	Bodenstandig 2000	OPL Archive	https://opl.wafflenet.com/vgm/Bodenstandig%202000/Trabant%20-%20Enter%20Spacebar%20%28Bodenstandig%202000%20Schwert%20Und%20Skelett%20Mix%29.vgz	vgz
+Call to Duty	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Call%20to%20Duty.vgz	vgz
+THEE Chiptune	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/THEE%20Chiptune.vgz	vgz
+Game Tutorial Theme	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Game%20Tutorial%20Theme.vgz	vgz
+Ultraviolet Sky	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Ultraviolet%20Sky.vgz	vgz
+Chivalry Honor	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Chivalry%20Honor.vgz	vgz
+Fifths Echo Rock	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Fifths%20Echo%20Rock.vgz	vgz
+Banzai Erdogo	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Banzai%20Erdogo.vgz	vgz
+The Omega Virus	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Omega%20Virus.vgz	vgz
+Oblivion Blast	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Oblivion%20Blast.vgz	vgz
+Cool Down Time	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Cool%20Down%20Time.vgz	vgz
+Manifest Destiny	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Manifest%20Destiny.vgz	vgz
+Super Mario Bros - Invincible	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Super%20Mario%20Bros%20-%20Invincible.vgz	vgz
+Skylight Central	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Skylight%20Central.vgz	vgz
+The Great Depression	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Great%20Depression.vgz	vgz
+Birdstone	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Birdstone.vgz	vgz
+Evil Sounding Loop	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Evil%20Sounding%20Loop.vgz	vgz
+Enchanting Loop	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Enchanting%20Loop.vgz	vgz
+The 30 Blade Razor Commercial Theme	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%2030%20Blade%20Razor%20Commercial%20Theme.vgz	vgz
+Sleep, Work, and Play	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Sleep%2C%20Work%2C%20and%20Play.vgz	vgz
+Dream 7 Max Slot Machine - Bonus Theme	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Dream%207%20Max%20Slot%20Machine%20-%20Bonus%20Theme.vgz	vgz
+The Contrasts Between Good and Evil - What We Learn	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Contrasts%20Between%20Good%20and%20Evil%20-%20What%20We%20Learn.vgz	vgz
+Fun Land	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Fun%20Land.vgz	vgz
+Deep Down Low	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Deep%20Down%20Low.vgz	vgz
+Mechanized Warfare	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Mechanized%20Warfare.vgz	vgz
+The Sky is Sharp	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Sky%20is%20Sharp.vgz	vgz
+These Are the Days of Our Lives	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/These%20Are%20the%20Days%20of%20Our%20Lives.vgz	vgz
+Time Will Tell	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Time%20Will%20Tell.vgz	vgz
+The Apocalypse Starts at Sun Down	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Apocalypse%20Starts%20at%20Sun%20Down.vgz	vgz
+The Kelsey Song	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Kelsey%20Song.vgz	vgz
+Cool Cat	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Cool%20Cat.vgz	vgz
+Lost Cause	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Lost%20Cause.vgz	vgz
+Deception (Revised Edition)	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Deception%20%28Revised%20Edition%29.vgz	vgz
+FRENZY!!!	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/FRENZY%21%21%21.vgz	vgz
+Very Nice Slot Machine - Themes	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Very%20Nice%20Slot%20Machine%20-%20Themes.vgz	vgz
+Bonus Round Theme	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Bonus%20Round%20Theme.vgz	vgz
+Conspiracy	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Conspiracy.vgz	vgz
+In a Perfect World	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/In%20a%20Perfect%20World.vgz	vgz
+Torpedo Alley	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Torpedo%20Alley.vgz	vgz
+No Choice But to Follow Them	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/No%20Choice%20But%20to%20Follow%20Them.vgz	vgz
+Look to the Horizon	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Look%20to%20the%20Horizon.vgz	vgz
+Inevitable Serenity	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Inevitable%20Serenity.vgz	vgz
+15 Minute Compo Trial	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/15%20Minute%20Compo%20Trial.vgz	vgz
+Marble City	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Marble%20City.vgz	vgz
+Obstacles of a Determined Mind	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Obstacles%20of%20a%20Determined%20Mind.vgz	vgz
+The Popcorn Song	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Popcorn%20Song.vgz	vgz
+Treachery	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Treachery.vgz	vgz
+Never Say Never	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Never%20Say%20Never.vgz	vgz
+Blades of Glory (Revised Version)	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Blades%20of%20Glory%20%28Revised%20Version%29.vgz	vgz
+Moderately Speaking	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Moderately%20Speaking.vgz	vgz
+Metro in Transit	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Metro%20in%20Transit.vgz	vgz
+Here Come the Teamsters!	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Here%20Come%20the%20Teamsters%21.vgz	vgz
+One Heck of an Adventure!	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/One%20Heck%20of%20an%20Adventure%21.vgz	vgz
+A Different Kind of Hero	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/A%20Different%20Kind%20of%20Hero.vgz	vgz
+Waves of Marine Life	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Waves%20of%20Marine%20Life.vgz	vgz
+The Big Guns	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Big%20Guns.vgz	vgz
+The Day Has Come	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Day%20Has%20Come.vgz	vgz
+Dream 7 Max Slot Machine - Theme	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Dream%207%20Max%20Slot%20Machine%20-%20Theme.vgz	vgz
+Race Through Cyberspace	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Race%20Through%20Cyberspace.vgz	vgz
+Frozen Over Heck	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Frozen%20Over%20Heck.vgz	vgz
+The Blizzard	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Blizzard.vgz	vgz
+West Bound Engine	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/West%20Bound%20Engine.vgz	vgz
+Golden Bell Slot Machine - Bonus Theme	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Golden%20Bell%20Slot%20Machine%20-%20Bonus%20Theme.vgz	vgz
+Mechanical Age	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Mechanical%20Age.vgz	vgz
+Think Fast	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Think%20Fast.vgz	vgz
+No Good Gofers	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/No%20Good%20Gofers.vgz	vgz
+Suspicion	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Suspicion.vgz	vgz
+Battletoads - Briefing Theme	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Battletoads%20-%20Briefing%20Theme.vgz	vgz
+Twisted Paradise	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Twisted%20Paradise.vgz	vgz
+HOV Lane	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/HOV%20Lane.vgz	vgz
+SpacePlex	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/SpacePlex.vgz	vgz
+Full Throttle	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Full%20Throttle.vgz	vgz
+Friendship	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Friendship.vgz	vgz
+Entertainment Warehouse	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Entertainment%20Warehouse.vgz	vgz
+Lemmings - Lemming 2	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Lemmings%20-%20Lemming%202.vgz	vgz
+The Happy Robin Theme	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Happy%20Robin%20Theme.vgz	vgz
+Spark Plug	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Spark%20Plug.vgz	vgz
+Ambush of Angels	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Ambush%20of%20Angels.vgz	vgz
+An Awkward Invasion	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/An%20Awkward%20Invasion.vgz	vgz
+Lucky Sevens	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Lucky%20Sevens.vgz	vgz
+The Paparazzi	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Paparazzi.vgz	vgz
+The Hunter and the Hunted	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/The%20Hunter%20and%20the%20Hunted.vgz	vgz
+Sitcom Game Menu Theme	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Sitcom%20Game%20Menu%20Theme.vgz	vgz
+Dream Among the Clouds Forever	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Dream%20Among%20the%20Clouds%20Forever.vgz	vgz
+Blades of Glory	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Blades%20of%20Glory.vgz	vgz
+Race Through Cyberspace (Revised Edition)	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Race%20Through%20Cyberspace%20%28Revised%20Edition%29.vgz	vgz
+Oh the Irony!	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Oh%20the%20Irony%21.vgz	vgz
+Electronic Skiing	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Electronic%20Skiing.vgz	vgz
+Sinister Deception	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Sinister%20Deception.vgz	vgz
+Stormy Weather	Brendan Bailey	OPL Archive	https://opl.wafflenet.com/vgm/Brendan%20Bailey/Stormy%20Weather.vgz	vgz
+Doom - Dark Halls (E1M3)	brickblock369	OPL Archive	https://opl.wafflenet.com/vgm/brickblock369/Doom%20-%20Dark%20Halls%20%28E1M3%29.vgz	vgz
+Fortress 2 Blue - Egyptian Rule	brickblock369	OPL Archive	https://opl.wafflenet.com/vgm/brickblock369/Fortress%202%20Blue%20-%20Egyptian%20Rule.vgz	vgz
+READY-GO	Byulbram	OPL Archive	https://opl.wafflenet.com/vgm/Byulbram/READY-GO.vgz	vgz
+Underwater Submarine	cabbage drop	OPL Archive	https://opl.wafflenet.com/vgm/cabbage%20drop/Underwater%20Submarine.vgz	vgz
+Golf Simulator	cabbage drop	OPL Archive	https://opl.wafflenet.com/vgm/cabbage%20drop/Golf%20Simulator.vgz	vgz
+UFO Test Drive	cabbage drop	OPL Archive	https://opl.wafflenet.com/vgm/cabbage%20drop/UFO%20Test%20Drive.vgz	vgz
+Tuesday Thursday	cabbage drop	OPL Archive	https://opl.wafflenet.com/vgm/cabbage%20drop/Tuesday%20Thursday.vgz	vgz
+GOA	Carlos Amoyan	OPL Archive	https://opl.wafflenet.com/vgm/Carlos%20Amoyan/GOA.CMA.001.vgz	vgz
+Fist Fight at the DEFRAGMENTATION_CUBE	Chimeratio	OPL Archive	https://opl.wafflenet.com/vgm/Chimeratio/Fist%20Fight%20at%20the%20DEFRAGMENTATION_CUBE.vgz	vgz
+Lost in iNFORMATION Labyrinth C	Chimeratio	OPL Archive	https://opl.wafflenet.com/vgm/Chimeratio/Lost%20in%20iNFORMATION%20Labyrinth%20C.vgz	vgz
+Can You Defeat The PAIN CRYSTAL [RUINS DEFENSE MECHANISM2] (no)	Chimeratio	OPL Archive	https://opl.wafflenet.com/vgm/Chimeratio/Can%20You%20Defeat%20The%20PAIN%20CRYSTAL%20%5BRUINS%20DEFENSE%20MECHANISM2%5D%20%28no%29.vgz	vgz
+Biomech 3	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/Biomech%203.vgz	vgz
+Den of the Mutant Sewer Rats	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/Den%20of%20the%20Mutant%20Sewer%20Rats.vgz	vgz
+Program 15	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/Program%2015.vgz	vgz
+Cyber Junk	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/Cyber%20Junk.vgz	vgz
+Silly Ra	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/Silly%20Ra.vgz	vgz
+Bonesaw	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/Bonesaw.vgz	vgz
+The Derpy South	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/The%20Derpy%20South.vgz	vgz
+cause aNd afekts	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/cause%20aNd%20afekts.vgz	vgz
+The Ice Caves of Mer	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/The%20Ice%20Caves%20of%20Mer.vgz	vgz
+Prophecy	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/Prophecy.vgz	vgz
+Radical Napz	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/Radical%20Napz.vgz	vgz
+Probably Probed	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/Probably%20Probed.vgz	vgz
+rktlhmrg	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/rktlhmrg.vgz	vgz
+Moonlit Prowler	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/Moonlit%20Prowler.vgz	vgz
+Adlib in tha Haus	Chip Champion	OPL Archive	https://opl.wafflenet.com/vgm/Chip%20Champion/Adlib%20in%20tha%20Haus.vgz	vgz
+Crystal 2	Chris Korte	OPL Archive	https://opl.wafflenet.com/vgm/Chris%20Korte/Crystal%202.vgz	vgz
+New Tune	Corona688	OPL Archive	https://opl.wafflenet.com/vgm/Corona688/New%20Tune.vgz	vgz
+Mission Mopreme 32K	Crossbone	OPL Archive	https://opl.wafflenet.com/vgm/Crossbone/Mission%20Mopreme%2032K.vgz	vgz
+Cyndi Lauper - The Goonies 'R' Good Enough	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Cyndi%20Lauper%20-%20The%20Goonies%20%27R%27%20Good%20Enough.vgz	vgz
+Absent-Minded	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Absent-Minded.vgz	vgz
+Delta - Title Screen	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Delta%20-%20Title%20Screen.vgz	vgz
+Cheating Engine Tune 1	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Cheating%20Engine%20Tune%201.vgz	vgz
+Motivation BBStro	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Motivation%20BBStro.vgz	vgz
+Blackthorne - Cracktro 2	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Blackthorne%20-%20Cracktro%202.vgz	vgz
+Deathlord - Zak00	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Deathlord%20-%20Zak00.vgz	vgz
+Super Mario Land - Birabuto Kingdom	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Super%20Mario%20Land%20-%20Birabuto%20Kingdom.vgz	vgz
+B'less	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/B%27less.vgz	vgz
+Heatbeat - Deathsong	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Heatbeat%20-%20Deathsong.vgz	vgz
+Monty on the Run - High Score	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Monty%20on%20the%20Run%20-%20High%20Score.vgz	vgz
+Comitek BBS Intro Tune	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Comitek%20BBS%20Intro%20Tune.vgz	vgz
+Reflex - Hurryup!	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Reflex%20-%20Hurryup%21.vgz	vgz
+Delight Loader	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Delight%20Loader.vgz	vgz
+Outside the World	Dalezy	OPL Archive	https://opl.wafflenet.com/vgm/Dalezy/Outside%20the%20World.vgz	vgz
+Full Moon and Stars Sparkle	DCT Master	OPL Archive	https://opl.wafflenet.com/vgm/DCT%20Master/Full%20Moon%20and%20Stars%20Sparkle.vgz	vgz
+Milinda	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Milinda.vgz	vgz
+Wildlife	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Wildlife.vgz	vgz
+Squanchy	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Squanchy.vgz	vgz
+Endless Scroll	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Endless%20Scroll.vgz	vgz
+Cat People	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Cat%20People.vgz	vgz
+RIP	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/RIP.vgz	vgz
+Memento Mori Pt	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Memento%20Mori%20Pt.%201.vgz	vgz
+XM1SS10N	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/XM1SS10N.vgz	vgz
+1856 Step	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/1856%20Step.vgz	vgz
+Odd Time	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Odd%20Time.vgz	vgz
+Samsara	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Samsara.vgz	vgz
+Programmable Sound Generator	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Programmable%20Sound%20Generator.vgz	vgz
+Acid Tracker	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Acid%20Tracker.vgz	vgz
+Keys	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Keys.vgz	vgz
+NULL	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/NULL.vgz	vgz
+Altair	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Altair.vgz	vgz
+Mutable Signs	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Mutable%20Signs.vgz	vgz
+ADR1FT	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/ADR1FT.vgz	vgz
+On Planet Zaxxon	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/On%20Planet%20Zaxxon.vgz	vgz
+Greetz Fly	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Greetz%20Fly.vgz	vgz
+Tom Song	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Tom%20Song.vgz	vgz
+Aquarius	Diode Milliampere	OPL Archive	https://opl.wafflenet.com/vgm/Diode%20Milliampere/Aquarius.vgz	vgz
+Rivals of Aether - Fight and Flight	Dippy	OPL Archive	https://opl.wafflenet.com/vgm/Dippy/Rivals%20of%20Aether%20-%20Fight%20and%20Flight.vgz	vgz
+Technological Terror	Dippy	OPL Archive	https://opl.wafflenet.com/vgm/Dippy/Technological%20Terror.vgz	vgz
+Jazz Jackrabbit 2 - Streetwize	Dippy	OPL Archive	https://opl.wafflenet.com/vgm/Dippy/Jazz%20Jackrabbit%202%20-%20Streetwize.vgz	vgz
+Laxity - Super Market	Dippy	OPL Archive	https://opl.wafflenet.com/vgm/Dippy/Laxity%20-%20Super%20Market.vgz	vgz
+Shinobi III - Return of the Ninja Master - Idaten	Dippy	OPL Archive	https://opl.wafflenet.com/vgm/Dippy/Shinobi%20III%20-%20Return%20of%20the%20Ninja%20Master%20-%20Idaten.vgz	vgz
+Short Sputter	dj.tuBIG-MaliceX	OPL Archive	https://opl.wafflenet.com/vgm/dj.tuBIG-MaliceX/Short%20Sputter.vgz	vgz
+Mushihimesama - The Direction to the Heart of the Forest (Stage 5)	dj.tuBIG-MaliceX	OPL Archive	https://opl.wafflenet.com/vgm/dj.tuBIG-MaliceX/Mushihimesama%20-%20The%20Direction%20to%20the%20Heart%20of%20the%20Forest%20%28Stage%205%29.vgz	vgz
+Team Innocent - The Point of No Return - CD Track 4	dj.tuBIG-MaliceX	OPL Archive	https://opl.wafflenet.com/vgm/dj.tuBIG-MaliceX/Team%20Innocent%20-%20The%20Point%20of%20No%20Return%20-%20CD%20Track%204.vgz	vgz
+Phantom Breaker - Battle Grounds - Shinjuku Stage	dj.tuBIG-MaliceX	OPL Archive	https://opl.wafflenet.com/vgm/dj.tuBIG-MaliceX/Phantom%20Breaker%20-%20Battle%20Grounds%20-%20Shinjuku%20Stage.vgz	vgz
+Dragon Slayer - Eiyuu Densetsu - Title Demo	dj.tuBIG-MaliceX	OPL Archive	https://opl.wafflenet.com/vgm/dj.tuBIG-MaliceX/Dragon%20Slayer%20-%20Eiyuu%20Densetsu%20-%20Title%20Demo.vgz	vgz
+Second4	doj	OPL Archive	https://opl.wafflenet.com/vgm/doj/Second4.vgz	vgz
+Old 64-Style	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Old%2064-Style.vgz	vgz
+Rocky	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Rocky.vgz	vgz
+Jaujhe	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Jaujhe.vgz	vgz
+Flash	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Flash.vgz	vgz
+Beyond Minds	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Beyond%20Minds.vgz	vgz
+Underlig	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Underlig.vgz	vgz
+Street Wise	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Street%20Wise.vgz	vgz
+Bussemand	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Bussemand.vgz	vgz
+A-ha - Take On Me	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/A-ha%20-%20Take%20On%20Me.vgz	vgz
+Sad	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Sad.vgz	vgz
+Human Nature II	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Human%20Nature%20II.vgz	vgz
+Human Nature I	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Human%20Nature%20I.vgz	vgz
+Level 42 - Running in the Family	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Level%2042%20-%20Running%20in%20the%20Family.vgz	vgz
+Goat Army	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Goat%20Army.vgz	vgz
+Porno	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Porno.vgz	vgz
+Bus	Drax	OPL Archive	https://opl.wafflenet.com/vgm/Drax/Bus.vgz	vgz
+Volly3	Drax & Metal	OPL Archive	https://opl.wafflenet.com/vgm/Drax%20%26%20Metal/Volly3.vgz	vgz
+Super Nova	Drax & Metal	OPL Archive	https://opl.wafflenet.com/vgm/Drax%20%26%20Metal/Super%20Nova.vgz	vgz
+Highscore	Drax & Metal	OPL Archive	https://opl.wafflenet.com/vgm/Drax%20%26%20Metal/Highscore.vgz	vgz
+Breaking Wind	Drax & Metal	OPL Archive	https://opl.wafflenet.com/vgm/Drax%20%26%20Metal/Breaking%20Wind.vgz	vgz
+Chrono Trigger - Undersea Palace	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/Chrono%20Trigger%20-%20Undersea%20Palace.vgz	vgz
+My Little Pony - Friendship is Magic - Hush Now, Quiet Now	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/My%20Little%20Pony%20-%20Friendship%20is%20Magic%20-%20Hush%20Now%2C%20Quiet%20Now.vgz	vgz
+Undertale - Megalovania	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/Undertale%20-%20Megalovania.vgz	vgz
+My Little Pony - Friendship is Magic - Becoming Popular	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/My%20Little%20Pony%20-%20Friendship%20is%20Magic%20-%20Becoming%20Popular.vgz	vgz
+Undertale - Tem Shop	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/Undertale%20-%20Tem%20Shop.vgz	vgz
+Bomberman 64 - The Second Attack - Pommy's Theme	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/Bomberman%2064%20-%20The%20Second%20Attack%20-%20Pommy%27s%20Theme.vgz	vgz
+WoodenToaster - Rainbow Factory	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/WoodenToaster%20-%20Rainbow%20Factory.vgz	vgz
+Sonic the Hedgehog 2 - Chemical Plant Zone	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/Sonic%20the%20Hedgehog%202%20-%20Chemical%20Plant%20Zone.vgz	vgz
+Chrono Trigger - Corridors of Time	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/Chrono%20Trigger%20-%20Corridors%20of%20Time.vgz	vgz
+Sonic the Hedgehog 2 - Oil Ocean Zone	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/Sonic%20the%20Hedgehog%202%20-%20Oil%20Ocean%20Zone.vgz	vgz
+Alstroemeria Records - Bad Apple!!	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/Alstroemeria%20Records%20-%20Bad%20Apple%21%21.vgz	vgz
+My Little Pony - Friendship is Magic - Bad Seed	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/My%20Little%20Pony%20-%20Friendship%20is%20Magic%20-%20Bad%20Seed.vgz	vgz
+Sonic the Hedgehog 2 - Mystic Cave Zone	Dretz	OPL Archive	https://opl.wafflenet.com/vgm/Dretz/Sonic%20the%20Hedgehog%202%20-%20Mystic%20Cave%20Zone.vgz	vgz
+Castlevania III - Dracula's Curse - Big Battle 1	Dullstar	OPL Archive	https://opl.wafflenet.com/vgm/Dullstar/Castlevania%20III%20-%20Dracula%27s%20Curse%20-%20Big%20Battle%201.vgz	vgz
+Cave Story - Jenka 2	Dullstar	OPL Archive	https://opl.wafflenet.com/vgm/Dullstar/Cave%20Story%20-%20Jenka%202.vgz	vgz
+Dungeon	Dullstar	OPL Archive	https://opl.wafflenet.com/vgm/Dullstar/Dungeon.vgz	vgz
+Cave Story - Oppression	Dullstar	OPL Archive	https://opl.wafflenet.com/vgm/Dullstar/Cave%20Story%20-%20Oppression.vgz	vgz
+Cave Story - Gravity	Dullstar	OPL Archive	https://opl.wafflenet.com/vgm/Dullstar/Cave%20Story%20-%20Gravity.vgz	vgz
+A	Electric Keet	OPL Archive	https://opl.wafflenet.com/vgm/Electric%20Keet/A.M.%20A.L.%20Funk.vgz	vgz
+Forest	Encore	OPL Archive	https://opl.wafflenet.com/vgm/Encore/Forest.vgz	vgz
+FM Tekno!	Encore	OPL Archive	https://opl.wafflenet.com/vgm/Encore/FM%20Tekno%21.vgz	vgz
+FM House (version II)	Encore	OPL Archive	https://opl.wafflenet.com/vgm/Encore/FM%20House%20%28version%20II%29.vgz	vgz
+Crazy Little Techno Beat	Encore	OPL Archive	https://opl.wafflenet.com/vgm/Encore/Crazy%20Little%20Techno%20Beat.vgz	vgz
+The Absence of Julia	Encore	OPL Archive	https://opl.wafflenet.com/vgm/Encore/The%20Absence%20of%20Julia.vgz	vgz
+Eric Prydz - Call on Me	Encore	OPL Archive	https://opl.wafflenet.com/vgm/Encore/Eric%20Prydz%20-%20Call%20on%20Me.vgz	vgz
+Amegas - Theme	Encore	OPL Archive	https://opl.wafflenet.com/vgm/Encore/Amegas%20-%20Theme.vgz	vgz
+Howard Jones - What is Love	Encore	OPL Archive	https://opl.wafflenet.com/vgm/Encore/Howard%20Jones%20-%20What%20is%20Love.vgz	vgz
+FM House	Encore	OPL Archive	https://opl.wafflenet.com/vgm/Encore/FM%20House.vgz	vgz
+Kraftwerk - Computer World	Encore	OPL Archive	https://opl.wafflenet.com/vgm/Encore/Kraftwerk%20-%20Computer%20World.vgz	vgz
+Doom - Donna to the Rescue (E3M2)	EpicTyphlosion	OPL Archive	https://opl.wafflenet.com/vgm/EpicTyphlosion/Doom%20-%20Donna%20to%20the%20Rescue%20%28E3M2%29.vgz	vgz
+Cee-Dee - Book of Memories	Erik	OPL Archive	https://opl.wafflenet.com/vgm/Erik/Cee-Dee%20-%20Book%20of%20Memories.vgz	vgz
+Vangelis - Alpha	Erik	OPL Archive	https://opl.wafflenet.com/vgm/Erik/Vangelis%20-%20Alpha.vgz	vgz
+Space Harrier - Theme	Esprit!	OPL Archive	https://opl.wafflenet.com/vgm/Esprit%21/Space%20Harrier%20-%20Theme.vgz	vgz
+Sky Heights	Essentric	OPL Archive	https://opl.wafflenet.com/vgm/Essentric/Sky%20Heights.vgz	vgz
+Rain Cloud Sunset	Ether Audio	OPL Archive	https://opl.wafflenet.com/vgm/Ether%20Audio/Rain%20Cloud%20Sunset.vgz	vgz
+Sun Dance	Fabe	OPL Archive	https://opl.wafflenet.com/vgm/Fabe/Sun%20Dance.vgz	vgz
+Raid	Fabe	OPL Archive	https://opl.wafflenet.com/vgm/Fabe/Raid.vgz	vgz
+WasWars	Fabe	OPL Archive	https://opl.wafflenet.com/vgm/Fabe/WasWars.vgz	vgz
+Willow	Fabe	OPL Archive	https://opl.wafflenet.com/vgm/Fabe/Willow.vgz	vgz
+DoricDream - Famicommodore	FADE	OPL Archive	https://opl.wafflenet.com/vgm/FADE/DoricDream%20-%20Famicommodore.vgz	vgz
+Underground 1	FL4SHK	OPL Archive	https://opl.wafflenet.com/vgm/FL4SHK/Underground%201.vgz	vgz
+Signal Engine	FL4SHK	OPL Archive	https://opl.wafflenet.com/vgm/FL4SHK/Signal%20Engine.vgz	vgz
+Chowning Playground	flashbob	OPL Archive	https://opl.wafflenet.com/vgm/flashbob/Chowning%20Playground.vgz	vgz
+Slip n Slap	funute	OPL Archive	https://opl.wafflenet.com/vgm/funute/Slip%20n%20Slap.vgz	vgz
+Ethereal Dream	funute	OPL Archive	https://opl.wafflenet.com/vgm/funute/Ethereal%20Dream.vgz	vgz
+Rider - Dash	Furmilion	OPL Archive	https://opl.wafflenet.com/vgm/Furmilion/Rider%20-%20Dash.vgz	vgz
+mk7 - Spring is Coming	garvalf	OPL Archive	https://opl.wafflenet.com/vgm/garvalf/mk7%20-%20Spring%20is%20Coming.vgz	vgz
+By the Shore	garvalf	OPL Archive	https://opl.wafflenet.com/vgm/garvalf/By%20the%20Shore.vgz	vgz
+Always Inserting or Deleting the Same Data	garvalf	OPL Archive	https://opl.wafflenet.com/vgm/garvalf/Always%20Inserting%20or%20Deleting%20the%20Same%20Data.vgz	vgz
+Electrostatic Powers	garvalf	OPL Archive	https://opl.wafflenet.com/vgm/garvalf/Electrostatic%20Powers.vgz	vgz
+Cyber-Danserye	garvalf	OPL Archive	https://opl.wafflenet.com/vgm/garvalf/Cyber-Danserye.vgz	vgz
+Litanie	garvalf	OPL Archive	https://opl.wafflenet.com/vgm/garvalf/Litanie.vgz	vgz
+Dio - Mystery	GAZETE	OPL Archive	https://opl.wafflenet.com/vgm/GAZETE/Dio%20-%20Mystery.vgz	vgz
+Into the Storm	GAZETE	OPL Archive	https://opl.wafflenet.com/vgm/GAZETE/Into%20the%20Storm.vgz	vgz
+98_ARTEC	Goopal	OPL Archive	https://opl.wafflenet.com/vgm/Goopal/98_ARTEC.vgz	vgz
+Yamaha PSR-48 - Demo Song	Goopal	OPL Archive	https://opl.wafflenet.com/vgm/Goopal/Yamaha%20PSR-48%20-%20Demo%20Song.vgz	vgz
+Street Fighter II - Title	Goopal	OPL Archive	https://opl.wafflenet.com/vgm/Goopal/Street%20Fighter%20II%20-%20Title.vgz	vgz
+Catnip	gotoandplay	OPL Archive	https://opl.wafflenet.com/vgm/gotoandplay/Catnip.vgz	vgz
+Ada while Ad ad ad ad	gotoandplay	OPL Archive	https://opl.wafflenet.com/vgm/gotoandplay/Ada%20while%20Ad%20ad%20ad%20ad.vgz	vgz
+Losing Sanctuary	gotoandplay	OPL Archive	https://opl.wafflenet.com/vgm/gotoandplay/Losing%20Sanctuary.vgz	vgz
+Incurabuly Dull	gotoandplay	OPL Archive	https://opl.wafflenet.com/vgm/gotoandplay/Incurabuly%20Dull.vgz	vgz
+Haze	gotoandplay	OPL Archive	https://opl.wafflenet.com/vgm/gotoandplay/Haze.vgz	vgz
+Sumerian	gotoandplay	OPL Archive	https://opl.wafflenet.com/vgm/gotoandplay/Sumerian.vgz	vgz
+Sensory Premonition	gotoandplay & tennisers	OPL Archive	https://opl.wafflenet.com/vgm/gotoandplay%20%26%20tennisers/Sensory%20Premonition.vgz	vgz
+Harment of Ibusion	GudPiggeh	OPL Archive	https://opl.wafflenet.com/vgm/GudPiggeh/Harment%20of%20Ibusion.vgz	vgz
+Final Fantasy VI - Aria di Mezzo Carattere	hah2o	OPL Archive	https://opl.wafflenet.com/vgm/hah2o/Final%20Fantasy%20VI%20-%20Aria%20di%20Mezzo%20Carattere.vgz	vgz
+Final Fantasy VI - Battle Theme	hah2o	OPL Archive	https://opl.wafflenet.com/vgm/hah2o/Final%20Fantasy%20VI%20-%20Battle%20Theme.vgz	vgz
+Shincheonji Adlib Club Logo Song	hah2o	OPL Archive	https://opl.wafflenet.com/vgm/hah2o/Shincheonji%20Adlib%20Club%20Logo%20Song.vgz	vgz
+Final Fantasy VI - Blackjack	hah2o	OPL Archive	https://opl.wafflenet.com/vgm/hah2o/Final%20Fantasy%20VI%20-%20Blackjack.vgz	vgz
+Final Fantasy VI - Searching for Friends	hah2o	OPL Archive	https://opl.wafflenet.com/vgm/hah2o/Final%20Fantasy%20VI%20-%20Searching%20for%20Friends.vgz	vgz
+Zara	Hanna Lee	OPL Archive	https://opl.wafflenet.com/vgm/Hanna%20Lee/Zara.vgz	vgz
+Chaya	Hanna Lee	OPL Archive	https://opl.wafflenet.com/vgm/Hanna%20Lee/Chaya.vgz	vgz
+Splash	Hanna Lee	OPL Archive	https://opl.wafflenet.com/vgm/Hanna%20Lee/Splash.vgz	vgz
+My Revenge	Hannes Seifert	OPL Archive	https://opl.wafflenet.com/vgm/Hannes%20Seifert/My%20Revenge.vgz	vgz
+Still Remember Rob	Hannes Seifert	OPL Archive	https://opl.wafflenet.com/vgm/Hannes%20Seifert/Still%20Remember%20Rob.vgz	vgz
+Shoot'em Up	Hannes Seifert	OPL Archive	https://opl.wafflenet.com/vgm/Hannes%20Seifert/Shoot%27em%20Up.vgz	vgz
+Middle of Illusion	Hannes Seifert	OPL Archive	https://opl.wafflenet.com/vgm/Hannes%20Seifert/Middle%20of%20Illusion.vgz	vgz
+JOE - Painfull Emptyness	Hannes Seifert	OPL Archive	https://opl.wafflenet.com/vgm/Hannes%20Seifert/JOE%20-%20Painfull%20Emptyness.vgz	vgz
+TRSI Techno Tune	Hannes Seifert	OPL Archive	https://opl.wafflenet.com/vgm/Hannes%20Seifert/TRSI%20Techno%20Tune.vgz	vgz
+Gargoyles	Henri Chalifour	OPL Archive	https://opl.wafflenet.com/vgm/Henri%20Chalifour/Gargoyles.vgz	vgz
+Highways	Henri Chalifour	OPL Archive	https://opl.wafflenet.com/vgm/Henri%20Chalifour/Highways.vgz	vgz
+Very Busy	Henri Chalifour	OPL Archive	https://opl.wafflenet.com/vgm/Henri%20Chalifour/Very%20Busy.vgz	vgz
+Sliding on a Rainbow	Hortus	OPL Archive	https://opl.wafflenet.com/vgm/Hortus/Sliding%20on%20a%20Rainbow.vgz	vgz
+Pseudolukian - Count Floyd	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Pseudolukian%20-%20Count%20Floyd.vgz	vgz
+Hi-Lite - Purple Shades	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Hi-Lite%20-%20Purple%20Shades.vgz	vgz
+Terra Cresta - Theme	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Terra%20Cresta%20-%20Theme.vgz	vgz
+Amegas - Theme	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Amegas%20-%20Theme.vgz	vgz
+WOTW - Intro Number 42	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/WOTW%20-%20Intro%20Number%2042.vgz	vgz
+Delta - Title Screen	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Delta%20-%20Title%20Screen.vgz	vgz
+Leisure Suit Larry - Theme	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Leisure%20Suit%20Larry%20-%20Theme.vgz	vgz
+Mantronix - Behind the Walls	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Mantronix%20-%20Behind%20the%20Walls.vgz	vgz
+Organic - Rainbow	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Organic%20-%20Rainbow.Chip.vgz	vgz
+Monty - Mario, Sometimes Hell, Sometimes Heaven	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Monty%20-%20Mario%2C%20Sometimes%20Hell%2C%20Sometimes%20Heaven.vgz	vgz
+Mad Freak - Fuckfuckfuckfuck	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Mad%20Freak%20-%20Fuckfuckfuckfuck.vgz	vgz
+Comic Bakery - Title	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Comic%20Bakery%20-%20Title.vgz	vgz
+Virgill - Headcrash Intro 2	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Virgill%20-%20Headcrash%20Intro%202.vgz	vgz
+Mel O'Dee - Wink of an Eye	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Mel%20O%27Dee%20-%20Wink%20of%20an%20Eye.vgz	vgz
+Chris - Downtown	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Chris%20-%20Downtown.vgz	vgz
+Wizardry - Theme	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Wizardry%20-%20Theme.vgz	vgz
+Commando - High Score	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Commando%20-%20High%20Score.vgz	vgz
+TDK - Crystal Intro	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/TDK%20-%20Crystal%20Intro.vgz	vgz
+My Dear Rob	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/My%20Dear%20Rob.vgz	vgz
+Einstein - Radical Cracktro	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Einstein%20-%20Radical%20Cracktro.vgz	vgz
+Drax - Disco Zax	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Drax%20-%20Disco%20Zax.vgz	vgz
+Titan - The Song	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Titan%20-%20The%20Song.vgz	vgz
+Last Betrayal	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Last%20Betrayal.vgz	vgz
+Mel O'Dee - Scales of Joy	Hydra	OPL Archive	https://opl.wafflenet.com/vgm/Hydra/Mel%20O%27Dee%20-%20Scales%20of%20Joy.vgz	vgz
+Lardossian Synthesis	Ikuma	OPL Archive	https://opl.wafflenet.com/vgm/Ikuma/Lardossian%20Synthesis.vgz	vgz
+The Five Star Stories - Hitomi no Naka no Far Away	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/The%20Five%20Star%20Stories%20-%20Hitomi%20no%20Naka%20no%20Far%20Away.vgz	vgz
+Tekken - Fiji, Philippines	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/Tekken%20-%20Fiji%2C%20Philippines.vgz	vgz
+Kimagure Orange Road - Sad Heart Burning	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/Kimagure%20Orange%20Road%20-%20Sad%20Heart%20Burning.vgz	vgz
+NiGHTS into Dreams - Dreams Dreams	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/NiGHTS%20into%20Dreams%20-%20Dreams%20Dreams.vgz	vgz
+Silent Mobius - Shining	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/Silent%20Mobius%20-%20Shining.vgz	vgz
+Yoon Sang - Amen	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/Yoon%20Sang%20-%20Amen.vgz	vgz
+Neon Genesis Evangelion - A Cruel Angel's Thesis	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/Neon%20Genesis%20Evangelion%20-%20A%20Cruel%20Angel%27s%20Thesis.vgz	vgz
+Nadia - The Secret of Blue Water - Blue Water	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/Nadia%20-%20The%20Secret%20of%20Blue%20Water%20-%20Blue%20Water.vgz	vgz
+Psycho World - Opening	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/Psycho%20World%20-%20Opening.vgz	vgz
+Macross - Do You Remember Love - Tenshi no Enogu	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/Macross%20-%20Do%20You%20Remember%20Love%20-%20Tenshi%20no%20Enogu.vgz	vgz
+Mobile Police Patlabor - Condition Green	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/Mobile%20Police%20Patlabor%20-%20Condition%20Green.vgz	vgz
+Yawara! - Miracle Girl	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/Yawara%21%20-%20Miracle%20Girl.vgz	vgz
+Maison Ikkoku - Hello Sadness	jam777	OPL Archive	https://opl.wafflenet.com/vgm/jam777/Maison%20Ikkoku%20-%20Hello%20Sadness.vgz	vgz
+Goblin Obligation	Jangler	OPL Archive	https://opl.wafflenet.com/vgm/Jangler/Goblin%20Obligation.vgz	vgz
+Customer Relations Management	Jangler	OPL Archive	https://opl.wafflenet.com/vgm/Jangler/Customer%20Relations%20Management.vgz	vgz
+Hot Bun Crossing	Jangler	OPL Archive	https://opl.wafflenet.com/vgm/Jangler/Hot%20Bun%20Crossing.vgz	vgz
+Limp-Linguine	Jangler	OPL Archive	https://opl.wafflenet.com/vgm/Jangler/Limp-Linguine.vgz	vgz
+Sleep Paralysis	Jangler	OPL Archive	https://opl.wafflenet.com/vgm/Jangler/Sleep%20Paralysis.vgz	vgz
+Calumny	Jangler	OPL Archive	https://opl.wafflenet.com/vgm/Jangler/Calumny.vgz	vgz
+Ergos BBS Intro	JaSS	OPL Archive	https://opl.wafflenet.com/vgm/JaSS/Ergos%20BBS%20Intro.vgz	vgz
+Laxity - Star Dream	JCH	OPL Archive	https://opl.wafflenet.com/vgm/JCH/Laxity%20-%20Star%20Dream.vgz	vgz
+Laxity - The Alibi	JCH	OPL Archive	https://opl.wafflenet.com/vgm/JCH/Laxity%20-%20The%20Alibi.vgz	vgz
+Instrument Test 8	JCH	OPL Archive	https://opl.wafflenet.com/vgm/JCH/Instrument%20Test%208.vgz	vgz
+Diflex - Strike Force Introtune	JCH	OPL Archive	https://opl.wafflenet.com/vgm/JCH/Diflex%20-%20Strike%20Force%20Introtune.vgz	vgz
+Platest	JCH	OPL Archive	https://opl.wafflenet.com/vgm/JCH/Platest.vgz	vgz
+Drax - Film Zak	JCH	OPL Archive	https://opl.wafflenet.com/vgm/JCH/Drax%20-%20Film%20Zak.vgz	vgz
+Drax - Rolling	JCH	OPL Archive	https://opl.wafflenet.com/vgm/JCH/Drax%20-%20Rolling.vgz	vgz
+Synchro	JCH	OPL Archive	https://opl.wafflenet.com/vgm/JCH/Synchro.vgz	vgz
+Drax - Gone	JCH	OPL Archive	https://opl.wafflenet.com/vgm/JCH/Drax%20-%20Gone.vgz	vgz
+Drax - Crooner	JCH	OPL Archive	https://opl.wafflenet.com/vgm/JCH/Drax%20-%20Crooner.vgz	vgz
+Phase	JCH	OPL Archive	https://opl.wafflenet.com/vgm/JCH/Phase.vgz	vgz
+Ergo	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Ergo.vgz	vgz
+Submission to -X-	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Submission%20to%20-X-.vgz	vgz
+Jarre Galway	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Jarre%20Galway.vgz	vgz
+Hard Guitar	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Hard%20Guitar.vgz	vgz
+Mad Man on a Bike	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Mad%20Man%20on%20a%20Bike.vgz	vgz
+Lammert	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Lammert.vgz	vgz
+Drums Are Hard to Do	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Drums%20Are%20Hard%20to%20Do.vgz	vgz
+Fly in Spider's Web!	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Fly%20in%20Spider%27s%20Web%21.vgz	vgz
+First Interstellar Jump	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/First%20Interstellar%20Jump.vgz	vgz
+Strikes Again	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Strikes%20Again.vgz	vgz
+Boring Sunday	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Boring%20Sunday.vgz	vgz
+Reggae	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Reggae.vgz	vgz
+Michael Davidson - Turn It Up	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Michael%20Davidson%20-%20Turn%20It%20Up.vgz	vgz
+Try	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Try.vgz	vgz
+AAAAARGGGHHH	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/AAAAARGGGHHH.vgz	vgz
+Like Galway	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Like%20Galway.vgz	vgz
+Dip	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Dip.vgz	vgz
+Pladder	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Pladder.vgz	vgz
+Try 3	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Try%203.vgz	vgz
+Interal	JO	OPL Archive	https://opl.wafflenet.com/vgm/JO/Interal.vgz	vgz
+Dancy Loops Y19	JonKaruzu	OPL Archive	https://opl.wafflenet.com/vgm/JonKaruzu/Dancy%20Loops%20Y19.vgz	vgz
+Virgo	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Virgo.vgz	vgz
+Demo 4	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Demo%204.vgz	vgz
+Funky Stuff	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Funky%20Stuff.vgz	vgz
+Demo 3	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Demo%203.vgz	vgz
+Ax	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Ax.vgz	vgz
+Jazz Jingle	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Jazz%20Jingle.vgz	vgz
+Rhodes	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Rhodes.vgz	vgz
+Demo 2	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Demo%202.vgz	vgz
+Demo 5	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Demo%205.vgz	vgz
+Shape	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Shape.vgz	vgz
+Guf	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Guf.vgz	vgz
+AdLib Fun	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/AdLib%20Fun.vgz	vgz
+Level 42 - Heathrow	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Level%2042%20-%20Heathrow.vgz	vgz
+Knas	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Knas.vgz	vgz
+SD	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/SD.vgz	vgz
+Salsa	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Salsa.vgz	vgz
+Def	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Def.vgz	vgz
+Goof	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Goof.vgz	vgz
+Alf	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Alf.vgz	vgz
+Charlie Parker - Now's the Time	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Charlie%20Parker%20-%20Now%27s%20the%20Time.vgz	vgz
+Untitled	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Untitled.vgz	vgz
+Whut	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Whut.vgz	vgz
+Test	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Test.vgz	vgz
+Percussion	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Percussion.vgz	vgz
+Melanko	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Melanko.vgz	vgz
+A	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/A.vgz	vgz
+Demo 1	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Demo%201.vgz	vgz
+AdLib Test	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/AdLib%20Test.vgz	vgz
+Chicky	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Chicky.vgz	vgz
+T	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/T.vgz	vgz
+Ballad	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Ballad.vgz	vgz
+Merkli	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Merkli.vgz	vgz
+NZ	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/NZ.vgz	vgz
+Hashis	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Hashis.vgz	vgz
+Test Test	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Test%20Test.vgz	vgz
+Bimmer	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Bimmer.vgz	vgz
+DDD	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/DDD.vgz	vgz
+Billy Strayhorn - Take the 'A' Train	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Billy%20Strayhorn%20-%20Take%20the%20%27A%27%20Train.vgz	vgz
+The Kinks - You Really Got Me	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/The%20Kinks%20-%20You%20Really%20Got%20Me.vgz	vgz
+Sax Blues	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Sax%20Blues.vgz	vgz
+Godamn	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Godamn.vgz	vgz
+Default	JOZZ	OPL Archive	https://opl.wafflenet.com/vgm/JOZZ/Default.vgz	vgz
+A Short Interlude	jrlepage	OPL Archive	https://opl.wafflenet.com/vgm/jrlepage/A%20Short%20Interlude.vgz	vgz
+Memories of Triumph	Kagamiin	OPL Archive	https://opl.wafflenet.com/vgm/Kagamiin/Memories%20of%20Triumph.vgz	vgz
+Fred's Back III - Title	Karl Sommer	OPL Archive	https://opl.wafflenet.com/vgm/Karl%20Sommer/Fred%27s%20Back%20III%20-%20Title.vgz	vgz
+Praises	Karl Sommer	OPL Archive	https://opl.wafflenet.com/vgm/Karl%20Sommer/Praises.vgz	vgz
+wswswswswswswswswsw	Karmic	OPL Archive	https://opl.wafflenet.com/vgm/Karmic/wswswswswswswswswsw.vgz	vgz
+Test7	KGBA32	OPL Archive	https://opl.wafflenet.com/vgm/KGBA32/Test7.vgz	vgz
+Frederic Hahn - Ackerlight-1	KGBA32	OPL Archive	https://opl.wafflenet.com/vgm/KGBA32/Frederic%20Hahn%20-%20Ackerlight-1.vgz	vgz
+Always Waiting	kilowatt64	OPL Archive	https://opl.wafflenet.com/vgm/kilowatt64/Always%20Waiting.vgz	vgz
+Oil Tank (Extended Mix)	kleeder	OPL Archive	https://opl.wafflenet.com/vgm/kleeder/Oil%20Tank%20%28Extended%20Mix%29.vgz	vgz
+Dreams About Green Rivers (OPL Version)	kleeder	OPL Archive	https://opl.wafflenet.com/vgm/kleeder/Dreams%20About%20Green%20Rivers%20%28OPL%20Version%29.vgz	vgz
+Sleep Deprivation	kleeder & MiDoRi	OPL Archive	https://opl.wafflenet.com/vgm/kleeder%20%26%20MiDoRi/Sleep%20Deprivation.vgz	vgz
+Wineman's Theme	kleeder & Spring	OPL Archive	https://opl.wafflenet.com/vgm/kleeder%20%26%20Spring/Wineman%27s%20Theme.vgz	vgz
+Tales of the Eastern Sands	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Tales%20of%20the%20Eastern%20Sands.vgz	vgz
+Pokemon Gold-Silver-Crystal - New Bark Town	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Pokemon%20Gold-Silver-Crystal%20-%20New%20Bark%20Town.vgz	vgz
+Kona-chan's Laying With Me at Home	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Kona-chan%27s%20Laying%20With%20Me%20at%20Home.vgz	vgz
+Lonelich	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Lonelich.vgz	vgz
+Tales of Phantasia - The Second Act	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Tales%20of%20Phantasia%20-%20The%20Second%20Act.vgz	vgz
+Lost in Space	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Lost%20in%20Space.vgz	vgz
+Top Gear - Las Vegas	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Top%20Gear%20-%20Las%20Vegas.vgz	vgz
+F-Zero - Mute City	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/F-Zero%20-%20Mute%20City.vgz	vgz
+Jackakes	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Jackakes.vgz	vgz
+SaltGrooves	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/SaltGrooves.vgz	vgz
+Dragon Quest - Unknown World	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Dragon%20Quest%20-%20Unknown%20World.vgz	vgz
+Dragon Quest - Overture	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Dragon%20Quest%20-%20Overture.vgz	vgz
+Dragon Quest - Chateau Ladutorm	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Dragon%20Quest%20-%20Chateau%20Ladutorm.vgz	vgz
+Wavywin	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Wavywin.vgz	vgz
+Final Fantasy II - The Rebel Army	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Final%20Fantasy%20II%20-%20The%20Rebel%20Army.vgz	vgz
+Reflections	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Reflections.vgz	vgz
+Limit Break	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Limit%20Break.vgz	vgz
+Touhou Gensoukyou - Lotus Land Story - Witching Dream	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Touhou%20Gensoukyou%20-%20Lotus%20Land%20Story%20-%20Witching%20Dream.vgz	vgz
+Battletoads - Surf City & Terra Tubes	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Battletoads%20-%20Surf%20City%20%26%20Terra%20Tubes.vgz	vgz
+The Eternal Warrior Awakes	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/The%20Eternal%20Warrior%20Awakes.vgz	vgz
+Kenseiden - Higo, Nagato, Settsu, Owari and Echyu	konakonaa	OPL Archive	https://opl.wafflenet.com/vgm/konakonaa/Kenseiden%20-%20Higo%2C%20Nagato%2C%20Settsu%2C%20Owari%20and%20Echyu.vgz	vgz
+Gradius II - Title	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Gradius%20II%20-%20Title.vgz	vgz
+Hydlide II - Opening	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Hydlide%20II%20-%20Opening.vgz	vgz
+TwinBee - Twinbee's Home Town Song	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/TwinBee%20-%20Twinbee%27s%20Home%20Town%20Song.vgz	vgz
+Gradius II - A Way Out of the Difficulty	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Gradius%20II%20-%20A%20Way%20Out%20of%20the%20Difficulty.vgz	vgz
+Yui Asaka - Melody	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Yui%20Asaka%20-%20Melody.vgz	vgz
+Gradius III - Sand Storm	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Gradius%20III%20-%20Sand%20Storm.vgz	vgz
+Salamander - Starfield	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Salamander%20-%20Starfield.vgz	vgz
+Snatcher - Twilight of Neo Kobe City	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Snatcher%20-%20Twilight%20of%20Neo%20Kobe%20City.vgz	vgz
+Dragon Spirit - Ending	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Dragon%20Spirit%20-%20Ending.vgz	vgz
+Gradius - Free Flyer	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Gradius%20-%20Free%20Flyer.vgz	vgz
+Salamander - Power of Anger	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Salamander%20-%20Power%20of%20Anger.vgz	vgz
+Gradius II - Tabidachi	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Gradius%20II%20-%20Tabidachi.vgz	vgz
+Super Hang-On - Winning Run	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Super%20Hang-On%20-%20Winning%20Run.vgz	vgz
+Salamander - Destroy Them All	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Salamander%20-%20Destroy%20Them%20All.vgz	vgz
+Dragon Quest II - Distant Journey	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Dragon%20Quest%20II%20-%20Distant%20Journey.vgz	vgz
+Dragon Spirit - Paleozoic Era	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Dragon%20Spirit%20-%20Paleozoic%20Era.vgz	vgz
+TwinBee - Fantastic Power	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/TwinBee%20-%20Fantastic%20Power.vgz	vgz
+Friedrich Burgmuller - 18 Etudes, Op	KONAMI	OPL Archive	https://opl.wafflenet.com/vgm/KONAMI/Friedrich%20Burgmuller%20-%2018%20Etudes%2C%20Op.%20109%2C%20No.%2012%20-%20Le%20Reveil%20dans%20les%20Bois.vgz	vgz
+Unrecognizable Magenta Sphere	Kot	OPL Archive	https://opl.wafflenet.com/vgm/Kot/Unrecognizable%20Magenta%20Sphere.vgz	vgz
+Cruisin' Mah '95 Pimpmobile (Early Version)	Kulor	OPL Archive	https://opl.wafflenet.com/vgm/Kulor/Cruisin%27%20Mah%20%2795%20Pimpmobile%20%28Early%20Version%29.vgz	vgz
+Cruisin' Mah '95 Pimpmobile	Kulor	OPL Archive	https://opl.wafflenet.com/vgm/Kulor/Cruisin%27%20Mah%20%2795%20Pimpmobile.vgz	vgz
+Off to Communist Island	Kulor	OPL Archive	https://opl.wafflenet.com/vgm/Kulor/Off%20to%20Communist%20Island.vgz	vgz
+Menu One	Kulor	OPL Archive	https://opl.wafflenet.com/vgm/Kulor/Menu%20One.vgz	vgz
+Classic Space	Kulor	OPL Archive	https://opl.wafflenet.com/vgm/Kulor/Classic%20Space.vgz	vgz
+Explosions on Sunday Afternoon	Kulor	OPL Archive	https://opl.wafflenet.com/vgm/Kulor/Explosions%20on%20Sunday%20Afternoon.vgz	vgz
+I'm No Cyberhero (Early Version)	Kulor	OPL Archive	https://opl.wafflenet.com/vgm/Kulor/I%27m%20No%20Cyberhero%20%28Early%20Version%29.vgz	vgz
+2000	Kulor	OPL Archive	https://opl.wafflenet.com/vgm/Kulor/2000.vgz	vgz
+I'm No Cyberhero	Kulor	OPL Archive	https://opl.wafflenet.com/vgm/Kulor/I%27m%20No%20Cyberhero.vgz	vgz
+Little Boots - Shake	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Little%20Boots%20-%20Shake.vgz	vgz
+Mega Man 3 - Title	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Mega%20Man%203%20-%20Title.vgz	vgz
+Batman (NES) - Game Over	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Batman%20%28NES%29%20-%20Game%20Over.vgz	vgz
+JosSs - Sweetest Sin	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/JosSs%20-%20Sweetest%20Sin.vgz	vgz
+Final Fantasy III - The Boundless Ocean	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Final%20Fantasy%20III%20-%20The%20Boundless%20Ocean.vgz	vgz
+Break My Heart	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Break%20My%20Heart.vgz	vgz
+YM3812 Funk	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/YM3812%20Funk.vgz	vgz
+Final Fantasy VII - The Prelude	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Final%20Fantasy%20VII%20-%20The%20Prelude.vgz	vgz
+Dubmood - Paradox Keygen 3	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Dubmood%20-%20Paradox%20Keygen%203.vgz	vgz
+Doom II - Running From Evil (MAP01)	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Doom%20II%20-%20Running%20From%20Evil%20%28MAP01%29.vgz	vgz
+The End of Time	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/The%20End%20of%20Time.vgz	vgz
+Where Are You	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Where%20Are%20You.vgz	vgz
+Mega Man 3 - Stage Select	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Mega%20Man%203%20-%20Stage%20Select.vgz	vgz
+Shine Forever (HexAd Demo Version)	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Shine%20Forever%20%28HexAd%20Demo%20Version%29.vgz	vgz
+Gradius II (Famicom) - Heavy Blow	kvee	OPL Archive	https://opl.wafflenet.com/vgm/kvee/Gradius%20II%20%28Famicom%29%20-%20Heavy%20Blow.vgz	vgz
+The Treasure of Usas - Ending	KwaK101	OPL Archive	https://opl.wafflenet.com/vgm/KwaK101/The%20Treasure%20of%20Usas%20-%20Ending.vgz	vgz
+Thunder Force III - Back to the Fire	KwaK101	OPL Archive	https://opl.wafflenet.com/vgm/KwaK101/Thunder%20Force%20III%20-%20Back%20to%20the%20Fire.vgz	vgz
+Mugen Senshi Valis II - Sacred Sacrifice	KwaK101	OPL Archive	https://opl.wafflenet.com/vgm/KwaK101/Mugen%20Senshi%20Valis%20II%20-%20Sacred%20Sacrifice.vgz	vgz
+Streets of Rage 2 - Good Ending	KwaK101	OPL Archive	https://opl.wafflenet.com/vgm/KwaK101/Streets%20of%20Rage%202%20-%20Good%20Ending.vgz	vgz
+Streets of Rage 2 - Go Straight	KwaK101	OPL Archive	https://opl.wafflenet.com/vgm/KwaK101/Streets%20of%20Rage%202%20-%20Go%20Straight.vgz	vgz
+Streets of Rage - Violent Breathing	KwaK101	OPL Archive	https://opl.wafflenet.com/vgm/KwaK101/Streets%20of%20Rage%20-%20Violent%20Breathing.vgz	vgz
+2 Unlimited - Delight	KwaK101	OPL Archive	https://opl.wafflenet.com/vgm/KwaK101/2%20Unlimited%20-%20Delight.vgz	vgz
+Thunder Force III - Truth	KwaK101	OPL Archive	https://opl.wafflenet.com/vgm/KwaK101/Thunder%20Force%20III%20-%20Truth.vgz	vgz
+Nightdrive	L1nd0	OPL Archive	https://opl.wafflenet.com/vgm/L1nd0/Nightdrive.vgz	vgz
+Battle 1	L2CLUB	OPL Archive	https://opl.wafflenet.com/vgm/L2CLUB/Battle%201.vgz	vgz
+Mysterous Caves	Lameguy64	OPL Archive	https://opl.wafflenet.com/vgm/Lameguy64/Mysterous%20Caves.vgz	vgz
+Cave Story - Mimiga Village	Lameguy64	OPL Archive	https://opl.wafflenet.com/vgm/Lameguy64/Cave%20Story%20-%20Mimiga%20Village.vgz	vgz
+Central Park West BBStro	Legend	OPL Archive	https://opl.wafflenet.com/vgm/Legend/Central%20Park%20West%20BBStro.vgz	vgz
+Inside	Legend	OPL Archive	https://opl.wafflenet.com/vgm/Legend/Inside.vgz	vgz
+Beach Chair Bay	Lint Huffer	OPL Archive	https://opl.wafflenet.com/vgm/Lint%20Huffer/Beach%20Chair%20Bay.vgz	vgz
+Get Up!	Louis Gorenfeld	OPL Archive	https://opl.wafflenet.com/vgm/Louis%20Gorenfeld/Get%20Up%21.vgz	vgz
+Fear of Notes	Louis Gorenfeld	OPL Archive	https://opl.wafflenet.com/vgm/Louis%20Gorenfeld/Fear%20of%20Notes.vgz	vgz
+The F in FM is for Funky	Louis Gorenfeld	OPL Archive	https://opl.wafflenet.com/vgm/Louis%20Gorenfeld/The%20F%20in%20FM%20is%20for%20Funky.vgz	vgz
+Streets of Rage - Fighting in the Street	Louis Gorenfeld	OPL Archive	https://opl.wafflenet.com/vgm/Louis%20Gorenfeld/Streets%20of%20Rage%20-%20Fighting%20in%20the%20Street.vgz	vgz
+Obliterator - Ingame Music	Louis Gorenfeld	OPL Archive	https://opl.wafflenet.com/vgm/Louis%20Gorenfeld/Obliterator%20-%20Ingame%20Music.vgz	vgz
+Subwave	Louis Gorenfeld	OPL Archive	https://opl.wafflenet.com/vgm/Louis%20Gorenfeld/Subwave.vgz	vgz
+Adlib Attack (TOZ System Mix)	Louis Gorenfeld	OPL Archive	https://opl.wafflenet.com/vgm/Louis%20Gorenfeld/Adlib%20Attack%20%28TOZ%20System%20Mix%29.vgz	vgz
+Into the Void	Louis Gorenfeld	OPL Archive	https://opl.wafflenet.com/vgm/Louis%20Gorenfeld/Into%20the%20Void.vgz	vgz
+Fantasy Zone - Opa-Opa!	Louis Gorenfeld	OPL Archive	https://opl.wafflenet.com/vgm/Louis%20Gorenfeld/Fantasy%20Zone%20-%20Opa-Opa%21.vgz	vgz
+Streets of Rage - The Street of Rage	Louis Gorenfeld	OPL Archive	https://opl.wafflenet.com/vgm/Louis%20Gorenfeld/Streets%20of%20Rage%20-%20The%20Street%20of%20Rage.vgz	vgz
+HOME - We're Finally Landing	LVintageNerd	OPL Archive	https://opl.wafflenet.com/vgm/LVintageNerd/HOME%20-%20We%27re%20Finally%20Landing.vgz	vgz
+Beyond 2000	Madbit	OPL Archive	https://opl.wafflenet.com/vgm/Madbit/Beyond%202000.vgz	vgz
+FM Beat	Madbit	OPL Archive	https://opl.wafflenet.com/vgm/Madbit/FM%20Beat.vgz	vgz
+Direct HiT	Madbit	OPL Archive	https://opl.wafflenet.com/vgm/Madbit/Direct%20HiT.vgz	vgz
+Oskari Goes to Soundblasterland	Madbrain	OPL Archive	https://opl.wafflenet.com/vgm/Madbrain/Oskari%20Goes%20to%20Soundblasterland.vgz	vgz
+Weird Sounding	Madbrain	OPL Archive	https://opl.wafflenet.com/vgm/Madbrain/Weird%20Sounding.vgz	vgz
+Oskari Leads the Investigation - Intro	Madbrain	OPL Archive	https://opl.wafflenet.com/vgm/Madbrain/Oskari%20Leads%20the%20Investigation%20-%20Intro.vgz	vgz
+Super Mario Bros - Underground	Madbrain	OPL Archive	https://opl.wafflenet.com/vgm/Madbrain/Super%20Mario%20Bros%20-%20Underground.vgz	vgz
+Sinner	Madbrain	OPL Archive	https://opl.wafflenet.com/vgm/Madbrain/Sinner.vgz	vgz
+International Crisis	Madbrain	OPL Archive	https://opl.wafflenet.com/vgm/Madbrain/International%20Crisis.vgz	vgz
+Oskari Wins the Game!	Madbrain	OPL Archive	https://opl.wafflenet.com/vgm/Madbrain/Oskari%20Wins%20the%20Game%21.vgz	vgz
+Duke Nukem 3D - Grab Bag	Madbrain	OPL Archive	https://opl.wafflenet.com/vgm/Madbrain/Duke%20Nukem%203D%20-%20Grab%20Bag.vgz	vgz
+Whak Punch	Madbrain	OPL Archive	https://opl.wafflenet.com/vgm/Madbrain/Whak%20Punch.vgz	vgz
+Oskari Travels to a New Galaxy	Madbrain	OPL Archive	https://opl.wafflenet.com/vgm/Madbrain/Oskari%20Travels%20to%20a%20New%20Galaxy.vgz	vgz
+Oskari the Heimfanker	Madbrain	OPL Archive	https://opl.wafflenet.com/vgm/Madbrain/Oskari%20the%20Heimfanker.vgz	vgz
+Jester - Chipmunks	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Jester%20-%20Chipmunks.vgz	vgz
+Believe in the Past	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Believe%20in%20the%20Past.vgz	vgz
+Twinkle Star	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Twinkle%20Star.vgz	vgz
+Really Make You Sick!!	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Really%20Make%20You%20Sick%21%21.vgz	vgz
+Fun	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Fun.vgz	vgz
+Flashback	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Flashback.vgz	vgz
+Short Intro Mukke	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Short%20Intro%20Mukke.vgz	vgz
+Drastic Overflow	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Drastic%20Overflow.vgz	vgz
+Return of Gabi & Uwe	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Return%20of%20Gabi%20%26%20Uwe.vgz	vgz
+Don't Shout!	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Don%27t%20Shout%21.vgz	vgz
+Melt Down	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Melt%20Down.vgz	vgz
+Prian	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Prian.vgz	vgz
+Went Your Ways	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Went%20Your%20Ways.vgz	vgz
+AND ONE POWER!!!	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/AND%20ONE%20POWER%21%21%21.vgz	vgz
+Laughable	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Laughable.vgz	vgz
+Back to Reality	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Back%20to%20Reality.vgz	vgz
+Game-Tune	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Game-Tune.vgz	vgz
+My Brain Hurtz!	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/My%20Brain%20Hurtz%21.vgz	vgz
+Nonjanitscharenmukke	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Nonjanitscharenmukke.vgz	vgz
+Sphere of Influence	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Sphere%20of%20Influence.vgz	vgz
+Technix - MoonWalk	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Technix%20-%20MoonWalk.vgz	vgz
+Fly Into a Rage	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Fly%20Into%20a%20Rage.vgz	vgz
+Jetgum	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Jetgum.vgz	vgz
+Chip Voices	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Chip%20Voices.vgz	vgz
+Ash-Becher Song	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Ash-Becher%20Song.vgz	vgz
+Litl Bit Cute	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Litl%20Bit%20Cute.vgz	vgz
+Lose of Control	Madness	OPL Archive	https://opl.wafflenet.com/vgm/Madness/Lose%20of%20Control.vgz	vgz
+End of the Line	Mads Orbesen Troest	OPL Archive	https://opl.wafflenet.com/vgm/Mads%20Orbesen%20Troest/End%20of%20the%20Line.vgz	vgz
+Hot Butter - Popcorn	Mads Orbesen Troest	OPL Archive	https://opl.wafflenet.com/vgm/Mads%20Orbesen%20Troest/Hot%20Butter%20-%20Popcorn.vgz	vgz
+Tick Tock Toe	Mads Orbesen Troest	OPL Archive	https://opl.wafflenet.com/vgm/Mads%20Orbesen%20Troest/Tick%20Tock%20Toe.vgz	vgz
+Wasted Years	Mads Orbesen Troest	OPL Archive	https://opl.wafflenet.com/vgm/Mads%20Orbesen%20Troest/Wasted%20Years.vgz	vgz
+The Zen Challenge	Mahbod Karamoozian	OPL Archive	https://opl.wafflenet.com/vgm/Mahbod%20Karamoozian/The%20Zen%20Challenge.vgz	vgz
+Little Boring Trance	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Little%20Boring%20Trance.vgz	vgz
+Oldsk00l Songs - Chapter 001	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Oldsk00l%20Songs%20-%20Chapter%20001.vgz	vgz
+Space Dive	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Space%20Dive.vgz	vgz
+Deorbitation	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Deorbitation.vgz	vgz
+OPL303	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/OPL303.vgz	vgz
+Analog Trip	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Analog%20Trip.vgz	vgz
+Dancing Ishtar	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Dancing%20Ishtar.vgz	vgz
+FM-Tronikk (aka Altair Street Dancer)	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/FM-Tronikk%20%28aka%20Altair%20Street%20Dancer%29.vgz	vgz
+Dancing on the Glass	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Dancing%20on%20the%20Glass.vgz	vgz
+Khaos	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Khaos.vgz	vgz
+Lazer Stork	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Lazer%20Stork.vgz	vgz
+Oldsk00l Songs - Chapter 002	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Oldsk00l%20Songs%20-%20Chapter%20002.vgz	vgz
+Khaos 2	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Khaos%202.vgz	vgz
+Traced Dimension	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Traced%20Dimension.vgz	vgz
+Pink - Rob Mat Reyn Pink	Malfunction	OPL Archive	https://opl.wafflenet.com/vgm/Malfunction/Pink%20-%20Rob%20Mat%20Reyn%20Pink.vgz	vgz
+MiG-29M Super Fulcrum - Title (Hybrid Cracktro Version)	Matt Furniss	OPL Archive	https://opl.wafflenet.com/vgm/Matt%20Furniss/MiG-29M%20Super%20Fulcrum%20-%20Title%20%28Hybrid%20Cracktro%20Version%29.vgz	vgz
+My Friend Dippy von Jabberflipper	mega9man	OPL Archive	https://opl.wafflenet.com/vgm/mega9man/My%20Friend%20Dippy%20von%20Jabberflipper.vgz	vgz
+Perpetual Motion	MelonadeM	OPL Archive	https://opl.wafflenet.com/vgm/MelonadeM/Perpetual%20Motion.vgz	vgz
+486 HEART ON FIRE	MelonadeM	OPL Archive	https://opl.wafflenet.com/vgm/MelonadeM/486%20HEART%20ON%20FIRE.vgz	vgz
+Ceydip5ll-6	Meritaethi	OPL Archive	https://opl.wafflenet.com/vgm/Meritaethi/Ceydip5ll-6.vgz	vgz
+www	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/www.oldskool.org.vgz	vgz
+Plasma World	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Plasma%20World.vgz	vgz
+Nautical Experience	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Nautical%20Experience.vgz	vgz
+Tales of Scary Stuff	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Tales%20of%20Scary%20Stuff.vgz	vgz
+Pop Syndrom	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Pop%20Syndrom.vgz	vgz
+Space Ace	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Space%20Ace.vgz	vgz
+Introism	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Introism.vgz	vgz
+Alttoga (Introism 2nd Version)	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Alttoga%20%28Introism%202nd%20Version%29.vgz	vgz
+Soul Shock	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Soul%20Shock.vgz	vgz
+Guru Meditation	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Guru%20Meditation.vgz	vgz
+Geologic Funk	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Geologic%20Funk.vgz	vgz
+Inside Down	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Inside%20Down.vgz	vgz
+Inside the Organ	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Inside%20the%20Organ.vgz	vgz
+Knaldout	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Knaldout.vgz	vgz
+Fodsved	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Fodsved.vgz	vgz
+Plastic Session	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Plastic%20Session.vgz	vgz
+Il Numitare et Sulfo	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Il%20Numitare%20et%20Sulfo.vgz	vgz
+Brain Bug Theme	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Brain%20Bug%20Theme.vgz	vgz
+Bordella	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Bordella.vgz	vgz
+Jazz6	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/Jazz6.vgz	vgz
+JOZZ - Jazz 1	Metal	OPL Archive	https://opl.wafflenet.com/vgm/Metal/JOZZ%20-%20Jazz%201.vgz	vgz
+Nuke	miau	OPL Archive	https://opl.wafflenet.com/vgm/miau/Nuke.vgz	vgz
+Jalapeno Jam	michu	OPL Archive	https://opl.wafflenet.com/vgm/michu/Jalapeno%20Jam.vgz	vgz
+Nectaris - Manual	mihaelkyeah	OPL Archive	https://opl.wafflenet.com/vgm/mihaelkyeah/Nectaris%20-%20Manual.vgz	vgz
+Nadia - The Secret of Blue Water - Yes! I Will	MPU401	OPL Archive	https://opl.wafflenet.com/vgm/MPU401/Nadia%20-%20The%20Secret%20of%20Blue%20Water%20-%20Yes%21%20I%20Will.vgz	vgz
+Memory of the Lemon (OPL3 Version)	MPU401	OPL Archive	https://opl.wafflenet.com/vgm/MPU401/Memory%20of%20the%20Lemon%20%28OPL3%20Version%29.vgz	vgz
+Memory of the Lemon (OPL2 Version)	MPU401	OPL Archive	https://opl.wafflenet.com/vgm/MPU401/Memory%20of%20the%20Lemon%20%28OPL2%20Version%29.vgz	vgz
+Laputa - Castle in the Sky (Image Album) - Sheeta and Pazu	MPU401	OPL Archive	https://opl.wafflenet.com/vgm/MPU401/Laputa%20-%20Castle%20in%20the%20Sky%20%28Image%20Album%29%20-%20Sheeta%20and%20Pazu.vgz	vgz
+Drax - Street Wise	MPU401	OPL Archive	https://opl.wafflenet.com/vgm/MPU401/Drax%20-%20Street%20Wise.vgz	vgz
+Knuckles' Chaotix - Door Into Summer	MrKsoft	OPL Archive	https://opl.wafflenet.com/vgm/MrKsoft/Knuckles%27%20Chaotix%20-%20Door%20Into%20Summer.vgz	vgz
+Rico Zerone - Empty Beach	MrKsoft	OPL Archive	https://opl.wafflenet.com/vgm/MrKsoft/Rico%20Zerone%20-%20Empty%20Beach.vgz	vgz
+Trippin' on MSD	MrKsoft	OPL Archive	https://opl.wafflenet.com/vgm/MrKsoft/Trippin%27%20on%20MSD.vgz	vgz
+Spindizzy II - Nice Day	MrKsoft	OPL Archive	https://opl.wafflenet.com/vgm/MrKsoft/Spindizzy%20II%20-%20Nice%20Day.vgz	vgz
+Castlevania - Order of Ecclesia - Riddle	MrKsoft	OPL Archive	https://opl.wafflenet.com/vgm/MrKsoft/Castlevania%20-%20Order%20of%20Ecclesia%20-%20Riddle.vgz	vgz
+JCH - Commercial Rhythm	MrKsoft	OPL Archive	https://opl.wafflenet.com/vgm/MrKsoft/JCH%20-%20Commercial%20Rhythm.vgz	vgz
+Streets of Rage - Violent Breathing	MrKsoft	OPL Archive	https://opl.wafflenet.com/vgm/MrKsoft/Streets%20of%20Rage%20-%20Violent%20Breathing.vgz	vgz
+Eschatos - Survive	MrKsoft	OPL Archive	https://opl.wafflenet.com/vgm/MrKsoft/Eschatos%20-%20Survive.vgz	vgz
+Ged3	MSK	OPL Archive	https://opl.wafflenet.com/vgm/MSK/Ged3.vgz	vgz
+Fresh	MSK	OPL Archive	https://opl.wafflenet.com/vgm/MSK/Fresh.vgz	vgz
+En Lille Test	MSK	OPL Archive	https://opl.wafflenet.com/vgm/MSK/En%20Lille%20Test.vgz	vgz
+MoonDriver for OPL3 DEMO 001	naruto	OPL Archive	https://opl.wafflenet.com/vgm/naruto/MoonDriver%20for%20OPL3%20DEMO%20001.vgz	vgz
+MoonDriver for OPL3 DEMO 002	naruto	OPL Archive	https://opl.wafflenet.com/vgm/naruto/MoonDriver%20for%20OPL3%20DEMO%20002.vgz	vgz
+MoonDriver for OPL3 DEMO 003	naruto	OPL Archive	https://opl.wafflenet.com/vgm/naruto/MoonDriver%20for%20OPL3%20DEMO%20003.vgz	vgz
+MoonDriver for OPL3 DEMO 004	naruto	OPL Archive	https://opl.wafflenet.com/vgm/naruto/MoonDriver%20for%20OPL3%20DEMO%20004.vgz	vgz
+Neon Genesis Evangelion - A Cruel Angel's Thesis	Navy	OPL Archive	https://opl.wafflenet.com/vgm/Navy/Neon%20Genesis%20Evangelion%20-%20A%20Cruel%20Angel%27s%20Thesis.vgz	vgz
+Radiohead - Creep	Navy	OPL Archive	https://opl.wafflenet.com/vgm/Navy/Radiohead%20-%20Creep.vgz	vgz
+Cutie Suzuki no Ringside Angel - Title	Nikacha	OPL Archive	https://opl.wafflenet.com/vgm/Nikacha/Cutie%20Suzuki%20no%20Ringside%20Angel%20-%20Title.vgz	vgz
+NiGHTS into Dreams	Nikacha	OPL Archive	https://opl.wafflenet.com/vgm/Nikacha/NiGHTS%20into%20Dreams...%20-%20Dreams%20Dreams%20in%20Silent%20Memory.vgz	vgz
+Shining in the Darkness - Tavern	Nikacha	OPL Archive	https://opl.wafflenet.com/vgm/Nikacha/Shining%20in%20the%20Darkness%20-%20Tavern.vgz	vgz
+Jacques Offenbach - Infernal Galop	Nikacha	OPL Archive	https://opl.wafflenet.com/vgm/Nikacha/Jacques%20Offenbach%20-%20Infernal%20Galop.vgz	vgz
+Midnight Resistance - Surging! Power	Nikacha	OPL Archive	https://opl.wafflenet.com/vgm/Nikacha/Midnight%20Resistance%20-%20Surging%21%20Power.vgz	vgz
+Shining in the Darkness - Search for Princess Claire	Nikacha	OPL Archive	https://opl.wafflenet.com/vgm/Nikacha/Shining%20in%20the%20Darkness%20-%20Search%20for%20Princess%20Claire.vgz	vgz
+Cutie Suzuki no Ringside Angel - Ending	Nikacha	OPL Archive	https://opl.wafflenet.com/vgm/Nikacha/Cutie%20Suzuki%20no%20Ringside%20Angel%20-%20Ending.vgz	vgz
+Ys III - Trading Town of Redmont	Nikacha	OPL Archive	https://opl.wafflenet.com/vgm/Nikacha/Ys%20III%20-%20Trading%20Town%20of%20Redmont.vgz	vgz
+Ys II - Stay With Me Forever	Nikacha	OPL Archive	https://opl.wafflenet.com/vgm/Nikacha/Ys%20II%20-%20Stay%20With%20Me%20Forever.vgz	vgz
+Hiryu no Ken III - 5 Nin no Ryu Senshi - Main Theme	Nikacha	OPL Archive	https://opl.wafflenet.com/vgm/Nikacha/Hiryu%20no%20Ken%20III%20-%205%20Nin%20no%20Ryu%20Senshi%20-%20Main%20Theme.vgz	vgz
+Jindungo	nitrofurano	OPL Archive	https://opl.wafflenet.com/vgm/nitrofurano/Jindungo.vgz	vgz
+1991 Donut	No-XS	OPL Archive	https://opl.wafflenet.com/vgm/No-XS/1991%20Donut.vgz	vgz
+Angry Adlib	Notademoscener	OPL Archive	https://opl.wafflenet.com/vgm/Notademoscener/Angry%20Adlib.vgz	vgz
+Double Adlib	Notademoscener	OPL Archive	https://opl.wafflenet.com/vgm/Notademoscener/Double%20Adlib.vgz	vgz
+Sector 03	now_its_dark	OPL Archive	https://opl.wafflenet.com/vgm/now_its_dark/Sector%2003.vgz	vgz
+Radix - Unreal Superhero	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Radix%20-%20Unreal%20Superhero.vgz	vgz
+Reilax3	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Reilax3.vgz	vgz
+Psycho5	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Psycho5.vgz	vgz
+Alley Cut - Title	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Alley%20Cut%20-%20Title.vgz	vgz
+Alley Cut - Credits	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Alley%20Cut%20-%20Credits.vgz	vgz
+Tempest - Zen-Bowling	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Tempest%20-%20Zen-Bowling.vgz	vgz
+A Prehistoric Tale (Atari ST) - Level BGM 4	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/A%20Prehistoric%20Tale%20%28Atari%20ST%29%20-%20Level%20BGM%204.vgz	vgz
+Cracker	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Cracker.vgz	vgz
+Super Mario Land - Birabuto Kingdom	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Super%20Mario%20Land%20-%20Birabuto%20Kingdom.vgz	vgz
+'POGROMA' Game Loader	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/%27POGROMA%27%20Game%20Loader.vgz	vgz
+Alley Cut - Main	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Alley%20Cut%20-%20Main.vgz	vgz
+Matkamies	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Matkamies.vgz	vgz
+MSK - Fresh	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/MSK%20-%20Fresh.vgz	vgz
+Quazar - Funky Stars	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Quazar%20-%20Funky%20Stars.vgz	vgz
+Minus	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Minus.vgz	vgz
+Juippi - Kulje	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Juippi%20-%20Kulje.vgz	vgz
+Zalza - Gote Gar Pa Tivoli	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Zalza%20-%20Gote%20Gar%20Pa%20Tivoli.vgz	vgz
+Zandax	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Zandax.vgz	vgz
+Psycho3x	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Psycho3x.vgz	vgz
+Rez - Unreal Superhero 2	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Rez%20-%20Unreal%20Superhero%202.vgz	vgz
+Pozitiff	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Pozitiff.vgz	vgz
+Zalza - Gummi Bjornarna	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Zalza%20-%20Gummi%20Bjornarna.vgz	vgz
+Imadick	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Imadick.vgz	vgz
+Jugi - Onward	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Jugi%20-%20Onward.vgz	vgz
+Sparapaaczci	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Sparapaaczci.vgz	vgz
+4-Mat - Menuloader	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/4-Mat%20-%20Menuloader.vgz	vgz
+Laxity - The Alibi (Summertime)	Nula	OPL Archive	https://opl.wafflenet.com/vgm/Nula/Laxity%20-%20The%20Alibi%20%28Summertime%29.vgz	vgz
+Light Sky	null1024	OPL Archive	https://opl.wafflenet.com/vgm/null1024/Light%20Sky.vgz	vgz
+Gigamega	null1024	OPL Archive	https://opl.wafflenet.com/vgm/null1024/Gigamega.vgz	vgz
+Food System	null1024	OPL Archive	https://opl.wafflenet.com/vgm/null1024/Food%20System.vgz	vgz
+Oxidate	null1024	OPL Archive	https://opl.wafflenet.com/vgm/null1024/Oxidate.vgz	vgz
+Rally-X - Theme	orient	OPL Archive	https://opl.wafflenet.com/vgm/orient/Rally-X%20-%20Theme.vgz	vgz
+The Lazy Gnome	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/The%20Lazy%20Gnome.vgz	vgz
+Bagel Bite Beats	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/Bagel%20Bite%20Beats.vgz	vgz
+Involuntary Surgery	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/Involuntary%20Surgery.vgz	vgz
+From Deaf Compo	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/From%20Deaf%20Compo.vgz	vgz
+Universal Health Scare	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/Universal%20Health%20Scare.vgz	vgz
+The Complete Devastation of Planet Earth	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/The%20Complete%20Devastation%20of%20Planet%20Earth.vgz	vgz
+Bring the Pain	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/Bring%20the%20Pain.vgz	vgz
+Enjoy the Violence	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/Enjoy%20the%20Violence.vgz	vgz
+Big Trouble in Little China	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/Big%20Trouble%20in%20Little%20China.vgz	vgz
+Gift 001	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/Gift%20001.vgz	vgz
+Gift 002	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/Gift%20002.vgz	vgz
+Left Out	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/Left%20Out.vgz	vgz
+C3 Comp Entry	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/C3%20Comp%20Entry.vgz	vgz
+deadmau5 - Ghosts 'n' Stuff	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/deadmau5%20-%20Ghosts%20%27n%27%20Stuff.vgz	vgz
+I Used to Love Her	OxygenStar	OPL Archive	https://opl.wafflenet.com/vgm/OxygenStar/I%20Used%20to%20Love%20Her.vgz	vgz
+The Legend of Zelda - Ocarina of Time - Gerudo Valley	Paper	OPL Archive	https://opl.wafflenet.com/vgm/Paper/The%20Legend%20of%20Zelda%20-%20Ocarina%20of%20Time%20-%20Gerudo%20Valley.vgz	vgz
+konakonaa - Kona-chan's Laying With Me at Home	Paper	OPL Archive	https://opl.wafflenet.com/vgm/Paper/konakonaa%20-%20Kona-chan%27s%20Laying%20With%20Me%20at%20Home.vgz	vgz
+Miha Kralj - Andromeda	Peter Gantar	OPL Archive	https://opl.wafflenet.com/vgm/Peter%20Gantar/Miha%20Kralj%20-%20Andromeda.vgz	vgz
+Forest Shadows	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Forest%20Shadows.vgz	vgz
+Elusive Dreams	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Elusive%20Dreams.vgz	vgz
+Ancestral Chimes	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Ancestral%20Chimes.vgz	vgz
+Silent Voyage	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Silent%20Voyage.vgz	vgz
+Christmas Song	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Christmas%20Song.vgz	vgz
+Tastes Like Fish	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Tastes%20Like%20Fish.vgz	vgz
+Arpeggio Domination	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Arpeggio%20Domination.vgz	vgz
+Lightforce - Title Screen	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Lightforce%20-%20Title%20Screen.vgz	vgz
+Rain	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Rain.vgz	vgz
+VoxelRunner	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/VoxelRunner.vgz	vgz
+Virtual Light	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Virtual%20Light.vgz	vgz
+SkyChase	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/SkyChase.vgz	vgz
+Intro Tune 2	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Intro%20Tune%202.vgz	vgz
+Spiral	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Spiral.vgz	vgz
+Silent One	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Silent%20One.vgz	vgz
+Dreaming	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Dreaming.vgz	vgz
+Vibrations II	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Vibrations%20II.vgz	vgz
+Napalm Loadertune	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Napalm%20Loadertune.vgz	vgz
+Marbles	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Marbles.vgz	vgz
+Hydrogenic Flanger	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Hydrogenic%20Flanger.vgz	vgz
+Aggresso	Phandral	OPL Archive	https://opl.wafflenet.com/vgm/Phandral/Aggresso.vgz	vgz
+Endless Break (Short Ver)	pigdevil2010	OPL Archive	https://opl.wafflenet.com/vgm/pigdevil2010/Endless%20Break%20%28Short%20Ver%29.vgz	vgz
+The Coming of Winter	pigdevil2010	OPL Archive	https://opl.wafflenet.com/vgm/pigdevil2010/The%20Coming%20of%20Winter.vgz	vgz
+ATB - 9 PM (Till I Come)	Platosha	OPL Archive	https://opl.wafflenet.com/vgm/Platosha/ATB%20-%209%20PM%20%28Till%20I%20Come%29.vgz	vgz
+Blink Dream	plus	OPL Archive	https://opl.wafflenet.com/vgm/plus/Blink%20Dream.vgz	vgz
+AdLie	Post-Retro	OPL Archive	https://opl.wafflenet.com/vgm/Post-Retro/AdLie.vgz	vgz
+Starport BBS Introtune	Purple Motion	OPL Archive	https://opl.wafflenet.com/vgm/Purple%20Motion/Starport%20BBS%20Introtune.vgz	vgz
+Waterworld (SNES) - Map	Raijin	OPL Archive	https://opl.wafflenet.com/vgm/Raijin/Waterworld%20%28SNES%29%20-%20Map.vgz	vgz
+B	rainwarrior	OPL Archive	https://opl.wafflenet.com/vgm/rainwarrior/B.RAD.vgz	vgz
+Gentle Words	raphaelgoulart	OPL Archive	https://opl.wafflenet.com/vgm/raphaelgoulart/Gentle%20Words.vgz	vgz
+Rushed Adlib Entry	raphaelgoulart	OPL Archive	https://opl.wafflenet.com/vgm/raphaelgoulart/Rushed%20Adlib%20Entry.vgz	vgz
+Thinking About Those Clouds	Ravencloak	OPL Archive	https://opl.wafflenet.com/vgm/Ravencloak/Thinking%20About%20Those%20Clouds.vgz	vgz
+Nighty Night	Ray Hamilton	OPL Archive	https://opl.wafflenet.com/vgm/Ray%20Hamilton/Nighty%20Night.vgz	vgz
+Acai World	Ray Hamilton	OPL Archive	https://opl.wafflenet.com/vgm/Ray%20Hamilton/Acai%20World.vgz	vgz
+Liquorice World	Ray Hamilton	OPL Archive	https://opl.wafflenet.com/vgm/Ray%20Hamilton/Liquorice%20World.vgz	vgz
+Permanently Confused	Razerek	OPL Archive	https://opl.wafflenet.com/vgm/Razerek/Permanently%20Confused.vgz	vgz
+Karsten Koch - Aryx	Rebible	OPL Archive	https://opl.wafflenet.com/vgm/Rebible/Karsten%20Koch%20-%20Aryx.vgz	vgz
+Ace of Base - Beautiful Life	Rebible	OPL Archive	https://opl.wafflenet.com/vgm/Rebible/Ace%20of%20Base%20-%20Beautiful%20Life.vgz	vgz
+Play Ground	Rebible	OPL Archive	https://opl.wafflenet.com/vgm/Rebible/Play%20Ground.vgz	vgz
+Real McCoy - Another Night	Rebible	OPL Archive	https://opl.wafflenet.com/vgm/Rebible/Real%20McCoy%20-%20Another%20Night.vgz	vgz
+Rave Dance Far Away	Rebible	OPL Archive	https://opl.wafflenet.com/vgm/Rebible/Rave%20Dance%20Far%20Away.vgz	vgz
+Nirvana - Smells Like Teen Spirit	Rebible	OPL Archive	https://opl.wafflenet.com/vgm/Rebible/Nirvana%20-%20Smells%20Like%20Teen%20Spirit.vgz	vgz
+CR II	Rebible	OPL Archive	https://opl.wafflenet.com/vgm/Rebible/CR%20II.vgz	vgz
+Street Fighter II - Guile Stage	reinhard	OPL Archive	https://opl.wafflenet.com/vgm/reinhard/Street%20Fighter%20II%20-%20Guile%20Stage.vgz	vgz
+Ys III - The Boy's Got Wings	reinhard	OPL Archive	https://opl.wafflenet.com/vgm/reinhard/Ys%20III%20-%20The%20Boy%27s%20Got%20Wings.vgz	vgz
+Romancing SaGa 2 - Seven Heroes Battle	reinhard	OPL Archive	https://opl.wafflenet.com/vgm/reinhard/Romancing%20SaGa%202%20-%20Seven%20Heroes%20Battle.vgz	vgz
+Romancing SaGa 2 - Opening Title	reinhard	OPL Archive	https://opl.wafflenet.com/vgm/reinhard/Romancing%20SaGa%202%20-%20Opening%20Title.vgz	vgz
+Raiden II - Repeated Tragedy	reinhard	OPL Archive	https://opl.wafflenet.com/vgm/reinhard/Raiden%20II%20-%20Repeated%20Tragedy.vgz	vgz
+Fatal Fury - Kiss for Geese (Geese Howard Theme)	reinhard	OPL Archive	https://opl.wafflenet.com/vgm/reinhard/Fatal%20Fury%20-%20Kiss%20for%20Geese%20%28Geese%20Howard%20Theme%29.vgz	vgz
+Super Mario World - Title Screen	reinhard	OPL Archive	https://opl.wafflenet.com/vgm/reinhard/Super%20Mario%20World%20-%20Title%20Screen.vgz	vgz
+Romancing SaGa 2 - Empire City Avalon	reinhard	OPL Archive	https://opl.wafflenet.com/vgm/reinhard/Romancing%20SaGa%202%20-%20Empire%20City%20Avalon.vgz	vgz
+Ys II - To Make the End of Battle	reinhard	OPL Archive	https://opl.wafflenet.com/vgm/reinhard/Ys%20II%20-%20To%20Make%20the%20End%20of%20Battle.vgz	vgz
+Ys IV - The Dawn of Ys	reinhard	OPL Archive	https://opl.wafflenet.com/vgm/reinhard/Ys%20IV%20-%20The%20Dawn%20of%20Ys.vgz	vgz
+Nightlife	Rene Verhaag	OPL Archive	https://opl.wafflenet.com/vgm/Rene%20Verhaag/Nightlife.vgz	vgz
+Jan Hammer - Tubbs and Valerie	Rene Verhaag	OPL Archive	https://opl.wafflenet.com/vgm/Rene%20Verhaag/Jan%20Hammer%20-%20Tubbs%20and%20Valerie.vgz	vgz
+Jan Hammer - Crockett's Theme	Rene Verhaag	OPL Archive	https://opl.wafflenet.com/vgm/Rene%20Verhaag/Jan%20Hammer%20-%20Crockett%27s%20Theme.vgz	vgz
+Shorty's Theme	Rene Verhaag	OPL Archive	https://opl.wafflenet.com/vgm/Rene%20Verhaag/Shorty%27s%20Theme.vgz	vgz
+Jan Hammer - Forever Tonight	Rene Verhaag	OPL Archive	https://opl.wafflenet.com/vgm/Rene%20Verhaag/Jan%20Hammer%20-%20Forever%20Tonight.vgz	vgz
+Summer Night on the Plain	RGB	OPL Archive	https://opl.wafflenet.com/vgm/RGB/Summer%20Night%20on%20the%20Plain.vgz	vgz
+Bon Jovi - Never Say Goodbye	s.p.i.k.e	OPL Archive	https://opl.wafflenet.com/vgm/s.p.i.k.e/Bon%20Jovi%20-%20Never%20Say%20Goodbye.vgz	vgz
+Surrounding	Sami Wilenius	OPL Archive	https://opl.wafflenet.com/vgm/Sami%20Wilenius/Surrounding.vgz	vgz
+Who Won	Sami Wilenius	OPL Archive	https://opl.wafflenet.com/vgm/Sami%20Wilenius/Who%20Won.vgz	vgz
+Keyb	Sami Wilenius	OPL Archive	https://opl.wafflenet.com/vgm/Sami%20Wilenius/Keyb.vgz	vgz
+Mouse	Sami Wilenius	OPL Archive	https://opl.wafflenet.com/vgm/Sami%20Wilenius/Mouse.vgz	vgz
+Carpet	Sami Wilenius	OPL Archive	https://opl.wafflenet.com/vgm/Sami%20Wilenius/Carpet.vgz	vgz
+Dirty	Savestate	OPL Archive	https://opl.wafflenet.com/vgm/Savestate/Dirty.vgz	vgz
+Hotkey Hell	Savestate	OPL Archive	https://opl.wafflenet.com/vgm/Savestate/Hotkey%20Hell.vgz	vgz
+Bathroom Blaster	Savestate	OPL Archive	https://opl.wafflenet.com/vgm/Savestate/Bathroom%20Blaster.vgz	vgz
+A Memoir Set in Sound	Savestate	OPL Archive	https://opl.wafflenet.com/vgm/Savestate/A%20Memoir%20Set%20in%20Sound.vgz	vgz
+ANTology Synthetic Version 1	Scalex	OPL Archive	https://opl.wafflenet.com/vgm/Scalex/ANTology%20Synthetic%20Version%201.0.vgz	vgz
+Sonic the Hedgehog 4 - Episode 1 - Splash Hill Zone Act 1	Scooblee	OPL Archive	https://opl.wafflenet.com/vgm/Scooblee/Sonic%20the%20Hedgehog%204%20-%20Episode%201%20-%20Splash%20Hill%20Zone%20Act%201.vgz	vgz
+Unknown - Perception Test	Sean Connolly	OPL Archive	https://opl.wafflenet.com/vgm/Sean%20Connolly/Unknown%20-%20Perception%20Test.vgz	vgz
+Turn 'n Burn - Theme	Sean Connolly	OPL Archive	https://opl.wafflenet.com/vgm/Sean%20Connolly/Turn%20%27n%20Burn%20-%20Theme.vgz	vgz
+Noisy Pillars - Tune 1	Sean Connolly	OPL Archive	https://opl.wafflenet.com/vgm/Sean%20Connolly/Noisy%20Pillars%20-%20Tune%201.vgz	vgz
+Bex Gurney - Ridin' the Waves	Sean Connolly	OPL Archive	https://opl.wafflenet.com/vgm/Sean%20Connolly/Bex%20Gurney%20-%20Ridin%27%20the%20Waves.vgz	vgz
+Stein Pedersen - On a Rainy Day	Sean Connolly	OPL Archive	https://opl.wafflenet.com/vgm/Sean%20Connolly/Stein%20Pedersen%20-%20On%20a%20Rainy%20Day.vgz	vgz
+The Human Race - The Final Chapter	Sean Connolly	OPL Archive	https://opl.wafflenet.com/vgm/Sean%20Connolly/The%20Human%20Race%20-%20The%20Final%20Chapter.vgz	vgz
+Hobbits and Dragons	Sexton	OPL Archive	https://opl.wafflenet.com/vgm/Sexton/Hobbits%20and%20Dragons.vgz	vgz
+Some Brutal	SexyElf	OPL Archive	https://opl.wafflenet.com/vgm/SexyElf/Some%20Brutal.vgz	vgz
+Old God	SexyElf	OPL Archive	https://opl.wafflenet.com/vgm/SexyElf/Old%20God.vgz	vgz
+Underground Cave Complex	SexyElf	OPL Archive	https://opl.wafflenet.com/vgm/SexyElf/Underground%20Cave%20Complex.vgz	vgz
+FAT 9	SexyElf	OPL Archive	https://opl.wafflenet.com/vgm/SexyElf/FAT%209.vgz	vgz
+Kerem	Silent Mode	OPL Archive	https://opl.wafflenet.com/vgm/Silent%20Mode/Kerem.vgz	vgz
+Joop	Silent Mode	OPL Archive	https://opl.wafflenet.com/vgm/Silent%20Mode/Joop.vgz	vgz
+Globe - Feel Like Dance	Silhouetti	OPL Archive	https://opl.wafflenet.com/vgm/Silhouetti/Globe%20-%20Feel%20Like%20Dance.vgz	vgz
+T-Square - Door to Tomorrow	Silhouetti	OPL Archive	https://opl.wafflenet.com/vgm/Silhouetti/T-Square%20-%20Door%20to%20Tomorrow.vgz	vgz
+Martian Successor Nadesico - Watashi Rashiku	Silhouetti	OPL Archive	https://opl.wafflenet.com/vgm/Silhouetti/Martian%20Successor%20Nadesico%20-%20Watashi%20Rashiku.vgz	vgz
+T-Square - Triumph	Silhouetti	OPL Archive	https://opl.wafflenet.com/vgm/Silhouetti/T-Square%20-%20Triumph.vgz	vgz
+Tenchi Muyo! Ryo-Ohki - Ren'ai no Sainou	Silhouetti	OPL Archive	https://opl.wafflenet.com/vgm/Silhouetti/Tenchi%20Muyo%21%20Ryo-Ohki%20-%20Ren%27ai%20no%20Sainou.vgz	vgz
+T-Square - Takarajima	Silhouetti	OPL Archive	https://opl.wafflenet.com/vgm/Silhouetti/T-Square%20-%20Takarajima.vgz	vgz
+Beginnings	Sir Vega	OPL Archive	https://opl.wafflenet.com/vgm/Sir%20Vega/Beginnings.vgz	vgz
+First Adlib Attempt	Skaven	OPL Archive	https://opl.wafflenet.com/vgm/Skaven/First%20Adlib%20Attempt.vgz	vgz
+Starport BBS Intro	Skaven	OPL Archive	https://opl.wafflenet.com/vgm/Skaven/Starport%20BBS%20Intro.vgz	vgz
+Snow Party (OPL3 Version)	Skuld	OPL Archive	https://opl.wafflenet.com/vgm/Skuld/Snow%20Party%20%28OPL3%20Version%29.vgz	vgz
+Snow Party (OPL2 Version)	Skuld	OPL Archive	https://opl.wafflenet.com/vgm/Skuld/Snow%20Party%20%28OPL2%20Version%29.vgz	vgz
+Kimagure Orange Road - Natsu no Mirage	Skuld	OPL Archive	https://opl.wafflenet.com/vgm/Skuld/Kimagure%20Orange%20Road%20-%20Natsu%20no%20Mirage.vgz	vgz
+Nadia - The Secret of Blue Water - Blue Water	Skuld	OPL Archive	https://opl.wafflenet.com/vgm/Skuld/Nadia%20-%20The%20Secret%20of%20Blue%20Water%20-%20Blue%20Water.vgz	vgz
+Breaking the Rules of Tonality	Slimeball	OPL Archive	https://opl.wafflenet.com/vgm/Slimeball/Breaking%20the%20Rules%20of%20Tonality.vgz	vgz
+Skeleton Rock	Sly	OPL Archive	https://opl.wafflenet.com/vgm/Sly/Skeleton%20Rock.vgz	vgz
+Scorched Earth - AdFlip 01	Sly	OPL Archive	https://opl.wafflenet.com/vgm/Sly/Scorched%20Earth%20-%20AdFlip%2001.vgz	vgz
+Wolfenstein 3D - Wondering About My Loved Ones	SnugglyBun	OPL Archive	https://opl.wafflenet.com/vgm/SnugglyBun/Wolfenstein%203D%20-%20Wondering%20About%20My%20Loved%20Ones.vgz	vgz
+OPL2	Snyderman	OPL Archive	https://opl.wafflenet.com/vgm/Snyderman/OPL2.1.vgz	vgz
+Madou Monogatari 1-2-3 - Opening (Version 1)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Madou%20Monogatari%201-2-3%20-%20Opening%20%28Version%201%29.vgz	vgz
+Desire (PC-9821) - Spiral	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Desire%20%28PC-9821%29%20-%20Spiral.vgz	vgz
+Touhou Gensoukyou - Lotus Land Story - Break The Sabbath	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Touhou%20Gensoukyou%20-%20Lotus%20Land%20Story%20-%20Break%20The%20Sabbath.vgz	vgz
+Sonic the Hedgehog 3 - Hard Bosses Edition 2 v400	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Sonic%20the%20Hedgehog%203%20-%20Hard%20Bosses%20Edition%202%20v400.0%20-%20Act%202%20Boss.vgz	vgz
+Sonic the Hedgehog 3 & Knuckles - Flying Battery Zone Act 2 (OPL3 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Sonic%20the%20Hedgehog%203%20%26%20Knuckles%20-%20Flying%20Battery%20Zone%20Act%202%20%28OPL3%20Version%29.vgz	vgz
+Touhou Gensoukyou - Lotus Land Story - Inanimate Dream (Beta+Final Mashup)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Touhou%20Gensoukyou%20-%20Lotus%20Land%20Story%20-%20Inanimate%20Dream%20%28Beta%2BFinal%20Mashup%29.vgz	vgz
+Sonic the Hedgehog 3 & Knuckles - Flying Battery Zone Act 2 (OPL2 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Sonic%20the%20Hedgehog%203%20%26%20Knuckles%20-%20Flying%20Battery%20Zone%20Act%202%20%28OPL2%20Version%29.vgz	vgz
+Popful Mail - Jungle (Battle)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Popful%20Mail%20-%20Jungle%20%28Battle%29.vgz	vgz
+Madou Monogatari 1-2-3 - Try Out (Version 1)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Madou%20Monogatari%201-2-3%20-%20Try%20Out%20%28Version%201%29.vgz	vgz
+Touhou Reiiden - Highly Responsive to Prayers - Angel of a Distant Star	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Touhou%20Reiiden%20-%20Highly%20Responsive%20to%20Prayers%20-%20Angel%20of%20a%20Distant%20Star.vgz	vgz
+Super Street Fighter II - Vega Stage	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Super%20Street%20Fighter%20II%20-%20Vega%20Stage.vgz	vgz
+Laputa - Castle in the Sky (Image Album) - Sheeta and Pazu (OPL3 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Laputa%20-%20Castle%20in%20the%20Sky%20%28Image%20Album%29%20-%20Sheeta%20and%20Pazu%20%28OPL3%20Version%29.vgz	vgz
+Laputa - Castle in the Sky (Image Album) - Sheeta and Pazu (OPL2 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Laputa%20-%20Castle%20in%20the%20Sky%20%28Image%20Album%29%20-%20Sheeta%20and%20Pazu%20%28OPL2%20Version%29.vgz	vgz
+Touhou Reiiden - Highly Responsive to Prayers - Angel's Legend	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Touhou%20Reiiden%20-%20Highly%20Responsive%20to%20Prayers%20-%20Angel%27s%20Legend.vgz	vgz
+System Shock - Intro	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/System%20Shock%20-%20Intro.vgz	vgz
+Prince of Persia (PC98-X68000) - Decorated Room	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Prince%20of%20Persia%20%28PC98-X68000%29%20-%20Decorated%20Room.vgz	vgz
+Rusty - Queen in the Dark Night (OPL2 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Rusty%20-%20Queen%20in%20the%20Dark%20Night%20%28OPL2%20Version%29.vgz	vgz
+Madou Monogatari 1-2-3 - An Enemy Approaches	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Madou%20Monogatari%201-2-3%20-%20An%20Enemy%20Approaches.vgz	vgz
+Rusty - Queen in the Dark Night (OPL3 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Rusty%20-%20Queen%20in%20the%20Dark%20Night%20%28OPL3%20Version%29.vgz	vgz
+Cho Ren Sha 68K - Chips!! (OPL2 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Cho%20Ren%20Sha%2068K%20-%20Chips%21%21%20%28OPL2%20Version%29.vgz	vgz
+Cho Ren Sha 68K - Chips!! (OPL3 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Cho%20Ren%20Sha%2068K%20-%20Chips%21%21%20%28OPL3%20Version%29.vgz	vgz
+Cosmic Carnage - Naruto's Stage (Fully Armored)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Cosmic%20Carnage%20-%20Naruto%27s%20Stage%20%28Fully%20Armored%29.vgz	vgz
+Alien 3 (NES) - Missions 1 & 2 (Version 2)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Alien%203%20%28NES%29%20-%20Missions%201%20%26%202%20%28Version%202%29.vgz	vgz
+Cho Ren Sha 68K - Justice of Galaxy	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Cho%20Ren%20Sha%2068K%20-%20Justice%20of%20Galaxy.vgz	vgz
+Corpse Party - Exploration Theme	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Corpse%20Party%20-%20Exploration%20Theme.vgz	vgz
+Touhou Kouryuudou - Unconnected Marketeers - Where Is That Bustling Marketplace Now - Immemorial Marketeers	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Touhou%20Kouryuudou%20-%20Unconnected%20Marketeers%20-%20Where%20Is%20That%20Bustling%20Marketplace%20Now%20-%20Immemorial%20Marketeers.vgz	vgz
+Madou Monogatari 1-2-3 - Try Out (Version 2)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Madou%20Monogatari%201-2-3%20-%20Try%20Out%20%28Version%202%29.vgz	vgz
+Alien 3 (NES) - Missions 1 & 2 (Version 3A)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Alien%203%20%28NES%29%20-%20Missions%201%20%26%202%20%28Version%203A%29.vgz	vgz
+Zero Wing - New Day For Me	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Zero%20Wing%20-%20New%20Day%20For%20Me.vgz	vgz
+AmbivalenZ - Deep Psyche	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/AmbivalenZ%20-%20Deep%20Psyche.vgz	vgz
+Xenon - Mugen no Shitai - Synaps (OPL3 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Xenon%20-%20Mugen%20no%20Shitai%20-%20Synaps%20%28OPL3%20Version%29.vgz	vgz
+Desire (PC-9821) - Fact	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Desire%20%28PC-9821%29%20-%20Fact.vgz	vgz
+Xenon - Mugen no Shitai - Synaps (OPL2 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Xenon%20-%20Mugen%20no%20Shitai%20-%20Synaps%20%28OPL2%20Version%29.vgz	vgz
+Madou Monogatari 1-2-3 - Opening (Version 2)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Madou%20Monogatari%201-2-3%20-%20Opening%20%28Version%202%29.vgz	vgz
+Brandish 2 - The Planet Buster - Prison (OPL2 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Brandish%202%20-%20The%20Planet%20Buster%20-%20Prison%20%28OPL2%20Version%29.vgz	vgz
+Sonic the Hedgehog 3 & Knuckles - Flying Battery Zone Act 1 (OPL2 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Sonic%20the%20Hedgehog%203%20%26%20Knuckles%20-%20Flying%20Battery%20Zone%20Act%201%20%28OPL2%20Version%29.vgz	vgz
+Brandish 2 - The Planet Buster - Prison (OPL3 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Brandish%202%20-%20The%20Planet%20Buster%20-%20Prison%20%28OPL3%20Version%29.vgz	vgz
+Sonic the Hedgehog 3 & Knuckles - Flying Battery Zone Act 1 (OPL3 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Sonic%20the%20Hedgehog%203%20%26%20Knuckles%20-%20Flying%20Battery%20Zone%20Act%201%20%28OPL3%20Version%29.vgz	vgz
+Madou Monogatari 1-2-3 - The Return of the Magic Girl Part 2	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Madou%20Monogatari%201-2-3%20-%20The%20Return%20of%20the%20Magic%20Girl%20Part%202.vgz	vgz
+Queen of Duelist Gaiden Alpha - Great Takegami	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Queen%20of%20Duelist%20Gaiden%20Alpha%20-%20Great%20Takegami.vgz	vgz
+Sonic the Hedgehog 3 & Knuckles - Angel Island Zone Act 2 (OPL2 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Sonic%20the%20Hedgehog%203%20%26%20Knuckles%20-%20Angel%20Island%20Zone%20Act%202%20%28OPL2%20Version%29.vgz	vgz
+Satori Corpse Party (Mashup)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Satori%20Corpse%20Party%20%28Mashup%29.vgz	vgz
+Sonic the Hedgehog 3 & Knuckles - Angel Island Zone Act 2 (OPL3 Version)	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Sonic%20the%20Hedgehog%203%20%26%20Knuckles%20-%20Angel%20Island%20Zone%20Act%202%20%28OPL3%20Version%29.vgz	vgz
+Portal (C64) - Stage Theme	spaztron64	OPL Archive	https://opl.wafflenet.com/vgm/spaztron64/Portal%20%28C64%29%20-%20Stage%20Theme.vgz	vgz
+World of Fantasy	Speedstar	OPL Archive	https://opl.wafflenet.com/vgm/Speedstar/World%20of%20Fantasy.vgz	vgz
+Move to the Beat	Speedstar	OPL Archive	https://opl.wafflenet.com/vgm/Speedstar/Move%20to%20the%20Beat.vgz	vgz
+Remembrance	Speedstar	OPL Archive	https://opl.wafflenet.com/vgm/Speedstar/Remembrance.vgz	vgz
+Adventure in Jungle	Speedstar	OPL Archive	https://opl.wafflenet.com/vgm/Speedstar/Adventure%20in%20Jungle.vgz	vgz
+Music Explosion	Speedstar	OPL Archive	https://opl.wafflenet.com/vgm/Speedstar/Music%20Explosion.vgz	vgz
+Come to Dance	Speedstar	OPL Archive	https://opl.wafflenet.com/vgm/Speedstar/Come%20to%20Dance.vgz	vgz
+Undertale - Megalovania	Speedy	OPL Archive	https://opl.wafflenet.com/vgm/Speedy/Undertale%20-%20Megalovania.vgz	vgz
+Thunder Force IV - Metal Squad (Stage 8)	Speedy	OPL Archive	https://opl.wafflenet.com/vgm/Speedy/Thunder%20Force%20IV%20-%20Metal%20Squad%20%28Stage%208%29.vgz	vgz
+M	Speedy	OPL Archive	https://opl.wafflenet.com/vgm/Speedy/M.U.S.H.A.%20-%20For%20the%20Love%20of.vgz	vgz
+Ys I - Battle Ground	Speedy	OPL Archive	https://opl.wafflenet.com/vgm/Speedy/Ys%20I%20-%20Battle%20Ground.vgz	vgz
+Depeche Mode - New Life	Spinning Voices	OPL Archive	https://opl.wafflenet.com/vgm/Spinning%20Voices/Depeche%20Mode%20-%20New%20Life.vgz	vgz
+Mighty Kingdom of Stupidum	Spring	OPL Archive	https://opl.wafflenet.com/vgm/Spring/Mighty%20Kingdom%20of%20Stupidum.vgz	vgz
+Siamese Brains	Strobe	OPL Archive	https://opl.wafflenet.com/vgm/Strobe/Siamese%20Brains.vgz	vgz
+Ge Nala	Strobe	OPL Archive	https://opl.wafflenet.com/vgm/Strobe/Ge%20Nala.vgz	vgz
+Nebula Warrior	Strobe	OPL Archive	https://opl.wafflenet.com/vgm/Strobe/Nebula%20Warrior.vgz	vgz
+1942 (C64) - Theme	subz3ro	OPL Archive	https://opl.wafflenet.com/vgm/subz3ro/1942%20%28C64%29%20-%20Theme.vgz	vgz
+Benjamin Gerardin - FMaven63b	subz3ro	OPL Archive	https://opl.wafflenet.com/vgm/subz3ro/Benjamin%20Gerardin%20-%20FMaven63b.vgz	vgz
+Maktone - Class05	subz3ro	OPL Archive	https://opl.wafflenet.com/vgm/subz3ro/Maktone%20-%20Class05.vgz	vgz
+Delta - Title Screen	subz3ro	OPL Archive	https://opl.wafflenet.com/vgm/subz3ro/Delta%20-%20Title%20Screen.vgz	vgz
+Hydra - Crack It	subz3ro	OPL Archive	https://opl.wafflenet.com/vgm/subz3ro/Hydra%20-%20Crack%20It.vgz	vgz
+Hydra & NHP - Intro Coop Tune	subz3ro	OPL Archive	https://opl.wafflenet.com/vgm/subz3ro/Hydra%20%26%20NHP%20-%20Intro%20Coop%20Tune.vgz	vgz
+Psychedelic Sound Synthesis	subz3ro	OPL Archive	https://opl.wafflenet.com/vgm/subz3ro/Psychedelic%20Sound%20Synthesis.vgz	vgz
+Mario & Luigi - Bowser's Inside Story - Deep Castle (Inside Bowser)	SuperJet Spade	OPL Archive	https://opl.wafflenet.com/vgm/SuperJet%20Spade/Mario%20%26%20Luigi%20-%20Bowser%27s%20Inside%20Story%20-%20Deep%20Castle%20%28Inside%20Bowser%29.vgz	vgz
+FADE - Mocktail Hour	SuperJet Spade	OPL Archive	https://opl.wafflenet.com/vgm/SuperJet%20Spade/FADE%20-%20Mocktail%20Hour.vgz	vgz
+Kirby 64 - The Crystal Shards - Factory Inspection	SuperJet Spade	OPL Archive	https://opl.wafflenet.com/vgm/SuperJet%20Spade/Kirby%2064%20-%20The%20Crystal%20Shards%20-%20Factory%20Inspection.vgz	vgz
+Sol-Feace - Mission 2 - Cilius Moon Weapon Factory	SuperJet Spade	OPL Archive	https://opl.wafflenet.com/vgm/SuperJet%20Spade/Sol-Feace%20-%20Mission%202%20-%20Cilius%20Moon%20Weapon%20Factory.vgz	vgz
+Mint Condition	SuperJet Spade	OPL Archive	https://opl.wafflenet.com/vgm/SuperJet%20Spade/Mint%20Condition.vgz	vgz
+4-Mat - Empty (512 Bytes)	SuperJet Spade	OPL Archive	https://opl.wafflenet.com/vgm/SuperJet%20Spade/4-Mat%20-%20Empty%20%28512%20Bytes%29.vgz	vgz
+RigidatoMS - Hard Transition	SuperJet Spade	OPL Archive	https://opl.wafflenet.com/vgm/SuperJet%20Spade/RigidatoMS%20-%20Hard%20Transition.vgz	vgz
+Battle Garegga - Fly to the Leaden Sky (Stage 1)	SuperJet Spade	OPL Archive	https://opl.wafflenet.com/vgm/SuperJet%20Spade/Battle%20Garegga%20-%20Fly%20to%20the%20Leaden%20Sky%20%28Stage%201%29.vgz	vgz
+OPL3 4OP Test Tune	SuperJet Spade	OPL Archive	https://opl.wafflenet.com/vgm/SuperJet%20Spade/OPL3%204OP%20Test%20Tune.vgz	vgz
+Grant Harper - Something Mega Drive This Way Comes	SuperJet Spade	OPL Archive	https://opl.wafflenet.com/vgm/SuperJet%20Spade/Grant%20Harper%20-%20Something%20Mega%20Drive%20This%20Way%20Comes.vgz	vgz
+Plutonia MIDI Pack - Blood Rush	Suzune Takada	OPL Archive	https://opl.wafflenet.com/vgm/Suzune%20Takada/Plutonia%20MIDI%20Pack%20-%20Blood%20Rush.vgz	vgz
+Tony Igy - Astronomia	Suzune Takada	OPL Archive	https://opl.wafflenet.com/vgm/Suzune%20Takada/Tony%20Igy%20-%20Astronomia.vgz	vgz
+BanG Dream! Girls Band Party! - Yes! BanG_Dream!	Suzune Takada	OPL Archive	https://opl.wafflenet.com/vgm/Suzune%20Takada/BanG%20Dream%21%20Girls%20Band%20Party%21%20-%20Yes%21%20BanG_Dream%21.vgz	vgz
+Tetris - Korobeiniki	Suzune Takada	OPL Archive	https://opl.wafflenet.com/vgm/Suzune%20Takada/Tetris%20-%20Korobeiniki.vgz	vgz
+Pikotaro - PPAP (Pen-Pineapple-Apple-Pen)	Suzune Takada	OPL Archive	https://opl.wafflenet.com/vgm/Suzune%20Takada/Pikotaro%20-%20PPAP%20%28Pen-Pineapple-Apple-Pen%29.vgz	vgz
+dusthillguy - The Theme of Y0nas K4rjal4inen	Svetlana Tovarisch	OPL Archive	https://opl.wafflenet.com/vgm/Svetlana%20Tovarisch/dusthillguy%20-%20The%20Theme%20of%20Y0nas%20K4rjal4inen.vgz	vgz
+Midnight Dog Orchestra	SwapXFO	OPL Archive	https://opl.wafflenet.com/vgm/SwapXFO/Midnight%20Dog%20Orchestra.vgz	vgz
+Twitch	SynaMax	OPL Archive	https://opl.wafflenet.com/vgm/SynaMax/Twitch.vgz	vgz
+NEWPAGA	SynaMax	OPL Archive	https://opl.wafflenet.com/vgm/SynaMax/NEWPAGA.vgz	vgz
+0xFF	SynaMax	OPL Archive	https://opl.wafflenet.com/vgm/SynaMax/0xFF.vgz	vgz
+E0	SynaMax	OPL Archive	https://opl.wafflenet.com/vgm/SynaMax/E0.vgz	vgz
+Strollin' in the Fields	TakuikaNinja	OPL Archive	https://opl.wafflenet.com/vgm/TakuikaNinja/Strollin%27%20in%20the%20Fields.vgz	vgz
+Twisted	Teetow	OPL Archive	https://opl.wafflenet.com/vgm/Teetow/Twisted.vgz	vgz
+A Synth	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/A%20Synth.vgz	vgz
+Woods	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Woods.vgz	vgz
+Slap	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Slap.vgz	vgz
+Rodent's Revenge	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Rodent%27s%20Revenge.vgz	vgz
+Bounce	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Bounce.vgz	vgz
+FM Nexus 69	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/FM%20Nexus%2069.vgz	vgz
+Badlib	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Badlib.vgz	vgz
+SCARY BITS	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/SCARY%20BITS.vgz	vgz
+A Trick	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/A%20Trick.vgz	vgz
+Yelling at the Floor	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Yelling%20at%20the%20Floor.vgz	vgz
+Icfmvoice	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Icfmvoice.vgz	vgz
+Phaat	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Phaat.vgz	vgz
+Cleared Path	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Cleared%20Path.vgz	vgz
+4th Coast	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/4th%20Coast.vgz	vgz
+Gate Array	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Gate%20Array.vgz	vgz
+Sunny	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Sunny.vgz	vgz
+Build	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Build.vgz	vgz
+Rockin' Norm	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Rockin%27%20Norm.vgz	vgz
+Cwack	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Cwack.vgz	vgz
+Shit	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Shit.vgz	vgz
+Yellow Wednesday	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Yellow%20Wednesday.vgz	vgz
+Top Gear 2	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Top%20Gear%202.vgz	vgz
+Teknoh Kapital	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Teknoh%20Kapital.vgz	vgz
+Suffer	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Suffer.vgz	vgz
+Tear It Down	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Tear%20It%20Down.vgz	vgz
+Water Crystals	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Water%20Crystals.vgz	vgz
+All Full	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/All%20Full.vgz	vgz
+Bopptoda	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Bopptoda.vgz	vgz
+Fucky Rev	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Fucky%20Rev.vgz	vgz
+Stuffage	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Stuffage.vgz	vgz
+Phased	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Phased.vgz	vgz
+DiM	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/DiM.vgz	vgz
+Macroroni	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Macroroni.vgz	vgz
+Boom	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Boom.vgz	vgz
+Aye Yay Yay	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Aye%20Yay%20Yay.vgz	vgz
+Shop Hard	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Shop%20Hard.vgz	vgz
+Antilato	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Antilato.vgz	vgz
+Libretto	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Libretto.vgz	vgz
+Discworld	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Discworld.vgz	vgz
+Commposter	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Commposter.vgz	vgz
+Diode Milliampere - XMISSION (Televicious Edit)	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Diode%20Milliampere%20-%20XMISSION%20%28Televicious%20Edit%29.vgz	vgz
+Bad Traffic	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Bad%20Traffic.vgz	vgz
+Drumb n Bass	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Drumb%20n%20Bass.vgz	vgz
+Boppin B	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Boppin%20B.vgz	vgz
+The Dead Leave	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/The%20Dead%20Leave.vgz	vgz
+Butterflies	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Butterflies.vgz	vgz
+Filthy Crackers	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Filthy%20Crackers.vgz	vgz
+Not Funny	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Not%20Funny.vgz	vgz
+Malfunction - Lazer Stork (Televicious Edit)	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Malfunction%20-%20Lazer%20Stork%20%28Televicious%20Edit%29.vgz	vgz
+Diode Milliampere - On Planet Zaxxon (Televicious Edit)	Televicious	OPL Archive	https://opl.wafflenet.com/vgm/Televicious/Diode%20Milliampere%20-%20On%20Planet%20Zaxxon%20%28Televicious%20Edit%29.vgz	vgz
+proteccno	TennesseeFields	OPL Archive	https://opl.wafflenet.com/vgm/TennesseeFields/proteccno.vgz	vgz
+Song for My New Friend Plus	TennesseeFields	OPL Archive	https://opl.wafflenet.com/vgm/TennesseeFields/Song%20for%20My%20New%20Friend%20Plus.vgz	vgz
+Extravagant Cat Socks	tennisers	OPL Archive	https://opl.wafflenet.com/vgm/tennisers/Extravagant%20Cat%20Socks.vgz	vgz
+Polymelia	tennisers	OPL Archive	https://opl.wafflenet.com/vgm/tennisers/Polymelia.vgz	vgz
+Eulogy of Alcoholic Porcupine	tennisers	OPL Archive	https://opl.wafflenet.com/vgm/tennisers/Eulogy%20of%20Alcoholic%20Porcupine.vgz	vgz
+Cryohorse	tennisers	OPL Archive	https://opl.wafflenet.com/vgm/tennisers/Cryohorse.vgz	vgz
+Forgot How to Tie My Shoes	tennisers	OPL Archive	https://opl.wafflenet.com/vgm/tennisers/Forgot%20How%20to%20Tie%20My%20Shoes.vgz	vgz
+flattened	tennisers & bigSmonkinLoser	OPL Archive	https://opl.wafflenet.com/vgm/tennisers%20%26%20bigSmonkinLoser/flattened.vgz	vgz
+The Hardliner - Contraduct Design	TheDuccinator	OPL Archive	https://opl.wafflenet.com/vgm/TheDuccinator/The%20Hardliner%20-%20Contraduct%20Design.vgz	vgz
+Electro Mama	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/Electro%20Mama.vgz	vgz
+C_THRU	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/C_THRU.vgz	vgz
+That's What She Said	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/That%27s%20What%20She%20Said.vgz	vgz
+That's the Joy of It	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/That%27s%20the%20Joy%20of%20It.vgz	vgz
+Unicorn	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/Unicorn.vgz	vgz
+Bubble Bobble - Introduction & Main Theme	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/Bubble%20Bobble%20-%20Introduction%20%26%20Main%20Theme.vgz	vgz
+Gigi D'Agostino - L'amour Toujours	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/Gigi%20D%27Agostino%20-%20L%27amour%20Toujours.vgz	vgz
+The Great Giana Sisters - Intro	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/The%20Great%20Giana%20Sisters%20-%20Intro.vgz	vgz
+16-Step Blues	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/16-Step%20Blues.vgz	vgz
+Makina Fever!!	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/Makina%20Fever%21%21.vgz	vgz
+Marsala	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/Marsala.vgz	vgz
+Hexion - Penguin Dance	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/Hexion%20-%20Penguin%20Dance.vgz	vgz
+Thrill of a Lifetime	Tobikomi	OPL Archive	https://opl.wafflenet.com/vgm/Tobikomi/Thrill%20of%20a%20Lifetime.vgz	vgz
+Dreaming About a Dream of Dreams	TrippleP	OPL Archive	https://opl.wafflenet.com/vgm/TrippleP/Dreaming%20About%20a%20Dream%20of%20Dreams.vgz	vgz
+Lovesick Weekend	TristEndo	OPL Archive	https://opl.wafflenet.com/vgm/TristEndo/Lovesick%20Weekend.vgz	vgz
+Sleepless Nights	TristEndo	OPL Archive	https://opl.wafflenet.com/vgm/TristEndo/Sleepless%20Nights.vgz	vgz
+RTB	Tyr	OPL Archive	https://opl.wafflenet.com/vgm/Tyr/RTB.vgz	vgz
+World of Metal Gray Color	Undine	OPL Archive	https://opl.wafflenet.com/vgm/Undine/World%20of%20Metal%20Gray%20Color.vgz	vgz
+After Burner - After Burner	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/After%20Burner%20-%20After%20Burner.vgz	vgz
+Simon & Garfunkel - The Sound of Silence	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Simon%20%26%20Garfunkel%20-%20The%20Sound%20of%20Silence.vgz	vgz
+Queen - Don't Stop Me Now	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Queen%20-%20Don%27t%20Stop%20Me%20Now.vgz	vgz
+Tetris (BPS) - Technotris	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Tetris%20%28BPS%29%20-%20Technotris.vgz	vgz
+Phil Collins - Another Day in Paradise	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Phil%20Collins%20-%20Another%20Day%20in%20Paradise.vgz	vgz
+Dragon Slayer - The Legend of Heroes II - Field	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Dragon%20Slayer%20-%20The%20Legend%20of%20Heroes%20II%20-%20Field.vgz	vgz
+Inspector Gadget - Theme	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Inspector%20Gadget%20-%20Theme.vgz	vgz
+2 Unlimited - Workaholic	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/2%20Unlimited%20-%20Workaholic.vgz	vgz
+Ork	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Ork.vgz	vgz
+Bubble Bobble - Main Theme	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Bubble%20Bobble%20-%20Main%20Theme.vgz	vgz
+Beverly Hills Cop - Axel F	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Beverly%20Hills%20Cop%20-%20Axel%20F.vgz	vgz
+2 Unlimited - Get Ready for This	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/2%20Unlimited%20-%20Get%20Ready%20for%20This.vgz	vgz
+Pierre De Geyter - The Internationale	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Pierre%20De%20Geyter%20-%20The%20Internationale.vgz	vgz
+Traditional - Drunken Sailor	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Traditional%20-%20Drunken%20Sailor.vgz	vgz
+LoVe AnTi Polotion Doom	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/LoVe%20AnTi%20Polotion%20Doom.vgz	vgz
+Eric Clapton - Tears in Heaven	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Eric%20Clapton%20-%20Tears%20in%20Heaven.vgz	vgz
+Mugen Senshi Valis II - Pearlmont Wink	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Mugen%20Senshi%20Valis%20II%20-%20Pearlmont%20Wink.vgz	vgz
+Metallica - One	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Metallica%20-%20One.vgz	vgz
+Cyndi Lauper - The Goonies 'R' Good Enough	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Cyndi%20Lauper%20-%20The%20Goonies%20%27R%27%20Good%20Enough.vgz	vgz
+U	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/U.N.%20Squadron%20-%20Canyon%20~%20Round%205.vgz	vgz
+Ambassadors of Funk - Supermarioland	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Ambassadors%20of%20Funk%20-%20Supermarioland.vgz	vgz
+The Beatles - Ob-La-Di, Ob-La-Da	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/The%20Beatles%20-%20Ob-La-Di%2C%20Ob-La-Da.vgz	vgz
+Kylie Minogue - The Locomotion	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Kylie%20Minogue%20-%20The%20Locomotion.vgz	vgz
+John Lennon - Imagine	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/John%20Lennon%20-%20Imagine.vgz	vgz
+Mission Impossible - Theme	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Mission%20Impossible%20-%20Theme.vgz	vgz
+The Beatles - Hey Jude	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/The%20Beatles%20-%20Hey%20Jude.vgz	vgz
+Twin Cobra - Break A Leg! (Stage 1, 6)	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Twin%20Cobra%20-%20Break%20A%20Leg%21%20%28Stage%201%2C%206%29.vgz	vgz
+Fire Hawk - Mission 3	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Fire%20Hawk%20-%20Mission%203.vgz	vgz
+Star Wars - Main Title	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Star%20Wars%20-%20Main%20Title.vgz	vgz
+Michael Franks - Antonio's Song	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Michael%20Franks%20-%20Antonio%27s%20Song.vgz	vgz
+The Legend of Heroes III - Lost Woods	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/The%20Legend%20of%20Heroes%20III%20-%20Lost%20Woods.vgz	vgz
+Vinnie Moore - Lifeforce	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Vinnie%20Moore%20-%20Lifeforce.vgz	vgz
+Square	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Square.vgz	vgz
+Ys III - The Boy's Got Wings	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Ys%20III%20-%20The%20Boy%27s%20Got%20Wings.vgz	vgz
+OutRun - Passing Breeze	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/OutRun%20-%20Passing%20Breeze.vgz	vgz
+The Terminator - Theme	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/The%20Terminator%20-%20Theme.vgz	vgz
+Dragon Spirit - Cave Road	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Dragon%20Spirit%20-%20Cave%20Road.vgz	vgz
+Mel	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Mel.vgz	vgz
+My Hero - Round 1	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/My%20Hero%20-%20Round%201.vgz	vgz
+Ooahh	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Ooahh.vgz	vgz
+Zap	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Zap.vgz	vgz
+Sonic the Hedgehog - Green Hill Zone	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Sonic%20the%20Hedgehog%20-%20Green%20Hill%20Zone.vgz	vgz
+Wayne Kerr - Emag002	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Wayne%20Kerr%20-%20Emag002.vgz	vgz
+The Little Mermaid - Under the Sea	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/The%20Little%20Mermaid%20-%20Under%20the%20Sea.vgz	vgz
+Pink Floyd - Another Brick in the Wall	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Pink%20Floyd%20-%20Another%20Brick%20in%20the%20Wall.vgz	vgz
+Jacques Offenbach - Infernal Galop	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Jacques%20Offenbach%20-%20Infernal%20Galop.vgz	vgz
+Soom	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Soom.vgz	vgz
+Ys III - Ilberns Ruins	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Ys%20III%20-%20Ilberns%20Ruins.vgz	vgz
+Secret of Mana - Tell a Strange Tale	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Secret%20of%20Mana%20-%20Tell%20a%20Strange%20Tale.vgz	vgz
+Francisco Tarrega - Recuerdos de la Alhambra	Unknown	OPL Archive	https://opl.wafflenet.com/vgm/Unknown/Francisco%20Tarrega%20-%20Recuerdos%20de%20la%20Alhambra.vgz	vgz
+Group	uUni	OPL Archive	https://opl.wafflenet.com/vgm/uUni/Group.vgz	vgz
+Tree on Fire	VanDerNurd Music	OPL Archive	https://opl.wafflenet.com/vgm/VanDerNurd%20Music/Tree%20on%20Fire.vgz	vgz
+(That's a) Damn Shame	VileR	OPL Archive	https://opl.wafflenet.com/vgm/VileR/%28That%27s%20a%29%20Damn%20Shame.vgz	vgz
+Electric (Wheel)chair	Vincent Voois	OPL Archive	https://opl.wafflenet.com/vgm/Vincent%20Voois/Electric%20%28Wheel%29chair.vgz	vgz
+You Won the Game, What Next	vintaque	OPL Archive	https://opl.wafflenet.com/vgm/vintaque/You%20Won%20the%20Game%2C%20What%20Next.vgz	vgz
+Whitesnake - Crying in the Rain	Viper	OPL Archive	https://opl.wafflenet.com/vgm/Viper/Whitesnake%20-%20Crying%20in%20the%20Rain.vgz	vgz
+Metallica - Master of Puppets	Viper	OPL Archive	https://opl.wafflenet.com/vgm/Viper/Metallica%20-%20Master%20of%20Puppets.vgz	vgz
+Europe - Carrie	Viper	OPL Archive	https://opl.wafflenet.com/vgm/Viper/Europe%20-%20Carrie.vgz	vgz
+Sayama	Viravax	OPL Archive	https://opl.wafflenet.com/vgm/Viravax/Sayama.vgz	vgz
+Pneumonoblahblahblah	Viraxor	OPL Archive	https://opl.wafflenet.com/vgm/Viraxor/Pneumonoblahblahblah.vgz	vgz
+Scortia - Terania	Void	OPL Archive	https://opl.wafflenet.com/vgm/Void/Scortia%20-%20Terania.vgz	vgz
+Raster	Void	OPL Archive	https://opl.wafflenet.com/vgm/Void/Raster.vgz	vgz
+Hangover	Void	OPL Archive	https://opl.wafflenet.com/vgm/Void/Hangover.vgz	vgz
+Jeroen Tel - Alloy Run	Void	OPL Archive	https://opl.wafflenet.com/vgm/Void/Jeroen%20Tel%20-%20Alloy%20Run.vgz	vgz
+Mindflux BBS Intro Tune	Void	OPL Archive	https://opl.wafflenet.com/vgm/Void/Mindflux%20BBS%20Intro%20Tune.vgz	vgz
+Error Loop	Warlord	OPL Archive	https://opl.wafflenet.com/vgm/Warlord/Error%20Loop.vgz	vgz
+Fat Lizards	Warlord	OPL Archive	https://opl.wafflenet.com/vgm/Warlord/Fat%20Lizards.vgz	vgz
+Sundown Wakeup	Warlord	OPL Archive	https://opl.wafflenet.com/vgm/Warlord/Sundown%20Wakeup.vgz	vgz
+The Final Hour	Warlord	OPL Archive	https://opl.wafflenet.com/vgm/Warlord/The%20Final%20Hour.vgz	vgz
+For Old Times	Warlord	OPL Archive	https://opl.wafflenet.com/vgm/Warlord/For%20Old%20Times.vgz	vgz
+Wintersports 2052	Warlord	OPL Archive	https://opl.wafflenet.com/vgm/Warlord/Wintersports%202052.vgz	vgz
+A Blib	Warlord	OPL Archive	https://opl.wafflenet.com/vgm/Warlord/A%20Blib.vgz	vgz
+Spectrum	Wayne Kerr	OPL Archive	https://opl.wafflenet.com/vgm/Wayne%20Kerr/Spectrum.vgz	vgz
+Emag001	Wayne Kerr	OPL Archive	https://opl.wafflenet.com/vgm/Wayne%20Kerr/Emag001.vgz	vgz
+64ish	Wayne Kerr	OPL Archive	https://opl.wafflenet.com/vgm/Wayne%20Kerr/64ish.vgz	vgz
+Mildred & Patty Hill - Happy Birthday to You	Wayne Kerr	OPL Archive	https://opl.wafflenet.com/vgm/Wayne%20Kerr/Mildred%20%26%20Patty%20Hill%20-%20Happy%20Birthday%20to%20You.vgz	vgz
+Eurodisco	Wayne Kerr	OPL Archive	https://opl.wafflenet.com/vgm/Wayne%20Kerr/Eurodisco.vgz	vgz
+Exposition	Wayne Kerr	OPL Archive	https://opl.wafflenet.com/vgm/Wayne%20Kerr/Exposition.vgz	vgz
+Muppets	Wayne Kerr	OPL Archive	https://opl.wafflenet.com/vgm/Wayne%20Kerr/Muppets.vgz	vgz
+DarkGen-2 Unused	Wayne Kerr	OPL Archive	https://opl.wafflenet.com/vgm/Wayne%20Kerr/DarkGen-2%20Unused.vgz	vgz
+Emag002	Wayne Kerr	OPL Archive	https://opl.wafflenet.com/vgm/Wayne%20Kerr/Emag002.vgz	vgz
+Traceback	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Traceback.vgz	vgz
+Thunder Force IV - Space Walk	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Thunder%20Force%20IV%20-%20Space%20Walk.vgz	vgz
+Thunder Force IV - Metal Squad	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Thunder%20Force%20IV%20-%20Metal%20Squad.vgz	vgz
+Streets of Rage 3 - Dub Slash	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Streets%20of%20Rage%203%20-%20Dub%20Slash.vgz	vgz
+MovieMovies1 - The Hero of Legend	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/MovieMovies1%20-%20The%20Hero%20of%20Legend.vgz	vgz
+Donkey Kong Country 2 - Stickerbush Symphony	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Donkey%20Kong%20Country%202%20-%20Stickerbush%20Symphony.vgz	vgz
+Sonic the Hedgehog 3 & Knuckles - Flying Battery Zone Act 2	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Sonic%20the%20Hedgehog%203%20%26%20Knuckles%20-%20Flying%20Battery%20Zone%20Act%202.vgz	vgz
+Sonic Spinball - Options	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Sonic%20Spinball%20-%20Options.vgz	vgz
+Undertale - Another Medium	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Undertale%20-%20Another%20Medium.vgz	vgz
+Sonic the Hedgehog 3 & Knuckles - The Doomsday Zone	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Sonic%20the%20Hedgehog%203%20%26%20Knuckles%20-%20The%20Doomsday%20Zone.vgz	vgz
+Vapor Trail - Staff Roll	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Vapor%20Trail%20-%20Staff%20Roll.vgz	vgz
+Contra Hard Corps - The Foggy Cave in the Darkness	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Contra%20Hard%20Corps%20-%20The%20Foggy%20Cave%20in%20the%20Darkness.vgz	vgz
+Sonic the Hedgehog 2 - Oil Ocean Zone	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Sonic%20the%20Hedgehog%202%20-%20Oil%20Ocean%20Zone.vgz	vgz
+Mega Man X - Storm Eagle	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Mega%20Man%20X%20-%20Storm%20Eagle.vgz	vgz
+Sonic the Hedgehog (8-bit) - Bridge Zone	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Sonic%20the%20Hedgehog%20%288-bit%29%20-%20Bridge%20Zone.vgz	vgz
+The Sweet Light of a Candylier	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/The%20Sweet%20Light%20of%20a%20Candylier.vgz	vgz
+Silver Surfer - Stage 1	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Silver%20Surfer%20-%20Stage%201.vgz	vgz
+Doom - At Doom's Gate (E1M1)	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Doom%20-%20At%20Doom%27s%20Gate%20%28E1M1%29.vgz	vgz
+Quazar - Funky Stars	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Quazar%20-%20Funky%20Stars.vgz	vgz
+Sonic the Hedgehog (8-bit) - Bridge Zone [Alternate]	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Sonic%20the%20Hedgehog%20%288-bit%29%20-%20Bridge%20Zone%20%5BAlternate%5D.vgz	vgz
+Sonic the Hedgehog (8-bit) - Scrap Brain Zone	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Sonic%20the%20Hedgehog%20%288-bit%29%20-%20Scrap%20Brain%20Zone.vgz	vgz
+JoJo's Bizarre Adventure - Fighting Gold	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/JoJo%27s%20Bizarre%20Adventure%20-%20Fighting%20Gold.vgz	vgz
+Such a Sweetheart	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Such%20a%20Sweetheart.vgz	vgz
+The Legend of Zelda - A Link to the Past - Hyrule Castle	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/The%20Legend%20of%20Zelda%20-%20A%20Link%20to%20the%20Past%20-%20Hyrule%20Castle.vgz	vgz
+Duke Nukem 3D - Grab Bag	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Duke%20Nukem%203D%20-%20Grab%20Bag.vgz	vgz
+Thunder Force IV - Stand Up Against Myself (Staff Roll)	Weeppiko	OPL Archive	https://opl.wafflenet.com/vgm/Weeppiko/Thunder%20Force%20IV%20-%20Stand%20Up%20Against%20Myself%20%28Staff%20Roll%29.vgz	vgz
+Aladdin - Prince Ali	Xanvier	OPL Archive	https://opl.wafflenet.com/vgm/Xanvier/Aladdin%20-%20Prince%20Ali.vgz	vgz
+Tiny Toon Adventures - Buster's Hidden Treasure - Grasslands	Xanvier	OPL Archive	https://opl.wafflenet.com/vgm/Xanvier/Tiny%20Toon%20Adventures%20-%20Buster%27s%20Hidden%20Treasure%20-%20Grasslands.vgz	vgz
+Final Fantasy IX - Battle 1	Xanvier	OPL Archive	https://opl.wafflenet.com/vgm/Xanvier/Final%20Fantasy%20IX%20-%20Battle%201.vgz	vgz
+OPL NATiON	Xaser	OPL Archive	https://opl.wafflenet.com/vgm/Xaser/OPL%20NATiON.vgz	vgz
+Johann Strauss II - The Blue Danube	Yamaha Corporation	OPL Archive	https://opl.wafflenet.com/vgm/Yamaha%20Corporation/Johann%20Strauss%20II%20-%20The%20Blue%20Danube.vgz	vgz
+Ludwig van Beethoven - Symphony No	Yamaha Corporation	OPL Archive	https://opl.wafflenet.com/vgm/Yamaha%20Corporation/Ludwig%20van%20Beethoven%20-%20Symphony%20No.%209%20in%20D%20Minor%2C%20Op.%20125%2C%20IV%20-%20Finale%20%28Ode%20to%20Joy%29.vgz	vgz
+Frederic Chopin - Nocturne in E-flat Major, Op	Yamaha Corporation	OPL Archive	https://opl.wafflenet.com/vgm/Yamaha%20Corporation/Frederic%20Chopin%20-%20Nocturne%20in%20E-flat%20Major%2C%20Op.%209%2C%20No.%202.vgz	vgz
+Traditional - Sur le Pont d'Avignon	Yamaha Corporation	OPL Archive	https://opl.wafflenet.com/vgm/Yamaha%20Corporation/Traditional%20-%20Sur%20le%20Pont%20d%27Avignon.vgz	vgz
+Amilcare Ponchielli - La Gioconda - Dance of the Hours	Yamaha Corporation	OPL Archive	https://opl.wafflenet.com/vgm/Yamaha%20Corporation/Amilcare%20Ponchielli%20-%20La%20Gioconda%20-%20Dance%20of%20the%20Hours.vgz	vgz
+Franz Xaver Gruber - Silent Night	Yamaha Corporation	OPL Archive	https://opl.wafflenet.com/vgm/Yamaha%20Corporation/Franz%20Xaver%20Gruber%20-%20Silent%20Night.vgz	vgz
+Wolfgang Amadeus Mozart - Serenade No	Yamaha Corporation	OPL Archive	https://opl.wafflenet.com/vgm/Yamaha%20Corporation/Wolfgang%20Amadeus%20Mozart%20-%20Serenade%20No.%2013%20for%20Strings%20in%20G%20Major%20-%20Allegro%20%28Eine%20Kleine%20Nachtmusik%29.vgz	vgz
+Toy Symphony - Allegro	Yamaha Corporation	OPL Archive	https://opl.wafflenet.com/vgm/Yamaha%20Corporation/Toy%20Symphony%20-%20Allegro.vgz	vgz
+Pehmo-Pop!	Yehar	OPL Archive	https://opl.wafflenet.com/vgm/Yehar/Pehmo-Pop%21.vgz	vgz
+Streets of Rage 2 - Revenge of Mr	Ygor	OPL Archive	https://opl.wafflenet.com/vgm/Ygor/Streets%20of%20Rage%202%20-%20Revenge%20of%20Mr.%20X.vgz	vgz
+That Funky Beat	Ygor	OPL Archive	https://opl.wafflenet.com/vgm/Ygor/That%20Funky%20Beat.vgz	vgz
+Sunset Over the River	Ygor	OPL Archive	https://opl.wafflenet.com/vgm/Ygor/Sunset%20Over%20the%20River.vgz	vgz
+The Moon Over the Sky	Ygor	OPL Archive	https://opl.wafflenet.com/vgm/Ygor/The%20Moon%20Over%20the%20Sky.vgz	vgz
+Rainbow Architecture	Yuzu	OPL Archive	https://opl.wafflenet.com/vgm/Yuzu/Rainbow%20Architecture.vgz	vgz
+Yu Lib	Yuzu	OPL Archive	https://opl.wafflenet.com/vgm/Yuzu/Yu%20Lib.vgz	vgz
+My Dirty Old Adlib	Zalza	OPL Archive	https://opl.wafflenet.com/vgm/Zalza/My%20Dirty%20Old%20Adlib.vgz	vgz
+Zity	zenmaster7799 & gotoandplay	OPL Archive	https://opl.wafflenet.com/vgm/zenmaster7799%20%26%20gotoandplay/Zity.vgz	vgz
+ClawZ - Sunk in Ink	Zephyr	OPL Archive	https://opl.wafflenet.com/vgm/Zephyr/ClawZ%20-%20Sunk%20in%20Ink.vgz	vgz
+MetaPhobe	Zephyr	OPL Archive	https://opl.wafflenet.com/vgm/Zephyr/MetaPhobe.vgz	vgz
+Shinespark	Zero	OPL Archive	https://opl.wafflenet.com/vgm/Zero/Shinespark.vgz	vgz
+Fog on the Bluff	Zero	OPL Archive	https://opl.wafflenet.com/vgm/Zero/Fog%20on%20the%20Bluff.vgz	vgz
+Magnolia Syndicate	Zero	OPL Archive	https://opl.wafflenet.com/vgm/Zero/Magnolia%20Syndicate.vgz	vgz
+Rolling Green	Zero	OPL Archive	https://opl.wafflenet.com/vgm/Zero/Rolling%20Green.vgz	vgz
+Even Men Cry When the Ketchup Is Gone	Zlew	OPL Archive	https://opl.wafflenet.com/vgm/Zlew/Even%20Men%20Cry%20When%20the%20Ketchup%20Is%20Gone.vgz	vgz
+Puyo Puyo - Brave of Puyo Puyo	Zumi	OPL Archive	https://opl.wafflenet.com/vgm/Zumi/Puyo%20Puyo%20-%20Brave%20of%20Puyo%20Puyo.vgz	vgz
+Quake II - Quad Machine	Zumi	OPL Archive	https://opl.wafflenet.com/vgm/Zumi/Quake%20II%20-%20Quad%20Machine.vgz	vgz
+Caverns of Zeux - Heaven	zzo38	OPL Archive	https://opl.wafflenet.com/vgm/zzo38/Caverns%20of%20Zeux%20-%20Heaven.vgz	vgz

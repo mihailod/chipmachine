@@ -2205,7 +2205,8 @@ void initFormats()
     // AdLib / OPL (PC).
     for (char const* f : { "raw opl capture", "edlib packed", "edlib d00",
                            "edlib d01", "herad music system", "imf",
-                           "a.m.composer 1.2" })
+                           "a.m.composer 1.2",
+                           "opl archive" }) // OPL2/OPL3 VGM logs (opl.wafflenet.com)
         format_map[f] = ADPLUG;
     // Japanese FM home computers (NEC PC-98, Sharp X68000, Fujitsu FM Towns).
     for (char const* f :
