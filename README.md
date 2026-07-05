@@ -10,8 +10,8 @@ But this is far more than a simple port!
 
 While ensuring the player runs on modern Apple hardware, my passion for it has expanded its compatibility and scale:
 
-* ~60 plugins supporting ~350 music formats
-* ~600,000 indexed songs
+* [60+ plugins](https://github.com/mihailod/musicplayer/tree/master/src/plugins) supporting [350+ music formats](data/misc/formats_descriptions.txt)
+* [~670,000](data) indexed songs (~70,000 annotaded with screenshots) and counting
 
 **The mission statement: support every single format and index all retro/chip music databases.**
 
@@ -540,9 +540,9 @@ This is mostly a preservation effort. I am making this project for myself so I a
 My work here is mostly based around:
 
 * **Porting**: from Intel to ARM
-* **Integration**: with / adding of various new plugins that did not exist in Intel version
-* **Content curation**: updating / adding more songs and fixing their metadata from various databases)
-* **Administration**: maintenance, releasing, pull requests merging, support, promoting
+* **Integration**: with / adding of various new plugins that did not exist in the Intel version
+* **Content curation**: updating / adding more songs and fixing their metadata from various databases
+* **Administration**: maintenance, releasing, PR merging, support, promoting
 
 **I don't take or imply any credit for the original idea and implementation and actual players development (the hardest part IMO).**
 
