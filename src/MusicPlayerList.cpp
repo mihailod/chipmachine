@@ -881,7 +881,12 @@ void MusicPlayerList::playCurrent()
         // The cached file has a URL-encoded name (e.g. "downloads.php%3fmoduleid=1")
         // which may contain bogus extensions like ".php". Use the format field
         // from the database (e.g. "XM") as the real extension.
-	LOGD("Detected ext: %s", currentInfo.ext);
+        // NB: this is the DB format HINT, not the final routing extension -- it is
+        // frequently empty (e.g. modland "Sam Coupe COP" carries no format), in
+        // which case the file routes on its on-disk extension instead. The
+        // deduced extension the plugins actually see is logged below (once f0 is
+        // finalised), after all the ext-inference here (gzip/rename/clean-name).
+	LOGD("Database file extension/format: '%s'", currentInfo.ext);
         if (!currentInfo.ext.empty()) {
             auto fname = f0.getName();
             auto wantExt = "." + utils::toLower(currentInfo.ext);
@@ -930,6 +935,16 @@ void MusicPlayerList::playCurrent()
 
         songFiles.push_back(f0);
         loadedFile = f0.getName();
+        // The final extension the plugins route on. path_extension() is what
+        // every ChipPlugin::canHandle() keys off (lower-cased), so this is the
+        // authoritative "what did the ext-inference above land on" -- worth
+        // logging because for magic-header / DB-format / gzip / clean-name cases
+        // it differs from both the URL-encoded cache name and the DB format hint.
+        {
+            auto routeExt = utils::toLower(utils::path_extension(loadedFile));
+            LOGD("Final deduced extension/format: '%s' (file: %s)", routeExt,
+                 loadedFile);
+        }
         for (const auto& s : mp.getSecondaryFiles(f0)) {
             if (s == "./") {
                 // The song's OWN directory (e.g. a MaxTrax shared-bank set whose
