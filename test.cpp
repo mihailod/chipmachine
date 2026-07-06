@@ -2622,15 +2622,18 @@ TEST_CASE("FTC routing", "[music]")
 // both. Fixtures cover the revisions: bd/e11 raw-Z80 "compiled" songs and duck1/
 // duck2 E-Tracker data (.cop), plus five .sng -- ddtitl (compiled 0x21..0xc3),
 // kapsa3 (E-Tracker data), music1 (Fuka), ofc2 (Ziutek "3e..3d c2 23 81") and
-// tetris (compiled "JP #81xx").
+// tetris (compiled "JP #81xx"). chrismas/rozkaz/stovka (.cop) are further
+// compiled songs whose subsong-select preambles ("01 ff 00 3e.." / "00 3e 01..")
+// match none of the old signatures -- they play because CopPlugin now claims
+// ".cop" by extension and lets CopMachine::init() run their own replayer.
 TEST_CASE("Sam Coupe COP", "[music]")
 {
     testPlugin<musix::CopPlugin>("testmus/cop", "");
 }
-// ".cop" is shared: ZXTune decodes the zxart E-Tracker variant (5-byte header),
-// but the modland corpus (10-byte-header data files + raw-Z80 compiled songs)
-// only plays here. Assert the live registry routes the modland files to
-// CopPlugin and that ZXTune declines them, so neither steals the other's files.
+// CopPlugin owns ".cop" outright now (ZXTune's COP loader failed on the modland
+// corpus, producing "no playable module"). Assert the live registry routes .cop
+// files to CopPlugin and that ZXTune declines the extension entirely, including a
+// compiled song (stovka) whose preamble the old signature gate didn't enumerate.
 TEST_CASE("COP routing", "[music]")
 {
     musix::ChipPlugin::createPlugins("data");
@@ -2642,8 +2645,10 @@ TEST_CASE("COP routing", "[music]")
     };
     REQUIRE(winner("testmus/cop/bd.cop") == "Sam Coupe (COP)");    // compiled
     REQUIRE(winner("testmus/cop/duck1.cop") == "Sam Coupe (COP)"); // E-Tracker
+    REQUIRE(winner("testmus/cop/stovka.cop") == "Sam Coupe (COP)"); // gap preamble
     REQUIRE_FALSE(musix::ZXTunePlugin().canHandle("testmus/cop/bd.cop"));
     REQUIRE_FALSE(musix::ZXTunePlugin().canHandle("testmus/cop/duck1.cop"));
+    REQUIRE_FALSE(musix::ZXTunePlugin().canHandle("testmus/cop/stovka.cop"));
     // Sam Coupe .sng routes here too (content-gated), and CopPlugin must NOT
     // grab the other .sng chips -- their headers fail looksLikeSamCoupeCop.
     REQUIRE(winner("testmus/cop/ddtitl.sng") == "Sam Coupe (COP)");
