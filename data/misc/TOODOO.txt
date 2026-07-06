@@ -2,7 +2,7 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- !!!!!!! VGMRIPS PR
+- furnace?
 
 - lots of paths with // which are dupes of others -- can we dedupe somehow?
 
@@ -81,15 +81,6 @@ dm	5
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
-
-* VGMRips --- PR in progress
-URL: [https://vgmrips.net](https://vgmrips.net)
-What it is: The premier home for .vgm (Video Game Music) file logs, focusing heavily on arcade boards (Capcom CPS1/2/3, Sega system 16, Neo Geo) and sound chips like the YM2612, YM2151, and AY-3-8910.
-VGMRips (Use the Server Admin's Zip)
-The Reality: VGMRips is a database front-end. Scraping individual pages for .vgm packs will get your IP blocked. The former server host maintains an official, all-in-one compressed file.
-Go directly to the VGMRips forum thread: https://vgmrips.net/forum/viewtopic.php?t=496
-The thread is titled "VGMRips full download packs".
-Download the single aggregated zip file (VGMRips_all_of_them_[DATE].zip). It sits around 4 to 5 GB and contains every single pack logged on the site up to its compilation date.
 
 * Project 2612 & SMS Power!
 URLs: [https://project2612.org](https://project2612.org) | [https://www.smspower.org](https://www.smspower.org)

@@ -1726,7 +1726,7 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                collection == "cpcpower" || collection == "vampi" ||
                collection == "rko" || collection == "amigaremix" ||
                collection == "amp" || collection == "modarchive" ||
-               collection == "projectay") {
+               collection == "projectay" || collection == "vgmrips") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
@@ -2238,6 +2238,31 @@ void initFormats()
     format_map["bbc micro"] = ACORN;        // Acorn 8-bit (close enough)
     // Misc small consoles/arcade -> generic OTHER ("Other Platforms" filter).
     for (char const* f : { "vectrex", "colecovision", "capcom q-sound format" })
+        format_map[f] = OTHER;
+
+    // --- VGMRips (vgmrips.net) game rips -------------------------------------
+    // The VGMRips collection stores the display platform as the `format` string
+    // (build_vgmrips.py) and its path is an archive.org ".../<game>.zip" URL, so
+    // the extension fallback can't help -- classify each label explicitly.
+    format_map["sega mega drive"] = MEGADRIVE; // YM2612 + SN76489
+    format_map["sega pico"] = MEGADRIVE;       // Genesis-based (YM2612)
+    format_map["nes"] = NES;                   // 2A03
+    format_map["game boy"] = GAMEBOY;          // DMG
+    format_map["pc engine"] = HES;             // TurboGrafx (HuC6280)
+    format_map["msx"] = MSX;
+    // Japanese FM home computers (OPN/OPNA family) -> JPFM, like .mdx/.s98/pmd.
+    for (char const* f : { "nec pc-98", "nec pc-88", "nec pc-80", "nec pc-88/98",
+                           "sharp x68000", "sharp x1", "fm towns", "fujitsu fm-7" })
+        format_map[f] = JPFM;
+    format_map["ibm pc"] = PC;
+    format_map["zx spectrum"] = SPECTRUM;
+    format_map["commodore 64"] = SID;
+    format_map["apple ii"] = APPLE;
+    format_map["apple iigs"] = APPLE;
+    // No dedicated arcade / Neo Geo / pinball F9 filter -> "Other Platforms".
+    for (char const* f : { "arcade", "arcade (capcom)", "arcade (konami)",
+                           "arcade (namco)", "arcade (sega)", "arcade (taito)",
+                           "neo geo", "neo geo pocket", "pinball", "other" })
         format_map[f] = OTHER;
 
     // Correct cross-platform formats that the generic fallbacks (endsWith

@@ -205,7 +205,24 @@
 --     (scripts/update_projectay_screenshots.py -> data/projectay_screenshots.txt,
 --     keyed by the local song path); CPC demo rips get none. Bump forces a
 --     reindex.
-VERSION = 77;
+-- 78: VGMRips (vgmrips.net) game rips, from the Internet Archive
+--     "vgmrips-all-of-them" item (one outer zip served member-by-member). Each
+--     path is a full archive.org member URL of a game's inner .zip; the
+--     ZIP-by-magic handler extracts the .vgz tracks and plays them as subsongs
+--     (like Zophar). 3574 games kept after title-deduping the MegaDrive subset
+--     vs modland Sega + Zophar (modland's "Video Game Music" is ~99% Sega, so
+--     the arcade / PC-98 / PC-88 / X68000 / FM Towns / TurboGrafx / Neo Geo /
+--     NES / GameBoy / WonderSwan / ... platforms are all net-new). Built by
+--     tools/build_vgmrips.py from data/misc/vgmrips/files.csv. ROUTING: VGM is a
+--     multi-chip container and GME's Vgm_Emu only decodes the Sega/AY logs
+--     (SN76489/YM2413/YM2612/AY8910); the chip gate in vgm_opl_detect.h
+--     (vgmNeedsLibVGM, superseding vgmHasOPL) now routes every other chip
+--     (OPL, YM2151, the OPN family, HuC6280, NES APU, GameBoy, C140, QSound,
+--     K053260/K054539, SegaPCM, OKIM..., WonderSwan, ...) to libvgmplugin.
+--     Screenshots: each game's sibling .png member, keyed by the song zip URL
+--     in data/vgmrips_screenshots.txt (getSongScreenshots offline path, like
+--     Zophar; 3314/4145 matched). Bump forces a reindex.
+VERSION = 78;
 
 DB = {
 {
@@ -234,6 +251,21 @@ DB = {
 	id =  "zophar",
 	source = "",
 	song_list = "data/zophar.txt",
+	song_template = "title composer format path ext",
+	color = 0xfffff
+},
+{
+	-- VGMRips (vgmrips.net) game rips via the Internet Archive
+	-- "vgmrips-all-of-them" item. Each path is a full archive.org member URL of
+	-- a game's inner .zip (source empty); the ZIP-by-magic handler extracts the
+	-- .vgz tracks and plays them as subsongs. Non-Sega chips route to
+	-- libvgmplugin (see vgm_opl_detect.h). Screenshots in
+	-- data/vgmrips_screenshots.txt keyed by the song zip URL. Built by
+	-- tools/build_vgmrips.py.
+	name = "VGMRips",
+	id =  "vgmrips",
+	source = "",
+	song_list = "data/vgmrips.txt",
 	song_template = "title composer format path ext",
 	color = 0xfffff
 },

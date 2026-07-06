@@ -270,6 +270,67 @@ TEST_CASE("OPL Archive routes to libvgm and plays", "[music]")
     }
 }
 
+// VGMRips routing: VGM is a multi-chip container. GME's Vgm_Emu only decodes the
+// Sega/AY logs (SN76489/YM2413/YM2612/AY8910); every other chip must route to
+// libvgm via the chip gate in vgm_opl_detect.h. The testmus/libvgm fixtures carry
+// one VGMRips rip per non-Sega chip (NES APU, GameBoy DMG, HuC6280, YM2610 Neo
+// Geo, the OPN family/PC-98, QSound, C140) -- assert the gate sends them to
+// libvgm and keeps GME off them, while the Sega/AY VGZ in testmus/gme stay on GME.
+TEST_CASE("VGMRips non-Sega VGM routes to libvgm", "[music]")
+{
+    musix::LibVGMPlugin lv;
+    musix::GMEPlugin gme;
+    for (auto const& vgz : { "testmus/libvgm/nes-2a03.vgz",
+                             "testmus/libvgm/gameboy-dmg.vgz",
+                             "testmus/libvgm/pce-huc6280.vgz",
+                             "testmus/libvgm/neogeo-ym2610.vgz",
+                             "testmus/libvgm/pc98-opn.vgz",
+                             "testmus/libvgm/capcom-qsound.vgz",
+                             "testmus/libvgm/namco-c140.vgz" }) {
+        REQUIRE(lv.canHandle(vgz));
+        REQUIRE_FALSE(gme.canHandle(vgz));
+    }
+    // The Sega (YM2612) and Vectrex (AY8910) logs GME plays well must NOT move.
+    for (auto const& vgz : { "testmus/gme/batman.vgz",
+                             "testmus/gme/vectrex-berzerk.vgz" }) {
+        REQUIRE(gme.canHandle(vgz));
+        REQUIRE_FALSE(lv.canHandle(vgz));
+    }
+}
+
+// VGMRips platform classification: the collection's path is an archive.org
+// ".../<game>.zip" URL (no useful extension), so every game is filed purely by
+// its `format` label. Guard that each distinct label resolves to the right
+// platform byte -- never UNKNOWN (which would make the game invisible to every
+// F9 platform filter).
+TEST_CASE("VGMRips format labels classify to a platform", "[music]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    const std::string url =
+        "vgmrips::https://archive.org/download/x.zip/Game.zip";
+    struct { const char* fmt; uint8_t plat; } cases[] = {
+        { "Sega Mega Drive", MEGADRIVE }, { "Sega Pico", MEGADRIVE },
+        { "NES", NES },                   { "Game Boy", GAMEBOY },
+        { "PC Engine", HES },             { "Neo Geo", OTHER },
+        { "Neo Geo Pocket", OTHER },      { "WonderSwan", WONDERSWAN },
+        { "MSX", MSX },                   { "NEC PC-98", JPFM },
+        { "NEC PC-88", JPFM },            { "Sharp X68000", JPFM },
+        { "FM Towns", JPFM },             { "IBM PC", PC },
+        { "Atari ST", ATARI },            { "ZX Spectrum", SPECTRUM },
+        { "Commodore 64", SID },          { "Apple IIgs", APPLE },
+        { "Arcade", OTHER },              { "Arcade (Capcom)", OTHER },
+        { "Arcade (Konami)", OTHER },     { "Pinball", OTHER },
+    };
+    for (auto const& c : cases) {
+        INFO("format " << c.fmt);
+        uint8_t b = mdb.classifyFormat(c.fmt, url);
+        REQUIRE(b != UNKNOWN_FORMAT);
+        REQUIRE(b == c.plat);
+    }
+}
+
 // The GUI marks app-shipped local collections with a "+" (vs "*" for cached
 // remote files) via isLocalAsset, keyed by the "<collection>::" path prefix.
 // Guard that all three shipped collections -- nsfe, hvtc (TED .prg) and the new

@@ -146,6 +146,7 @@ Metadata from these databases is ingested, normalized, deduped and cross-checked
 * Scene.org - https://scene.org
 * OPL Archive - https://opl.wafflenet.com
 * Bulba's ZX Spectrum & Amstrad CPC AY/YM Music Archives - https://bulba.untergrund.net/music_e.htm
+* VGMRips - https://vgmrips.net
 
 ### Remixes (MP3)
 
