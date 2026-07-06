@@ -2,6 +2,8 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+- !!!!!!! VGMRIPS PR
+
 - cop -- expected/bad module?
 [web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Sam%20Coupe%20COP/-%20unknown/stovka.cop
 [MusicDatabase.cpp:1681] Loaded 796 zxspectrum screenshots
@@ -50,7 +52,6 @@ MusicPlayer: Plugin 'ZX Spectrum (ZXTune)' failed to load '/Users/mihailod/Libra
 
 under 200 chars but >100 songs
 
-mgs
 mtm
 okta
 org

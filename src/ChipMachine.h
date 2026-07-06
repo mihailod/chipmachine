@@ -300,6 +300,9 @@ private:
     Icon netIcon;
     Icon volumeIcon;
     Icon screenShotIcon;
+    // Big "muted" overlay shown in the screen centre while paused (F5), so the
+    // user sees what they pressed and which key un-mutes.
+    Icon pausedIcon;
 
     RenderSet mainScreen;
 

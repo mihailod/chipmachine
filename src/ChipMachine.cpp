@@ -287,6 +287,15 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
                ((float)screen.height() - hh) / 2.0f, ww, hh };
     volumeIcon = Icon(volume_icon, volPos.x, volPos.y, volPos.w, volPos.h);
 
+    // Load the big "paused" glyph shown while paused. Missing file is not fatal:
+    // the overlay is simply skipped when the icon has no texture.
+    try {
+        auto mp = workDir / "data" / "misc" / "paused.png";
+        pausedIcon.setBitmap(image::load_image(mp.string()), true);
+    } catch (image::image_exception& e) {
+        LOGD("Failed to load paused.png overlay");
+    }
+
     setupCommands();
     setupRules();
 
@@ -1546,6 +1555,22 @@ void ChipMachine::render(uint32_t delta)
     // text up into their area. Kept below the modal overlay so dialogs/help still
     // sit on top of the scroll.
     scrollEffect.render(delta);
+
+    // While paused (F5), show a big mute symbol in the centre with a large white
+    // "F5" beside it, so the user knows what they pressed and how to un-mute.
+    if (player.isPaused() && pausedIcon.getTextureWidth() > 0) {
+        float isz = 240.0f;
+        float textScale = 3.0f;
+        auto tsz = font.get_size("F5", textScale);
+        float gap = 40.0f;
+        float totalW = isz + gap + tsz.x;
+        float gx = 25; // ((float)screen.width() - totalW) / 2.0f;
+        float gy = ((float)screen.height() - isz) / 2.0f;
+        screen.text(font, "F5", gx, gy + (isz - tsz.y) / 2.0f + 30, 0xffffffff,
+                    textScale);
+        pausedIcon.setArea({ gx + tsz.x + gap, gy+60, isz/2, isz/2 });
+        pausedIcon.render(screenptr, 0);
+    }
 
     overlay.render(screenptr, delta);
 
