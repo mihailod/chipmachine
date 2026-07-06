@@ -95,6 +95,7 @@ git clone https://github.com/mihailod/playerpro.git
 git clone https://github.com/mihailod/jaytrax.git
 git clone https://github.com/mihailod/webixs.git
 git clone https://github.com/mihailod/famitracker-cx.git
+git clone https://github.com/mihailod/furnace.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
