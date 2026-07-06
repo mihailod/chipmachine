@@ -248,6 +248,10 @@ private:
     // Appends the current song's platform logo (if any) and the ChipMachine
     // logo to the screenshots rotation, so it is never empty.
     void appendLogoScreenshots();
+    // Appends only the per-extension or per-platform logo (no generic icon) for
+    // the current song. Returns true if one was appended. Used both by
+    // appendLogoScreenshots and to tack the logo onto real screenshots.
+    bool appendPlatformOrExtLogo();
 
     utils::path workDir;
 

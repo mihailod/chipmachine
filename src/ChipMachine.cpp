@@ -838,6 +838,12 @@ void ChipMachine::loadScreenshot(const std::string& shot)
                     // shot == hq: even the guaranteed thumbnail failed -> logo.
                 }
                 appendLogoScreenshots();
+            } else {
+                // Song has real screenshots -- still append the platform (or
+                // extension) logo as the final frame so it always rotates in
+                // last. No generic icon here: if there is no platform/ext logo,
+                // just rotate the real screenshots as before.
+                appendPlatformOrExtLogo();
             }
             currentShot = -1;
             nextScreenshot();
@@ -870,16 +876,20 @@ static const std::map<std::string, std::string>& consoleSubLogos()
     return m;
 }
 
-void ChipMachine::appendLogoScreenshots()
+// Appends the per-extension screenshot, or failing that the per-platform logo,
+// for the current song. Returns true if one was appended. Does NOT append the
+// generic ChipMachine icon -- that is a last resort reserved for the logo-only
+// path (see appendLogoScreenshots).
+bool ChipMachine::appendPlatformOrExtLogo()
 {
     // 1) Per-extension screenshot (e.g. mod.png, sid.png) takes priority over
-    //    the platform logo when the song has no real screenshot.
+    //    the platform logo.
     if (!currentSongExt.empty()) {
         auto it = extensionShots.find(currentSongExt);
         if (it != extensionShots.end() && it->second.width() > 0) {
             screenshots.emplace_back("ext:" + currentSongExt, it->second);
             LOGD("Screenshot logos: ext='%s' logo=yes", currentSongExt);
-            return;
+            return true;
         }
     }
     // 2) Per-platform logo for the current song, when one is installed.
@@ -891,20 +901,26 @@ void ChipMachine::appendLogoScreenshots()
         if (sub != consoleSubLogos().end() && platformShots.count(sub->second))
             logoSlug = sub->second;
     }
-    bool havePlatform = false;
     if (!logoSlug.empty()) {
         auto it = platformShots.find(logoSlug);
         if (it != platformShots.end() && it->second.width() > 0) {
             screenshots.emplace_back("platform:" + logoSlug, it->second);
-            havePlatform = true;
+            LOGD("Screenshot logos: platform='%s' logo='%s' have=yes",
+                 currentPlatformSlug, logoSlug);
+            return true;
         }
     }
-    LOGD("Screenshot logos: platform='%s' logo='%s' have=%s", currentPlatformSlug,
-         logoSlug, havePlatform ? "yes" : "none");
-    // Only when there is no platform logo, fall back to the ChipMachine icon so
-    // the area isn't blank. When a platform logo exists, show only that.
-    if (havePlatform)
+    LOGD("Screenshot logos: platform='%s' have=none", currentPlatformSlug);
+    return false;
+}
+
+void ChipMachine::appendLogoScreenshots()
+{
+    // Prefer the ext/platform logo when the song has no real screenshot.
+    if (appendPlatformOrExtLogo())
         return;
+    // Only when there is no ext/platform logo, fall back to the ChipMachine icon
+    // so the area isn't blank.
     if (defaultShot.width() == 0 || defaultShot.height() == 0) {
         try {
             auto ic = workDir / "data" / "misc" / "icon.png";

@@ -2,11 +2,7 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- furnace?
-
 - lots of paths with // which are dupes of others -- can we dedupe somehow?
-
-- append the platform fallback image to the array of screenshots so that it is always shown as the last image in the rotation
 
 - 2nd level menu drill on more platforms with subplatforms?
 - unify some platforms on 1st level and do the drill?
