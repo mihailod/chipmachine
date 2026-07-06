@@ -1558,17 +1558,23 @@ void ChipMachine::render(uint32_t delta)
 
     // While paused (F5), show a big mute symbol in the centre with a large white
     // "F5" beside it, so the user knows what they pressed and how to un-mute.
-    if (player.isPaused() && pausedIcon.getTextureWidth() > 0) {
-        float isz = 240.0f;
-        float textScale = 3.0f;
+    // Blink once per second: visible for the first half of each second, hidden
+    // for the second half.
+    if (player.isPaused() && pausedIcon.getTextureWidth() > 0 &&
+        (utils::getms() / 500) % 2 == 0) {
+        // All sizes/offsets are authored against the 576px reference height and
+        // multiplied by gscale so the overlay grows/shrinks with the window just
+        // like the rest of the screen (gscale matches Scroller.h / the marquee).
+        float gscale = screen.height() / 576.0f;
+        float isz = 180.0f * gscale;
+        float textScale = 2.25f * gscale;
         auto tsz = font.get_size("F5", textScale);
-        float gap = 40.0f;
-        float totalW = isz + gap + tsz.x;
-        float gx = 25; // ((float)screen.width() - totalW) / 2.0f;
+        float gap = 40.0f * gscale;
+        float gx = 25.0f * gscale;
         float gy = ((float)screen.height() - isz) / 2.0f;
-        screen.text(font, "F5", gx, gy + (isz - tsz.y) / 2.0f + 30, 0xffffffff,
-                    textScale);
-        pausedIcon.setArea({ gx + tsz.x + gap, gy+60, isz/2, isz/2 });
+        screen.text(font, "F5", gx, gy + (isz - tsz.y) / 2.0f + 40 * gscale,
+                    0xffffffff, textScale);
+        pausedIcon.setArea({ gx + tsz.x + gap, gy + 60 * gscale, isz / 2, isz / 2 });
         pausedIcon.render(screenptr, 0);
     }
 

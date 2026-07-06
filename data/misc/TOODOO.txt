@@ -37,8 +37,6 @@ MusicPlayer: Plugin 'ZX Spectrum (ZXTune)' failed to load '/Users/mihailod/Libra
 
 - lots of paths with // which are dupes of others -- can we dedupe somehow?
 
-- when muted (F5), show a big mute symbol at the middle of the screen (data/misc/muted.png) with big white F5 so that user knows what he pressed and what he needs to press to unmute
-
 - implement the same ping-pong scroll for the artist/author/composer text display. some are too big to fit the screen. if it is too big to fit, just do the same ping-pong left-right scroll for that field instead of cutting it off (one long-named composer example: "anteeksi neiti, mutta voisinko lainata kupillisen sokeria?")
 
 - append the platform fallback image to the array of screenshots so that it is always shown as the last image in the rotation
@@ -117,7 +115,7 @@ dm	5
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
 
-* VGMRips
+* VGMRips --- PR in progress
 URL: [https://vgmrips.net](https://vgmrips.net)
 What it is: The premier home for .vgm (Video Game Music) file logs, focusing heavily on arcade boards (Capcom CPS1/2/3, Sega system 16, Neo Geo) and sound chips like the YM2612, YM2151, and AY-3-8910.
 VGMRips (Use the Server Admin's Zip)
