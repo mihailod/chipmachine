@@ -4,16 +4,7 @@
 
 - !!!!!!! VGMRIPS PR
 
-- cop -- expected/bad module?
-[web.cpp:161] Curl Getting ftp://ftp.modland.com/pub/modules/Sam%20Coupe%20COP/-%20unknown/stovka.cop
-[MusicDatabase.cpp:1681] Loaded 796 zxspectrum screenshots
-[MusicDatabase.cpp:1681] Loaded 31786 modland screenshots
-[web.cpp:291] CODE 226
-[RemoteLoader.cpp:219] CODE 226
-[MusicPlayerList.cpp:884] Detected ext: 
-MusicPlayer: Plugin 'ZX Spectrum (ZXTune)' failed to load '/Users/mihailod/Library/Caches/chipmachine/_webfiles/ftp%3a%2f%2fftp.modland.com%2fpub%2fmodules%2fSam Coupe COP%2f- unknown/stovka.cop'. Error: ZXTune: no playable module
-
-- happens sometimes with yt videos randomly, different videos, i doubt it is google/network issue, more likely some subtle bug in our way of streaming?
+- this happens sometimes with yt videos after couple of minutes of ok playback. randomly, different videos, i doubt it is google/network issue, more likely some subtle bug in our way of streaming? hard to reproduce and i think it is not happening with the same videos even on consecutive playbacks, not sure, please investigte.
 [web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/https%3a%2f%2fimg.youtube.com%2fvi%2fPKP2Xds-evg/sddefault.jpg
 [web.cpp:161] Curl Getting https://img.youtube.com/vi/PKP2Xds-evg/sddefault.jpg
 [web.cpp:291] CODE 200
@@ -36,8 +27,6 @@ MusicPlayer: Plugin 'ZX Spectrum (ZXTune)' failed to load '/Users/mihailod/Libra
 [utils.cpp:648] PID ended 31000 0
 
 - lots of paths with // which are dupes of others -- can we dedupe somehow?
-
-- implement the same ping-pong scroll for the artist/author/composer text display. some are too big to fit the screen. if it is too big to fit, just do the same ping-pong left-right scroll for that field instead of cutting it off (one long-named composer example: "anteeksi neiti, mutta voisinko lainata kupillisen sokeria?")
 
 - append the platform fallback image to the array of screenshots so that it is always shown as the last image in the rotation
 

@@ -610,46 +610,52 @@ void ChipMachine::layoutScreen()
     // picked up automatically.
 }
 
-// Bounce-scroll the song title each frame when it is too wide to fit, so the
-// whole title becomes visible. Recomputes the overflow from the CURRENT title
-// width and content bounds every call, which makes it correct across window
-// resizes (the previous baked-tween version kept the distance captured at song
-// start). Position is derived purely from titleMarqueePhase, so it can never get
-// "stuck" scrolled off to one side.
+// Bounce-scroll the song title AND composer each frame when they are too wide to
+// fit, so the whole text becomes visible instead of being cut off. Recomputes the
+// overflow from each field's CURRENT width and the content bounds every call, so
+// it stays correct across window resizes (the previous baked-tween version kept
+// the distance captured at song start). Position is derived purely from
+// titleMarqueePhase[], so a field can never get "stuck" scrolled off to one side.
 void ChipMachine::updateTitleMarquee(uint32_t delta)
 {
     if (!titleMarqueeActive)
         return;
 
-    // The composer field keeps the un-scrolled left/base x of the title column.
-    float baseX = currentInfoField[1].pos.x;
-    int tw = currentInfoField.getWidth(0);
-    int overflow = tw - (downRight.x - topLeft.x - 20);
-
-    if (overflow <= 20) {
-        // Title fits (or nearly): pin it to the base, no scrolling.
-        currentInfoField[0].pos.x = baseX;
-        titleMarqueePhase = 0.0f;
-        return;
-    }
-
-    titleMarqueePhase += delta / 1000.0f;
-
-    // Constant on-screen scroll speed, independent of window size. The sweep
-    // time is distance / velocity, and the velocity scales with the window
-    // (gscale) exactly as the glyphs and the overflow distance do -- so growing
-    // the window increases the distance and the speed together, leaving the
-    // perceived scroll rate unchanged. (A fixed cycle time made bigger windows,
-    // which overflow more pixels, appear to crawl -- the same bug we fixed on the
-    // bottom scroller.) gscale matches Scroller.h: screen height / 576.
+    // The format field (index 2) is never scrolled, so its x is the un-scrolled
+    // left/base x shared by the whole info column.
+    float baseX = currentInfoField[2].pos.x;
+    float avail = downRight.x - topLeft.x - 20;
     float gscale = screen.height() / 576.0f;
-    float speed = 330.0f * gscale;                            // px/sec; raise to go faster
-    float cycle = 2.0f * overflow / speed;                    // seconds per out-and-back
-    if (cycle < 1.0f) cycle = 1.0f;                           // gentle floor for near-fitting titles
-    float p = std::fmod(titleMarqueePhase, cycle) / cycle;    // 0..1
-    // Easing shape 0 -> 1 -> 0 over one cycle, dwelling briefly at each end.
-    float ease = 0.5f - 0.5f * std::cos(p * 6.28318530718f);
-    currentInfoField[0].pos.x = baseX - ease * overflow;
+
+    // 0 = title, 1 = composer. Each field scrolls on its own phase so a long
+    // title and a long composer bounce independently at the same visual speed.
+    for (int i = 0; i < 2; i++) {
+        int overflow = currentInfoField.getWidth(i) - (int)avail;
+
+        if (overflow <= 20) {
+            // Fits (or nearly): pin it to the base, no scrolling.
+            currentInfoField[i].pos.x = baseX;
+            titleMarqueePhase[i] = 0.0f;
+            continue;
+        }
+
+        titleMarqueePhase[i] += delta / 1000.0f;
+
+        // Constant on-screen scroll speed, independent of window size. The sweep
+        // time is distance / velocity, and the velocity scales with the window
+        // (gscale) exactly as the glyphs and the overflow distance do -- so
+        // growing the window increases the distance and the speed together,
+        // leaving the perceived scroll rate unchanged. (A fixed cycle time made
+        // bigger windows, which overflow more pixels, appear to crawl -- the same
+        // bug we fixed on the bottom scroller.) gscale matches Scroller.h.
+        float speed = 330.0f * gscale;                            // px/sec; raise to go faster
+        float cycle = 2.0f * overflow / speed;                    // seconds per out-and-back
+        if (cycle < 1.0f) cycle = 1.0f;                           // gentle floor for near-fitting text
+        float p = std::fmod(titleMarqueePhase[i], cycle) / cycle; // 0..1
+        // Easing shape 0 -> 1 -> 0 over one cycle, dwelling briefly at each end.
+        float ease = 0.5f - 0.5f * std::cos(p * 6.28318530718f);
+        currentInfoField[i].pos.x = baseX - ease * overflow;
+    }
 }
 
 void ChipMachine::play(SongInfo const& si)
@@ -1246,12 +1252,15 @@ void ChipMachine::update()
         loadScreenshot(shot);
 
         currentTween.finish();
-        currentInfoField[0].pos.x = currentInfoField[1].pos.x;
-        // Suspend the title marquee during the intro slide-in (the tween below
-        // animates the field position); it is re-enabled in onComplete once the
-        // title has settled at its base.
+        // Reset title AND composer to the shared base x (the format field is
+        // never scrolled, so its x is the base) -- either may have been mid-scroll
+        // for the previous song.
+        currentInfoField[0].pos.x = currentInfoField[2].pos.x;
+        currentInfoField[1].pos.x = currentInfoField[2].pos.x;
+        // Suspend the marquee during the intro slide-in (the tween below animates
+        // the field positions); re-enabled in onComplete once they've settled.
         titleMarqueeActive = false;
-        titleMarqueePhase = 0.0f;
+        titleMarqueePhase[0] = titleMarqueePhase[1] = 0.0f;
         prevInfoField = currentInfoField;
 
         currentInfoField.setInfo(currentInfo);
@@ -1267,10 +1276,10 @@ void ChipMachine::update()
 
         auto f = [=]() {
             xinfoField.setText(sub_title);
-            // Title has settled at its base -- hand control to the per-frame
-            // marquee, which scrolls it only if it doesn't fit.
+            // Fields have settled at their base -- hand control to the per-frame
+            // marquee, which scrolls the title/composer only if they don't fit.
             titleMarqueeActive = true;
-            titleMarqueePhase = 0.0f;
+            titleMarqueePhase[0] = titleMarqueePhase[1] = 0.0f;
         };
 
         updateFavorite();
@@ -1310,9 +1319,10 @@ void ChipMachine::update()
     if (playerState == MusicPlayerList::Error) {
         player.stop();
         currentTween.finish();
-        currentInfoField[0].pos.x = currentInfoField[1].pos.x;
+        currentInfoField[0].pos.x = currentInfoField[2].pos.x;
+        currentInfoField[1].pos.x = currentInfoField[2].pos.x;
         titleMarqueeActive = false;
-        titleMarqueePhase = 0.0f;
+        titleMarqueePhase[0] = titleMarqueePhase[1] = 0.0f;
 
         SongInfo song = player.getInfo();
         song.format = MusicDatabase::describeFormat(song);

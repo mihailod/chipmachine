@@ -364,13 +364,14 @@ private:
 
     tween::Tween markTween;
 
-    // Per-frame marquee that bounce-scrolls a too-long song title so all of it
-    // becomes visible. Driven live in updateTitleMarquee() rather than by a baked
-    // tween, so the scroll distance always tracks the CURRENT window size (resize/
-    // maximize) instead of the value captured when the song started. Only active
-    // after the intro slide-in completes; inactive while a title fits.
+    // Per-frame marquee that bounce-scrolls a too-long song title/composer so all
+    // of it becomes visible. Driven live in updateTitleMarquee() rather than by a
+    // baked tween, so the scroll distance always tracks the CURRENT window size
+    // (resize/maximize) instead of the value captured when the song started. Only
+    // active after the intro slide-in completes; a field that fits doesn't scroll.
+    // Index 0 = title (currentInfoField[0]), 1 = composer (currentInfoField[1]).
     bool titleMarqueeActive = false;
-    float titleMarqueePhase = 0.0f;
+    float titleMarqueePhase[2] = { 0.0f, 0.0f };
 
     Color timeColor;
     Color spectrumColor = 0xffffffff;
