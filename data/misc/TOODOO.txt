@@ -4,28 +4,6 @@
 
 - !!!!!!! VGMRIPS PR
 
-- this happens sometimes with yt videos after couple of minutes of ok playback. randomly, different videos, i doubt it is google/network issue, more likely some subtle bug in our way of streaming? hard to reproduce and i think it is not happening with the same videos even on consecutive playbacks, not sure, please investigte.
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/https%3a%2f%2fimg.youtube.com%2fvi%2fPKP2Xds-evg/sddefault.jpg
-[web.cpp:161] Curl Getting https://img.youtube.com/vi/PKP2Xds-evg/sddefault.jpg
-[web.cpp:291] CODE 200
-[tls @ 0x6000008327f0] IO Error: -9806
-[in#0/mov,mp4,m4a,3gp,3g2,mj2 @ 0x146f05450] stream 0, offset 0x1c4069: partial file
-[in#0/mov,mp4,m4a,3gp,3g2,mj2 @ 0x146f05330] Error during demuxing: Input/output error
-[aac @ 0x146f089c0] Input buffer exhausted before END element found
-[aist#0:0/aac @ 0x146f0b9a0] [dec:aac @ 0x146f08520] Error submitting packet to decoder: Invalid data found when processing input
-[utils.cpp:648] PID ended 30709 0
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/http%3a%2f%2fcontent.pouet.net%2ffiles%2fscreenshots%2f00057/00057090.jpg
-[web.cpp:161] Curl Getting http://content.pouet.net/files/screenshots/00057/00057090.jpg
-[web.cpp:278] Redirecting to https://content.pouet.net/files/screenshots/00057/00057090.jpg
-[web.cpp:291] CODE 404
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/https%3a%2f%2fimg.youtube.com%2fvi%2fPAG9mXrXG3c/sddefault.jpg
-[tls @ 0x600001260000] IO Error: -9806
-[in#0/mov,mp4,m4a,3gp,3g2,mj2 @ 0x1546087e0] stream 0, offset 0x144160: partial file
-[in#0/mov,mp4,m4a,3gp,3g2,mj2 @ 0x1546086c0] Error during demuxing: Input/output error
-[aac @ 0x155a06540] decode_band_types: Input buffer exhausted before END element found
-[aist#0:0/aac @ 0x155a09a50] [dec:aac @ 0x155a060a0] Error submitting packet to decoder: Invalid data found when processing input
-[utils.cpp:648] PID ended 31000 0
-
 - lots of paths with // which are dupes of others -- can we dedupe somehow?
 
 - append the platform fallback image to the array of screenshots so that it is always shown as the last image in the rotation
