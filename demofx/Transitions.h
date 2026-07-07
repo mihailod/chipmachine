@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <functional>
 #include <memory>
+#include <vector>
 
 #include <grappix/rectangle.h>
 #include <image/bitmap.h>
@@ -63,13 +64,15 @@ private:
     void transitionMosaic();
     void transitionStarfield();
     void transitionCopperWipe();
-    // Draws the copper-wipe frame (bars + sliding/fading image strips) into the
-    // icon; installed as the icon's custom renderer while the wipe runs.
+    // Effect frame renderers, installed as the icon's custom renderer while the
+    // matching effect runs. They draw into the icon's rect/texture.
+    void renderMosaic(std::shared_ptr<grappix::RenderTarget> target);
+    void renderStars(std::shared_ptr<grappix::RenderTarget> target);
     void renderCopper(std::shared_ptr<grappix::RenderTarget> target,
                       uint32_t delta);
-    // Reshuffle the mosaic tile reveal order onto the icon.
+    // Reshuffle the mosaic tile reveal order.
     void setupMosaicOrder();
-    // Sample a grid of stars (positions + colors) from bm onto the icon.
+    // Sample a grid of stars (positions + colors) from bm.
     void setupStars(const image::bitmap& bm);
     // Swap in the current shot's bitmap and return its full-size rectangle.
     grappix::Rectangle swapToCurrentShot();
@@ -83,6 +86,24 @@ private:
     int outgoingShot = -1;   // shot displayed before the current transition
     int currentEffect = 0;   // position in the effect rotation
     uint64_t setShotAt = 0;  // when the current shot began showing
+
+    // Mosaic runtime state (read by renderMosaic).
+    int mosaicGridW = 0;
+    int mosaicGridH = 0;
+    float revealProgress = 1.0f;   // 0 = all black, 1 = whole image shown
+    std::vector<int> tileRank;     // per-tile position in the shuffled reveal
+
+    // Starfield runtime state (read by renderStars).
+    struct Star
+    {
+        float hx, hy;      // home offset from rect center, as a fraction [-0.5,0.5]
+        uint32_t color;    // sampled pixel, already in 0xAARRGGBB order
+    };
+    int starGridW = 0;
+    int starGridH = 0;
+    float starZ = 1.0f;        // depth: 1 = image intact, ->0 = flown at viewer
+    float starAlpha = 1.0f;    // global fade of the star cloud
+    std::vector<Star> stars;
 
     // Copper-wipe runtime state (read by renderCopper).
     float copperShift = 0.0f;        // strip horizontal slide, fraction of width

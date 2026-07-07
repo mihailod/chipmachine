@@ -60,18 +60,10 @@ public:
     {
         if (!texture || (color >> 24) == 0) return;
         // An effect (e.g. ScreenshotTransitions) can install a custom renderer
-        // that fully takes over drawing while it runs.
+        // that fully takes over drawing while it runs; otherwise draw the plain
+        // textured quad.
         if (customRender) {
             customRender(target, delta);
-            return;
-        }
-        if (starMode && !stars.empty() && starGridW > 0 && starGridH > 0) {
-            renderStars(target);
-            return;
-        }
-        if (mosaicMode && (int)tileRank.size() == mosaicGridW * mosaicGridH &&
-            mosaicGridW > 0 && mosaicGridH > 0) {
-            renderMosaic(target);
             return;
         }
         target->draw(*texture, rec.x, rec.y, rec.w, rec.h, nullptr, color);
@@ -79,64 +71,6 @@ public:
 
     // The current texture, for custom renderers that draw it themselves.
     grappix::Texture* getTexture() const { return texture.get(); }
-
-    // Draws the sampled pixels as a 3D starfield. Each star sits at home offset
-    // (hx,hy) (fraction of the rect, from center) at rest; the projection factor
-    // f = 1/starZ blows them radially outward as starZ shrinks toward the viewer,
-    // and starAlpha fades the whole cloud. At starZ=1, f=1 and the stars tile the
-    // rect, reproducing the image; as starZ->0 they streak off toward the edges.
-    void renderStars(std::shared_ptr<grappix::RenderTarget> target)
-    {
-        float cx = rec.x + rec.w * 0.5f;
-        float cy = rec.y + rec.h * 0.5f;
-        float f = starZ > 0.0001f ? 1.0f / starZ : 10000.0f;
-        float sw = (rec.w / starGridW) * f;
-        float sh = (rec.h / starGridH) * f;
-        float scrW = (float)target->width();
-        float scrH = (float)target->height();
-        for (auto& s : stars) {
-            float sx = cx + s.hx * rec.w * f;
-            float sy = cy + s.hy * rec.h * f;
-            if (sx + sw < 0 || sx - sw > scrW || sy + sh < 0 || sy - sh > scrH)
-                continue;
-            float a = ((s.color >> 24) & 0xff) / 255.0f * starAlpha;
-            if (a <= 0.004f) continue;
-            uint32_t col = ((uint32_t)(a * 255.0f) << 24) | (s.color & 0x00ffffff);
-            target->rectangle(sx - sw * 0.5f, sy - sh * 0.5f, sw, sh, col);
-        }
-    }
-
-    // Draws the texture as a mosaicGridW x mosaicGridH grid of tiles. A tile is
-    // shown (textured) once its position in the shuffled reveal order,
-    // tileRank[idx], is below the reveal threshold; hidden tiles are simply not
-    // drawn, so the starfield shows through. revealProgress in [0,1] scales how
-    // many tiles are shown.
-    void renderMosaic(std::shared_ptr<grappix::RenderTarget> target)
-    {
-        int total = mosaicGridW * mosaicGridH;
-        int revealed = (int)(revealProgress * total + 0.5f);
-        if (revealed < 0) revealed = 0;
-        if (revealed > total) revealed = total;
-        float tw = rec.w / mosaicGridW;
-        float th = rec.h / mosaicGridH;
-        for (int ty = 0; ty < mosaicGridH; ty++) {
-            for (int tx = 0; tx < mosaicGridW; tx++) {
-                int idx = ty * mosaicGridW + tx;
-                if (tileRank[idx] >= revealed) continue;
-                float x = rec.x + tx * tw;
-                float y = rec.y + ty * th;
-                float s0 = (float)tx / mosaicGridW;
-                float s1 = (float)(tx + 1) / mosaicGridW;
-                // Texture is uploaded vertically flipped and the draw quad maps
-                // screen-top to t=1, so mirror the vertical UV band to keep each
-                // tile in the same place it occupies in the whole image.
-                float t0 = 1.0f - (float)(ty + 1) / mosaicGridH;
-                float t1 = 1.0f - (float)ty / mosaicGridH;
-                float uvs[8] = { s0, t0, s1, t0, s0, t1, s1, t1 };
-                target->draw(*texture, x, y, tw, th, uvs, color);
-            }
-        }
-    }
 
     void setBitmap(const image::bitmap& bm, bool filter = false)
     {
@@ -160,29 +94,9 @@ public:
     grappix::Color color{ 0xffffffff };
     grappix::Rectangle rec;
 
-    // Mosaic reveal effect state (driven by ScreenshotTransitions).
-    bool mosaicMode = false;
-    int mosaicGridW = 0;
-    int mosaicGridH = 0;
-    float revealProgress = 1.0f;   // 0 = all black, 1 = whole image shown
-    std::vector<int> tileRank;     // per-tile position in the shuffled reveal
-
-    // Starfield scatter effect state (driven by ScreenshotTransitions).
-    struct Star
-    {
-        float hx, hy;      // home offset from rect center, as a fraction [-0.5,0.5]
-        uint32_t color;    // sampled pixel, already in 0xAARRGGBB order
-    };
-    bool starMode = false;
-    int starGridW = 0;
-    int starGridH = 0;
-    float starZ = 1.0f;        // depth: 1 = image intact, ->0 = flown at viewer
-    float starAlpha = 1.0f;    // global fade of the star cloud
-    std::vector<Star> stars;
-
-    // Optional custom renderer installed by an effect (e.g. the copper wipe in
-    // ScreenshotTransitions). When set, it draws the icon instead of the default
-    // textured quad. Cleared when the effect finishes.
+    // Optional custom renderer installed by an effect (e.g. the screenshot
+    // transitions). When set, it draws the icon instead of the default textured
+    // quad. Cleared when the effect finishes.
     std::function<void(std::shared_ptr<grappix::RenderTarget>, uint32_t)>
         customRender;
 

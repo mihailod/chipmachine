@@ -107,8 +107,8 @@ void ScreenshotTransitions::transitionZoom()
         });
 }
 
-// Shuffle a fresh random reveal order for the mosaic effect onto the screenshot
-// icon: tileRank[idx] gives each tile's position in the reveal sequence.
+// Shuffle a fresh random reveal order for the mosaic effect: tileRank[idx] gives
+// each tile's position in the reveal sequence.
 void ScreenshotTransitions::setupMosaicOrder()
 {
     int gw = mosaicGrid, gh = mosaicGrid;
@@ -120,9 +120,46 @@ void ScreenshotTransitions::setupMosaicOrder()
     std::vector<int> rank(total);
     for (int i = 0; i < total; i++)
         rank[order[i]] = i;
-    icon->mosaicGridW = gw;
-    icon->mosaicGridH = gh;
-    icon->tileRank = std::move(rank);
+    mosaicGridW = gw;
+    mosaicGridH = gh;
+    tileRank = std::move(rank);
+}
+
+// Draws the image as a mosaicGridW x mosaicGridH grid of tiles. A tile is shown
+// (textured) once its position in the shuffled reveal order, tileRank[idx], is
+// below the reveal threshold; hidden tiles are simply not drawn, so the
+// starfield shows through. revealProgress in [0,1] scales how many are shown.
+void ScreenshotTransitions::renderMosaic(std::shared_ptr<RenderTarget> target)
+{
+    Texture* tex = icon->getTexture();
+    if (!tex || mosaicGridW <= 0 || mosaicGridH <= 0 ||
+        (int)tileRank.size() != mosaicGridW * mosaicGridH)
+        return;
+    auto& rec = icon->rec;
+    uint32_t color = (uint32_t)icon->color;
+    int total = mosaicGridW * mosaicGridH;
+    int revealed = (int)(revealProgress * total + 0.5f);
+    if (revealed < 0) revealed = 0;
+    if (revealed > total) revealed = total;
+    float tw = rec.w / mosaicGridW;
+    float th = rec.h / mosaicGridH;
+    for (int ty = 0; ty < mosaicGridH; ty++) {
+        for (int tx = 0; tx < mosaicGridW; tx++) {
+            int idx = ty * mosaicGridW + tx;
+            if (tileRank[idx] >= revealed) continue;
+            float x = rec.x + tx * tw;
+            float y = rec.y + ty * th;
+            float s0 = (float)tx / mosaicGridW;
+            float s1 = (float)(tx + 1) / mosaicGridW;
+            // Texture is uploaded vertically flipped and the draw quad maps
+            // screen-top to t=1, so mirror the vertical UV band to keep each
+            // tile in the same place it occupies in the whole image.
+            float t0 = 1.0f - (float)(ty + 1) / mosaicGridH;
+            float t1 = 1.0f - (float)ty / mosaicGridH;
+            float uvs[8] = { s0, t0, s1, t0, s0, t1, s1, t1 };
+            target->draw(*tex, x, y, tw, th, uvs, color);
+        }
+    }
 }
 
 // Effect: dissolve the current shot to black tile-by-tile in random order, swap,
@@ -132,42 +169,42 @@ void ScreenshotTransitions::transitionMosaic()
     float secs = mosaicSeconds;
     icon->color = Color(0xffffffff);
     setupMosaicOrder();
-    icon->mosaicMode = true;
-    icon->revealProgress = 1.0f;
+    revealProgress = 1.0f;
+    icon->customRender = [this](std::shared_ptr<RenderTarget> t, uint32_t) {
+        renderMosaic(t);
+    };
     Tween::make()
-        .to(icon->revealProgress, 0.0f)
+        .to(revealProgress, 0.0f)
         .seconds(secs)
         .onComplete([=]() {
             if (shotCount() <= currentShot) {
                 LOGD("Shot went away!");
-                icon->mosaicMode = false;
+                icon->customRender = nullptr;
                 return;
             }
             swapToCurrentShot();
             setupMosaicOrder();
-            icon->mosaicMode = true;
-            icon->revealProgress = 0.0f;
+            revealProgress = 0.0f;
             Tween::make()
-                .to(icon->revealProgress, 1.0f)
+                .to(revealProgress, 1.0f)
                 .seconds(secs)
                 .onComplete([=]() {
                     // Back to a plain quad so the next effect renders normally.
-                    icon->mosaicMode = false;
+                    icon->customRender = nullptr;
                 });
         });
 }
 
 // Sample a starGrid x starGrid grid of pixels from bm and store them as stars
-// (home position + color) on the screenshot icon. Fully transparent pixels
-// (e.g. a logo's background) become no star.
+// (home position + color). Fully transparent pixels (e.g. a logo's background)
+// become no star.
 void ScreenshotTransitions::setupStars(const image::bitmap& bm)
 {
     int gw = starGrid, gh = starGrid;
     int bw = bm.width(), bh = bm.height();
-    auto& stars = icon->stars;
     stars.clear();
-    icon->starGridW = gw;
-    icon->starGridH = gh;
+    starGridW = gw;
+    starGridH = gh;
     if (bw <= 0 || bh <= 0) return;
     stars.reserve(gw * gh);
     for (int gy = 0; gy < gh; gy++) {
@@ -186,6 +223,39 @@ void ScreenshotTransitions::setupStars(const image::bitmap& bm)
     }
 }
 
+// Draws the sampled pixels as a 3D starfield. Each star sits at home offset
+// (hx,hy) (fraction of the rect, from center) at rest; the projection factor
+// f = 1/starZ blows them radially outward as starZ shrinks toward the viewer,
+// and starAlpha fades the whole cloud. At starZ=1, f=1 and the stars tile the
+// rect, reproducing the image; as starZ->0 they streak off toward the edges.
+void ScreenshotTransitions::renderStars(std::shared_ptr<RenderTarget> target)
+{
+    if (stars.empty() || starGridW <= 0 || starGridH <= 0) return;
+    auto& rec = icon->rec;
+    float cx = rec.x + rec.w * 0.5f;
+    float cy = rec.y + rec.h * 0.5f;
+    float f = starZ > 0.0001f ? 1.0f / starZ : 10000.0f;
+    // Particle size grows slower than the positional spread so the cloud opens
+    // gaps between particles as it explodes, instead of the tiles staying
+    // edge-to-edge. At rest (f=1) sizeF=1 so the image tiles solid.
+    const float sizeGrow = 0.1f;
+    float sizeF = 1.0f + (f - 1.0f) * sizeGrow;
+    float sw = (rec.w / starGridW) * sizeF;
+    float sh = (rec.h / starGridH) * sizeF;
+    float scrW = (float)target->width();
+    float scrH = (float)target->height();
+    for (auto& s : stars) {
+        float sx = cx + s.hx * rec.w * f;
+        float sy = cy + s.hy * rec.h * f;
+        if (sx + sw < 0 || sx - sw > scrW || sy + sh < 0 || sy - sh > scrH)
+            continue;
+        float a = ((s.color >> 24) & 0xff) / 255.0f * starAlpha;
+        if (a <= 0.004f) continue;
+        uint32_t col = ((uint32_t)(a * 255.0f) << 24) | (s.color & 0x00ffffff);
+        target->rectangle(sx - sw * 0.5f, sy - sh * 0.5f, sw, sh, col);
+    }
+}
+
 // Effect: the outgoing shot's pixels break into stars and fly toward the viewer
 // (fading out), then the next shot's pixels decelerate back from the scatter to
 // reform the image.
@@ -194,24 +264,26 @@ void ScreenshotTransitions::transitionStarfield()
     float secs = starSeconds;
     float zMin = starDepthMin;
     icon->color = Color(0xffffffff);
+    icon->customRender = [this](std::shared_ptr<RenderTarget> t, uint32_t) {
+        renderStars(t);
+    };
 
     // In phase: start the new shot fully scattered/faded and collapse it home.
     auto startIn = [=]() {
         if (shotCount() <= currentShot) {
             LOGD("Shot went away!");
-            icon->starMode = false;
+            icon->customRender = nullptr;
             return;
         }
         swapToCurrentShot();
         setupStars(shotBitmap(currentShot));
-        icon->starMode = true;
-        icon->starZ = zMin;
-        icon->starAlpha = 0.0f;
+        starZ = zMin;
+        starAlpha = 0.0f;
         Tween::make()
-            .to(icon->starZ, 1.0f)
-            .to(icon->starAlpha, 1.0f)
+            .to(starZ, 1.0f)
+            .to(starAlpha, 1.0f)
             .seconds(secs)
-            .onComplete([=]() { icon->starMode = false; });
+            .onComplete([=]() { icon->customRender = nullptr; });
     };
 
     bool haveOut = outgoingShot >= 0 && outgoingShot < shotCount();
@@ -221,12 +293,11 @@ void ScreenshotTransitions::transitionStarfield()
         return;
     }
     setupStars(shotBitmap(outgoingShot));
-    icon->starMode = true;
-    icon->starZ = 1.0f;
-    icon->starAlpha = 1.0f;
+    starZ = 1.0f;
+    starAlpha = 1.0f;
     Tween::make()
-        .to(icon->starZ, zMin)
-        .to(icon->starAlpha, 0.0f)
+        .to(starZ, zMin)
+        .to(starAlpha, 0.0f)
         .seconds(secs)
         .onComplete([=]() { startIn(); });
 }
@@ -349,10 +420,8 @@ void ScreenshotTransitions::next()
     currentShot++;
     if (currentShot >= shotCount()) currentShot = 0;
 
-    // A fresh transition owns the icon: clear any special render mode left over
-    // from an interrupted effect so a stale particle cloud can't linger.
-    icon->starMode = false;
-    icon->mosaicMode = false;
+    // A fresh transition owns the icon: clear any custom renderer left over from
+    // an interrupted effect so a stale particle cloud can't linger.
     icon->customRender = nullptr;
 
     // Cycle through the available transition effects so successive shots animate
