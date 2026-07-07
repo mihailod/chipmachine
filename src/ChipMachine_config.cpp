@@ -122,6 +122,11 @@ void ChipMachine::setVariable(const std::string& name, int index,
         case 8: scrollEffect.set("sine_on", val); break;
         case 9: scrollEffect.set("sine_interval", val); break;
         case 10: scrollEffect.set("sine_transition", val); break;
+        case 11: scrollEffect.set("vbob_amplitude", val); break;
+        case 12: scrollEffect.set("vbob_speed", val); break;
+        case 13: scrollEffect.set("vbob_on", val); break;
+        case 14: scrollEffect.set("vbob_interval", val); break;
+        case 15: scrollEffect.set("vbob_transition", val); break;
         }
     } else if (name == "hilight_color") {
         hilightColor = Color(stoll(val));

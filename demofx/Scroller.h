@@ -42,7 +42,7 @@ public:
 	void resize(int w, int h) override {
 		// Texture is (re)sized in render() to track the window/text scale; just
 		// scale the height with the target here so the first frame isn't clipped.
-		int texH = (int)(300 * (target.height() / 576.0f));
+		int texH = (int)(100 * (target.height() / 576.0f) * scrollsize);
 		if(texH < 8) texH = 300;
 		if(w > 8)
 			scr = grappix::Texture(w+10, texH);
@@ -68,6 +68,16 @@ public:
 			sine_interval = std::stof(val);
 		} else if(what == "sine_transition") {
 			sine_transition = std::stof(val);
+		} else if(what == "vbob_amplitude") {
+			vbob_amplitude = std::stof(val);
+		} else if(what == "vbob_speed") {
+			vbob_speed = std::stof(val);
+		} else if(what == "vbob_on") {
+			vbob_on = (val == "true") || (atof(val.c_str()) != 0.0);
+		} else if(what == "vbob_interval") {
+			vbob_interval = std::stof(val);
+		} else if(what == "vbob_transition") {
+			vbob_transition = std::stof(val);
 		} else {
 			scrollText = val;
 			LOGD("SCROLL: %s", scrollText);
@@ -79,15 +89,20 @@ public:
 		if(alpha <= 0.01)
 			return;
 
-		// Calculate dynamic scale factor based on target resolution
+		// Calculate dynamic scale factor based on target resolution.
+		// scrollsize is the FONT-SIZE multiplier (Settings.scroll[2] in lua); it
+		// used to be dead. gscale keeps the visual size consistent across window
+		// sizes; scrollsize is the user-tunable knob on top of that.
 		float gscale = target.height() / 576.0f;
-		float dynScale = gscale * 3.0f;
+		float dynScale = gscale * scrollsize;
 
 		// The render texture must grow with the text scale, otherwise large
 		// windows clip the glyphs at the old fixed 300px height (the bottoms
 		// of the letters disappear). Keep it 1:1 with on-screen pixels.
 		int texW = target.width() + 10;
-		int texH = (int)(300 * gscale);
+		// Texture height tracks the font size so larger scrollsize values don't
+		// clip the glyph tops/bottoms (100 * 3 == the old fixed 300 at the default).
+		int texH = (int)(100 * gscale * scrollsize);
 		if(texH < 8) texH = 300;
 		if((int)scr.width() != texW || (int)scr.height() != texH)
 			scr = grappix::Texture(texW, texH);
@@ -143,8 +158,35 @@ public:
 		program.setUniform("uAmplitude", sine_amplitude * current_amplitude_factor);
 		program.setUniform("uFrequency", sine_frequency);
 
+		// Occasional vertical bob: lift the WHOLE scroller up and down now and
+		// then, like the classic Amiga "bouncing" scrollers. This is separate from
+		// the per-column sine wobble above (that displaces the texture lookup; this
+		// translates the whole strip). Gated on its own interval so it happens
+		// occasionally, with a smooth fade in/out via vbob_transition -- same shape
+		// as the sine gating.
+		float vbob_cycle = 0.0f;
+		if (vbob_interval > 0.0f)
+			vbob_cycle = fmod(time_counter, 2.0f * vbob_interval);
+		float vbob_target = (vbob_on && (vbob_interval <= 0.0f || vbob_cycle < vbob_interval)) ? 1.0f : 0.0f;
+		if (vbob_transition > 0.0f) {
+			if (vbob_factor < vbob_target) {
+				vbob_factor += (dt / 1000.0f) / vbob_transition;
+				if (vbob_factor > vbob_target) vbob_factor = vbob_target;
+			} else if (vbob_factor > vbob_target) {
+				vbob_factor -= (dt / 1000.0f) / vbob_transition;
+				if (vbob_factor < vbob_target) vbob_factor = vbob_target;
+			}
+		} else {
+			vbob_factor = vbob_target;
+		}
+		// Amplitude is in pixels at gscale 1.0, scaled by gscale so the bob height
+		// is visually consistent across window sizes. sin() starts at 0 so there
+		// is no jump when a bob episode fades in.
+		float voffset = vbob_amplitude * gscale * vbob_factor
+		              * sin(time_counter * vbob_speed);
+
 		static float uvs[] = { 0,0,1,0,0,1,1,1 };
-		target.draw(scr, 0.0F, scrolly - texH / 2.0f, target.width(), texH, uvs, program);
+		target.draw(scr, 0.0F, scrolly - texH / 2.0f + voffset, target.width(), texH, uvs, program);
 	}
 
 	float alpha = 1.0;
@@ -154,7 +196,9 @@ public:
 	// lua/screen.lua (via Settings.scroll) -- tune the speed THERE, not here.
 	int scrollspeed = 8;
 	int scrolly = 0;
-	float scrollsize = 4.0;
+	// Font-size multiplier for the scroll text (Settings.scroll[2]); the on-screen
+	// glyph scale is gscale * scrollsize. Default 3.0 == the previous hardcoded size.
+	float scrollsize = 3.0;
 
 	// Tweakable parameters for sinusoid scroll
 	float sine_amplitude = 0.15f;
@@ -164,8 +208,16 @@ public:
 	float sine_interval = 10.0f;
 	float sine_transition = 1.0f;
 
+	// Tweakable parameters for the occasional vertical bob (whole-strip up/down)
+	float vbob_amplitude = 40.0f;  // how high it goes, in px at gscale 1.0
+	float vbob_speed = 2.0f;       // how fast it oscillates up/down
+	bool vbob_on = true;           // enable/disable the bob
+	float vbob_interval = 12.0f;   // how often: bob for N s, rest N s (0 = always)
+	float vbob_transition = 1.0f;  // fade in/out time between bob and rest
+
 	float time_counter = 0.0f;
 	float current_amplitude_factor = 0.0f;
+	float vbob_factor = 0.0f;      // current eased bob on/off amount (internal)
 
 private:
 	grappix::RenderTarget& target;

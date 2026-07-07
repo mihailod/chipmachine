@@ -74,24 +74,29 @@ SPECH = MONO_SPECW * 3.5
 
     Settings.scroll = {                                                                                              
       Y1 - GSCALE * 130, -- 1. y position                                                                            
-      GSCALE * 2.0,      -- 2. vertical size scaling                                                                 
+      3.0,               -- 2. font size multiplier (on-screen glyph scale = gscale * this), bigger (4.0) = larger; smaller (2.0) = smaller text
       SCROLL_SPEED,      -- 3. horizontal scroll speed                                                               
       "data/Bello.otf",  -- 4. font path                                                                             
-      0.15,              -- 5. sine_amplitude (height of the wave; 0.15 = 15% of scroller height)                    
+      0.15,              -- 5. sine_amplitude (height of the wave; 0.15 = 15% of scroller height);  it scales together with the font — bump the font a lot and you may want to nudge this down slightly.                    
       8.0,               -- 6. sine_frequency (wavelength; higher is more compressed waves)                          
       4.0,               -- 7. sine_speed (oscillation animation speed)                                              
       1,                 -- 8. sine_on (1 = active/alternating, 0 = off/always flat)                                 
-      10.0,              -- 9. sine_interval (cycle time: 10s flat, 10s sine)                                        
-      1.0                -- 10. sine_transition (time in seconds to smoothly morph flat <-> sine)                    
-    }   
+      10.0,              -- 9. sine_interval (cycle time: 10s flat, 10s sine)
+      1.0,               -- 10. sine_transition (time in seconds to smoothly morph flat <-> sine)
+      40.0,              -- 11. vbob_amplitude (how high the whole scroll bobs up/down, px at GSCALE 1)
+      2.0,               -- 12. vbob_speed (how fast the up/down oscillation is)
+      1,                 -- 13. vbob_on (1 = bob enabled, 0 = off)
+      12.0,              -- 14. vbob_interval (how often: bob for 12s, rest 12s; 0 = always bobbing)
+      1.0                -- 15. vbob_transition (seconds to smoothly fade the bob in/out)
+    }
 
 ]]
 
 if TV then
-  Settings.scroll = { Y1 - 100, GSCALE * 2.0, SCROLL_SPEED, "data/Bello.otf", 0.15, 8.0, 4.0, 1, 10.0, 1.0 }
+  Settings.scroll = { Y1 - 100, 3.0, SCROLL_SPEED, "data/Bello.otf", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0 }
   Settings.spectrum = { X0-40, Y1+40, 28, 80.0, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 else
-  Settings.scroll = { Y1 - GSCALE * 130, GSCALE * 2.0, SCROLL_SPEED, "data/Bello.otf", 0.15, 8.0, 4.0, 1, 10.0, 1.0 }
+  Settings.scroll = { Y1 - GSCALE * 130, 3.0, SCROLL_SPEED, "data/Bello.otf", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0 }
   -- Anchor spectrum firmly to the bottom of the window
   Settings.spectrum = { X0, SCREEN_HEIGHT - 10, SPECW, SPECH, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 end

@@ -7,9 +7,6 @@
 - 2nd level menu drill on more platforms with subplatforms?
 - unify some platforms on 1st level and do the drill?
 
-- is wonderswan worth its own category?
-
-
 --------------
 
 - extensions still missing format description:
@@ -107,8 +104,7 @@ A massive historical repository of ZX Spectrum chiptunes. While heavily populate
 
 --- MP3 / FLAC - not sure - we focus on real chip music - but already have some - maybe -----
 
-* IN PROGRESS...... https://chipmusic.org -- zx spectrum beeper music, maybe more...
-  chipmusic.org serves MP3 only. 
+* (parked) https://chipmusic.org --  chipmusic.org serves MP3 only. 
 
 * GYUSYABU PC-98 SOUNDTRACKS
   - URL: http://gyusyabu.ddo.jp (or mirrors)
