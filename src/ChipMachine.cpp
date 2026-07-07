@@ -885,8 +885,39 @@ static const std::map<std::string, std::string>& consoleSubLogos()
 // for the current song. Returns true if one was appended. Does NOT append the
 // generic ChipMachine icon -- that is a last resort reserved for the logo-only
 // path (see appendLogoScreenshots).
+// Arcade VGM rips all share the "vgz" extension, so the per-extension logo can't
+// tell the boards apart. Map the (lowercased) format string to a per-board image
+// in data/misc/extensionscreenshots/ (loaded into extensionShots by basename).
+static const std::map<std::string, std::string>& arcadeSubLogos()
+{
+    static const std::map<std::string, std::string> m = {
+        { "arcade", "vgz-arcade" },
+        { "arcade (capcom)", "vgz-capcom" },
+        { "arcade (konami)", "vgz-konami" },
+        { "arcade (namco)", "vgz-namco" },
+        { "arcade (sega)", "vgz-sega" },
+        { "arcade (taito)", "vgz-taito" },
+        { "neo geo", "vgz-neogeo" },
+    };
+    return m;
+}
+
 bool ChipMachine::appendPlatformOrExtLogo()
 {
+    // 0) Arcade boards: pick the per-board logo by format string (Capcom/Konami/
+    //    Namco/Sega/Taito/Neo Geo/other), overriding the shared "vgz" ext logo.
+    {
+        auto a = arcadeSubLogos().find(currentSongFormat);
+        if (a != arcadeSubLogos().end()) {
+            auto it = extensionShots.find(a->second);
+            if (it != extensionShots.end() && it->second.width() > 0) {
+                screenshots.emplace_back("ext:" + a->second, it->second);
+                LOGD("Screenshot logos: arcade='%s' logo='%s'",
+                     currentSongFormat.c_str(), a->second.c_str());
+                return true;
+            }
+        }
+    }
     // 1) Per-extension screenshot (e.g. mod.png, sid.png) takes priority over
     //    the platform logo.
     if (!currentSongExt.empty()) {

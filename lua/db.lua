@@ -228,7 +228,11 @@
 --     OTHER; the sub-platform drill (buildSubPlatforms) is byte-parametrized so
 --     Arcade browses its sub-boards exactly like Other Platforms does. Neo Geo /
 --     pinball stay under Other Platforms. Reindex reclassifies the arcade songs.
-VERSION = 79;
+-- 80: Fold "Atari Jaguar" into the Atari filter (ATARI byte; filter renamed
+--     "Atari ST/STE/Falcon") and "Neo Geo" into the Arcade filter (ARCADE
+--     byte, shown as the "Arcade (Neo Geo)" drill group). Neo Geo Pocket /
+--     pinball stay under Other Platforms. Reindex reclassifies those songs.
+VERSION = 80;
 
 DB = {
 {

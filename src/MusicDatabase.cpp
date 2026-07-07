@@ -2263,11 +2263,15 @@ void initFormats()
     format_map["apple iigs"] = APPLE;
     // Arcade boards get their own top-level filter ("Arcade"), which drills into
     // these sub-platforms (recovered from the format string, see buildSubPlatforms).
+    // Neo Geo (arcade/AES) joins them, shown as "Arcade (Neo Geo)".
     for (char const* f : { "arcade", "arcade (capcom)", "arcade (konami)",
-                           "arcade (namco)", "arcade (sega)", "arcade (taito)" })
+                           "arcade (namco)", "arcade (sega)", "arcade (taito)",
+                           "neo geo" })
         format_map[f] = ARCADE;
-    // Neo Geo / pinball have no dedicated F9 filter yet -> "Other Platforms".
-    for (char const* f : { "neo geo", "neo geo pocket", "pinball", "other" })
+    // Atari Jaguar folds into the Atari ST/E/Falcon/Jaguar filter.
+    format_map["atari jaguar"] = ATARI;
+    // Neo Geo Pocket / pinball have no dedicated F9 filter yet -> "Other Platforms".
+    for (char const* f : { "neo geo pocket", "pinball", "other" })
         format_map[f] = OTHER;
 
     // Correct cross-platform formats that the generic fallbacks (endsWith
@@ -2789,9 +2793,12 @@ void MusicDatabase::buildSubPlatforms()
         std::string name = trim(fmt);
         if (name.empty()) name = "Unknown";
         // The bare "Arcade" group sits alongside the vendor-specific ones
-        // (Arcade (Capcom), ...), so disambiguate it as "Arcade (Other)".
-        if (subPlatformByte == ARCADE && toLower(name) == "arcade")
-            name = "Arcade (Other)";
+        // (Arcade (Capcom), ...), so disambiguate it as "Arcade (Other)"; and
+        // fold Neo Geo in as another vendor-style "Arcade (Neo Geo)" group.
+        if (subPlatformByte == ARCADE) {
+            if (toLower(name) == "arcade") name = "Arcade (Other)";
+            else if (toLower(name) == "neo geo") name = "Arcade (Neo Geo)";
+        }
         byName[name].push_back(idx);
     }
 

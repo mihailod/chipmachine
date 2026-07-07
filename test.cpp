@@ -286,7 +286,12 @@ TEST_CASE("VGMRips non-Sega VGM routes to libvgm", "[music]")
                              "testmus/libvgm/neogeo-ym2610.vgz",
                              "testmus/libvgm/pc98-opn.vgz",
                              "testmus/libvgm/capcom-qsound.vgz",
-                             "testmus/libvgm/namco-c140.vgz" }) {
+                             "testmus/libvgm/namco-c140.vgz",
+                             // Dual AY8910 (Capcom 1942): GME instantiates one
+                             // AY, so the 2nd chip's writes overflow Ay_Apu and
+                             // abort ("addr < reg_count"). The dual-chip bit must
+                             // route it to libvgm even though AY8910 is a GME chip.
+                             "testmus/libvgm/capcom-dual-ay8910.vgz" }) {
         REQUIRE(lv.canHandle(vgz));
         REQUIRE_FALSE(gme.canHandle(vgz));
     }
@@ -313,15 +318,16 @@ TEST_CASE("VGMRips format labels classify to a platform", "[music]")
     struct { const char* fmt; uint8_t plat; } cases[] = {
         { "Sega Mega Drive", MEGADRIVE }, { "Sega Pico", MEGADRIVE },
         { "NES", NES },                   { "Game Boy", GAMEBOY },
-        { "PC Engine", HES },             { "Neo Geo", OTHER },
+        { "PC Engine", HES },             { "Neo Geo", ARCADE },
         { "Neo Geo Pocket", OTHER },      { "WonderSwan", WONDERSWAN },
         { "MSX", MSX },                   { "NEC PC-98", JPFM },
         { "NEC PC-88", JPFM },            { "Sharp X68000", JPFM },
         { "FM Towns", JPFM },             { "IBM PC", PC },
         { "Atari ST", ATARI },            { "ZX Spectrum", SPECTRUM },
         { "Commodore 64", SID },          { "Apple IIgs", APPLE },
-        { "Arcade", OTHER },              { "Arcade (Capcom)", OTHER },
-        { "Arcade (Konami)", OTHER },     { "Pinball", OTHER },
+        { "Arcade", ARCADE },             { "Arcade (Capcom)", ARCADE },
+        { "Arcade (Konami)", ARCADE },    { "Pinball", OTHER },
+        { "Atari Jaguar", ATARI },
     };
     for (auto const& c : cases) {
         INFO("format " << c.fmt);
@@ -3391,6 +3397,47 @@ TEST_CASE("Vice Stereo Sidplayer", "[music][vice]")
     REQUIRE(playsSound("testmus/libvice/stereo/raistlin the magician.str"));
     // A regular .sid still loads and plays (no regression in psid_load_file).
     REQUIRE(playsSound("testmus/libvice/10_Orbyte.sid"));
+}
+
+// Dump the "Other Platforms" sub-platform groups (the OTHER format byte, one
+// row per distinct format string) sorted by song count, so we can eyeball which
+// deserve promotion to a top-level F9 filter. Reads the live app music.db and
+// applies the real classifyFormat, so it matches the GUI drill exactly.
+TEST_CASE("other_platforms", "[.]")
+{
+    using chipmachine::MusicDatabase;
+    auto dbPath = (Environment::getCacheDir() / "music.db").string();
+    sqlite3db::Database db(dbPath);
+
+    auto trim = [](std::string x) {
+        size_t a = x.find_first_not_of(" \t");
+        if (a == std::string::npos) return std::string();
+        return x.substr(a, x.find_last_not_of(" \t") - a + 1);
+    };
+
+    std::map<std::string, int> byName;
+    int total = 0;
+    auto q = db.query<std::string, std::string>("SELECT format, path FROM song");
+    while (q.step()) {
+        std::string fmt, path;
+        std::tie(fmt, path) = q.get_tuple();
+        if (MusicDatabase::classifyFormat(fmt, path) != chipmachine::OTHER)
+            continue;
+        std::string name = trim(fmt);
+        if (name.empty()) name = "Unknown";
+        byName[name]++;
+        total++;
+    }
+
+    std::vector<std::pair<std::string, int>> rows(byName.begin(), byName.end());
+    std::sort(rows.begin(), rows.end(),
+              [](auto const& a, auto const& b) { return a.second > b.second; });
+
+    printf("\n--- OTHER PLATFORMS (%d groups, %d songs) ---\n",
+           (int)rows.size(), total);
+    for (auto const& [name, n] : rows)
+        printf("%6d  %s\n", n, name.c_str());
+    printf("------------------------------\n");
 }
 
 TEST_CASE("priority_map", "[.]")
