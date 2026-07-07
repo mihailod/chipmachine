@@ -193,6 +193,7 @@ set(GUI_FILES
     src/ChipMachine_keys.cpp
     src/ChipMachine_commands.cpp
     src/textmode.cpp
+    demofx/Transitions.cpp
 )
 
 set(SOURCE_FILES ${SOURCE_FILES} src/version.h src/TextField.h src/TextListView.h src/CueSheet.h

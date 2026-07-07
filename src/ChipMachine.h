@@ -12,6 +12,7 @@
 
 #include "../demofx/Scroller.h"
 #include "../demofx/StarField.h"
+#include "../demofx/Transitions.h"
 #include "../sol2/sol.hpp"
 
 #include <coreutils/utils.h>
@@ -56,12 +57,42 @@ public:
                 uint32_t delta) override
     {
         if (!texture || (color >> 24) == 0) return;
+        if (starMode && !stars.empty() && starGridW > 0 && starGridH > 0) {
+            renderStars(target);
+            return;
+        }
         if (mosaicMode && (int)tileRank.size() == mosaicGridW * mosaicGridH &&
             mosaicGridW > 0 && mosaicGridH > 0) {
             renderMosaic(target);
             return;
         }
         target->draw(*texture, rec.x, rec.y, rec.w, rec.h, nullptr, color);
+    }
+
+    // Draws the sampled pixels as a 3D starfield. Each star sits at home offset
+    // (hx,hy) (fraction of the rect, from center) at rest; the projection factor
+    // f = 1/starZ blows them radially outward as starZ shrinks toward the viewer,
+    // and starAlpha fades the whole cloud. At starZ=1, f=1 and the stars tile the
+    // rect, reproducing the image; as starZ->0 they streak off toward the edges.
+    void renderStars(std::shared_ptr<grappix::RenderTarget> target)
+    {
+        float cx = rec.x + rec.w * 0.5f;
+        float cy = rec.y + rec.h * 0.5f;
+        float f = starZ > 0.0001f ? 1.0f / starZ : 10000.0f;
+        float sw = (rec.w / starGridW) * f;
+        float sh = (rec.h / starGridH) * f;
+        float scrW = (float)target->width();
+        float scrH = (float)target->height();
+        for (auto& s : stars) {
+            float sx = cx + s.hx * rec.w * f;
+            float sy = cy + s.hy * rec.h * f;
+            if (sx + sw < 0 || sx - sw > scrW || sy + sh < 0 || sy - sh > scrH)
+                continue;
+            float a = ((s.color >> 24) & 0xff) / 255.0f * starAlpha;
+            if (a <= 0.004f) continue;
+            uint32_t col = ((uint32_t)(a * 255.0f) << 24) | (s.color & 0x00ffffff);
+            target->rectangle(sx - sw * 0.5f, sy - sh * 0.5f, sw, sh, col);
+        }
     }
 
     // Draws the texture as a mosaicGridW x mosaicGridH grid of tiles. A tile is
@@ -118,12 +149,25 @@ public:
     grappix::Color color{ 0xffffffff };
     grappix::Rectangle rec;
 
-    // Mosaic reveal effect state (driven by ChipMachine::transitionMosaic).
+    // Mosaic reveal effect state (driven by ScreenshotTransitions).
     bool mosaicMode = false;
     int mosaicGridW = 0;
     int mosaicGridH = 0;
     float revealProgress = 1.0f;   // 0 = all black, 1 = whole image shown
     std::vector<int> tileRank;     // per-tile position in the shuffled reveal
+
+    // Starfield scatter effect state (driven by ScreenshotTransitions).
+    struct Star
+    {
+        float hx, hy;      // home offset from rect center, as a fraction [-0.5,0.5]
+        uint32_t color;    // sampled pixel, already in 0xAARRGGBB order
+    };
+    bool starMode = false;
+    int starGridW = 0;
+    int starGridH = 0;
+    float starZ = 1.0f;        // depth: 1 = image intact, ->0 = flown at viewer
+    float starAlpha = 1.0f;    // global fade of the star cloud
+    std::vector<Star> stars;
 
 private:
     std::shared_ptr<grappix::Texture> texture;
@@ -282,16 +326,6 @@ private:
                (songList.selected() < songList.size());
     }
 
-    void nextScreenshot();
-    // Individual screenshot transition effects, cycled by nextScreenshot().
-    void transitionFade();
-    void transitionZoom();
-    void transitionMosaic();
-    // Reshuffle the mosaic tile reveal order onto screenShotIcon.
-    void setupMosaicOrder();
-    // Shared mid-transition step: swap in the current shot and return its
-    // full-size rectangle.
-    grappix::Rectangle swapToCurrentShot();
     void loadScreenshot(const std::string& shot);
     // Loads the per-platform logos at startup and warns about missing ones.
     void loadPlatformScreenshots();
@@ -488,17 +522,10 @@ private:
     uint32_t favColor = 0x884444;
 
     std::string namedToPlay;
-    int currentShot = -1;
-    // Index into the screenshot transition-effect rotation; advances once per
-    // shot so effects (fade, zoom, ...) chain rather than replace each other.
-    int currentEffect = 0;
-    // Seconds for one direction of each screenshot transition (out phase, then
-    // in phase). Fade: alpha out/in. Zoom: shrink to a pixel / grow from a pixel.
-    // Mosaic: image dissolves to/from black tile-by-tile in random order.
-    float screenshotFadeSeconds = 1.0f;
-    float screenshotZoomSeconds = 1.0f;
-    float screenshotMosaicSeconds = 1.0f;
-    int screenshotMosaicGrid = 10;   // grid is NxN tiles
+    // Drives the animated transitions between screenshots (fade, zoom, mosaic,
+    // starfield). Configured in the constructor with callbacks into `screenshots`
+    // and updateScreenshotArea().
+    ScreenshotTransitions transitions;
     struct NamedBitmap
     {
         NamedBitmap() {}
@@ -517,7 +544,6 @@ private:
         }
     };
     std::vector<NamedBitmap> screenshots;
-    uint64_t setShotAt = 0;
     std::string currentScreenshot;
     // Lazily-loaded ChipMachine logo (data/misc/icon.png), used as the final
     // fallback so the screenshot area is never blank.

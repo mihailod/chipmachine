@@ -178,7 +178,7 @@ void ChipMachine::setupCommands()
         }
     });
 
-    cmd("next_screenshot", [=] { nextScreenshot(); });
+    cmd("next_screenshot", [=] { transitions.next(); });
 
     cmd("add_current_favorite", [=] {
         auto song = dbInfo;

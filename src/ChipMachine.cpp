@@ -10,8 +10,6 @@
 #include <cctype>
 #include <cmath>
 #include <map>
-#include <numeric>
-#include <random>
 #ifdef _WIN32
 #    include <ShellApi.h>
 #endif
@@ -256,6 +254,12 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
 
     screenShotIcon = Icon(image::bitmap(8, 8), 100, 100);
     mainScreen.add(&screenShotIcon);
+    // Give the transition driver access to the screenshot icon, the loaded
+    // screenshot bitmaps, and the geometry recompute.
+    transitions.configure(
+        screenShotIcon, [this] { return (int)screenshots.size(); },
+        [this](int i) -> const image::bitmap& { return screenshots[i].bm; },
+        [this] { updateScreenshotArea(); });
 
     mainScreen.add(&prevInfoField);
     mainScreen.add(&currentInfoField);
@@ -768,15 +772,14 @@ void ChipMachine::loadScreenshot(const std::string& shot)
         screenShotIcon.clear();
         screenshots.clear();
         appendLogoScreenshots();
-        currentShot = -1;
-        nextScreenshot();
+        transitions.restart();
         return;
     }
 
     // Guards against re-loading the same URL.
     if (shot == currentScreenshot) {
         // Already loaded or loading — just advance to next frame
-        nextScreenshot();
+        transitions.next();
         return;
     }
 
@@ -853,8 +856,7 @@ void ChipMachine::loadScreenshot(const std::string& shot)
                 // just rotate the real screenshots as before.
                 appendPlatformOrExtLogo();
             }
-            currentShot = -1;
-            nextScreenshot();
+            transitions.restart();
         }
     };
     for (auto& p : parts)
@@ -1073,150 +1075,6 @@ void ChipMachine::loadExtensionScreenshots()
              "(add data/misc/extensionscreenshots/<ext>.png): %s",
              (int)uncovered.size(), list);
     }
-}
-
-// A full-size screenshot rectangle collapsed to a single pixel at its center --
-// the start/end point of the zoom transition.
-static grappix::Rectangle collapsedRect(const grappix::Rectangle& full)
-{
-    return grappix::Rectangle(full.x + full.w / 2, full.y + full.h / 2, 1.0f,
-                              1.0f);
-}
-
-// Mid-transition step shared by every effect: swap in the current shot's bitmap
-// and (re)compute its full-size rectangle. Returns that rectangle. Assumes the
-// caller has already checked that currentShot is still valid.
-grappix::Rectangle ChipMachine::swapToCurrentShot()
-{
-    auto& bm = screenshots[currentShot].bm;
-    screenShotIcon.setBitmap(bm, true);
-    updateScreenshotArea();
-    return screenShotIcon.rec;
-}
-
-// Effect: fade the current shot out, swap, then fade the next shot in.
-void ChipMachine::transitionFade()
-{
-    float secs = screenshotFadeSeconds;
-    Tween::make()
-        .to(screenShotIcon.color, Color(0x00000000))
-        .seconds(secs)
-        .onComplete([=]() {
-            if (screenshots.size() <= currentShot) {
-                LOGD("Shot went away!");
-                return;
-            }
-            swapToCurrentShot();
-            Tween::make()
-                .to(screenShotIcon.color, Color(0xffffffff))
-                .seconds(secs);
-        });
-}
-
-// Effect: shrink the current shot down to a pixel, swap, then grow the next
-// shot back up from a pixel to full size.
-void ChipMachine::transitionZoom()
-{
-    float secs = screenshotZoomSeconds;
-    // The zoom animates the rectangle only, so make sure the shot is opaque in
-    // case a preceding fade left the color mid-transition.
-    screenShotIcon.color = Color(0xffffffff);
-    auto& rec = screenShotIcon.rec;
-    auto target = collapsedRect(rec);
-    Tween::make()
-        .to(rec.x, target.x)
-        .to(rec.y, target.y)
-        .to(rec.w, target.w)
-        .to(rec.h, target.h)
-        .seconds(secs)
-        .onComplete([=]() {
-            if (screenshots.size() <= currentShot) {
-                LOGD("Shot went away!");
-                return;
-            }
-            // Start the new shot collapsed at its own full-size center so the
-            // zoom-in lands exactly on it.
-            grappix::Rectangle full = swapToCurrentShot();
-            screenShotIcon.rec = collapsedRect(full);
-            auto& r = screenShotIcon.rec;
-            Tween::make()
-                .to(r.x, full.x)
-                .to(r.y, full.y)
-                .to(r.w, full.w)
-                .to(r.h, full.h)
-                .seconds(secs);
-        });
-}
-
-// Shuffle a fresh random reveal order for the mosaic effect onto the screenshot
-// icon: tileRank[idx] gives each tile's position in the reveal sequence.
-void ChipMachine::setupMosaicOrder()
-{
-    int gw = screenshotMosaicGrid, gh = screenshotMosaicGrid;
-    int total = gw * gh;
-    std::vector<int> order(total);
-    std::iota(order.begin(), order.end(), 0);
-    static std::mt19937 rng{ std::random_device{}() };
-    std::shuffle(order.begin(), order.end(), rng);
-    std::vector<int> rank(total);
-    for (int i = 0; i < total; i++)
-        rank[order[i]] = i;
-    screenShotIcon.mosaicGridW = gw;
-    screenShotIcon.mosaicGridH = gh;
-    screenShotIcon.tileRank = std::move(rank);
-}
-
-// Effect: dissolve the current shot to black tile-by-tile in random order, swap,
-// then build the next shot up from black the same way.
-void ChipMachine::transitionMosaic()
-{
-    float secs = screenshotMosaicSeconds;
-    screenShotIcon.color = Color(0xffffffff);
-    setupMosaicOrder();
-    screenShotIcon.mosaicMode = true;
-    screenShotIcon.revealProgress = 1.0f;
-    Tween::make()
-        .to(screenShotIcon.revealProgress, 0.0f)
-        .seconds(secs)
-        .onComplete([=]() {
-            if (screenshots.size() <= currentShot) {
-                LOGD("Shot went away!");
-                screenShotIcon.mosaicMode = false;
-                return;
-            }
-            swapToCurrentShot();
-            setupMosaicOrder();
-            screenShotIcon.mosaicMode = true;
-            screenShotIcon.revealProgress = 0.0f;
-            Tween::make()
-                .to(screenShotIcon.revealProgress, 1.0f)
-                .seconds(secs)
-                .onComplete([=]() {
-                    // Back to a plain quad so the next effect renders normally.
-                    screenShotIcon.mosaicMode = false;
-                });
-        });
-}
-
-void ChipMachine::nextScreenshot()
-{
-    setShotAt = utils::getms();
-    if (screenshots.empty()) return;
-
-    currentShot++;
-    if (currentShot >= screenshots.size()) currentShot = 0;
-
-    // Cycle through the available transition effects so successive shots animate
-    // differently (zoom, then fade, then mosaic, ...). Append new effects here
-    // and they slot into the rotation automatically.
-    static const std::vector<void (ChipMachine::*)()> effects = {
-        &ChipMachine::transitionZoom,
-        &ChipMachine::transitionFade,
-        &ChipMachine::transitionMosaic,
-    };
-    auto effect = effects[currentEffect % effects.size()];
-    currentEffect = (currentEffect + 1) % (int)effects.size();
-    (this->*effect)();
 }
 
 void ChipMachine::updateNextField()
@@ -1637,7 +1495,7 @@ void ChipMachine::update()
 
     netIcon.visible(busy);
 
-    if (setShotAt < utils::getms() - 10000) nextScreenshot();
+    if (transitions.idleFor(10000)) transitions.next();
 }
 
 void ChipMachine::toast(std::string const& txt, ToastType type)
