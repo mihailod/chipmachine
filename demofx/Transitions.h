@@ -56,6 +56,8 @@ public:
     float starDepthMin = 0.04f;   // smallest starZ = maximum scatter (f = 1/z)
     float copperSeconds = 1.0f;
     int copperStrips = 16;        // image split into this many horizontal strips
+    float warpSeconds = 1.0f;
+    int warpColumns = 64;         // image split into this many vertical columns
 
 private:
     // Individual transition effects, cycled by next().
@@ -64,12 +66,15 @@ private:
     void transitionMosaic();
     void transitionStarfield();
     void transitionCopperWipe();
+    void transitionSineWarp();
     // Effect frame renderers, installed as the icon's custom renderer while the
     // matching effect runs. They draw into the icon's rect/texture.
     void renderMosaic(std::shared_ptr<grappix::RenderTarget> target);
     void renderStars(std::shared_ptr<grappix::RenderTarget> target);
     void renderCopper(std::shared_ptr<grappix::RenderTarget> target,
                       uint32_t delta);
+    void renderSineWarp(std::shared_ptr<grappix::RenderTarget> target,
+                        uint32_t delta);
     // Reshuffle the mosaic tile reveal order.
     void setupMosaicOrder();
     // Sample a grid of stars (positions + colors) from bm.
@@ -109,6 +114,10 @@ private:
     float copperShift = 0.0f;        // strip horizontal slide, fraction of width
     float copperImageAlpha = 1.0f;   // image opacity over the bars
     float copperPhase = 0.0f;        // animated copper colour cycle
+
+    // Sine-warp runtime state (read by renderSineWarp).
+    float warpAmp = 0.0f;            // displacement amplitude, fraction of height
+    float warpPhase = 0.0f;          // animated wave phase (oscillation)
 };
 
 } // namespace chipmachine

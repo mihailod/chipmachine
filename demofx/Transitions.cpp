@@ -405,6 +405,67 @@ void ScreenshotTransitions::transitionCopperWipe()
         });
 }
 
+// Draws the image as `warpColumns` full-height vertical columns, each shifted
+// vertically by a sine wave running along the x axis (amplitude warpAmp as a
+// fraction of the rect height, animated by warpPhase). At warpAmp=0 the columns
+// line up into the flat image; as it grows the image bends into an oscillating
+// ribbon.
+void ScreenshotTransitions::renderSineWarp(std::shared_ptr<RenderTarget> target,
+                                           uint32_t delta)
+{
+    Texture* tex = icon->getTexture();
+    if (!tex) return;
+    auto& rec = icon->rec;
+    uint32_t color = (uint32_t)icon->color;
+
+    warpPhase += delta * 0.004f;   // oscillation speed
+    const float waves = 2.5f;      // sine periods across the width
+    int cols = warpColumns > 0 ? warpColumns : 64;
+    float colW = rec.w / cols;
+    float amp = warpAmp * rec.h;
+    for (int i = 0; i < cols; i++) {
+        float xf = (i + 0.5f) / cols;   // column-center fraction across width
+        float dy = amp * std::sin(xf * waves * 6.2831853f + warpPhase);
+        float s0 = (float)i / cols;
+        float s1 = (float)(i + 1) / cols;
+        // Full-height column: t spans 0..1 (already upright, like the default
+        // quad), only the horizontal UV band is sliced.
+        float uvs[8] = { s0, 0, s1, 0, s0, 1, s1, 1 };
+        target->draw(*tex, rec.x + i * colW, rec.y + dy, colW, rec.h, uvs, color);
+    }
+}
+
+// Effect: warp the current image's columns with a growing sine wave until it is
+// an oscillating ribbon, swap the texture, then damp the wave back down so the
+// new image settles flat. (Amiga vector-grid / sine distortion.)
+void ScreenshotTransitions::transitionSineWarp()
+{
+    float secs = warpSeconds;
+    const float ampMax = 0.5f;   // peak displacement, fraction of height
+    icon->color = Color(0xffffffff);
+    warpAmp = 0.0f;
+    icon->customRender = [this](std::shared_ptr<RenderTarget> t, uint32_t d) {
+        renderSineWarp(t, d);
+    };
+    // Out: ramp the amplitude up until the image deforms into a ribbon.
+    Tween::make()
+        .to(warpAmp, ampMax)
+        .seconds(secs)
+        .onComplete([=]() {
+            if (shotCount() <= currentShot) {
+                LOGD("Shot went away!");
+                icon->customRender = nullptr;
+                return;
+            }
+            swapToCurrentShot();
+            // In: damp the amplitude back to zero so the new image settles flat.
+            Tween::make()
+                .to(warpAmp, 0.0f)
+                .seconds(secs)
+                .onComplete([=]() { icon->customRender = nullptr; });
+        });
+}
+
 void ScreenshotTransitions::restart()
 {
     currentShot = -1;
@@ -433,6 +494,7 @@ void ScreenshotTransitions::next()
         &ScreenshotTransitions::transitionMosaic,
         &ScreenshotTransitions::transitionStarfield,
         &ScreenshotTransitions::transitionCopperWipe,
+        &ScreenshotTransitions::transitionSineWarp,
     };
     auto effect = effects[currentEffect % effects.size()];
     currentEffect = (currentEffect + 1) % (int)effects.size();
