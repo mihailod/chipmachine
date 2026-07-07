@@ -62,6 +62,7 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "PC-98/X68000/FM Towns", { JPFM } },
     { "PC Engine/TurboGrafx-16", { HES } },
     { "WonderSwan", { WONDERSWAN } },
+    { "Arcade", { ARCADE } },
     { "Other Platforms", { OTHER } },
     { "Unclassified MP3/OGG", { MP3, OGG } },
     { "Unclassified YouTube Audio", { YOUTUBE } },
@@ -76,6 +77,7 @@ static uint32_t formatColor(int f)
     static const std::map<uint32_t, uint32_t> colors = {
         { NOT_SET, 0xffff00ff }, { PLAYLIST, 0xffffff88 },
         { OTHER, 0xffdd3355 },
+        { ARCADE, 0xffb060e0 },
         { HES, 0xffee7766 },
         { NES, 0xffe05555 },     { SNES, 0xff9a7bd0 },
         { GAMEBOY, 0xff9bbc0f },  { GBA, 0xff9bbc0f },
@@ -448,6 +450,9 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
             // sub-platforms, e.g. "23 Other Platforms  [N tunes]".
             if (fmt0 == OTHER && otherPlatformCount > 0)
                 label = utils::format("%d %s", otherPlatformCount, opt.name);
+            // Same for the Arcade entry, e.g. "6 Arcade  [N tunes]".
+            if (fmt0 == ARCADE && arcadePlatformCount > 0)
+                label = utils::format("%d %s", arcadePlatformCount, opt.name);
             if (index < filterCounts.size()) {
                 if (fmt0 == RADIO) {
                     // Each radio entry IS one station, so just count-prefix the
@@ -1100,6 +1105,7 @@ void ChipMachine::computeFilterCounts()
     if (total == 0) return;
     podcastShowCount = musicDatabase.getPodcastShowCount();
     otherPlatformCount = musicDatabase.getOtherPlatformCount();
+    arcadePlatformCount = musicDatabase.getArcadePlatformCount();
     filterCounts.assign(filterOptions.size(), 0);
     for (size_t i = 0; i < filterOptions.size(); i++) {
         auto const& opt = filterOptions[i];
@@ -1586,8 +1592,8 @@ void ChipMachine::render(uint32_t delta)
     // "F5" beside it, so the user knows what they pressed and how to un-mute.
     // Blink once per second: visible for the first half of each second, hidden
     // for the second half.
-    if (player.isPaused() && pausedIcon.getTextureWidth() > 0 &&
-        (utils::getms() / 500) % 2 == 0) {
+    if (player.isPlaying() && player.isPaused() &&
+        pausedIcon.getTextureWidth() > 0 && (utils::getms() / 500) % 2 == 0) {
         // All sizes/offsets are authored against the 576px reference height and
         // multiplied by gscale so the overlay grows/shrinks with the window just
         // like the rest of the screen (gscale matches Scroller.h / the marquee).

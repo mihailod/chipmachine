@@ -99,6 +99,11 @@ enum Formats
     JPFM, // Japanese FM computers: NEC PC-98, Sharp X68000, Fujitsu FM Towns
 
     ADPLUG,
+
+    ARCADE, // Arcade boards (MAME-style rips): generic + Capcom/Konami/Namco/
+            // Sega/Taito. Like OTHER, one byte fronting several sub-platforms
+            // recovered from the format string (see buildSubPlatforms).
+
     TRACKER = 0x30,
     SCREAMTRACKER,  // IBM PC: Scream Tracker (S3M/STM)
     IMPULSETRACKER, // IBM PC: Impulse Tracker (IT)
@@ -157,7 +162,7 @@ public:
         // std::lock_guard lock{dbMutex};
         int f;
         if (index >= OTHER_PLATFORM_INDEX)
-            f = OTHER;
+            f = subPlatformByte; // OTHER or ARCADE group row
         else if (index >= PODCAST_SHOW_INDEX)
             f = PODCAST;
         else if (index >= PLAYLIST_INDEX)
@@ -245,6 +250,10 @@ public:
     // Number of distinct sub-platforms among "Other Platforms" (OTHER-format)
     // songs. Used to label the F9 Other Platforms filter ("N Other Platforms").
     int getOtherPlatformCount();
+
+    // Number of distinct sub-platforms among "Arcade" (ARCADE-format) songs.
+    // Used to label the F9 Arcade filter ("N Arcade").
+    int getArcadePlatformCount();
 
     std::string getTitle(int index) const
     {
@@ -467,7 +476,7 @@ public:
 
     // Other-platforms browse: list of (groupId, name) for each sub-platform,
     // sorted by name; populated when the Other Platforms format filter
-    // activates (see buildOtherPlatforms).
+    // activates (see buildSubPlatforms).
     std::vector<std::pair<int, std::string>> const& otherPlatforms() const
     {
         return otherPlatformList;
@@ -535,19 +544,23 @@ private:
     int podcastShowFilter = -1;                           // drilled-in ROWID
     std::vector<std::pair<int, std::string>> podcastShowList; // (ROWID,name)
 
-    // Other-platforms browse state (see OTHER_PLATFORM_INDEX / otherPlatforms()).
-    // The OTHER format byte collapses many real platforms into one filter, so a
-    // song's sub-platform survives only as its DB format string. buildOtherPlatforms()
-    // recovers it with one scan (cached for the session) and groups by name.
-    bool otherFilterActive = false;                     // OTHER filter on
+    // Sub-platform browse state (see OTHER_PLATFORM_INDEX / otherPlatforms()).
+    // Some format bytes (OTHER, ARCADE) collapse many real platforms into one
+    // filter, so a song's sub-platform survives only as its DB format string.
+    // buildSubPlatforms() recovers it with one scan and groups by name. Only one
+    // such filter is active at a time, so a single working set is reused; the
+    // byte it was built for is tracked so switching filters rebuilds it.
+    bool otherFilterActive = false;                     // OTHER/ARCADE filter on
+    uint8_t subPlatformByte = OTHER;                    // active drill byte
     int otherPlatformFilter = -1;                       // drilled-in groupId
-    bool otherPlatformsBuilt = false;                   // grouping cached?
+    int builtSubPlatformByte = -1;                      // byte the set was built for
     std::vector<std::pair<int, std::string>> otherPlatformList; // (groupId,name)
     std::vector<int> otherGroupCount;                   // songs per group (by pos)
     std::unordered_map<int, int> otherIndexToGroup;     // song index -> groupId
-    // Scan the song table (ROWID == search index + 1) once, classify OTHER songs
-    // by their format string, and populate the browse state above. Idempotent.
-    void buildOtherPlatforms();
+    // Scan the song table (ROWID == search index + 1) once, classify songs whose
+    // format byte == subPlatformByte by their format string, and populate the
+    // browse state above. Rebuilds when subPlatformByte changes.
+    void buildSubPlatforms();
     // Rank (0..N-1) of each distinct sub-format hue present in the active
     // filter, and the count N. Built in setFormatFilter() so renderSong can
     // spread hues evenly across however many formats the platform actually has.

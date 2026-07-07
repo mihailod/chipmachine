@@ -7,6 +7,10 @@
 - 2nd level menu drill on more platforms with subplatforms?
 - unify some platforms on 1st level and do the drill?
 
+- see which are top categories in other maybe worth top level (eg neo geo)
+- is wonderswan worth its own category?
+
+
 --------------
 
 - extensions still missing format description:

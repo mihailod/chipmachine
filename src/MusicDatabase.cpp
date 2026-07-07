@@ -1217,10 +1217,12 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
                            allowedFormats[0] == PODCAST);
     podcastShowFilter = -1;
     podcastShowList.clear();
-    // Same reset for the Other-platforms browse; the grouping itself is built
-    // (and cached) on demand by buildOtherPlatforms() below.
+    // Same reset for the sub-platform browse (OTHER / ARCADE); the grouping
+    // itself is built (and cached) on demand by buildSubPlatforms() below.
     otherFilterActive = (allowedFormats.size() == 1 &&
-                         allowedFormats[0] == OTHER);
+                         (allowedFormats[0] == OTHER ||
+                          allowedFormats[0] == ARCADE));
+    if (otherFilterActive) subPlatformByte = allowedFormats[0];
     otherPlatformFilter = -1;
     if (allowedFormats.empty()) {
         titleIndex.setFilter();
@@ -1286,8 +1288,8 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
                       });
         }
 
-        // Build the Other-platforms grouping (cached across the session).
-        if (otherFilterActive) buildOtherPlatforms();
+        // Build the sub-platform grouping for the active byte (OTHER / ARCADE).
+        if (otherFilterActive) buildSubPlatforms();
     }
 }
 
@@ -1584,7 +1586,7 @@ SongInfo MusicDatabase::getSongInfo(int index) const
                 if (g.first == gid) name = g.second;
         }
         return SongInfo("otherplatform::" + std::to_string(gid), "", name, "",
-                        "Other");
+                        subPlatformByte == ARCADE ? "Arcade" : "Other");
     }
 
     if (index >= PODCAST_SHOW_INDEX) {
@@ -2259,10 +2261,13 @@ void initFormats()
     format_map["commodore 64"] = SID;
     format_map["apple ii"] = APPLE;
     format_map["apple iigs"] = APPLE;
-    // No dedicated arcade / Neo Geo / pinball F9 filter -> "Other Platforms".
+    // Arcade boards get their own top-level filter ("Arcade"), which drills into
+    // these sub-platforms (recovered from the format string, see buildSubPlatforms).
     for (char const* f : { "arcade", "arcade (capcom)", "arcade (konami)",
-                           "arcade (namco)", "arcade (sega)", "arcade (taito)",
-                           "neo geo", "neo geo pocket", "pinball", "other" })
+                           "arcade (namco)", "arcade (sega)", "arcade (taito)" })
+        format_map[f] = ARCADE;
+    // Neo Geo / pinball have no dedicated F9 filter yet -> "Other Platforms".
+    for (char const* f : { "neo geo", "neo geo pocket", "pinball", "other" })
         format_map[f] = OTHER;
 
     // Correct cross-platform formats that the generic fallbacks (endsWith
@@ -2617,6 +2622,7 @@ static std::string platformName(uint8_t b)
     case PLAYSTATION2: return "PlayStation";
     case HES: return "PC Engine";
     case OTHER: return "Other";
+    case ARCADE: return "Arcade";
     case ADPLUG: return "PC AdLib";
     case PC: return "PC";
     case MP3: return "MP3";
@@ -2744,9 +2750,9 @@ int MusicDatabase::getPodcastShowCount() const
     return (int)shows.size();
 }
 
-void MusicDatabase::buildOtherPlatforms()
+void MusicDatabase::buildSubPlatforms()
 {
-    if (otherPlatformsBuilt) return;
+    if (builtSubPlatformByte == subPlatformByte) return;
 
     uint32_t n = (productStartIndex > 0 &&
                   productStartIndex <= (uint32_t)formats.size())
@@ -2755,7 +2761,7 @@ void MusicDatabase::buildOtherPlatforms()
     // Not indexed yet: don't cache an empty result -- retry on the next call.
     if (n == 0) return;
 
-    otherPlatformsBuilt = true;
+    builtSubPlatformByte = subPlatformByte;
     otherPlatformList.clear();
     otherGroupCount.clear();
     otherIndexToGroup.clear();
@@ -2766,10 +2772,11 @@ void MusicDatabase::buildOtherPlatforms()
         return x.substr(a, x.find_last_not_of(" \t") - a + 1);
     };
 
-    // The OTHER format byte collapses many real platforms into one filter, so a
-    // song's sub-platform survives only as its DB format string. Recover it with
-    // one scan of the song table -- search position i maps to song.ROWID i+1
-    // (contiguous; see getSongInfo / syncPodcastSongs) -- and group by name.
+    // The active format byte (OTHER / ARCADE) collapses many real platforms into
+    // one filter, so a song's sub-platform survives only as its DB format string.
+    // Recover it with one scan of the song table -- search position i maps to
+    // song.ROWID i+1 (contiguous; see getSongInfo / syncPodcastSongs) -- and
+    // group by name.
     std::map<std::string, std::vector<int>> byName;
     auto q = db.query<int, std::string>("SELECT ROWID, format FROM song");
     while (q.step()) {
@@ -2778,9 +2785,13 @@ void MusicDatabase::buildOtherPlatforms()
         tie(rowid, fmt) = q.get_tuple();
         int idx = rowid - 1;
         if (idx < 0 || idx >= (int)n) continue;
-        if ((formats[idx] & 0xff) != OTHER) continue;
+        if ((formats[idx] & 0xff) != subPlatformByte) continue;
         std::string name = trim(fmt);
         if (name.empty()) name = "Unknown";
+        // The bare "Arcade" group sits alongside the vendor-specific ones
+        // (Arcade (Capcom), ...), so disambiguate it as "Arcade (Other)".
+        if (subPlatformByte == ARCADE && toLower(name) == "arcade")
+            name = "Arcade (Other)";
         byName[name].push_back(idx);
     }
 
@@ -2789,7 +2800,11 @@ void MusicDatabase::buildOtherPlatforms()
     std::vector<std::string> names;
     names.reserve(byName.size());
     for (auto const& kv : byName) names.push_back(kv.first);
+    // Alphabetical (case-insensitive), except "Arcade (Other)" is forced last so
+    // the catch-all bucket sits below the named vendor groups.
     std::sort(names.begin(), names.end(), [](auto const& a, auto const& b) {
+        bool ao = (a == "Arcade (Other)"), bo = (b == "Arcade (Other)");
+        if (ao != bo) return bo; // a before b iff b is the catch-all
         return toLower(a) < toLower(b);
     });
     for (int gid = 0; gid < (int)names.size(); gid++) {
@@ -2803,7 +2818,16 @@ void MusicDatabase::buildOtherPlatforms()
 int MusicDatabase::getOtherPlatformCount()
 {
     std::lock_guard lock{ dbMutex };
-    buildOtherPlatforms();
+    subPlatformByte = OTHER;
+    buildSubPlatforms();
+    return (int)otherPlatformList.size();
+}
+
+int MusicDatabase::getArcadePlatformCount()
+{
+    std::lock_guard lock{ dbMutex };
+    subPlatformByte = ARCADE;
+    buildSubPlatforms();
     return (int)otherPlatformList.size();
 }
 

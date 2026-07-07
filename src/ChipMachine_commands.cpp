@@ -142,6 +142,8 @@ void ChipMachine::setupCommands()
     });
 
     cmd("play_pause", [=] {
+        // Nothing loaded -> F5 is a no-op (no pause state, no mute overlay).
+        if (!player.isPlaying()) return;
         auto isPaused = player.isPaused();
         player.pause(!isPaused);
         if (!isPaused) {

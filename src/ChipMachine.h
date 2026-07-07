@@ -349,6 +349,9 @@ private:
     // Number of distinct sub-platforms among OTHER songs, used to prefix the F9
     // "Other Platforms" label ("N Other Platforms"). Populated with filterCounts.
     int otherPlatformCount = 0;
+    // Number of distinct sub-platforms among ARCADE songs, used to prefix the F9
+    // "Arcade" label ("N Arcade"). Populated with filterCounts.
+    int arcadePlatformCount = 0;
     // Tune count of the currently selected platform filter (0 = no filter);
     // used for the "type to search N songs" prompt hint on large filters.
     int activeFilterCount = 0;

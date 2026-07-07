@@ -222,7 +222,13 @@
 --     Screenshots: each game's sibling .png member, keyed by the song zip URL
 --     in data/vgmrips_screenshots.txt (getSongScreenshots offline path, like
 --     Zophar; 3314/4145 matched). Bump forces a reindex.
-VERSION = 78;
+-- 79: New top-level "Arcade" platform (F9 filter), split out of "Other
+--     Platforms". The six "arcade" / "arcade (capcom|konami|namco|sega|taito)"
+--     format strings now classify to the new ARCADE format byte instead of
+--     OTHER; the sub-platform drill (buildSubPlatforms) is byte-parametrized so
+--     Arcade browses its sub-boards exactly like Other Platforms does. Neo Geo /
+--     pinball stay under Other Platforms. Reindex reclassifies the arcade songs.
+VERSION = 79;
 
 DB = {
 {
