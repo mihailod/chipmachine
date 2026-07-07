@@ -412,7 +412,15 @@ void ScreenshotTransitions::transitionStarfield()
     bool haveOut = outgoingShot >= 0 && outgoingShot < shotCount();
     if (!haveOut) {
         // Nothing to scatter out from (first shot of a song) -- just collapse in.
-        startIn();
+        // Defer via a tween tick rather than calling startIn() directly: next()
+        // can be invoked from a web download callback with no GL context, and
+        // startIn()'s swapToCurrentShot() creates a texture (a GL call). Tween
+        // completions run on the render thread, so the swap lands there safely.
+        stars.clear();   // renderStars draws nothing until startIn populates it
+        Tween::make()
+            .to(starZ, zMin)
+            .seconds(0.001f)
+            .onComplete([=]() { startIn(); });
         return;
     }
     setupStars(shotBitmap(outgoingShot));

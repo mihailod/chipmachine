@@ -707,8 +707,14 @@ void ChipMachine::updateScreenshotArea()
     float final_w = bm_w * d;
     float final_h = bm_h * d;
 
+    // Horizontal: right edge anchored near the window edge (unchanged).
     float x = screen.width() - final_w - (screen.width() * 0.05);
-    float y = topLeft.y + screen.height() * 0.1;
+    // Vertical: anchor every image's CENTER on the same line (the middle of the
+    // 0.45-height slot), so pictures of differing heights/aspect ratios share a
+    // common center of gravity and read as aligned, instead of pinning the top
+    // edge (which left short/wide logos floating high and tall shots hanging low).
+    float centerY = topLeft.y + screen.height() * 0.1 + h * 0.5;
+    float y = centerY - final_h * 0.5;
 
     screenShotIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
 }
