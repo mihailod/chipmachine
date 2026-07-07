@@ -21,6 +21,128 @@ using tween::Tween;
 
 namespace chipmachine {
 
+// Minimal shader for the batched quad renderer: a per-vertex colour, no texture.
+static const char* kQuadVertexSrc =
+    "attribute vec2 vertex;\n"
+    "attribute vec4 vcolor;\n"
+    "uniform mat4 matrix;\n"
+    "varying vec4 col;\n"
+    "void main() { gl_Position = matrix * vec4(vertex, 0.0, 1.0); col = vcolor; }\n";
+static const char* kQuadFragmentSrc =
+    "#ifdef GL_ES\n"
+    "precision mediump float;\n"
+    "#endif\n"
+    "varying vec4 col;\n"
+    "void main() { gl_FragColor = col; }\n";
+
+// Append one screen-space quad (two triangles) with a flat colour to quadVerts.
+void ScreenshotTransitions::pushQuad(float x, float y, float w, float h,
+                                     uint32_t argb)
+{
+    float r = ((argb >> 16) & 0xff) / 255.0f;
+    float g = ((argb >> 8) & 0xff) / 255.0f;
+    float b = (argb & 0xff) / 255.0f;
+    float a = ((argb >> 24) & 0xff) / 255.0f;
+    float x1 = x + w, y1 = y + h;
+    const float q[36] = {
+        x,  y,  r, g, b, a,   x1, y,  r, g, b, a,   x,  y1, r, g, b, a,
+        x1, y,  r, g, b, a,   x1, y1, r, g, b, a,   x,  y1, r, g, b, a,
+    };
+    quadVerts.insert(quadVerts.end(), q, q + 36);
+}
+
+// Emit every quad accumulated with pushQuad() in a single draw call, then reset.
+void ScreenshotTransitions::drawColorQuads(std::shared_ptr<RenderTarget> target)
+{
+    if (quadVerts.empty()) return;
+    // Program + VBO created once, on the GL thread, on first use.
+    static Program prog(kQuadVertexSrc, kQuadFragmentSrc);
+    static GLuint vbo = 0;
+    if (vbo == 0) glGenBuffers(1, &vbo);
+
+    target->bindMe();
+    glViewport(0, 0, target->width(), target->height());
+    prog.use();
+    prog.setUniform("matrix", target->get_view_matrix().transpose());
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, quadVerts.size() * sizeof(float),
+                 quadVerts.data(), GL_DYNAMIC_DRAW);
+    const GLsizei stride = 6 * sizeof(float);
+    prog.vertexAttribPointer("vertex", 2, GL_FLOAT, GL_FALSE, stride, (GLint)0);
+    prog.vertexAttribPointer("vcolor", 4, GL_FLOAT, GL_FALSE, stride,
+                             (GLint)(2 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLES, 0, (GLsizei)(quadVerts.size() / 6));
+
+    // Leave GL state clean for the next grappix draw: disable our colour array
+    // (grappix re-specifies "vertex"/"uv" itself before every draw) and unbind.
+    glDisableVertexAttribArray(prog.getAttribLocation("vcolor"));
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    quadVerts.clear();
+}
+
+// Textured batch shader: samples a texture, tinted by a uniform colour.
+static const char* kTexVertexSrc =
+    "attribute vec2 vertex;\n"
+    "attribute vec2 uv;\n"
+    "uniform mat4 matrix;\n"
+    "varying vec2 UV;\n"
+    "void main() { gl_Position = matrix * vec4(vertex, 0.0, 1.0); UV = uv; }\n";
+static const char* kTexFragmentSrc =
+    "#ifdef GL_ES\n"
+    "precision mediump float;\n"
+    "#endif\n"
+    "uniform sampler2D sTexture;\n"
+    "uniform vec4 color;\n"
+    "varying vec2 UV;\n"
+    "void main() { gl_FragColor = texture2D(sTexture, UV) * color; }\n";
+
+// Append one screen-space quad textured from UV rect (s0,t0)-(s1,t1). The vertex
+// UVs match RenderTarget::draw's quad orientation (screen-top uses t1), so the
+// callers' existing (mirrored) t bands keep each piece in place.
+void ScreenshotTransitions::pushTexQuad(float x, float y, float w, float h,
+                                        float s0, float t0, float s1, float t1)
+{
+    float x1 = x + w, y1 = y + h;
+    const float q[24] = {
+        x,  y,  s0, t1,   x1, y,  s1, t1,   x,  y1, s0, t0,
+        x1, y,  s1, t1,   x1, y1, s1, t0,   x,  y1, s0, t0,
+    };
+    texVerts.insert(texVerts.end(), q, q + 24);
+}
+
+// Emit every quad accumulated with pushTexQuad() in one draw call, tinted by
+// `color` and sampled from `texId`, then reset.
+void ScreenshotTransitions::drawTexQuads(std::shared_ptr<RenderTarget> target,
+                                         uint32_t texId, uint32_t color)
+{
+    if (texVerts.empty()) return;
+    static Program prog(kTexVertexSrc, kTexFragmentSrc);
+    static GLuint vbo = 0;
+    if (vbo == 0) glGenBuffers(1, &vbo);
+
+    target->bindMe();
+    glViewport(0, 0, target->width(), target->height());
+    prog.use();
+    prog.setUniform("matrix", target->get_view_matrix().transpose());
+    Color c(color);
+    prog.setUniform("color", c.red, c.green, c.blue, c.alpha);
+    glBindTexture(GL_TEXTURE_2D, texId);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, texVerts.size() * sizeof(float),
+                 texVerts.data(), GL_DYNAMIC_DRAW);
+    const GLsizei stride = 4 * sizeof(float);
+    prog.vertexAttribPointer("vertex", 2, GL_FLOAT, GL_FALSE, stride, (GLint)0);
+    prog.vertexAttribPointer("uv", 2, GL_FLOAT, GL_FALSE, stride,
+                             (GLint)(2 * sizeof(float)));
+    glDrawArrays(GL_TRIANGLES, 0, (GLsizei)(texVerts.size() / 4));
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    texVerts.clear();
+}
+
 void ScreenshotTransitions::configure(
     Icon& ic, std::function<int()> count,
     std::function<const image::bitmap&(int)> bitmap,
@@ -156,10 +278,10 @@ void ScreenshotTransitions::renderMosaic(std::shared_ptr<RenderTarget> target)
             // tile in the same place it occupies in the whole image.
             float t0 = 1.0f - (float)(ty + 1) / mosaicGridH;
             float t1 = 1.0f - (float)ty / mosaicGridH;
-            float uvs[8] = { s0, t0, s1, t0, s0, t1, s1, t1 };
-            target->draw(*tex, x, y, tw, th, uvs, color);
+            pushTexQuad(x, y, tw, th, s0, t0, s1, t1);
         }
     }
+    drawTexQuads(target, tex->id(), color);
 }
 
 // Effect: dissolve the current shot to black tile-by-tile in random order, swap,
@@ -252,8 +374,9 @@ void ScreenshotTransitions::renderStars(std::shared_ptr<RenderTarget> target)
         float a = ((s.color >> 24) & 0xff) / 255.0f * starAlpha;
         if (a <= 0.004f) continue;
         uint32_t col = ((uint32_t)(a * 255.0f) << 24) | (s.color & 0x00ffffff);
-        target->rectangle(sx - sw * 0.5f, sy - sh * 0.5f, sw, sh, col);
+        pushQuad(sx - sw * 0.5f, sy - sh * 0.5f, sw, sh, col);
     }
+    drawColorQuads(target);
 }
 
 // Effect: the outgoing shot's pixels break into stars and fly toward the viewer
@@ -345,15 +468,17 @@ void ScreenshotTransitions::renderCopper(
 
     copperPhase += delta * 0.00035f;   // colour cycles per millisecond
 
-    // 1) Copper bars fill the rect, one thin band per few scanlines.
+    // 1) Copper bars fill the rect, one thin band per few scanlines. Batched
+    //    into one draw call, then flushed so the strips render on top.
     const float step = 3.0f;
     for (float yy = 0; yy < rec.h; yy += step) {
         float v = (yy + step * 0.5f) / rec.h;
         float h = std::min(step, rec.h - yy);
-        target->rectangle(rec.x, rec.y + yy, rec.w, h, copperColor(v, copperPhase));
+        pushQuad(rec.x, rec.y + yy, rec.w, h, copperColor(v, copperPhase));
     }
+    drawColorQuads(target);
 
-    // 2) Image strips over the bars.
+    // 2) Image strips over the bars (all share one tint, so batch them).
     int strips = copperStrips > 0 ? copperStrips : 16;
     float a = copperImageAlpha;
     if (a <= 0.004f) return;
@@ -365,9 +490,9 @@ void ScreenshotTransitions::renderCopper(
         // Texture is uploaded flipped, so mirror the vertical UV band.
         float t0 = 1.0f - (float)(s + 1) / strips;
         float t1 = 1.0f - (float)s / strips;
-        float uvs[8] = { 0, t0, 1, t0, 0, t1, 1, t1 };
-        target->draw(*tex, rec.x + dx, y, rec.w, stripH, uvs, col);
+        pushTexQuad(rec.x + dx, y, rec.w, stripH, 0, t0, 1, t1);
     }
+    drawTexQuads(target, tex->id(), col);
 }
 
 // Effect: the current image splits into horizontal strips that slide out and
@@ -430,9 +555,9 @@ void ScreenshotTransitions::renderSineWarp(std::shared_ptr<RenderTarget> target,
         float s1 = (float)(i + 1) / cols;
         // Full-height column: t spans 0..1 (already upright, like the default
         // quad), only the horizontal UV band is sliced.
-        float uvs[8] = { s0, 0, s1, 0, s0, 1, s1, 1 };
-        target->draw(*tex, rec.x + i * colW, rec.y + dy, colW, rec.h, uvs, color);
+        pushTexQuad(rec.x + i * colW, rec.y + dy, colW, rec.h, s0, 0, s1, 1);
     }
+    drawTexQuads(target, tex->id(), color);
 }
 
 // Effect: warp the current image's columns with a growing sine wave until it is

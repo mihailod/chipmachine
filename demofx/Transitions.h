@@ -82,6 +82,23 @@ private:
     // Swap in the current shot's bitmap and return its full-size rectangle.
     grappix::Rectangle swapToCurrentShot();
 
+    // Batched solid-colour quad renderer. Effects that draw thousands of small
+    // coloured quads per frame (the starfield's particles, the copper bars)
+    // accumulate them with pushQuad() and emit them in a single draw call via
+    // drawColorQuads(), instead of thousands of RenderTarget::rectangle() calls
+    // -- that per-call driver overhead was long enough to hitch the scroller.
+    void pushQuad(float x, float y, float w, float h, uint32_t argb);
+    void drawColorQuads(std::shared_ptr<grappix::RenderTarget> target);
+
+    // Batched textured quad renderer, for effects that draw many sub-rects of
+    // the same texture with the same tint per frame (mosaic tiles, copper
+    // strips, sine-warp columns). Accumulate with pushTexQuad(), emit with one
+    // draw call via drawTexQuads().
+    void pushTexQuad(float x, float y, float w, float h, float s0, float t0,
+                     float s1, float t1);
+    void drawTexQuads(std::shared_ptr<grappix::RenderTarget> target,
+                      uint32_t texId, uint32_t color);
+
     Icon* icon = nullptr;
     std::function<int()> shotCount;
     std::function<const image::bitmap&(int)> shotBitmap;
@@ -118,6 +135,12 @@ private:
     // Sine-warp runtime state (read by renderSineWarp).
     float warpAmp = 0.0f;            // displacement amplitude, fraction of height
     float warpPhase = 0.0f;          // animated wave phase (oscillation)
+
+    // Reused CPU-side vertex scratch for the batched renderers, kept across
+    // frames to avoid reallocating. quadVerts: x,y,r,g,b,a per vertex.
+    // texVerts: x,y,u,v per vertex. 6 vertices per quad.
+    std::vector<float> quadVerts;
+    std::vector<float> texVerts;
 };
 
 } // namespace chipmachine
