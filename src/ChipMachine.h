@@ -56,7 +56,44 @@ public:
                 uint32_t delta) override
     {
         if (!texture || (color >> 24) == 0) return;
+        if (mosaicMode && (int)tileRank.size() == mosaicGridW * mosaicGridH &&
+            mosaicGridW > 0 && mosaicGridH > 0) {
+            renderMosaic(target);
+            return;
+        }
         target->draw(*texture, rec.x, rec.y, rec.w, rec.h, nullptr, color);
+    }
+
+    // Draws the texture as a mosaicGridW x mosaicGridH grid of tiles. A tile is
+    // shown (textured) once its position in the shuffled reveal order,
+    // tileRank[idx], is below the reveal threshold; hidden tiles are simply not
+    // drawn, so the starfield shows through. revealProgress in [0,1] scales how
+    // many tiles are shown.
+    void renderMosaic(std::shared_ptr<grappix::RenderTarget> target)
+    {
+        int total = mosaicGridW * mosaicGridH;
+        int revealed = (int)(revealProgress * total + 0.5f);
+        if (revealed < 0) revealed = 0;
+        if (revealed > total) revealed = total;
+        float tw = rec.w / mosaicGridW;
+        float th = rec.h / mosaicGridH;
+        for (int ty = 0; ty < mosaicGridH; ty++) {
+            for (int tx = 0; tx < mosaicGridW; tx++) {
+                int idx = ty * mosaicGridW + tx;
+                if (tileRank[idx] >= revealed) continue;
+                float x = rec.x + tx * tw;
+                float y = rec.y + ty * th;
+                float s0 = (float)tx / mosaicGridW;
+                float s1 = (float)(tx + 1) / mosaicGridW;
+                // Texture is uploaded vertically flipped and the draw quad maps
+                // screen-top to t=1, so mirror the vertical UV band to keep each
+                // tile in the same place it occupies in the whole image.
+                float t0 = 1.0f - (float)(ty + 1) / mosaicGridH;
+                float t1 = 1.0f - (float)ty / mosaicGridH;
+                float uvs[8] = { s0, t0, s1, t0, s0, t1, s1, t1 };
+                target->draw(*texture, x, y, tw, th, uvs, color);
+            }
+        }
     }
 
     void setBitmap(const image::bitmap& bm, bool filter = false)
@@ -80,6 +117,13 @@ public:
 
     grappix::Color color{ 0xffffffff };
     grappix::Rectangle rec;
+
+    // Mosaic reveal effect state (driven by ChipMachine::transitionMosaic).
+    bool mosaicMode = false;
+    int mosaicGridW = 0;
+    int mosaicGridH = 0;
+    float revealProgress = 1.0f;   // 0 = all black, 1 = whole image shown
+    std::vector<int> tileRank;     // per-tile position in the shuffled reveal
 
 private:
     std::shared_ptr<grappix::Texture> texture;
@@ -239,6 +283,15 @@ private:
     }
 
     void nextScreenshot();
+    // Individual screenshot transition effects, cycled by nextScreenshot().
+    void transitionFade();
+    void transitionZoom();
+    void transitionMosaic();
+    // Reshuffle the mosaic tile reveal order onto screenShotIcon.
+    void setupMosaicOrder();
+    // Shared mid-transition step: swap in the current shot and return its
+    // full-size rectangle.
+    grappix::Rectangle swapToCurrentShot();
     void loadScreenshot(const std::string& shot);
     // Loads the per-platform logos at startup and warns about missing ones.
     void loadPlatformScreenshots();
@@ -436,6 +489,16 @@ private:
 
     std::string namedToPlay;
     int currentShot = -1;
+    // Index into the screenshot transition-effect rotation; advances once per
+    // shot so effects (fade, zoom, ...) chain rather than replace each other.
+    int currentEffect = 0;
+    // Seconds for one direction of each screenshot transition (out phase, then
+    // in phase). Fade: alpha out/in. Zoom: shrink to a pixel / grow from a pixel.
+    // Mosaic: image dissolves to/from black tile-by-tile in random order.
+    float screenshotFadeSeconds = 1.0f;
+    float screenshotZoomSeconds = 1.0f;
+    float screenshotMosaicSeconds = 1.0f;
+    int screenshotMosaicGrid = 10;   // grid is NxN tiles
     struct NamedBitmap
     {
         NamedBitmap() {}
