@@ -22,7 +22,9 @@
 #include <grappix/gui/renderset.h>
 #include <tween/tween.h>
 
+#include <cstdint>
 #include <cstdio>
+#include <functional>
 #include <map>
 #include <memory>
 #include <string>
@@ -57,6 +59,12 @@ public:
                 uint32_t delta) override
     {
         if (!texture || (color >> 24) == 0) return;
+        // An effect (e.g. ScreenshotTransitions) can install a custom renderer
+        // that fully takes over drawing while it runs.
+        if (customRender) {
+            customRender(target, delta);
+            return;
+        }
         if (starMode && !stars.empty() && starGridW > 0 && starGridH > 0) {
             renderStars(target);
             return;
@@ -68,6 +76,9 @@ public:
         }
         target->draw(*texture, rec.x, rec.y, rec.w, rec.h, nullptr, color);
     }
+
+    // The current texture, for custom renderers that draw it themselves.
+    grappix::Texture* getTexture() const { return texture.get(); }
 
     // Draws the sampled pixels as a 3D starfield. Each star sits at home offset
     // (hx,hy) (fraction of the rect, from center) at rest; the projection factor
@@ -168,6 +179,12 @@ public:
     float starZ = 1.0f;        // depth: 1 = image intact, ->0 = flown at viewer
     float starAlpha = 1.0f;    // global fade of the star cloud
     std::vector<Star> stars;
+
+    // Optional custom renderer installed by an effect (e.g. the copper wipe in
+    // ScreenshotTransitions). When set, it draws the icon instead of the default
+    // textured quad. Cleared when the effect finishes.
+    std::function<void(std::shared_ptr<grappix::RenderTarget>, uint32_t)>
+        customRender;
 
 private:
     std::shared_ptr<grappix::Texture> texture;

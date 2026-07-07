@@ -6,6 +6,7 @@
 #include "../src/ChipMachine.h"
 
 #include <algorithm>
+#include <cmath>
 #include <numeric>
 #include <random>
 #include <vector>
@@ -230,6 +231,109 @@ void ScreenshotTransitions::transitionStarfield()
         .onComplete([=]() { startIn(); });
 }
 
+// HSV (0..1 each) -> 0xAARRGGBB, full alpha. Used for the copper palette.
+static uint32_t hsv(float h, float s, float v)
+{
+    h = (h - std::floor(h)) * 6.0f;
+    float f = h - std::floor(h);
+    float p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s);
+    float r, g, b;
+    switch (((int)h) % 6) {
+    case 0: r = v; g = t; b = p; break;
+    case 1: r = q; g = v; b = p; break;
+    case 2: r = p; g = v; b = t; break;
+    case 3: r = p; g = q; b = v; break;
+    case 4: r = t; g = p; b = v; break;
+    default: r = v; g = p; b = q; break;
+    }
+    return 0xff000000u | ((uint32_t)(r * 255) << 16) |
+           ((uint32_t)(g * 255) << 8) | (uint32_t)(b * 255);
+}
+
+// Colour of a copper scanline at vertical fraction v, animated by `phase`: a
+// drifting hue down the rect (rainbow) with sine "metallic" highlight bands
+// moving through it -- the classic Amiga copper-bar look.
+static uint32_t copperColor(float v, float phase)
+{
+    const float bands = 7.0f;    // highlight bands down the rect
+    const float hueCycles = 1.3f;
+    float lum = 0.35f + 0.65f *
+                (0.5f + 0.5f * std::sin((v * bands - phase) * 6.2831853f));
+    return hsv(v * hueCycles + phase * 0.25f, 0.85f, lum);
+}
+
+// Copper bars fill the rect; on top, the image is drawn as `copperStrips`
+// horizontal strips shifted horizontally by copperShift (alternating direction)
+// and faded by copperImageAlpha. copperPhase animates the bars' colour cycle.
+void ScreenshotTransitions::renderCopper(
+    std::shared_ptr<RenderTarget> target, uint32_t delta)
+{
+    auto& rec = icon->rec;
+    Texture* tex = icon->getTexture();
+    if (!tex) return;
+
+    copperPhase += delta * 0.00035f;   // colour cycles per millisecond
+
+    // 1) Copper bars fill the rect, one thin band per few scanlines.
+    const float step = 3.0f;
+    for (float yy = 0; yy < rec.h; yy += step) {
+        float v = (yy + step * 0.5f) / rec.h;
+        float h = std::min(step, rec.h - yy);
+        target->rectangle(rec.x, rec.y + yy, rec.w, h, copperColor(v, copperPhase));
+    }
+
+    // 2) Image strips over the bars.
+    int strips = copperStrips > 0 ? copperStrips : 16;
+    float a = copperImageAlpha;
+    if (a <= 0.004f) return;
+    uint32_t col = ((uint32_t)(a * 255.0f) << 24) | 0x00ffffff;
+    float stripH = rec.h / strips;
+    for (int s = 0; s < strips; s++) {
+        float dx = ((s % 2 == 0) ? 1.0f : -1.0f) * copperShift * rec.w;
+        float y = rec.y + s * stripH;
+        // Texture is uploaded flipped, so mirror the vertical UV band.
+        float t0 = 1.0f - (float)(s + 1) / strips;
+        float t1 = 1.0f - (float)s / strips;
+        float uvs[8] = { 0, t0, 1, t0, 0, t1, 1, t1 };
+        target->draw(*tex, rec.x + dx, y, rec.w, stripH, uvs, col);
+    }
+}
+
+// Effect: the current image splits into horizontal strips that slide out and
+// fade, revealing cycling rainbow copper bars; then the new image fades back in
+// over the settled bars. (Amiga Copper / Blitter wipe.)
+void ScreenshotTransitions::transitionCopperWipe()
+{
+    float secs = copperSeconds;
+    icon->color = Color(0xffffffff);
+    copperShift = 0.0f;
+    copperImageAlpha = 1.0f;
+    icon->customRender = [this](std::shared_ptr<RenderTarget> t, uint32_t d) {
+        renderCopper(t, d);
+    };
+    // Out: slide the current image's strips out (alternating sides) and fade
+    // them, exposing the copper bars underneath.
+    Tween::make()
+        .to(copperShift, 0.35f)
+        .to(copperImageAlpha, 0.0f)
+        .seconds(secs)
+        .onComplete([=]() {
+            if (shotCount() <= currentShot) {
+                LOGD("Shot went away!");
+                icon->customRender = nullptr;
+                return;
+            }
+            swapToCurrentShot();
+            copperShift = 0.0f;
+            copperImageAlpha = 0.0f;
+            // In: fade the new image in over the still-cycling copper bars.
+            Tween::make()
+                .to(copperImageAlpha, 1.0f)
+                .seconds(secs)
+                .onComplete([=]() { icon->customRender = nullptr; });
+        });
+}
+
 void ScreenshotTransitions::restart()
 {
     currentShot = -1;
@@ -249,15 +353,17 @@ void ScreenshotTransitions::next()
     // from an interrupted effect so a stale particle cloud can't linger.
     icon->starMode = false;
     icon->mosaicMode = false;
+    icon->customRender = nullptr;
 
     // Cycle through the available transition effects so successive shots animate
-    // differently (zoom, fade, mosaic, starfield, ...). Append new effects here
-    // and they slot into the rotation automatically.
+    // differently (zoom, fade, mosaic, starfield, copper, ...). Append new
+    // effects here and they slot into the rotation automatically.
     static const std::vector<void (ScreenshotTransitions::*)()> effects = {
         &ScreenshotTransitions::transitionZoom,
         &ScreenshotTransitions::transitionFade,
         &ScreenshotTransitions::transitionMosaic,
         &ScreenshotTransitions::transitionStarfield,
+        &ScreenshotTransitions::transitionCopperWipe,
     };
     auto effect = effects[currentEffect % effects.size()];
     currentEffect = (currentEffect + 1) % (int)effects.size();

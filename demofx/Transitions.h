@@ -3,9 +3,14 @@
 
 #include <cstdint>
 #include <functional>
+#include <memory>
 
 #include <grappix/rectangle.h>
 #include <image/bitmap.h>
+
+namespace grappix {
+class RenderTarget;
+}
 
 namespace chipmachine {
 
@@ -48,6 +53,8 @@ public:
     float starSeconds = 1.0f;
     int starGrid = 64;            // starfield pixels sampled: NxN
     float starDepthMin = 0.04f;   // smallest starZ = maximum scatter (f = 1/z)
+    float copperSeconds = 1.0f;
+    int copperStrips = 16;        // image split into this many horizontal strips
 
 private:
     // Individual transition effects, cycled by next().
@@ -55,6 +62,11 @@ private:
     void transitionZoom();
     void transitionMosaic();
     void transitionStarfield();
+    void transitionCopperWipe();
+    // Draws the copper-wipe frame (bars + sliding/fading image strips) into the
+    // icon; installed as the icon's custom renderer while the wipe runs.
+    void renderCopper(std::shared_ptr<grappix::RenderTarget> target,
+                      uint32_t delta);
     // Reshuffle the mosaic tile reveal order onto the icon.
     void setupMosaicOrder();
     // Sample a grid of stars (positions + colors) from bm onto the icon.
@@ -71,6 +83,11 @@ private:
     int outgoingShot = -1;   // shot displayed before the current transition
     int currentEffect = 0;   // position in the effect rotation
     uint64_t setShotAt = 0;  // when the current shot began showing
+
+    // Copper-wipe runtime state (read by renderCopper).
+    float copperShift = 0.0f;        // strip horizontal slide, fraction of width
+    float copperImageAlpha = 1.0f;   // image opacity over the bars
+    float copperPhase = 0.0f;        // animated copper colour cycle
 };
 
 } // namespace chipmachine
