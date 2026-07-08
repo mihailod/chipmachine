@@ -862,7 +862,17 @@ void ChipMachine::loadScreenshot(const std::string& shot)
                 // just rotate the real screenshots as before.
                 appendPlatformOrExtLogo();
             }
-            transitions.restart();
+            // Do NOT call transitions.restart() here: this callback may run on
+            // the web worker thread (async download, no GL context), and
+            // restart()->next() touches OpenGL (releasing held textures such as
+            // the cube-flip's cubeTexOld runs glDeleteTextures -> crash off the
+            // render thread). It may ALSO run synchronously on the render thread
+            // (cache hit, via getFile->call_handler), so we can't block/marshal
+            // either (run_safely would self-deadlock). Just flag it; update() on
+            // the render thread consumes the flag and does the GL-touching
+            // restart. screenshots[] filled above is published by this
+            // release-store; update() acquire-loads before reading it.
+            pendingShotRestart.store(true, std::memory_order_release);
         }
     };
     for (auto& p : parts)
@@ -1378,6 +1388,13 @@ void ChipMachine::update()
             loadScreenshot(shot);
         }
     }
+
+    // A screenshot download callback (possibly on the web worker thread) asked
+    // to (re)start the transition. Do the GL-touching restart here, on the
+    // render thread. acquire-load pairs with the release-store in loadScreenshot
+    // so the screenshots[] it filled are visible before restart() reads them.
+    if (pendingShotRestart.exchange(false, std::memory_order_acquire))
+        transitions.restart();
 
     if (playerState == MusicPlayerList::Error) {
         player.stop();

@@ -457,6 +457,14 @@ private:
     // starfield). Configured in the constructor with callbacks into `screenshots`
     // and updateScreenshotArea().
     ScreenshotTransitions transitions;
+    // Screenshot download callbacks can fire on the web worker thread (async
+    // download) OR synchronously on the render thread (cache hit, via
+    // getFile->call_handler). transitions.restart()/next() touch OpenGL, which
+    // is only valid on the render thread. So the web-callback path just raises
+    // this flag; update() (always the render thread) consumes it and does the
+    // GL-touching restart. Must not block here -- run_safely would deadlock when
+    // the callback already runs on the render thread.
+    std::atomic<bool> pendingShotRestart{false};
     struct NamedBitmap
     {
         NamedBitmap() {}
