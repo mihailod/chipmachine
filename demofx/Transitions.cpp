@@ -599,6 +599,148 @@ void ScreenshotTransitions::transitionSineWarp()
         });
 }
 
+// Draws the current image as a flat double-sided card rotating about the Y axis,
+// faked (per the classic demo trick) by compressing the horizontal width with a
+// cosine: width = |cos(flipAngle)| * fullWidth, centred. The image pinches to a
+// vertical line at 90 degrees (where the texture is swapped) and expands back.
+void ScreenshotTransitions::renderCardFlip(std::shared_ptr<RenderTarget> target)
+{
+    Texture* tex = icon->getTexture();
+    if (!tex) return;
+    auto& rec = icon->rec;
+    float w = rec.w * std::abs(std::cos(flipAngle));
+    if (w < 0.5f) return;
+    float x = rec.x + (rec.w - w) * 0.5f;
+    target->draw(*tex, x, rec.y, w, rec.h, (const float*)nullptr,
+                 (uint32_t)icon->color);
+}
+
+// Effect: the frame flips like a double-sided card -- image A rotates 0->90deg
+// (compressing to edge-on), the texture swaps to image B, then B completes the
+// turn 90->180deg, expanding back to full width.
+void ScreenshotTransitions::transitionCardFlip()
+{
+    float secs = cardFlipSeconds;
+    const float halfPi = 1.57079633f;
+    icon->color = Color(0xffffffff);
+    flipAngle = 0.0f;
+    icon->customRender = [this](std::shared_ptr<RenderTarget> t, uint32_t) {
+        renderCardFlip(t);
+    };
+    // Out: rotate the current image to edge-on (width -> 0).
+    Tween::make()
+        .to(flipAngle, halfPi)
+        .seconds(secs)
+        .onComplete([=]() {
+            if (shotCount() <= currentShot) {
+                LOGD("Shot went away!");
+                icon->customRender = nullptr;
+                return;
+            }
+            swapToCurrentShot();
+            flipAngle = halfPi;
+            // In: rotate the new image from edge-on back to full width.
+            Tween::make()
+                .to(flipAngle, 0.0f)
+                .seconds(secs)
+                .onComplete([=]() { icon->customRender = nullptr; });
+        });
+}
+
+// Draws two adjacent cube faces rotating about the Y axis: face A (the outgoing
+// image, cubeTexOld) and face B (the incoming image, the icon's texture). Each
+// face is sliced into vertical columns and projected with a simple perspective
+// (near edge larger, far edge smaller), so as cubeAngle goes 0->90deg A swings
+// away to one side while B swings in from the other, meeting at the cube's front
+// edge -- the classic texture-mapped-quad cube spin.
+void ScreenshotTransitions::renderCubeFlip(std::shared_ptr<RenderTarget> target)
+{
+    auto& rec = icon->rec;
+    float cx = rec.x + rec.w * 0.5f;
+    float cy = rec.y + rec.h * 0.5f;
+    float ca = std::cos(cubeAngle), sa = std::sin(cubeAngle);
+    const float D = 4.0f;   // camera distance (larger = milder perspective)
+    const int N = 24;       // columns per face
+    uint32_t color = (uint32_t)icon->color;
+
+    // Accumulate one face's columns into texVerts. isA picks the model geometry:
+    //   A = front face  (mx in [-1,1], mz = 1)
+    //   B = right face  (mx = 1, mz in [1,-1])   -- shares the edge at (1,1).
+    auto emitFace = [&](bool isA) {
+        auto proj = [&](float t, float& sx, float& scale) {
+            float mx = isA ? (-1.0f + 2.0f * t) : 1.0f;
+            float mz = isA ? 1.0f : (1.0f - 2.0f * t);
+            float X = mx * ca - mz * sa;
+            float Z = mx * sa + mz * ca;
+            scale = (D - 1.0f) / (D - Z);       // 1 at the front (Z=1)
+            sx = cx + X * (rec.w * 0.5f) * scale;
+        };
+        for (int i = 0; i < N; i++) {
+            float t0 = (float)i / N, t1 = (float)(i + 1) / N;
+            float x0, sc0, x1, sc1;
+            proj(t0, x0, sc0);
+            proj(t1, x1, sc1);
+            float w = std::abs(x1 - x0);
+            if (w < 0.25f) continue;   // edge-on slivers add nothing
+            float h = rec.h * (sc0 + sc1) * 0.5f;
+            float y = cy - h * 0.5f;
+            // Map screen-left to the smaller-x boundary so the texture stays
+            // upright regardless of which way the column runs.
+            float left = std::min(x0, x1);
+            float sL = (x0 <= x1) ? t0 : t1;
+            float sR = (x0 <= x1) ? t1 : t0;
+            pushTexQuad(left, y, w, h, sL, 0.0f, sR, 1.0f);
+        }
+    };
+
+    if (cubeTexOld) {
+        emitFace(true);
+        drawTexQuads(target, cubeTexOld->id(), color);
+    }
+    if (Texture* bTex = icon->getTexture()) {
+        emitFace(false);
+        drawTexQuads(target, bTex->id(), color);
+    }
+}
+
+// Effect: image A and image B are adjacent faces of a cube; a 90-degree turn
+// about the Y axis swings A away into the background while B swings forward.
+void ScreenshotTransitions::transitionCubeFlip()
+{
+    float secs = cubeSeconds;
+    const float halfPi = 1.57079633f;
+    icon->color = Color(0xffffffff);
+    cubeAngle = 0.0f;
+    cubeTexOld = nullptr;
+    int outShot = outgoingShot;
+    icon->customRender = [this](std::shared_ptr<RenderTarget> t, uint32_t) {
+        renderCubeFlip(t);
+    };
+    // Defer texture creation + swap to a tween tick: next() may be called from a
+    // web download callback with no GL context, and building textures is a GL op.
+    Tween::make()
+        .to(cubeAngle, 0.0f)
+        .seconds(0.001f)
+        .onComplete([=]() {
+            if (shotCount() <= currentShot) {
+                LOGD("Shot went away!");
+                icon->customRender = nullptr;
+                return;
+            }
+            if (outShot >= 0 && outShot < shotCount())
+                cubeTexOld = std::make_shared<Texture>(shotBitmap(outShot));
+            swapToCurrentShot();   // icon's texture becomes face B (the new shot)
+            cubeAngle = 0.0f;
+            Tween::make()
+                .to(cubeAngle, halfPi)
+                .seconds(secs)
+                .onComplete([=]() {
+                    icon->customRender = nullptr;
+                    cubeTexOld = nullptr;
+                });
+        });
+}
+
 void ScreenshotTransitions::restart()
 {
     currentShot = -1;
@@ -615,8 +757,10 @@ void ScreenshotTransitions::next()
     if (currentShot >= shotCount()) currentShot = 0;
 
     // A fresh transition owns the icon: clear any custom renderer left over from
-    // an interrupted effect so a stale particle cloud can't linger.
+    // an interrupted effect so a stale particle cloud can't linger, and release
+    // the cube's held outgoing texture.
     icon->customRender = nullptr;
+    cubeTexOld = nullptr;
 
     // Cycle through the available transition effects so successive shots animate
     // differently (zoom, fade, mosaic, starfield, copper, ...). Append new
@@ -628,6 +772,8 @@ void ScreenshotTransitions::next()
         &ScreenshotTransitions::transitionStarfield,
         &ScreenshotTransitions::transitionCopperWipe,
         &ScreenshotTransitions::transitionSineWarp,
+        &ScreenshotTransitions::transitionCardFlip,
+        &ScreenshotTransitions::transitionCubeFlip,
     };
     auto effect = effects[currentEffect % effects.size()];
     currentEffect = (currentEffect + 1) % (int)effects.size();

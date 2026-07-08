@@ -11,6 +11,7 @@
 
 namespace grappix {
 class RenderTarget;
+class Texture;
 }
 
 namespace chipmachine {
@@ -58,6 +59,8 @@ public:
     int copperStrips = 16;        // image split into this many horizontal strips
     float warpSeconds = 1.0f;
     int warpColumns = 64;         // image split into this many vertical columns
+    float cardFlipSeconds = 1.0f; // one direction (rotate to edge-on / back out)
+    float cubeSeconds = 1.0f;     // full 90-degree cube quarter-turn
 
 private:
     // Individual transition effects, cycled by next().
@@ -67,6 +70,8 @@ private:
     void transitionStarfield();
     void transitionCopperWipe();
     void transitionSineWarp();
+    void transitionCardFlip();
+    void transitionCubeFlip();
     // Effect frame renderers, installed as the icon's custom renderer while the
     // matching effect runs. They draw into the icon's rect/texture.
     void renderMosaic(std::shared_ptr<grappix::RenderTarget> target);
@@ -75,6 +80,8 @@ private:
                       uint32_t delta);
     void renderSineWarp(std::shared_ptr<grappix::RenderTarget> target,
                         uint32_t delta);
+    void renderCardFlip(std::shared_ptr<grappix::RenderTarget> target);
+    void renderCubeFlip(std::shared_ptr<grappix::RenderTarget> target);
     // Reshuffle the mosaic tile reveal order.
     void setupMosaicOrder();
     // Sample a grid of stars (positions + colors) from bm.
@@ -135,6 +142,13 @@ private:
     // Sine-warp runtime state (read by renderSineWarp).
     float warpAmp = 0.0f;            // displacement amplitude, fraction of height
     float warpPhase = 0.0f;          // animated wave phase (oscillation)
+
+    // 3D flip runtime state.
+    float flipAngle = 0.0f;          // card flip: 0..pi/2 (cos -> width factor)
+    float cubeAngle = 0.0f;          // cube: 0..pi/2 quarter-turn about Y
+    // Outgoing image's texture, held so the cube can show the old face (A) and
+    // the new face (B, = the icon's swapped-in texture) at the same time.
+    std::shared_ptr<grappix::Texture> cubeTexOld;
 
     // Reused CPU-side vertex scratch for the batched renderers, kept across
     // frames to avoid reallocating. quadVerts: x,y,r,g,b,a per vertex.
