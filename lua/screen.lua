@@ -76,7 +76,7 @@ SPECH = MONO_SPECW * 3.5
       Y1 - GSCALE * 130, -- 1. y position                                                                            
       3.0,               -- 2. font size multiplier (on-screen glyph scale = gscale * this), bigger (4.0) = larger; smaller (2.0) = smaller text
       SCROLL_SPEED,      -- 3. horizontal scroll speed                                                               
-      "data/Bello.otf",  -- 4. font path                                                                             
+      "data/fontsmainscroll/Bello.otf",  -- 4. font path                                                                             
       0.15,              -- 5. sine_amplitude (height of the wave; 0.15 = 15% of scroller height);  it scales together with the font — bump the font a lot and you may want to nudge this down slightly.                    
       8.0,               -- 6. sine_frequency (wavelength; higher is more compressed waves)                          
       4.0,               -- 7. sine_speed (oscillation animation speed)                                              
@@ -93,10 +93,10 @@ SPECH = MONO_SPECW * 3.5
 ]]
 
 if TV then
-  Settings.scroll = { Y1 - 100, 3.0, SCROLL_SPEED, "data/Bello.otf", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0 }
+  Settings.scroll = { Y1 - 100, 3.0, SCROLL_SPEED, "data/fontsmainscroll/Bello.otf", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0 }
   Settings.spectrum = { X0-40, Y1+40, 28, 80.0, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 else
-  Settings.scroll = { Y1 - GSCALE * 130, 3.0, SCROLL_SPEED, "data/Bello.otf", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0 }
+  Settings.scroll = { Y1 - GSCALE * 130, 3.0, SCROLL_SPEED, "data/fontsmainscroll/Bello.otf", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0 }
   -- Anchor spectrum firmly to the bottom of the window
   Settings.spectrum = { X0, SCREEN_HEIGHT - 10, SPECW, SPECH, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 end

@@ -241,7 +241,7 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
 
     screen.setTitle(PROGRAM_NAME " " VERSION_STR);
 
-    auto ff = workDir / "data" / "Bello.otf";
+    auto ff = workDir / "data" / "fontsmainscroll" / "Bello.otf";
     scrollEffect.set("font", ff.string());
 
 #ifdef ENABLE_TELNET
