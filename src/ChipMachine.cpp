@@ -39,7 +39,7 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "[show all]", {} },
     { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER } },
     { "Atari ST/STE/Falcon", { ATARI } },
-    { "Atari 8bit (POKEY/TIA)", { POKEY } },
+    { "Atari 8bit (TIA/POKEY)", { POKEY } },
     { "Commodore 64 (SID)", { SID, STR } },
     { "Commodore 16/116/+4 (TED)", { PRG } },
     { "ZX Spectrum 16K/48K (Beeper)", { ZXBEEPER } },
@@ -987,9 +987,17 @@ void ChipMachine::loadPlatformScreenshots()
     // not fatal: collect them and emit a single warning so they can be added.
     auto dir = workDir / "data" / "misc" / "platformscreenshots";
     // Probe <name>.png|jpg|jpeg, black-key it, store under `key`; return found.
+    // A slug may contain '/' (e.g. "ZX Spectrum 16/48"), which can't be a
+    // filename, so also try a filesystem-safe variant with '/' replaced by '-'.
     auto load = [&](const std::string& key, const std::string& name) {
+        std::vector<std::string> bases{ name };
+        std::string safe = name;
+        std::replace(safe.begin(), safe.end(), '/', '-');
+        if (safe != name)
+            bases.push_back(safe);
+        for (auto& base : bases)
         for (auto ext : { ".png", ".jpg", ".jpeg" }) {
-            auto p = dir / (name + ext);
+            auto p = dir / (base + ext);
             if (!utils::File::exists(p.string()))
                 continue;
             try {
@@ -1016,6 +1024,22 @@ void ChipMachine::loadPlatformScreenshots()
     // the platform list, so absence is never reported as missing).
     for (auto& [fmt, base] : consoleSubLogos())
         load(base, base);
+
+    // Generic platform slugs that have no dedicated artwork reuse a specific
+    // variant's logo. E.g. VGM/VGZ rips of Spectrum games carry the bare
+    // "ZX Spectrum" platform, which has no logo of its own -> use the 128K one.
+    static const std::pair<std::string, std::string> aliases[] = {
+        { "ZX Spectrum", "ZX Spectrum 128" },
+    };
+    for (auto& [alias, src] : aliases)
+        if (!platformShots.count(alias) && platformShots.count(src))
+            platformShots[alias] = platformShots[src];
+    // Any slug now satisfied via alias is no longer "missing".
+    missing.erase(std::remove_if(missing.begin(), missing.end(),
+                                 [&](const std::string& m) {
+                                     return platformShots.count(m) > 0;
+                                 }),
+                  missing.end());
 
     LOGD("Loaded %d platform logos from %s", (int)platformShots.size(),
          dir.string());

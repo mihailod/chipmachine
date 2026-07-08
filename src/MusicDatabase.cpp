@@ -1723,7 +1723,8 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
     } else if (collection == "hvtc" || collection == "sndh" ||
                collection == "unexotica" || collection == "modland" ||
                collection == "hvsc" || collection == "asma" ||
-               collection == "zxart" || collection == "demozoo" ||
+               collection == "zxart" || collection == "zxtunes" ||
+               collection == "demozoo" ||
                collection == "sceneorg" || collection == "zophar" ||
                collection == "cpcpower" || collection == "vampi" ||
                collection == "rko" || collection == "amigaremix" ||
@@ -1734,7 +1735,10 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
         // ("<composer>/<game>.sndh"), unexotica -> Hall of Light (the per-game
         // "/Game/<composer>/<game>.lha" id), zxart -> zxart.ee ZX game tunes vs
-        // ZXDB (full zxart.ee URL), demozoo -> the production's own
+        // ZXDB (full zxart.ee URL), zxtunes -> the ZX game's World of Spectrum
+        // loading screen (ZXDB match, keyed by the full zxtunes.com
+        // downloads.php?id= URL; built by scripts/update_zxtunes_screenshots.py),
+        // demozoo -> the production's own
         // media.demozoo.org screens (full song URL), zophar -> the game's
         // soundcover image on Zophar's Domain (full song URL, keyed by the
         // fi.zophar.net .zip URL; built by build_zophar.py --screenshots),
@@ -2536,6 +2540,27 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
             }
         }
         // fprintf(stderr, "%s\n", f.c_str());
+    }
+
+    // Refine the generic "ZX Spectrum" platform (SPECTRUM) to 128K AY (ZXAY)
+    // when we can prove the tune is a 128K AY one. Demozoo/VGMRips tag these with
+    // the bare "zx spectrum" platform string -- which resolves to SPECTRUM before
+    // the ext fallback can run -- even though there is a definitive signal:
+    //   1) the extension is an AY-chip module format (.pt3, .asc, .stc, ...), or
+    //   2) the file name carries the model token "ZX Spectrum 128" (VGMRips names
+    //      its .vgz rips "<Game> (ZX Spectrum 128[K])", and the 128K is the model
+    //      that actually has the AY chip a .vgz logs).
+    // Anything without such a signal (archives, .mp3, mis-tagged non-ZX rips)
+    // stays on the generic slug.
+    if (l == SPECTRUM && !path.empty()) {
+        std::string ext = toLower(utils::path_extension(path));
+        if (!ext.empty() && ext[0] == '.') ext = ext.substr(1);
+        auto it = ext.empty() ? format_map.end() : format_map.find(ext);
+        std::string lpath = toLower(path);
+        if ((it != format_map.end() && it->second == ZXAY) ||
+            lpath.find("spectrum 128") != std::string::npos ||
+            lpath.find("spectrum_128") != std::string::npos)
+            l = ZXAY;
     }
 
     // Some demoscene sources (demozoo / scene.org) tag a module with the

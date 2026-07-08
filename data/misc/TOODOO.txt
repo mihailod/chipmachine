@@ -4,71 +4,16 @@
 
 - lots of paths with // which are dupes of others -- can we dedupe somehow?
 
-- 2nd level menu drill on more platforms with subplatforms?
-- unify some platforms on 1st level and do the drill?
-
 --------------
-
 - extensions still missing format description:
-
-under 200 chars but >100 songs
-
-mtm
-okta
-org
-psc
-rol
-sa
-sfx
-sqt
-stm
-sunvox
-vtx
-vt2
-
+under 200 chars but >100 songs: mtm okta org psc rol sa sfx sqt stm sunvox vtx vt2
 these are also confirmed missing but tiny corpus:
-sm3	18
-sc	18
-mm4	17
-hot	17
-emod	17
-synmod	16
-sog	16
-glue	16
-aero	16
-plx	15
-dtl	15
-kt	14
-kdm	13
-ims	13
-tss	12
-liq	12
-buz2	12
-bsf	12
-vt	11
-mvm	11
-fmf	11
-lion	10
-smpro	9
-plist	9
-ma	9
-trk	8
-t0ast	8
-ftf	8
-arp	8
-vss	7
-vge	7
-fnk	7
-fmk	7
-dsyn	7
-cff	6
-syn	5
-msm	5
-hst	5
-gym	5
-dm	5
-0cc	5
-
+sm3	18 sc	18 mm4	17 hot	17 emod	17 synmod	16
+sog	16 glue	16 aero	16 plx	15 dtl	15 kt	14 kdm	13 ims	13
+tss	12 liq	12 buz2	12 bsf	12 vt	11 mvm	11 fmf	11 lion	10
+smpro	9 plist	9 ma	9 trk	8 t0ast	8 ftf	8 arp	8 vss	7
+vge	7 fnk	7 fmk	7 dsyn	7 cff	6 syn	5 msm	5 hst	5
+gym	5 dm	5 0cc	5 
 ------------------------
 
 - revisit cpcpower database (was afraid of killing the site)
@@ -98,9 +43,6 @@ wget --mirror --no-parent --accept "*.zip" \
 * Mirsoft World of Game Mods
 URL: [http://www.mirsoft.info](http://www.mirsoft.info)
 What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.
-
-* https://zxtunes.com -- a Russian site
-A massive historical repository of ZX Spectrum chiptunes. While heavily populated by standard AY tracking formats, its index includes extensive mappings of older, undocumented internal-beeper game routines that were ripped and isolated by early scene groups.
 
 --- MP3 / FLAC - not sure - we focus on real chip music - but already have some - maybe -----
 
@@ -147,14 +89,7 @@ It's the Wayback subset (51 tunes), not the full audiotheque — cpc-power has n
 
 - packaging: the app should offer to os handling of all extensions it can play, package_app.sh should be augmented with plist writer for it. then the application needs to handle the file passed in (standard mac way exists)
 
-- can we detect "video unavailable" for youtube and show / print that?, same for 404s -- not our fault, present message "file not present anymore or something"
-
-- do not treat extensions which are none in db as missing, only the present in db (currently none that missing are present so the test is 100% covering all but cmtest prints missing formats... once they appear maybe from new databases it should fire again)
-
 cosmetic/low priority:
-- [window_pc.cpp:48] SCROLL 0.000000, 0.200000
-   let mouse influenct the scrolling stars!
-- every other screenshot fade-in make it wave like a flag, like effects in amiga intros
 - maybe try another scroll font?
 - rainbow copper effect in scrolling like amiga demos
 

@@ -232,7 +232,20 @@
 --     "Atari ST/STE/Falcon") and "Neo Geo" into the Arcade filter (ARCADE
 --     byte, shown as the "Arcade (Neo Geo)" drill group). Neo Geo Pocket /
 --     pinball stay under Other Platforms. Reindex reclassifies those songs.
-VERSION = 80;
+-- 81: zxtunes.com collection (~7k net-new ZX Spectrum AY tunes). Built by
+--     tools/build_zxtunes.py from the zxtunes.com XML API (xml.php). Same AY
+--     tracker formats as zxart (pt3/pt2/stc/stp/asc/... -> ayfly, .ay -> gme),
+--     so it reuses the "Spectrum AY" -> ZXAY mapping; no new decoder/enum. Each
+--     path is an extensionless downloads.php?id= URL (source="", ext column
+--     routes it, like amp). Deduped title-stem vs zxart/modland/projectay/
+--     modarchive (16.6k dropped as already-present). Reindex adds the songs.
+-- 82: zxtunes fix -- store the BARE track id in `path` (source now prepends
+--     downloads.php?id=) instead of the full URL. A full URL made
+--     path_extension() deduce the bogus ext "php?id=N", which clobbered the
+--     Content-Disposition/`ext`-column module ext and broke playback (format
+--     shown as "Spectrum AY (php?id=N)"). Dedup is the strict
+--     {title,composer,format} triple. Reindex rewrites the zxtunes paths.
+VERSION = 82;
 
 DB = {
 {
@@ -344,6 +357,23 @@ DB = {
 	id =  "zxart",
 	source = "",
 	song_list = "data/zxart.txt",
+	song_template = "title composer format path ext",
+	color = 0xfffff
+},
+{
+	-- zxtunes.com: net-new ZX Spectrum AY tunes, deduped on the app-wide
+	-- {title,composer,format} triple vs zxart/projectay/amp. Same AY tracker
+	-- formats we already play, so it reuses the "Spectrum AY" -> ZXAY mapping.
+	-- Each `path` is a BARE track id; `source` prepends the downloads.php?id=
+	-- endpoint (the amp/modarchive moduleid idiom). The path MUST stay
+	-- extensionless -- a full ".../downloads.php?id=N" URL makes path_extension
+	-- deduce the bogus ext "php?id=N" and breaks playback. The real module ext
+	-- comes from the `ext` column (+ Content-Disposition). Built by
+	-- tools/build_zxtunes.py.
+	name = "zxtunes.com",
+	id =  "zxtunes",
+	source = "https://zxtunes.com/downloads.php?id=",
+	song_list = "data/zxtunes.txt",
 	song_template = "title composer format path ext",
 	color = 0xfffff
 },

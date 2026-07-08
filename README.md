@@ -148,6 +148,7 @@ Metadata from these databases is ingested, normalized, deduped and cross-checked
 * OPL Archive - https://opl.wafflenet.com
 * Bulba's ZX Spectrum & Amstrad CPC AY/YM Music Archives - https://bulba.untergrund.net/music_e.htm
 * VGMRips - https://vgmrips.net
+* ZX TUNES - https://zxtunes.com
 
 ### Remixes (MP3)
 
