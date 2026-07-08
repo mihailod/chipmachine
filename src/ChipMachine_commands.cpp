@@ -180,6 +180,14 @@ void ChipMachine::setupCommands()
 
     cmd("next_screenshot", [=] { transitions.next(); });
 
+    cmd("next_scroll_font", [=] {
+        auto name = scrollEffect.nextFont();
+        // Drop the .otf (or any) extension from the on-screen toast.
+        auto dot = name.find_last_of('.');
+        if (dot != std::string::npos) name = name.substr(0, dot);
+        if (!name.empty()) toast("Font: " + name, NORMAL);
+    });
+
     cmd("add_current_favorite", [=] {
         auto song = dbInfo;
         song.starttune = currentTune;

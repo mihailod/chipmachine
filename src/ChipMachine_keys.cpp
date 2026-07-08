@@ -110,7 +110,7 @@ void ChipMachine::setupRules()
 
     addKey('d' | CTRL, "download_current");
     addKey('z' | CTRL, "next_screenshot");
-
+    addKey('n' | CTRL, "next_scroll_font");
     addKey('r' | CTRL, "random_shuffle");
     addKey('f' | CTRL, "format_shuffle");
     addKey('c' | CTRL, "composer_shuffle");
@@ -120,9 +120,8 @@ void ChipMachine::setupRules()
     addKey('-', "volume_down");
     addKey({ '+', '=' }, "volume_up");
     addKey('m' | CTRL, "Stereo/Mono/Auto_Spectrum_Analyzer");
-    auto spectrumToggle = std::find(commands.begin(), commands.end(),
-                                    "Stereo/Mono/Auto_Spectrum_Analyzer");
-    if (spectrumToggle != commands.end()) spectrumToggle->shortcut = "CTRL+M";
+
+    addKey('m' | CTRL, "Stereo/Mono/Auto_Spectrum_Analyzer");
     addKey(keycodes::TAB, "toggle_command");
     addKey(keycodes::HOME, "local_file_playback");
     std::string empty("");

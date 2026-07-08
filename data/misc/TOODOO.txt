@@ -2,6 +2,35 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+- NoiseTrekker (.ntk) has no platform logo / classification and also songs in db play silent
+note it claims working in cmtest:
+---- ProTrekkr ----
+Trying testmus/ntk/d.m.turner remix.ntk ... playback OK
+https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/BRASS_TACKS.NTK
+https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/C-MASTERS.NTK
+https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/CHEMISTRY.NTK
+https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/DRAGON.NTK
+https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/DREAM_WEAVER.NTK
+https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/JAMESON.NTK
+https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/MONEY.NTK
+https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/ROUND-A-BOUT.NTK
+NoiseTrekker 2/ArGuru/unionjack.ntk
+NoiseTrekker 2/Rhino/brass tacks.ntk
+NoiseTrekker 2/Rhino/chemistry.ntk
+NoiseTrekker 2/Rhino/c-masters.ntk
+NoiseTrekker 2/Rhino/dragon.ntk
+NoiseTrekker 2/Rhino/dream weaver.ntk
+NoiseTrekker 2/Rhino/jameson.ntk
+NoiseTrekker 2/Rhino/money.ntk
+NoiseTrekker 2/Rhino/round-a-bout.ntk
+NoiseTrekker/- unknown/d.m.turner remix.ntk
+NoiseTrekker/- unknown/robot-ballet.ntk
+NoiseTrekker/- unknown/sunday 18'30.ntk
+investigate and make sure they all play or explain why not if impossible
+
+
+- volume up/down graphics should be drawn on the top in z-order so it is always fully visible
+
 --------------
 - extensions still missing format description:
 under 200 chars but >100 songs: mtm okta org psc rol sa sfx sqt stm sunvox vtx vt2

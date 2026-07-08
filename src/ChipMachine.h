@@ -187,6 +187,13 @@ private:
     void setVariable(const std::string& name, int index,
                      const std::string& val);
 
+    // Load every .otf from `folder` (relative to workDir) into the scroller's
+    // rotating font pool, in alphabetical order. Called at startup from the
+    // config (Settings.scroll[4]); rebuilds/regenerates each font's distance-map
+    // cache on the way, so a font newly dropped into the folder is picked up on
+    // the next launch.
+    void loadScrollFonts(const std::string& folder);
+
     void showScreen(Screen screen);
     SongInfo getSelectedSong();
 
@@ -272,6 +279,10 @@ private:
     bool appendPlatformOrExtLogo();
 
     utils::path workDir;
+    // Resolved folder the scroller fonts were last loaded from; used to skip a
+    // redundant reload when the constructor seed and the config both point at the
+    // same folder (avoids rebuilding all fonts twice at startup).
+    std::string scrollFontDir;
 
     RemoteLoader& remoteLoader;
     MusicPlayerList& player;

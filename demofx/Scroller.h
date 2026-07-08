@@ -5,6 +5,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <string>
+#include <vector>
 
 #include <coreutils/file.h>
 #include <grappix/grappix.h>
@@ -47,6 +48,47 @@ public:
 		if(w > 8)
 			scr = grappix::Texture(w+10, texH);
 	}
+	// --- Rotating font pool -------------------------------------------------
+	// The scroller cycles through a set of fonts (loaded from a folder at
+	// startup, see ChipMachine::loadScrollFonts). Every font is fully built up
+	// front so a swap -- automatic (font_swap_interval) or manual (CTRL+N) -- is
+	// instant, with no glyph-load or distance-map hitch mid-scroll.
+	void clearFonts() {
+		fonts.clear();
+		fontNames.clear();
+		fontIndex = 0;
+		font_swap_timer = 0.0f;
+	}
+
+	// Build a font and add it to the pool. The first one added becomes active.
+	void addFont(const std::string &path) {
+		grappix::Font f(path, 120, 1024 | grappix::Font::DISTANCE_MAP);
+		f.set_program(fprogram);
+		fonts.push_back(f);
+		fontNames.push_back(baseName(path));
+		if(fonts.size() == 1) {
+			font = fonts[0];
+			fontIndex = 0;
+		}
+	}
+
+	// Advance to the next font in the pool (wrapping). Returns the basename of
+	// the now-active font (for the on-screen toast); resets the auto-swap timer
+	// so a manual CTRL+N gives a full interval before the next automatic swap.
+	std::string nextFont() {
+		if(fonts.empty())
+			return "";
+		fontIndex = (fontIndex + 1) % (int)fonts.size();
+		font = fonts[fontIndex];
+		font_swap_timer = 0.0f;
+		return fontNames[fontIndex];
+	}
+
+	std::string currentFontName() const {
+		return fonts.empty() ? std::string() : fontNames[fontIndex];
+	}
+	size_t fontCount() const { return fonts.size(); }
+
 	void set(const std::string &what, const std::string &val, float seconds = 0.0) override {
 		if(what == "font") {
 			font = grappix::Font(val, 120, 1024 | grappix::Font::DISTANCE_MAP);
@@ -132,6 +174,16 @@ public:
 		scr.text(font, scrollText, xpos, texH / 2.0f, 0xffffffff, dynScale);
 
 		time_counter += dt / 1000.0f;
+
+		// Automatic font rotation: after font_swap_interval seconds of real time,
+		// swap to the next font in the pool. Disabled when interval <= 0 or when
+		// there is nothing to rotate to (0 or 1 fonts loaded).
+		if(font_swap_interval > 0.0f && fonts.size() > 1) {
+			font_swap_timer += dt / 1000.0f;
+			if(font_swap_timer >= font_swap_interval)
+				nextFont(); // also resets font_swap_timer
+		}
+
 		float cycle_time = 0.0f;
 		if (sine_interval > 0.0f) {
 			cycle_time = fmod(time_counter, 2.0f * sine_interval);
@@ -219,9 +271,22 @@ public:
 	float current_amplitude_factor = 0.0f;
 	float vbob_factor = 0.0f;      // current eased bob on/off amount (internal)
 
+	// Seconds between automatic font swaps (Settings.scroll[16] in lua). 0 = off.
+	float font_swap_interval = 60.0f;
+
 private:
+	// Basename (strip directory) for on-screen font-name toasts.
+	static std::string baseName(const std::string &path) {
+		auto slash = path.find_last_of("/\\");
+		return slash == std::string::npos ? path : path.substr(slash + 1);
+	}
+
 	grappix::RenderTarget& target;
 	grappix::Font font;
+	std::vector<grappix::Font> fonts;      // rotation pool (built at startup)
+	std::vector<std::string> fontNames;    // basenames, parallel to `fonts`
+	int fontIndex = 0;                     // active index into `fonts`
+	float font_swap_timer = 0.0f;          // elapsed seconds since last swap
 	grappix::Program program;
 	grappix::Program fprogram;
 	float xpos = -9999;

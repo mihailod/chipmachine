@@ -1,8 +1,59 @@
 #include "ChipMachine.h"
 
+#include <coreutils/file.h>
 #include <coreutils/searchpath.h>
 
+#include <algorithm>
+
 namespace chipmachine {
+
+void ChipMachine::loadScrollFonts(const std::string& folder)
+{
+    using utils::File;
+
+    // Resolve the folder: try as given (may be absolute or relative to cwd),
+    // then relative to workDir (the resource root). NOTE: File::isDir() THROWS
+    // if the path does not exist, so guard every isDir() call with exists()
+    // first and short-circuit.
+    File dir(folder);
+    if (!dir.exists())
+        dir = File((workDir / folder).string());
+    if (!dir.exists() || !dir.isDir()) {
+        LOGW("Scroll font folder not found: %s", folder);
+        return;
+    }
+
+    // Skip if we already loaded this exact (resolved) folder -- the constructor
+    // seeds the default folder and the config typically names the same one.
+    if (dir.getName() == scrollFontDir && scrollEffect.fontCount() > 0)
+        return;
+    scrollFontDir = dir.getName();
+
+    // Collect every .otf (case-insensitive) and sort alphabetically by filename
+    // so the rotation order is stable and predictable across machines.
+    std::vector<std::string> fontPaths;
+    for (auto const& f : dir.listFiles()) {
+        if (utils::toLower(utils::path_extension(f.getName())) == "otf")
+            fontPaths.push_back(f.getName());
+    }
+    std::sort(fontPaths.begin(), fontPaths.end(),
+              [](std::string const& a, std::string const& b) {
+                  return utils::toLower(utils::path_filename(a)) <
+                         utils::toLower(utils::path_filename(b));
+              });
+
+    if (fontPaths.empty()) {
+        LOGW("No .otf fonts in scroll font folder: %s", dir.getName());
+        return;
+    }
+
+    scrollEffect.clearFonts();
+    for (auto const& p : fontPaths)
+        scrollEffect.addFont(p);
+    LOGD("Loaded %d scroll font(s) from %s (first: %s)",
+         (int)scrollEffect.fontCount(), dir.getName(),
+         scrollEffect.currentFontName());
+}
 
 void ChipMachine::setVariable(const std::string& name, int index,
                               const std::string& val)
@@ -112,10 +163,7 @@ void ChipMachine::setVariable(const std::string& name, int index,
         case 1: scrollEffect.scrolly = stol(val); break;
         case 2: scrollEffect.scrollsize = stod(val); break;
         case 3: scrollEffect.scrollspeed = stol(val); break;
-        case 4: {
-            if (auto fontFile = findFile(path, val))
-                scrollEffect.set("font", fontFile->string());
-        } break;
+        case 4: loadScrollFonts(val); break;
         case 5: scrollEffect.set("sine_amplitude", val); break;
         case 6: scrollEffect.set("sine_frequency", val); break;
         case 7: scrollEffect.set("sine_speed", val); break;
@@ -127,6 +175,7 @@ void ChipMachine::setVariable(const std::string& name, int index,
         case 13: scrollEffect.set("vbob_on", val); break;
         case 14: scrollEffect.set("vbob_interval", val); break;
         case 15: scrollEffect.set("vbob_transition", val); break;
+        case 16: scrollEffect.font_swap_interval = stod(val); break;
         }
     } else if (name == "hilight_color") {
         hilightColor = Color(stoll(val));

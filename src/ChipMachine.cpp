@@ -241,8 +241,11 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
 
     screen.setTitle(PROGRAM_NAME " " VERSION_STR);
 
-    auto ff = workDir / "data" / "fontsmainscroll" / "Bello.otf";
-    scrollEffect.set("font", ff.string());
+    // Font pool for the main scroller is populated from the config
+    // (Settings.scroll[4] = folder) via loadScrollFonts(). Seed a sensible
+    // default here so the scroller still has a font even if that entry is
+    // missing from lua; the config load overrides it moments later.
+    loadScrollFonts("data/fontsmainscroll");
 
 #ifdef ENABLE_TELNET
     telnet = std::make_unique<TelnetInterface>(player);
