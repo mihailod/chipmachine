@@ -245,7 +245,15 @@
 --     Content-Disposition/`ext`-column module ext and broke playback (format
 --     shown as "Spectrum AY (php?id=N)"). Dedup is the strict
 --     {title,composer,format} triple. Reindex rewrites the zxtunes paths.
-VERSION = 82;
+-- 83: modarchive title cleanup -- the title column is the upstream
+--     marchive-open-db composite "<filename>//<realtitle>"; the filename half
+--     is dead weight (playback routes on the `ext` column + Content-Disposition,
+--     nothing reads it) and it uglified the GUI + poisoned {title,composer,
+--     format} dedup. parseStandard now keeps only the text after the first "//"
+--     for id=="modarchive", and drops a trailing ".<ext>" for the ~5% of rows
+--     whose uploader reused the filename as the title ("1394.it//1394.it" ->
+--     "1394"). Reindex rewrites the modarchive titles.
+VERSION = 83;
 
 DB = {
 {

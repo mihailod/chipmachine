@@ -2,8 +2,6 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- lots of paths with // which are dupes of others -- can we dedupe somehow?
-
 --------------
 - extensions still missing format description:
 under 200 chars but >100 songs: mtm okta org psc rol sa sfx sqt stm sunvox vtx vt2

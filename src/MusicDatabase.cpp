@@ -806,6 +806,14 @@ bool MusicDatabase::parseStandard(
     // "<game>-<songname>" (songname = filename with its format prefix stripped).
     bool unexotica = (vars["id"] == "unexotica");
 
+    // modarchive's title column is the upstream marchive-open-db composite
+    // "<filename>//<realtitle>" (see data/misc/ModArchive.md). The filename half
+    // is dead weight -- playback routes on the `ext` column plus the server's
+    // Content-Disposition name, nothing reads the embedded filename -- and it
+    // both uglifies the GUI and poisons any {title,composer,format} dedup key.
+    // Show/dedup on the real title only (transform applied per-row below).
+    bool modarchive = (vars["id"] == "modarchive");
+
     File f{ listFile };
 
     // Pre-pass: determine which leading filename tokens are genuine format
@@ -870,6 +878,26 @@ bool MusicDatabase::parseStandard(
 
             std::string gameField = gameIndex >= 0 ? parts[gameIndex] : "";
             std::string titleField = parts[titleIndex];
+            if (modarchive) {
+                // Keep everything after the FIRST "//" (a filename never
+                // contains "//", so joke titles that themselves hold slashes --
+                // e.g. "//// VAMPIRE \\\\" -- survive intact).
+                auto sep = titleField.find("//");
+                if (sep != std::string::npos)
+                    titleField = titleField.substr(sep + 2);
+                // ~5% of rows carry no real title, so the filename was reused
+                // verbatim ("1394.it//1394.it"). Drop a trailing ".<ext>" that
+                // matches this row's ext column so those read "1394", not
+                // "1394.it". Real titles practically never end in a module ext.
+                if (extIndex >= 0) {
+                    auto dotExt = "." + toLower(parts[extIndex]);
+                    if (titleField.size() > dotExt.size() &&
+                        toLower(titleField.substr(titleField.size() -
+                                                  dotExt.size())) == dotExt)
+                        titleField =
+                            titleField.substr(0, titleField.size() - dotExt.size());
+                }
+            }
             std::string composerField =
                 composerIndex >= 0 ? parts[composerIndex] : composer;
             std::string formatField =
