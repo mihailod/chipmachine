@@ -300,7 +300,12 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     // the overlay is simply skipped when the icon has no texture.
     try {
         auto mp = workDir / "data" / "misc" / "paused.png";
-        pausedIcon.setBitmap(image::load_image(mp.string()), true);
+        auto bm = image::load_image(mp.string());
+        // Key out the pure-black background so the starfield shows through, the
+        // same way platform logos are made transparent (see loadPlatformScreenshots).
+        for (auto& px : bm)
+            if ((px & 0xffffff) == 0) px &= 0xffffff;
+        pausedIcon.setBitmap(bm, true);
     } catch (image::image_exception& e) {
         LOGD("Failed to load paused.png overlay");
     }
