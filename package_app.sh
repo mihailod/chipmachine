@@ -136,7 +136,7 @@ fi
 # It is a lone arm64 Mach-O dylib, legal in Contents/MacOS/ and signed
 # individually in step 7. The vendored copy is arm64-only so the step 5b
 # architecture check passes.
-SUNVOX_DYLIB_SRC="${WORKSPACE_ROOT}/musicplayer/src/plugins/sunvoxplugin/sunvox_lib/sunvox.dylib"
+SUNVOX_DYLIB_SRC="${CHIPMACHINE_DIR}/external/musicplayer/src/plugins/sunvoxplugin/sunvox_lib/sunvox.dylib"
 if [ -f "${SUNVOX_DYLIB_SRC}" ]; then
     echo "-> Packaging SunVox engine (sunvox.dylib) into bundle..."
     cp "${SUNVOX_DYLIB_SRC}" "${MAC_OS_DIR}/sunvox.dylib"
