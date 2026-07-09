@@ -32,7 +32,7 @@
 --     is "<Game>.lha" with the version as an inner dir, so they are now
 --     "<Game>.lha/<Version>/<member>" (e.g. Advanced Ski Simulator Custom).
 -- 49: zxart.ee MUSIC collection (~29k ZX Spectrum / Sam Coupe tunes). Built by
---     tools/build_zxart.py from the zxart API; routes by chip type (AY ->
+--     chipmachine/scripts/build_zxart.py from the zxart API; routes by chip type (AY ->
 --     "ZX Spectrum 128", beeper -> "ZX Spectrum 16/48", COP/SAA -> new "Sam
 --     Coupe" category). Originals play natively when the format is supported;
 --     otherwise the per-tune ogg fallback (music.zxart.ee) streams via ffmpeg.
@@ -59,12 +59,12 @@
 --     (AY-3-8912), LHA-wrapped; stsoundplugin depacks them natively. Full set has
 --     no browsable index (/YM/ is 403), so only the ~51 Wayback-known files are
 --     indexed, with URLs pointing at the live /YM/ files (fetched on demand).
---     Built by tools/build_cpcpower.py; format "Amstrad CPC" -> AMSTRAD filter.
+--     Built by chipmachine/scripts/build_cpcpower.py; format "Amstrad CPC" -> AMSTRAD filter.
 -- 56: Zophar's Domain pilot -- Sega Genesis VGM gamerips (the genuinely net-new
 --     slice; modland already has SNES/GB/PS/N64/Saturn/NES/Dreamcast but NO VGM
 --     and NO arcade). Each row's path is a "<game> (EMU).zophar.zip" of per-track
 --     .vgm files; MusicPlayerList detects the ZIP by magic, extracts it, and plays
---     the tracks as local subsongs. Built by tools/build_zophar.py (dedup vs the
+--     the tracks as local subsongs. Built by chipmachine/scripts/build_zophar.py (dedup vs the
 --     265 modland Megadrive GYM games). format "Sega Genesis" -> MEGADRIVE filter.
 -- 57: zophar.txt deduped properly. v56 wrongly deduped Genesis only vs "Megadrive
 --     GYM" (265) and missed modland's huge "Video Game Music/Sega Megadrive" tree
@@ -75,7 +75,7 @@
 -- 58: Vampi's MDX Database (mdx.vampi.tech) -- Sharp X68000 MDX. Vampi has 9321
 --     MDX vs modland's 7449, so we onboard ONLY the net-new ones: best-effort
 --     dedup by (basename,size) vs modland MDX -> 6872 kept, 2449 dups skipped.
---     Built by tools/build_vampi.py; path = data/<filename> (verified .mdx);
+--     Built by chipmachine/scripts/build_vampi.py; path = data/<filename> (verified .mdx);
 --     format "MDX" -> JPFM (X68000/FM Towns filter); plays via mdxplugin.
 -- 64: four more music podcasts (type=podcast, live remote_list + shipped
 --     snapshot, per-episode itunes:image art): This Week in Chiptune (Dj
@@ -84,7 +84,7 @@
 -- 65: HVTC (Commodore 16/116/+4 TED .prg) pivoted from the flaky online
 --     plus4world/Wayback mirror to a shipped local store (music/hvtc), like
 --     nsfe -> music/Console. Forces a reindex so the new local_dir is stored.
--- 66: Demozoo (demozoo.org). Built by tools/build_demozoo.py from the daily
+-- 66: Demozoo (demozoo.org). Built by chipmachine/scripts/build_demozoo.py from the daily
 --     Postgres dump (data.demozoo.org/demozoo-export.sql.gz). Onboards only
 --     net-new demoscene *music* (supertype=music): a production is dropped if
 --     any of its download links is one we already mirror -- a ModlandFile, or a
@@ -108,7 +108,7 @@
 --     these), so onboarding all ~9k of scene.org would be almost pure dup. Scoped
 --     (user choice) to the slice modland/modarchive cover WORST: the Spanish
 --     demoscene mirror (mirrors/scenesp.org/) + the party archive (parties/).
---     Built by tools/build_sceneorg.py from the shipped TSV dumps in
+--     Built by chipmachine/scripts/build_sceneorg.py from the shipped TSV dumps in
 --     data/misc/scene.org/. No md5 exists anywhere (TSV / files.scene.org view
 --     page / API), so dedup is by lowercased basename vs allmods (modland),
 --     modarchive.txt and our own demozoo.txt -> 3278 net-new kept of 6838 in
@@ -140,12 +140,12 @@
 --     playable member -- native-platform disk-images/ROMs/executables (e.g.
 --     BOING.ZIP->BOING.ATR Atari 8-bit disk image, BATTLE.BIN Atari 2600 ROM,
 --     HAWKEYE.XEX). These showed as dead "No playable tracks" entries, mostly in
---     the Atari/console F9 filters. tools/filter_demozoo_archives.py downloads the
+--     the Atari/console F9 filters. chipmachine/scripts/filter_demozoo_archives.py downloads the
 --     417 Fujiology zip rows and keeps only the 277 with a decodable member
 --     (module/mp3/etc., matching MusicPlayerList songExt+audioExt); demozoo.txt
 --     41929->41789. Also fixed nested-member zip extraction (audio in a subfolder
 --     now extracts; ZipFile::extract makedirs the parent + skips dir entries).
--- 72: Extended the archive filter to scene.org too. tools/filter_demozoo_archives.py
+-- 72: Extended the archive filter to scene.org too. chipmachine/scripts/filter_demozoo_archives.py
 --     --all-hosts --native-only inspects the ~2005 non-Demoscene/non-Amiga .zip rows
 --     (native/console platforms, where program-only zips concentrate) and drops the
 --     601 with NO playable member (2600 ROMs/.xex exes/disk-images like snakepit.bin,
@@ -166,7 +166,7 @@
 --     178k catalogue scrape (data/misc/amp/MODULES.csv) into a real, indexed
 --     collection -- the old entry was `index = "no"` (unsearchable) and only
 --     half-played (MOD/STK routed via OpenMPT's prefix special-case; IT/XM/
---     S3M/MED/... silently failed). tools/build_amp.py dedups vs modland +
+--     S3M/MED/... silently failed). chipmachine/scripts/build_amp.py dedups vs modland +
 --     modarchive + demozoo + scene.org + unexotica on normalised (composer,
 --     title) -> 58432 net-new of 178032. Each path is a bare module id; the
 --     source appends it to "downmod.php?index=" (302 -> gzip module, no
@@ -186,7 +186,7 @@
 --     them silent, aborts on some OPL2), so a new libvgmplugin (ValleyBell
 --     libvgm, vendored at zxtune/3rdparty/vgm) plays them and GME declines any
 --     OPL-carrying VGM -- the ~14k non-OPL console VGZ stay on GME. Built by
---     tools/build_oplarchive.py from data/misc/opl/files.csv; path = a full
+--     chipmachine/scripts/build_oplarchive.py from data/misc/opl/files.csv; path = a full
 --     URI-encoded wafflenet URL (source empty), kept as .vgz (libvgm reads gzip
 --     directly). format "OPL Archive" -> ADPLUG -> the "IBM PC (AdLib/OPL)"
 --     filter. Bump forces a reindex.
@@ -196,7 +196,7 @@
 --     SoLO/CORPSE's Amstrad CPC demo rips (373) -> "Amstrad CPC"/AMSTRAD.
 --     Shipped LOCAL (music/projectay, like nsfe->music/Console): Bulba only
 --     serves big archives and Ironfist's site is dead. Built by
---     tools/build_projectay.py from embedded AY metadata (PAuthor=composer,
+--     chipmachine/scripts/build_projectay.py from embedded AY metadata (PAuthor=composer,
 --     PMisc=game). .ay is now owned by gmeplugin (Ay_Emul lineage plays ZX AND
 --     CPC; Ayfly, which renders CPC rips silent, no longer claims .ay and keeps
 --     pt3/stc/vtx/...). Not deduped: distinct "definitive" raw rips vs zxart's
@@ -213,7 +213,7 @@
 --     vs modland Sega + Zophar (modland's "Video Game Music" is ~99% Sega, so
 --     the arcade / PC-98 / PC-88 / X68000 / FM Towns / TurboGrafx / Neo Geo /
 --     NES / GameBoy / WonderSwan / ... platforms are all net-new). Built by
---     tools/build_vgmrips.py from data/misc/vgmrips/files.csv. ROUTING: VGM is a
+--     chipmachine/scripts/build_vgmrips.py from data/misc/vgmrips/files.csv. ROUTING: VGM is a
 --     multi-chip container and GME's Vgm_Emu only decodes the Sega/AY logs
 --     (SN76489/YM2413/YM2612/AY8910); the chip gate in vgm_opl_detect.h
 --     (vgmNeedsLibVGM, superseding vgmHasOPL) now routes every other chip
@@ -233,7 +233,7 @@
 --     byte, shown as the "Arcade (Neo Geo)" drill group). Neo Geo Pocket /
 --     pinball stay under Other Platforms. Reindex reclassifies those songs.
 -- 81: zxtunes.com collection (~7k net-new ZX Spectrum AY tunes). Built by
---     tools/build_zxtunes.py from the zxtunes.com XML API (xml.php). Same AY
+--     chipmachine/scripts/build_zxtunes.py from the zxtunes.com XML API (xml.php). Same AY
 --     tracker formats as zxart (pt3/pt2/stc/stp/asc/... -> ayfly, .ay -> gme),
 --     so it reuses the "Spectrum AY" -> ZXAY mapping; no new decoder/enum. Each
 --     path is an extensionless downloads.php?id= URL (source="", ext column
@@ -264,7 +264,7 @@
 --     GME's Vgm_Emu decodes SN76489 + YM2413. SMS/GG/SG-1000 -> SEGAMS; the 2
 --     ColecoVision sets ride under OTHER (misc small consoles, not a Sega
 --     platform). Catalog + screenshot existence read from the Wayback CDX
---     (no live crawl); built by tools/build_smspower.py. Screenshots: each game's
+--     (no live crawl); built by chipmachine/scripts/build_smspower.py. Screenshots: each game's
 --     sibling title-screen .png, keyed by the pack URL in
 --     data/smspower_screenshots.txt (167/173). Bump forces a reindex.
 -- 85: CPC-Power YM audiotheque FULL EXPANSION (51 -> 6429 tunes / 2537 games).
@@ -280,7 +280,7 @@
 --     shots are now EXACT (fiche == detail num, handed to us for free by the
 --     enumeration): 6337 shots for 2475/2522 games via the fiche=num endpoint,
 --     replacing the old fragile difflib name-search (was 30/27). Rebuilt by
---     tools/build_cpcpower.py (--build / --screenshots). Bump forces a reindex.
+--     chipmachine/scripts/build_cpcpower.py (--build / --screenshots). Bump forces a reindex.
 VERSION = 85;
 
 DB = {
@@ -320,7 +320,7 @@ DB = {
 	-- .vgz tracks and plays them as subsongs. Non-Sega chips route to
 	-- libvgmplugin (see vgm_opl_detect.h). Screenshots in
 	-- data/vgmrips_screenshots.txt keyed by the song zip URL. Built by
-	-- tools/build_vgmrips.py.
+	-- chipmachine/scripts/build_vgmrips.py.
 	name = "VGMRips",
 	id =  "vgmrips",
 	source = "",
@@ -336,7 +336,7 @@ DB = {
 	-- subsongs. SN76489 PSG (+ YM2413 FM) -> GME Vgm_Emu, no new format. Deduped
 	-- vs modland Sega Master System / Game Gear. Screenshots in
 	-- data/smspower_screenshots.txt keyed by the pack URL. Built by
-	-- tools/build_smspower.py.
+	-- chipmachine/scripts/build_smspower.py.
 	name = "SMS Power",
 	id =  "smspower",
 	source = "",
@@ -373,7 +373,7 @@ DB = {
 	-- that MusicPlayerList extracts by magic. Screenshots in
 	-- data/demozoo_screenshots.txt, keyed by the song URL (handled in
 	-- MusicDatabase::getSongScreenshots, like zxart). Built by
-	-- tools/build_demozoo.py.
+	-- chipmachine/scripts/build_demozoo.py.
 	name = "Demozoo",
 	id =  "demozoo",
 	source = "",
@@ -386,7 +386,7 @@ DB = {
 	-- the net-new-vs-modland/modarchive slice. Each path is a full
 	-- archive.scene.org/pub/ URL (source empty); .zip rows hold a lone module
 	-- extracted by magic. composer = party/artist provenance. Built by
-	-- tools/build_sceneorg.py from data/misc/scene.org/*.tsv.
+	-- chipmachine/scripts/build_sceneorg.py from data/misc/scene.org/*.tsv.
 	name = "scene.org",
 	id =  "sceneorg",
 	source = "",
@@ -422,7 +422,7 @@ DB = {
 	-- extensionless -- a full ".../downloads.php?id=N" URL makes path_extension
 	-- deduce the bogus ext "php?id=N" and breaks playback. The real module ext
 	-- comes from the `ext` column (+ Content-Disposition). Built by
-	-- tools/build_zxtunes.py.
+	-- chipmachine/scripts/build_zxtunes.py.
 	name = "zxtunes.com",
 	id =  "zxtunes",
 	source = "https://zxtunes.com/downloads.php?id=",
@@ -478,7 +478,7 @@ DB = {
 	-- modland/modarchive/demozoo/scene.org/unexotica (net-new only). Each path
 	-- is a bare module id; source appends it to the downmod.php endpoint, which
 	-- 302-redirects to the gzip module. MusicPlayerList inflates the gzip body
-	-- by magic, then the `ext` column routes it. Built by tools/build_amp.py.
+	-- by magic, then the `ext` column routes it. Built by chipmachine/scripts/build_amp.py.
 	name = "Amp",
 	id =  "amp",
 	source = "http://amp.dascene.net/downmod.php?index=",
@@ -508,7 +508,7 @@ DB = {
 	-- own rips ("Spectrum AY" -> ZX AY filter) and SoLO/CORPSE's Amstrad CPC
 	-- demo rips ("Amstrad CPC" -> CPC filter). Shipped LOCAL (like nsfe/hvtc):
 	-- Bulba only offers big archives and Ironfist's site is gone. Built by
-	-- tools/build_projectay.py from the embedded AY metadata; .ay plays via
+	-- chipmachine/scripts/build_projectay.py from the embedded AY metadata; .ay plays via
 	-- gmeplugin (Ayfly renders CPC rips silent). source empty (local files).
 	name = "Project AY",
 	id =  "projectay",

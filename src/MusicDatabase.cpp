@@ -1790,7 +1790,7 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         // build_smspower.py --screenshots). modland/hvsc/sndh/asma/
         // sceneorg are additionally augmented from Demozoo: a tune is matched to
         // the demos that use it as soundtrack and borrows that production's
-        // screenshot (built by tools/build_demozoo.py --augment, keyed by the
+        // screenshot (built by chipmachine/scripts/build_demozoo.py --augment, keyed by the
         // full song path; sceneorg matched by its archive.scene.org URL). No
         // match -> blank.
         std::string key = parts[1];
@@ -2056,7 +2056,7 @@ void initFormats()
     format_map["dsym"] = ACORN;
 
     // --- zxart.ee music collection: chip-family format strings emitted by
-    // tools/build_zxart.py (see that script's classify()). The collection routes
+    // chipmachine/scripts/build_zxart.py (see that script's classify()). The collection routes
     // by ZX chip type so AY tunes, 1-bit beeper tunes and Sam Coupe SAA tunes
     // land in their own platform filters; unplayable originals fall back to ogg.
     format_map["spectrum ay"] = ZXAY;

@@ -279,6 +279,12 @@ private:
     }
 
     void loadScreenshot(const std::string& shot);
+    // Recomputes the centred, half-screen rectangle of the splash icon.
+    void updateSplashArea();
+    // Collects the (deduplicated) platform + extension pictures shown by the
+    // idle splash animation. Must run after loadPlatformScreenshots() and
+    // loadExtensionScreenshots() so their bitmaps are already loaded.
+    void loadSplashScreenshots();
     // Loads the per-platform logos at startup and warns about missing ones.
     void loadPlatformScreenshots();
     // Loads per-extension screenshots and reports extensions that have neither
@@ -512,6 +518,24 @@ private:
     };
     std::vector<NamedBitmap> screenshots;
     std::string currentScreenshot;
+    // Splash animation shown while the app is idle on the main screen (nothing
+    // playing, "only the scroller visible"). Rotates the platform + extension
+    // pictures, centred and large, reusing the same transition effects as the
+    // per-song screenshot area but driven by its own icon/bitmap set so the two
+    // never interfere. See updateSplashArea()/loadSplashScreenshots().
+    ScreenshotTransitions splashTransitions;
+    // Default-constructed (no texture): the first bitmap is uploaded by
+    // splashTransitions.restart(), which runs on the render thread.
+    Icon splashIcon;
+    // Deduplicated platform + extension pictures rotated by the splash. Some
+    // extensions share the same picture, so identical bitmaps are collapsed to
+    // a single entry (see loadSplashScreenshots()).
+    std::vector<NamedBitmap> splashShots;
+    // Fraction of the screen the splash picture fills (per axis, aspect kept).
+    float splashSizeFraction = 0.5f;
+    // Whether the splash was active last frame; render() reads this (set by
+    // update()) and it drives the restart-on-enter transition.
+    bool splashActive = false;
     // Lazily-loaded ChipMachine logo (data/misc/icon.png), used as the final
     // fallback so the screenshot area is never blank.
     image::bitmap defaultShot;

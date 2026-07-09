@@ -10,6 +10,8 @@
 #include <cctype>
 #include <cmath>
 #include <map>
+#include <random>
+#include <set>
 #ifdef _WIN32
 #    include <ShellApi.h>
 #endif
@@ -264,6 +266,24 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
         [this](int i) -> const image::bitmap& { return screenshots[i].bm; },
         [this] { updateScreenshotArea(); });
 
+    // Idle splash: same effect rotation, but its own icon + picture set, drawn
+    // centred and large (see updateSplashArea). Rendered manually in render()
+    // only while idle, so it is NOT added to mainScreen.
+    splashTransitions.configure(
+        splashIcon, [this] { return (int)splashShots.size(); },
+        [this](int i) -> const image::bitmap& { return splashShots[i].bm; },
+        [this] { updateSplashArea(); });
+    // Run the splash's transitions at 2x speed (half the per-effect duration).
+    // The per-song `transitions` keeps its default 1.0s timings.
+    splashTransitions.fadeSeconds = 0.5f;
+    splashTransitions.zoomSeconds = 0.5f;
+    splashTransitions.mosaicSeconds = 0.5f;
+    splashTransitions.starSeconds = 0.5f;
+    splashTransitions.copperSeconds = 0.5f;
+    splashTransitions.warpSeconds = 0.5f;
+    splashTransitions.cardFlipSeconds = 0.5f;
+    splashTransitions.cubeSeconds = 0.5f;
+
     mainScreen.add(&prevInfoField);
     mainScreen.add(&currentInfoField);
     mainScreen.add(&nextInfoField);
@@ -363,6 +383,8 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     // Preload per-extension screenshots; reports extensions not covered by a
     // platform logo. Must run after loadPlatformScreenshots().
     loadExtensionScreenshots();
+    // Build the deduplicated splash picture set from the logos just loaded.
+    loadSplashScreenshots();
 
     musicDatabase.initFromLuaAsync(this->workDir);
 
@@ -735,6 +757,72 @@ void ChipMachine::updateScreenshotArea()
     float y = centerY - final_h * 0.5;
 
     screenShotIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
+}
+
+// Positions the idle-splash picture centred on the screen, scaled to fill
+// splashSizeFraction of the smaller screen dimension while preserving aspect.
+void ChipMachine::updateSplashArea()
+{
+    int bm_w = splashIcon.getTextureWidth();
+    int bm_h = splashIcon.getTextureHeight();
+    if (bm_w == 0 || bm_h == 0) return;
+
+    // Fit the picture inside a splashSizeFraction x splashSizeFraction box of the
+    // screen (as a fraction of each axis), keeping its aspect ratio.
+    float w = screen.width() * splashSizeFraction;
+    float h = screen.height() * splashSizeFraction;
+
+    float d = h / bm_h;
+    float d2 = w / bm_w;
+    if (d2 < d) d = d2;
+
+    float final_w = bm_w * d;
+    float final_h = bm_h * d;
+
+    float x = (screen.width() - final_w) * 0.5f;
+    // Horizontally centred, but lifted half the picture's height above the
+    // vertical centre so the image clears the scroller running along the bottom.
+    float y = (screen.height() - final_h) * 0.5f - final_h * 0.5f;
+
+    splashIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
+}
+
+// Builds splashShots from every loaded platform + extension picture, collapsing
+// duplicates: several extensions (and the platform aliases) resolve to the same
+// artwork, and the splash should show each distinct picture only once.
+void ChipMachine::loadSplashScreenshots()
+{
+    splashShots.clear();
+    std::set<uint64_t> seen;
+    // Cheap content fingerprint (dimensions + FNV-1a over the pixels). Collisions
+    // would only drop a picture, never crash, so a 64-bit hash is plenty.
+    auto fingerprint = [](const image::bitmap& bm) -> uint64_t {
+        uint64_t h = 1469598103934665603ull;
+        auto mix = [&](uint64_t v) { h = (h ^ v) * 1099511628211ull; };
+        mix((uint64_t)bm.width());
+        mix((uint64_t)bm.height());
+        int n = bm.size();
+        for (int i = 0; i < n; i++)
+            mix((uint64_t)bm[i]);
+        return h;
+    };
+    auto add = [&](const std::string& name, const image::bitmap& bm) {
+        if (bm.width() <= 0 || bm.height() <= 0) return;
+        if (seen.insert(fingerprint(bm)).second)
+            splashShots.emplace_back(name, bm);
+    };
+    // Extensions first (more specific artwork), then platforms.
+    for (auto& [key, bm] : extensionShots)
+        add("ext:" + key, bm);
+    for (auto& [key, bm] : platformShots)
+        add("platform:" + key, bm);
+    // Randomise the display order so each launch shows a different sequence
+    // (the maps above iterate in a fixed, sorted order otherwise).
+    std::shuffle(splashShots.begin(), splashShots.end(),
+                 std::mt19937{ std::random_device{}() });
+    LOGD("Splash: %d unique pictures from %d platform + %d extension logos",
+         (int)splashShots.size(), (int)platformShots.size(),
+         (int)extensionShots.size());
 }
 
 bool ChipMachine::noImages = false;
@@ -1561,6 +1649,23 @@ void ChipMachine::update()
     netIcon.visible(busy);
 
     if (transitions.idleFor(10000)) transitions.next();
+
+    // Idle splash: show the platform/extension picture rotation whenever the app
+    // sits on the main screen with nothing playing -- the "only the scroller is
+    // visible" state at startup, and again whenever the user ESCs back to it.
+    bool nowSplash = (currentScreen == MAIN_SCREEN) && !player.isPlaying() &&
+                     currentInfo.title.empty() && !splashShots.empty();
+    if (nowSplash && !splashActive) {
+        // Just entered the idle state -- animate the first picture in. Safe here:
+        // update() runs on the render thread, so the GL work in restart() is ok.
+        splashTransitions.restart();
+    } else if (!nowSplash && splashActive) {
+        // Leaving the idle state -- drop the texture so no stale frame lingers.
+        splashIcon.clear();
+    }
+    splashActive = nowSplash;
+    if (splashActive && splashTransitions.idleFor(2000))
+        splashTransitions.next();
 }
 
 void ChipMachine::toast(std::string const& txt, ToastType type)
@@ -1639,6 +1744,9 @@ void ChipMachine::render(uint32_t delta)
 
     if (currentScreen == MAIN_SCREEN) {
         mainScreen.render(screenptr, delta);
+        // Idle splash picture, drawn over the (otherwise empty) main screen but
+        // below the scroller so the scroll text stays in the foreground.
+        if (splashActive) splashIcon.render(screenptr, delta);
     } else if (currentScreen == SEARCH_SCREEN) {
         searchScreen.render(screenptr, delta);
     } else if (currentScreen == ADVANCED_SCREEN) {
