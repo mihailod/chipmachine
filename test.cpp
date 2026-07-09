@@ -3522,77 +3522,16 @@ TEST_CASE("extension_to_platform_map", "[.]")
     musix::ChipPlugin::createPlugins("data");
     auto& plugins = musix::ChipPlugin::getPlugins();
 
-    // The platform an extension belongs to follows the plugin that actually
-    // plays it in the app -- i.e. the highest-priority plugin claiming it (same
-    // rule as priority_map / the GUI). Most plugins target a single hardware
-    // platform; the few that span several get per-extension handling below.
-    static const std::map<string, string> pluginPlatform = {
-        { "UADE", "Amiga" },
-        { "AdPlug", "PC AdLib" },
-        { "Ayfly ZX", "ZX Spectrum 128" },
-        { "ZX Spectrum (ZXTune)", "ZX Spectrum 128" },
-        { "RSNPlugin", "Nintendo SNES" },
-        { "MSX (libkss)", "MSX" },
-        { "HEPlugin", "PlayStation" },
-        { "libvice", "Commodore 64" },
-        { "SC68", "Atari ST/STE" },
-        { "FMPPlugin", "PC-98 / X68000" },
-        { "V2Plugin", "PC" },
-        { "USFPlugin", "Nintendo 64" },
-        { "StSound", "Atari ST/STE" },
-        { "STarKos", "Amstrad CPC" },
-        { "Quartet", "Atari ST/STE" },
-        { "PxTone Collage Player", "PC" },
-        { "NDSPlugin", "Nintendo DS" },
-        { "HivelyPlugin", "Amiga" },
-        { "Gameboy Advance", "Nintendo Game Boy" },
-        { "WonderSwan (in_wsr)", "WonderSwan" },
-        { "Tedplay", "Commodore 16/+4" },
-        { "SunVox Player", "PC" },
-        { "SoundSmith", "Apple IIGS" },
-        { "SBStudio", "PC" },
-        { "S98", "PC-98 / X68000" },
-        { "PokeyNoise", "Atari XL/XE" },
-        { "Organya Player", "PC" },
-        { "NerdTracker2", "Nintendo NES" },
-        { "Monotone", "PC" },
-        { "MikMod", "Amiga" },
-        { "Megatracker", "Atari ST/STE" },
-        { "MED", "Amiga" },
-        { "MaxTrax", "Amiga" },
-        { "MDX", "PC-98 / X68000" },
-        { "JayTrax", "PC" },
-        { "IXS", "PC" },
-        { "Euphony", "PC-98 / X68000" },
-        { "Coconizer", "Acorn Archimedes" },
-        { "BBSong", "ZX Spectrum 16/48" },
-        { "Archimedes Tracker", "Acorn Archimedes" },
-        { "SCC-Musixx", "MSX" },
-    };
-    // Multi-platform plugins (GME, HTPlugin, Audio Overload, ffmpeg) carry
-    // unrelated systems under one plugin, so the *extension* picks the platform.
-    static const std::map<string, string> extPlatform = {
-        // Game Music Engine
-        { "nsf", "Nintendo NES" }, { "nsfe", "Nintendo NES" },
-        { "spc", "Nintendo SNES" }, { "gbs", "Nintendo Game Boy" },
-        { "gbr", "Nintendo Game Boy" }, { "gym", "Sega Mega Drive" },
-        { "vgm", "Sega Mega Drive" }, { "vgz", "Sega Mega Drive" },
-        { "sgc", "Sega 8-bit" }, { "hes", "PC Engine" }, { "kss", "MSX" },
-        { "ay", "ZX Spectrum 128" }, { "emul", "ZX Spectrum 128" },
-        { "sap", "Atari XL/XE" },
-        // HTPlugin / Audio Overload
-        { "dsf", "Sega Dreamcast" }, { "minidsf", "Sega Dreamcast" },
-        { "ssf", "Sega Saturn" }, { "minissf", "Sega Saturn" },
-        { "qsf", "Sega Saturn" }, { "miniqsf", "Sega Saturn" },
-        { "spu", "PlayStation" },
-        // ffmpeg
-        { "mp3", "MP3" }, { "ogg", "OGG" }, { "8svx", "Amiga" },
-        { "aac", "PC" }, { "m4a", "PC" }, { "mp4", "PC" },
-        // .cop is SAA1099 Sam Coupe, not the ZX Spectrum its plugin otherwise serves
-        { "cop", "Sam Coupe" },
-    };
+    // Every extension any plugin claims must resolve to a platform. The
+    // extension->platform mapping is owned by the app -- MusicDatabase::
+    // platformForExtension() picks the highest-priority plugin claiming the
+    // extension and maps it to a platform (the same rule the GUI uses) -- so this
+    // test just enumerates the extensions and asserts the app classifies each.
+    // The plugin name is tracked only to make an uncovered-extension failure
+    // easier to diagnose. (This is DISTINCT from classifyFormat(), which the app
+    // uses for real DB rows via their format string; see platformForExtension.)
 
-    // ext -> highest-priority plugin claiming it (the one that plays in the app).
+    // ext -> highest-priority plugin claiming it (for diagnostics only).
     std::map<string, string> extPrimary;
     std::map<string, int> extPriority;
     for (auto const& plugin : plugins) {
@@ -3608,17 +3547,7 @@ TEST_CASE("extension_to_platform_map", "[.]")
     std::map<string, std::vector<string>> platformExts;
     std::vector<string> uncovered;
     for (auto const& [ext, primary] : extPrimary) {
-        string platform;
-        if (extPlatform.count(ext)) {
-            platform = extPlatform.at(ext);
-        } else if (primary == "OpenMPT") {
-            // OpenMPT tracker formats split Amiga (mod/med/okt/...) vs PC
-            // (xm/s3m/it/...); the format classifier knows which is which.
-            platform = chipmachine::MusicDatabase::platformForExtension(ext);
-            if (platform.empty()) { platform = "PC"; }
-        } else if (pluginPlatform.count(primary)) {
-            platform = pluginPlatform.at(primary);
-        }
+        string platform = chipmachine::MusicDatabase::platformForExtension(ext);
         if (platform.empty()) {
             uncovered.push_back(ext + " (" + primary + ")");
         } else {

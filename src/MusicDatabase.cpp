@@ -3,6 +3,8 @@
 #include "SongFileIdentifier.h"
 #include "modutils.h"
 
+#include <musicplayer/src/chipplugin.h>
+
 #include <archive/archive.h>
 #include <coreutils/environment.h>
 #include <coreutils/searchpath.h>
@@ -2318,6 +2320,12 @@ void initFormats()
     format_map["sidplayer"] = SID;          // Commodore 64 (not Amiga)
     format_map["goattracker"] = SID;
     format_map["goattracker 2"] = SID;
+    // Bare .sng extension fallback -> GoatTracker (C64 SID), the highest-priority
+    // plugin claiming .sng, so a row whose format string is missing/non-canonical
+    // still lands on Commodore 64 instead of UNKNOWN. The other .sng formats reach
+    // the classifier with resolving format strings ("sam coupe sng" -> SAMCOUPE,
+    // Richard Joseph/ZoundMonitor -> UADE) and never fall through to this key.
+    format_map["sng"] = SID;
     format_map["cybertracker"] = SID;
     format_map["cybertracker c64"] = SID;
     format_map["famitracker"] = NES;
@@ -2712,13 +2720,120 @@ uint8_t MusicDatabase::classifyFormat(std::string const& fmt,
     return formatToByte(fmt, path, 0);
 }
 
-std::string MusicDatabase::platformForExtension(std::string const& ext)
+// The platform a bare file of extension `ext` belongs to: the platform of the
+// highest-priority plugin that plays it -- the same plugin the GUI would pick
+// (mirrors priority_map). This is the app-owned source of truth for the
+// extension->platform question, used by tooling/tests. It is DISTINCT from
+// classifyFormat(): a real DB row always carries a format string, which is the
+// richer signal (it alone disambiguates shared extensions like .sng = GoatTracker
+// vs Sam Coupe vs Richard Joseph), so classifyFormat() stays format-string-driven
+// and remains the runtime classifier. Here there is no format string -- only the
+// extension and the plugins claiming it -- so the plugin decides. Returns "" when
+// the extension maps to no known platform (which the test asserts never happens).
+//
+// Requires the plugins to be loaded (ChipPlugin::createPlugins); returns "" if not.
+std::string MusicDatabase::platformForExtension(std::string const& rawExt)
 {
-    auto e = toLower(ext);
-    // Drive classification by the extension itself: format_map keys many
-    // extensions directly, and a "dummy.<ext>" path lets the extension-based
-    // fallbacks fire too.
-    return platformName(formatToByte(e, "dummy." + e, 0));
+    using std::string;
+    auto ext = toLower(rawExt);
+
+    // Multi-platform plugins (GME, HTPlugin, Audio Overload, ffmpeg) carry
+    // unrelated systems under one plugin, so the *extension* picks the platform.
+    static const std::map<string, string> extPlatform = {
+        // Game Music Engine
+        { "nsf", "Nintendo NES" }, { "nsfe", "Nintendo NES" },
+        { "spc", "Nintendo SNES" }, { "gbs", "Nintendo Game Boy" },
+        { "gbr", "Nintendo Game Boy" }, { "gym", "Sega Mega Drive" },
+        { "vgm", "Sega Mega Drive" }, { "vgz", "Sega Mega Drive" },
+        { "sgc", "Sega 8-bit" }, { "hes", "PC Engine" }, { "kss", "MSX" },
+        { "ay", "ZX Spectrum 128" }, { "emul", "ZX Spectrum 128" },
+        { "sap", "Atari XL/XE" },
+        // HTPlugin / Audio Overload
+        { "dsf", "Sega Dreamcast" }, { "minidsf", "Sega Dreamcast" },
+        { "ssf", "Sega Saturn" }, { "minissf", "Sega Saturn" },
+        { "qsf", "Sega Saturn" }, { "miniqsf", "Sega Saturn" },
+        { "spu", "PlayStation" },
+        // ffmpeg
+        { "mp3", "MP3" }, { "ogg", "OGG" }, { "8svx", "Amiga" },
+        { "aac", "PC" }, { "m4a", "PC" }, { "mp4", "PC" },
+        // .cop is SAA1099 Sam Coupe, not the ZX Spectrum its plugin otherwise serves
+        { "cop", "Sam Coupe" },
+    };
+    if (auto it = extPlatform.find(ext); it != extPlatform.end())
+        return it->second;
+
+    // Highest-priority plugin claiming this extension (what plays in the app).
+    string primary;
+    int best = 0;
+    bool found = false;
+    for (auto const& plugin : musix::ChipPlugin::getPlugins()) {
+        for (auto const& raw : plugin->getSupportedExtensions()) {
+            if (toLower(raw) != ext) continue;
+            if (!found || plugin->priority() > best) {
+                primary = plugin->name();
+                best = plugin->priority();
+                found = true;
+            }
+        }
+    }
+    if (!found) return "";
+
+    // OpenMPT tracker formats split Amiga (mod/med/okt/...) vs PC (xm/s3m/it/...);
+    // the format-string classifier knows which is which.
+    if (primary == "OpenMPT") {
+        auto p = platformName(formatToByte(ext, "dummy." + ext, 0));
+        return p.empty() ? string("PC") : p;
+    }
+
+    // Most plugins target a single hardware platform.
+    static const std::map<string, string> pluginPlatform = {
+        { "UADE", "Amiga" },
+        { "AdPlug", "PC AdLib" },
+        { "Ayfly ZX", "ZX Spectrum 128" },
+        { "ZX Spectrum (ZXTune)", "ZX Spectrum 128" },
+        { "RSNPlugin", "Nintendo SNES" },
+        { "MSX (libkss)", "MSX" },
+        { "HEPlugin", "PlayStation" },
+        { "libvice", "Commodore 64" },
+        { "SC68", "Atari ST/STE" },
+        { "FMPPlugin", "PC-98 / X68000" },
+        { "V2Plugin", "PC" },
+        { "USFPlugin", "Nintendo 64" },
+        { "StSound", "Atari ST/STE" },
+        { "STarKos", "Amstrad CPC" },
+        { "Quartet", "Atari ST/STE" },
+        { "PxTone Collage Player", "PC" },
+        { "NDSPlugin", "Nintendo DS" },
+        { "HivelyPlugin", "Amiga" },
+        { "Gameboy Advance", "Nintendo Game Boy" },
+        { "WonderSwan (in_wsr)", "WonderSwan" },
+        { "Tedplay", "Commodore 16/+4" },
+        { "SunVox Player", "PC" },
+        { "SoundSmith", "Apple IIGS" },
+        { "SBStudio", "PC" },
+        { "S98", "PC-98 / X68000" },
+        { "PokeyNoise", "Atari XL/XE" },
+        { "Organya Player", "PC" },
+        { "NerdTracker2", "Nintendo NES" },
+        { "Monotone", "PC" },
+        { "MikMod", "Amiga" },
+        { "Megatracker", "Atari ST/STE" },
+        { "MED", "Amiga" },
+        { "MaxTrax", "Amiga" },
+        { "MDX", "PC-98 / X68000" },
+        { "JayTrax", "PC" },
+        { "IXS", "PC" },
+        { "Euphony", "PC-98 / X68000" },
+        { "Coconizer", "Acorn Archimedes" },
+        { "BBSong", "ZX Spectrum 16/48" },
+        { "Archimedes Tracker", "Acorn Archimedes" },
+        { "SCC-Musixx", "MSX" },
+        { "GoatTracker", "Commodore 64" },
+        { "DMF", "PC" },
+    };
+    if (auto it = pluginPlatform.find(primary); it != pluginPlatform.end())
+        return it->second;
+    return "";
 }
 
 // Map a format byte to a filesystem-safe platform slug for the per-platform

@@ -56,14 +56,9 @@ What it is: A massive database specifically tracking down original game tracker 
 - packaging: the app should offer to os handling of all extensions it can play, package_app.sh should be augmented with plist writer for it. then the application needs to handle the file passed in (standard mac way exists)
 
 cosmetic/low priority:
-- maybe try another scroll font?
 - rainbow copper effect in scrolling like amiga demos
 
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
-
-product/process
-===============
-- move all plugins into musicplayer/src/plugins and unify into one repo, it is becoming silly with clones... and we don't ship anything independently anyway so it is pointless 
 
 major new features
 ==================
