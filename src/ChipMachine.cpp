@@ -313,6 +313,18 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
         LOGD("Failed to load paused.png overlay");
     }
 
+    // Load the "muted" glyph shown centred when the volume is turned down to
+    // silence (in place of the volume bars). Black background keyed to alpha.
+    try {
+        auto mp = workDir / "data" / "misc" / "muted.png";
+        auto bm = image::load_image(mp.string());
+        for (auto& px : bm)
+            if ((px & 0xffffff) == 0) px &= 0xffffff;
+        mutedIcon.setBitmap(bm, true);
+    } catch (image::image_exception& e) {
+        LOGD("Failed to load muted.png overlay");
+    }
+
     setupCommands();
     setupRules();
 
@@ -1598,16 +1610,6 @@ void ChipMachine::render(uint32_t delta)
 
     screen.clear(0xff000000 | bgcolor);
 
-    if (showVolume) {
-        static Color color = 0xff000000;
-        showVolume--;
-
-        volumeIcon.render(screenptr, 0);
-        auto v = (int)(player.getVolume() * 10);
-        v = (int)(v * volPos.w) / 10;
-        screen.rectangle(volPos.x + v, volPos.y, volPos.w - v, volPos.h, color);
-    }
-
     if (playerState == MusicPlayerList::Stopped || playerState == MusicPlayerList::Error) {
         std::fill(eq.begin(), eq.end(), 0);
         std::fill(eqLeft.begin(), eqLeft.end(), 0);
@@ -1677,6 +1679,29 @@ void ChipMachine::render(uint32_t delta)
     }
 
     overlay.render(screenptr, delta);
+
+    // Drawn last so the volume bar always sits on top of every screen element
+    // (album art, lists, scroller) and is never partially obscured. Only the
+    // filled portion of the icon is drawn; the rest stays transparent (no black
+    // masking rectangle) so the starfield shows through.
+    float vol = player.getVolume();
+    if (vol <= 0.0f && mutedIcon.getTextureWidth() > 0) {
+        // Fully silenced: keep the muted glyph on screen the WHOLE time the
+        // volume is at zero (not just the transient volume-overlay window), so
+        // the user always knows audio is muted. Centred and sized against the
+        // 576px reference height like the other overlays.
+        float gscale = screen.height() / 576.0f;
+        float iw = mutedIcon.getTextureWidth() * gscale;
+        float ih = mutedIcon.getTextureHeight() * gscale;
+        mutedIcon.setArea({ ((float)screen.width() - iw) / 2.0f,
+                            ((float)screen.height() - ih) / 2.0f, iw, ih });
+        mutedIcon.render(screenptr, 0);
+        if (showVolume) showVolume--;
+    } else if (showVolume) {
+        // Audible volume: bars flash briefly after a volume change.
+        showVolume--;
+        volumeIcon.renderFraction(screenptr, vol);
+    }
 
     font.update_cache();
     listFont.update_cache();

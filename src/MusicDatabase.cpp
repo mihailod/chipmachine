@@ -2365,6 +2365,12 @@ void initFormats()
     format_map["noisetrekker 2"] = PC;
     format_map["protrekkr"] = PC;            // ProTrekkr (cross-platform softsynth)
     format_map["protrekkr 2.0"] = PC;
+    // Key the bare extensions too: NoiseTrekker/ProTrekkr modules onboarded from
+    // sources that don't carry a canonical format string (e.g. Fujiology .NTK
+    // URLs) reach the classifier via the extension fallback -- without these they
+    // land in UNKNOWN and show no platform logo. ptkplugin plays both.
+    format_map["ntk"] = PC;                  // NoiseTrekker / ProTrekkr .ntk
+    format_map["ptk"] = PC;                  // ProTrekkr .ptk
     format_map["klystrack"] = PC;            // klystrack (cross-platform chiptune tracker)
     format_map["darkwave studio"] = PC;      // DarkWave Studio (Windows DAW)
     format_map["dreamstation"] = PC;         // DreamStation (Windows)

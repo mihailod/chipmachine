@@ -69,6 +69,20 @@ public:
         target->draw(*texture, rec.x, rec.y, rec.w, rec.h, nullptr, color);
     }
 
+    // Render only the left `frac` (0..1) of the texture, scaled into the left
+    // `frac` of the icon's area. The unfilled part is simply not drawn, so it
+    // stays transparent instead of being masked with an opaque rectangle (used
+    // for the volume-level bar over the starfield).
+    void renderFraction(std::shared_ptr<grappix::RenderTarget> target,
+                        float frac)
+    {
+        if (!texture || (color >> 24) == 0) return;
+        if (frac <= 0.0f) return;
+        if (frac > 1.0f) frac = 1.0f;
+        float uvs[8] = { 0, 0, frac, 0, 0, 1, frac, 1 };
+        target->draw(*texture, rec.x, rec.y, rec.w * frac, rec.h, uvs, color);
+    }
+
     // The current texture, for custom renderers that draw it themselves.
     grappix::Texture* getTexture() const { return texture.get(); }
 
@@ -336,6 +350,9 @@ private:
     // Big "muted" overlay shown in the screen centre while paused (F5), so the
     // user sees what they pressed and which key un-mutes.
     Icon pausedIcon;
+    // Shown centred in place of the volume bars when the volume is turned all
+    // the way down to silence.
+    Icon mutedIcon;
 
     RenderSet mainScreen;
 

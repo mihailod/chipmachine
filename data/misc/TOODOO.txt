@@ -2,35 +2,6 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- NoiseTrekker (.ntk) has no platform logo / classification and also songs in db play silent
-note it claims working in cmtest:
----- ProTrekkr ----
-Trying testmus/ntk/d.m.turner remix.ntk ... playback OK
-https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/BRASS_TACKS.NTK
-https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/C-MASTERS.NTK
-https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/CHEMISTRY.NTK
-https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/DRAGON.NTK
-https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/DREAM_WEAVER.NTK
-https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/JAMESON.NTK
-https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/MONEY.NTK
-https://ftp.untergrund.net/users/ltk_tscc/fujiology/MUSIC/FT/TUNEZ/R/RHINO/NTK/ROUND-A-BOUT.NTK
-NoiseTrekker 2/ArGuru/unionjack.ntk
-NoiseTrekker 2/Rhino/brass tacks.ntk
-NoiseTrekker 2/Rhino/chemistry.ntk
-NoiseTrekker 2/Rhino/c-masters.ntk
-NoiseTrekker 2/Rhino/dragon.ntk
-NoiseTrekker 2/Rhino/dream weaver.ntk
-NoiseTrekker 2/Rhino/jameson.ntk
-NoiseTrekker 2/Rhino/money.ntk
-NoiseTrekker 2/Rhino/round-a-bout.ntk
-NoiseTrekker/- unknown/d.m.turner remix.ntk
-NoiseTrekker/- unknown/robot-ballet.ntk
-NoiseTrekker/- unknown/sunday 18'30.ntk
-investigate and make sure they all play or explain why not if impossible
-
-
-- volume up/down graphics should be drawn on the top in z-order so it is always fully visible
-
 --------------
 - extensions still missing format description:
 under 200 chars but >100 songs: mtm okta org psc rol sa sfx sqt stm sunvox vtx vt2
@@ -50,24 +21,25 @@ gym	5 dm	5 0cc	5
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
 
-* Project 2612 & SMS Power!
-URLs: [https://project2612.org](https://project2612.org) | [https://www.smspower.org](https://www.smspower.org)
-What they are: Definitive, dedicated system vaults. Project 2612 is the definitive source for Sega Genesis/Mega Drive .vgm rips. SMS Power handles Sega Master System, Game Gear, and SG-1000 audio logging.
-These sites are simple, predictable directory trees. They do not block standard command-line tools if you throttle your requests.
-Project 2612 (Sega Genesis)
+* Project 2612 (Sega Genesis)
+https://project2612.org
+Definitive, dedicated system vault. Project 2612 is the definitive source for Sega Genesis/Mega Drive .vgm rips. SMS Power handles Sega Master System, Game Gear, and SG-1000 audio logging.
+simple, predictable directory trees. will not block standard command-line tools if you throttle your requests.
 Use wget to cleanly mirror the entire structured .vgm archive directory. Use a mirror flag, reject HTML files, and add a mandatory delay to avoid triggering server alerts:
 Bash
 wget --mirror --no-parent --no-host-directories \
      --reject "index.html*" --wait=1 --random-wait \
      https://project2612.org/vgm/
-SMS Power! (Sega Master System / Game Gear)
+
+* SMS Power! (Sega Master System / Game Gear)
+[https://www.smspower.org](https://www.smspower.org)
 SMS Power hosts pre-packaged zip files of their entire music section.
 Bash
 wget --mirror --no-parent --accept "*.zip" \
      --wait=1 --random-wait \
      https://www.smspower.org/Music/
 
-* Mirsoft World of Game Mods
+* .....IN PROGRESS.... PESIC ......Mirsoft World of Game Mods
 URL: [http://www.mirsoft.info](http://www.mirsoft.info)
 What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.
 
