@@ -140,7 +140,7 @@ Metadata from these databases is ingested, normalized, deduped and cross-checked
 * Exotica - https://www.exotica.org.uk
 * CSDb - https://csdb.dk
 * ZX Art - https://zxart.ee/eng/music
-* CPC-Power (partial archive.org mirror) - https://www.cpc-power.com
+* CPC-Power - https://www.cpc-power.com
 * Zophar's Domain (Sega Genesis only) - https://www.zophar.net
 * Vampi's MDX Collection (Sharp X68000) - https://mdx.vampi.tech
 * Demozoo - https://demozoo.org

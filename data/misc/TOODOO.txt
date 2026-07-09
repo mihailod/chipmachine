@@ -2,6 +2,22 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+---------------------
+Implement Amiga Boing Ball Loading Spinner
+
+We display "LOADING... / BUFFERING..." toast word now before the music is ready to be played.
+
+Draw a small, perfectly fluid rotating Amiga Boing Ball into the screenshot area.
+
+Technical Implementation Tip: Don't bother setting up a complex 3D sphere mesh pipeline just for this. Do it the classic Amiga way: Use a single 2D quad or sprite sheet containing the pre-rendered rotation frames of the ball. Apply a 2D scale factor (X and Y altered independently) to simulate a realistic squash-and-stretch impact whenever the ball hits the bounding box of your UI layout.
+
+There are ton of information on the internet about amiga boing ball -- it should be trivial to implement it using that knowledge.
+
+And put the code in the demofx/BoingBall.cpp / demofx/BoingBall.h files and just call them from the main program.
+
+IMPORTANT NOTE: I noticed we display "LOADING..." for audio files and "BUFFERING..." for MP3/MPU but we don't display "BUFFERING" for YouTube playbac -- we should. Please add that and also draw the spinning Boing Ball as well during youtube preparation for playback. 
+-----------------------
+
 --------------
 - extensions still missing format description:
 under 200 chars but >100 songs: mtm okta org psc rol sa sfx sqt stm sunvox vtx vt2
@@ -14,7 +30,6 @@ vge	7 fnk	7 fmk	7 dsyn	7 cff	6 syn	5 msm	5 hst	5
 gym	5 dm	5 0cc	5 
 ------------------------
 
-- revisit cpcpower database (was afraid of killing the site)
 - revisit zophar arcade
 
 *************************************************
@@ -27,7 +42,7 @@ What it is: A massive database specifically tracking down original game tracker 
 
 --- MP3 / FLAC - not sure - we focus on real chip music - but already have some - maybe -----
 
-* (parked) https://chipmusic.org --  chipmusic.org serves MP3 only. 
+* (started and parked) https://chipmusic.org --  chipmusic.org serves MP3 only. 
 
 * GYUSYABU PC-98 SOUNDTRACKS
   - URL: http://gyusyabu.ddo.jp (or mirrors)
@@ -49,20 +64,6 @@ What it is: A massive database specifically tracking down original game tracker 
   - Key Formats: Pre-rendered (.mp3, .flac)
   - Notes: High-quality FLAC and MP3 game soundtrack index. Useful as a fallback
     for games where native chips cannot be easily emulated (e.g. modern Arcade/PS3/PS4).
-
---------------------------------------------------------------------------
------- DATABASES DONE / RESOLVED / ABANDONED IN THIS PASS BELOW ----------
---------------------------------------------------------------------------
-
-* ... PARTIALLY DONE in 1.5 ....   CPC-POWER AUDIOTHEQUE
-  - URL: https://www.cpc-power.com
-  - Sound Chips: Amstrad CPC (AY-3-8912)
-  - Key Formats: .ay, .ym
-  - Notes: A dedicated database tracking Amstrad CPC computer games and their
-    accompanying AY chiptune soundtracks.
-full scan needed, will take hours and DOS the site maybe...
-a small subset was found on wayback and added (51 songs)
-It's the Wayback subset (51 tunes), not the full audiotheque — cpc-power has no browsable music index (/YM/ is 403, games DB is ~10/page over ~30k entries), so the complete set needs a heavy multi-thousand-request crawl you declined. The builder uses the ~51 files Wayback captured, with URLs pointing at the live /YM/ files. I documented in memory exactly how to expand it later (rate-limited crawl of the zicym tabs) if you ever want the full ~1–3k.
 
 *********
 * OTHER *

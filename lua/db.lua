@@ -267,7 +267,21 @@
 --     (no live crawl); built by tools/build_smspower.py. Screenshots: each game's
 --     sibling title-screen .png, keyed by the pack URL in
 --     data/smspower_screenshots.txt (167/173). Bump forces a reindex.
-VERSION = 84;
+-- 85: CPC-Power YM audiotheque FULL EXPANSION (51 -> 6429 tunes / 2537 games).
+--     The site has no browsable music index, so the earlier build shipped only
+--     the ~51 .ym files Wayback happened to capture. New approach: the Wayback
+--     CDX cheaply enumerates the 2568 game fiches that have an onglet=zicym tab
+--     (the expensive "which games have music" discovery), then we read just
+--     those specific tabs from the LIVE site -- a targeted one-request-per-
+--     music-game crawl, NOT the 20k blind sweep that was declined -- and parse
+--     the JS liste_musique[] array for the .ym filenames + metadata. Song URLs
+--     still point at the live cpc-power /YM/<name>.ym (LHA-wrapped, depacked by
+--     stsoundplugin; no new format, same "Amstrad CPC" -> AMSTRAD route). Screen-
+--     shots are now EXACT (fiche == detail num, handed to us for free by the
+--     enumeration): 6337 shots for 2475/2522 games via the fiche=num endpoint,
+--     replacing the old fragile difflib name-search (was 30/27). Rebuilt by
+--     tools/build_cpcpower.py (--build / --screenshots). Bump forces a reindex.
+VERSION = 85;
 
 DB = {
 {
@@ -331,8 +345,9 @@ DB = {
 	color = 0xfffff
 },
 {
-	-- CPC-Power Amstrad CPC YM audiotheque (Wayback-known subset). Full URLs in
-	-- the path column point at the live cpc-power /YM/ files; source is empty.
+	-- CPC-Power Amstrad CPC YM audiotheque (full set: ~6.4k tunes / 2.5k games;
+	-- see VERSION 85). Full URLs in the path column point at the live cpc-power
+	-- /YM/ files; source is empty.
 	name = "CPC-Power",
 	id =  "cpcpower",
 	source = "",
