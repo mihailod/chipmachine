@@ -788,12 +788,24 @@ void ChipMachine::updateSplashArea()
 }
 
 // Builds splashShots from every loaded platform + extension picture, collapsing
-// duplicates: several extensions (and the platform aliases) resolve to the same
-// artwork, and the splash should show each distinct picture only once.
+// duplicates so the splash shows each distinct thing only once. Two kinds of
+// duplicate are removed: pixel-identical images (platform aliases / the
+// case-insensitive Console sub-logos), and same-SUBJECT images that merely look
+// alike -- e.g. the arcade "vgz-capcom" board logo and the "Capcom" platform
+// logo are different files but both read as "Capcom", so only one is kept.
 void ChipMachine::loadSplashScreenshots()
 {
     splashShots.clear();
     std::set<uint64_t> seen;
+    std::set<std::string> seenSubjects;
+    // Normalised subject of a logo, used to drop near-duplicates of the same
+    // thing: lowercased, with the arcade "vgz-" board prefix stripped. So
+    // "vgz-capcom" and "Capcom" both map to "capcom".
+    auto subjectOf = [](const std::string& key) {
+        std::string s = utils::toLower(key);
+        if (s.rfind("vgz-", 0) == 0) s = s.substr(4);
+        return s;
+    };
     // Cheap content fingerprint (dimensions + FNV-1a over the pixels). Collisions
     // would only drop a picture, never crash, so a 64-bit hash is plenty.
     auto fingerprint = [](const image::bitmap& bm) -> uint64_t {
@@ -806,16 +818,18 @@ void ChipMachine::loadSplashScreenshots()
             mix((uint64_t)bm[i]);
         return h;
     };
-    auto add = [&](const std::string& name, const image::bitmap& bm) {
+    auto add = [&](const std::string& kind, const std::string& key,
+                   const image::bitmap& bm) {
         if (bm.width() <= 0 || bm.height() <= 0) return;
+        if (!seenSubjects.insert(subjectOf(key)).second) return; // same subject
         if (seen.insert(fingerprint(bm)).second)
-            splashShots.emplace_back(name, bm);
+            splashShots.emplace_back(kind + key, bm);
     };
     // Extensions first (more specific artwork), then platforms.
     for (auto& [key, bm] : extensionShots)
-        add("ext:" + key, bm);
+        add("ext:", key, bm);
     for (auto& [key, bm] : platformShots)
-        add("platform:" + key, bm);
+        add("platform:", key, bm);
     // Randomise the display order so each launch shows a different sequence
     // (the maps above iterate in a fixed, sorted order otherwise).
     std::shuffle(splashShots.begin(), splashShots.end(),
