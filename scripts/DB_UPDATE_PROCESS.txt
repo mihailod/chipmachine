@@ -398,8 +398,8 @@ ZXART.EE MUSIC, see https://zxart.ee/eng/music
 ~29k ZX Spectrum (AY + 1-bit beeper) and Sam Coupe tunes, id-addressed via the
 zxart REST API. Regenerate data/zxart.txt with:
 
-    python3 tools/build_zxart.py --histogram   # inspect type/compo/ext spread first
-    python3 tools/build_zxart.py --build        # write chipmachine/data/zxart.txt
+    python3 chipmachine/scripts/build_zxart.py --histogram   # inspect type/compo/ext spread first
+    python3 chipmachine/scripts/build_zxart.py --build        # write chipmachine/data/zxart.txt
 
 API pages are cached under tools/zxart_cache/ (delete it to force a fresh pull).
 
