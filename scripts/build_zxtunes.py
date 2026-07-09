@@ -21,7 +21,7 @@ fuzzy normalized-title dedup against those collections (see load_existing_stems)
   --histogram   parse the cache, print ext / dedup stats, then stop.
   --build       write chipmachine/data/zxtunes.txt
 
-Metadata cache (authors.xml + author_<id>.xml) lives under tools/zxtunes_cache/;
+Metadata cache (authors.xml + author_<id>.xml) lives under chipmachine/scripts/zxtunes_cache/;
 populate it with the sibling crawl (curl loop) or --crawl. Delete to refresh.
 """
 

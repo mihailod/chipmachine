@@ -19,7 +19,7 @@ the existing mp3/ogg streaming path.
                 EXT_CATEGORY mapping before generating the final list.
   --build       write chipmachine/data/zxart.txt
 
-Raw API pages are cached under tools/zxart_cache/ so reruns don't re-hit the
+Raw API pages are cached under chipmachine/scripts/zxart_cache/ so reruns don't re-hit the
 site. Delete that dir to force a refresh.
 """
 

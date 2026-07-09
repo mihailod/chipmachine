@@ -14,11 +14,11 @@ vge	7 fnk	7 fmk	7 dsyn	7 cff	6 syn	5 msm	5 hst	5
 gym	5 dm	5 0cc	5 
 ------------------------
 
-- revisit zophar arcade
-
 *************************************************
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
+
+- .... in progress...  PESIC: revisit zophar arcade
 
 * .....IN PROGRESS.... PESIC ......Mirsoft World of Game Mods
 URL: [http://www.mirsoft.info](http://www.mirsoft.info)

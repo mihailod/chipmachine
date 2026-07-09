@@ -1664,8 +1664,27 @@ void ChipMachine::update()
         splashIcon.clear();
     }
     splashActive = nowSplash;
-    if (splashActive && splashTransitions.idleFor(2000))
-        splashTransitions.next();
+    if (splashActive) {
+        // No audio is playing, but we want the spectrum analyzer to look alive so
+        // users see the feature at a glance. Randomly "hit" bars to fresh peaks
+        // each frame; the decayEq() pass above brings them back down, producing
+        // the same jumping-bars motion as a real tune. eqLeft/eqRight use
+        // independent draws so the two stereo halves differ.
+        static std::mt19937 srng{ std::random_device{}() };
+        auto kick = [&](std::vector<uint8_t>& bars) {
+            for (auto& b : bars) {
+                if ((srng() & 0xff) < 70) { // ~27% chance to re-hit per frame
+                    int peak = 90 + (int)(srng() % 166); // 90..255
+                    if (peak > b) b = (uint8_t)peak;
+                }
+            }
+        };
+        kick(eqLeft);
+        kick(eqRight);
+        kick(eqMono);
+        eq = eqMono;
+        if (splashTransitions.idleFor(2000)) splashTransitions.next();
+    }
 }
 
 void ChipMachine::toast(std::string const& txt, ToastType type)
@@ -1713,7 +1732,11 @@ void ChipMachine::render(uint32_t delta)
 
     screen.clear(0xff000000 | bgcolor);
 
-    if (playerState == MusicPlayerList::Stopped || playerState == MusicPlayerList::Error) {
+    // Keep the simulated spectrum alive during the idle splash (update() fills
+    // the eq arrays there); only blank the bars when genuinely stopped.
+    if ((playerState == MusicPlayerList::Stopped ||
+         playerState == MusicPlayerList::Error) &&
+        !splashActive) {
         std::fill(eq.begin(), eq.end(), 0);
         std::fill(eqLeft.begin(), eqLeft.end(), 0);
         std::fill(eqRight.begin(), eqRight.end(), 0);
