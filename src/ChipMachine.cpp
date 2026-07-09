@@ -825,11 +825,20 @@ void ChipMachine::loadSplashScreenshots()
         if (seen.insert(fingerprint(bm)).second)
             splashShots.emplace_back(kind + key, bm);
     };
+    // Platform logos that are deliberately excluded from the splash. The
+    // "PC-98 - X68000" logo is a composite of three systems in one image (used
+    // elsewhere on purpose); those platforms are already shown individually, so
+    // it would just look like a redundant collage here.
+    static const std::set<std::string> splashExcludePlatforms = {
+        "PC-98 - X68000",
+    };
     // Extensions first (more specific artwork), then platforms.
     for (auto& [key, bm] : extensionShots)
         add("ext:", key, bm);
-    for (auto& [key, bm] : platformShots)
+    for (auto& [key, bm] : platformShots) {
+        if (splashExcludePlatforms.count(key)) continue;
         add("platform:", key, bm);
+    }
     // Randomise the display order so each launch shows a different sequence
     // (the maps above iterate in a fixed, sorted order otherwise).
     std::shuffle(splashShots.begin(), splashShots.end(),
