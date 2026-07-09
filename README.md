@@ -74,28 +74,13 @@ To authorize and run the application on your Mac, follow these steps:
 
 ## Building for Apple Silicon
 
+All third-party dependencies (apone, musicplayer, zxtune, furnace, libkss, arkostracker3, etc.)
+are now **vendored inside the repo** under [external/](external/), so a single clone is all you need —
+no more cloning ~20 sibling repositories. Provenance (each vendored fork's upstream URL and commit)
+is recorded in [external/VENDORED.md](external/VENDORED.md).
+
 ```bash
-mkdir chipmachine-as && cd chipmachine-as
 git clone https://github.com/mihailod/chipmachine.git
-git clone https://github.com/mihailod/apone.git
-git clone https://github.com/mihailod/musicplayer.git
-git clone https://github.com/mihailod/vice310.git
-git clone https://github.com/mihailod/98fmplayer.git
-git clone https://github.com/mihailod/libpxtone.git
-git clone https://github.com/mihailod/organya.h.git organya
-git clone https://github.com/mihailod/eupmini.git
-git clone https://github.com/mihailod/zingzong.git
-git clone https://github.com/mihailod/zxtune.git
-git clone --recursive https://github.com/mihailod/libkss.git
-git clone https://github.com/mihailod/audiodecoder.wsr.git audiodecoderwsr
-git clone https://github.com/mihailod/protrekkr.git
-git clone https://github.com/mihailod/soundsmith.git
-git clone https://github.com/mihailod/arkostracker3.git
-git clone https://github.com/mihailod/playerpro.git
-git clone https://github.com/mihailod/jaytrax.git
-git clone https://github.com/mihailod/webixs.git
-git clone https://github.com/mihailod/famitracker-cx.git
-git clone https://github.com/mihailod/furnace.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
