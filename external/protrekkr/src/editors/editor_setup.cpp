@@ -1,0 +1,1196 @@
+// ------------------------------------------------------
+// Protrekkr
+// Based on Juan Antonio Arguelles Rius's NoiseTrekker.
+//
+// Copyright (C) 2008-2026 Franck Charlet.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions
+// are met:
+//
+//  1. Redistributions of source code must retain the above copyright notice,
+//     this list of conditions and the following disclaimer.
+//
+//  2. Redistributions in binary form must reproduce the above copyright notice,
+//     this list of conditions and the following disclaimer in the documentation
+//     and/or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS "AS IS" AND
+// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+// IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+// ARE DISCLAIMED. IN NO EVENT SHALL FRANCK CHARLET OR CONTRIBUTORS BE LIABLE
+// FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+// DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+// OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+// HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+// LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+// OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+// SUCH DAMAGE.
+// ------------------------------------------------------
+
+// ------------------------------------------------------
+// Includes
+#include "include/editor_setup.h"
+#include "include/editor_sequencer.h"
+#include "include/editor_pattern.h"
+#include "../midi/include/midi.h"
+#include "../main/include/main.h"
+
+// ------------------------------------------------------
+// Variables
+extern int Song_Playing_Pattern;
+extern int patt_highlight;
+extern char FullScreen;
+extern char FullScreen_Desktop;
+extern int do_resize;
+extern int FullScreen_Width;
+extern int FullScreen_Height;
+extern char AutoSave;
+extern char AutoBackup;
+extern char AutoReload;
+extern char SplashScreen;
+extern int Beveled;
+extern char Use_Shadows;
+extern int Continuous_Scroll;
+extern int wait_AutoSave;
+extern char Global_Patterns_Font;
+extern int leading_zeroes;
+extern int leading_zeroes_char;
+extern int leading_zeroes_char_row;
+
+extern int metronome_magnify;
+extern int Cur_Screen_Mode;
+extern int Max_Screen_Mode;
+int Changing_Screen_Mode = 0;
+
+extern int Nbr_Keyboards;
+extern int Keyboard_Idx;
+extern char Jazz_Edit;
+
+extern char Accidental;
+
+int current_palette_idx;
+
+char Paste_Across;
+
+char *Labels_PatSize[] =
+{
+    "Small",
+    "Medium",
+    "Large"
+};
+
+char *Labels_AutoSave[] =
+{
+    "Off",
+    "1 min",
+    "2 mins",
+    "4 mins",
+    "8 mins",
+    "10 mins",
+    "15 mins",
+    "30 mins"
+};
+
+// ------------------------------------------------------
+// Functions
+char *Get_Keyboard_Label(void);
+char *Get_Keyboard_FileName(void);
+void Load_Keyboard_Def(char *FileName);
+
+void Draw_Master_Ed(void)
+{
+    Get_Phony_Palette();
+
+    Draw_Editors_Bar(USER_SCREEN_SETUP_EDIT);
+
+    Gui_Draw_Button_Box(0, (Cur_Height - 153), fsize, 130, NULL, BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Flat_Box("UI Setup");
+
+    Gui_Draw_Button_Box(8, (Cur_Height - 125), 110, 16, "Metronome (Rows)", BUTTON_NORMAL | BUTTON_DISABLED);
+
+    Gui_Draw_Button_Box(8, (Cur_Height - 105), 110, 16, "Latency (Milliseconds)", BUTTON_NORMAL | BUTTON_DISABLED);
+
+    Gui_Draw_Button_Box(330, (Cur_Height - 145), 114, 16, "Reset After Step Play", BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Button_Box(330, (Cur_Height - 125), 114, 16, "Mousewheel Multiplier", BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Button_Box(330, (Cur_Height - 105), 114, 16, "Rows Highlight", BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Button_Box(330, (Cur_Height - 85), 114, 16, "Decimal Rows", BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Button_Box(330, (Cur_Height - 65), 114, 16, "Show Prev/Next Patt.", BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Button_Box(330, (Cur_Height - 45), 114, 16, "Continuous Scroll", BUTTON_NORMAL | BUTTON_DISABLED);
+
+    Gui_Draw_Button_Box(8, (Cur_Height - 85), 110, 16, "Auto Save", BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Button_Box(520, (Cur_Height - 145), 60, 16, "Full Screen", BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Button_Box(520, (Cur_Height - 125), 60, 16, "Keyboard", BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20 + 66, (Cur_Height - 105), 60, 16, "Themes", BUTTON_NO_BORDER | BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+    
+    Gui_Draw_Button_Box(520 + (18 + 108) + 1 + 66, (Cur_Height - 85), 18, 16, "\214", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+    Gui_Draw_Button_Box(520 + (18 + 108) + 1 + 66, (Cur_Height - 65), 18, 16, "\005", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+    Gui_Draw_Button_Box(520 + (18 + 108) + 1 + 66, (Cur_Height - 45), 18, 16, "\006", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+
+    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20 + 66, (Cur_Height - 85), 18, 16, "1", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20 + 66 + 21, (Cur_Height - 85), 18, 16, "2", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20 + 66 + 42, (Cur_Height - 85), 18, 16, "3", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20 + 66, (Cur_Height - 65), 18, 16, "4", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20 + 66 + 21, (Cur_Height - 65), 18, 16, "5", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20 + 66 + 42, (Cur_Height - 65), 18, 16, "6", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20 + 66, (Cur_Height - 45), 18, 16, "7", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20 + 66 + 21, (Cur_Height - 45), 18, 16, "8", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20 + 66 + 42, (Cur_Height - 45), 18, 16, "9", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+
+    Gui_Draw_Button_Box(8, (Cur_Height - 65), 110, 16, "Default Pattern Font", BUTTON_NORMAL | BUTTON_DISABLED);
+
+    Gui_Draw_Button_Box(8, (Cur_Height - 45), 110, 16, "Paste Across Patterns", BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Button_Box(184, (Cur_Height - 125), 72, 16, "Play While Edit", BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Button_Box(184, (Cur_Height - 105), 72, 16, "Auto Backup", BUTTON_NORMAL | BUTTON_DISABLED);
+
+    Gui_Draw_Button_Box(205, (Cur_Height - 65), 51, 16, "Splash S.", BUTTON_NORMAL | BUTTON_DISABLED);
+    Gui_Draw_Button_Box(184, (Cur_Height - 45), 72, 16, "Load Last Ptk", BUTTON_NORMAL | BUTTON_DISABLED);
+
+    Gui_Draw_Button_Box(734, (Cur_Height - 125), 42, 16, "Accid.", BUTTON_NORMAL | BUTTON_DISABLED);
+
+    Gui_Draw_Button_Box(205, (Cur_Height - 85), 51, 16, "Lead 0s", BUTTON_NORMAL | BUTTON_DISABLED);
+}
+
+void Actualize_Master_Ed(char action)
+{
+    int Real_Palette_Idx;
+    int RefreshTex = FALSE;
+    char Modes[64];
+
+    if(userscreen == USER_SCREEN_SETUP_EDIT)
+    {
+        // Latency
+        if(action == 0 || action == 5)
+        {
+
+#if defined(__AMIGAOS4__)
+            if(AUDIO_Milliseconds < 20) AUDIO_Milliseconds = 20;
+#else
+#if defined(__LINUX_ALSASEQ__)
+            if(AUDIO_Milliseconds < 20) AUDIO_Milliseconds = 20;
+#else
+            if(AUDIO_Milliseconds < 10) AUDIO_Milliseconds = 10;
+#endif
+#endif
+
+            if(AUDIO_Milliseconds > 250) AUDIO_Milliseconds = 250;
+            Gui_Draw_Arrows_Number_Box(8 + 112, (Cur_Height - 105), AUDIO_Milliseconds, BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+        }
+
+        // Create a new sound buffer with the new latency amount
+        if(action == 5)
+        {
+            Song_Stop();
+            AUDIO_Stop_Sound_Buffer();
+            AUDIO_Create_Sound_Buffer(AUDIO_Milliseconds);
+            Init_Scopes_VuMeters_Buffers();
+            AUDIO_Play();
+        }
+
+        // Mouse wheel
+        if(action == 0 || action == 6)
+        {
+            if(MouseWheel_Multiplier < 1) MouseWheel_Multiplier = 1;
+            if(MouseWheel_Multiplier > 16) MouseWheel_Multiplier = 16;
+            Gui_Draw_Arrows_Number_Box2(446, (Cur_Height - 125), MouseWheel_Multiplier, BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+        }
+
+        // Pattern highlight
+        if(action == 0 || action == 7)
+        {
+            if(patt_highlight < 1) patt_highlight = 1;
+            if(patt_highlight > 16) patt_highlight = 16;
+            if(patt_highlight == 1)
+            {
+                Gui_Draw_Button_Box(446, (Cur_Height - 105), 16, 16, "\03", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(446 + 18, (Cur_Height - 105), 24, 16, "Off", BUTTON_NORMAL | BUTTON_DISABLED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(446 + 44, (Cur_Height - 105), 16, 16, "\04", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                if(Rows_Decimal)
+                {
+                    Gui_Draw_Arrows_Number_Box2(446, (Cur_Height - 105), patt_highlight, BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                }
+                else
+                {
+                    value_box(446, (Cur_Height - 105), patt_highlight, BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                }
+            }
+        }
+        if(action == 7)
+        {
+            go_update_pattern |= 1;
+        }
+
+        // Use decimal numbering for rows
+        if(action == 0 || action == 8)
+        {
+            if(Rows_Decimal)
+            {
+                Gui_Draw_Button_Box(446, (Cur_Height - 85), 29, 16, "On", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(446 + 31, (Cur_Height - 85), 29, 16, "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                Gui_Draw_Button_Box(446, (Cur_Height - 85), 29, 16, "On", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(446 + 31, (Cur_Height - 85), 29, 16, "Off", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+            }
+        }
+
+        // Show Prev. next pattern
+        if(action == 0 || action == 13)
+        {
+            if(See_Prev_Next_Pattern)
+            {
+                Gui_Draw_Button_Box(446, (Cur_Height - 65), 29, 16, "On", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(446 + 31, (Cur_Height - 65), 29, 16, "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                Gui_Draw_Button_Box(446, (Cur_Height - 65), 29, 16, "On", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(446 + 31, (Cur_Height - 65), 29, 16, "Off", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+            }
+        }
+
+        // Don't stop at the bottom of a pattern
+        if(action == 0 || action == 14)
+        {
+            if(Continuous_Scroll)
+            {
+                Gui_Draw_Button_Box(446, (Cur_Height - 45), 29, 16, "On", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(446 + 31, (Cur_Height - 45), 29, 16, "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                Gui_Draw_Button_Box(446, (Cur_Height - 45), 29, 16, "On", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(446 + 31, (Cur_Height - 45), 29, 16, "Off", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+            }
+            Draw_Pattern_Right_Stuff();
+            go_update_pattern |= 1;
+        }
+
+        // Full screen
+        if(action == 0 || action == 9)
+        {
+            if(FullScreen_Desktop)
+            {
+                Gui_Draw_Button_Box(734, (Cur_Height - 145), 29, 16, "On", BUTTON_NORMAL | BUTTON_DISABLED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(734 + 31, (Cur_Height - 145), 29, 16, "Off", BUTTON_NORMAL | BUTTON_DISABLED | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                if(FullScreen)
+                {
+                    Gui_Draw_Button_Box(734, (Cur_Height - 145), 29, 16, "On", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                    Gui_Draw_Button_Box(734 + 31, (Cur_Height - 145), 29, 16, "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                }
+                else
+                {
+                    Gui_Draw_Button_Box(734, (Cur_Height - 145), 29, 16, "On", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                    Gui_Draw_Button_Box(734 + 31, (Cur_Height - 145), 29, 16, "Off", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                }
+            }
+        }
+
+        // Change viewed color
+        if (action == 0 || action == 29)
+        {
+            if (current_palette_idx < 0) current_palette_idx = 0;
+            if (current_palette_idx > (NUMBER_COLORS - 1)) current_palette_idx = NUMBER_COLORS - 1;
+            Gui_Draw_Button_Box(520, (Cur_Height - 105), 16, 16, "\03", BUTTON_NORMAL | BUTTON_TEXT_CENTERED | BUTTON_RIGHT_MOUSE);
+            Gui_Draw_Button_Box(520 + 16 + 2, (Cur_Height - 105), 108, 16, Labels_Palette[current_palette_idx], BUTTON_NORMAL | BUTTON_DISABLED | BUTTON_TEXT_CENTERED);
+            Gui_Draw_Button_Box(520 + (18 + 108) + 2, (Cur_Height - 105), 16, 16, "\04", BUTTON_NORMAL | BUTTON_TEXT_CENTERED | BUTTON_RIGHT_MOUSE);
+        }
+
+        // Refresh palette infos
+        if(action == 0 || action == 10 || action == 29)
+        {
+            Real_Palette_Idx = Idx_Palette[current_palette_idx];
+            if(Phony_Palette[Real_Palette_Idx].r < 0) Phony_Palette[Real_Palette_Idx].r = 0;
+            if(Phony_Palette[Real_Palette_Idx].r > 255) Phony_Palette[Real_Palette_Idx].r = 255;
+            if(Phony_Palette[Real_Palette_Idx].g < 0) Phony_Palette[Real_Palette_Idx].g = 0;
+            if(Phony_Palette[Real_Palette_Idx].g > 255) Phony_Palette[Real_Palette_Idx].g = 255;
+            if(Phony_Palette[Real_Palette_Idx].b < 0) Phony_Palette[Real_Palette_Idx].b = 0;
+            if(Phony_Palette[Real_Palette_Idx].b > 255) Phony_Palette[Real_Palette_Idx].b = 255;
+            Set_Phony_Palette();
+            if(action)
+            {
+                RefreshTex = TRUE;
+            }
+            else
+            {
+                Real_Slider(518, (Cur_Height - 85), Ptk_Palette[Real_Palette_Idx].r / 2, TRUE);
+                Print_Long_Small(668, (Cur_Height - 85), Ptk_Palette[Real_Palette_Idx].r, INT_PLAIN, 41, BUTTON_NORMAL | BUTTON_DISABLED);
+                Real_Slider(518, (Cur_Height - 65), Ptk_Palette[Real_Palette_Idx].g / 2, TRUE);
+                Print_Long_Small(668, (Cur_Height - 65), Ptk_Palette[Real_Palette_Idx].g, INT_PLAIN, 41, BUTTON_NORMAL | BUTTON_DISABLED);
+                Real_Slider(518, (Cur_Height - 45), Ptk_Palette[Real_Palette_Idx].b / 2, TRUE);
+                Print_Long_Small(668, (Cur_Height - 45), Ptk_Palette[Real_Palette_Idx].b, INT_PLAIN, 41, BUTTON_NORMAL | BUTTON_DISABLED);
+            }
+        }
+
+        // Bevel on/off
+        if(action == 0 || action == 30)
+        {
+            switch(Beveled)
+            {
+                case 2:
+                    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20, (Cur_Height - 105), 14, 16, "B", BUTTON_PUSHED | BUTTON_RIGHT_MOUSE | BUTTON_TEXT_CENTERED);
+                    break;
+                case 1:
+                    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20, (Cur_Height - 105), 14, 16, "B", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                    break;
+                case 0:
+                    Gui_Draw_Button_Box(520 + (18 + 108) + 2 + 20, (Cur_Height - 105), 14, 16, "B", BUTTON_NORMAL | BUTTON_RIGHT_MOUSE | BUTTON_TEXT_CENTERED);
+                    break;
+            }
+            Set_Phony_Palette();
+            if(action) 
+            {
+                RefreshTex = TRUE;
+            }
+        }
+
+        // Set auto save interval
+        if(action == 0 || action == 15)
+        {
+            if(AutoSave < 0) AutoSave = 0;
+            if(AutoSave >= sizeof(Labels_AutoSave) / sizeof(char *)) AutoSave = sizeof(Labels_AutoSave) / sizeof(char *) - 1;
+            Gui_Draw_Button_Box(8 + 112, (Cur_Height - 85), 16, 16, "\03", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            Gui_Draw_Button_Box(8 + 112 + 18, (Cur_Height - 85), 46, 16, Labels_AutoSave[AutoSave], BUTTON_NORMAL | BUTTON_DISABLED | BUTTON_TEXT_CENTERED);
+            Gui_Draw_Button_Box(8 + 112 + 48 + 18, (Cur_Height - 85), 16, 16, "\04", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+        }
+
+        // Keyboard layout
+        if(action == 0 || action == 16)
+        {
+            if(Keyboard_Idx < 0) Keyboard_Idx = 0;
+            if(Keyboard_Idx >= (Nbr_Keyboards - 1)) Keyboard_Idx = Nbr_Keyboards - 1;
+            if(action == 16)
+            {
+                Load_Keyboard_Def(Get_Keyboard_FileName());
+            }
+            Gui_Draw_Button_Box(520 + 62 + 2, (Cur_Height - 125), 16, 16, "\03", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            Gui_Draw_Button_Box(520 + 62 + 2 + 18, (Cur_Height - 125), 106, 16, Get_Keyboard_Label(), BUTTON_NORMAL | BUTTON_DISABLED | BUTTON_TEXT_CENTERED);
+            Gui_Draw_Button_Box(520 + 62 + 2 + 108 + 18, (Cur_Height - 125), 16, 16, "\04", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+        }
+
+        // Paste across patterns
+        if(action == 0 || action == 17)
+        {
+            if(Paste_Across)
+            {
+                Gui_Draw_Button_Box(120, (Cur_Height - 45), 29, 16, "On", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(120 + 31, (Cur_Height - 45), 29, 16, "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                Gui_Draw_Button_Box(120, (Cur_Height - 45), 29, 16, "On", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(120 + 31, (Cur_Height - 45), 29, 16, "Off", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+            }
+        }
+
+        // Play instruments while editing
+        if(action == 0 || action == 18)
+        {
+            if(Jazz_Edit)
+            {
+                Gui_Draw_Button_Box(258, (Cur_Height - 125), 29, 16, "On", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(258 + 31, (Cur_Height - 125), 29, 16, "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                Gui_Draw_Button_Box(258, (Cur_Height - 125), 29, 16, "On", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(258 + 31, (Cur_Height - 125), 29, 16, "Off", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+            }
+        }
+
+        // Notes type
+        if(action == 0 || action == 19)
+        {
+            if(Accidental)
+            {
+                Gui_Draw_Button_Box(780, (Cur_Height - 125), 14, 16, "b", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                Gui_Draw_Button_Box(780, (Cur_Height - 125), 14, 16, "#", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            if(action == 19)
+            {
+                go_update_pattern |= 1;
+            }
+        }
+
+        // Shades on/off
+        if(action == 0 || action == 20)
+        {
+            switch(Use_Shadows)
+            {
+                case 0:
+                    Gui_Draw_Button_Box(520 + 18 + (18 + 108) + 2 + 20, (Cur_Height - 105), 40, 16, "Shades", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                    break;
+                case 1:
+                    Gui_Draw_Button_Box(520 + 18 + (18 + 108) + 2 + 20, (Cur_Height - 105), 40, 16, "Shades", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                    break;
+            }
+            go_update_pattern |= 1;
+        }
+
+        // Set default size of patterns
+        if(action == 0 || action == 21)
+        {
+            if(Global_Patterns_Font < TRACK_SMALL) Global_Patterns_Font = TRACK_SMALL;
+            if(Global_Patterns_Font >= TRACK_LARGE) Global_Patterns_Font = TRACK_LARGE;
+            Gui_Draw_Button_Box(120, (Cur_Height - 65), 16, 16, "\03", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            Gui_Draw_Button_Box(120 + 18, (Cur_Height - 65), 46, 16, Labels_PatSize[Global_Patterns_Font], BUTTON_NORMAL | BUTTON_DISABLED | BUTTON_TEXT_CENTERED);
+            Gui_Draw_Button_Box(120 + 48 + 18, (Cur_Height - 65), 16, 16, "\04", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+        }
+
+        // Metronome
+        if(action == 0 || action == 22)
+        {
+            if(metronome_magnify < 0) metronome_magnify = 0;
+            if(metronome_magnify > 128) metronome_magnify = 128;
+            if(!metronome_magnify)
+            {
+                value_box_string(8 + 112, (Cur_Height - 125), "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED | BUTTON_RIGHT_MOUSE);
+            }
+            else
+            {
+                Gui_Draw_Arrows_Number_Box(8 + 112, (Cur_Height - 125), metronome_magnify, BUTTON_NORMAL | BUTTON_TEXT_CENTERED | BUTTON_RIGHT_MOUSE);
+            }
+        }
+
+        // Auto backup
+        if(action == 0 || action == 23)
+        {
+            if(AutoBackup)
+            {
+                Gui_Draw_Button_Box(258, (Cur_Height - 105), 29, 16, "On", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(258 + 31, (Cur_Height - 105), 29, 16, "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                Gui_Draw_Button_Box(258, (Cur_Height - 105), 29, 16, "On", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(258 + 31, (Cur_Height - 105), 29, 16, "Off", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+            }
+        }
+
+        // Splash screen
+        if(action == 0 || action == 24)
+        {
+            if(SplashScreen)
+            {
+                Gui_Draw_Button_Box(258, (Cur_Height - 65), 29, 16, "On", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(258 + 31, (Cur_Height - 65), 29, 16, "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                Gui_Draw_Button_Box(258, (Cur_Height - 65), 29, 16, "On", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(258 + 31, (Cur_Height - 65), 29, 16, "Off", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+            }
+        }
+
+        // Load last used ptk
+        if(action == 0 || action == 25)
+        {
+            if(AutoReload)
+            {
+                Gui_Draw_Button_Box(258, (Cur_Height - 45), 29, 16, "On", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(258 + 31, (Cur_Height - 45), 29, 16, "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                Gui_Draw_Button_Box(258, (Cur_Height - 45), 29, 16, "On", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(258 + 31, (Cur_Height - 45), 29, 16, "Off", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+            }
+        }
+
+        // Show leading 0s
+        if(action == 0 || action == 26)
+        {
+            if(leading_zeroes)
+            {
+                Gui_Draw_Button_Box(258, (Cur_Height - 85), 29, 16, "On", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(258 + 31, (Cur_Height - 85), 29, 16, "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                Gui_Draw_Button_Box(258, (Cur_Height - 85), 29, 16, "On", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(258 + 31, (Cur_Height - 85), 29, 16, "Off", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+            }
+        }
+        
+        // Show screen modes
+        if(action == 0 || action == 27)
+        {
+            if(FullScreen)
+            {
+                Gui_Draw_Button_Box(512 + 64 + 8, (Cur_Height - 145), 16, 16, "\03", BUTTON_NORMAL | BUTTON_DISABLED | BUTTON_TEXT_CENTERED);
+                sprintf(Modes, "%d x %d", Get_Screen_Rect(Cur_Screen_Mode)->w, Get_Screen_Rect(Cur_Screen_Mode)->h);
+                Gui_Draw_Button_Box(520 + 64 + 16 + 2, (Cur_Height - 145), 106, 16, Modes, BUTTON_NORMAL | BUTTON_DISABLED | BUTTON_DISABLED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(520 + 64 + 16 + 2 + 106 + 2, (Cur_Height - 145), 16, 16, "\04", BUTTON_NORMAL | BUTTON_DISABLED | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                if(Changing_Screen_Mode)
+                {
+                    int Try_Screen_Mode = Cur_Screen_Mode;
+                    do
+                    {
+                        Try_Screen_Mode = Try_Screen_Mode + Changing_Screen_Mode;
+                        if(Try_Screen_Mode < 0)
+                        {
+                            Try_Screen_Mode = 0;
+                            break;
+                        }
+                        if(Try_Screen_Mode >= (Max_Screen_Mode - 1))
+                        {
+                            Try_Screen_Mode = (Max_Screen_Mode - 1);
+                            break;
+                        }
+                    } while(Get_Screen_Rect(Try_Screen_Mode)->w < 800 && Get_Screen_Rect(Try_Screen_Mode)->h < 600);
+
+                    if((Get_Screen_Rect(Try_Screen_Mode)->w >= 800 && Get_Screen_Rect(Try_Screen_Mode)->h >= 600))
+                    {
+                        Cur_Screen_Mode = Try_Screen_Mode;
+                    }
+            
+                    FullScreen_Width = Get_Screen_Rect(Cur_Screen_Mode)->w;
+                    FullScreen_Height = Get_Screen_Rect(Cur_Screen_Mode)->h;
+                    if(FullScreen_Width < SCREEN_WIDTH) FullScreen_Width = SCREEN_WIDTH;
+                    if(FullScreen_Height < SCREEN_HEIGHT) FullScreen_Height = SCREEN_HEIGHT;
+                    Changing_Screen_Mode = 0;
+                }
+                if(Cur_Screen_Mode > (Max_Screen_Mode - 1))
+                {
+                    Cur_Screen_Mode = (Max_Screen_Mode - 1);
+                }
+                if(Cur_Screen_Mode < 0)
+                {
+                    Cur_Screen_Mode = 0;
+                }
+                sprintf(Modes, "%d x %d", Get_Screen_Rect(Cur_Screen_Mode)->w, Get_Screen_Rect(Cur_Screen_Mode)->h);
+                Gui_Draw_Button_Box(512 + 64 + 8, (Cur_Height - 145), 16, 16, "\03", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(520 + 64 + 16 + 2, (Cur_Height - 145), 106, 16, Modes, BUTTON_NORMAL | BUTTON_DISABLED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(520 + 64 + 16 + 2 + 106 + 2, (Cur_Height - 145), 16, 16, "\04", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+        }
+        
+        // Save position in step play
+        if(action == 0 || action == 28)
+        {
+            if(Save_Step_Play)
+            {
+                Gui_Draw_Button_Box(446, (Cur_Height - 145), 29, 16, "On", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(446 + 31, (Cur_Height - 145), 29, 16, "Off", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+            }
+            else
+            {
+                Gui_Draw_Button_Box(446, (Cur_Height - 145), 29, 16, "On", BUTTON_NORMAL | BUTTON_TEXT_CENTERED);
+                Gui_Draw_Button_Box(446 + 31, (Cur_Height - 145), 29, 16, "Off", BUTTON_PUSHED | BUTTON_TEXT_CENTERED);
+            }
+        }
+
+        // There was a palette change
+        if(RefreshTex)
+        {
+            Renew_Gfx_Context(FALSE);
+            RefreshTex = FALSE;
+            Real_Slider(518, (Cur_Height - 85), Ptk_Palette[Real_Palette_Idx].r / 2, TRUE);
+            Print_Long_Small(668, (Cur_Height - 85), Ptk_Palette[Real_Palette_Idx].r, INT_PLAIN, 41, BUTTON_NORMAL | BUTTON_DISABLED);
+            Real_Slider(518, (Cur_Height - 65), Ptk_Palette[Real_Palette_Idx].g / 2, TRUE);
+            Print_Long_Small(668, (Cur_Height - 65), Ptk_Palette[Real_Palette_Idx].g, INT_PLAIN, 41, BUTTON_NORMAL | BUTTON_DISABLED);
+            Real_Slider(518, (Cur_Height - 45), Ptk_Palette[Real_Palette_Idx].b / 2, TRUE);
+            Print_Long_Small(668, (Cur_Height - 45), Ptk_Palette[Real_Palette_Idx].b, INT_PLAIN, 41, BUTTON_NORMAL | BUTTON_DISABLED);
+        }
+    }
+}
+
+void Mouse_Right_Master_Ed(void)
+{
+    if(userscreen == USER_SCREEN_SETUP_EDIT)
+    {
+        // Previous color
+        if(Check_Mouse(520, (Cur_Height - 105), 16, 16) == 1)
+        {
+            current_palette_idx -= 10;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Next color
+        if(Check_Mouse(520 + (18 + 108) + 2, (Cur_Height - 105), 16, 16) == 1)
+        {
+            current_palette_idx += 10;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Turn beveling type 2 on/off
+        if(Check_Mouse(520 + (18 + 108) + 2 + 20, (Cur_Height - 105), 14, 16))
+        {
+            if(Beveled == 2) Beveled = 0;
+            else Beveled = 2;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 30;
+        }
+
+        // Metronome
+        if(Check_Mouse(8 + 112, (Cur_Height - 125), 16, 16))
+        {
+            metronome_magnify -= 10;
+            if(metronome_magnify < 0) metronome_magnify = 0;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 22;
+        }
+
+        // Metronome
+        if(Check_Mouse(8 + 112 + 44, (Cur_Height - 125), 16, 16))
+        {
+            metronome_magnify += 10;
+            if(metronome_magnify > 128) metronome_magnify = 128;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 22;
+        }
+    }
+}
+
+void Mouse_Left_Master_Ed(void)
+{
+    if(userscreen == USER_SCREEN_SETUP_EDIT)
+    {
+        // Latency
+        if(Check_Mouse(8 + 112, (Cur_Height - 105), 16, 16))
+        {
+
+#if defined(__AMIGAOS4__)
+            if(AUDIO_Milliseconds > 20)
+#else
+#if defined(__LINUX_ALSASEQ__)
+            if(AUDIO_Milliseconds > 20)
+#else
+            if(AUDIO_Milliseconds > 10)
+#endif
+#endif
+
+            {
+                AUDIO_Milliseconds -= 10;
+                gui_action = GUI_CMD_UPDATE_SETUP_ED;
+                teac = 5;
+            }
+        }
+
+        // Latency
+        if(Check_Mouse(8 + 112 + 44, (Cur_Height - 105), 16, 16))
+        {
+            if(AUDIO_Milliseconds < 250)
+            {
+                AUDIO_Milliseconds += 10;
+                gui_action = GUI_CMD_UPDATE_SETUP_ED;
+                teac = 5;
+            }
+        }
+
+        // Save step play position
+        if(Check_Mouse(446, (Cur_Height - 145), 29, 16))
+        {
+            Save_Step_Play = TRUE;
+            teac = 28;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Save step play position
+        if(Check_Mouse(446 + 31, (Cur_Height - 145), 29, 16))
+        {
+            Save_Step_Play = FALSE;
+            teac = 28;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Mousewheel
+        if(Check_Mouse(446, (Cur_Height - 125), 16, 16))
+        {
+            MouseWheel_Multiplier--;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 6;
+        }
+
+        // Mousewheel
+        if(Check_Mouse(446 + 44, (Cur_Height - 125), 16, 16))
+        {
+            MouseWheel_Multiplier++;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 6;
+        }
+
+        // Patterns sep.
+        if(Check_Mouse(446, (Cur_Height - 105), 16, 16))
+        {
+            patt_highlight--;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 7;
+        }
+
+        // Patterns sep.
+        if(Check_Mouse(446 + 44, (Cur_Height - 105), 16, 16))
+        {
+            patt_highlight++;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 7;
+        }
+
+        // Rows decimal on
+        if(Check_Mouse(446, (Cur_Height - 85), 29, 16))
+        {
+            Rows_Decimal = TRUE;
+            teac = 0;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            Actualize_Sequencer();
+            go_update_pattern |= 1;
+        }
+
+        // Rows decimal off
+        if(Check_Mouse(446 + 31, (Cur_Height - 85), 29, 16))
+        {
+            Rows_Decimal = FALSE;
+            teac = 0;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            Actualize_Sequencer();
+            go_update_pattern |= 1;
+        }
+
+        // See prev/next pattern
+        if(Check_Mouse(446, (Cur_Height - 65), 29, 16))
+        {
+            See_Prev_Next_Pattern = TRUE;
+            teac = 13;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            go_update_pattern |= 1;
+        }
+
+        // See prev/next pattern
+        if(Check_Mouse(446 + 31, (Cur_Height - 65), 29, 16))
+        {
+            See_Prev_Next_Pattern = FALSE;
+            teac = 13;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            go_update_pattern |= 1;
+        }
+
+        // Continuous scroll
+        if(Check_Mouse(446, (Cur_Height - 45), 29, 16))
+        {
+            Continuous_Scroll = 1;
+            teac = 14;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Continuous scroll
+        if(Check_Mouse(446 + 31, (Cur_Height - 45), 29, 16))
+        {
+            Continuous_Scroll = 0;
+            teac = 14;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Paste across pattern
+        if(Check_Mouse(120, (Cur_Height - 45), 29, 16))
+        {
+            Paste_Across = TRUE;
+            teac = 17;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Paste across pattern
+        if(Check_Mouse(120 + 31, (Cur_Height - 45), 29, 16))
+        {
+            Paste_Across = FALSE;
+            teac = 17;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Play while editing
+        if(Check_Mouse(258, (Cur_Height - 125), 29, 16))
+        {
+            Jazz_Edit = TRUE;
+            teac = 18;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Play while editing
+        if(Check_Mouse(258 + 31, (Cur_Height - 125), 29, 16))
+        {
+            Jazz_Edit = FALSE;
+            teac = 18;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Accidental type
+        if(Check_Mouse(780, (Cur_Height - 125), 14, 16))
+        {
+            Accidental ^= TRUE;
+            teac = 19;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Full screen on
+        if(Check_Mouse(734, (Cur_Height - 145), 29, 16))
+        {
+            if(!FullScreen && !FullScreen_Desktop)
+            {
+                FullScreen = TRUE;
+                teac = 9;
+                do_resize = TRUE;
+            }
+        }
+
+        // Full screen off
+        if(Check_Mouse(734 + 31, (Cur_Height - 145), 29, 16))
+        {
+            if(FullScreen && !FullScreen_Desktop)
+            {
+                FullScreen = FALSE;
+                teac = 9;
+                do_resize = TRUE;
+            }
+        }
+
+        // Previous color
+        if(Check_Mouse(520, (Cur_Height - 105), 16, 16))
+        {
+            current_palette_idx--;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 29;
+        }
+
+        // Next color
+        if(Check_Mouse(520 + (18 + 108) + 2, (Cur_Height - 105), 16, 16))
+        {
+            current_palette_idx++;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 29;
+        }
+
+        // Negate the palette
+        if(Check_Mouse(520 + (18 + 108) +1 + 66, (Cur_Height - 85), 18, 16))
+        {
+            Negate_Palette();
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Rotate the palette components to the left
+        if(Check_Mouse(520 + (18 + 108) +1 + 66, (Cur_Height - 65), 18, 16))
+        {
+            Rotate_Palette_Left();
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Rotate the palette components to the right
+        if(Check_Mouse(520 + (18 + 108) +1 + 66, (Cur_Height - 45), 18, 16))
+        {
+            Rotate_Palette_Right();
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // set default palette 1
+        if(Check_Mouse(520 + (18 + 108) + 2 + 20 + 66, (Cur_Height - 85), 18, 16))
+        {
+            Restore_Default_Palette(Default_Palette1, Default_Beveled1);
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Set default palette 2
+        if(Check_Mouse(520 + (18 + 108) + 2 + 20 + 66 + 21, (Cur_Height - 85), 18, 16))
+        {
+            Restore_Default_Palette(Default_Palette2, Default_Beveled2);
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Set default palette 3
+        if(Check_Mouse(520 + (18 + 108) + 2 + 20 + 66 + 42, (Cur_Height - 85), 18, 16))
+        {
+            Restore_Default_Palette(Default_Palette3, Default_Beveled3);
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Set default palette 4
+        if(Check_Mouse(520 + (18 + 108) + 2 + 20 + 66, (Cur_Height - 65), 18, 16))
+        {
+            Restore_Default_Palette(Default_Palette4, Default_Beveled4);
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Set default palette 5
+        if(Check_Mouse(520 + (18 + 108) + 2 + 20 + 66 + 21, (Cur_Height - 65), 18, 16))
+        {
+            Restore_Default_Palette(Default_Palette5, Default_Beveled5);
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Set default palette 6
+        if(Check_Mouse(520 + (18 + 108) + 2 + 20 + 66 + 42, (Cur_Height - 65), 18, 16))
+        {
+            Restore_Default_Palette(Default_Palette6, Default_Beveled6);
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Set default palette 7
+        if(Check_Mouse(520 + (18 + 108) + 2 + 20 + 66, (Cur_Height - 45), 18, 16))
+        {
+            Restore_Default_Palette(Default_Palette7, Default_Beveled7);
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Set default palette 8
+        if(Check_Mouse(520 + (18 + 108) + 2 + 20 + 66 + 21, (Cur_Height - 45), 18, 16))
+        {
+            Restore_Default_Palette(Default_Palette8, Default_Beveled8);
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Set default palette 9
+        if(Check_Mouse(520 + (18 + 108) + 2 + 20 + 66 + 42, (Cur_Height - 45), 18, 16))
+        {
+            Restore_Default_Palette(Default_Palette9, Default_Beveled9);
+            Get_Phony_Palette();
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Turn beveling type 1 on/off
+        if(Check_Mouse(520 + (18 + 108) + 2 + 20, (Cur_Height - 105), 14, 16))
+        {
+            if(Beveled == 1) Beveled = 0;
+            else Beveled = 1;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 30;
+        }
+
+        // Turn shadows on/off
+        if(Check_Mouse(520 + 18 + (18 + 108) + 2 + 20, (Cur_Height - 105), 40, 16))
+        {
+            Use_Shadows ^= TRUE;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 20;
+        }
+
+        // Default patterns zoom
+        if(Check_Mouse(120, (Cur_Height - 65), 16, 16))
+        {
+            Global_Patterns_Font--;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 21;
+        }
+
+        // Default patterns zoom
+        if(Check_Mouse(120 + 48 + 18, (Cur_Height - 65), 16, 16))
+        {
+            Global_Patterns_Font++;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 21;
+        }
+
+        // Autosave
+        if(Check_Mouse(8 + 112, (Cur_Height - 85), 16, 16))
+        {
+            AutoSave--;
+            wait_AutoSave = 0;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 15;
+        }
+
+        // Autosave
+        if(Check_Mouse(8 + 112 + 48 + 18, (Cur_Height - 85), 16, 16))
+        {
+            AutoSave++;
+            wait_AutoSave = 0;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 15;
+        }
+
+        // Keyboard
+        if(Check_Mouse(520 + 62 + 2, (Cur_Height - 125), 16, 16))
+        {
+            Keyboard_Idx--;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 16;
+        }
+
+        // Keyboard
+        if(Check_Mouse(520 + 62 + 2 + 108 + 18, (Cur_Height - 125), 16, 16))
+        {
+            Keyboard_Idx++;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 16;
+        }
+
+        // Metronome
+        if(Check_Mouse(8 + 112, (Cur_Height - 125), 16, 16))
+        {
+            if(metronome_magnify > 0)
+            {
+                metronome_magnify--;
+                gui_action = GUI_CMD_UPDATE_SETUP_ED;
+                teac = 22;
+            }
+        }
+
+        // Metronome
+        if(Check_Mouse(8 + 112 + 44, (Cur_Height - 125), 16, 16))
+        {
+            if(metronome_magnify < 128)
+            {
+                metronome_magnify++;
+                gui_action = GUI_CMD_UPDATE_SETUP_ED;
+                teac = 22;
+            }
+        }
+
+        // Auto backup on
+        if(Check_Mouse(258, (Cur_Height - 105), 29, 16))
+        {
+            AutoBackup = TRUE;
+            teac = 23;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Auto backup off
+        if(Check_Mouse(258 + 31, (Cur_Height - 105), 29, 16))
+        {
+            AutoBackup = FALSE;
+            teac = 23;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Leading 0s on
+        if(Check_Mouse(258, (Cur_Height - 85), 29, 16))
+        {
+            leading_zeroes = TRUE;
+            leading_zeroes_char = 0;
+            leading_zeroes_char_row = 0;
+            teac = 26;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            go_update_pattern |= 1;
+        }
+
+        // Leading 0s off
+        if(Check_Mouse(258 + 31, (Cur_Height - 85), 29, 16))
+        {
+            leading_zeroes = FALSE;
+            leading_zeroes_char = 21;
+            leading_zeroes_char_row = 20;
+            teac = 26;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            go_update_pattern |= 1;
+        }
+
+        // Splash Screen on
+        if(Check_Mouse(258, (Cur_Height - 65), 29, 16))
+        {
+            SplashScreen = TRUE;
+            teac = 24;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Splash Screen off
+        if(Check_Mouse(258 + 31, (Cur_Height - 65), 29, 16))
+        {
+            SplashScreen = FALSE;
+            teac = 24;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Load Last Ptk on
+        if(Check_Mouse(258, (Cur_Height - 45), 29, 16))
+        {
+            AutoReload = TRUE;
+            teac = 25;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Load Last Ptk off
+        if(Check_Mouse(258 + 31, (Cur_Height - 45), 29, 16))
+        {
+            AutoReload = FALSE;
+            teac = 25;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+        }
+
+        // Change full screen mode
+        if(Check_Mouse(520 + 62 + 2, (Cur_Height - 145), 16, 16) && !FullScreen)
+        {
+            Changing_Screen_Mode = -1;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 27;
+        }
+
+        // Change full screen mode
+        if(Check_Mouse(520 + 62 + 2 + 108 + 18, (Cur_Height - 145), 16, 16) && !FullScreen)
+        {
+            Changing_Screen_Mode = 1;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 27;
+        }
+
+    }
+}
+
+void Mouse_Sliders_Master_Ed(void)
+{
+    int Real_Palette_Idx;
+
+    if(userscreen == USER_SCREEN_SETUP_EDIT)
+    {
+        // Red component
+        if(Check_Mouse(518, (Cur_Height - 81), 148, 16))
+        {
+            Real_Palette_Idx = Idx_Palette[current_palette_idx];
+            Phony_Palette[Real_Palette_Idx].r = (int) ((Mouse.x - 10 - 518.0f)) * 2;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Green component
+        if(Check_Mouse(518, (Cur_Height - 81) + 18, 148, 16))
+        {
+            Real_Palette_Idx = Idx_Palette[current_palette_idx];
+            Phony_Palette[Real_Palette_Idx].g = (int) ((Mouse.x - 10 - 518.0f)) * 2;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+
+        // Blue component
+        if(Check_Mouse(518, (Cur_Height - 81) + 18 + 18, 148, 16))
+        {
+            Real_Palette_Idx = Idx_Palette[current_palette_idx];
+            Phony_Palette[Real_Palette_Idx].b = (int) ((Mouse.x - 10 - 518.0f)) * 2;
+            gui_action = GUI_CMD_UPDATE_SETUP_ED;
+            teac = 10;
+        }
+    }
+}

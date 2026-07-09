@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.4)
 project(mksonglist)
 
-set(AP1_ROOT ../../apone)
+set(AP1_ROOT ../../external/apone)
 
 add_definitions(-DAPP_NAME=mksonglist)
 

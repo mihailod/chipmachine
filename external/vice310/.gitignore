@@ -1,0 +1,92 @@
+# ==========================================
+# Global Compiler Artifacts
+# ==========================================
+**/*.o
+**/*.obj
+**/*.d
+**/*.la
+**/*.lo
+**/*.a
+**/*.so
+**/*.dylib
+**/*.gresource
+
+# ==========================================
+# Autotools & Configure Artifacts (Nested)
+# ==========================================
+**/Makefile
+**/Makefile.in
+**/config.log
+**/config.status
+**/config.cache
+**/config.h
+**/config.h.in
+**/autom4te.cache/
+**/stamp-h1
+**/.aclocal.out
+**/.autoconf.out
+**/.autoheader.out
+**/.automake.out
+**/aclocal.m4
+**/compile
+**/configure
+**/depcomp
+**/missing
+**/ylwrap
+
+# ==========================================
+# Generated Source Code & Documentation
+# ==========================================
+**/monitor/mon_lex.c
+**/monitor/mon_parse.c
+**/monitor/mon_parse.h
+**/doc/html/
+
+# ==========================================
+# Compiled Emulator Executables (Mac Targets)
+# ==========================================
+vice/src/arch/shared/macOS-launcher
+vice/src/c1541
+vice/src/vsid
+vice/src/x128
+vice/src/x64dtv
+vice/src/x64sc
+vice/src/xcbm2
+vice/src/xcbm5x0
+vice/src/xpet
+vice/src/xplus4
+vice/src/xscpu64
+vice/src/xvic
+vice/src/tools/cartconv/cartconv
+vice/src/tools/petcat/petcat
+
+# ==========================================
+# OS Clutter
+# ==========================================
+**/.DS_Store
+**/._*
+
+# ==========================================
+# Hidden Autotools Dependency Folders & Files
+# ==========================================
+**/.deps/
+**/box_drawing.h
+**/marshal.cc
+**/marshal.h
+**/vtetypebuiltins.cc
+**/vtetypebuiltins.h
+**/keysymtable.h
+**/psiddrv.h
+**/psiddrv.o65
+**/debug.h
+**/infocontrib.h
+**/siddtvdefs.h
+**/siddefs.h
+**/wave6581_*.h
+**/wave8580_*.h
+**/version.h
+**/vice-version.sh
+**/README''
+**/index.html''
+**/COPYING
+**/INSTALL

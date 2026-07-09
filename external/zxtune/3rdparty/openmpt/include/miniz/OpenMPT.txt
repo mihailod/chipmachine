@@ -1,0 +1,1 @@
+﻿miniz <https://github.com/richgel999/miniz> v3.1.1 (2026-02-03)

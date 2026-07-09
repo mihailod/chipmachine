@@ -46,9 +46,9 @@ if(CCACHE_PROGRAM)
 endif()
 
 # Subproject Paths
-set(AP1_ROOT ../apone CACHE PATH "Where apone is checked out")
-set(MUSICPLAYER ../musicplayer CACHE PATH "Where musicplayer is checked out")
-get_filename_component(VICE_ROOT "${CMAKE_SOURCE_DIR}/../vice310" ABSOLUTE)
+set(AP1_ROOT external/apone CACHE PATH "Where apone is checked out")
+set(MUSICPLAYER external/musicplayer CACHE PATH "Where musicplayer is checked out")
+get_filename_component(VICE_ROOT "${CMAKE_SOURCE_DIR}/external/vice310" ABSOLUTE)
 set(VICE_ROOT ${VICE_ROOT} CACHE PATH "Where vice is checked out")
 
 include(${AP1_ROOT}/cmake/Utils.cmake)
@@ -141,7 +141,7 @@ include_directories(${AP1_ROOT}/mods/grappix ${MUSICPLAYER}/plugins)
 # liblhasa (vendored under zxtune) decompresses the .lha archives that the
 # UnExoticA collection ships its tunes in. The `lhasa` static-lib target is
 # created by the zxtuneplugin subproject above.
-get_filename_component(ZXTUNE_ROOT "${CMAKE_SOURCE_DIR}/../zxtune" ABSOLUTE)
+get_filename_component(ZXTUNE_ROOT "${CMAKE_SOURCE_DIR}/external/zxtune" ABSOLUTE)
 include_directories(${ZXTUNE_ROOT}/3rdparty/lhasa/lib/public)
 
 if(WIN32)

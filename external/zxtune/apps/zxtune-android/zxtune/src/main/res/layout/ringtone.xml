@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/ringtone_durations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="HardcodedText">
+
+    <Button
+            style="@style/Button"
+            android:layout_weight="1"
+            android:tag="30"
+            android:text="0:30" />
+
+    <Button
+            style="@style/Button"
+            android:layout_weight="1"
+            android:tag="60"
+            android:text="1:00" />
+
+    <Button
+            style="@style/Button"
+            android:layout_weight="1"
+            android:tag="120"
+            android:text="2:00" />
+
+    <Button
+            style="@style/Button"
+            android:layout_weight="1"
+            android:tag="180"
+            android:text="3:00" />
+</LinearLayout>

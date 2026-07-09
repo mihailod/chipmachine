@@ -1,0 +1,8 @@
+# Encoding restriction for Visual C++
+# Disabled: git only allows [attr] macro definitions in the top-level
+# .gitattributes, so this subdir macro triggered a warning on every git op.
+# It only set Visual C++ text encoding, irrelevant to this build.
+#[attr]msvc encoding=ascii-dos,utf8-with-signature-dos
+#*.c msvc
+#*.cpp msvc
+#*.h msvc

@@ -1,0 +1,166 @@
+#include "GSFPlugin.h"
+
+#include <coreutils/utils.h>
+#include <psf/PSFFile.h>
+
+#include <cstdio>
+#include <cstdlib>
+#include <set>
+#include <unordered_map>
+
+extern "C"
+{
+#include "VBA/psftag.h"
+#include "gsf.h"
+}
+
+#include <coreutils/fifo.h>
+
+extern "C"
+{
+    int defvolume = 1000;
+    int relvolume = 1000;
+    int TrackLength = 0;
+    int FadeLength = 0;
+    int IgnoreTrackLength, DefaultLength = 150000;
+    int playforever = 1;
+    int fileoutput = 0;
+    int TrailingSilence = 1000;
+    int DetectSilence = 0, silencedetected = 0, silencelength = 5;
+
+    int cpupercent = 0, sndSamplesPerSec, sndNumChannels;
+    int sndBitsPerSample = 16;
+
+    int deflen = 120, deffade = 4;
+
+    int decode_pos_ms; // current decoding position, in milliseconds
+
+    extern unsigned short soundFinalWave[2304];
+
+    extern int soundBufferLen;
+}
+/*
+extern char soundEcho;
+extern char soundLowPass;
+extern char soundReverse;
+extern char soundQuality;*/
+
+static utils::Fifo<int16_t>* gsfFifo = nullptr;
+
+extern "C" void end_of_track()
+{
+    // LOGD("END OF TRACK");
+}
+
+extern "C" void writeSound(void)
+{
+    // int tmp;
+    gsfFifo->put((short*)soundFinalWave, soundBufferLen / 2);
+    decode_pos_ms +=
+        (soundBufferLen / (2 * sndNumChannels) * 1000) / sndSamplesPerSec;
+}
+
+namespace musix {
+
+class GSFPlayer : public ChipPlayer
+{
+public:
+    explicit GSFPlayer(const std::string& fileName)
+        : fifo(512 * 1024), psf{fileName}
+    {
+
+        decode_pos_ms = 0;
+        TrailingSilence = 1000;
+        IgnoreTrackLength = 1;
+        DetectSilence = 0;
+        silencedetected = 0;
+        playforever = 1;
+
+        gsfFifo = &fifo;
+
+        if (psf.valid()) {
+            auto& tags = psf.tags();
+
+            int seconds = psf.songLength();
+
+            setMeta("composer", tags["artist"], "sub_title", tags["title"],
+                    "game", tags["game"], "format", "Gameboy Advance", "length",
+                    seconds);
+        }
+
+        LOGD("GSF:{}", fileName.c_str());
+
+        int r = GSFRun(fileName.c_str());
+        if (r == 0) {
+            throw player_exception("GSFPlugin error: Could not load gsf");
+        }
+    }
+
+    ~GSFPlayer() override { GSFClose(); }
+
+    int getSamples(int16_t* target, int noSamples) override
+    {
+        if (decode_pos_ms > TrackLength && (playforever == 0)) { return -1; }
+
+        // Emulate until we can satisfy the request. The host (MusicPlayer::
+        // update) asks for as much as fits in its audio FIFO -- ~130k samples --
+        // so a fixed iteration cap silently under-fills and makes getSamples
+        // report end-of-song on the very first call (counter frozen at 00:00).
+        // Instead loop until the FIFO holds enough, bailing only on a genuine
+        // stall (the emulator stops producing samples), capped well above the
+        // ~115 EmulationLoops a full request legitimately needs.
+        int stalls = 0;
+        while (static_cast<int>(fifo.filled()) < noSamples) {
+            auto before = fifo.filled();
+            EmulationLoop();
+            if (fifo.filled() == before) {
+                if (++stalls > 100) { return -1; }
+            } else {
+                stalls = 0;
+            }
+        }
+
+        if (fifo.filled() == 0) { return 0; }
+
+        int len = fifo.get(target, noSamples);
+        return len;
+    }
+
+private:
+    utils::Fifo<int16_t> fifo;
+    PSFFile psf;
+};
+
+static const std::set<std::string> supported_ext{"gsf", "minigsf"};
+
+bool GSFPlugin::canHandle(const std::string& name)
+{
+    auto ext = utils::path_extension(name);
+    return supported_ext.count(utils::path_extension(name)) > 0;
+}
+
+std::set<std::string> GSFPlugin::getSupportedExtensions() const
+{
+    return supported_ext;
+}
+
+std::vector<std::string> GSFPlugin::getSecondaryFiles(const std::string& name)
+{
+    // .gsf/.minigsf rips reference a shared .gsflib via PSF "_lib" tags; the VBA
+    // loader opens it from the file's own dir, so it must be fetched alongside
+    // when streaming (else GSFRun fails: "Could not load gsf").
+    return psfLibFiles(name);
+}
+
+ChipPlayer* GSFPlugin::fromFile(const std::string& fileName)
+{
+    return new GSFPlayer{fileName};
+};
+
+} // namespace musix
+extern "C" void gsfplugin_register()
+{
+    musix::ChipPlugin::addPluginConstructor([](std::string const& config) {
+        return std::make_shared<musix::GSFPlugin>();
+    });
+}

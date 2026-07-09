@@ -1,4 +1,4 @@
-// g++ -I../apone/mods -std=c++11 ../apone/mods/coreutils/*.cpp modland.cpp
+// g++ -I../external/apone/mods -std=c++11 ../external/apone/mods/coreutils/*.cpp modland.cpp
 #include <coreutils/utils.h>
 #include <coreutils/file.h>
 #include <coreutils/log.h>

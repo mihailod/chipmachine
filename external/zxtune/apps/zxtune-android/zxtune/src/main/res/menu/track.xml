@@ -1,0 +1,40 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/action_add"
+            android:icon="@drawable/ic_menu_add"
+            android:title="@string/add"
+            app:iconTint="?colorControlNormal"
+            app:showAsAction="never" />
+    <item
+            android:id="@+id/action_send"
+            android:icon="@drawable/ic_menu_send"
+            android:title="@string/send"
+            app:iconTint="?colorControlNormal"
+            app:showAsAction="never" />
+    <item
+            android:id="@+id/action_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/share"
+            app:iconTint="?colorControlNormal"
+            app:showAsAction="never" />
+    <item
+            android:id="@+id/action_make_ringtone"
+            android:icon="@drawable/ic_menu_ringtone"
+            android:title="@string/ringtone_create_title"
+            app:iconTint="?colorControlNormal"
+            app:showAsAction="never" />
+    <item
+            android:id="@+id/action_sound_controls"
+            android:icon="@drawable/ic_menu_sound_controls"
+            android:title="@string/sound_controls"
+            app:iconTint="?colorControlNormal"
+            app:showAsAction="never">
+    </item>
+    <item
+            android:id="@+id/action_properties"
+            android:icon="@drawable/ic_menu_info"
+            android:title="@string/properties"
+            app:iconTint="?colorControlNormal"
+            app:showAsAction="never" />
+</menu>

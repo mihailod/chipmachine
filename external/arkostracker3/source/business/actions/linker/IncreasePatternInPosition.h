@@ -1,0 +1,44 @@
+#pragma once
+
+#include <memory>
+
+#include <juce_data_structures/juce_data_structures.h>
+
+#include "../../../song/subsong/Position.h"
+#include "../../../utils/Id.h"
+
+namespace arkostracker 
+{
+
+class SongController;
+
+/** Action to increase/decrease a Pattern index in a Position, if possible. */
+class IncreasePatternInPosition final : public juce::UndoableAction
+{
+public:
+    /**
+     * Constructor.
+     * @param songController the SongController, to access the Song and for notification.
+     * @param subsongId the ID of the Subsong. Must be valid.
+     * @param positionIndex the index of the Position to modify. Must be valid.
+     * @param step the step to which to increase the pattern. May be negative.
+     */
+    IncreasePatternInPosition(SongController& songController, Id subsongId, int positionIndex, int step) noexcept;
+
+    bool perform() override;
+    bool undo() override;
+
+private:
+    /** Notifies the Listeners of a change. */
+    void notifyListeners() const noexcept;
+
+    SongController& songController;
+
+    const Id subsongId;
+    const int positionIndex;
+    const int step;
+
+    std::unique_ptr<Position> oldPosition;
+};
+
+}   // namespace arkostracker

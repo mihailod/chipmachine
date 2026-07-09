@@ -1,0 +1,7 @@
+project(libcore)
+
+file(GLOB SRCS_CXX "plugins/*.cpp" "src/*.cpp" "text/*.cpp")
+file(GLOB SRCS_H "plugins/*.h" "src/*.h" "text/*.h" "*.h" "../../include/*.h")
+
+add_library(core ${SRCS_CXX} ${SRCS_H})
+set_property(TARGET core PROPERTY FOLDER "core")

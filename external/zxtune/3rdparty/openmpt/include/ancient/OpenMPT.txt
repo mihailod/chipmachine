@@ -1,0 +1,2 @@
+ *  ancient <https://github.com/temisu/ancient> v2.3.0 (2025-09-21)
+ *  Unnecssary files have been removed.

@@ -1,0 +1,40 @@
+CC = gcc
+AS = as
+AR = ar
+STRIP = strip
+include test/module.macosx
+
+LIBS_PPC = -lptkreplay_ppc -framework CoreAudio -framework AudioUnit -framework Cocoa 
+DEBUG = 
+FLAGS_PPC = $(DEBUG) -O3 -arch ppc -fsigned-char -mcpu=G4 -fomit-frame-pointer -fno-strict-aliasing -ffast-math --prefetch-loop-arrays -faltivec -mabi=altivec -maltivec \
+            -mtune=G4 -fno-rtti -D __MACOSX_PPC__ -D __GCC__ -D __STAND_ALONE__ -D __BIG_ENDIAN__ -Ilib/include
+EXEOBJS_PPC = test_ppc.o module_ppc.o
+
+all: remreplaytest module ptkreplay replaytest
+clean: remobj remlibobj
+
+remreplaytest:
+	-rm -f libptkreplay_ppc.a
+	-rm -f replaytest
+
+remobj:
+	-rm -f module.cpp
+	-rm -f $(EXEOBJS_PPC)
+	
+replaytest: $(EXEOBJS_PPC)
+	$(CC) -o replaytest -s -L./ $(FLAGS_PPC) $(EXEOBJS_PPC) $(LIBS_PPC)
+	$(STRIP) -x -X -S replaytest
+	-rm -f module.cpp
+
+test_ppc.o: test/test_macosx.cpp
+	$(CC) -c -o $(@) $(FLAGS_PPC) test/test_macosx.cpp
+
+module_ppc.o: module.cpp
+	$(CC) -c -o $(@) -arch ppc module.cpp
+
+module:
+	chmod +x ./bin2c
+	./bin2c $(MODULE) module.cpp _PTK_MODULE
+
+# the library itself #
+include lib/makefile.macosx_ppc

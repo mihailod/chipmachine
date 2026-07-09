@@ -1,0 +1,46 @@
+cmake_minimum_required(VERSION 3.12)
+
+project(SongToYm VERSION 1.0.0)
+
+set(TargetName ${PROJECT_NAME})
+
+juce_add_console_app(${TargetName}
+        PRODUCT_NAME "Song to YM")
+
+target_sources(${TargetName}
+        PRIVATE
+        main.cpp
+        ToolSongToYm.cpp
+        ToolSongToYm.h
+
+        ../../../source/export/ym/YmExporter.cpp
+        ../../../source/export/ym/YmExporter.h
+        ../../../source/export/ym/YmGenerator.cpp
+        ../../../source/export/ym/YmGenerator.h
+        ../../../source/export/ym/YmStreamEncoder.cpp
+        ../../../source/export/ym/YmStreamEncoder.h
+        ../../../source/export/ym/YmStreamEncoderInterleaved.cpp
+        ../../../source/export/ym/YmStreamEncoderInterleaved.h
+        ../../../source/export/ym/YmStreamEncoderNonInterleaved.cpp
+        ../../../source/export/ym/YmStreamEncoderNonInterleaved.h
+
+        ../../../source/export/samples/SampleEncoder.cpp
+        ../../../source/export/samples/SampleEncoder.h
+        ../../../source/export/samples/SampleCodeGenerator.cpp
+        ../../../source/export/samples/SampleCodeGenerator.h
+        ../../../source/export/samples/SampleEncoderFlags.cpp
+        ../../../source/export/samples/SampleEncoderFlags.h
+
+        ../../../source/business/instrument/SampleResampler.cpp
+        ../../../source/business/instrument/SampleResampler.h
+)
+
+target_link_libraries(${TargetName}
+        PRIVATE
+        BaseExport
+        juce::juce_core
+        PUBLIC
+        juce::juce_recommended_config_flags
+        juce::juce_recommended_lto_flags
+        juce::juce_recommended_warning_flags
+)

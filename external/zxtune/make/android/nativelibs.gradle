@@ -1,0 +1,230 @@
+/*
+ * Native libs basic functionality
+ *
+ */
+
+ext {
+  jniDir = "${project.buildDir}/jni"
+}
+
+def getListProperty(name, defvalue) {
+  def prop = localProperties.getProperty(name, defvalue)
+  return prop.split()
+}
+
+def getSplittedAbiFilters() {
+  return getListProperty('flavors.splitted.abifilters', '')
+}
+
+def getFatAbiFilters() {
+  return getListProperty('flavors.fat.abifilters', '')
+}
+
+def getAabAbiFilters() {
+  return getListProperty('flavors.thin.abifilters', '')
+}
+
+android {
+    // required for stripping
+    ndkVersion = localProperties.getProperty("ndk.version", "")
+    // store debug symbols in bundle
+    defaultConfig.ndk.debugSymbolLevel = 'FULL'
+}
+
+enum PackagingType {
+  FAT_APK,
+  SPLIT_APK,
+  BUNDLE,
+}
+
+android {
+    flavorDimensions 'packaging', 'api'
+
+    splits.abi {
+        def abis = getSplittedAbiFilters()
+        reset()
+        if (abis.length != 0) {
+            enable true
+            include abis
+        }
+    }
+
+    productFlavors.whenObjectAdded { flavor ->
+        // flavor is not set up yet...
+        flavor.ext.set('versionCodeOffset', 0)
+        flavor.ext.set('nameTag', null)
+        flavor.ext.set('packagingType', null)
+    }
+
+    // Splits config is global and cannot be per-variant
+    // so, it conflicts with another flavors due to non-empty ndk.abiFilters
+    productFlavors {
+        // Single APK
+        fat {
+            dimension 'packaging'
+            versionNameSuffix '-fat'
+            ndk.abiFilters getFatAbiFilters()
+            signingConfig = signingConfigs.release
+            packagingType = PackagingType.FAT_APK
+        }
+
+        // Single AAB
+        aabStores.eachWithIndex { name, idx ->
+          create("${name}") {
+            dimension 'packaging'
+            versionNameSuffix "-${name}"
+            ndk.abiFilters getAabAbiFilters()
+            signingConfig = signingConfigs.getByName("aab_${name}")
+            packagingType = PackagingType.BUNDLE
+            nameTag = name
+            versionCodeOffset = idx
+          }
+        }
+
+        // Several APKs
+        // Should not be combined with another flavors (configs)
+        splitted {
+            dimension 'packaging'
+            versionNameSuffix '-splitted'
+            signingConfig = signingConfigs.release
+            packagingType = PackagingType.SPLIT_APK
+        }
+
+        fdroid {
+            dimension 'packaging'
+            versionNameSuffix '-fdroid'
+            applicationIdSuffix 'fdroid'
+            if (signingConfigs.fdroid.keyPassword == null) {
+              println 'Use empty signing for fdroid'
+            } else {
+              signingConfig = signingConfigs.fdroid
+            }
+            packagingType = PackagingType.SPLIT_APK
+            nameTag = 'fdroid'
+        }
+
+        minSdks.eachWithIndex { val, idx ->
+            def name = "minsdk${val}"
+            create(name) {
+              dimension 'api'
+              if (idx != 0) {
+                versionNameSuffix "-${name}"
+                nameTag = name
+              }
+              minSdkVersion val
+              sourceSets.getByName(name).jniLibs.srcDirs = [ "${jniDir}/${name}" ]
+              versionCodeOffset = idx
+            }
+        }
+    }
+
+    variantFilter { variant ->
+        def isRelease = variant.buildType.name == 'release'
+        def pkgFlavor = variant.flavors[0]
+        assert pkgFlavor.dimension == 'packaging'
+        def packaging = pkgFlavor.packagingType
+        def apiFlavor = variant.flavors[1]
+        assert apiFlavor.dimension == 'api'
+        def isBaseMinsdk = 0 == apiFlavor.versionCodeOffset
+        if (!isRelease && packaging != PackagingType.FAT_APK) {
+            setIgnore(true)
+            println "Disable ${variant.name} for developer builds"
+            return
+        }
+        if (splits.abi.enable != (packaging == PackagingType.SPLIT_APK)) {
+            setIgnore(true)
+            println "Disable ${variant.name} due to abi splits"
+            return
+        }
+        if (!splits.abi.enable && pkgFlavor.ndk.abiFilters.flatten().isEmpty()) {
+            setIgnore(true)
+            println "Disable ${variant.name} due to empty ndk.abiFilters"
+            return
+        }
+        if (packaging != PackagingType.BUNDLE && !isBaseMinsdk) {
+            setIgnore(true)
+            println "Disable ${variant.name} for apk packages"
+            return
+        }
+        if (!isBaseMinsdk && pkgFlavor.name == 'rustore') {
+            setIgnore(true)
+            println "Disable ${variant.name} for rustore limitations"
+            return
+        }
+    }
+}
+
+android {
+  applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+      def abiVersions = ['armeabi-v7a':1, 'arm64-v8a':2, 'x86':3, 'x86_64':4]
+      def abiVersionCodeOffset = abiVersions.get(output.getFilter('ABI'), 0)
+      def pkgFlavor = variant.productFlavors[0]
+      def apiFlavor = variant.productFlavors[1]
+      def versionCodeOffset = minSdks.size() * (pkgFlavor.versionCodeOffset + abiVersionCodeOffset) + apiFlavor.versionCodeOffset
+      assert versionCodeOffset < 10
+      println "VersionCodeOffset[${output.name}]=$versionCodeOffset"
+      output.versionCodeOverride = android.defaultConfig.versionCode * 10 + versionCodeOffset
+    }
+  }
+}
+
+abstract class NativeLibsTask extends DefaultTask {
+    private int cpuCount = Runtime.runtime.availableProcessors()
+
+    @Internal
+    int maxLinkers = cpuCount / 2
+
+    @Input
+    Set<String> abis = new HashSet<String>()
+
+    @Input
+    Set<Integer> minsdks = new HashSet<Integer>()
+
+    @TaskAction
+    void execute() {
+      assert !abis.isEmpty()
+      assert !minsdks.isEmpty()
+      def usedLinkers = abis.size() * minsdks.size()
+      def jobs = usedLinkers > maxLinkers ? maxLinkers : cpuCount
+      println "Build native libs arch=${abis} minsdk=${minsdks} jobs=${jobs}"
+
+      def binDir = outputs.files.first()
+      def flags = "arch=${abis.join(':')} android.minsdk=${minsdks.join(':')}"
+      inputs.files.each { jniDir ->
+        callMake("${flags} bins_dir=${binDir}/minsdk\$(android.minsdk)/\$(arch) -C ${jniDir} -j ${jobs}")
+      }
+    }
+
+    void callMake(cmdline) {
+      def fullCmd = "make platform=android ${cmdline}"
+      def proc = fullCmd.execute()
+      proc.consumeProcessOutput(System.out, System.out)
+      assert 0 == proc.waitFor()
+    }
+}
+
+android {
+    def nativeLibs = tasks.register('nativeLibs', NativeLibsTask) {
+        group = 'Native'
+        abis += splits.abiFilters
+        def linkers = localProperties.getProperty('build.jni.max_linkers')
+        if (linkers != null && !linkers.isEmpty()) {
+            maxLinkers = linkers.toInteger()
+        }
+        inputs.files sourceSets.main.jni.srcDirs
+        outputs.dir jniDir
+    }
+    applicationVariants.configureEach { variant ->
+        def pkgFlavor = variant.productFlavors[0]
+        def apiFlavor = variant.productFlavors[1]
+        nativeLibs.configure {
+            abis += pkgFlavor.ndk.abiFilters
+            minsdks += apiFlavor.minSdkVersion.apiLevel
+        }
+        def suffix = variant.name.capitalize()
+        tasks.named("merge${suffix}JniLibFolders").configure {
+            dependsOn nativeLibs
+        }
+    }
+}

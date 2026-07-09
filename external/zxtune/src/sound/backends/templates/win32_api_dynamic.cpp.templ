@@ -1,0 +1,27 @@
+/**
+ *
+ * @file
+ *
+ * @brief  Win32 subsystem API gate implementation
+ *
+ * @author vitamin.caig@gmail.com
+ *
+ **/
+
+#include "sound/backends/gates/win32_api.h"
+
+#include "debug/log.h"
+#include "platform/shared_library_adapter.h"
+
+#include "make_ptr.h"
+
+namespace Sound::Win32
+{
+<TMPL_INCLUDE NAME="api_dynamic.cpp.templ">
+
+  Api::Ptr LoadDynamicApi()
+  {
+    auto lib = Platform::SharedLibrary::Load("winmm"sv);
+    return MakePtr<DynamicApi>(std::move(lib));
+  }
+}  // namespace Sound::Win32

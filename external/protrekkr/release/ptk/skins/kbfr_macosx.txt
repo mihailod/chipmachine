@@ -1,0 +1,5 @@
+French.MacOSX
+ 2 3   5 6 7   9 0   -
+a z e r t y u i o p ^ $
+ q s d   g h j   l m
+w x c v b n , ; : =

@@ -1,0 +1,5 @@
+#define VGM_USE_FFMPEG
+#define VGM_USE_VORBIS
+#define VGM_USE_ATRAC9
+#define VGM_USE_MPEG
+#define VGM_USE_G7221
