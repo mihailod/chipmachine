@@ -24,6 +24,7 @@ Y1 = SCREEN_HEIGHT - 10
 background = 0x808080
 
 SCROLL_SPEED = 7
+SCROLL_FONT_CHANGE_INTERVAL = 20.0
 
 if true then
  TEXT_COLOR = 0xffe0e080
@@ -88,16 +89,16 @@ SPECH = MONO_SPECW * 3.5
       1,                 -- 13. vbob_on (1 = bob enabled, 0 = off)
       12.0,              -- 14. vbob_interval (how often: bob for 12s, rest 12s; 0 = always bobbing)
       1.0,               -- 15. vbob_transition (seconds to smoothly fade the bob in/out)
-      60.0               -- 16. font_swap_interval (seconds between automatic font swaps; 0 = never auto-swap. CTRL+N swaps manually anytime)
+      SCROLL_FONT_CHANGE_INTERVAL               -- 16. font_swap_interval (seconds between automatic font swaps; 0 = never auto-swap. CTRL+N swaps manually anytime)
     }
 
 ]]
 
 if TV then
-  Settings.scroll = { Y1 - 100, 3.0, SCROLL_SPEED, "data/fontsmainscroll", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0, 60.0 }
+  Settings.scroll = { Y1 - 100, 3.0, SCROLL_SPEED, "data/fontsmainscroll", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0, SCROLL_FONT_CHANGE_INTERVAL }
   Settings.spectrum = { X0-40, Y1+40, 28, 80.0, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 else
-  Settings.scroll = { Y1 - GSCALE * 130, 3.0, SCROLL_SPEED, "data/fontsmainscroll", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0, 60.0 }
+  Settings.scroll = { Y1 - GSCALE * 130, 3.0, SCROLL_SPEED, "data/fontsmainscroll", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0, SCROLL_FONT_CHANGE_INTERVAL }
   -- Anchor spectrum firmly to the bottom of the window
   Settings.spectrum = { X0, SCREEN_HEIGHT - 10, SPECW, SPECH, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 end

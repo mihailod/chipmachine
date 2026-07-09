@@ -119,9 +119,7 @@ void ChipMachine::setupRules()
     addKey('g' | CTRL, "favorite_shuffle");
     addKey('-', "volume_down");
     addKey({ '+', '=' }, "volume_up");
-    addKey('m' | CTRL, "Stereo/Mono/Auto_Spectrum_Analyzer");
-
-    addKey('m' | CTRL, "Stereo/Mono/Auto_Spectrum_Analyzer");
+    addKey('m' | CTRL, "Spectrum_Analyzer_Mode");
     addKey(keycodes::TAB, "toggle_command");
     addKey(keycodes::HOME, "local_file_playback");
     std::string empty("");

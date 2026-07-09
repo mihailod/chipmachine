@@ -13,27 +13,6 @@ void ChipMachine::setupCommands()
         commands.emplace_back(name, f);
     };
 
-    cmd("Stereo/Mono/Auto_Spectrum_Analyzer", [=] {
-        // Cycle Auto -> Mono -> Stereo so the user keeps manual control while
-        // still being able to return to automatic content detection.
-        if (autoStereoDetect) {
-            autoStereoDetect = false;
-            stereoSpectrum = false;
-            toast("Spectrum: Mono", NORMAL);
-        } else if (!stereoSpectrum) {
-            stereoSpectrum = true;
-            toast("Spectrum: Stereo", NORMAL);
-        } else {
-            autoStereoDetect = true;
-            stereoDiffAccum = 0;
-            stereoSumAccum = 0;
-            stereoDetectFrames = 0;
-            toast("Spectrum: Auto", NORMAL);
-        }
-        musicBarsWidth = stereoSpectrum ? spectrumWidth : spectrumWidth * 2;
-        musicBars.setup(musicBarsWidth, spectrumHeight);
-    });
-
     cmd("show_main", [=] { showScreen(MAIN_SCREEN); });
 
     cmd("show_search", [=]() {
@@ -176,6 +155,27 @@ void ChipMachine::setupCommands()
             player.addSong(song);
             songList.select(songList.selected() + 1);
         }
+    });
+
+    cmd("Spectrum_Analyzer_Mode", [=] {
+        // Cycle Auto -> Mono -> Stereo so the user keeps manual control while
+        // still being able to return to automatic content detection.
+        if (autoStereoDetect) { 
+            autoStereoDetect = false;
+            stereoSpectrum = false;
+            toast("Spectrum: Mono", NORMAL);
+        } else if (!stereoSpectrum) {
+            stereoSpectrum = true;
+            toast("Spectrum: Stereo", NORMAL);
+        } else {
+            autoStereoDetect = true;
+            stereoDiffAccum = 0;
+            stereoSumAccum = 0; 
+            stereoDetectFrames = 0;
+            toast("Spectrum: Auto", NORMAL);
+        }
+        musicBarsWidth = stereoSpectrum ? spectrumWidth : spectrumWidth * 2;      
+        musicBars.setup(musicBarsWidth, spectrumHeight);
     });
 
     cmd("next_screenshot", [=] { transitions.next(); });
