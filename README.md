@@ -74,10 +74,7 @@ To authorize and run the application on your Mac, follow these steps:
 
 ## Building for Apple Silicon
 
-All third-party dependencies (apone, musicplayer, zxtune, furnace, libkss, arkostracker3, etc.)
-are now **vendored inside the repo** under [external/](external/), so a single clone is all you need —
-no more cloning ~20 sibling repositories. Provenance (each vendored fork's upstream URL and commit)
-is recorded in [external/VENDORED.md](external/VENDORED.md).
+All third-party dependencies are **vendored inside the repo** under [external/](external/), so a single clone is all you need. Provenance (each vendored fork's upstream URL and commit) is recorded in [external/VENDORED.md](external/VENDORED.md).
 
 ```bash
 git clone https://github.com/mihailod/chipmachine.git
@@ -86,7 +83,8 @@ cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
 ```
 
-* Running the app from the build folder: ./chipmachine (-h for all options)
+* Running the app (from the build folder): ./chipmachine (-h for all options)
+* Running the tests (from the build folder): ./cmtest
 * Packaging the app: [package_app.sh](package_app.sh)
 * AI tools used to help with the porting: Claude, Gemini, Antigravity, Codex
 
