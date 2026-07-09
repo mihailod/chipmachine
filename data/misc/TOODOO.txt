@@ -21,24 +21,6 @@ gym	5 dm	5 0cc	5
 * ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
 *************************************************
 
-* Project 2612 (Sega Genesis)
-https://project2612.org
-Definitive, dedicated system vault. Project 2612 is the definitive source for Sega Genesis/Mega Drive .vgm rips. SMS Power handles Sega Master System, Game Gear, and SG-1000 audio logging.
-simple, predictable directory trees. will not block standard command-line tools if you throttle your requests.
-Use wget to cleanly mirror the entire structured .vgm archive directory. Use a mirror flag, reject HTML files, and add a mandatory delay to avoid triggering server alerts:
-Bash
-wget --mirror --no-parent --no-host-directories \
-     --reject "index.html*" --wait=1 --random-wait \
-     https://project2612.org/vgm/
-
-* SMS Power! (Sega Master System / Game Gear)
-[https://www.smspower.org](https://www.smspower.org)
-SMS Power hosts pre-packaged zip files of their entire music section.
-Bash
-wget --mirror --no-parent --accept "*.zip" \
-     --wait=1 --random-wait \
-     https://www.smspower.org/Music/
-
 * .....IN PROGRESS.... PESIC ......Mirsoft World of Game Mods
 URL: [http://www.mirsoft.info](http://www.mirsoft.info)
 What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.

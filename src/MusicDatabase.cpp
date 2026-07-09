@@ -1757,7 +1757,8 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                collection == "cpcpower" || collection == "vampi" ||
                collection == "rko" || collection == "amigaremix" ||
                collection == "amp" || collection == "modarchive" ||
-               collection == "projectay" || collection == "vgmrips") {
+               collection == "projectay" || collection == "vgmrips" ||
+               collection == "smspower") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
@@ -1783,7 +1784,10 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         // build_amiremix.py --screenshots. projectay -> the ZX game's World of
         // Spectrum loading screen (ZXDB match), keyed by the local song path
         // ("ironfist/<game>.ay"); ZX rips only, CPC demo rips get no shot; built
-        // by scripts/update_projectay_screenshots.py. modland/hvsc/sndh/asma/
+        // by scripts/update_projectay_screenshots.py. smspower -> the game's
+        // title-screen .png on SMS Power (full song URL, keyed by the live
+        // /uploads/Music/<game>.zip pack URL; built by
+        // build_smspower.py --screenshots). modland/hvsc/sndh/asma/
         // sceneorg are additionally augmented from Demozoo: a tune is matched to
         // the demos that use it as soundtrack and borrows that production's
         // screenshot (built by tools/build_demozoo.py --augment, keyed by the
@@ -2143,6 +2147,8 @@ void initFormats()
     format_map["sega game gear"] = SEGAMS;
     format_map["sega sg-1000"] = SEGAMS;
     format_map["sega sc-3000"] = SEGAMS;
+    // ("colecovision" also uses SN76489 but is filed under OTHER below, with the
+    // other misc small consoles -- shared with the VGMRips/SMS Power labels.)
     // Sega 16-bit (Mega Drive/Genesis, YM2612 + SN76489) and its add-ons
     format_map["sega megadrive"] = MEGADRIVE;
     format_map["sega genesis"] = MEGADRIVE; // Zophar Genesis VGM gamerips
@@ -2441,7 +2447,8 @@ static uint8_t platformNameToByte(std::string s)
         { "sega genesis/mega drive", MEGADRIVE },
         { "sega megadrive/genesis", MEGADRIVE },
         { "sega master system", SEGAMS },
-        { "sega game gear", SEGAMS },{ "dreamcast", DREAMCAST },
+        { "sega game gear", SEGAMS },{ "sega sg-1000", SEGAMS },
+        { "dreamcast", DREAMCAST },
         { "nes/famicom", NES },      { "snes/super famicom", SNES },
         { "nintendo 64", NINTENDO64 },{ "nintendo ds", NDS },
         { "gameboy", GAMEBOY },      { "gameboy color", GAMEBOY },

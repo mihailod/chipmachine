@@ -253,7 +253,21 @@
 --     for id=="modarchive", and drops a trailing ".<ext>" for the ~5% of rows
 --     whose uploader reused the filename as the title ("1394.it//1394.it" ->
 --     "1394"). Reindex rewrites the modarchive titles.
-VERSION = 83;
+-- 84: SMS Power! collection (smspower) -- the definitive Sega 8-bit VGM vault
+--     (Master System / Game Gear / SG-1000 / ColecoVision, SN76489 PSG + some
+--     YM2413 FM). 173 games kept after title-deduping vs modland's "Video Game
+--     Music/Sega Master System" (184) + "Sega Game Gear" (33); SMS Power is far
+--     more comprehensive, so mostly GG/SMS/SG-1000/Homebrew net-new. Each path is
+--     a live smspower.org /uploads/Music/<game>-<console>.zip pack (source="",
+--     browser-UA fetch passes Cloudflare); the ZIP-by-magic handler extracts the
+--     .vgm tracks and plays them as subsongs, like Zophar/VGMRips. No new format:
+--     GME's Vgm_Emu decodes SN76489 + YM2413. SMS/GG/SG-1000 -> SEGAMS; the 2
+--     ColecoVision sets ride under OTHER (misc small consoles, not a Sega
+--     platform). Catalog + screenshot existence read from the Wayback CDX
+--     (no live crawl); built by tools/build_smspower.py. Screenshots: each game's
+--     sibling title-screen .png, keyed by the pack URL in
+--     data/smspower_screenshots.txt (167/173). Bump forces a reindex.
+VERSION = 84;
 
 DB = {
 {
@@ -297,6 +311,22 @@ DB = {
 	id =  "vgmrips",
 	source = "",
 	song_list = "data/vgmrips.txt",
+	song_template = "title composer format path ext",
+	color = 0xfffff
+},
+{
+	-- SMS Power! (smspower.org) -- definitive Sega 8-bit (Master System / Game
+	-- Gear / SG-1000 / ColecoVision) VGM vault. Each path is a live
+	-- /uploads/Music/<game>-<console>.zip pack (source empty, full URL in path);
+	-- the ZIP-by-magic handler extracts the .vgm tracks and plays them as
+	-- subsongs. SN76489 PSG (+ YM2413 FM) -> GME Vgm_Emu, no new format. Deduped
+	-- vs modland Sega Master System / Game Gear. Screenshots in
+	-- data/smspower_screenshots.txt keyed by the pack URL. Built by
+	-- tools/build_smspower.py.
+	name = "SMS Power",
+	id =  "smspower",
+	source = "",
+	song_list = "data/smspower.txt",
 	song_template = "title composer format path ext",
 	color = 0xfffff
 },

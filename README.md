@@ -149,6 +149,7 @@ Metadata from these databases is ingested, normalized, deduped and cross-checked
 * Bulba's ZX Spectrum & Amstrad CPC AY/YM Music Archives - https://bulba.untergrund.net/music_e.htm
 * VGMRips - https://vgmrips.net
 * ZX TUNES - https://zxtunes.com
+* SMS POWER! - https://www.smspower.org
 
 ### Remixes (MP3)
 

@@ -337,6 +337,26 @@ TEST_CASE("VGMRips format labels classify to a platform", "[music]")
     }
 }
 
+// SMS Power! (smspower) files by the `format` label too (its path is a .zip pack
+// URL). The Sega 8-bit labels must resolve to SEGAMS so the games appear under
+// that F9 filter; ColecoVision (SN76489 too, but not a Sega platform) rides with
+// the other misc small consoles under OTHER. Never UNKNOWN (invisible to every
+// filter).
+TEST_CASE("SMS Power format labels classify to a platform", "[music]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    const std::string url =
+        "smspower::https://www.smspower.org/uploads/Music/Game-SMS.zip";
+    for (const char* fmt : { "Sega Master System", "Sega Game Gear",
+                             "Sega SG-1000" }) {
+        INFO("format " << fmt);
+        REQUIRE(mdb.classifyFormat(fmt, url) == SEGAMS);
+    }
+    REQUIRE(mdb.classifyFormat("ColecoVision", url) == OTHER);
+}
+
 // The GUI marks app-shipped local collections with a "+" (vs "*" for cached
 // remote files) via isLocalAsset, keyed by the "<collection>::" path prefix.
 // Guard that all three shipped collections -- nsfe, hvtc (TED .prg) and the new
@@ -754,6 +774,38 @@ TEST_CASE("GME SGC SMS FM plays sound", "[music]")
         REQUIRE(energy != 0);
     }
     delete player;
+}
+
+// SMS Power! (smspower collection) ships per-track .vgm files inside its game zip
+// packs. They are Sega 8-bit VGM logs -- SN76489 PSG, and for FM-capable Master
+// System games also YM2413 (OPLL) -- and are gzip-compressed despite the .vgm
+// extension. GME's Vgm_Emu decodes both chips and auto-inflates gzip, so no new
+// plugin is needed; these real fixtures (one PSG, one FM) guard that a raw
+// SMS Power .vgm loads and produces audio.
+TEST_CASE("GME plays SMS Power VGM (PSG + FM)", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::GMEPlugin plugin;
+
+    for (auto const& vgm : { "testmus/gme/smspower-aceofaces-psg.vgm",
+                             "testmus/gme/smspower-cyborghunter-fm.vgm" }) {
+        INFO(vgm);
+        REQUIRE(plugin.canHandle(vgm));
+        auto* player = plugin.fromFile(vgm);
+        REQUIRE(player != nullptr);
+
+        std::array<int16_t, 8192> buffer{};
+        int64_t energy = 0;
+        for (int count = 0; count < 100 && energy == 0; ++count) {
+            int rc = player->getSamples(buffer.data(), buffer.size());
+            if (rc <= 0) { break; }
+            for (int i = 0; i < rc; ++i) {
+                energy += std::abs(static_cast<int>(buffer[i]));
+            }
+        }
+        delete player;
+        REQUIRE(energy != 0);
+    }
 }
 
 // Regression test for GBR (the older Game Boy rip format, predecessor of GBS).

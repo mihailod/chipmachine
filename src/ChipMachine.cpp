@@ -525,8 +525,6 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
         "Type to search . . UP+DOWN/ENTER navigate/play"
         " . . F9=formats"
         " . . TAB=help . . . "
-        PROGRAM_NAME " " VERSION_STR
-      " . . ."
     );
     starEffect.fadeIn();
     }
