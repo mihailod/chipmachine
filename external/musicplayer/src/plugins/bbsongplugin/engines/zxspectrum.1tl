@@ -1,0 +1,498 @@
+#include "common.1tl"
+#include "z80ass.1tl"
+
+
+
+//standart export features shared by most of engines
+
+void ZXSetStandartExportOptions(void)
+{
+	AddExportFormat("AY file","ay");
+	AddExportFormat("TAP file","tap");
+	AddExportFormat("SCL file","scl");
+	AddExportFormat("Assembly code","asm");
+	
+	Z80AssInit();
+}
+
+
+
+void ZXStandartExportOptions(uint format,bool rom)
+{
+	Z80MemInit(rom);
+
+	int size=Z80AssCompile(TextFile,0x8000);
+
+	if(size<0)
+	{
+		SetExtraInfo("Song compilation error");
+		return;
+	}
+
+	SetExtraInfo("Compiled song with player takes "+size+" bytes");
+
+	switch(format)
+	{
+	case 0://AY file to play
+	case 1://AY file to save
+		{
+			AYFileCreate(0x8000);
+			
+			if(rom) AYFileAddBlock(0x0004,16380);//full ROM, used as noise source
+			
+			AYFileAddBlock(0x8000,size);
+			AYFileClose();
+		}
+		break;
+
+	case 2://TAP file
+		{
+			TAPFileCreate(0x8000,size);
+		}
+		break;
+
+	case 3://SCL file
+		{
+			SCLFileCreate(0x8000,size);
+		}
+		break;
+
+	case 4://assembly file
+		{
+			TextFileDump();
+		}
+		break;
+	}
+
+	TextFileClear();
+}
+
+
+
+//common functions to work with virtual Z80 memory
+
+uint8[] Z80Mem(65536);	//Z80 memory, 65536 bytes
+
+
+void Z80MemInit(bool loadrom)
+{
+	if(!loadrom)
+	{
+		for(uint i=0x0000;i<=0x3fff;++i) Z80Mem[i]=Random();
+	}
+	else
+	{
+		uint8[] rom=LoadBinaryFile(GetBaseDirectory()+"engines/spectrum48.rom",0,16384);
+
+		for(uint i=0x0000;i<=0x3fff;++i) Z80Mem[i]=rom[i];
+
+		rom.resize(0);
+	}
+
+	for(uint i=0x8000;i<=0xffff;++i) Z80Mem[i]=0;
+}
+
+
+
+uint16 Z80MemCpy(uint16 address,uint8[] src)
+{
+	uint length=src.length();
+
+	for(uint i=0;i<length;++i) Z80Mem[address+i]=src[i];
+
+	return address+length;
+}
+
+
+
+void Z80WriteWord(uint16 address,uint16 value)
+{
+	Z80Mem[address+0]=value&255;
+	Z80Mem[address+1]=value>>8;
+}
+
+
+
+//common functions to create an AY file of blocks of Z80 memory
+
+uint8[] AYFile;		//represents content of *.ay file
+
+uint AYBlockCount;
+uint AYDataOffset;
+uint AYFileSize;
+
+const uint AYBlocksMax=16;
+
+
+
+void AYWriteString(uint offset,string str,uint length)
+{
+	uint8 c=0;
+
+	for(uint i=0;i<length;++i)
+	{
+		if(i<str.length()) c=str[i]; else c=0x20;
+
+		AYFile[offset+i]=c;
+	}
+}
+
+
+
+void AYWriteWord(uint offset,uint16 value)
+{
+	AYFile[offset+0]=(value>>8)&0xff;
+	AYFile[offset+1]= value    &0xff;
+}
+
+
+
+void AYFileCreate(uint16 start)
+{
+	AYBlockCount=0;
+	AYDataOffset=206;
+	AYFileSize=AYDataOffset;
+
+	AYFile.resize(AYFileSize);
+
+	AYWriteString(0,"ZXAYEMUL",8);
+
+	AYFile[8]=1;			//file version
+	AYFile[9]=3;			//player version (3 for 48K support)
+	AYFile[10]=0;			//special player, short int
+	AYFile[11]=0;
+	AYWriteWord(12,140-12);	//author offset
+	AYWriteWord(14,173-14);	//misc offset
+	AYFile[16]=0;			//number of songs in file-1
+	AYFile[17]=0;			//first song-1
+	AYWriteWord(18,2);		//end struct offset
+	AYWriteWord(20,173-20);	//NTStr offset
+	AYWriteWord(22,2);		//song header offset
+	AYFile[24]=0;			//AY A
+	AYFile[25]=1;			//AY B
+	AYFile[26]=2;			//AY C
+	AYFile[27]=3;			//AY Noise
+	AYWriteWord(28,0);		//song length (0 for unknown)
+	AYWriteWord(30,0);		//fade length
+	AYFile[32]=0;			//hireg
+	AYFile[33]=0;			//loreg
+	AYWriteWord(34,4);		//points offset
+	AYWriteWord(36,8);		//data offset
+	AYWriteWord(38,start);	//stack
+	AYWriteWord(40,start);	//init
+	AYWriteWord(42,0x0038);	//interrupt
+
+	for(uint i=0;i<16;++i)
+	{
+		AYWriteWord(44+i*6,0);	//addr for z80
+		AYWriteWord(46+i*6,0);	//length
+		AYWriteWord(48+i*6,0);	//offset in file
+	}
+
+	AYWriteWord(44+16*6,0);//end of blocks list
+
+	AYWriteString(140,GetSongTitle(),32);//title
+	AYFile[172]=0;
+
+	AYWriteString(173,GetSongAuthor(),32);//author
+	AYFile[205]=0;
+}
+
+
+
+void AYFileAddBlock(uint16 address,uint16 length)
+{
+	if(AYBlockCount==AYBlocksMax)
+	{
+		CompileError("Too many blocks in AY file");
+		return;
+	}
+
+	AYFileSize+=length;
+
+	AYFile.resize(AYFileSize);
+
+	uint blockOffset=44+AYBlockCount*6;
+
+	AYWriteWord(blockOffset+0,address);		//addr of block in Z80 address space
+	AYWriteWord(blockOffset+2,length);		//length of block
+	AYWriteWord(blockOffset+4,AYDataOffset-(blockOffset+4));//offset in file
+
+	for(uint i=0;i<length;++i) AYFile[AYDataOffset++]=Z80Mem[address++];//data
+
+	++AYBlockCount;
+}
+
+
+
+void AYFileClose(void)
+{
+	DumpOutput(AYFile);
+
+	AYFile.resize(0);
+}
+
+
+
+//common functions to create a TAP file of block of Z80 memory
+
+uint8[] TAPFile; //represents content of TAP file
+
+//default BASIC loader for TAP files
+
+const uint8[] TAPBasicLoader={
+	0x13,0x00,0x00,0x00,0x31,0x74,0x72,0x61,0x63,0x6b,0x65,0x72,0x20,0x20,0x8e,0x00,
+	0x0a,0x00,0x8e,0x00,0x43,0x90,0x00,0xff,0x00,0x0a,0x1c,0x00,0xe7,0xc3,0xa7,0x3a,
+	0xda,0xc3,0xa7,0x3a,0xd9,0xb0,0x22,0x37,0x22,0x3a,0xdc,0xbc,0xa7,0x3a,0xfd,0xb0,
+	0x22,0x33,0x32,0x37,0x36,0x37,0x22,0x0d,0x00,0x14,0x0d,0x00,0xef,0x22,0x22,0xaf,
+	0xb0,0x22,0x33,0x32,0x37,0x36,0x38,0x22,0x0d,0x00,0x1e,0x4a,0x00,0xfb,0x3a,0xf5,
+	0x22,0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x30,0x31,0x32,0x33,0x34,
+	0x35,0x36,0x37,0x38,0x39,0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x30,
+	0x31,0x22,0x3a,0xf5,0x22,0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x30,
+	0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x30,0x31,0x32,0x33,0x34,0x35,0x36,
+	0x37,0x38,0x39,0x30,0x31,0x22,0x0d,0x00,0x28,0x0b,0x00,0xf9,0xc0,0xb0,0x22,0x33,
+	0x32,0x37,0x36,0x38,0x22,0x0d,0xdb
+};
+
+
+
+void TAPPutWord(uint16 word)
+{
+	TAPFile.insertLast(word&255);
+	TAPFile.insertLast(word>>8);
+}
+
+
+
+void TAPChangeVAL(uint offset,uint value)
+{
+	TAPFile[offset+0]='0'+value/10000%10;
+	TAPFile[offset+1]='0'+value/1000%10;
+	TAPFile[offset+2]='0'+value/100%10;
+	TAPFile[offset+3]='0'+value/10%10;
+	TAPFile[offset+4]='0'+value%10;
+}
+
+
+
+void TAPPutHeader(string name,uint16 dataSize)
+{
+	TAPPutWord(19);//size of the header
+
+	uint offset=TAPFile.length();
+
+	TAPFile.insertLast(0);//flag
+	TAPFile.insertLast(3);//code type
+
+	for(uint i=0;i<10;++i) TAPFile.insertLast(name[i]);
+
+	TAPPutWord(dataSize);//size of data
+	TAPPutWord(0);//parameter 1
+    TAPPutWord(0);//parameter 2
+
+	uint8 checksum=0;
+
+	for(uint i=offset;i<TAPFile.length();++i) checksum^=TAPFile[i];
+
+	TAPFile.insertLast(checksum);
+}
+
+
+
+void TAPPutCodeBlock(uint16 address,uint16 length)
+{
+	TAPPutWord(length+2);
+
+	TAPFile.insertLast(255);//flag
+
+	uint8 checksum=255;
+
+	for(uint i=0;i<length;++i)
+	{
+		TAPFile.insertLast(Z80Mem[address+i]);
+
+		checksum^=Z80Mem[address+i];
+	}
+
+	TAPFile.insertLast(checksum);
+}
+
+
+
+void TAPFileCreate(uint16 address,uint16 length)
+{
+	TAPFile.resize(0);
+
+	//copy BASIC loader
+
+	for(uint i=0;i<TAPBasicLoader.length();++i) TAPFile.insertLast(TAPBasicLoader[i]);
+
+	//update song information in the loader
+
+	string songTitle =GetSongTitle();
+	string songAuthor=GetSongAuthor();
+
+	for(uint i=0;i<32;++i)
+	{
+		if(i<songTitle.length())  TAPFile[0x51+i]=songTitle[i];  else TAPFile[0x51+i]=32;
+		if(i<songAuthor.length()) TAPFile[0x75+i]=songAuthor[i]; else TAPFile[0x75+i]=32;
+	}
+
+	//change addresses in the loader accordingly to the load/start address
+
+	TAPChangeVAL(0x31,address-1);	//ramtop
+	TAPChangeVAL(0x42,address);	//load
+	TAPChangeVAL(0x9f,address);	//usr
+
+	//recalculate checksum for the loader
+
+	uint8 checksum=0;
+
+	for(uint i=0x17;i<0xa6;++i) checksum^=TAPFile[i];
+
+	TAPFile[0xa6]=checksum;
+
+	//add code block with header
+
+	TAPPutHeader("music data",length);
+	TAPPutCodeBlock(address,length);
+
+	DumpOutput(TAPFile);
+
+	TAPFile.resize(0);
+}
+
+
+
+//common functions to create a SCL file of block of Z80 memory
+
+uint8[] SCLFile;		//represents content of SCL file, first it contans headers only
+uint8[] SCLFileData;	//actual file data
+
+uint SCLFileCount;
+
+uint8[] SCLBasicLoader={
+	0x00,0x0a,0x1c,0x00,0xe7,0xc3,0xa7,0x3a,0xda,0xc3,0xa7,0x3a,0xd9,0xb0,0x22,0x37,
+	0x22,0x3a,0xdc,0xbc,0xa7,0x3a,0xfd,0xb0,0x22,0x33,0x32,0x37,0x36,0x37,0x22,0x0d,
+	0x00,0x14,0x22,0x00,0xf9,0xc0,0xb0,0x22,0x31,0x35,0x36,0x31,0x39,0x22,0x3a,0xea,
+	0x3a,0xef,0x22,0x6d,0x75,0x73,0x5f,0x64,0x61,0x74,0x61,0x22,0xaf,0xb0,0x22,0x33,
+	0x32,0x37,0x36,0x38,0x22,0x0d,0x00,0x1e,0x4a,0x00,0xfb,0x3a,0xf5,0x22,0x20,0x20,
+	0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,
+	0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x22,0x3a,
+	0xf5,0x22,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,
+	0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,0x20,
+	0x20,0x20,0x22,0x0d,0x00,0x28,0x0b,0x00,0xf9,0xc0,0xb0,0x22,0x33,0x32,0x37,0x36,
+	0x38,0x22,0x0d,0x80,0xaa,0x0a,0x00//last two bytes are autostart line
+};
+
+
+
+void SCLBasicLoaderChangeVAL(uint offset,uint value)
+{
+	SCLBasicLoader[offset+0]='0'+value/10000%10;
+	SCLBasicLoader[offset+1]='0'+value/1000%10;
+	SCLBasicLoader[offset+2]='0'+value/100%10;
+	SCLBasicLoader[offset+3]='0'+value/10%10;
+	SCLBasicLoader[offset+4]='0'+value%10;
+}
+
+
+
+void SCLFileAddHeader(string name,string type,uint addr,uint size)
+{
+	SCLFile[8]=++SCLFileCount;
+
+	for(uint i=0;i<8;++i) if(i<name.length()) SCLFile.insertLast(name[i]); else SCLFile.insertLast(' ');
+
+	SCLFile.insertLast(type[0]);
+	SCLFile.insertLast(addr&255);
+	SCLFile.insertLast(addr>>8);
+	SCLFile.insertLast(size&255);
+	SCLFile.insertLast(size>>8);
+	SCLFile.insertLast((size+255)>>8);
+}
+
+
+
+void SCLFileAddBlock(string name,string type,uint addr,uint8[] data)
+{
+	int size=data.length();
+
+	int sec=(size+255)>>8;
+
+	for(int i=0;i<size;++i) SCLFileData.insertLast(data[i]);//put actual data
+
+	for(int i=size;i<sec*256;++i) SCLFileData.insertLast(0);//fill rest of the last sector with zeroes
+
+	if(type=="B") addr=size;
+
+	SCLFileAddHeader(name,type,addr,size);
+}
+
+
+
+void SCLFileAddBlockZ80(string name,string type,uint addr,uint size)
+{
+	uint sec=(size+255)>>8;
+
+	for(uint i=0;i<size;++i) SCLFileData.insertLast(Z80Mem[addr+i]);//put actual data
+
+	for(uint i=size;i<sec*256;++i) SCLFileData.insertLast(0);//fill rest of the last sector with zeroes
+
+	SCLFileAddHeader(name,type,addr,size);
+}
+
+
+
+void SCLFileCreate(uint16 address,uint16 length)
+{
+	const string id="SINCLAIR";
+
+	SCLFileCount=0;
+
+	//set SCL header
+
+	SCLFile.resize(9);//SCL header
+	SCLFileData.resize(0);
+
+	for(int i=0;i<8;++i) SCLFile[i]=id[i];
+
+	//update song information in the loader
+
+	string songTitle =GetSongTitle();
+	string songAuthor=GetSongAuthor();
+
+	for(uint i=0;i<32;++i)
+	{
+		if(i<songTitle.length())  SCLBasicLoader[0x4e+i]=songTitle[i];  else SCLBasicLoader[0x4e+i]=32;
+		if(i<songAuthor.length()) SCLBasicLoader[0x72+i]=songAuthor[i]; else SCLBasicLoader[0x72+i]=32;
+	}
+
+	//change addresses in the loader accordingly to the load/start address
+
+	SCLBasicLoaderChangeVAL(0x19,address-1);	//ramtop
+	SCLBasicLoaderChangeVAL(0x3f,address);	//load
+	SCLBasicLoaderChangeVAL(0x9c,address);	//usr
+	
+	//add files
+
+	SCLFileAddBlock("loader","B",0,SCLBasicLoader);
+	SCLFileAddBlockZ80("mus_data","C",address,length);
+
+	//combine headers and data, calculate checksum
+
+	for(uint i=0;i<SCLFileData.length();++i) SCLFile.insertLast(SCLFileData[i]);
+
+	int sum=0;
+
+	for(uint i=0;i<SCLFile.length();++i) sum+=SCLFile[i];
+
+	SCLFile.insertLast( sum     &255);
+	SCLFile.insertLast((sum>>8) &255);
+	SCLFile.insertLast((sum>>16)&255);
+	SCLFile.insertLast((sum>>24)&255);
+
+	DumpOutput(SCLFile);
+
+	SCLFile.resize(0);
+}

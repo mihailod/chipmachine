@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:dialogTheme">@style/CustomDialog</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="ListItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?android:listPreferredItemHeight</item>
+        <item name="android:background">@drawable/selectable_background</item>
+        <item name="android:foreground">?android:selectableItemBackground</item>
+        <item name="android:paddingLeft">?android:listPreferredItemPaddingLeft</item>
+        <item name="android:paddingRight">?android:listPreferredItemPaddingRight</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+    <style name="ListItem.Large">
+        <item name="android:layout_height">?android:listPreferredItemHeight</item>
+        <item name="android:paddingLeft">0px</item>
+    </style>
+
+    <style name="Button" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:minWidth">32dp</item>
+        <item name="tint">?colorControlNormal</item>
+    </style>
+
+    <style name="Button.Toggled">
+        <item name="android:minWidth">48dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/toggle_button_background</item>
+    </style>
+
+    <style name="Button.Breadcrumbs">
+        <item name="android:drawableRight">@drawable/breadcrumbs_delimiter</item>
+        <item name="android:drawablePadding">1dp</item>
+        <item name="android:padding">1dp</item>
+    </style>
+
+    <style name="CustomDialog" parent="Theme.AppCompat.DayNight.Dialog">
+        <!-- strange bug with broken background -->
+        <item name="android:background">?android:colorBackground</item>
+        <item name="android:windowNoTitle">false</item>
+    </style>
+</resources>

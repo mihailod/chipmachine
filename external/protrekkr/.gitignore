@@ -1,0 +1,16 @@
+*.obj
+*.nbc
+*.sbr
+*.opt
+*.idb
+*.ilk
+*.pdb
+*.plg
+*.chw
+*.exp
+*.sdf
+*.user
+.genio
+*.o
+*.a
+release/ptk/ptk_*

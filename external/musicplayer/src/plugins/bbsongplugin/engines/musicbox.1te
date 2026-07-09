@@ -1,0 +1,644 @@
+const string MusicBoxAssemblySource="
+
+	org #8000
+	
+begin
+
+	ld hl,music_data
+	call play
+	ret
+	
+	
+	
+play
+
+	ld a,(hl)
+	ld (tempo),a
+	
+	inc hl
+	ld e,(hl)
+	inc hl
+	ld d,(hl)
+	
+	ld (ch1_ptr),de
+	
+	inc hl
+	ld e,(hl)
+	inc hl
+	ld d,(hl)
+	ld (ch2_ptr),de
+
+	inc hl
+	ld e,(hl)
+	inc hl
+	ld d,(hl)
+	ld (ch1_loop),de
+	
+	inc hl
+	ld e,(hl)
+	inc hl
+	ld d,(hl)
+	ld (ch2_loop),de
+	
+	di
+	
+play_loop
+
+	call play_row
+	call #028E
+	inc	e
+	jr	z,play_loop
+	ei
+	
+	ret
+
+ch1_note 		db 0
+ch2_note 		db 0
+border_color 	db 0
+ch1_ptr 		dw 0
+ch1_loop 		dw 0
+ch2_ptr 		dw 0
+ch2_loop 		dw 0
+tempo 			db 0	;230..255
+
+read_note
+
+	ld	e,(hl)
+	inc	hl
+	ld	d,(hl)	
+	
+reread_note
+
+	ld	a,(de)
+	inc	de
+	
+	cp	#40
+	jr	z,read_note_loop
+	
+	ld	(hl),d
+	dec	hl
+	ld	(hl),e
+	
+	ret
+
+note_to_period
+
+	ld	a,(hl)
+	
+	add	a,#0c
+	ld	e,a
+	ld	d,#00
+	
+	ld	hl,noteTable
+	add	hl,de
+	
+	ld	h,(hl)
+	ld	l,#01
+
+	ret
+
+read_note_loop
+
+	inc	hl
+	ld	e,(hl)
+	inc	hl
+	ld	d,(hl)
+	
+	dec	hl
+	dec	hl
+	
+	jr	reread_note
+
+play_row
+
+	ld	hl,ch1_ptr
+	call	read_note
+	ld	(ch1_note),a
+	
+	ld	hl,ch2_ptr
+	call	read_note
+	ld	(ch2_note),a
+	
+	ld	hl,ch1_note
+	call	note_to_period
+	
+	rl e
+	jp c,drum
+	
+	push	hl
+	
+	ld	hl,ch2_note
+	call note_to_period
+	
+	pop	de
+	
+	ld	a,h
+	dec	a
+	jr	nz,L8074
+	
+	ld	a,d
+	dec	a
+	jr	z,delay
+	
+L8074
+
+	ld	a,(tempo)
+	ld	c,a
+	ld	b,0
+	ld	a,(border_color)
+	ex	af,af'
+	ld	a,(border_color)
+
+	ld	ixh,d
+	ld	d,#10
+	
+sound_loop
+
+	nop
+	nop
+	
+L8087
+
+	ex	af,af'
+	dec	e
+	out	(#fe),a
+	
+	jr	nz,L80A4
+
+	ld	e,ixh
+	xor	d
+	ex	af,af'
+	dec	l
+	jp	nz,L80AB
+	
+L8095
+
+	out	(#fe),a
+	ld	l,h
+	xor	d
+	djnz sound_loop
+	
+	inc	c
+	jp	nz,L8087
+	
+	ret
+
+L80A4
+
+	jr	z,L80A4
+	ex	af,af'
+	dec	l
+	jp	z,L8095
+	
+L80AB
+
+	out	(#fe),a
+	nop
+	nop
+	djnz sound_loop
+	
+	inc	c
+	jp	nz,L8087
+	
+	ret
+
+delay
+
+	ld	a,(tempo)
+	cpl
+	ld	c,a
+	
+L80BB
+
+	push	bc
+	push	af
+	
+	ld	b,0
+	
+delay1
+
+	push	hl
+	
+	ld	hl,0
+	sra	(hl)
+	sra	(hl)
+	sra	(hl)
+	nop
+	pop	hl
+	djnz delay1
+	
+	dec	c
+	jp nz,delay1
+	
+	pop	af
+	pop	bc
+	
+	ret
+	
+	
+	
+drum
+
+	push af
+	ld   a,(ch2_note)
+	ld   d,a
+	pop  af
+	
+	call L812D
+	
+	cp   #ff
+	jr   z,L8142
+	cp   #c0
+	jp   z,L817F
+	ld   b,4
+	ld   c,e
+	rla
+	rla
+	rla
+	rla
+	
+L8123
+
+	rla
+	
+	call c,L8142
+	call nc,L80BB
+	
+	djnz L8123
+	
+	ret
+	
+L812D
+
+	push af
+	
+	ld   a,(tempo)
+	cpl
+	ld   b,a
+	ld   c,a
+	add  a,#01
+	sra  a
+	sra  a
+	ld   e,a
+	cp   #00
+	jr   nz,$+3
+	inc  e
+
+	pop  af
+	
+	ret
+
+L8142
+
+	push af
+	push hl
+	push bc
+	ld   a,(border_color)
+	ld   b,0
+	ld   hl,#03e8
+	
+L814D
+
+	rrc  d
+	jp   nc,L8171
+	inc  hl
+	bit  0,(hl)
+	jp   z,L816D
+	set  4,a
+	xor  #83
+	xor  #83
+	
+L815E
+
+	out  (#fe),a
+	
+L8160
+
+	nop
+	dec  b
+	jp   nz,L814D
+	dec  c
+	jp   nz,L814D
+	
+	pop  bc
+	pop  hl
+	pop  af
+	
+	ret
+
+L816D
+
+	res 4,a
+	jr L815E
+	
+L8171
+
+	scf
+	jp   nc,0
+	jp   nc,0
+	jp   nc,0
+	nop
+	nop
+	jr   L8160
+
+L817F:
+
+	ld   e,b
+	ld   d,00
+	ld   hl,player_code_end
+	adc  hl,de
+	
+	ld   a,(hl)
+	ld   b,a
+	ld   hl,#0003
+	
+L818C:
+
+	push bc
+	ld   de,#0001
+	push hl
+	call L819E
+	pop  hl
+	ld   de,#00FF
+	adc  hl,de
+	pop  bc
+	djnz L818C
+	
+	ret
+	
+L819E:
+
+	ld   a,l
+	srl  l
+	srl  l
+	cpl
+	and  #3
+	ld   c,a
+	ld   b,0
+	ld   ix,#03D1
+	add  ix,bc
+	
+	ld   a,(border_color)
+	
+	call #03D4
+	
+	di
+	
+	ret
+
+noteTable
+
+	db #FF,#F0,#E3,#D7,#CB,#C0,#B4,#AB,#A1,#97,#90,#88
+	db #80,#79,#72,#6C,#66,#60,#5B,#56,#51,#4C,#48,#44
+	db #40,#3D,#39,#36,#33,#30,#2D,#2B,#28,#26,#24,#22
+	db #20,#1E,#1C,#1B,#19,#18,#17,#15,#14,#13,#12,#11
+	db #10,#0F,#0E,#0D,#0C,#01
+	
+player_code_end
+
+";
+
+
+
+#include "zxspectrum.1tl"
+
+//song compiler arrays
+
+uint8[] mute(3,0);
+
+uint8[] songChannel1Data;
+uint8[] songChannel2Data;
+uint8[] songChannel3Data;
+
+uint8[] noteToCode(128,0);
+
+
+
+//song compiler variables
+
+int songLength;
+int songLoopStart;
+int songLoopEnd;
+
+
+
+void Info(void)
+{
+	SetTitle("ZX|1BIT|Music Box");
+
+	SetAbout("Original Z80 code by Mark Alexander, 1985\n1tracker version by Shiru 03'2018\n\nThe most classic ZX Spectrum beeper engine. Two tone channels of square tone, noise and kick drums that replace tone channels. Global speed.");
+	
+	SetDocFile("music_box.txt");
+}
+
+
+
+void Init(void)
+{
+	int i;
+	
+	AddColumn( 0,COLUMN_NOTE ,0,1);
+	AddColumn(-1,COLUMN_EMPTY,0,0);
+	AddColumn( 1,COLUMN_NOTE ,0,1);
+	AddColumn(-1,COLUMN_EMPTY,0,0);
+	AddColumn( 2,1           ,9,1);
+	AddColumn( 2,1           ,1,1);
+	AddColumn( 2,1           ,1,1);
+	AddColumn( 2,1           ,1,1);
+	AddColumn( 2,1           ,1,1);
+
+	SetNoteRange("C-1","E-5");
+	SetPatternHeader(" Row  T1  T2  Dmask");
+	SetInstrumentsNumber(0);
+	SetSpeedRange(1,26,20);
+	SetLoopSupport(1);
+
+	ZXSetStandartExportOptions();
+	
+	//generate note codes
+	
+	for(i=0;i<128;++i) noteToCode[i]=41;
+	
+	for(i=0;i<53;++i) noteToCode[14+i]=(244+i)&255;
+}
+
+
+
+void Instrument(void)
+{
+	//this engine does not support instruments
+}
+
+
+
+void Compile(uint format,uint startRow,uint oneShot,uint useMute)
+{
+	int i,row,len,takeLoop,loopRow,loopOffset,songHasLoop;
+	uint8 note,note1,note2,drum;
+
+	//get mute state
+
+	for(i=0;i<3;++i) if(useMute>0) mute[i]=GetChannelMute(i); else mute[i]=0;
+
+	//compile song
+
+	songLength   =GetSongLength();
+	songLoopStart=GetSongLoopStart();
+	songLoopEnd  =GetSongLoopEnd();
+
+	if(songLoopStart<songLoopEnd&&songLoopEnd<9999) songHasLoop=1; else songHasLoop=0;
+	
+	row=startRow;
+	takeLoop=0;
+	loopRow=-1;
+
+	if(oneShot==1)
+	{
+		len=1;
+	}
+	else
+	{
+		len=songLength-row;
+
+		if(songHasLoop==1)
+		{
+			if(row<songLoopStart)//start before loop
+			{
+				len=songLoopEnd-row;
+				loopRow=songLoopStart;
+				takeLoop=1;
+			}
+			else
+			if(row<songLoopEnd)//start inside loop
+			{
+				len=songLoopEnd-songLoopStart;
+				loopRow=row;
+				takeLoop=1;
+			}
+		}
+	}
+
+	note1=1;
+	note2=1;
+
+	TextFileClear();
+	TextFilePutString(MusicBoxAssemblySource);
+
+	TextFilePutString(";compiled music data\n\n");
+	TextFilePutString("music_data\n");
+	TextFilePutString("\tdb #"+formatInt(255-GetSongSpeed(),"0h",2)+"\n");
+	TextFilePutString("\tdw .ch1\n");
+	TextFilePutString("\tdw .ch2\n");
+	TextFilePutString("\tdw .ch1loop\n");
+	TextFilePutString("\tdw .ch2loop\n");
+	
+	songChannel1Data.resize(0);
+	songChannel2Data.resize(0);
+	songChannel3Data.resize(0);
+	
+	note1=0;
+	note2=0;
+	drum=0;
+	
+	loopOffset=-1;
+	
+	while(len>0)
+	{
+		if(row==loopRow) loopOffset=songChannel1Data.length();
+		
+		if(mute[0]==0) note1=GetSongData(row,0);
+		
+		if(mute[1]==0) note2=GetSongData(row,2);
+		
+		if(mute[2]==0)
+		{
+			drum=GetSongData(row,4);
+			
+			if(drum>0)
+			{
+				drum|=GetSongData(row,5)<<4;
+				drum|=GetSongData(row,6)<<5;
+				drum|=GetSongData(row,7)<<6;
+				drum|=GetSongData(row,8)<<7;
+			}
+		}
+		
+		songChannel1Data.insertLast(note1);
+		songChannel2Data.insertLast(note2);
+		songChannel3Data.insertLast(drum);
+		
+		--len;
+		++row;
+
+		if(takeLoop==1) if(row>=songLoopEnd) row=songLoopStart;
+	}
+
+	//first tone channel
+	
+	len=songChannel1Data.length();
+	
+	TextFilePutString(".ch1\n");
+	
+	for(i=0;i<len;++i)
+	{
+		if(i==loopOffset) TextFilePutString(".ch1loop\n");
+		
+		note=noteToCode[songChannel1Data[i]];
+		drum=songChannel3Data[i];
+
+		if(drum>0)
+		{	
+			if((drum&15)==9)
+			{
+				note=0xb4;	//tom
+			}
+			else
+			{
+				note=0xe4+((drum>>4)^15);	//noise with mask
+			}
+		}
+
+		TextFilePutString("\tdb #"+formatInt(note,"0h",2)+"\n");
+	}
+	
+	if(oneShot==1||takeLoop==0)
+	{
+		TextFilePutString(".ch1loop\n"); //loop at sound mute at end of the song
+		TextFilePutString("\tdb #29\n");
+	}
+	
+	TextFilePutString("\tdb #40\n");
+	
+	//second tone channel
+	
+	len=songChannel1Data.length();
+	
+	TextFilePutString(".ch2\n");
+	
+	for(i=0;i<len;++i)
+	{
+		if(i==loopOffset) TextFilePutString(".ch2loop\n");
+		
+		note=noteToCode[songChannel2Data[i]];
+		drum=songChannel3Data[i]&15;
+
+		if(drum>0&&drum<9)
+		{
+			note=0xff>>(drum-1);
+		}
+		
+		TextFilePutString("\tdb #"+formatInt(note,"0h",2)+"\n");
+	}
+	
+	if(oneShot==1||takeLoop==0)
+	{
+		TextFilePutString(".ch2loop\n"); //loop at sound mute at end of the song
+		TextFilePutString("\tdb #29\n");
+	}
+	
+	TextFilePutString("\tdb #40\n");
+	
+	//generate file
+	
+	ZXStandartExportOptions(format,true);
+}

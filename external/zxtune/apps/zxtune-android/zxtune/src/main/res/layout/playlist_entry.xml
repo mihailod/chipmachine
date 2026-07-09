@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:ignore="RtlHardcoded">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+                name="entry"
+                type="app.zxtune.ui.playlist.Entry" />
+
+        <variable
+                name="isPlaying"
+                type="boolean" />
+    </data>
+
+    <RelativeLayout style="@style/ListItem">
+
+        <ImageView
+                android:id="@+id/playlist_entry_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="?android:listPreferredItemPaddingLeft"
+                android:src="@{isPlaying ? @drawable/ic_playing : @drawable/ic_drag_handler}"
+                app:tint="?colorControlNormal"
+                tools:src="@drawable/ic_drag_handler" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/playlist_entry_duration"
+                android:layout_toRightOf="@+id/playlist_entry_state"
+                android:orientation="vertical">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@{entry.getDisplayTitle()}"
+                    android:textAppearance="?android:textAppearanceListItem"
+                    tools:text="@tools:sample/lorem/random" />
+
+            <TextView
+                    android:id="@+id/list_item_text_aux"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="@{entry.getAuthor()}"
+                    android:textAppearance="?textAppearanceListItemSecondary"
+                    android:visibility="@{entry.getAuthor().isEmpty() ? View.GONE : View.VISIBLE}"
+                    tools:text="@tools:sample/full_names" />
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/playlist_entry_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="?android:listPreferredItemPaddingRight"
+                android:text="@{entry.getDuration().toString()}"
+                android:textAppearance="?android:textAppearanceListItemSmall"
+                tools:text="@tools:sample/date/hhmm" />
+
+    </RelativeLayout>
+</layout>

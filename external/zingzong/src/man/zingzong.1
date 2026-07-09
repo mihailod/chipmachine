@@ -1,0 +1,122 @@
+.TH ZINGZONG "1" "October 2017" "zingzong @VERSION@" "User Commands"
+.SH NAME
+zingzong \- manual page for zingzong @VERSION@
+.SH SYNOPSIS
+.B zingzong
+[\fI\,OPTIONS\/\fR] \fI\,<song.4v> \/\fR[\fI\,<inst.set>\/\fR]
+.br
+.B zingzong
+[\fI\,OPTIONS\/\fR] \fI\,<music.4q>
+.SH DESCRIPTION
+A Microdeal quartet music file command line player.
+.SS "OPTIONS:"
+.TP
+\fB\-h\fR \fB\-\-help\fR \fB\-\-usage\fR
+Print this message and exit.
+.TP
+\fB\-V\fR \fB\-\-version\fR
+Print version and copyright and exit.
+.TP
+\fB\-t\fR \fB\-\-tick\fR=\fI\,HZ\/\fR
+Set player tick rate (default is 200hz).
+.TP
+\fB\-r\fR \fB\-\-rate\fR=\fI\,[R\/,]HZ\fR
+Set re\-sampling method and rate (soxr,48K).
+.TP
+\fBR\fR :=
+\fBint:qerp\fR ..... quadratic interpolation (fast,MQ).
+.br
+\fBint:lerp\fR ..... linear interpolation (very fast).
+.br
+\fBint:none\fR ..... no interpolation (lightning fast/LQ).
+.br
+\fBsoxr\fR ......... high quality variable rate.
+.br
+\fBsinc:best\fR .... band limited sinc (best quality).
+.br
+\fBsinc:medium\fR .. band limited sinc (medium quality).
+.br
+\fBsinc:fast\fR .... band limited sinc (fastest sinc).
+.TP
+\fB\-l\fR \fB\-\-length\fR=\fI\,TIME\/\fR
+Set play time.
+.TP
+\fB\-b\fR \fB\-\-blend\fR=\fI\,[X\/,]Y\fR
+Set channel mapping and blending (see below).
+.TP
+\fB\-m\fR \fB\-\-mute\fR=\fI\,CHANS\/\fR
+Mute selected channels (bit\-field or string).
+.TP
+\fB\-i\fR \fB\-\-ignore\fR=\fI\,CHANS\/\fR
+Ignore selected channels (bit\-field or string).
+.TP
+\fB\-o\fR \fB\-\-output\fR=\fI\,URI\/\fR
+Set output file name (\fB\-w\fR or \fB\-c\fR).
+.TP
+\fB\-c\fR \fB\-\-stdout\fR
+Output raw PCM to stdout or file (native 16\-bit).
+.TP
+\fB\-n\fR \fB\-\-null\fR
+Output to the void.
+.TP
+\fB\-w\fR \fB\-\-wav\fR
+Generated a .wav file.
+.SS "OUTPUT:"
+Options `\-n/\-\-null',`\-c/\-\-stdout' and `\-w/\-\-wav' are used to set the
+output type. The last one is used. Without it the default output type
+is used which should be playing sound via the default or configured
+libao driver.
+.P
+The `\-o/\-\-output' option specify the output depending on the output
+type.
+.TP
+\fB\-n/\-\-null\fR
+output is ignored
+.TP
+\fB\-c/\-\-stdout\fR
+output to the specified file instead of <stdout>.
+.TP
+\fB\-w/\-\-wav\fB
+unless set output is a file based on song filename.
+
+.SS "BLENDING:"
+.P
+Blending defines how the 4 channels are mapped to stereo output.
+The 4 channels are mapped as left pair (lP) and right pair (rP).
+   \fIX\fR := B  lP=A+B  rP=C+D (default)
+        C  lP=A+C  rP=B+D
+        D  lP=A+D  rP=B+C
+.P
+Both channels pairs are blended together according to \fIY\fR.
+   \fIY\fR := 0    L=100%lP       R=100%rP
+        64   L=75%lP+25%rP  R=25%lP+75%rP
+        128  L=50%lP+50%rP  R=50%lP+50%rP
+        192  L=25%lP+75%rP  R=75%lP+25%rP
+        256  L=100%rP       R=100%lP
+.P
+ L := ((256-Y).lP+Y.rP)/256   R := (Y.lP+(256-Y).rP)/256
+
+.SS "TIME:"
+.IP \[bu] 2
+0 or inf represents infinite duration
+.IP \[bu]
+comma(,) dot(.) or double-quote(\(dq) separates milliseconds
+.IP \[bu]
+`m' or quote(') to suffix minutes
+.IP \[bu]
+`h' to suffix hours
+.P
+If time is not set the player tries to auto\-detect the music duration.
+However a number of musics are going into unnecessary loops which make
+it harder to properly detect.
+.SS "CHANS:"
+Select channels to be either muted or ignored. It can be either:
+.IP \[bu] 2
+an integer representing a mask of selected channels (C-style prefix)
+.IP \[bu]
+a string containing the letter A to D (case insensitive) in any order
+.SH "REPORTING BUGS"
+Report bugs to <https://github.com/benjihan/zingzong/issues>
+.SH COPYRIGHT
+Copyright \(co 2017-2023 Benjamin Gerard AKA Ben/OVR
+Licensed under MIT license

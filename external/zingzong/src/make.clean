@@ -1,0 +1,33 @@
+# -*- makefile-gmake -*-
+#
+# ----------------------------------------------------------------------
+# @file    make.clean
+# @author  Benjamin Gerard AKA Ben/OVR
+# @date    2017-08-17
+# @brief   Make rules for clean related targets
+# ----------------------------------------------------------------------
+#
+
+RM ?= rm -f
+
+clean-cfg:
+	$(call M,"CLN","$@")
+	-$(RM) -- $(cc_conf)
+
+clean-dep: clean-cfg
+	$(call M,"CLN","$@")
+	-$(RM) -- $(depends) 
+
+clean-obj:
+	$(call M,"CLN","$@")
+	-$(RM) -- $(objects)
+
+clean-tgt: CLEAN_FILES ?= $(sort $(targets) $(clean_files))
+clean-tgt: $(CLEAN_TARGETS)
+	$(call M,"CLN","$@")
+	-$(RM) -- $(CLEAN_FILES)
+
+clean: clean-dep clean-obj clean-tgt
+	$(call M,"CLN","$@")
+
+.PHONY: clean clean-tgt clean-obj clean-dep clean-cfg

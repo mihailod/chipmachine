@@ -1,0 +1,98 @@
+//constants for column function
+
+const int COLUMN_LETTER=-2;
+const int COLUMN_EMPTY=-1;
+const int COLUMN_NOTE=0;
+
+
+
+//standart note table for a high octave
+
+const float[] NoteFreqTable={ 2093.0f,2217.4f,2349.2f,2489.0f,2637.0f,2793.8f,2960.0f,3136.0f,3322.4f,3520.0f,3729.2f,3951.0f };
+
+
+
+string charFromCode(uint8 code)
+{
+	string str=" ";
+
+	str[0]=code;
+
+	return str;
+}
+
+
+
+//common functions to create a text file
+
+string TextFile;
+
+
+
+void TextFileClear(void)
+{
+	TextFile.resize(0);
+}
+
+
+
+void TextFilePutString(string str)
+{
+	TextFile+=str;
+}
+
+
+
+void TextFileDump(void)
+{
+	uint8[] data;
+
+	for(uint i=0;i<TextFile.length();++i) data.insertLast(TextFile[i]);
+
+	DumpOutput(data);
+}
+
+
+
+uint8[] LoadBinaryFile(string name,int offset,int size)
+{
+	uint8[] data;
+
+	string str=LoadBinaryFileAsString(name,offset,size);
+
+	if(str.length()==0) CompileError("Can't load file '"+name+"'");
+
+	if(size<0) size=str.length()/2;
+	
+	data.resize(size);
+
+	int ptr=0;
+
+	for(int i=0;i<size*2;i+=2)
+	{
+		uint8 lsb=str[i+0];
+		uint8 msb=str[i+1];
+
+		data[ptr++]=(lsb-'a')+((msb-'a')<<4);
+	}
+
+	return data;
+}
+
+
+
+void SaveBinaryFile(string name,uint8[] data)
+{
+	string str="";
+	
+	for(uint i=0;i<data.length();++i)
+	{
+		int lsb='a'+(data[i]&0x0f);
+		int msb='a'+(data[i]>>4);
+		
+		str+=charFromCode(lsb);
+		str+=charFromCode(msb);
+	}
+	
+	SaveStringAsBinaryFile(name,str);
+}

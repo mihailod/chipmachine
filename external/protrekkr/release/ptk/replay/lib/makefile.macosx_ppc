@@ -1,0 +1,34 @@
+LIBFLAGS = -c
+LIBOBJS_PPC = endianness_ppc.o replay_ppc.o synth_ppc.o tb_303_ppc.o wavpack_ppc.o samples_unpack_ppc.o sounddriver_macosx_ppc.o
+
+all: ptkreplay
+clean: remlibobj
+
+remlibobj:
+	-rm -f $(LIBOBJS_PPC)
+	-rm -f libptkreplay_ppc.a
+	
+ptkreplay: $(LIBOBJS_PPC)
+	-rm -f libptkreplay_ppc.a
+	$(AR) -s -r libptkreplay_ppc.a $(LIBOBJS_PPC)
+
+sounddriver_macosx_ppc.o: lib/sounddriver/sounddriver_macosx.cpp
+	$(CC) -o $(@) $(LIBFLAGS) $(FLAGS_PPC) lib/sounddriver/sounddriver_macosx.cpp
+
+samples_unpack_ppc.o: lib/samples_unpack.cpp
+	$(CC) -o $(@) $(LIBFLAGS) $(FLAGS_PPC) lib/samples_unpack.cpp
+
+tb_303_ppc.o: lib/tb_303.cpp
+	$(CC) -o $(@) $(LIBFLAGS) $(FLAGS_PPC) lib/tb_303.cpp
+
+synth_ppc.o: lib/synth.cpp
+	$(CC) -o $(@) $(LIBFLAGS) $(FLAGS_PPC) lib/synth.cpp
+
+replay_ppc.o: lib/replay.cpp
+	$(CC) -o $(@) $(LIBFLAGS) $(FLAGS_PPC) lib/replay.cpp
+
+endianness_ppc.o: lib/endianness.cpp
+	$(CC) -o $(@) $(LIBFLAGS) $(FLAGS_PPC) lib/endianness.cpp
+
+wavpack_ppc.o: lib/wavpack.cpp
+	$(CC) -o $(@) $(LIBFLAGS) $(FLAGS_PPC) lib/wavpack.cpp

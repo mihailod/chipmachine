@@ -1,0 +1,160 @@
+/*
+ * Generic functionality for Android project building
+ *
+ */
+
+
+def makeOutput(cmdline) {
+    return "make --quiet ${cmdline}".execute().text.trim()
+}
+
+def computeVersionCode() {
+    def code = makeOutput("-f ${treeRoot}/make/version.mak version_index")
+    return code.toInteger()
+}
+
+def computeVersionName() {
+    def name = makeOutput("-f ${treeRoot}/make/version.mak version_name")
+    return name
+}
+
+def loadLocalProperties() {
+    def properties = new Properties()
+    properties.load(project.rootProject.file("local.properties").newDataInputStream())
+    return properties
+}
+
+ext {
+    localProperties = loadLocalProperties()
+
+    aabStores = ['google', 'rustore']
+    minSdks = [16, 28]
+}
+
+def aliasPassword(alias) {
+  def fallback = localProperties.getProperty('key.alias.password')
+  return localProperties.getProperty("key.${alias}.password", fallback)
+}
+
+android {
+
+    defaultConfig {
+        versionCode computeVersionCode()
+        versionName computeVersionName()
+        buildConfigField("int", "VERSION", "${versionCode}")
+    }
+
+    lintOptions {
+        checkReleaseBuilds = false
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("${treeRoot}/make/android/keystore")
+            storePassword localProperties.getProperty('key.store.password')
+            keyAlias 'release'
+            keyPassword aliasPassword('release')
+        }
+
+        // AAB signing with upload keys
+        aabStores.each { name ->
+          create("aab_${name}") {
+            initWith release
+            keyAlias "upload_${name}"
+            keyPassword aliasPassword("upload_${name}")
+          }
+        }
+
+        fdroid {
+          initWith release
+          keyAlias 'fdroid'
+          keyPassword aliasPassword('fdroid')
+        }
+    }
+
+    buildTypes {
+        release {
+            // Take config from flavor
+            signingConfig = null
+            minifyEnabled true
+            shrinkResources = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
+        }
+
+        debug {
+            debuggable true
+        }
+
+        develop {
+            minifyEnabled true
+            debuggable true
+            signingConfig = signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules-develop.pro'
+        }
+    }
+
+    lintOptions {
+        abortOnError = false
+    }
+
+    dependenciesInfo {
+        includeInApk = false
+    }
+}
+
+// publish
+android {
+    ext.publicBuildsDir = "${treeRoot}/Builds/${defaultConfig.versionName}/android"
+
+    def publicBuild = tasks.register('publicBuild') {
+      group = 'Publish'
+    }
+    applicationVariants.configureEach { variant ->
+      if (variant.buildType.name != 'release') {
+        return
+      }
+      def suffix = variant.name.capitalize()
+      def baseName = "${project.name}_${defaultConfig.versionName}"
+      def packagingType = null
+      variant.productFlavors.each { flavor ->
+        flavor.nameTag?.with { tag ->
+          baseName += "-${tag}"
+        }
+        flavor.packagingType?.with { type ->
+          packagingType = type
+        }
+      }
+      def pkgTask = packagingType.toString() != 'BUNDLE'
+        ?
+        tasks.register("publishApk${suffix}") {
+          group = 'Publish'
+          dependsOn "assemble${suffix}"
+          doLast {
+            variant.outputs.each { out ->
+              copy {
+                def abi = out.getFilter("ABI")
+                from out.outputFile
+                into publicBuildsDir
+                rename ".*\\.apk", "${baseName}${abi ? '_' + abi : ''}.apk"
+              }
+            }
+          }
+        }
+        :
+        tasks.register("publishAab${suffix}") {
+          group = 'Publish'
+          dependsOn "bundle${suffix}"
+          doLast {
+            def aab = tasks["sign${suffix}Bundle"].outputs.files.filter { it.name.endsWith('.aab') }.singleFile
+            copy {
+               from aab
+               into publicBuildsDir
+               rename ".*\\.aab", "${baseName}.aab"
+            }
+          }
+        }
+      publicBuild.configure {
+        dependsOn pkgTask
+      }
+    }
+}

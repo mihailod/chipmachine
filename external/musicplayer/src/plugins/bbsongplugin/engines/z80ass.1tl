@@ -1,0 +1,1713 @@
+//Z80Ass, a crude AngelScript-powered Z80 assembler by Shiru
+
+//v1.2 04.01.18 very basic conditional compilation, if N/endif
+//v1.1 16.06.17 reworked opcode search, now much faster
+//v1.0    06.13 initial release
+
+
+uint Z80AssSourcePtr;
+uint Z80AssSourcePtrOld;
+uint Z80AssSourceLen;
+
+uint Z80AssLine;
+uint Z80AssLinesAll;
+
+string Z80AssSource;
+string Z80AssOriginalSource;
+
+bool Z80AssStop;
+uint Z80AssPass;
+
+class LabelStruct {
+	string name;
+	uint16 adr;
+};
+
+array<LabelStruct> Z80AssLabelList;
+
+string Z80AssLabelScope;
+
+uint16 Z80AssProgramCounter;
+
+int[] Z80AssParamValue(2);
+
+class LineStruct {
+	uint off;
+	uint adr;
+	bool compile;
+};
+
+array<LineStruct> Z80AssLineList;
+
+
+uint[] Z80AssOpcodeLenList(1024);
+
+int[] Z80AssOpcodeLetterStartA(256);
+int[] Z80AssOpcodeLetterStartB(256);
+int[] Z80AssOpcodeLetterLenA(256);
+int[] Z80AssOpcodeLetterLenB(256);
+
+uint Z80AssOpcodeListLen;
+
+
+string[] Z80AssOpcodeList={
+"adc a,(hl)|8e",
+"adc a,a|8f",
+"adc a,b|88",
+"adc a,c|89",
+"adc a,d|8a",
+"adc a,e|8b",
+"adc a,h|8c",
+"adc a,ixh|dd8c",
+"adc a,ixl|dd8d",
+"adc a,iyh|fd8c",
+"adc a,iyl|fd8d",
+"adc a,l|8d",
+"adc hl,bc|ed4a",
+"adc hl,de|ed5a",
+"adc hl,hl|ed6a",
+"adc hl,sp|ed7a",
+"add a,(hl)|86",
+"add a,a|87",
+"add a,b|80",
+"add a,c|81",
+"add a,d|82",
+"add a,e|83",
+"add a,h|84",
+"add a,ixh|dd84",
+"add a,ixl|dd85",
+"add a,iyh|fd84",
+"add a,iyl|fd85",
+"add a,l|85",
+"add hl,bc|09",
+"add hl,de|19",
+"add hl,hl|29",
+"add hl,sp|39",
+"add ix,bc|dd09",
+"add ix,de|dd19",
+"add ix,ix|dd29",
+"add ix,sp|dd39",
+"add iy,bc|fd09",
+"add iy,de|fd19",
+"add iy,iy|fd29",
+"add iy,sp|fd39",
+"and (hl)|a6",
+"and a|a7",
+"and b|a0",
+"and c|a1",
+"and d|a2",
+"and e|a3",
+"and h|a4",
+"and ixh|dda4",
+"and ixl|dda5",
+"and iyh|fda4",
+"and iyl|fda5",
+"and l|a5",
+"bit 0,(hl)|cb46",
+"bit 0,a|cb47",
+"bit 0,b|cb40",
+"bit 0,c|cb41",
+"bit 0,d|cb42",
+"bit 0,e|cb43",
+"bit 0,h|cb44",
+"bit 0,l|cb45",
+"bit 1,(hl)|cb4e",
+"bit 1,a|cb4f",
+"bit 1,b|cb48",
+"bit 1,c|cb49",
+"bit 1,d|cb4a",
+"bit 1,e|cb4b",
+"bit 1,h|cb4c",
+"bit 1,l|cb4d",
+"bit 2,(hl)|cb56",
+"bit 2,a|cb57",
+"bit 2,b|cb50",
+"bit 2,c|cb51",
+"bit 2,d|cb52",
+"bit 2,e|cb53",
+"bit 2,h|cb54",
+"bit 2,l|cb55",
+"bit 3,(hl)|cb5e",
+"bit 3,a|cb5f",
+"bit 3,b|cb58",
+"bit 3,c|cb59",
+"bit 3,d|cb5a",
+"bit 3,e|cb5b",
+"bit 3,h|cb5c",
+"bit 3,l|cb5d",
+"bit 4,(hl)|cb66",
+"bit 4,a|cb67",
+"bit 4,b|cb60",
+"bit 4,c|cb61",
+"bit 4,d|cb62",
+"bit 4,e|cb63",
+"bit 4,h|cb64",
+"bit 4,l|cb65",
+"bit 5,(hl)|cb6e",
+"bit 5,a|cb6f",
+"bit 5,b|cb68",
+"bit 5,c|cb69",
+"bit 5,d|cb6a",
+"bit 5,e|cb6b",
+"bit 5,h|cb6c",
+"bit 5,l|cb6d",
+"bit 6,(hl)|cb76",
+"bit 6,a|cb77",
+"bit 6,b|cb70",
+"bit 6,c|cb71",
+"bit 6,d|cb72",
+"bit 6,e|cb73",
+"bit 6,h|cb74",
+"bit 6,l|cb75",
+"bit 7,(hl)|cb7e",
+"bit 7,a|cb7f",
+"bit 7,b|cb78",
+"bit 7,c|cb79",
+"bit 7,d|cb7a",
+"bit 7,e|cb7b",
+"bit 7,h|cb7c",
+"bit 7,l|cb7d",
+"ccf|3f",
+"cp (hl)|be",
+"cp a|bf",
+"cp b|b8",
+"cp c|b9",
+"cp d|ba",
+"cp e|bb",
+"cp h|bc",
+"cp ixh|ddbc",
+"cp ixl|ddbd",
+"cp iyh|fdbc",
+"cp iyl|fdbd",
+"cp l|bd",
+"cpdr|edb9",
+"cpd|eda9",
+"cpir|edb1",
+"cpi|eda1",
+"cpl|2f",
+"daa|27",
+"dec (hl)|35",
+"dec a|3d",
+"dec bc|0b",
+"dec b|05",
+"dec c|0d",
+"dec de|1b",
+"dec d|15",
+"dec e|1d",
+"dec hl|2b",
+"dec h|25",
+"dec ixh|dd25",
+"dec ixl|dd2d",
+"dec ix|dd2b",
+"dec iyh|fd25",
+"dec iyl|fd2d",
+"dec iy|fd2b",
+"dec l|2d",
+"dec sp|3b",
+"di|f3",
+"ei|fb",
+"ex (sp),hl|e3",
+"ex (sp),ix|dde3",
+"ex (sp),iy|fde3",
+"ex af,af'|08",
+"ex de,hl|eb",
+"exa|08",
+"exx|d9",
+"halt|76",
+"im 0|ed46",
+"im 1|ed56",
+"im 2|ed5e",
+"in a,(c)|ed78",
+"in b,(c)|ed40",
+"in c,(c)|ed48",
+"in d,(c)|ed50",
+"in e,(c)|ed58",
+"in f,(c)|ed70",
+"in h,(c)|ed60",
+"in l,(c)|ed68",
+"inc (hl)|34",
+"inc a|3c",
+"inc bc|03",
+"inc b|04",
+"inc c|0c",
+"inc de|13",
+"inc d|14",
+"inc e|1c",
+"inc hl|23",
+"inc h|24",
+"inc ixh|dd24",
+"inc ixl|dd2c",
+"inc ix|dd23",
+"inc iyh|fd24",
+"inc iyl|fd2c",
+"inc iy|fd23",
+"inc l|2c",
+"inc sp|33",
+"indr|edba",
+"ind|edaa",
+"inir|edb2",
+"ini|eda2",
+"jp (hl)|e9",
+"jp (ix)|dde9",
+"jp (iy)|fde9",
+"ld (bc),a|02",
+"ld (de),a|12",
+"ld (hl),a|77",
+"ld (hl),b|70",
+"ld (hl),c|71",
+"ld (hl),d|72",
+"ld (hl),e|73",
+"ld (hl),h|74",
+"ld (hl),l|75",
+"ld a,(bc)|0a",
+"ld a,(de)|1a",
+"ld a,(hl)|7e",
+"ld a,a|7f",
+"ld a,b|78",
+"ld a,c|79",
+"ld a,d|7a",
+"ld a,e|7b",
+"ld a,h|7c",
+"ld a,ixh|dd7c",
+"ld a,ixl|dd7d",
+"ld a,iyh|fd7c",
+"ld a,iyl|fd7d",
+"ld a,i|ed57",
+"ld a,l|7d",
+"ld a,r|ed5f",
+"ld b,(hl)|46",
+"ld b,a|47",
+"ld b,b|40",
+"ld b,c|41",
+"ld b,d|42",
+"ld b,e|43",
+"ld b,h|44",
+"ld b,ixh|dd44",
+"ld b,ixl|dd45",
+"ld b,iyh|fd44",
+"ld b,iyl|fd45",
+"ld b,l|45",
+"ld c,(hl)|4e",
+"ld c,a|4f",
+"ld c,b|48",
+"ld c,c|49",
+"ld c,d|4a",
+"ld c,e|4b",
+"ld c,h|4c",
+"ld c,ixh|dd4c",
+"ld c,ixh|dd4d",
+"ld c,iyh|fd4c",
+"ld c,iyh|fd4d",
+"ld c,l|4d",
+"ld d,(hl)|56",
+"ld d,a|57",
+"ld d,b|50",
+"ld d,c|51",
+"ld d,d|52",
+"ld d,e|53",
+"ld d,h|54",
+"ld d,ixh|dd55",
+"ld d,ixl|dd54",
+"ld d,iyh|fd55",
+"ld d,iyl|fd54",
+"ld d,l|55",
+"ld e,(hl)|5e",
+"ld e,a|5f",
+"ld e,b|58",
+"ld e,c|59",
+"ld e,d|5a",
+"ld e,e|5b",
+"ld e,h|5c",
+"ld e,ixh|dd5c",
+"ld e,ixl|dd5d",
+"ld e,iyh|fd5c",
+"ld e,iyl|fd5d",
+"ld e,l|5d",
+"ld h,(hl)|66",
+"ld h,a|67",
+"ld h,b|60",
+"ld h,c|61",
+"ld h,d|62",
+"ld h,e|63",
+"ld h,h|64",
+"ld h,l|65",
+"ld i,a|ed47",
+"ld ixh,a|dd67",
+"ld ixh,b|dd60",
+"ld ixh,c|dd61",
+"ld ixh,d|dd62",
+"ld ixh,e|dd63",
+"ld ixh,ixh|dd64",
+"ld ixh,ixl|dd65",
+"ld ixl,a|dd6f",
+"ld ixl,b|dd68",
+"ld ixl,c|dd69",
+"ld ixl,d|dd6a",
+"ld ixl,e|dd6b",
+"ld ixl,ixh|dd6c",
+"ld ixl,ixl|dd6d",
+"ld iyh,a|fd67",
+"ld iyh,b|fd60",
+"ld iyh,c|fd61",
+"ld iyh,d|fd62",
+"ld iyh,e|fd63",
+"ld iyh,iyh|fd64",
+"ld iyh,iyl|fd65",
+"ld iyl,a|fd6f",
+"ld iyl,b|fd68",
+"ld iyl,c|fd69",
+"ld iyl,d|fd6a",
+"ld iyl,e|fd6b",
+"ld iyl,iyh|fd6c",
+"ld iyl,iyl|fd6d",
+"ld l,(hl)|6e",
+"ld l,a|6f",
+"ld l,b|68",
+"ld l,c|69",
+"ld l,d|6a",
+"ld l,e|6b",
+"ld l,h|6c",
+"ld l,l|6d",
+"ld r,a|ed4f",
+"ld sp,hl|f9",
+"ld sp,ix|ddf9",
+"ld sp,iy|fdf9",
+"lddr|edb8",
+"ldd|eda8",
+"ldir|edb0",
+"ldi|eda0",
+"neg|ed44",
+"nop|00",
+"or (hl)|b6",
+"or a|b7",
+"or b|b0",
+"or c|b1",
+"or d|b2",
+"or e|b3",
+"or h|b4",
+"or ixh|ddb4",
+"or ixl|ddb5",
+"or iyh|fdb4",
+"or iyl|fdb5",
+"or l|b5",
+"otdr|edbb",
+"otir|edb3",
+"out (c),a|ed79",
+"out (c),b|ed41",
+"out (c),c|ed49",
+"out (c),d|ed51",
+"out (c),e|ed59",
+"out (c),h|ed61",
+"out (c),l|ed69",
+"out f,(c)|ed71",
+"outd|edab",
+"outi|eda3",
+"pop af|f1",
+"pop bc|c1",
+"pop de|d1",
+"pop hl|e1",
+"pop ix|dde1",
+"pop iy|fde1",
+"push af|f5",
+"push bc|c5",
+"push de|d5",
+"push hl|e5",
+"push ix|dde5",
+"push iy|fde5",
+"res 0,(hl)|cb86",
+"res 0,a|cb87",
+"res 0,b|cb80",
+"res 0,c|cb81",
+"res 0,d|cb82",
+"res 0,e|cb83",
+"res 0,h|cb84",
+"res 0,l|cb85",
+"res 1,(hl)|cb8e",
+"res 1,a|cb8f",
+"res 1,b|cb88",
+"res 1,c|cb89",
+"res 1,d|cb8a",
+"res 1,e|cb8b",
+"res 1,h|cb8c",
+"res 1,l|cb8d",
+"res 2,(hl)|cb96",
+"res 2,a|cb97",
+"res 2,b|cb90",
+"res 2,c|cb91",
+"res 2,d|cb92",
+"res 2,e|cb93",
+"res 2,h|cb94",
+"res 2,l|cb95",
+"res 3,(hl)|cb9e",
+"res 3,a|cb9f",
+"res 3,b|cb98",
+"res 3,c|cb99",
+"res 3,d|cb9a",
+"res 3,e|cb9b",
+"res 3,h|cb9c",
+"res 3,l|cb9d",
+"res 4,(hl)|cba6",
+"res 4,a|cba7",
+"res 4,b|cba0",
+"res 4,c|cba1",
+"res 4,d|cba2",
+"res 4,e|cba3",
+"res 4,h|cba4",
+"res 4,l|cba5",
+"res 5,(hl)|cbae",
+"res 5,a|cbaf",
+"res 5,b|cba8",
+"res 5,c|cba9",
+"res 5,d|cbaa",
+"res 5,e|cbab",
+"res 5,h|cbac",
+"res 5,l|cbad",
+"res 6,(hl)|cbb6",
+"res 6,a|cbb7",
+"res 6,b|cbb0",
+"res 6,c|cbb1",
+"res 6,d|cbb2",
+"res 6,e|cbb3",
+"res 6,h|cbb4",
+"res 6,l|cbb5",
+"res 7,(hl)|cbbe",
+"res 7,a|cbbf",
+"res 7,b|cbb8",
+"res 7,c|cbb9",
+"res 7,d|cbba",
+"res 7,e|cbbb",
+"res 7,h|cbbc",
+"res 7,l|cbbd",
+"ret c|d8",
+"ret m|f8",
+"ret nc|d0",
+"ret nz|c0",
+"ret pe|e8",
+"ret po|e0",
+"ret p|f0",
+"ret z|c8",
+"reti|ed4d",
+"retn|ed45",
+"ret|c9",
+"rl (hl)|cb16",
+"rl a|cb17",
+"rl b|cb10",
+"rl c|cb11",
+"rl d|cb12",
+"rl e|cb13",
+"rl h|cb14",
+"rl l|cb15",
+"rla|17",
+"rlc (hl)|cb06",
+"rlc a|cb07",
+"rlc b|cb00",
+"rlc c|cb01",
+"rlc d|cb02",
+"rlc e|cb03",
+"rlc h|cb04",
+"rlc l|cb05",
+"rlca|07",
+"rld|ed6f",
+"rr (hl)|cb1e",
+"rr a|cb1f",
+"rr b|cb18",
+"rr c|cb19",
+"rr d|cb1a",
+"rr e|cb1b",
+"rr h|cb1c",
+"rr l|cb1d",
+"rra|1f",
+"rrc (hl)|cb0e",
+"rrc a|cb0f",
+"rrc b|cb08",
+"rrc c|cb09",
+"rrc d|cb0a",
+"rrc e|cb0b",
+"rrc h|cb0c",
+"rrc l|cb0d",
+"rrca|0f",
+"rrd|ed67",
+"rst 0h|c7",
+"rst 0|c7",
+"rst 10h|d7",
+"rst 18h|df",
+"rst 20h|e7",
+"rst 28h|ef",
+"rst 30h|f7",
+"rst 38h|ff",
+"rst 8h|cf",
+"sbc a,(hl)|9e",
+"sbc a,a|9f",
+"sbc a,b|98",
+"sbc a,c|99",
+"sbc a,d|9a",
+"sbc a,e|9b",
+"sbc a,h|9c",
+"sbc a,ixh|dd9c",
+"sbc a,ixl|dd9d",
+"sbc a,iyh|fd9c",
+"sbc a,iyl|fd9d",
+"sbc a,l|9d",
+"sbc hl,bc|ed42",
+"sbc hl,de|ed52",
+"sbc hl,hl|ed62",
+"sbc hl,sp|ed72",
+"scf|37",
+"set 0,(hl)|cbc6",
+"set 0,a|cbc7",
+"set 0,b|cbc0",
+"set 0,c|cbc1",
+"set 0,d|cbc2",
+"set 0,e|cbc3",
+"set 0,h|cbc4",
+"set 0,l|cbc5",
+"set 1,(hl)|cbce",
+"set 1,a|cbcf",
+"set 1,b|cbc8",
+"set 1,c|cbc9",
+"set 1,d|cbca",
+"set 1,e|cbcb",
+"set 1,h|cbcc",
+"set 1,l|cbcd",
+"set 2,(hl)|cbd6",
+"set 2,a|cbd7",
+"set 2,b|cbd0",
+"set 2,c|cbd1",
+"set 2,d|cbd2",
+"set 2,e|cbd3",
+"set 2,h|cbd4",
+"set 2,l|cbd5",
+"set 3,(hl)|cbde",
+"set 3,a|cbdf",
+"set 3,b|cbd8",
+"set 3,c|cbd9",
+"set 3,d|cbda",
+"set 3,e|cbdb",
+"set 3,h|cbdc",
+"set 3,l|cbdd",
+"set 4,(hl)|cbe6",
+"set 4,a|cbe7",
+"set 4,b|cbe0",
+"set 4,c|cbe1",
+"set 4,d|cbe2",
+"set 4,e|cbe3",
+"set 4,h|cbe4",
+"set 4,l|cbe5",
+"set 5,(hl)|cbee",
+"set 5,a|cbef",
+"set 5,b|cbe8",
+"set 5,c|cbe9",
+"set 5,d|cbea",
+"set 5,e|cbeb",
+"set 5,h|cbec",
+"set 5,l|cbed",
+"set 6,(hl)|cbf6",
+"set 6,a|cbf7",
+"set 6,b|cbf0",
+"set 6,c|cbf1",
+"set 6,d|cbf2",
+"set 6,e|cbf3",
+"set 6,h|cbf4",
+"set 6,l|cbf5",
+"set 7,(hl)|cbfe",
+"set 7,a|cbff",
+"set 7,b|cbf8",
+"set 7,c|cbf9",
+"set 7,d|cbfa",
+"set 7,e|cbfb",
+"set 7,h|cbfc",
+"set 7,l|cbfd",
+"sla (hl)|cb26",
+"sla a|cb27",
+"sla b|cb20",
+"sla c|cb21",
+"sla d|cb22",
+"sla e|cb23",
+"sla h|cb24",
+"sla l|cb25",
+"sll (hl)|cb36",
+"sll a|cb37",
+"sll b|cb30",
+"sll c|cb31",
+"sll d|cb32",
+"sll e|cb33",
+"sll h|cb34",
+"sll l|cb35",
+"sra (hl)|cb2e",
+"sra a|cb2f",
+"sra b|cb28",
+"sra c|cb29",
+"sra d|cb2a",
+"sra e|cb2b",
+"sra h|cb2c",
+"sra l|cb2d",
+"srl (hl)|cb3e",
+"srl a|cb3f",
+"srl b|cb38",
+"srl c|cb39",
+"srl d|cb3a",
+"srl e|cb3b",
+"srl h|cb3c",
+"srl l|cb3d",
+"sub (hl)|96",
+"sub a|97",
+"sub b|90",
+"sub c|91",
+"sub d|92",
+"sub e|93",
+"sub h|94",
+"sub ixh|dd94",
+"sub ixl|dd95",
+"sub iyh|fd94",
+"sub iyl|fd95",
+"sub l|95",
+"xor (hl)|ae",
+"xor a|af",
+"xor b|a8",
+"xor c|a9",
+"xor d|aa",
+"xor e|ab",
+"xor h|ac",
+"xor ixh|ddac",
+"xor ixl|ddad",
+"xor iyh|fdac",
+"xor iyl|fdad",
+"xor l|ad",
+":add a,(ix*)|dd86*",
+":add a,(iy*)|fd86*",
+":add a,#|c6#",
+":and (ix*)|dda6*",
+":and (iy*)|fda6*",
+":and #|e6#",
+":adc a,(ix*)|dd8e*",
+":adc a,(iy*)|fd8e*",
+":adc a,#|ce#",
+":bit 0,(ix*)|ddcb*46",
+":bit 0,(iy*)|fdcb*46",
+":bit 1,(ix*)|ddcb*4e",
+":bit 1,(iy*)|fdcb*4e",
+":bit 2,(ix*)|ddcb*56",
+":bit 2,(iy*)|fdcb*56",
+":bit 3,(ix*)|ddcb*5e",
+":bit 3,(iy*)|fdcb*5e",
+":bit 4,(ix*)|ddcb*66",
+":bit 4,(iy*)|fdcb*66",
+":bit 5,(ix*)|ddcb*6e",
+":bit 5,(iy*)|fdcb*6e",
+":bit 6,(ix*)|ddcb*76",
+":bit 6,(iy*)|fdcb*76",
+":bit 7,(ix*)|ddcb*7e",
+":bit 7,(iy*)|fdcb*7e",
+":call nz,@|c4@",
+":call nc,@|d4@",
+":call po,@|e4@",
+":call pe,@|ec@",
+":call z,@|cc@",
+":call c,@|dc@",
+":call p,@|f4@",
+":call m,@|fc@",
+":call @|cd@",
+":cp (ix*)|ddbe*",
+":cp (iy*)|fdbe*",
+":cp #|fe#",
+":dec (ix*)|dd35*",
+":dec (iy*)|fd35*",
+":djnz $|10$",
+":inc (ix*)|dd34*",
+":inc (iy*)|fd34*",
+":in a,(#)|db#",
+":jp nz,@|c2@",
+":jp nc,@|d2@",
+":jp po,@|e2@",
+":jp pe,@|ea@",
+":jp z,@|ca@",
+":jp c,@|da@",
+":jp p,@|f2@",
+":jp m,@|fa@",
+":jp @|c3@",
+":jr nz,$|20$",
+":jr nc,$|30$",
+":jr z,$|28$",
+":jr c,$|38$",
+":jr $|18$",
+":ld a,(ix*)|dd7e*",
+":ld a,(iy*)|fd7e*",
+":ld b,(ix*)|dd46*",
+":ld b,(iy*)|fd46*",
+":ld c,(ix*)|dd4e*",
+":ld c,(iy*)|fd4e*",
+":ld d,(ix*)|dd56*",
+":ld d,(iy*)|fd56*",
+":ld e,(ix*)|dd5e*",
+":ld e,(iy*)|fd5e*",
+":ld h,(ix*)|dd66*",
+":ld h,(iy*)|fd66*",
+":ld l,(ix*)|dd6e*",
+":ld l,(iy*)|fd6e*",
+":ld (ix*),a|dd77*",
+":ld (ix*),b|dd70*",
+":ld (ix*),c|dd71*",
+":ld (ix*),d|dd72*",
+":ld (ix*),e|dd73*",
+":ld (ix*),h|dd74*",
+":ld (ix*),l|dd75*",
+":ld (iy*),a|fd77*",
+":ld (iy*),b|fd70*",
+":ld (iy*),c|fd71*",
+":ld (iy*),d|fd72*",
+":ld (iy*),e|fd73*",
+":ld (iy*),h|fd74*",
+":ld (iy*),l|fd75*",
+":ld (ix*),#|dd36*#",
+":ld (iy*),#|fd36*#",
+":ld (hl),#|36#",
+":ld hl,(@)|2a@",
+":ld bc,(@)|ed4b@",
+":ld de,(@)|ed5b@",
+":ld sp,(@)|ed7b@",
+":ld ix,(@)|dd2a@",
+":ld iy,(@)|fd2a@",
+":ld bc,@|01@",
+":ld de,@|11@",
+":ld hl,@|21@",
+":ld sp,@|31@",
+":ld ix,@|dd21@",
+":ld iy,@|fd21@",
+":ld a,(@)|3a@",
+":ld (@),hl|22@",
+":ld (@),bc|ed43@",
+":ld (@),de|ed53@",
+":ld (@),sp|ed73@",
+":ld (@),ix|dd22@",
+":ld (@),iy|fd22@",
+":ld (@),a|32@",
+":ld ixh,#|dd26#",
+":ld ixl,#|dd2e#",
+":ld iyh,#|fd26#",
+":ld iyl,#|fd2e#",
+":ld a,#|3e#",
+":ld b,#|06#",
+":ld c,#|0e#",
+":ld d,#|16#",
+":ld e,#|1e#",
+":ld h,#|26#",
+":ld l,#|2e#",
+":or (ix*)|ddb6*",
+":or (iy*)|fdb6*",
+":or #|f6#",
+":out (#),a|d3#",
+":res 0,(ix*)|ddcb*86",
+":res 0,(iy*)|fdcb*86",
+":res 1,(ix*)|ddcb*8e",
+":res 1,(iy*)|fdcb*8e",
+":res 2,(ix*)|ddcb*96",
+":res 2,(iy*)|fdcb*96",
+":res 3,(ix*)|ddcb*9e",
+":res 3,(iy*)|fdcb*9e",
+":res 4,(ix*)|ddcb*a6",
+":res 4,(iy*)|fdcb*a6",
+":res 5,(ix*)|ddcb*ae",
+":res 5,(iy*)|fdcb*ae",
+":res 6,(ix*)|ddcb*b6",
+":res 6,(iy*)|fdcb*b6",
+":res 7,(ix*)|ddcb*be",
+":res 7,(iy*)|fdcb*be",
+":rlc (ix*)|ddcb*06",
+":rlc (iy*)|fdcb*06",
+":rl (ix*)|ddcb*16",
+":rl (iy*)|fdcb*16",
+":rrc (ix*)|ddcb*0e",
+":rrc (iy*)|fdcb*0e",
+":rr (ix*)|ddcb*1e",
+":rr (iy*)|fdcb*1e",
+":sbc a,(ix*)|dd9e*",
+":sbc a,(iy*)|fd9e*",
+":sbc (ix*)|dd9e*",
+":sbc (iy*)|fd9e*",
+":sbc a,#|de#",
+":set 0,(ix*)|ddcb*c6",
+":set 0,(iy*)|fdcb*c6",
+":set 1,(ix*)|ddcb*ce",
+":set 1,(iy*)|fdcb*ce",
+":set 2,(ix*)|ddcb*d6",
+":set 2,(iy*)|fdcb*d6",
+":set 3,(ix*)|ddcb*de",
+":set 3,(iy*)|fdcb*de",
+":set 4,(ix*)|ddcb*e6",
+":set 4,(iy*)|fdcb*e6",
+":set 5,(ix*)|ddcb*ee",
+":set 5,(iy*)|fdcb*ee",
+":set 6,(ix*)|ddcb*f6",
+":set 6,(iy*)|fdcb*f6",
+":set 7,(ix*)|ddcb*fe",
+":set 7,(iy*)|fdcb*fe",
+":sla (ix*)|ddcb*26",
+":sla (iy*)|fdcb*26",
+":sra (ix*)|ddcb*2e",
+":sra (iy*)|fdcb*2e",
+":srl (ix*)|ddcb*3e",
+":srl (iy*)|fdcb*3e",
+":sub (ix*)|dd96*",
+":sub (iy*)|fd96*",
+":sub #|d6#",
+":xor (ix*)|ddae*",
+":xor (iy*)|fdae*",
+":xor #|ee#"
+};
+
+
+
+void Z80AssError(string error)
+{
+	uint len,ptr,line,c;
+	string str;
+
+	if(Z80AssStop) return;
+
+	Print("Z80Ass error: "+error+"\n");
+
+	str=" "+(Z80AssLine+1)+": ";
+	
+	line=0;
+	ptr=0;
+	
+	len=Z80AssOriginalSource.length();
+	
+	while(ptr<len)
+	{
+		c=Z80AssOriginalSource[ptr++];
+
+		if(line==Z80AssLine)
+		{
+			if(c!='\n') str+=charFromCode(c); else break;
+		}
+		else
+		{
+			if(c=='\n') ++line;
+		}
+	}
+	
+	str+="\n";
+
+	Print(str);
+
+	Z80AssStop=true;
+}
+
+
+
+bool Z80AssCompareSrcPart(string str)
+{
+	uint i,ptr,len;
+
+	ptr=Z80AssSourcePtr;
+	len=str.length();
+	
+	for(i=0;i<len;++i) if(Z80AssSource[ptr++]!=str[i]) return false;
+
+	return true;
+}
+
+
+
+bool Z80AssLabelIsCharAllowed(uint c)
+{
+	return ((c>='a'&&c<='z')||(c>='0'&&c<='9')||c=='_'||c=='.');
+}
+
+
+
+int Z80AssHexChar(uint c)
+{
+	if(c>='0'&&c<='9') return c-'0'; else return c-'a'+10;
+}
+
+
+
+void Z80AssEmitCode(uint value)
+{
+	Z80Mem[Z80AssProgramCounter++]=value;
+}
+
+
+
+void Z80AssEmitByte(int value)
+{
+	if(value<-255||value>255) Z80AssError("truncated to 8-bit!");
+
+	Z80AssEmitCode(value);
+}
+
+
+
+void Z80AssEmitWord(int value)
+{
+	if(value<-65535||value>65535) Z80AssError("truncated to 16-bit!");
+
+	Z80AssEmitCode(value&255);
+	Z80AssEmitCode(value>>8);
+}
+
+
+
+int Z80AssRelativeOffset(int value)
+{
+	if(value<-128||value>127) Z80AssError("relative offset is out of range -128..127!");
+
+	if(value<0) value=((0-value-1)^0xff)&0xff;
+
+	return value;
+}
+
+
+
+int Z80AssParseNumber(void)
+{
+	int c,base,value;
+
+	value=0;
+	base=10;
+
+	c=Z80AssSource[Z80AssSourcePtr];
+
+	if(!(c>='0'&&c<='9')&&c!='#'&&c!='%') return 0x7fffffff;//not a number
+
+	if(c=='#') base=16;
+	if(c=='%') base=2;
+
+	if(base!=10) ++Z80AssSourcePtr;
+
+	while(Z80AssSourcePtr<Z80AssSourceLen)
+	{
+		c=Z80AssSource[Z80AssSourcePtr];
+
+		if(c=='\n') break;
+
+		if(c>='0'&&c<='9') c=c-'0'; else if(c>='a'&&c<='f') c=c-'a'+10;
+
+		if(c<0||c>=base) break;
+
+		value=value*base+c;
+
+		++Z80AssSourcePtr;
+	}
+
+	return value;
+}
+
+
+
+int Z80AssParseEquation(uint pass)
+{
+	uint i;
+	int n,result,value;
+	string label;
+	int8 c,alu,nalu;
+	bool found;
+
+	result=0;
+	alu=0;
+	nalu='=';//set first number as initial value
+
+	while(Z80AssSourcePtr<Z80AssSourceLen)
+	{
+		c=Z80AssSource[Z80AssSourcePtr];
+
+		if(c=='\n'||c==' '||c==')'||c==',') break;
+
+		if(c=='$')//current translation address
+		{
+			++Z80AssSourcePtr;
+			value=Z80AssProgramCounter;
+			alu=nalu;
+			nalu=0;
+		}
+		else
+		{
+			n=Z80AssParseNumber();
+
+			if(n!=0x7fffffff)
+			{
+				value=n;
+				alu=nalu;
+				nalu=0;
+			}
+			else//not a number, probably a label
+			{
+				if((c>='a'&&c<='z')||c=='_'||c=='.')//label
+				{
+					if(c!='.') label=""; else label=Z80AssLabelScope;//local label, add preceding label scope
+
+					while(Z80AssSourcePtr<Z80AssSourceLen)
+					{
+						c=Z80AssSource[Z80AssSourcePtr];
+
+						if(!Z80AssLabelIsCharAllowed(c)) break;
+
+						label+=charFromCode(c);
+						++Z80AssSourcePtr;
+					}
+
+					if(pass==1)//pass 1
+					{
+						value=0;
+						Z80AssLineList[Z80AssLine].compile=true;//lines with labels in equation will be compiled in pass 2
+					}
+					else//pass 2
+					{
+						found=false;
+
+						for(i=0;i<Z80AssLabelList.length();++i)
+						{
+							if(Z80AssLabelList[i].name==label)
+							{
+								value=Z80AssLabelList[i].adr;
+								found=true;
+								break;
+							}
+						}
+
+						if(!found)
+						{
+							Z80AssError("label '"+label+"' is not defined!");
+							return 0;
+						}
+
+						alu=nalu;
+						nalu=0;
+					}
+				}
+				else//not a label, probably a math operator
+				{
+					if(nalu!=0&&nalu!='=')
+					{
+						Z80AssError("unexpected operation in an equation!");
+						return 0;
+					}
+
+					nalu=c;
+					++Z80AssSourcePtr;
+				}
+			}
+		}
+
+		if(alu!=0)
+		{
+			switch(alu)
+			{
+			case '=':
+			case '+': result+=value; break;
+			case '-': result-=value; break;
+			case '*': result*=value; break;
+			case '/': result/=value; break;
+			case '&': result&=value; break;
+			case '|': result|=value; break;
+			case '^': result^=value; break;
+			default:
+				Z80AssError("unexpected int8acter in an equation!");
+				return 0;
+			}
+
+			alu=0;
+		}
+	}
+
+	return result;
+}
+
+
+
+void Z80AssParseDataArray(int s)
+{
+	int value;
+
+	Z80AssSourcePtr+=3;
+
+	while(Z80AssSourcePtr<Z80AssSourceLen)
+	{
+		if(Z80AssSource[Z80AssSourcePtr]=='\n') return;
+
+		value=Z80AssParseEquation(Z80AssPass);
+
+		if(s==1) Z80AssEmitByte(value); else Z80AssEmitWord(value);
+
+		if(Z80AssSource[Z80AssSourcePtr]==',') ++Z80AssSourcePtr;
+	}
+}
+
+
+
+bool Z80AssParseDirective(void)
+{
+	uint i,len;
+	int value;
+
+	if(Z80AssCompareSrcPart("db "))//parse string of db's
+	{
+		Z80AssParseDataArray(1);
+		return true;
+	}
+
+	if(Z80AssCompareSrcPart("dw "))//parse string of dw's
+	{
+		Z80AssParseDataArray(2);
+		return true;
+	}
+
+	if(Z80AssCompareSrcPart("ds "))//allocate bytes, with optional fill value
+	{
+		Z80AssSourcePtr+=3;
+
+		len=Z80AssParseEquation(2);
+
+		if(Z80AssSource[Z80AssSourcePtr]==',')
+		{
+			++Z80AssSourcePtr;
+			value=Z80AssParseEquation(2);
+		}
+		else
+		{
+			value=0;
+		}
+
+		for(i=0;i<len;++i) Z80AssEmitByte(value);
+
+		return true;
+	}
+
+	if(Z80AssCompareSrcPart("org "))
+	{
+		Z80AssSourcePtr+=4;
+		Z80AssProgramCounter=Z80AssParseEquation(Z80AssPass);
+
+		return true;
+	}
+
+	if(Z80AssCompareSrcPart("align "))
+	{
+		Z80AssSourcePtr+=6;
+		value=Z80AssParseEquation(Z80AssPass);
+		Z80AssProgramCounter=(Z80AssProgramCounter+value-1)&~(value-1);
+
+		return true;
+	}
+
+	if(Z80AssCompareSrcPart("module "  )) return true;//allowed, doing nothing
+	if(Z80AssCompareSrcPart("endmodule")) return true;
+
+	if(Z80AssCompareSrcPart("if "))
+	{
+		Z80AssSourcePtr+=3;
+
+		value=Z80AssParseEquation(2);	//always get actual value
+
+		if(value==0)	//skip to next endif
+		{
+			while(Z80AssLine<Z80AssLinesAll)
+			{
+				++Z80AssLine;
+				
+				Z80AssSourcePtr=Z80AssLineList[Z80AssLine].off;
+
+				Z80AssParseLabel();
+				
+				if(Z80AssCompareSrcPart("endif")) break;
+			}
+		}
+
+		return true;
+	}
+
+	if(Z80AssCompareSrcPart("endif")) return true;
+	
+	return false;
+}
+
+
+
+int Z80AssParseOpcodePart(uint opcode_start,uint opcodes_all,uint rowlen)
+{
+	uint i,j,c,oplen,match,param_off,opcode,opcode_end;
+
+	opcode_end=opcode_start+opcodes_all;
+
+	for(opcode=opcode_start;opcode<opcode_end;++opcode)
+	{
+		oplen=Z80AssOpcodeLenList[opcode];
+
+		if(Z80AssOpcodeList[opcode][0]!=':')
+		{
+			if(rowlen!=oplen) continue;
+			
+			match=0;
+		}
+		else
+		{
+			if(rowlen+2<oplen) continue;
+
+			match=1;
+		}
+
+		param_off=0;
+
+		Z80AssSourcePtr=Z80AssSourcePtrOld;
+
+		for(j=match;j<oplen;++j)
+		{
+			c=Z80AssOpcodeList[opcode][j];
+
+			if(c=='#'||c=='$'||c=='*'||c=='@')
+			{
+				Z80AssParamValue[param_off++]=Z80AssParseEquation(Z80AssPass);
+				
+				if(Z80AssStop) break;
+			}
+			else
+			{
+				if(c!=Z80AssSource[Z80AssSourcePtr++]) break;
+			}
+			
+			++match;
+		}
+
+		if(match==oplen) return opcode;
+	}
+	
+	return -1;
+}
+
+
+
+void Z80AssParseOpcode(void)
+{
+	uint i,j,c,len,rowlen,oplen,param_off,ptr;
+	int opcode,value;
+
+	rowlen=Z80AssSource.findFirst("\n",Z80AssSourcePtr)-Z80AssSourcePtr;//calculate line length
+	
+	if(rowlen==0) return;//empty opcode field
+
+	Z80AssSourcePtrOld=Z80AssSourcePtr;
+
+	c=Z80AssSource[Z80AssSourcePtr];
+
+	if(Z80AssOpcodeLetterStartA[c]>=0)	//first try to search parameter-less opcode starting from given character
+	{
+		opcode=Z80AssParseOpcodePart(Z80AssOpcodeLetterStartA[c],Z80AssOpcodeLetterLenA[c],rowlen);
+	}
+	else
+	{
+		opcode=-1;
+	}
+	
+	if(opcode<0)	//if no parameter-less opcode found, search all opcodes with parameters
+	{
+		opcode=Z80AssParseOpcodePart(Z80AssOpcodeLetterStartB[c],Z80AssOpcodeLetterLenB[c],rowlen);
+	}
+	
+	if(opcode<0)
+	{
+		Z80AssError("unknown opcode or directive!");
+		Z80AssStop=true;
+		return;
+	}
+
+	ptr=Z80AssOpcodeLenList[opcode]+1;
+	len=Z80AssOpcodeList[opcode].length();
+	param_off=0;
+	
+	while(ptr<len)
+	{
+		c=Z80AssOpcodeList[opcode][ptr++];
+
+		if((c>='0'&&c<='9')||(c>='a'&&c<='f'))
+		{
+			Z80AssEmitCode((Z80AssHexChar(c)<<4)|Z80AssHexChar(Z80AssOpcodeList[opcode][ptr++]));
+			continue;
+		}
+
+		value=Z80AssParamValue[param_off++];
+
+		switch(c)
+		{
+		case '#'://8-bit immediate
+			Z80AssEmitByte(value);
+			break;
+
+		case '@'://16-bit immediate
+			Z80AssEmitWord(value);
+			break;
+
+		case '$'://8-bit relative
+			if(value>127) value-=Z80AssProgramCounter+1;//a hack to distinguish an absolute address from actual offset value
+
+		case '*'://8-bit relative optional
+			Z80AssEmitCode(Z80AssRelativeOffset(value));
+			break;
+		}
+	}
+}
+
+
+
+void Z80AssParseLabel(void)
+{
+	uint i,c,lt,len;
+	int value;
+	string label;
+	LabelStruct ls;
+
+	if(Z80AssSource[Z80AssSourcePtr]!='@') return;
+
+	Z80AssLineList[Z80AssLine].compile=true;//lines with labels needs to be compiled in the pass 2
+	
+	++Z80AssSourcePtr;
+
+	lt=Z80AssSource[Z80AssSourcePtr];
+
+	if(lt>='0'&&lt<='9')
+	{
+		Z80AssError("label can't start with a number!");
+		return;
+	}
+
+	if(lt!='.') label=""; else label=Z80AssLabelScope;//local label, add preceding label scope
+
+	value=Z80AssProgramCounter;
+
+	while(Z80AssSourcePtr<Z80AssSourceLen)
+	{
+		c=Z80AssSource[Z80AssSourcePtr];
+
+		if(c=='\n') break;//line break, not skipped
+
+		++Z80AssSourcePtr;
+
+		if(c==' '||c==':')//space or semicolon terminates label, needs to be skipped
+		{
+			if(Z80AssCompareSrcPart("equ "))//special case for equ
+			{
+				Z80AssSourcePtr+=4;
+				value=Z80AssParseEquation(Z80AssPass);
+				break;
+			}
+
+			if(Z80AssSource[Z80AssSourcePtr]==' ') ++Z80AssSourcePtr;//also skip space between semicolon and opcode
+			break;
+		}
+
+		if(c=='=')
+		{
+			value=Z80AssParseEquation(Z80AssPass);
+			break;
+		}
+
+		if(Z80AssLabelIsCharAllowed(c))
+		{
+			label+=charFromCode(c);
+		}
+		else
+		{
+			Z80AssError("wrong character in label name!");
+			return;
+		}
+	}
+
+	if(lt!='.') Z80AssLabelScope=label;//global label, set as new scope label
+
+	if(Z80AssPass==1)
+	{
+		len=Z80AssLabelList.length();
+		
+		for(i=0;i<len;++i)
+		{
+			if(Z80AssLabelList[i].name==label)
+			{
+				Z80AssError("label already defined!");
+				return;
+			}
+		}
+
+		ls.name=label;
+		ls.adr=value;
+
+		Z80AssLabelList.insertLast(ls);
+	}
+}
+
+
+
+void Z80AssDumpLabelList(void)
+{
+	for(uint i=0;i<Z80AssLabelList.length();++i) Print(Z80AssLabelList[i].name+" "+Z80AssLabelList[i].adr+"\n");
+}
+
+
+
+void Z80AssInit(void)
+{
+	uint i,c;
+	
+	//build list of opcode lengths
+	
+	Z80AssOpcodeListLen=Z80AssOpcodeList.length();
+	
+	for(i=0;i<Z80AssOpcodeListLen;++i) Z80AssOpcodeLenList[i]=Z80AssOpcodeList[i].findFirst("|");
+	
+	//build list of pointers to each possible first character, and number of opcodes starting from this character
+	
+	for(i=0;i<256;++i)
+	{
+		Z80AssOpcodeLetterStartA[i]=-1;
+		Z80AssOpcodeLetterStartB[i]=-1;
+		Z80AssOpcodeLetterLenA[i]=0;
+		Z80AssOpcodeLetterLenB[i]=0;
+	}
+
+	for(i=0;i<Z80AssOpcodeListLen;++i)
+	{
+		c=Z80AssOpcodeList[i][0];
+
+		if(c!=':')
+		{
+			if(Z80AssOpcodeLetterStartA[c]< 0) Z80AssOpcodeLetterStartA[c]=i;
+			if(Z80AssOpcodeLetterStartA[c]>=0) Z80AssOpcodeLetterLenA  [c]++;
+		}
+		else
+		{
+			c=Z80AssOpcodeList[i][1];
+
+			if(Z80AssOpcodeLetterStartB[c]< 0) Z80AssOpcodeLetterStartB[c]=i;
+			if(Z80AssOpcodeLetterStartB[c]>=0) Z80AssOpcodeLetterLenB  [c]++;
+		}
+	}
+}
+
+
+
+string Z80AssSourceCleanup(string src)
+{
+	uint i,c,sptr,spaces,prevc,size,len,slen;
+	bool newline,label;
+	string dst;
+	
+	//similar to pass 0 of actual compilation
+	
+	dst="";
+	
+	newline=true;
+	label=false;
+	sptr=0;
+	spaces=0;
+	prevc=255;
+	
+	slen=src.length();
+	
+	while(sptr<slen)
+	{
+		c=src[sptr++];
+
+		if(c==0x09||c==0x0d) c=0x20;//tabs and returns to spaces
+
+		if(c==0x20&&c==prevc) continue; else prevc=c;//skip multiple spaces
+
+		if(c>='A'&&c<='Z') c+=0x20;//to lower case
+
+		if(c==';')//skip comments
+		{
+			sptr=src.findFirst("\n",sptr);
+			continue;
+		}
+
+		if(c==0x20) ++spaces;
+
+		if(newline) if(c>0x20) label=true; else dst+=" ";
+
+		len=dst.length();
+		
+		if(c=='\n'&&len!=0)//remove any trailing spaces and repeating new lines
+		{
+			for(i=len-1;i>0;--i)
+			{
+				if(dst[i]!=0x20&&dst[i]!='\n')
+				{
+					dst.resize(i+1);
+					break;
+				}
+			}
+		}
+
+		if(c!=0x20||(label&&spaces==1)||spaces==2) dst+=charFromCode(c);
+
+		if(c=='\n')
+		{
+			newline=true;
+			label=false;
+			spaces=0;
+		}
+		else
+		{
+			newline=false;
+		}
+	}
+
+	dst+="\n";
+	
+	return dst;
+}
+
+
+
+int Z80AssCompile(string src,uint adr)
+{
+	uint i,c,sptr,spaces,prevc,size,len,slen;
+	bool newline,label;
+	LineStruct line;
+
+	//ProfileStart();
+	
+	Z80AssOriginalSource=src;
+
+	Z80AssSource="";
+	Z80AssSourcePtr=0;
+
+	//pass 0 creates a copy of the source code without all unneeded spaces and comments, with labels marked with @
+	//also makes all text lower case (labels are case-insensitive)
+	//original source code remains untouched and used in error reports
+	//the only spaces kept are space between an op and a parameter, and space between a label and an op
+
+	newline=true;
+	label=false;
+	sptr=0;
+	spaces=0;
+	prevc=255;
+	
+	Z80AssLineList.resize(0);
+	
+	line.off=0;
+	line.adr=0;
+	line.compile=false;
+	
+	slen=Z80AssOriginalSource.length();
+	
+	while(sptr<slen)
+	{
+		c=Z80AssOriginalSource[sptr++];
+
+		if(c==0x09||c==0x0d) c=0x20;//tabs and returns to spaces
+
+		if(c==0x20&&c==prevc) continue; else prevc=c;//skip multiple spaces
+
+		if(c>='A'&&c<='Z') c+=0x20;//to lower case
+
+		if(c==';')//skip comments
+		{
+			sptr=Z80AssOriginalSource.findFirst("\n",sptr);
+			continue;
+		}
+
+		if(newline&&c>0x20)//mark labels
+		{
+			Z80AssSource+="@";
+			label=true;
+		}
+
+		if(c==0x20) ++spaces;
+
+		len=Z80AssSource.length();
+		
+		if(c=='\n'&&len!=0)//remove any trailing spaces and repeating new lines
+		{
+			for(i=len-1;i>0;--i)
+			{
+				if(Z80AssSource[i]!=0x20)
+				{
+					Z80AssSource.resize(i+1);
+					break;
+				}
+			}
+		}
+
+		if(c!=0x20||(label&&spaces==1)||spaces==2) Z80AssSource+=charFromCode(c);
+
+		if(c=='\n')
+		{
+			Z80AssLineList.insertLast(line);
+			
+			line.off=Z80AssSource.length();
+			
+			newline=true;
+			label=false;
+			spaces=0;
+		}
+		else
+		{
+			newline=false;
+		}
+	}
+
+	Z80AssLineList.insertLast(line);
+	
+	Z80AssSource+="\n";
+
+	Z80AssSourceLen=Z80AssSource.length();
+	Z80AssLinesAll=Z80AssLineList.length();
+	
+	//pass 1 translates code with zeroes instead of parameters and calculates labels in the process
+
+	Z80AssLabelList.resize(0);
+	Z80AssStop=false;
+
+	Z80AssPass=1;
+	Z80AssLabelScope="";
+
+	Z80AssProgramCounter=adr;
+
+	for(Z80AssLine=0;Z80AssLine<Z80AssLinesAll;++Z80AssLine)
+	{
+		Z80AssSourcePtr=Z80AssLineList[Z80AssLine].off;
+		Z80AssLineList[Z80AssLine].adr=Z80AssProgramCounter;
+		
+		Z80AssParseLabel();
+		
+		if(!Z80AssParseDirective()) Z80AssParseOpcode();//parse opcode or directive
+		
+		if(Z80AssStop) break;
+	}
+
+	size=Z80AssProgramCounter-adr;
+
+	//Z80AssDumpLabelList();
+	
+	//pass 2 translates only those lines that weren't compiled in the pass 1 because labels weren't defined
+
+	Z80AssPass=2;
+	Z80AssLabelScope="";
+
+	for(Z80AssLine=0;Z80AssLine<Z80AssLinesAll;++Z80AssLine)
+	{
+		if(!Z80AssLineList[Z80AssLine].compile) continue;
+		
+		Z80AssSourcePtr=Z80AssLineList[Z80AssLine].off;
+		Z80AssProgramCounter=Z80AssLineList[Z80AssLine].adr;
+		
+		Z80AssParseLabel();
+		
+		if(!Z80AssParseDirective()) Z80AssParseOpcode();//parse opcode or directive
+		
+		if(Z80AssStop) break;
+	}
+
+	//Z80AssDumpLabelList();
+	
+	//cleanup
+	
+	Z80AssSource.resize(0);
+	Z80AssOriginalSource.resize(0);
+	Z80AssLabelList.resize(0);
+	Z80AssLineList.resize(0);
+
+	//ProfileEnd();
+
+	return Z80AssStop?-1:size;
+}

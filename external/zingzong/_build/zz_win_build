@@ -1,0 +1,49 @@
+#! /bin/bash -ue
+#
+# ----------------------------------------------------------------------
+#
+# zingzong build script for win32/win64
+#
+# by Benjamin Gerard AKA Ben/OVR
+#
+# ----------------------------------------------------------------------
+
+build=../zz_build
+
+# Program name
+prog=$(basename "$0" .sh)
+
+# Basename of dirname is our host name
+[ -n "${arch-}" ] ||
+    export arch="${PWD##*/}"
+
+case "$arch" in
+
+    in_zingzong)
+        #########################
+        # Winamp plugin special #
+        #########################
+	if [ -z "${WADIR+set}" ]; then
+            export WADIR="$(regtool -W get /user/Software/Winamp/)"
+	which cygpath >/dev/null 2>/dev/null && 
+	    WADIR="$(cygpath -m "$WADIR")"
+        set -- "$@" NO_AO=1 NO_SRATE=1
+        export arch=i686-w64-mingw32
+        export ZZ_MAKEFILE=../src/zz-winamp/Makefile
+        ;;
+
+    *-*-mingw*)
+        ######################
+        # Only support mingw #
+        ######################
+        ;;
+
+    *) echo "$prog: not a valid host triplet -- $arch" >&2
+       exit 1 ;;
+esac
+
+# ----------------------------------------------------------------------
+# Let's build
+# ----------------------------------------------------------------------
+
+exec $build "$@"

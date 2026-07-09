@@ -1,0 +1,27 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"PO-Revision-Date: 2017-03-01 16:05+0300\n"
+"Last-Translator: <EMAIL@ADDRESS>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+msgid "{} processing"
+msgstr "Анализ {}"
+
+msgid "{0} processing at {1}"
+msgstr "Анализ {0} в {1}"
+
+msgid "{0} processing for {1}"
+msgstr "Анализ {0} для {1}"
+
+msgid "{0} processing for {1} at {2}"
+msgstr "Анализ {0} для {1} в {2}"
+
+msgid "Specified minimal scan size ({0}). Should be more than {1}."
+msgstr "Неправильный минимальный размер блока для анализа ({0}). Должен быть больше {1}."

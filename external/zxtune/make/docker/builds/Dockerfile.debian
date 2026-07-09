@@ -1,0 +1,35 @@
+# --begin: keep in sync with other linux-based builds
+ARG arch
+
+FROM debian:bookworm-slim as debian-buildenv
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+     ca-certificates debian-ports-archive-keyring \
+     wget xz-utils bzip2 zip nano less sudo \
+     git make cmake g++ gcc python3-minimal ccache && \
+    useradd -m -s /bin/bash -U -G users,sudo -d /build build && \
+    echo '%sudo ALL = (root) NOPASSWD: ALL' >> /etc/sudoers
+ENV prebuilt=/build/prebuilt toolchains=/build/toolchains
+# --end
+
+FROM debian-buildenv
+RUN apt-get install -y --no-install-recommends \
+      debhelper build-essential fakeroot \
+      libpulse-dev libclalsadrv-dev \
+      libboost-locale-dev libboost-program-options-dev libicu-dev \
+      qtbase5-dev
+
+# TODO: link own static boost
+USER build
+RUN mkdir /build/zxtune && cd /build/zxtune && \
+    git init && \
+    git remote add --tags origin https://bitbucket.org/zxtune/zxtune.git && \
+    echo "platform=linux\narch=x86_64\npackaging?=deb\ndistro?=bookworm" > variables.mak && \
+    echo "qt.includes=/usr/include/x86_64-linux-gnu/qt5\nqt.bin=/usr/lib/x86_64-linux-gnu/qt5/bin/" >> variables.mak && \
+    echo "cxx_flags=-fPIC\nboost.force_static=1\nlibraries.linux=icuuc icudata\ntools.python=python3" >> variables.mak
+
+WORKDIR /build/zxtune
+COPY entrypoint.sh .
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["package", "-C", "apps/bundle"]

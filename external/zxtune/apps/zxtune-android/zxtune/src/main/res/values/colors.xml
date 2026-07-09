@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent">#607d8b</color>
+    <color name="accent_transparent">#c0607d8b</color>
+
+    <color name="background">@android:color/background_light</color>
+</resources>
