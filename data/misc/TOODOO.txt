@@ -20,10 +20,6 @@ gym	5 dm	5 0cc	5
 
 - .... in progress...  PESIC: revisit zophar arcade
 
-* .....IN PROGRESS.... PESIC ......Mirsoft World of Game Mods
-URL: [http://www.mirsoft.info](http://www.mirsoft.info)
-What it is: A massive database specifically tracking down original game tracker modules across PC, Amiga, and Atari platforms.
-
 --- MP3 / FLAC - not sure - we focus on real chip music - but already have some - maybe -----
 
 * (started and parked) https://chipmusic.org --  chipmusic.org serves MP3 only. 

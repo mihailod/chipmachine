@@ -133,6 +133,7 @@ Metadata from these databases is ingested, normalized, deduped and cross-checked
 * VGMRips - https://vgmrips.net
 * ZX TUNES - https://zxtunes.com
 * SMS POWER! - https://www.smspower.org
+* MirSoft - http://www.mirsoft.info
 
 ### Remixes (MP3)
 

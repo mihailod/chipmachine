@@ -281,9 +281,51 @@
 --     enumeration): 6337 shots for 2475/2522 games via the fiche=num endpoint,
 --     replacing the old fragile difflib name-search (was 30/27). Rebuilt by
 --     chipmachine/scripts/build_cpcpower.py (--build / --screenshots). Bump forces a reindex.
-VERSION = 85;
+-- 86: mirsoft.info "World of Game MODs" collection (mirsoft) -- the tracker
+--     modules used in games, one .zip per game (several .mod/.xm/.it/.s3m/.med
+--     + info.txt). Spans many platforms (Amiga-dominant, then C64/PC/NES/SNES/
+--     Mac/PlayStation/...) but by policy only mainstream tracker formats, so
+--     NO new format: every module plays via OpenMPT/UADE and the ZIP-by-magic
+--     subsong handler extracts them like zophar/vgmrips/smspower (Digital
+--     Mugician .dmu now in that allow-list too; info.txt + the odd .mid/.dro/.mo3
+--     are ignored). 1049 net-new games kept after platform-aware dedup: Amiga
+--     names vs UnExoticA + modland "Video Game Music", C64 vs rko, CPC vs
+--     cpcpower, consoles vs zophar/vgmrips/smspower, plus a byte (stem,size)
+--     content match vs modland+amp. The 1601-game 2021 IA tarball is topped up
+--     with 29 net-new games added to mirsoft since (fetched live via the site's
+--     newest-additions delta, dates 2022-2025). CLASSIFIED BY GAME PLATFORM
+--     (item 4): the `format`
+--     column is a canonical platform label mapped in initFormats' mirsoft block
+--     (Amiga->AMIGA, Commodore 64->SID, PC->PC, NES->NES, ...). SOURCE is the
+--     Internet Archive item mirsoftJuly2021snapshot (a 982MB .tar.xz of the raw
+--     gamemods/ tree), parsed offline by chipmachine/scripts/build_mirsoft.py; every fact
+--     (platform/composer/format/tracks) comes from each game's info.txt -- no
+--     live crawl. RUNTIME serves archive.org first (mirsoftJuly2021snapshot/
+--     gamemods/<Game>.zip) with the live mirsoft host as fallback (generateIndex
+--     mirsoft branch, like hvtc's Wayback+live). mirsoft hosts no screenshots,
+--     so best-effort game shots are matched by name from sources we already ship
+--     (gb64 for C64, Hall of Light/abime for Amiga, zophar/vgmrips/smspower/
+--     cpcpower reuse) into data/mirsoft_screenshots.txt (274/1049), consumed by
+--     the mirsoft branch of getSongScreenshots.
+--     Bump forces a reindex.
+VERSION = 86;
 
 DB = {
+{
+	-- mirsoft.info "World of Game MODs" (id=mirsoft): game tracker modules, one
+	-- .zip per game. source = live mirsoft base; generateIndex's mirsoft branch
+	-- registers archive.org as PRIMARY and this live host as FALLBACK. The path
+	-- column is the URL-encoded "<Game>.zip"; the ZIP-by-magic handler extracts
+	-- the .mod/.xm/.it/.s3m/.med members as subsongs. Classified by game platform
+	-- via the `format` column (see initFormats mirsoft block). Built offline from
+	-- the Internet Archive mirsoftJuly2021snapshot .tar.xz by chipmachine/scripts/build_mirsoft.py.
+	name = "World of Game MODs",
+	id =  "mirsoft",
+	source = "http://mirsoft.info/gamemods/",
+	song_list = "data/mirsoft.txt",
+	song_template = "title composer format path ext",
+	color = 0xfffff
+},
 {
 	name = "unexotica",
 	id =  "unexotica",

@@ -357,6 +357,70 @@ TEST_CASE("SMS Power format labels classify to a platform", "[music]")
     REQUIRE(mdb.classifyFormat("ColecoVision", url) == OTHER);
 }
 
+// mirsoft "World of Game MODs" (mirsoft) is classified by the GAME's platform:
+// the `format` column carries a platform label, so a C64/NES/SNES game's tracker
+// arrangement must file under that console (db.lua v86, "classify by game
+// platform"). Every label must resolve to a real platform (never UNKNOWN, which
+// is invisible to every F9 filter).
+TEST_CASE("mirsoft platform labels classify to a platform", "[music]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    const std::string url = "mirsoft::A%20Game.zip";
+    struct { const char* fmt; uint8_t plat; } cases[] = {
+        { "Amiga", AMIGA },              { "Commodore 64", SID },
+        { "PC", PC },                    { "NES", NES },
+        { "Super Nintendo", SNES },      { "Macintosh", APPLE },
+        { "PlayStation", PLAYSTATION },  { "Game Boy", GAMEBOY },
+        { "Nintendo 64", NINTENDO64 },   { "Sega Mega Drive", MEGADRIVE },
+        { "Sega Master System", SEGAMS },{ "Sega Saturn", SATURN },
+        { "Dreamcast", DREAMCAST },      { "Atari ST", ATARI },
+        { "Atari Falcon", ATARI },       { "Atari Jaguar", ATARI },
+        { "ZX Spectrum", SPECTRUM },     { "Amstrad CPC", AMSTRAD },
+        { "PC Engine", HES },            { "Arcade", ARCADE },
+    };
+    for (auto const& c : cases) {
+        INFO("format " << c.fmt);
+        uint8_t b = mdb.classifyFormat(c.fmt, url);
+        REQUIRE(b != UNKNOWN_FORMAT);
+        REQUIRE(b == c.plat);
+    }
+}
+
+// The "no new format" claim: mirsoft holds only mainstream tracker modules, even
+// for console games (tracker arrangements, not native .sid/.nsf rips). Each of
+// its formats must play through the real host path (createPlugins -> fromFile ->
+// getSamples), the same one the ZIP-by-magic subsong handler feeds at runtime.
+// Fixtures are real net-new mirsoft modules (one per format we ship).
+TEST_CASE("mirsoft game modules play via the host path", "[music]")
+{
+    auto ap = std::make_shared<AudioPlayerNull>();
+    const auto injector = di::make_injector(di::bind<utils::path>.to("."),
+                                            di::bind<AudioPlayer>.to(ap));
+    musix::ChipPlugin::createPlugins("data");
+    chipmachine::MusicPlayer mp{ ap };
+    for (const char* f : { "testmus/mirsoft/ironseed-cargo.mod",
+                           "testmus/mirsoft/crystalis.it",
+                           "testmus/mirsoft/ageofempires-track3.xm",
+                           "testmus/mirsoft/speedhaste.s3m",
+                           "testmus/mirsoft/simcity2000.med",
+                           // .dmu = Digital Mugician (UADE); mirsoft ships a few,
+                           // now in the ZIP-member allow-list (MusicPlayerList).
+                           "testmus/mirsoft/hoi-level4.dmu" }) {
+        INFO("file " << f);
+        REQUIRE(mp.playFile(f));
+        int64_t sum = 0;
+        for (int i = 0; i < 20 && sum == 0; ++i) {
+            mp.update();
+            std::vector<int16_t> data(8192);
+            ap->get(data);
+            sum = std::accumulate(data.begin(), data.end(), (int64_t)0);
+        }
+        REQUIRE(sum != 0);
+    }
+}
+
 // The GUI marks app-shipped local collections with a "+" (vs "*" for cached
 // remote files) via isLocalAsset, keyed by the "<collection>::" path prefix.
 // Guard that all three shipped collections -- nsfe, hvtc (TED .prg) and the new

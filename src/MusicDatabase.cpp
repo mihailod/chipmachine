@@ -1760,7 +1760,7 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                collection == "rko" || collection == "amigaremix" ||
                collection == "amp" || collection == "modarchive" ||
                collection == "projectay" || collection == "vgmrips" ||
-               collection == "smspower") {
+               collection == "smspower" || collection == "mirsoft") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
@@ -1789,7 +1789,12 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         // by scripts/update_projectay_screenshots.py. smspower -> the game's
         // title-screen .png on SMS Power (full song URL, keyed by the live
         // /uploads/Music/<game>.zip pack URL; built by
-        // build_smspower.py --screenshots). modland/hvsc/sndh/asma/
+        // build_smspower.py --screenshots). mirsoft -> best-effort game shot from
+        // the sources we already ship offline (gb64 for C64, Hall of Light/abime
+        // for Amiga, zophar/vgmrips/smspower/cpcpower reuse), matched by game name
+        // and keyed by the mirsoft "<Game>.zip" song path; built by
+        // build_mirsoft.py --screenshots. mirsoft hosts no shots of its own.
+        // modland/hvsc/sndh/asma/
         // sceneorg are additionally augmented from Demozoo: a tune is matched to
         // the demos that use it as soundtrack and borrows that production's
         // screenshot (built by chipmachine/scripts/build_demozoo.py --augment, keyed by the
@@ -2313,6 +2318,22 @@ void initFormats()
     // Neo Geo Pocket / pinball have no dedicated F9 filter yet -> "Other Platforms".
     for (char const* f : { "neo geo pocket", "pinball", "other" })
         format_map[f] = OTHER;
+
+    // mirsoft.info "World of Game MODs" is classified by the GAME's platform, so
+    // its `format` column carries a platform label rather than a module format --
+    // a C64/NES/SNES game's .mod/.xm/.it arrangement files under that console,
+    // per the "classify by game platform" choice (db.lua v86). Most labels it
+    // emits are already mapped above (commodore 64->SID, zx spectrum, atari st,
+    // amstrad cpc, super nintendo, nes, game boy, sega mega drive/master system,
+    // pc engine, arcade, atari jaguar); these are the few nothing else declared.
+    format_map["amiga"] = AMIGA;
+    format_map["pc"] = PC;                   // PC DOS/Windows game tracker mods
+    format_map["macintosh"] = APPLE;
+    format_map["playstation"] = PLAYSTATION;
+    format_map["atari falcon"] = ATARI;
+    format_map["nintendo 64"] = NINTENDO64;
+    format_map["sega saturn"] = SATURN;
+    format_map["dreamcast"] = DREAMCAST;
 
     // Correct cross-platform formats that the generic fallbacks (endsWith
     // "tracker" -> TRACKER, uade_formats -> UADE) would otherwise mis-file under
@@ -3372,6 +3393,16 @@ void MusicDatabase::generateIndex()
             std::string live = c.url;
             std::string wayback = "https://web.archive.org/web/2id_/" + live;
             loader.registerSource(c.name, wayback, c.local_dir.string(), live);
+        } else if (c.name == "mirsoft") {
+            // mirsoft.info game-mod zips: serve from the Internet Archive
+            // snapshot first (mirsoftJuly2021snapshot/gamemods/<Game>.zip), with
+            // the live mirsoft host (c.url) as fallback for anything the 2021
+            // snapshot lacks -- so mirsoft's own server is never crawled. Same
+            // primary+fallback shape as hvtc, just Archive-primary.
+            std::string live = c.url;
+            std::string archive =
+                "https://archive.org/download/mirsoftJuly2021snapshot/gamemods/";
+            loader.registerSource(c.name, archive, c.local_dir.string(), live);
         } else {
             loader.registerSource(c.name, c.url, c.local_dir.string());
         }

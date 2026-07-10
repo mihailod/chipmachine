@@ -783,7 +783,8 @@ void MusicPlayerList::playCurrent()
                     "s3m", "mtm", "669", "far", "okt", "med", "mmd0", "mmd1",
                     "mmd2", "mmd3", "dbm", "digi", "ahx", "hvl", "thx", "dmf",
                     "ptm", "stm", "ult", "amf", "psm", "mt2", "gt2", "dtm", "fc",
-                    "fc13", "fc14", "aon", "smod", "dw", "cust", "mptm" };
+                    "fc13", "fc14", "aon", "smod", "dw", "cust", "mptm", "dmu",
+                    "dmu2" };  // dmu/dmu2 = Digital Mugician (UADE), in mirsoft zips
                 static const std::set<std::string> audioExt = {
                     "mp3", "ogg", "flac", "wav", "mp2", "m4a", "aac", "opus" };
                 std::string dir = f0.getName() + "_x";
