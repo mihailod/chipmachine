@@ -78,8 +78,15 @@ public:
 	std::string nextFont() {
 		if(fonts.empty())
 			return "";
-		fontIndex = (fontIndex + 1) % (int)fonts.size();
-		font = fonts[fontIndex];
+		int oldIndex = fontIndex;
+		int newIndex = (fontIndex + 1) % (int)fonts.size();
+		// Reparametrize xpos so the glyph currently under screen-centre stays
+		// under screen-centre in the new font -- otherwise the differing glyph
+		// widths make the text visibly jump/skip/repeat at the swap moment.
+		if(newIndex != oldIndex)
+			anchorSwap(fonts[oldIndex], fonts[newIndex]);
+		fontIndex = newIndex;
+		font = fonts[newIndex];
 		font_swap_timer = 0.0f;
 		return fontNames[fontIndex];
 	}
@@ -279,6 +286,71 @@ private:
 	static std::string baseName(const std::string &path) {
 		auto slash = path.find_last_of("/\\");
 		return slash == std::string::npos ? path : path.substr(slash + 1);
+	}
+
+	// Keep the glyph under the horizontal centre of the screen fixed across a
+	// font swap. The scroller draws the whole string starting at texture-x `xpos`
+	// (which the final blit maps 1:1 onto screen width), so the text-space offset
+	// currently under centre is `offOld = centre - xpos` measured in the OLD
+	// font's pixels. We find which character boundary that offset falls on (plus
+	// the fraction into that glyph), remeasure the same boundary in the NEW font,
+	// and solve for the xpos that puts that identical point back under centre.
+	// Without this, xpos is unchanged while the total width changes, so the
+	// centre offset suddenly lands on a different character -- the visible jump.
+	void anchorSwap(const grappix::Font &oldF, const grappix::Font &newF) {
+		if(scrollText.empty() || scr.width() <= 0)
+			return;
+
+		const float gscale = target.height() / 576.0f;
+		const float dynScale = gscale * scrollsize;
+		const float centre = scr.width() / 2.0f;      // texture-space screen centre
+		const float offOld = centre - xpos;           // text offset under centre (old px)
+
+		const float lenOld = (float)oldF.get_width(scrollText, dynScale);
+		// Centre sits on the blank gap before/after the text: nothing to anchor,
+		// and leaving xpos alone keeps that gap continuous. (Avoids div-by-zero.)
+		if(offOld <= 0.0f || offOld >= lenOld || lenOld <= 0.0f)
+			return;
+
+		// Byte offsets of every UTF-8 character boundary (0 .. length()).
+		std::vector<int> bnd;
+		bnd.push_back(0);
+		for(int p = 0; p < (int)scrollText.size();) {
+			unsigned char c = (unsigned char)scrollText[p];
+			int adv = (c >= 0xF0) ? 4 : (c >= 0xE0) ? 3 : (c >= 0xC0) ? 2 : 1;
+			p += adv;
+			if(p > (int)scrollText.size()) p = (int)scrollText.size();
+			bnd.push_back(p);
+		}
+		const int nchars = (int)bnd.size() - 1;
+
+		// Width (old font) of the first k characters. Monotonic in k.
+		auto prefixOld = [&](int k) -> float {
+			if(k <= 0) return 0.0f;
+			if(k >= nchars) return lenOld;
+			return (float)oldF.get_width(scrollText.substr(0, bnd[k]), dynScale);
+		};
+
+		// Largest k with prefixOld(k) <= offOld  ->  the glyph under centre is k.
+		int lo = 0, hi = nchars;
+		while(lo < hi) {
+			int mid = (lo + hi + 1) / 2;
+			if(prefixOld(mid) <= offOld) lo = mid; else hi = mid - 1;
+		}
+		const int k = lo;                          // 0 <= k <= nchars-1
+
+		const float wOldK  = prefixOld(k);
+		const float wOldK1 = prefixOld(k + 1);
+		const float frac = (wOldK1 > wOldK) ? (offOld - wOldK) / (wOldK1 - wOldK) : 0.0f;
+
+		// Same character boundary, measured in the NEW font.
+		auto prefixNew = [&](int j) -> float {
+			if(j <= 0) return 0.0f;
+			return (float)newF.get_width(scrollText.substr(0, bnd[j]), dynScale);
+		};
+		const float offNew = prefixNew(k) + frac * (prefixNew(k + 1) - prefixNew(k));
+
+		xpos = centre - offNew;
 	}
 
 	grappix::RenderTarget& target;
