@@ -553,6 +553,17 @@ private:
     // Total number of indexed songs, computed at startup in computeFilterCounts
     // (the same total the "[Show All]" F9 filter reports).
     int totalSongs = 0;
+    // The startup indexing progress bar runs in two phases:
+    //  - first progressDbPhase (75%): one tick per collection DB created, out of
+    //    progressMaxDatabases.
+    //  - remaining 25%: row indexing, scaled by progressMaxSongs (the final DB
+    //    size can't be known up-front). Bump either as the library grows.
+    int progressMaxSongs = 750000;
+    int progressMaxDatabases = 40;
+    float progressDbPhase = 0.85f;
+    // Vertical nudge (in gscale pixels) of the % label inside the progress bar.
+    // Positive = down. Tweak this to fine-tune the vertical centring.
+    float progressPctYNudge = 4.0f;
     // Lazily-loaded ChipMachine logo (data/misc/icon.png), used as the final
     // fallback so the screenshot area is never blank.
     image::bitmap defaultShot;
