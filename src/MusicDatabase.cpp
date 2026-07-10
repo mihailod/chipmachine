@@ -3835,6 +3835,10 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
     if (totalSongs > 0) {
         print_fmt("Total songs count: %d\n", totalSongs);
     }
+    int dbCount = dbCreatedCount.load(std::memory_order_relaxed);
+    if (dbCount > 0) {
+        print_fmt("Total databases count: %d\n", dbCount);
+    }
 
     generateIndex();
     return true;

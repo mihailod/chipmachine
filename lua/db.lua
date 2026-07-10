@@ -386,7 +386,27 @@
 --     Screenshots in data/ocremix_screenshots.txt keyed by the song URL
 --     (getSongScreenshots ocremix branch). NO dedup (arranged remixes, a distinct
 --     artifact type from every rip/module collection). Bump forces a reindex.
-VERSION = 90;
+-- 91: keygenmusic (keygenmusic.tk/.org) -- the keygen/cracktro music scene, a
+--     genuinely distinct subculture (tunes written for software keygens/cracks)
+--     not otherwise in the DB. Original site dead (~2022); the full collection is
+--     preserved on the Internet Archive item `keygen-music-2020-03-pack` (one
+--     ~5.5k-file zip). 5388 net-new songs. Enumerated from ONE request to
+--     archive.org's view_archive.php (reached via the stable /download/<item>/
+--     <zip>/ redirect), which lists every inner file with its path AND byte size.
+--     Each path is a STATIC archive.org zip-extraction URL
+--     .../keygen-music-2020-03-pack.zip/<inner path> (source=""; same
+--     archive.org-side extraction VGMRips uses, RemoteLoader follows the 302 and
+--     plays the module directly). Playability + platform driven by the REAL ext
+--     (xm/mod/it/s3m/mtm/mo3, sid/nsf/sap/spc, ahx, sc68/ym, v2m, d00/rad/hsc/amd,
+--     fc13/fc14/bp, mp3/ogg/flac); .mid + junk skipped. Filename is
+--     "<Artist> - <software title>.<ext>" -> composer=artist, title=software name.
+--     Deduped vs modland (exact byte SIZE + normalized artist/stem, zero false
+--     positives) and modarchive (filename/title) -> 35 dups dropped (keygen is a
+--     distinct subculture; software-named titles rarely match, so net-new is
+--     ~the whole set). NO screenshots (cracktro/keygen scene has no game art,
+--     like AMP/chipmusic). Built by chipmachine/scripts/build_keygenmusic.py --build. Bump
+--     forces a reindex.
+VERSION = 91;
 
 DB = {
 {
@@ -740,6 +760,20 @@ DB = {
 	source = "",
 	song_list = "data/ocremix.txt",
 	song_template = "title game composer format path",
+	color = 0xfffff
+},
+{
+	-- keygenmusic (keygen/cracktro scene) -- full collection preserved on the
+	-- Internet Archive (see VERSION 91). Each path is a full archive.org
+	-- zip-extraction URL .../keygen-music-2020-03-pack.zip/<inner path>
+	-- (source=""); the `ext` column routes the native module/chip decoder.
+	-- composer = artist, title = the cracked-software name. No screenshots.
+	-- Built by scripts/build_keygenmusic.py.
+	name = "keygenmusic",
+	id =  "keygenmusic",
+	source = "",
+	song_list = "data/keygenmusic.txt",
+	song_template = "title composer format path ext",
 	color = 0xfffff
 },
 

@@ -2,17 +2,23 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- 1 ONBOARD 3. keygenmusic — archive.org (medium, niche but net‑new)
-Original site dead (~2022), but the full collection is preserved on the Internet Archive (~5,533 files, formats we already play: mod/xm/s3m/it/ahx/nsf/sid/spc/sap/sc68/v2m/ym/d00/rad/hsc/fc13/fc14/mtm/bp/amd + mp3/ogg). A genuinely distinct subculture (cracktro/keygen scene) not represented elsewhere in the DB. Directly fetchable from archive.org. Smaller and needs dedup vs modland/modarchive, but net‑new.
+- Arcade shouldn't be missing, there is extensionscreenshots/vgz-arcade.png -- can we duplicate that into platformscreenshots/Arcade.png?
+[ChipMachine.cpp:1246] Missing 2 platform logo(s) in /Users/mihailod/Documents/chipmachine-as/chipmachine/data/misc/platformscreenshots (add <name>.png or .jpg): Other, Arcade
+
+- add pictures for some famous extensions: 36 extension(s) have no screenshot and no platform logo (add data/misc/extensionscreenshots/<ext>.png): 7, aac, ac3, aif, aiff, arj, asg, boys, brax, down, ehr, flp, henk, img, kumma, legoz, lzx, m4a, m8s, mon, mp2, mpeg, ntk, oldie, one, opus, pfrk, ps1, slash, snort, stag, t, tgz, tic, v2m, xz
 
 - see if there are other formats in db we don't play
 
 - global dedupe everything against everything to see stats. I think battle of the bits added dupes. when removing if all equal remove the dupe without the screenshot.
 
+- i see files with no screenshots while almost identical files have them -- can we somehow annotate more songs with screenshots if a super-similar file has it?
+
 - classify OGG files into platforms
 - make an attempt to reclassify the rest of the yt
 - combine yt and ogg not classified into one?
 - release 1.8 or even 2.0 once all dbs are ingested?
+
+- songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
 
 --------------
 - extensions still missing format description:
@@ -46,4 +52,3 @@ cosmetic/low priority:
 major new features
 ==================
 - Separate db from code and auto-update db independently from code
-

@@ -136,6 +136,7 @@ Metadata from these databases is ingested, normalized, deduped and cross-checked
 * MirSoft - http://www.mirsoft.info
 * Chipmusic - https://chipmusic.org
 * Battle of the Bits - https://battleofthebits.org
+* keygenmusic (Internet Archive) - https://archive.org/details/keygen-music-2020-03-pack
 
 ### Remixes / Recordings / Streaming (mp2/mp3/ogg/flac/wav/aif/aiff/opus)
 
