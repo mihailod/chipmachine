@@ -134,11 +134,14 @@ Metadata from these databases is ingested, normalized, deduped and cross-checked
 * ZX TUNES - https://zxtunes.com
 * SMS POWER! - https://www.smspower.org
 * MirSoft - http://www.mirsoft.info
+* Chipmusic - https://chipmusic.org
 
-### Remixes (MP3)
+### Remixes / Recordings / Streaming (mp2/mp3/ogg/flac/wav/aif/aiff/opus)
 
-* Amiga remix (MP3) - http://amigaremix.com
+* Pouët.net - https://www.pouet.net
+* Amiga Remix (MP3) - http://amigaremix.com
 * Sounds of Scenesat - https://scenesat.com
+* Demozoo -- https://demozoo.org
 
 ### Youtube Audio
 * Pouet - https://www.pouet.net
@@ -176,7 +179,7 @@ And one not related to retro music but dear to my heart so here it is:
 * Radio PARALAX - https://www.radio-paralax.de
 * CVGM Radio - https://radio.cvgm.net
 * Kohina - https://kohina.com
-* Gyusyabu Retro PC (NEC PC-98 / Sharp X68000 game music from real hardware) - http://gyusyabu.ddo.jp
+* Gyusyabu NEC PC-98/Sharp X68000 - http://gyusyabu.ddo.jp
 
 ## Music Plugins and supported formats and platforms
 

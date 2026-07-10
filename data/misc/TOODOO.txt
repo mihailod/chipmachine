@@ -2,6 +2,11 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
+- global dedupe everything against everything to see stats
+- classify OGG files into platforms
+- make an attempt to reclassify the rest of the yt
+- combine yt and ogg not classified into one?
+
 --------------
 - extensions still missing format description:
 under 200 chars but >100 songs: mtm okta org psc rol sa sfx sqt stm sunvox vtx vt2
@@ -19,17 +24,6 @@ gym	5 dm	5 0cc	5
 *************************************************
 
 - .... in progress...  PESIC: revisit zophar arcade
-
---- MP3 / FLAC - not sure - we focus on real chip music - but already have some - maybe -----
-
-* (started and parked) https://chipmusic.org --  chipmusic.org serves MP3 only. 
-
-* SITTING ON CLOUDS
-  - URL: https://www.sittingonclouds.net
-  - Platforms: Modern consoles, arcade systems
-  - Key Formats: Pre-rendered (.mp3, .flac)
-  - Notes: High-quality FLAC and MP3 game soundtrack index. Useful as a fallback
-    for games where native chips cannot be easily emulated (e.g. modern Arcade/PS3/PS4).
 
 *********
 * OTHER *

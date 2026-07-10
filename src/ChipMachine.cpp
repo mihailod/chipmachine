@@ -1399,48 +1399,73 @@ void ChipMachine::update()
 
     playerState = player.getState();
 
-    // Show a "LOADING..." toast while a song that is not already in the local
-    // cache is being fetched, and clear it the moment playback starts (or the
-    // load otherwise ends). Cached songs load instantly, so they get no toast.
-    if (playerState == MusicPlayerList::Loading) {
-        if (!loadingToastChecked) {
-            loadingToastChecked = true;
-            auto rawPath = player.getInfo().path;
-            auto loadingPath = utils::toLower(rawPath);
-            // A file already present on local disk plays instantly -> no toast.
-            bool isLocal = utils::exists(rawPath);
-            // Radio and the ffmpeg-decoded formats are streamed rather than
-            // played from a finished local file, so they "buffer".
-            bool streamed = utils::startsWith(loadingPath, "radio::") ||
-                            utils::endsWith(loadingPath, ".mp3") ||
-                            utils::endsWith(loadingPath, ".ogg") ||
-                            utils::endsWith(loadingPath, ".aac") ||
-                            utils::endsWith(loadingPath, ".m4a") ||
-                            utils::endsWith(loadingPath, ".mp4") ||
-                            utils::endsWith(loadingPath, ".8svx");
-            if (isLocal) {
-                // nothing to fetch
-            } else if (streamed) {
-                toast("BUFFERING...", STICKY);
-                loadingToastShown = true;
-            } else {
-                bool cached = false;
-                try {
-                    cached = remoteLoader.inCache(rawPath);
-                } catch (...) {
-                    cached = false; // unknown source -> assume it needs fetching
-                }
-                if (!cached) {
-                    toast("LOADING...", STICKY);
+    // Fetch/buffer toast. A song that is not already on local disk needs one of
+    // two waits, shown as one sticky toast:
+    //   * whole-file download (a remote native module): the player sits in
+    //     Loading while remoteLoader fetches the file -> "LOADING...".
+    //   * progressive stream (ffmpeg/YouTube/radio): playCurrent() flips to
+    //     Playstarted almost immediately and ffmpeg *then* prebuffers, so the
+    //     track is nominally "playing" while no PCM has reached the DAC yet ->
+    //     "BUFFERING...". (This is why keying the toast on the Loading state
+    //     alone missed streams entirely: their Loading window is ~0 frames.)
+    // willStream() is the same predicate playCurrent() routes on, so the message
+    // always matches the path taken. Resolve once per song (recompute only when
+    // the playing path changes) to avoid a stat()/lookup every frame.
+    {
+        auto info = player.getInfo();
+        if (info.path != loadingToastPath) {
+            loadingToastPath = info.path;
+            loadingToastResolved = false;
+            if (loadingToastShown) {
+                removeToast();
+                loadingToastShown = false;
+            }
+            loadingToastIsLocal = utils::exists(info.path);
+            loadingToastStreamed =
+                !loadingToastIsLocal && MusicPlayerList::willStream(info);
+        }
+
+        if (!loadingToastResolved) {
+            if (loadingToastIsLocal) {
+                loadingToastResolved = true; // on disk -> instant, no toast
+            } else if (loadingToastStreamed) {
+                // Prebuffering: hold "BUFFERING..." until the first samples reach
+                // the audio callback, then clear it.
+                if (player.hasAudioStarted()) {
+                    if (loadingToastShown) {
+                        removeToast();
+                        loadingToastShown = false;
+                    }
+                    loadingToastResolved = true;
+                } else if (!loadingToastShown) {
+                    toast("BUFFERING...", STICKY);
                     loadingToastShown = true;
                 }
+            } else if (playerState == MusicPlayerList::Loading) {
+                // Whole-file download in flight -> "LOADING..." (skip if it is
+                // already sitting in the local cache from a prior fetch).
+                if (!loadingToastShown) {
+                    bool cached = false;
+                    try {
+                        cached = remoteLoader.inCache(info.path);
+                    } catch (...) {
+                        cached = false; // unknown source -> assume a fetch
+                    }
+                    if (!cached) {
+                        toast("LOADING...", STICKY);
+                        loadingToastShown = true;
+                    } else {
+                        loadingToastResolved = true;
+                    }
+                }
+            } else {
+                // Left Loading -> the download finished and playback began.
+                if (loadingToastShown) {
+                    removeToast();
+                    loadingToastShown = false;
+                }
+                loadingToastResolved = true;
             }
-        }
-    } else {
-        loadingToastChecked = false;
-        if (loadingToastShown) {
-            removeToast();
-            loadingToastShown = false;
         }
     }
 

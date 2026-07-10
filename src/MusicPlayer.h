@@ -38,6 +38,12 @@ public:
     void stop() { player = nullptr; }
     [[nodiscard]] uint32_t getPosition() const { return play_pos / 44100; };
     [[nodiscard]] uint32_t getLength() const { return length; }
+    // True once the first decoded samples have reached the audio callback, i.e.
+    // real audio is flowing. For a progressively-streamed track this flips only
+    // when ffmpeg's prebuffer has produced enough PCM, so it is the precise
+    // "buffering finished" signal (play_pos is reset to 0 on each new song).
+    // Sample-accurate, unlike getPosition() which is integer seconds.
+    [[nodiscard]] bool hasAudioStarted() const { return play_pos > 0; }
 
     void putStream(const uint8_t* ptr, int size);
     void clearStreamFifo() { stream_fifo->clear(); }

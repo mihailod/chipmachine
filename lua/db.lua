@@ -317,7 +317,21 @@
 --     http://gyusyabu.ddo.jp:8000/;stream.mp3 (plays via the radio::/ffmpeg
 --     path; no new format). Station logo = the site's title.gif (stb decodes
 --     GIF; STBI_NO_GIF is not set). Bump forces a reindex.
-VERSION = 87;
+-- 88: chipmusic.org community chiptune archive (chipmusic collection) -- ~8637
+--     tracks. Every track is served ONLY as a rendered MP3 on S3 (directly
+--     hotlinkable, HTTP 206 range OK), no original module, so it's an MP3
+--     STREAMING collection (ffmpeg playback, no new decode capability). The whole
+--     catalog (title/artist/S3 MP3 URL) comes from ONE RSS request
+--     (music/rss/feed.xml?limit=N); platform is classified per track from the
+--     freeform tags read off each track page (a polite, cached, ~2 req/s crawl
+--     that aborts on any Cloudflare 403-burst/429). Tag->platform: lsdj/gameboy
+--     ->Game Boy, sid/c64->Commodore 64, nsf/famitracker->NES, ym/sndh->Atari ST,
+--     amiga/protracker/ahx->Amiga, beeper/1bit->ZX Spectrum, impulse/schism->PC;
+--     ~47% land on a real platform filter, the untagged remainder -> "Chipmusic"
+--     -> the existing Unclassified MP3/OGG filter (format_map["chipmusic"]=MP3,
+--     no new enum byte). Built by chipmachine/scripts/build_chipmusic.py (--rss /
+--     --tags / --build). Bump forces a reindex.
+VERSION = 88;
 
 DB = {
 {
@@ -627,6 +641,20 @@ DB = {
 	song_list = "data/scenesat.txt",
 	song_template = "composer game title format path",
 	local_dir = "/opt/Music/scenesat",
+	color = 0xfffff
+},
+{
+	-- chipmusic.org community chiptune archive (see VERSION 87). Rendered-MP3
+	-- streaming collection: path = full hotlinkable chipmusic.s3.amazonaws.com
+	-- .mp3 URL (source=""), plays via ffmpeg. The `format` column is the platform
+	-- classified from each track's tags (Game Boy/Commodore 64/NES/Atari ST/Amiga/
+	-- ZX Spectrum/PC), routed to those F9 filters; untagged -> "Chipmusic" ->
+	-- Unclassified MP3/OGG. Built by chipmachine/scripts/build_chipmusic.py.
+	name = "Chipmusic",
+	id =  "chipmusic",
+	source = "",
+	song_list = "data/chipmusic.txt",
+	song_template = "title composer format path",
 	color = 0xfffff
 },
 

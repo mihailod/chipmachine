@@ -576,6 +576,75 @@ TEST_CASE("FFMPEG claims 8svx samples", "[ffmpeg8svx]")
     REQUIRE(!p.canHandle("mod.somesong"));
 }
 
+// The bundled ffmpeg also decodes lossless PCM containers (wav/flac/aiff/aif)
+// and MP2 -- all present across the demoscene collections (demozoo alone has
+// ~685 wav, ~343 flac, ~60 mp2, plus aif/aiff) but previously dropped because
+// the extension gate omitted them. Guard the routing decision (no ffmpeg binary
+// needed for canHandle); actual decode is exercised by the "FFMPEG" corpus test
+// and "FFMPEG lossless/mp2" below.
+TEST_CASE("FFMPEG claims lossless PCM and mp2 extensions", "[ffmpeglossless]")
+{
+    musix::FFMPEGPlugin p;
+    REQUIRE(p.canHandle("song.wav"));
+    REQUIRE(p.canHandle("song.flac"));
+    REQUIRE(p.canHandle("song.aiff"));
+    REQUIRE(p.canHandle("song.aif"));
+    REQUIRE(p.canHandle("song.mp2"));
+    REQUIRE(p.canHandle("song.opus"));
+    // getSupportedExtensions() and canHandle() share one source of truth.
+    auto exts = p.getSupportedExtensions();
+    for (auto const& e : {"wav", "flac", "aiff", "aif", "mp2", "opus", "mp3",
+                          "ogg", "m4a", "aac", "mp4", "8svx"}) {
+        REQUIRE(exts.count(e) > 0);
+    }
+}
+
+// The stream-vs-download decision is the single source of truth behind both the
+// playback path (playCurrent) and the UI toast ("BUFFERING..." for a progressive
+// stream, "LOADING..." for a whole-file download). Guard the contract so the two
+// can't drift: every ffmpeg finite-file format streams, YouTube/radio stream,
+// while native modules and M3U (and the 8svx prefix form, which is fetched whole)
+// do not.
+TEST_CASE("willStream picks streaming vs full-download", "[music]")
+{
+    using namespace chipmachine;
+    // Streamed: the ffmpeg finite-file formats (play after a short prebuffer).
+    for (auto const* ext : {"mp3", "ogg", "aac", "m4a", "mp4", "opus", "mp2",
+                            "wav", "flac", "aiff", "aif"}) {
+        REQUIRE(MusicPlayerList::isStreamableExt(ext));
+        SongInfo si("demozoo::pub/x." + std::string(ext), "", "", "",
+                    "Demoscene");
+        INFO(ext << " should stream");
+        REQUIRE(MusicPlayerList::willStream(si));
+    }
+    // A "?query" tail must not defeat the ext match (podCloud enclosure URLs).
+    REQUIRE(MusicPlayerList::willStream(
+        SongInfo("https://host/enclosure.flac?p=f", "", "", "", "Demoscene")));
+
+    // YouTube (Pouet / manual patch) and radio/Shoutcast are streamed too.
+    REQUIRE(MusicPlayerList::willStream(SongInfo(
+        "https://www.youtube.com/watch?v=abc", "", "", "", "Youtube (Windows)")));
+    REQUIRE(MusicPlayerList::willStream(
+        SongInfo("pouet::https://www.youtube.com/watch?v=abc")));
+    REQUIRE(MusicPlayerList::willStream(
+        SongInfo("radio::necta64.mp3", "", "", "", "MP3")));
+
+    // Downloaded whole (=> "LOADING..."): native modules, M3U playlists, and the
+    // 8svx modland prefix form (no real extension, so it can't stream).
+    for (auto const* ext : {"mod", "xm", "it", "s3m", "sid", "vgz", "sndh"}) {
+        REQUIRE(!MusicPlayerList::isStreamableExt(ext));
+        SongInfo si("mirsoft::x." + std::string(ext), "", "", "", "Amiga");
+        INFO(ext << " should NOT stream");
+        REQUIRE(!MusicPlayerList::willStream(si));
+    }
+    // An .mp3 codec tag but M3U format = a playlist wrapper, not a stream yet.
+    REQUIRE(!MusicPlayerList::willStream(
+        SongInfo("radio::list.m3u", "", "", "", "M3U")));
+    // 8svx sample: ffmpeg decodes it, but it is fetched whole -> LOADING.
+    REQUIRE(!MusicPlayerList::willStream(
+        SongInfo("unexotica::8svx.Welcome On Amiga", "", "", "", "Amiga")));
+}
+
 template <typename PLUGIN, typename... ARGS>
 bool testPlugin(std::string const& dir, std::string const& exclude,
                 const ARGS&... args)
@@ -2951,6 +3020,46 @@ TEST_CASE("MikMod", "[music]") { testPlugin<musix::MikModPlugin>("testmus/mikmod
 // skip ("unsupported"), so coverage exercises the 18 Phaser1 tunes.
 TEST_CASE("Beepola", "[music]") { testPlugin<musix::BBSongPlugin>("testmus/bbsong", ""); }
 TEST_CASE("FFMPEG", "[music]") { testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg", ""); }
+
+// Explicit guard that the newly-enabled lossless PCM (wav/flac/aiff) and MP2
+// fixtures decode to real (non-silent) audio through the ffmpeg local-file path.
+// The corpus test above already sweeps the directory, but pin each format by
+// name so a routing/gate regression fails loudly instead of just shifting the
+// coverage tally. Fixtures are 3s cuts of sample.ogg (see testmus/ffmpeg).
+TEST_CASE("FFMPEG plays wav/flac/aiff/mp2/opus", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::FFMPEGPlugin plugin;
+    std::array<int16_t, 8192> buffer{};
+    for (auto const* file : {"testmus/ffmpeg/sample.wav",
+                             "testmus/ffmpeg/sample.flac",
+                             "testmus/ffmpeg/sample.aiff",
+                             "testmus/ffmpeg/sample.mp2",
+                             "testmus/ffmpeg/sample.opus"}) {
+        REQUIRE(utils::exists(file));
+        REQUIRE(plugin.canHandle(file));
+        auto* player = plugin.fromFile(file);
+        REQUIRE(player != nullptr);
+        // ffmpeg is a subprocess (non-blocking); the first getSamples() calls
+        // return 0 while it warms up. Poll within a budget for the first PCM.
+        int64_t sum = 0;
+        int count = 50;
+        while (sum == 0 && count-- != 0) {
+            int rc = player->getSamples(&buffer[0], buffer.size());
+            if (rc > 0) {
+                for (int i = 0; i < rc; ++i)
+                    if (buffer[i] != 0) { sum = 1; break; }
+            } else if (rc == 0) {
+                utils::sleepms(20);
+            } else {
+                break; // SONG_END before any audio
+            }
+        }
+        delete player;
+        INFO("no audio decoded from " << file);
+        REQUIRE(sum != 0);
+    }
+}
 // Progressive (fromStream) path: feed a file's bytes into the fifo a chunk at a
 // time -- as a slow download would -- and confirm ffmpeg starts producing audio
 // before all bytes arrive (getSamples returns 0 = "buffering", then >0), and
@@ -3024,6 +3133,71 @@ TEST_CASE("FFMPEG stream", "[music]")
     REQUIRE(total > 44100);   // at least ~0.25s of decoded audio
     REQUIRE(nonzero > 0);
     printf("  PASS: progressive playback + clean termination\n");
+}
+
+// The GUI streams every ffmpeg-decodable finite remote file progressively
+// (curl->fifo->ffmpeg, see MusicPlayerList extStreamable), not just ogg/mp3.
+// The lossless containers matter here: wav/aiff carry a RIFF/FORM header with a
+// declared data size, and flac has a STREAMINFO header -- confirm each decodes
+// to real audio when fed through a non-seekable pipe a chunk at a time, exactly
+// as a slow download delivers it. (opus rides ogg; mp2 is frame-based like mp3.)
+TEST_CASE("FFMPEG streams wav/flac/aiff/mp2/opus", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    for (auto const* file : {"testmus/ffmpeg/sample.wav",
+                             "testmus/ffmpeg/sample.flac",
+                             "testmus/ffmpeg/sample.aiff",
+                             "testmus/ffmpeg/sample.mp2",
+                             "testmus/ffmpeg/sample.opus"}) {
+        std::ifstream f(file, std::ios::binary);
+        REQUIRE(f.good());
+        std::vector<uint8_t> bytes((std::istreambuf_iterator<char>(f)),
+                                   std::istreambuf_iterator<char>());
+        REQUIRE(!bytes.empty());
+
+        musix::FFMPEGPlugin plugin;
+        auto fifo = std::make_shared<utils::Fifo<uint8_t>>(32768 * 8);
+        std::unique_ptr<musix::ChipPlayer> player(plugin.fromStream(fifo));
+        REQUIRE(player != nullptr);
+
+        // Feed the bytes progressively (4KB/2ms) as a slow download would.
+        std::thread producer([&] {
+            size_t off = 0;
+            while (off < bytes.size()) {
+                int chunk =
+                    static_cast<int>(std::min<size_t>(4096, bytes.size() - off));
+                fifo->put(bytes.data() + off, chunk);
+                off += chunk;
+                std::this_thread::sleep_for(std::chrono::milliseconds(2));
+            }
+            player->endStream();
+        });
+
+        std::vector<int16_t> buf(4096);
+        long total = 0, nonzero = 0;
+        int rc = 0, idleGuard = 0;
+        while (true) {
+            rc = player->getSamples(buf.data(), static_cast<int>(buf.size()));
+            if (rc < 0) break; // SONG_END
+            if (rc == 0) {     // buffering
+                std::this_thread::sleep_for(std::chrono::milliseconds(2));
+                if (++idleGuard > 5000) break; // 10s without audio: give up
+                continue;
+            }
+            idleGuard = 0;
+            total += rc;
+            for (int i = 0; i < rc; i++)
+                if (buf[i] != 0) nonzero++;
+        }
+        producer.join();
+
+        printf("  streamed %s: %ld samples, %ld non-silent, ended via %s\n",
+               file, total, nonzero, rc < 0 ? "clean EOF" : "IDLE-TIMEOUT");
+        INFO("progressive stream produced no audio for " << file);
+        REQUIRE(rc < 0);        // clean EOF, not idle-timeout hang
+        REQUIRE(total > 44100); // at least ~0.25s decoded
+        REQUIRE(nonzero > 0);
+    }
 }
 
 // Mid-stream abort (a song switch): destroy the streaming player while it is

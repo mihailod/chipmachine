@@ -61,11 +61,26 @@ public:
 
     SongInfo getInfo(int index = 0) const;
     SongInfo getDBInfo() const;
+
+    // Single source of truth for the stream-vs-download decision. Returns true if
+    // `info` will be played by progressive streaming (curl->fifo->ffmpeg, or the
+    // YouTube/radio direct-URL path) -- i.e. it plays after a short prebuffer --
+    // and false if it must be downloaded whole before playback. playCurrent()
+    // routes on exactly this, and the UI reads it to show "BUFFERING..." vs
+    // "LOADING...", so the message always matches the path actually taken.
+    static bool willStream(const SongInfo& info);
+    // The set of file extensions the ffmpeg progressive-stream path accepts.
+    // Shared between willStream() and playCurrent() so the two never drift.
+    static bool isStreamableExt(const std::string& ext);
     int getLength() const;
     int getPosition() const;
     int listSize() const;
 
     bool isPlaying() const { return playing; }
+    // True once the current song's first samples have reached the DAC -- the
+    // precise "buffering finished" signal for progressive streams (see
+    // MusicPlayer::hasAudioStarted). Used by the UI to clear "BUFFERING...".
+    bool hasAudioStarted() const { return mp.hasAudioStarted(); }
 
     int getTune() const { return currentTune; }
 

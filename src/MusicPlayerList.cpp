@@ -529,6 +529,49 @@ void MusicPlayerList::update()
     message = mp.getMeta("message");
 }
 
+bool MusicPlayerList::isStreamableExt(const std::string& ext)
+{
+    // The finite-remote-file extensions the ffmpeg progressive-stream path
+    // accepts. Mirrors FFMPEGPlugin::getSupportedExtensions() minus 8svx, which
+    // ffmpeg decodes but which arrives via the modland "8svx.<name>" prefix form
+    // (no real extension), so it is downloaded whole rather than streamed.
+    return ext == "mp3" || ext == "ogg" || ext == "aac" || ext == "m4a" ||
+           ext == "mp4" || ext == "opus" || ext == "mp2" || ext == "wav" ||
+           ext == "flac" || ext == "aiff" || ext == "aif";
+}
+
+bool MusicPlayerList::willStream(const SongInfo& info)
+{
+    // Mirror playCurrent()'s streamed-path decision so the two never disagree.
+    std::string prefix, path;
+    auto parts = split(info.path, "::", 2);
+    if (parts.size() == 2) {
+        prefix = parts[0];
+        path = parts[1];
+    } else
+        path = info.path;
+
+    // Pouet entries are YouTube-backed; the youtube plugin streams them.
+    if (prefix == "pouet") return true;
+    // Any YouTube watch URL streams via the youtube plugin.
+    if (startsWith(path, "http") && path.find("youtu") != std::string::npos)
+        return true;
+
+    // Same ext derivation as playCurrent: strip a "?query" and lowercase.
+    auto ext = path_extension(path);
+    auto qpos = ext.find('?');
+    if (qpos != std::string::npos) ext = ext.substr(0, qpos);
+    makeLower(ext);
+
+    bool isRadioStream =
+        (toLower(info.format) == "mp3" || toLower(info.format) == "ogg");
+    bool isPodcast =
+        MusicDatabase::classifyFormat(info.format, info.path) == PODCAST;
+
+    return info.format != "M3U" &&
+           (isStreamableExt(ext) || isRadioStream || isPodcast);
+}
+
 void MusicPlayerList::playCurrent()
 {
     SET_STATE(Loading);
@@ -698,8 +741,15 @@ void MusicPlayerList::playCurrent()
         return;
     }
 
-    bool extStreamable = (ext == "mp3" || ext == "ogg" || ext == "aac" ||
-                          ext == "m4a" || ext == "mp4");
+    // Any container the ffmpeg plugin decodes and that arrives as a single finite
+    // remote file: stream it progressively (curl->fifo->ffmpeg) instead of a full
+    // download, so it plays after a short prebuffer. The ext list lives in
+    // isStreamableExt() (shared with willStream() so the UI toast can't drift from
+    // the path taken here). Includes the lossless PCM (wav/flac/aiff/aif) +
+    // mp2/opus formats found across the demoscene collections; without this they
+    // fell onto the full-download path and sat at "BUFFERING..." while a multi-MB
+    // flac downloaded in full before a single sample played.
+    bool extStreamable = isStreamableExt(ext);
     // A bare "MP3"/"OGG" codec tag is set only by .pls/.m3u resolution, i.e. a
     // radio/Shoutcast stream (often an extension-less ICY mount). Those stay on
     // the direct-ffmpeg-URL path, which handles ICY/redirects/endless streams.

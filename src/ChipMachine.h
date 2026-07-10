@@ -464,9 +464,15 @@ private:
 
     MusicBars musicBars;
     MusicPlayerList::State playerState;
-    // "LOADING..." toast shown while a non-cached song is being fetched.
+    // Fetch/buffer toast state. "LOADING..." while a whole-file download is in
+    // flight; "BUFFERING..." while a progressive stream prebuffers. Resolved once
+    // per song: recomputed only when the playing path changes, then cleared the
+    // moment real audio starts (stream) or the load ends (download).
     bool loadingToastShown = false;
-    bool loadingToastChecked = false;
+    bool loadingToastResolved = false;
+    bool loadingToastIsLocal = false;
+    bool loadingToastStreamed = false;
+    std::string loadingToastPath;
     std::string scrollText;
 
     struct Command

@@ -2334,6 +2334,11 @@ void initFormats()
     format_map["nintendo 64"] = NINTENDO64;
     format_map["sega saturn"] = SATURN;
     format_map["dreamcast"] = DREAMCAST;
+    // chipmusic.org rendered-MP3 tracks that carry no platform-bearing tag land
+    // in the generic "Chipmusic" bucket -> the existing Unclassified MP3/OGG
+    // filter (the classifiable majority route to Game Boy/C64/NES/Atari ST/Amiga/
+    // ZX Spectrum/PC via the labels already mapped above).
+    format_map["chipmusic"] = MP3;
 
     // Correct cross-platform formats that the generic fallbacks (endsWith
     // "tracker" -> TRACKER, uade_formats -> UADE) would otherwise mis-file under
