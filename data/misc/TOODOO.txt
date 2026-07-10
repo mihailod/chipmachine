@@ -2,10 +2,7 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- Arcade shouldn't be missing, there is extensionscreenshots/vgz-arcade.png -- can we duplicate that into platformscreenshots/Arcade.png?
-[ChipMachine.cpp:1246] Missing 2 platform logo(s) in /Users/mihailod/Documents/chipmachine-as/chipmachine/data/misc/platformscreenshots (add <name>.png or .jpg): Other, Arcade
-
-- add pictures for some famous extensions: 36 extension(s) have no screenshot and no platform logo (add data/misc/extensionscreenshots/<ext>.png): 7, aac, ac3, aif, aiff, arj, asg, boys, brax, down, ehr, flp, henk, img, kumma, legoz, lzx, m4a, m8s, mon, mp2, mpeg, ntk, oldie, one, opus, pfrk, ps1, slash, snort, stag, t, tgz, tic, v2m, xz
+- "Now the vendored copy has the same latent bug — fix it too for consistency:" -- why we have 2 copies of anything? we should have only one, that was the point of unification via vendoring in external
 
 - see if there are other formats in db we don't play
 
@@ -19,6 +16,9 @@
 - release 1.8 or even 2.0 once all dbs are ingested?
 
 - songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
+
+- tag each song with database it came from and display also that discreetly on the playback screen
+- have another screen similar to Platforms but Databases -- wanna be able to restrict results to just one database and i pick there. we list all there (45 now i think) and user can go up/down in the table like now with formats and select one and then we restrict search result to show only results from that db
 
 --------------
 - extensions still missing format description:

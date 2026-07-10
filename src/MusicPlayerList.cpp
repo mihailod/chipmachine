@@ -531,13 +531,34 @@ void MusicPlayerList::update()
 
 bool MusicPlayerList::isStreamableExt(const std::string& ext)
 {
-    // The finite-remote-file extensions the ffmpeg progressive-stream path
-    // accepts. Mirrors FFMPEGPlugin::getSupportedExtensions() minus 8svx, which
-    // ffmpeg decodes but which arrives via the modland "8svx.<name>" prefix form
-    // (no real extension), so it is downloaded whole rather than streamed.
+    // The finite-remote-file extensions the ffmpeg stream path accepts. Mirrors
+    // FFMPEGPlugin::getSupportedExtensions() minus 8svx, which ffmpeg decodes but
+    // which arrives via the modland "8svx.<name>" prefix form (no real
+    // extension), so it is downloaded whole rather than streamed.
+    //
+    // Two sub-paths live under this predicate (see playCurrent): the sequential
+    // codecs go through the curl->fifo->"ffmpeg -i pipe:0" progressive stream,
+    // while the seek-dependent containers (needsSeekableInput()) instead hand the
+    // URL straight to ffmpeg so it can seek via HTTP range requests.
     return ext == "mp3" || ext == "ogg" || ext == "aac" || ext == "m4a" ||
-           ext == "mp4" || ext == "opus" || ext == "mp2" || ext == "wav" ||
-           ext == "flac" || ext == "aiff" || ext == "aif";
+           ext == "mp4" || ext == "opus" || ext == "mp2" || ext == "mpeg" ||
+           ext == "ac3" || ext == "wav" || ext == "flac" || ext == "aiff" ||
+           ext == "aif";
+}
+
+// Container formats whose ffmpeg demuxer needs a seekable input and so CANNOT be
+// fed through the one-way "ffmpeg -i pipe:0" progressive pipe:
+//   - aiff/aif: chunk layout (COMM/SSND) requires seeking; a pipe fails with
+//     "file is not seekable" / "Error opening input: Operation not permitted".
+//   - mp4/m4a:  the moov atom is frequently at end-of-file (non-faststart),
+//     reachable only by seeking.
+// These are handed to ffmpeg as a direct URL instead (mp.streamUrl), which lets
+// ffmpeg do its own HTTP with Range requests -- so it still starts after a short
+// prebuffer instead of a full multi-MB download, and can seek to parse the
+// header.
+bool MusicPlayerList::needsSeekableInput(const std::string& ext)
+{
+    return ext == "aiff" || ext == "aif" || ext == "m4a" || ext == "mp4";
 }
 
 bool MusicPlayerList::willStream(const SongInfo& info)
@@ -769,6 +790,18 @@ void MusicPlayerList::playCurrent()
         if (isRadioStream) {
             // Endless radio: let ffmpeg fetch and decode the resolved URL
             // directly (handles bare "ICY 200 OK" mounts the curl path rejects).
+            if (mp.streamUrl(remoteLoader.resolveUrl(currentInfo.path))) {
+                SET_STATE(Playstarted);
+            }
+            return;
+        }
+        // Seek-dependent containers (aiff/aif/mp4/m4a) can't be demuxed from the
+        // one-way pipe the progressive path uses -- ffmpeg must be able to seek to
+        // parse them. Hand the resolved URL straight to ffmpeg, which does its own
+        // HTTP with Range requests: it starts after a short prebuffer (no full
+        // download) yet can still seek to read the header. Killing the ffmpeg
+        // process on a track switch aborts its transfer, so this is switch-safe.
+        if (needsSeekableInput(ext)) {
             if (mp.streamUrl(remoteLoader.resolveUrl(currentInfo.path))) {
                 SET_STATE(Playstarted);
             }

@@ -2430,6 +2430,13 @@ void initFormats()
     // land in UNKNOWN and show no platform logo. ptkplugin plays both.
     format_map["ntk"] = PC;                  // NoiseTrekker / ProTrekkr .ntk
     format_map["ptk"] = PC;                  // ProTrekkr .ptk
+    // .mon is the Maniacs Of Noise format (a C64/SID driver by origin) but is
+    // played through UADE, so its modland tunes carry the "Maniacs Of Noise"
+    // format string and already resolve to UADE/Amiga. This bare-extension key
+    // is the safety net for .mon files onboarded without that canonical string
+    // (e.g. a scene.org "Demoscene"-tagged internal.mon) so they group with the
+    // rest of the extension under Amiga instead of falling through to no logo.
+    format_map["mon"] = UADE;                // Maniacs Of Noise .mon (UADE-played)
     format_map["klystrack"] = PC;            // klystrack (cross-platform chiptune tracker)
     format_map["darkwave studio"] = PC;      // DarkWave Studio (Windows DAW)
     format_map["dreamstation"] = PC;         // DreamStation (Windows)
@@ -2937,14 +2944,44 @@ std::map<std::string, std::set<std::string>> MusicDatabase::extensionPlatforms()
         sqlite3db::Database db{
             (Environment::getCacheDir() / "music.db").string()
         };
-        auto q = db.query<std::string, std::string>(
-            "SELECT DISTINCT ext, format FROM song");
-        std::string ext, fmt;
+        auto q = db.query<std::string, std::string, std::string>(
+            "SELECT DISTINCT ext, format, path FROM song");
+        std::string ext, fmt, path;
+        // A token is a "known format" if formats_descriptions describes it.
+        // (Container exts like gz/zip/lha aren't described, so they never match.)
+        auto described = [this](std::string e) {
+            return !e.empty() && !describeExtension(e).empty();
+        };
         while (q.step()) {
-            std::tie(ext, fmt) = q.get_tuple();
+            std::tie(ext, fmt, path) = q.get_tuple();
             ext = toLower(ext);
             if (ext.empty()) continue;
-            out[ext].insert(platformSlugForByte(formatToByte(fmt, "", 0)));
+            // Disqualify bogus prefix-form suffixes. Modland/scene names come as
+            // "<prefix>.<songname>" (e.g. "mod.brax", "cust.henk", "pn.jetset")
+            // where the real format is the LEADING token; the indexer stored the
+            // TRAILING token ("brax") as ext, which is just the song name -- not a
+            // format. When the prefix is a recognized format and the stored ext is
+            // not, remap to the prefix so the "missing screenshot" report lists
+            // the real format (usually already covered) instead of a phantom
+            // extension. Uses both recognizers the playback path relies on:
+            // describeExtension() (formats_descriptions) and getTypeAndBase()'s
+            // modland prefix list (pn/ash/jpn/smpl/sng/...).
+            std::string leaf = utils::path_filename(path);
+            if (auto qp = leaf.find('?'); qp != std::string::npos)
+                leaf = leaf.substr(0, qp);
+            auto fd = leaf.find_first_of('.');
+            std::string prefix =
+                fd != std::string::npos ? toLower(leaf.substr(0, fd)) : "";
+            bool knownPrefix =
+                described(prefix) || toLower(getTypeFromName(leaf)) == prefix;
+            if (!prefix.empty() && knownPrefix && !described(ext)) ext = prefix;
+            // Pass the real path (not "") so formatToByte's extension fallback
+            // and per-extension corrections fire exactly as they do at play time.
+            // Without it, formats identified only by their extension (e.g. .mon
+            // tunes tagged with a generic "Demoscene" platform string) resolve to
+            // no platform here and get mis-reported as needing a screenshot, even
+            // though playback classifies them fine.
+            out[ext].insert(platformSlugForByte(formatToByte(fmt, path, 0)));
         }
     } catch (...) {
         // No cached DB yet (first run) or it is mid-reindex -- skip the report.
@@ -3304,11 +3341,15 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
 std::string MusicDatabase::describeExtension(std::string const& ext)
 {
     if (!formatDescriptionsLoaded) {
-        formatDescriptionsLoaded = true;
         // Each entry spans two lines: "<ext>\t<trackers>" followed by a prose
         // description, then a blank separator line.
+        // NOTE: only mark the table as loaded once the file is actually found.
+        // describeExtension() can be called (via resolveExtension) before
+        // workDir is set, when File{"", ...} resolves to nothing -- caching an
+        // empty table there would permanently blank every format description.
         File f{ workDir.string(), "data/misc/formats_descriptions.txt" };
         if (f.exists()) {
+            formatDescriptionsLoaded = true;
             auto lines = f.getLines();
             for (size_t i = 0; i < lines.size(); i++) {
                 auto tab = lines[i].find('\t');

@@ -202,15 +202,16 @@ FFMPEGPlugin::FFMPEGPlugin()
 
 // Container/codec extensions the bundled ffmpeg decodes into PCM. Kept as the
 // single source of truth for both canHandle() and getSupportedExtensions() so
-// the two never drift. The compressed-lossy set (mp3/aac/m4a/mp4/ogg/opus/mp2)
-// plus the lossless PCM containers (wav/flac/aiff/aif) that show up across the
-// demoscene collections (demozoo has ~685 wav, ~343 flac, ~60 mp2, ~6 aif/aiff,
-// ~4 opus) -- all handled by ffmpeg's demuxers, previously dropped because the
-// gate omitted them.
+// the two never drift. The compressed-lossy set (mp3/aac/m4a/mp4/ogg/opus/mp2/
+// mpeg/ac3) plus the lossless PCM containers (wav/flac/aiff/aif) that show up
+// across the demoscene collections (demozoo has ~685 wav, ~343 flac, ~60 mp2,
+// ~6 aif/aiff, ~4 opus; scene.org compos add raw .mpeg audio and Dolby .ac3) --
+// all handled by ffmpeg's demuxers, previously dropped because the gate omitted
+// them.
 static const std::set<std::string>& ffmpegExtensions()
 {
     static const std::set<std::string> exts = {
-        "m4a", "aac", "mp3", "mp4", "ogg", "opus", "mp2",
+        "m4a", "aac", "mp3", "mp4", "ogg", "opus", "mp2", "mpeg", "ac3",
         "wav", "flac", "aiff", "aif", "8svx"};
     return exts;
 }

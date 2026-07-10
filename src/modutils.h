@@ -16,6 +16,15 @@ inline std::string getBaseName(std::string const& filename)
             fnstart += 2;
             break;
         }
+        // A '%' that isn't "%2f" (e.g. any byte of a percent-encoded UTF-8 name
+        // like "%E5%A4%A7...MDX"): keep scanning earlier for a real separator.
+        // But if this '%' is at position 0 there is nothing earlier -- decrement
+        // would wrap the unsigned index to npos and find_last_of() would restart
+        // from the end, spinning forever. Stop: the whole string is the basename.
+        if (fnstart == 0) {
+            fnstart = std::string::npos;
+            break;
+        }
         fnstart--;
     }
 

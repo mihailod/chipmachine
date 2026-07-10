@@ -887,10 +887,19 @@ void ChipMachine::loadSplashScreenshots()
     // it would just look like a redundant collage here.
     static const std::set<std::string> splashExcludePlatforms = {
         "PC-98 - X68000",
+        // Generic catch-all bucket, not a specific "venerable retro platform".
+        "Other",
+    };
+    // Extension logos excluded from the splash: streamable/plain-audio formats
+    // that aren't a "venerable retro platform" worth showcasing here.
+    static const std::set<std::string> splashExcludeExtensions = {
+        "aac", "aif", "aiff", "m4a", "opus", "mp2",
     };
     // Extensions first (more specific artwork), then platforms.
-    for (auto& [key, bm] : extensionShots)
+    for (auto& [key, bm] : extensionShots) {
+        if (splashExcludeExtensions.count(key)) continue;
         add("ext:", key, bm);
+    }
     for (auto& [key, bm] : platformShots) {
         if (splashExcludePlatforms.count(key)) continue;
         add("platform:", key, bm);

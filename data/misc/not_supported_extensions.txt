@@ -1,3 +1,44 @@
+# --- scene.org / Fujiology demoscene-compo oddities (2026-07-10) ---
+# These reached the index via URL onboarding tagged with a generic platform
+# string ("Demoscene"/"Windows"/"Linux"/"TIC-80") that resolves to no hardware,
+# so they surfaced in the "no screenshot / no platform logo" audit. On review
+# none has a decoder in our stack -- they are archives, commercial DAW projects,
+# executables, or hardware trackers with no open replayer -- so indexing them
+# only yields broken GUI entries. Skip them. (mon/ntk from the same audit ARE
+# playable and were fixed in MusicDatabase.cpp instead.)
+
+# compression archives, not music formats (compo entries submitted as archives)
+.arj
+.lzx
+.tgz
+.xz
+.img
+
+# .one -- unidentified container ("modk.one"); no reader
+.one
+
+# FL Studio (FruityLoops) project -- commercial DAW, no open renderer (cf. renoise/psy)
+.flp
+
+# 32k executable-music intro (Windows PE), not a decodable module
+.ps1
+
+# TIC-80 fantasy-console cart -- no TIC-80 music replayer in the stack
+.tic
+
+# Dirtywave M8 tracker song -- hardware tracker, no open replayer
+.m8s
+
+# unidentified obscure demoscene formats, no decoder anywhere
+.legoz
+.asg
+
+# .snort -- 2 scene.org "mod.snort" files, no .snort route/decoder
+.snort
+
+# (.ac3 Dolby AC-3 and .mpeg raw MPEG audio are NOT skipped -- they are wired
+# into FFMPEGPlugin's ffmpeg gate and play as audio.)
+
 # renoise commercial player
 .rns
 .xrns

@@ -72,6 +72,9 @@ public:
     // The set of file extensions the ffmpeg progressive-stream path accepts.
     // Shared between willStream() and playCurrent() so the two never drift.
     static bool isStreamableExt(const std::string& ext);
+    // Streamable containers whose ffmpeg demuxer needs a seekable input, so they
+    // take the direct-URL (HTTP Range) path instead of the one-way pipe.
+    static bool needsSeekableInput(const std::string& ext);
     int getLength() const;
     int getPosition() const;
     int listSize() const;

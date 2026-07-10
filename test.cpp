@@ -337,6 +337,33 @@ TEST_CASE("VGMRips format labels classify to a platform", "[music]")
     }
 }
 
+// The extension-screenshot audit (ChipMachine::loadExtensionScreenshots) keys off
+// classifyFormat(format, path) exactly as playback does -- it must pass the real
+// path so the extension fallback fires. scene.org/Fujiology tunes onboarded with a
+// generic "Demoscene"/"Windows" platform string (which resolves to no hardware)
+// must still classify by their extension so they land on a platform logo instead
+// of being mis-reported as needing a screenshot. Guards the mon/ntk false-positive
+// fix: .mon (Maniacs Of Noise, UADE-played) -> Amiga; .ntk (ProTrekkr) -> PC.
+TEST_CASE("generic-tagged demoscene tunes classify by extension", "[music]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    struct { const char* fmt; const char* path; uint8_t plat; } cases[] = {
+        { "Demoscene",
+          "https://archive.scene.org/pub/parties/2013/atparty13/x/internal.mon",
+          UADE },
+        { "Demoscene",
+          "https://ftp.untergrund.net/users/x/fujiology/x/BRASS_TACKS.NTK", PC },
+    };
+    for (auto const& c : cases) {
+        INFO(c.fmt << " " << c.path);
+        uint8_t b = mdb.classifyFormat(c.fmt, c.path);
+        REQUIRE(b != UNKNOWN_FORMAT);
+        REQUIRE(b == c.plat);
+    }
+}
+
 // SMS Power! (smspower) files by the `format` label too (its path is a .zip pack
 // URL). The Sega 8-bit labels must resolve to SEGAMS so the games appear under
 // that F9 filter; ColecoVision (SN76489 too, but not a Sega platform) rides with
@@ -591,10 +618,12 @@ TEST_CASE("FFMPEG claims lossless PCM and mp2 extensions", "[ffmpeglossless]")
     REQUIRE(p.canHandle("song.aif"));
     REQUIRE(p.canHandle("song.mp2"));
     REQUIRE(p.canHandle("song.opus"));
+    REQUIRE(p.canHandle("song.mpeg"));
+    REQUIRE(p.canHandle("song.ac3"));
     // getSupportedExtensions() and canHandle() share one source of truth.
     auto exts = p.getSupportedExtensions();
     for (auto const& e : {"wav", "flac", "aiff", "aif", "mp2", "opus", "mp3",
-                          "ogg", "m4a", "aac", "mp4", "8svx"}) {
+                          "ogg", "m4a", "aac", "mp4", "8svx", "mpeg", "ac3"}) {
         REQUIRE(exts.count(e) > 0);
     }
 }
@@ -610,7 +639,7 @@ TEST_CASE("willStream picks streaming vs full-download", "[music]")
     using namespace chipmachine;
     // Streamed: the ffmpeg finite-file formats (play after a short prebuffer).
     for (auto const* ext : {"mp3", "ogg", "aac", "m4a", "mp4", "opus", "mp2",
-                            "wav", "flac", "aiff", "aif"}) {
+                            "mpeg", "ac3", "wav", "flac", "aiff", "aif"}) {
         REQUIRE(MusicPlayerList::isStreamableExt(ext));
         SongInfo si("demozoo::pub/x." + std::string(ext), "", "", "",
                     "Demoscene");
@@ -3026,7 +3055,7 @@ TEST_CASE("FFMPEG", "[music]") { testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg
 // The corpus test above already sweeps the directory, but pin each format by
 // name so a routing/gate regression fails loudly instead of just shifting the
 // coverage tally. Fixtures are 3s cuts of sample.ogg (see testmus/ffmpeg).
-TEST_CASE("FFMPEG plays wav/flac/aiff/mp2/opus", "[music]")
+TEST_CASE("FFMPEG plays wav/flac/aiff/mp2/opus/mpeg/ac3", "[music]")
 {
     logging::setLevel(logging::Level::Warning);
     musix::FFMPEGPlugin plugin;
@@ -3035,7 +3064,9 @@ TEST_CASE("FFMPEG plays wav/flac/aiff/mp2/opus", "[music]")
                              "testmus/ffmpeg/sample.flac",
                              "testmus/ffmpeg/sample.aiff",
                              "testmus/ffmpeg/sample.mp2",
-                             "testmus/ffmpeg/sample.opus"}) {
+                             "testmus/ffmpeg/sample.opus",
+                             "testmus/ffmpeg/sample.mpeg",
+                             "testmus/ffmpeg/sample.ac3"}) {
         REQUIRE(utils::exists(file));
         REQUIRE(plugin.canHandle(file));
         auto* player = plugin.fromFile(file);
