@@ -2,10 +2,19 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- global dedupe everything against everything to see stats
+- FOLLOW UP ON PLAYBACK: One deliberate omission worth flagging: I skipped .0cc/.kftm (0CC-FamiTracker, ~380 files) as unverified — if you confirm FamiTracker CX loads them, that's an easy follow-up to add. Key nuance for your follow-up: .0cc carries the standard FamiTracker Module magic (so just adding 0cc to supported_ext passes the existing gate), but .kftm has a distinct kftm magic — it'll need its own magic check plus a loader-support check. Let me record that in the db.lua note and memory.
+Added 390 0CC-FamiTracker files (276 .0cc + 114 .kftm) to the BotB collection with their real extensions, classified as FamiTracker → NES. Collection is now 60,165 songs (data/botb.txt), 15,006 distinctive cover-art screenshots.
+For your playback follow-up — I checked the file magics so you know exactly what's needed in FamiTrackerPlugin.cpp:149 (currently supported_ext{"ftm"}, magic-gated on FamiTracker Module):
+.0cc — carries the same FamiTracker Module magic. Just add "0cc" to supported_ext; the existing magic gate already passes. (May still choke on 0CC extended blocks — worth verifying decode.)
+.kftm — has a distinct magic (kftm\x01\x00…), so it needs both a new magic branch in looksLikeFtm/canHandle and a loader check — kftm is a 0CC export container that base famitracker-cx may not parse.
+Both nuances are recorded in the db.lua v89 note and the botb-onboarding memory so the next session has the full picture. The build_botb.py mapping change is the only edit; no reindex-affecting code changed beyond the data file.
+
+- global dedupe everything against everything to see stats. I think battle of the bits added dupes. when removing if all equal remove the dupe without the screenshot.
+
 - classify OGG files into platforms
 - make an attempt to reclassify the rest of the yt
 - combine yt and ogg not classified into one?
+- release 1.8
 
 --------------
 - extensions still missing format description:

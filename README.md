@@ -135,6 +135,7 @@ Metadata from these databases is ingested, normalized, deduped and cross-checked
 * SMS POWER! - https://www.smspower.org
 * MirSoft - http://www.mirsoft.info
 * Chipmusic - https://chipmusic.org
+* Battle of the Bits - https://battleofthebits.org
 
 ### Remixes / Recordings / Streaming (mp2/mp3/ogg/flac/wav/aif/aiff/opus)
 

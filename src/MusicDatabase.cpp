@@ -1760,7 +1760,8 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                collection == "rko" || collection == "amigaremix" ||
                collection == "amp" || collection == "modarchive" ||
                collection == "projectay" || collection == "vgmrips" ||
-               collection == "smspower" || collection == "mirsoft") {
+               collection == "smspower" || collection == "mirsoft" ||
+               collection == "botb") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
@@ -1794,6 +1795,12 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         // for Amiga, zophar/vgmrips/smspower/cpcpower reuse), matched by game name
         // and keyed by the mirsoft "<Game>.zip" song path; built by
         // build_mirsoft.py --screenshots. mirsoft hosts no shots of its own.
+        // botb -> the entry's battle cover art (themed compos have a distinctive
+        // artwork.png/entry image), keyed by the full disk/battle/<id>/<file>
+        // song URL; built by build_botb.py --build (~14.8k distinctive covers;
+        // the generic One-Hour-Battle /disk/debris/ banners are dropped). Cover
+        // art, not a game screenshot -- BotB entries are original community
+        // compos, not rips.
         // modland/hvsc/sndh/asma/
         // sceneorg are additionally augmented from Demozoo: a tune is matched to
         // the demos that use it as soundtrack and borrows that production's
@@ -2283,6 +2290,11 @@ void initFormats()
     format_map["iso-mpeg audio layer-3"] = MP3;
     format_map["hippel st coso"] = ATARI;   // Atari ST Hippel
     format_map["bbc micro"] = ACORN;        // Acorn 8-bit (close enough)
+    // Battle of the Bits (build_botb.py) format labels not covered above.
+    format_map["mptm"] = PCTRACKER;         // OpenMPT native module
+    format_map["adlib"] = ADPLUG;           // AdPlug OPL (rad/amd/a2m/dfm/snd)
+    format_map["pxtone"] = PC;              // PxTone Collage (Studio Pixel)
+    format_map["vgm"] = OTHER;              // generic multi-chip VGM log
     // Misc small consoles/arcade -> generic OTHER ("Other Platforms" filter).
     for (char const* f : { "vectrex", "colecovision", "capcom q-sound format" })
         format_map[f] = OTHER;

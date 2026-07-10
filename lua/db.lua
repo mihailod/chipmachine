@@ -331,7 +331,35 @@
 --     -> the existing Unclassified MP3/OGG filter (format_map["chipmusic"]=MP3,
 --     no new enum byte). Built by chipmachine/scripts/build_chipmusic.py (--rss /
 --     --tags / --build). Bump forces a reindex.
-VERSION = 88;
+-- 89: Battle of the Bits (battleofthebits.com) -- the live, active original-
+--     composition chiptune community (2005-). 60165 net-new audio entries
+--     onboarded from its public JSON API (on the .COM host; .org 404s for
+--     /api). Playability is driven by the REAL file extension (from each
+--     entry's view_url), NOT the API format_token (a compo/platform label):
+--     only extensions one of our plugins actually decodes are kept -- nsf/it/
+--     xm/mod/s3m/mptm (OpenMPT+GME), sid, spc, sap, gbs, hes, ay/pt3, vgm/vgz,
+--     ftm/0cc/kftm (FamiTracker; 0cc/kftm playback is a follow-up -- famitracker
+--     plugin claims only .ftm today), dmf, sunvox, ptcop/pttune, org, bbsong,
+--     ahx, sndh/ym, prg, s98,
+--     a2m/rad/amd/dfm/snd (AdPlug), and the rendered remix/sample/vocal/allgear/
+--     wildchip compos (mp3/ogg/wav/flac -> ffmpeg). Unplayable natives (renoise
+--     .xrns, furnace .fur, klystrack .kt, mario paint .sho, raw ROMs .smc/.gb,
+--     midi, tap, lgpt/snibbe/... ) are skipped -- BotB's mp3 PREVIEW endpoint is
+--     login-gated, so there is no rendered fallback for those. NO dedup (BotB is
+--     original battle output, not rips -- near-zero overlap with modland/
+--     modarchive). Each path is a full STATIC, directly-hotlinkable
+--     https://battleofthebits.com/disk/battle/<battle_id:08d>/<file> URL
+--     (source=""; the API's EntryDonload/EntryPreview endpoints 403 anonymously,
+--     but the raw disk asset is public), reconstructed from view_url + battle_id.
+--     format column classifies to the F9 platform filter (build_botb.py); ext
+--     column routes the decoder. Screenshots: each entry's battle cover art
+--     (artwork.png / entry image), keyed by the song URL in
+--     data/botb_screenshots.txt (~14.8k distinctive covers; the generic
+--     One-Hour-Battle debris banners are dropped; getSongScreenshots botb
+--     branch). New format_map labels adlib/
+--     mptm/pxtone/vgm added in initFormats. Built by chipmachine/scripts/build_botb.py
+--     (--crawl / --build). Bump forces a reindex.
+VERSION = 89;
 
 DB = {
 {
@@ -655,6 +683,21 @@ DB = {
 	source = "",
 	song_list = "data/chipmusic.txt",
 	song_template = "title composer format path",
+	color = 0xfffff
+},
+{
+	-- Battle of the Bits (battleofthebits.com) -- original-composition chiptune
+	-- community (see VERSION 89). Each path is a full STATIC
+	-- https://battleofthebits.com/disk/battle/<id>/<file> URL (source=""); the
+	-- `ext` column routes the decoder (native module/chip file, or a rendered
+	-- mp3/ogg/wav compo -> ffmpeg), the `format` column the F9 platform filter.
+	-- Screenshots = the entry's battle cover art in data/botb_screenshots.txt
+	-- (getSongScreenshots botb branch). Built by scripts/build_botb.py.
+	name = "Battle of the Bits",
+	id =  "botb",
+	source = "",
+	song_list = "data/botb.txt",
+	song_template = "title composer format path ext",
 	color = 0xfffff
 },
 
