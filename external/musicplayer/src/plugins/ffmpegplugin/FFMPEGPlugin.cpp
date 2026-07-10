@@ -200,18 +200,28 @@ FFMPEGPlugin::FFMPEGPlugin()
     LOGD("FFMPEG PLUGIN INITIALIZED WITH PATH '%s'", ffmpeg.c_str());
 }
 
+// Container/codec extensions the bundled ffmpeg decodes into PCM. Kept as the
+// single source of truth for both canHandle() and getSupportedExtensions() so
+// the two never drift. The compressed-lossy set (mp3/aac/m4a/mp4/ogg/opus/mp2)
+// plus the lossless PCM containers (wav/flac/aiff/aif) that show up across the
+// demoscene collections (demozoo has ~685 wav, ~343 flac, ~60 mp2, ~6 aif/aiff,
+// ~4 opus) -- all handled by ffmpeg's demuxers, previously dropped because the
+// gate omitted them.
+static const std::set<std::string>& ffmpegExtensions()
+{
+    static const std::set<std::string> exts = {
+        "m4a", "aac", "mp3", "mp4", "ogg", "opus", "mp2",
+        "wav", "flac", "aiff", "aif", "8svx"};
+    return exts;
+}
+
 bool FFMPEGPlugin::canHandle(const std::string& name)
 {
     LOGD("FFMPEGPlugin::canHandle checking '%s'", name.c_str());
     // Since MusicPlayer already called makeLower(), 'name' is guaranteed to be lowercase.
-    // Check for the extension explicitly from the end of the string.
-    if (name.size() >= 4) {
-        if (name.compare(name.size() - 4, 4, ".m4a") == 0) return true;
-        if (name.compare(name.size() - 4, 4, ".aac") == 0) return true;
-        if (name.compare(name.size() - 4, 4, ".mp3") == 0) return true;
-        if (name.compare(name.size() - 4, 4, ".mp4") == 0) return true;
-        if (name.compare(name.size() - 4, 4, ".ogg") == 0) return true;
-    }
+    // Match on the trailing extension against the supported set.
+    auto ext = utils::path_extension(name);
+    if (!ext.empty() && ffmpegExtensions().count(ext) > 0) return true;
     // IFF-8SVX Amiga samples (modland/UnExoticA "8svx.<name>" prefix form). UADE
     // ships no 8SVX eagleplayer, but ffmpeg's IFF demuxer decodes them (incl.
     // Fibonacci-delta), so route them here. Content is FORM..8SVX; the prefix is
@@ -222,7 +232,7 @@ bool FFMPEGPlugin::canHandle(const std::string& name)
 
 std::set<std::string> FFMPEGPlugin::getSupportedExtensions() const
 {
-    return {"m4a", "aac", "mp3", "mp4", "ogg", "8svx"};
+    return ffmpegExtensions();
 }
 
 
