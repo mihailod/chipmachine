@@ -281,6 +281,9 @@ private:
     void loadScreenshot(const std::string& shot);
     // Recomputes the centred, half-screen rectangle of the splash icon.
     void updateSplashArea();
+    // Builds (once totalSongs is known) and ping-pong-scrolls the splash welcome
+    // banner across the top each frame, mirroring the song-title marquee.
+    void updateSplashWelcome(uint32_t delta);
     // Collects the (deduplicated) platform + extension pictures shown by the
     // idle splash animation. Must run after loadPlatformScreenshots() and
     // loadExtensionScreenshots() so their bitmaps are already loaded.
@@ -536,6 +539,14 @@ private:
     // Whether the splash was active last frame; render() reads this (set by
     // update()) and it drives the restart-on-enter transition.
     bool splashActive = false;
+    // Welcome banner ping-pong-scrolled across the top of the splash, in the
+    // song-title font/size/colour. Rendered behind the splash pictures.
+    TextField splashWelcomeField;
+    float splashWelcomePhase = 0.0f;   // ping-pong scroll phase (seconds)
+    int splashWelcomeSongs = -1;       // totalSongs baked into the current text
+    // Total number of indexed songs, computed at startup in computeFilterCounts
+    // (the same total the "[Show All]" F9 filter reports).
+    int totalSongs = 0;
     // Lazily-loaded ChipMachine logo (data/misc/icon.png), used as the final
     // fallback so the screenshot area is never blank.
     image::bitmap defaultShot;

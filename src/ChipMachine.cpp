@@ -780,11 +780,67 @@ void ChipMachine::updateSplashArea()
     float final_h = bm_h * d;
 
     float x = (screen.width() - final_w) * 0.5f;
-    // Horizontally centred, but lifted half the picture's height above the
-    // vertical centre so the image clears the scroller running along the bottom.
-    float y = (screen.height() - final_h) * 0.5f - final_h * 0.5f;
+    // Centred both horizontally and vertically.
+    float y = (screen.height() - final_h) * 0.5f;
 
     splashIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
+}
+
+// Ping-pong-scrolls the welcome banner across the top of the splash. Uses the
+// same font/scale/colour as the song title (currentInfoField[0]) and the same
+// bounce math as updateTitleMarquee, but spans the full window width. The banner
+// text is (re)built when the indexed song total becomes known.
+void ChipMachine::updateSplashWelcome(uint32_t delta)
+{
+    if (totalSongs <= 0) return; // not indexed yet -- nothing to announce
+
+    auto& title = currentInfoField[0];
+
+    // (Re)build the text and adopt the title font when the total changes.
+    if (splashWelcomeSongs != totalSongs) {
+        splashWelcomeField.setFont(font);
+        splashWelcomeField.setText(
+            PROGRAM_NAME " " VERSION_STR
+            " - EXPLORE & LISTEN TO " +
+            withCommas(totalSongs) +
+            " RETRO TUNES");
+        splashWelcomeSongs = totalSongs;
+        splashWelcomePhase = 0.0f;
+    }
+    // Track the live title styling every frame (lua may set it after startup).
+    splashWelcomeField.scale = title.scale;
+    splashWelcomeField.color = title.color;
+    splashWelcomeField.align = 0.0f; // left-anchored; x is the left edge
+
+    float gscale = screen.height() / 576.0f;
+    // Span (almost) the whole window width, with a small margin each side.
+    float margin = 10.0f * gscale;
+    float baseX = margin;
+    float avail = screen.width() - 2.0f * margin;
+    // Sit a good way below the top edge: the title font's rounded glyphs
+    // overshoot the em-box, so a small margin clips their tops. Anchoring to a
+    // fraction of the height keeps this correct as the window (and the
+    // proportional font) resizes.
+    splashWelcomeField.pos.y = screen.height() * 0.16f;
+
+    int overflow = splashWelcomeField.getWidth() - (int)avail;
+    if (overflow <= 0) {
+        // Fits -- pin to the left margin, no scroll.
+        splashWelcomeField.pos.x = baseX;
+        splashWelcomePhase = 0.0f;
+        return;
+    }
+
+    splashWelcomePhase += delta / 1000.0f;
+    // Constant on-screen speed regardless of window size (matches the title
+    // marquee): distance and velocity both scale with gscale.
+    float speed = 330.0f * gscale;             // px/sec
+    float cycle = 2.0f * overflow / speed;     // seconds per out-and-back
+    if (cycle < 1.0f) cycle = 1.0f;
+    float p = std::fmod(splashWelcomePhase, cycle) / cycle;   // 0..1
+    // Ease 0 -> 1 -> 0 over one cycle, dwelling briefly at each end.
+    float ease = 0.5f - 0.5f * std::cos(p * 6.28318530718f);
+    splashWelcomeField.pos.x = baseX - ease * overflow;
 }
 
 // Builds splashShots from every loaded platform + extension picture, collapsing
@@ -1283,6 +1339,7 @@ void ChipMachine::computeFilterCounts()
     for (int c : counts)
         total += c;
     if (total == 0) return;
+    totalSongs = total; // drives the splash welcome banner
     podcastShowCount = musicDatabase.getPodcastShowCount();
     otherPlatformCount = musicDatabase.getOtherPlatformCount();
     arcadePlatformCount = musicDatabase.getArcadePlatformCount();
@@ -1790,9 +1847,13 @@ void ChipMachine::render(uint32_t delta)
 
     if (currentScreen == MAIN_SCREEN) {
         mainScreen.render(screenptr, delta);
-        // Idle splash picture, drawn over the (otherwise empty) main screen but
-        // below the scroller so the scroll text stays in the foreground.
-        if (splashActive) splashIcon.render(screenptr, delta);
+        if (splashActive) {
+            // Picture first, then the welcome banner on TOP of it (still below
+            // the foreground scroller).
+            splashIcon.render(screenptr, delta);
+            updateSplashWelcome(delta);
+            splashWelcomeField.render(screenptr, delta);
+        }
     } else if (currentScreen == SEARCH_SCREEN) {
         searchScreen.render(screenptr, delta);
     } else if (currentScreen == ADVANCED_SCREEN) {
