@@ -24,20 +24,6 @@ gym	5 dm	5 0cc	5
 
 * (started and parked) https://chipmusic.org --  chipmusic.org serves MP3 only. 
 
-* GYUSYABU PC-98 SOUNDTRACKS
-  - URL: http://gyusyabu.ddo.jp (or mirrors)
-  - Platforms/Chips: NEC PC-9801/8801 FM Synthesis
-  - Key Formats: High-quality .mp3 rips
-  - Notes: A long-standing Japanese community archive hosting pre-recorded MP3 renders
-    of PC-98 game music recorded from real hardware (PC-9821 with OPNA boards).
-
-* KHINSIDER VIDEO GAME MUSIC
-  - URL: https://downloads.khinsider.com
-  - Platforms: All gaming platforms (modern & retro)
-  - Key Formats: Pre-rendered (.mp3, .flac)
-  - Notes: Contains pre-recorded soundtracks (OSTs) for consoles that are hard to
-    emulate or rely on streamed audio (e.g. CD-DA, ADX). Scrapers / bulk-downloaders exist.
-
 * SITTING ON CLOUDS
   - URL: https://www.sittingonclouds.net
   - Platforms: Modern consoles, arcade systems

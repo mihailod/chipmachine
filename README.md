@@ -176,6 +176,7 @@ And one not related to retro music but dear to my heart so here it is:
 * Radio PARALAX - https://www.radio-paralax.de
 * CVGM Radio - https://radio.cvgm.net
 * Kohina - https://kohina.com
+* Gyusyabu Retro PC (NEC PC-98 / Sharp X68000 game music from real hardware) - http://gyusyabu.ddo.jp
 
 ## Music Plugins and supported formats and platforms
 

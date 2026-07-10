@@ -308,7 +308,16 @@
 --     cpcpower reuse) into data/mirsoft_screenshots.txt (274/1049), consumed by
 --     the mirsoft branch of getSongScreenshots.
 --     Bump forces a reindex.
-VERSION = 86;
+-- 87: added Gyusyabu Retro PC radio station (data/radio.txt) -- gyusyabu.ddo.jp's
+--     long-running SHOUTcast stream of NEC PC-98/PC-88 + Sharp X68000 game music
+--     recorded from REAL hardware (PC-9821 + OPNA/YM2203). It is a live stream,
+--     NOT a downloadable file archive (the site's MP3/ dir is 403 and the album
+--     pages are just program info), so it onboards as one radio entry like The
+--     Sid Station / VGM Radio -- direct 256kbps SHOUTcast MP3 at
+--     http://gyusyabu.ddo.jp:8000/;stream.mp3 (plays via the radio::/ffmpeg
+--     path; no new format). Station logo = the site's title.gif (stb decodes
+--     GIF; STBI_NO_GIF is not set). Bump forces a reindex.
+VERSION = 87;
 
 DB = {
 {
