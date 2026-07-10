@@ -2,19 +2,17 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- FOLLOW UP ON PLAYBACK: One deliberate omission worth flagging: I skipped .0cc/.kftm (0CC-FamiTracker, ~380 files) as unverified — if you confirm FamiTracker CX loads them, that's an easy follow-up to add. Key nuance for your follow-up: .0cc carries the standard FamiTracker Module magic (so just adding 0cc to supported_ext passes the existing gate), but .kftm has a distinct kftm magic — it'll need its own magic check plus a loader-support check. Let me record that in the db.lua note and memory.
-Added 390 0CC-FamiTracker files (276 .0cc + 114 .kftm) to the BotB collection with their real extensions, classified as FamiTracker → NES. Collection is now 60,165 songs (data/botb.txt), 15,006 distinctive cover-art screenshots.
-For your playback follow-up — I checked the file magics so you know exactly what's needed in FamiTrackerPlugin.cpp:149 (currently supported_ext{"ftm"}, magic-gated on FamiTracker Module):
-.0cc — carries the same FamiTracker Module magic. Just add "0cc" to supported_ext; the existing magic gate already passes. (May still choke on 0CC extended blocks — worth verifying decode.)
-.kftm — has a distinct magic (kftm\x01\x00…), so it needs both a new magic branch in looksLikeFtm/canHandle and a loader check — kftm is a 0CC export container that base famitracker-cx may not parse.
-Both nuances are recorded in the db.lua v89 note and the botb-onboarding memory so the next session has the full picture. The build_botb.py mapping change is the only edit; no reindex-affecting code changed beyond the data file.
+- 1 ONBOARD 3. keygenmusic — archive.org (medium, niche but net‑new)
+Original site dead (~2022), but the full collection is preserved on the Internet Archive (~5,533 files, formats we already play: mod/xm/s3m/it/ahx/nsf/sid/spc/sap/sc68/v2m/ym/d00/rad/hsc/fc13/fc14/mtm/bp/amd + mp3/ogg). A genuinely distinct subculture (cracktro/keygen scene) not represented elsewhere in the DB. Directly fetchable from archive.org. Smaller and needs dedup vs modland/modarchive, but net‑new.
+
+- see if there are other formats in db we don't play
 
 - global dedupe everything against everything to see stats. I think battle of the bits added dupes. when removing if all equal remove the dupe without the screenshot.
 
 - classify OGG files into platforms
 - make an attempt to reclassify the rest of the yt
 - combine yt and ogg not classified into one?
-- release 1.8
+- release 1.8 or even 2.0 once all dbs are ingested?
 
 --------------
 - extensions still missing format description:

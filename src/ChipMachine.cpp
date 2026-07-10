@@ -1892,7 +1892,10 @@ void ChipMachine::render(uint32_t delta)
     // other screen elements) painted over it whenever the sine wobble pushed the
     // text up into their area. Kept below the modal overlay so dialogs/help still
     // sit on top of the scroll.
-    scrollEffect.render(delta);
+    // Hold the scroller until indexing finishes, so it doesn't start scrolling
+    // over the "Indexing database" progress screen.
+    if (!indexingDatabase)
+        scrollEffect.render(delta);
 
     // While paused (F5), show a big mute symbol in the centre with a large white
     // "F5" beside it, so the user knows what they pressed and how to un-mute.
@@ -1917,6 +1920,79 @@ void ChipMachine::render(uint32_t delta)
     }
 
     overlay.render(screenptr, delta);
+
+    // Startup indexing progress bar, drawn just below the "Indexing database"
+    // toast. A plain white outline that fills left-to-right, with the percentage
+    // centred inside. Progress is (rows processed / progressMaxSongs); since the
+    // real DB size isn't known up-front we assume progressMaxSongs and clamp.
+    if (indexingDatabase && toastField.getText() != "") {
+        float gscale = screen.height() / 576.0f;
+        // Two-phase progress: the DB-creation ticks fill the first
+        // progressDbPhase of the bar, the row indexing fills the rest.
+        float dbFrac = (float)musicDatabase.getDbCreatedCount() /
+                       (float)std::max(1, progressMaxDatabases);
+        if (dbFrac > 1.0f) dbFrac = 1.0f;
+        float rowFrac = (float)musicDatabase.getIndexedCount() /
+                        (float)std::max(1, progressMaxSongs);
+        if (rowFrac > 1.0f) rowFrac = 1.0f;
+        float frac = progressDbPhase * dbFrac +
+                     (1.0f - progressDbPhase) * rowFrac;
+        if (frac < 0.0f) frac = 0.0f;
+        if (frac > 1.0f) frac = 1.0f;
+
+        float cx = topLeft.x + (downRight.x - topLeft.x) * 0.5f;
+        float barW = (downRight.x - topLeft.x) * 0.5f;
+        float barH = 44.0f * gscale;
+        float barX = cx - barW * 0.5f;
+        float barY = toastField.pos.y + toastField.getHeight() + 12.0f * gscale;
+        float b = std::max(2.0f, 2.0f * gscale); // border thickness
+
+        const uint32_t white = 0xffffffff;
+        // White outline, black interior.
+        screen.rectangle(barX, barY, barW, barH, white);
+        screen.rectangle(barX + b, barY + b, barW - 2 * b, barH - 2 * b,
+                         0xff000000);
+
+        // Spectrum-analyzer fill: colour ramps green -> yellow -> red across the
+        // FULL bar width, revealed left-to-right up to `frac`. So the fill starts
+        // green and its leading edge shifts toward red as it approaches 100%.
+        auto specColor = [](float t) -> uint32_t {
+            if (t < 0.0f) t = 0.0f;
+            if (t > 1.0f) t = 1.0f;
+            float r, g;
+            if (t < 0.5f) { r = t / 0.5f; g = 1.0f; }         // green -> yellow
+            else { r = 1.0f; g = 1.0f - (t - 0.5f) / 0.5f; }  // yellow -> red
+            return 0xff000000u | ((uint32_t)(r * 255.0f) << 16) |
+                   ((uint32_t)(g * 255.0f) << 8);
+        };
+        float innerX = barX + b;
+        float innerY = barY + b;
+        float innerW = barW - 2 * b;
+        float innerH = barH - 2 * b;
+        float filledW = innerW * frac;
+        const int strips = 64;
+        float stripW = innerW / strips;
+        for (int i = 0; i < strips; i++) {
+            float left = i * stripW;
+            if (left >= filledW) break;
+            float w = std::min(stripW, filledW - left);
+            screen.rectangle(innerX + left, innerY, w, innerH,
+                             specColor((i + 0.5f) / strips));
+        }
+
+        std::string pct = utils::format("%d%%", (int)(frac * 100.0f));
+        float tScale = 0.6f * gscale;
+        auto tsz = font.get_size(pct, tScale);
+        // Centre the line box in the bar, then apply an explicit pixel nudge
+        // (progressPctYNudge) because this font's glyphs sit high within their
+        // line box. The nudge is in gscale pixels for a predictable 1:1 lever.
+        // Once the fill passes the centred label (>= 50%), switch it to black so
+        // it stays legible against the bright fill.
+        uint32_t textColor = (frac >= 0.5f) ? 0xff000000 : white;
+        screen.text(font, pct, cx - tsz.x * 0.5f,
+                    barY + (barH - tsz.y) * 0.5f + progressPctYNudge * gscale,
+                    textColor, tScale);
+    }
 
     // Drawn last so the volume bar always sits on top of every screen element
     // (album art, lists, scroller) and is never partially obscured. Only the

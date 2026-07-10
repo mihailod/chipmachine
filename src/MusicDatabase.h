@@ -313,6 +313,19 @@ public:
         return true;
     }
 
+    // Number of song rows the indexer has processed so far (see indexedCount).
+    // Drives the startup indexing progress bar.
+    int getIndexedCount() const
+    {
+        return indexedCount.load(std::memory_order_relaxed);
+    }
+
+    // Number of per-collection databases created so far (see dbCreatedCount).
+    int getDbCreatedCount() const
+    {
+        return dbCreatedCount.load(std::memory_order_relaxed);
+    }
+
     SongInfo& lookup(SongInfo& song);
 
     std::vector<SongInfo> getProductSongs(uint32_t id);
@@ -588,6 +601,13 @@ private:
 
     std::future<void> initFuture;
     std::atomic<bool> indexing{};
+    // Live count of rows processed by the indexer, published for the startup
+    // progress bar. Written from the async index thread, read from the render
+    // thread; relaxed access is fine (a slightly stale count just moves the bar).
+    std::atomic<int> indexedCount{ 0 };
+    // Live count of per-collection databases created (one tick per "Creating
+    // '...' DB" step). Drives the first phase of the startup progress bar.
+    std::atomic<int> dbCreatedCount{ 0 };
 
     std::vector<Playlist> playLists;
     std::unordered_map<uint64_t, uint32_t> pathMap;

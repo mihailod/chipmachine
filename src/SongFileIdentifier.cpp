@@ -322,7 +322,6 @@ bool identify_song(SongInfo& info, std::string ext)
     if (ext == "prg") {
 
         auto parts = utils::split(info.metadata[SongInfo::INFO], "/");
-        LOGD("PARTS %s", parts);
         int l = parts.size();
         auto title = utils::path_basename(parts[l - 1]);
         fixName(title);

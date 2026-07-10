@@ -185,3 +185,27 @@
 
 # atari exexutable, pruned from db but just in case:
 .xex
+
+# 0CC-FamiTracker (.0cc, BotB corpus). Carries the SAME "FamiTracker Module" magic
+# and file-version 0x0440 as a plain .ftm, so the shipped FamiTracker CX engine's
+# gate accepts it -- but 0CC's headline feature is multichip expansion the engine
+# never implemented. Tested 20 real BotB .0cc files through famitracker-cx: only
+# ~40% play; ~50% throw UNIMPLEMENTED_CX ("Instrument not supported" -- N163/
+# INST_N106 and Sunsoft-5B/INST_S5B are commented out in FtmDocument.cpp), and
+# ~10% HARD-SIGSEGV during render (CTrackerChannel::SetNote deref of a NULL channel
+# at TrackerChannel.cpp:47 -- the module addresses N163 x8 / 5B channels the
+# ChannelMap never allocated). The crash is a raw signal, NOT a catchable
+# FtmDocumentException, so a bad .0cc takes down the whole app, and it fires mid-
+# song (past load) so "loads OK" is no guarantee. Adding "0cc" to
+# famitrackerplugin supported_ext was tested and REJECTED -- 40% playback isn't
+# worth a >=10% process-crash rate. Proper support needs a 0CC-aware engine
+# (N163/5B channels + expansion ChannelMap + extended blocks), a real upgrade.
+# See botb-onboarding memory. Re-open if the engine is upgraded.
+.0cc
+
+# 0CC-FamiTracker compact export (.kftm, BotB corpus). NOT the "FamiTracker Module"
+# block container at all -- magic is "kftm\x01\x00" followed by a 32-byte inline
+# song name. base famitracker-cx has no reader for this format, and it shares the
+# N163/5B expansion dead-end above. Would need its own parser AND a 0CC-aware
+# engine. Parked with .0cc.
+.kftm

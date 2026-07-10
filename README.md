@@ -141,6 +141,7 @@ Metadata from these databases is ingested, normalized, deduped and cross-checked
 
 * Pouët.net - https://www.pouet.net
 * Amiga Remix (MP3) - http://amigaremix.com
+* OverClocked ReMix (MP3) - https://ocremix.org
 * Sounds of Scenesat - https://scenesat.com
 * Demozoo -- https://demozoo.org
 

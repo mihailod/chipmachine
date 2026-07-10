@@ -1194,6 +1194,8 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
 
     print_fmt("Creating '%s' DB, source: %s, songs count: %d\n", name,
               usedFile, localCount);
+    // One progress tick per created collection DB (first phase of the bar).
+    dbCreatedCount.fetch_add(1, std::memory_order_relaxed);
 }
 
 void MusicDatabase::setFilter(std::string const& collection, int type)
@@ -1761,7 +1763,7 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                collection == "amp" || collection == "modarchive" ||
                collection == "projectay" || collection == "vgmrips" ||
                collection == "smspower" || collection == "mirsoft" ||
-               collection == "botb") {
+               collection == "botb" || collection == "ocremix") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
@@ -1795,6 +1797,10 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         // for Amiga, zophar/vgmrips/smspower/cpcpower reuse), matched by game name
         // and keyed by the mirsoft "<Game>.zip" song path; built by
         // build_mirsoft.py --screenshots. mirsoft hosts no shots of its own.
+        // ocremix -> the source game's title-screen/box image on ocremix.org
+        // (the remix's og:image; a genuine game shot), keyed by the full mirror
+        // .mp3 song URL in data/ocremix_screenshots.txt; built by
+        // build_ocremix.py --build.
         // botb -> the entry's battle cover art (themed compos have a distinctive
         // artwork.png/entry image), keyed by the full disk/battle/<id>/<file>
         // song URL; built by build_botb.py --build (~14.8k distinctive covers;
@@ -2295,6 +2301,7 @@ void initFormats()
     format_map["adlib"] = ADPLUG;           // AdPlug OPL (rad/amd/a2m/dfm/snd)
     format_map["pxtone"] = PC;              // PxTone Collage (Studio Pixel)
     format_map["vgm"] = OTHER;              // generic multi-chip VGM log
+    format_map["playstation 2"] = PLAYSTATION2; // OCReMix PS2 game remixes
     // Misc small consoles/arcade -> generic OTHER ("Other Platforms" filter).
     for (char const* f : { "vectrex", "colecovision", "capcom q-sound format" })
         format_map[f] = OTHER;
@@ -3489,6 +3496,9 @@ void MusicDatabase::generateIndex()
         if (count % step == 0) {
             LOGD("%d songs indexed", count);
         }
+        // Publish progress for the startup bar every 2000 rows (cheap, smooth).
+        if (count % 2000 == 0)
+            indexedCount.store(count, std::memory_order_relaxed);
 
         tie(title, game, fmt, composer, path, collection) = query.get_tuple();
 
@@ -3630,6 +3640,8 @@ void MusicDatabase::initFromLuaAsync(utils::path const& workDir)
 {
     this->workDir = workDir;
     indexing = true;
+    indexedCount.store(0, std::memory_order_relaxed);
+    dbCreatedCount.store(0, std::memory_order_relaxed);
     initFuture = std::async(std::launch::async, [=]() {
         std::lock_guard lock{ dbMutex };
         if (!initFromLua(workDir)) {

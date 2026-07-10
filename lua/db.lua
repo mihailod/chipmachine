@@ -338,8 +338,10 @@
 --     entry's view_url), NOT the API format_token (a compo/platform label):
 --     only extensions one of our plugins actually decodes are kept -- nsf/it/
 --     xm/mod/s3m/mptm (OpenMPT+GME), sid, spc, sap, gbs, hes, ay/pt3, vgm/vgz,
---     ftm/0cc/kftm (FamiTracker; 0cc/kftm playback is a follow-up -- famitracker
---     plugin claims only .ftm today), dmf, sunvox, ptcop/pttune, org, bbsong,
+--     ftm/0cc/kftm (FamiTracker -- only .ftm actually plays; 0cc/kftm ingested for
+--     completeness but playback SHELVED: tested, famitracker-cx SIGSEGVs on 0CC's
+--     N163/5B channels, kftm is a different container -- needs an engine upgrade,
+--     see botb-onboarding memory), dmf, sunvox, ptcop/pttune, org, bbsong,
 --     ahx, sndh/ym, prg, s98,
 --     a2m/rad/amd/dfm/snd (AdPlug), and the rendered remix/sample/vocal/allgear/
 --     wildchip compos (mp3/ogg/wav/flac -> ffmpeg). Unplayable natives (renoise
@@ -359,7 +361,32 @@
 --     branch). New format_map labels adlib/
 --     mptm/pxtone/vgm added in initFormats. Built by chipmachine/scripts/build_botb.py
 --     (--crawl / --build). Bump forces a reindex.
-VERSION = 89;
+-- 90: OverClocked ReMix (ocremix.org) -- the premier community archive of
+--     *arranged* video-game music: ~5000 free downloadable MP3 remixes
+--     (OCR00001..OCR050xx), each tied to a source game, its original composer
+--     and the remixer. A rendered-MP3 STREAMING collection (ffmpeg, no new
+--     decode capability), same class as amigaremix/chipmusic. ocremix.org
+--     robots.txt disallows AI-training crawlers (ClaudeBot/GPTBot/CCBot) but has
+--     no general block; with the user's explicit go-ahead, built by a POLITE,
+--     THROTTLED (~2 req/s), browser-UA fetch of one detail page per remix
+--     (chipmachine/scripts/build_ocremix.py --crawl/--build). Each path is a full STATIC,
+--     directly-hotlinkable mirror URL
+--     https://iterations.org/files/music/remixes/<file>.mp3 (source=""); the
+--     filename uses an abbreviated game name (not derivable), so it comes from
+--     the detail page's mp3 link. Clean OpenGraph tags drive extraction: og:title
+--     -> game + remix title, og:description -> remixer, color-original ->
+--     original game composer(s), og:image -> the source game's title-screen
+--     image (screenshot). The `composer` column is "<remixer> / <original
+--     composer(s)>" so a search for EITHER the arranger or the original game
+--     composer surfaces the remix (e.g. "Nobuo Uematsu" -> 824 remixes).
+--     `game` column = source game (searchable);
+--     `format` column = the game's console (from the og:image system dir), which
+--     classifies to the F9 platform filter (Super Nintendo/NES/Sega Genesis/
+--     Playstation/N64/Arcade/...); unmapped/modern consoles -> MP3 (Unclassified).
+--     Screenshots in data/ocremix_screenshots.txt keyed by the song URL
+--     (getSongScreenshots ocremix branch). NO dedup (arranged remixes, a distinct
+--     artifact type from every rip/module collection). Bump forces a reindex.
+VERSION = 90;
 
 DB = {
 {
@@ -698,6 +725,21 @@ DB = {
 	source = "",
 	song_list = "data/botb.txt",
 	song_template = "title composer format path ext",
+	color = 0xfffff
+},
+{
+	-- OverClocked ReMix (ocremix.org) -- arranged video-game music, ~5000 free
+	-- MP3 remixes (see VERSION 90). Each path is a full mirror
+	-- iterations.org/files/music/remixes/<file>.mp3 URL (source=""), played via
+	-- ffmpeg. `game` = source game (searchable), `composer` = remixer, `format`
+	-- = the game's console -> F9 platform filter. Screenshots = the source
+	-- game's title-screen image in data/ocremix_screenshots.txt
+	-- (getSongScreenshots ocremix branch). Built by scripts/build_ocremix.py.
+	name = "OC ReMix",
+	id =  "ocremix",
+	source = "",
+	song_list = "data/ocremix.txt",
+	song_template = "title game composer format path",
 	color = 0xfffff
 },
 

@@ -345,7 +345,6 @@ static void fixName(std::string& name)
 bool parseTed(SongInfo& info)
 {
     auto parts = utils::split(info.metadata[SongInfo::INFO], "/");
-    LOGD("PARTS %s", parts);
     auto l = parts.size();
     auto title = utils::path_basename(parts[l - 1]);
     fixName(title);
