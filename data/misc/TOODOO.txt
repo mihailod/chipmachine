@@ -2,7 +2,7 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- pesic pr zophar
+- alternate green shade on help screen per divider
 
 - see if there are other formats in db we don't play
 

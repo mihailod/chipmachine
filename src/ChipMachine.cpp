@@ -415,9 +415,13 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
             if (index < matchingCommands.size()) {
                 auto cmd = matchingCommands[index];
                 // No selection highlight here: the whole help menu fits on one
-                // screen, so there is nothing to navigate to -- every row is
-                // drawn in the same static colour (the `hilight` flag is unused).
-                uint32_t c = 0xaa00cc00;
+                // screen, so there is nothing to navigate to (the `hilight` flag
+                // is unused). Alternate the green shade per logical group so
+                // adjacent command sets are visually distinct: even groups use
+                // the base green, odd groups a lighter one.
+                bool oddGroup =
+                    index < matchingGroup.size() && (matchingGroup[index] & 1);
+                uint32_t c = oddGroup ? 0xaaaaffaa : 0xaa00cc00;
                 int cmdPos = rec.w * 0.6;
                 std::string displayName = cmd->name;
                 for (char& ch : displayName) {

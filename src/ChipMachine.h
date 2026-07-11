@@ -315,12 +315,18 @@ private:
         // matchingGap[i] is the cumulative divider gap (in rows) before row i.
         matchingCommands.clear();
         matchingGap.clear();
+        matchingGroup.clear();
         float gap = 0.0f;
+        int group = 0;
         for (auto& c : commands) {
             if (c.shortcut.empty()) continue;
-            if (groupBreaks.count(c.name)) gap += 0.3f;
+            if (groupBreaks.count(c.name)) {
+                gap += 0.3f;
+                group++;
+            }
             matchingCommands.push_back(&c);
             matchingGap.push_back(gap);
+            matchingGroup.push_back(group);
         }
         fitCommandList();
     }
@@ -617,6 +623,10 @@ private:
     // Parallel to matchingCommands: cumulative group-divider gap (in rows) drawn
     // above each help-menu row. Rebuilt with matchingCommands in clearCommand().
     std::vector<float> matchingGap;
+    // Parallel to matchingCommands: which logical group (0,1,2,...) each row is
+    // in -- incremented at every divider. renderCommand alternates the row colour
+    // by group parity so adjacent sets are visually distinct.
+    std::vector<int> matchingGroup;
     // How much bigger the help font is than the result-list font: the ratio of
     // the (taller) dedicated help area to the shared list area, since both hold
     // the same command rows. Clamped; set in updateLists(), used by renderCommand.
