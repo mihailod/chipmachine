@@ -893,7 +893,7 @@ void ChipMachine::loadSplashScreenshots()
     // Extension logos excluded from the splash: streamable/plain-audio formats
     // that aren't a "venerable retro platform" worth showcasing here.
     static const std::set<std::string> splashExcludeExtensions = {
-        "aac", "aif", "aiff", "m4a", "opus", "mp2",
+        "aac", "aif", "aiff", "m4a", "opus", "mp2", "ac3", "mpeg", "mp3", 
     };
     // Extensions first (more specific artwork), then platforms.
     for (auto& [key, bm] : extensionShots) {
