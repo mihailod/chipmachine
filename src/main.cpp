@@ -76,6 +76,7 @@ int main(int argc, char* argv[])
         bool force_reindex = false;
         bool delete_web_cache = false;
         bool no_images = false;
+        bool debug = false;
         std::string play_what;
 #ifdef TEXTMODE_ONLY
         bool text_mode = true;
@@ -95,6 +96,7 @@ int main(int argc, char* argv[])
     opts.add_flag_function("-d",
                            [&](size_t count) {
                                options.full_screen = false;
+                               options.debug = true;
                                logging::setLevel(logging::Debug);
                            },
                            "Debug output");
@@ -116,6 +118,7 @@ int main(int argc, char* argv[])
 
 #ifndef TEXTMODE_ONLY
     chipmachine::ChipMachine::noImages = options.no_images;
+    chipmachine::ChipMachine::debugMode = options.debug;
 #endif
 
     if (options.delete_web_cache) {

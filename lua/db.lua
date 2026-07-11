@@ -80,7 +80,7 @@
 -- 64: four more music podcasts (type=podcast, live remote_list + shipped
 --     snapshot, per-episode itunes:image art): This Week in Chiptune (Dj
 --     CUTMAN), Pixelated Audio, GameFuel + Nitro Game Injection (KNGI). All
---     show under the F9 Podcasts category alongside C64 Take-away / CU Podcast.
+--     show under the TAB Podcasts category alongside C64 Take-away / CU Podcast.
 -- 65: HVTC (Commodore 16/116/+4 TED .prg) pivoted from the flaky online
 --     plus4world/Wayback mirror to a shipped local store (music/hvtc), like
 --     nsfe -> music/Console. Forces a reindex so the new local_dir is stored.
@@ -140,7 +140,7 @@
 --     playable member -- native-platform disk-images/ROMs/executables (e.g.
 --     BOING.ZIP->BOING.ATR Atari 8-bit disk image, BATTLE.BIN Atari 2600 ROM,
 --     HAWKEYE.XEX). These showed as dead "No playable tracks" entries, mostly in
---     the Atari/console F9 filters. chipmachine/scripts/filter_demozoo_archives.py downloads the
+--     the Atari/console TAB filters. chipmachine/scripts/filter_demozoo_archives.py downloads the
 --     417 Fujiology zip rows and keeps only the 277 with a decodable member
 --     (module/mp3/etc., matching MusicPlayerList songExt+audioExt); demozoo.txt
 --     41929->41789. Also fixed nested-member zip extraction (audio in a subfolder
@@ -222,7 +222,7 @@
 --     Screenshots: each game's sibling .png member, keyed by the song zip URL
 --     in data/vgmrips_screenshots.txt (getSongScreenshots offline path, like
 --     Zophar; 3314/4145 matched). Bump forces a reindex.
--- 79: New top-level "Arcade" platform (F9 filter), split out of "Other
+-- 79: New top-level "Arcade" platform (TAB filter), split out of "Other
 --     Platforms". The six "arcade" / "arcade (capcom|konami|namco|sega|taito)"
 --     format strings now classify to the new ARCADE format byte instead of
 --     OTHER; the sub-platform drill (buildSubPlatforms) is byte-parametrized so
@@ -353,7 +353,7 @@
 --     https://battleofthebits.com/disk/battle/<battle_id:08d>/<file> URL
 --     (source=""; the API's EntryDonload/EntryPreview endpoints 403 anonymously,
 --     but the raw disk asset is public), reconstructed from view_url + battle_id.
---     format column classifies to the F9 platform filter (build_botb.py); ext
+--     format column classifies to the TAB platform filter (build_botb.py); ext
 --     column routes the decoder. Screenshots: each entry's battle cover art
 --     (artwork.png / entry image), keyed by the song URL in
 --     data/botb_screenshots.txt (~14.8k distinctive covers; the generic
@@ -381,7 +381,7 @@
 --     composer surfaces the remix (e.g. "Nobuo Uematsu" -> 824 remixes).
 --     `game` column = source game (searchable);
 --     `format` column = the game's console (from the og:image system dir), which
---     classifies to the F9 platform filter (Super Nintendo/NES/Sega Genesis/
+--     classifies to the TAB platform filter (Super Nintendo/NES/Sega Genesis/
 --     Playstation/N64/Arcade/...); unmapped/modern consoles -> MP3 (Unclassified).
 --     Screenshots in data/ocremix_screenshots.txt keyed by the song URL
 --     (getSongScreenshots ocremix branch). NO dedup (arranged remixes, a distinct
@@ -728,7 +728,7 @@ DB = {
 	-- streaming collection: path = full hotlinkable chipmusic.s3.amazonaws.com
 	-- .mp3 URL (source=""), plays via ffmpeg. The `format` column is the platform
 	-- classified from each track's tags (Game Boy/Commodore 64/NES/Atari ST/Amiga/
-	-- ZX Spectrum/PC), routed to those F9 filters; untagged -> "Chipmusic" ->
+	-- ZX Spectrum/PC), routed to those TAB filters; untagged -> "Chipmusic" ->
 	-- Unclassified MP3/OGG. Built by chipmachine/scripts/build_chipmusic.py.
 	name = "Chipmusic",
 	id =  "chipmusic",
@@ -742,7 +742,7 @@ DB = {
 	-- community (see VERSION 89). Each path is a full STATIC
 	-- https://battleofthebits.com/disk/battle/<id>/<file> URL (source=""); the
 	-- `ext` column routes the decoder (native module/chip file, or a rendered
-	-- mp3/ogg/wav compo -> ffmpeg), the `format` column the F9 platform filter.
+	-- mp3/ogg/wav compo -> ffmpeg), the `format` column the TAB platform filter.
 	-- Screenshots = the entry's battle cover art in data/botb_screenshots.txt
 	-- (getSongScreenshots botb branch). Built by scripts/build_botb.py.
 	name = "Battle of the Bits",
@@ -757,7 +757,7 @@ DB = {
 	-- MP3 remixes (see VERSION 90). Each path is a full mirror
 	-- iterations.org/files/music/remixes/<file>.mp3 URL (source=""), played via
 	-- ffmpeg. `game` = source game (searchable), `composer` = remixer, `format`
-	-- = the game's console -> F9 platform filter. Screenshots = the source
+	-- = the game's console -> TAB platform filter. Screenshots = the source
 	-- game's title-screen image in data/ocremix_screenshots.txt
 	-- (getSongScreenshots ocremix branch). Built by scripts/build_ocremix.py.
 	name = "OC ReMix",

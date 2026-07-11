@@ -2,10 +2,7 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- platform screen == maybe one column on the left with platform logo on the right?
-  pro: see logo, con: not all visible at once
-
-- revamp keyboard commands -- tab for formats, F9 help, more...
+- pesic pr zophar
 
 - see if there are other formats in db we don't play
 
@@ -16,7 +13,6 @@
 - classify OGG files into platforms
 - make an attempt to reclassify the rest of the yt
 - combine yt and ogg not classified into one?
-- release 1.8 or even 2.0 once all dbs are ingested?
 
 - songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
 
@@ -34,16 +30,6 @@ smpro	9 plist	9 ma	9 trk	8 t0ast	8 ftf	8 arp	8 vss	7
 vge	7 fnk	7 fmk	7 dsyn	7 cff	6 syn	5 msm	5 hst	5
 gym	5 dm	5 0cc	5 
 ------------------------
-
-*************************************************
-* ADDITIONAL DATABASES TO INVESTIGATE AND INDEX *
-*************************************************
-
-- .... in progress...  PESIC: revisit zophar arcade
-
-*********
-* OTHER *
-*********
 
 - packaging: the app should offer to os handling of all extensions it can play, package_app.sh should be augmented with plist writer for it. then the application needs to handle the file passed in (standard mac way exists)
 

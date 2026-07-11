@@ -126,7 +126,8 @@ void ScreenshotTransitions::drawTexQuads(std::shared_ptr<RenderTarget> target,
     prog.use();
     prog.setUniform("matrix", target->get_view_matrix().transpose());
     Color c(color);
-    prog.setUniform("color", c.red, c.green, c.blue, c.alpha);
+    float as = icon ? icon->alphaScale : 1.0f;
+    prog.setUniform("color", c.red, c.green, c.blue, c.alpha * as);
     glBindTexture(GL_TEXTURE_2D, texId);
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -371,7 +372,8 @@ void ScreenshotTransitions::renderStars(std::shared_ptr<RenderTarget> target)
         float sy = cy + s.hy * rec.h * f;
         if (sx + sw < 0 || sx - sw > scrW || sy + sh < 0 || sy - sh > scrH)
             continue;
-        float a = ((s.color >> 24) & 0xff) / 255.0f * starAlpha;
+        float a = ((s.color >> 24) & 0xff) / 255.0f * starAlpha *
+                  (icon ? icon->alphaScale : 1.0f);
         if (a <= 0.004f) continue;
         uint32_t col = ((uint32_t)(a * 255.0f) << 24) | (s.color & 0x00ffffff);
         pushQuad(sx - sw * 0.5f, sy - sh * 0.5f, sw, sh, col);
@@ -482,7 +484,8 @@ void ScreenshotTransitions::renderCopper(
     for (float yy = 0; yy < rec.h; yy += step) {
         float v = (yy + step * 0.5f) / rec.h;
         float h = std::min(step, rec.h - yy);
-        pushQuad(rec.x, rec.y + yy, rec.w, h, copperColor(v, copperPhase));
+        pushQuad(rec.x, rec.y + yy, rec.w, h,
+                 icon->scaledColor(copperColor(v, copperPhase)));
     }
     drawColorQuads(target);
 
@@ -612,7 +615,7 @@ void ScreenshotTransitions::renderCardFlip(std::shared_ptr<RenderTarget> target)
     if (w < 0.5f) return;
     float x = rec.x + (rec.w - w) * 0.5f;
     target->draw(*tex, x, rec.y, w, rec.h, (const float*)nullptr,
-                 (uint32_t)icon->color);
+                 icon->scaledColor((uint32_t)icon->color));
 }
 
 // Effect: the frame flips like a double-sided card -- image A rotates 0->90deg

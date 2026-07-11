@@ -27,6 +27,7 @@
 #include <functional>
 #include <map>
 #include <memory>
+#include <set>
 #include <string>
 #include <vector>
 #include <atomic>
@@ -66,7 +67,8 @@ public:
             customRender(target, delta);
             return;
         }
-        target->draw(*texture, rec.x, rec.y, rec.w, rec.h, nullptr, color);
+        target->draw(*texture, rec.x, rec.y, rec.w, rec.h, nullptr,
+                     scaledColor((uint32_t)color));
     }
 
     // Render only the left `frac` (0..1) of the texture, scaled into the left
@@ -108,6 +110,19 @@ public:
     grappix::Color color{ 0xffffffff };
     grappix::Rectangle rec;
 
+    // Extra opacity multiplier (0..1) applied on top of `color`, so an animated
+    // icon (whose colour the ScreenshotTransitions constantly drive/reset) can
+    // still be shown dimmed -- e.g. the platform-logo transitions behind the
+    // help screen. The transitions read this too (see Transitions.cpp).
+    float alphaScale = 1.0f;
+    // color with its alpha scaled by alphaScale.
+    uint32_t scaledColor(uint32_t c) const
+    {
+        if (alphaScale >= 1.0f) return c;
+        uint32_t a = (uint32_t)(((c >> 24) & 0xff) * alphaScale);
+        return (a << 24) | (c & 0x00ffffff);
+    }
+
     // Optional custom renderer installed by an effect (e.g. the screenshot
     // transitions). When set, it draws the icon instead of the default textured
     // quad. Cleared when the effect finishes.
@@ -132,6 +147,11 @@ public:
     // fetches a screenshot. Useful when the screenshot host (e.g. the Wayback
     // mirror that gb64/hvtc/sndh/unexotica depend on) is down or unreachable.
     static bool noImages;
+
+    // Set when the app is launched with -d. Surfaces developer-only affordances
+    // in the command list (e.g. F4 "layout screen", which hot-reloads
+    // lua/screen.lua); those keys still work without it, they're just hidden.
+    static bool debugMode;
 
     using Color = grappix::Color;
 
@@ -222,17 +242,29 @@ private:
     void updateLists()
     {
         int y = resultFieldTemplate.pos.y + (15 * resultFieldTemplate.scale);
+        int w = grappix::screen.width() - topLeft.x;
+        int h = downRight.y - topLeft.y - y;
 
-        songList.setArea(grappix::Rectangle(topLeft.x, y,
-                                            grappix::screen.width() - topLeft.x,
-                                            downRight.y - topLeft.y - y));
-        commandList.setArea(grappix::Rectangle(
-            topLeft.x, y, grappix::screen.width() - topLeft.x,
-            downRight.y - topLeft.y - y));
-        advancedArea = grappix::Rectangle(topLeft.x, y,
-                                          grappix::screen.width() - topLeft.x,
-                                          downRight.y - topLeft.y - y);
+        songList.setArea(grappix::Rectangle(topLeft.x, y, w, h));
+        advancedArea = grappix::Rectangle(topLeft.x, y, w, h);
         advancedList.setArea(advancedArea);
+
+        // The help/command screen is one non-scrolling screen, so give it a
+        // dedicated, taller area: title nudged up and the list running all the
+        // way to the bottom margin. fitCommandList() sizes the rows to fill it
+        // and renderCommand scales the font up to match. The title baseline can
+        // only move up a little -- its big-font glyphs sit above pos.y.
+        commandTitle.pos.y = topLeft.y * 0.90f;
+        int cmdTop = (int)(topLeft.y * 1.30f);
+        int cmdH = downRight.y - cmdTop;
+        commandList.setArea(grappix::Rectangle(topLeft.x, cmdTop, w, cmdH));
+
+        // The help list holds the same rows in this taller area as it would in
+        // the shared list area, so its font can grow by the height ratio. Clamp
+        // so long labels never collide with the shortcut column.
+        commandFontFactor = h > 0 ? (float)cmdH / (float)h : 1.0f;
+        if (commandFontFactor < 1.0f) commandFontFactor = 1.0f;
+        if (commandFontFactor > 1.4f) commandFontFactor = 1.4f;
     }
 
     static inline const std::vector<std::string> key_names = {
@@ -266,10 +298,51 @@ private:
 
     void clearCommand()
     {
-        matchingCommands.resize(commands.size());
-        int i = 0;
-        for (auto& c : commands)
-            matchingCommands[i++] = &c;
+        // Command names that begin a new logical group in the help menu: a
+        // half-row gap is drawn before each (see renderCommand / matchingGap).
+        // Add the first command of a group here to visually separate the sets.
+        static const std::set<std::string> groupBreaks = { 
+            "show_platform_filters",
+            "local_file_playback",
+            "play_song",
+            "Spectrum_Analyzer_Mode",
+            "add_current_favorite",
+            "next_composer",
+            "random_shuffle",
+        };
+        // Only surface commands that have a key binding -- one with an empty
+        // shortcut has no way to be triggered, so there is no point listing it.
+        // matchingGap[i] is the cumulative divider gap (in rows) before row i.
+        matchingCommands.clear();
+        matchingGap.clear();
+        float gap = 0.0f;
+        for (auto& c : commands) {
+            if (c.shortcut.empty()) continue;
+            if (groupBreaks.count(c.name)) gap += 0.3f;
+            matchingCommands.push_back(&c);
+            matchingGap.push_back(gap);
+        }
+        fitCommandList();
+    }
+
+    // Size the help list so every row plus its group-divider gaps fit without
+    // scrolling. VerticalList only counts rows, so hand it enough "slots" that
+    // N rows + total gap span the area (compressing the row pitch only when the
+    // extra gaps would otherwise overflow; normal height when there's room).
+    void fitCommandList()
+    {
+        if (matchingCommands.empty()) {
+            commandList.setVisible(numLines);
+            return;
+        }
+        float gaps = matchingGap.empty() ? 0.0f : matchingGap.back();
+        float need = (float)matchingCommands.size() + gaps;
+        int slots = (int)need;
+        if ((float)slots < need) slots++; // ceil
+        if (slots < 1) slots = 1;
+        // Fill the dedicated help area exactly (all rows + gaps span it, no
+        // scrolling and no empty tail rows).
+        commandList.setVisible(slots);
     }
 
     bool haveSelection()
@@ -325,7 +398,7 @@ private:
     // for a row the user has already scrolled past is discarded.
     void loadSearchArtwork(const std::string& url);
 
-    // Refreshes filterLogoIcon with the highlighted F9 filter entry's platform
+    // Refreshes filterLogoIcon with the highlighted TAB filter entry's platform
     // logo, centred behind the list. Clears it off the filter screen or when the
     // entry has no hardware platform.
     void updateFilterLogo();
@@ -401,11 +474,11 @@ private:
     std::atomic<bool> pendingSearchLogo{ false };
     image::bitmap pendingSearchLogoBm;
     std::string pendingSearchLogoUrl;
-    // Logo of the highlighted platform/category on the F9 filter screen, drawn
+    // Logo of the highlighted platform/category on the TAB filter screen, drawn
     // dimmed and centred behind the two-column list. Textureless when the
     // highlighted entry has no hardware platform (e.g. "[No Filter]", MP3).
     Icon filterLogoIcon;
-    // Big "muted" overlay shown in the screen centre while paused (F5), so the
+    // Big "muted" overlay shown in the screen centre while paused (SPACE), so the
     // user sees what they pressed and which key un-mutes.
     Icon pausedIcon;
     // Shown centred in place of the volume bars when the volume is turned all
@@ -440,20 +513,23 @@ private:
 
     RenderSet advancedScreen;
     grappix::VerticalList advancedList;
-    grappix::Rectangle advancedArea; // area of the F9 list (for 2-column layout)
+    grappix::Rectangle advancedArea; // area of the TAB list (for 2-column layout)
     TextField advancedTitle;
+    // Header on the command/help screen (e.g. "ChipMachineAS 1.9 HELP MENU"),
+    // drawn above the first entry; hidden while a command filter is being typed.
+    TextField commandTitle;
     TextField mainFilterField;
     std::string selectedFilterName;
-    // Per-filterOptions tune counts, shown as "[N tunes]" on the F9 screen.
+    // Per-filterOptions tune counts, shown as "[N tunes]" on the TAB screen.
     // Populated once the database finishes indexing.
     std::vector<int> filterCounts;
-    // Number of distinct podcast shows, used to prefix the F9 "Podcasts" label
+    // Number of distinct podcast shows, used to prefix the TAB "Podcasts" label
     // ("9 Podcasts  [N episodes]"). Populated alongside filterCounts.
     int podcastShowCount = 0;
-    // Number of distinct sub-platforms among OTHER songs, used to prefix the F9
+    // Number of distinct sub-platforms among OTHER songs, used to prefix the TAB
     // "Other Platforms" label ("N Other Platforms"). Populated with filterCounts.
     int otherPlatformCount = 0;
-    // Number of distinct sub-platforms among ARCADE songs, used to prefix the F9
+    // Number of distinct sub-platforms among ARCADE songs, used to prefix the TAB
     // "Arcade" label ("N Arcade"). Populated with filterCounts.
     int arcadePlatformCount = 0;
     // Tune count of the currently selected platform filter (0 = no filter);
@@ -538,6 +614,13 @@ private:
 
     std::vector<Command> commands;
     std::vector<Command*> matchingCommands;
+    // Parallel to matchingCommands: cumulative group-divider gap (in rows) drawn
+    // above each help-menu row. Rebuilt with matchingCommands in clearCommand().
+    std::vector<float> matchingGap;
+    // How much bigger the help font is than the result-list font: the ratio of
+    // the (taller) dedicated help area to the shared list area, since both hold
+    // the same command rows. Clamped; set in updateLists(), used by renderCommand.
+    float commandFontFactor = 1.0f;
     std::mutex multiLoadLock;
     int lastKey = 0;
     bool searchUpdated = false;
@@ -594,13 +677,16 @@ private:
     // Whether the splash was active last frame; render() reads this (set by
     // update()) and it drives the restart-on-enter transition.
     bool splashActive = false;
+    // Whether the platform-logo transitions are running (idle main splash OR the
+    // help/command screen). Broader than splashActive; drives restart/next.
+    bool splashLogoActive = false;
     // Welcome banner ping-pong-scrolled across the top of the splash, in the
     // song-title font/size/colour. Rendered behind the splash pictures.
     TextField splashWelcomeField;
     float splashWelcomePhase = 0.0f;   // ping-pong scroll phase (seconds)
     int splashWelcomeSongs = -1;       // totalSongs baked into the current text
     // Total number of indexed songs, computed at startup in computeFilterCounts
-    // (the same total the "[Show All]" F9 filter reports).
+    // (the same total the "[Show All]" TAB filter reports).
     int totalSongs = 0;
     // The startup indexing progress bar runs in two phases:
     //  - first progressDbPhase (75%): one tick per collection DB created, out of

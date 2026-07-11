@@ -175,7 +175,7 @@ public:
     // Get full data, may require SQL query
     SongInfo getSongInfo(int index) const;
 
-    // True while a platform filter (F9) is active.
+    // True while a platform filter (TAB) is active.
     bool hasFormatFilter() const { return formatFilterActive; }
     // Position of a song's sub-format among the distinct formats present in the
     // active filter, in [0,1) -- used to spread hues evenly so few-format
@@ -216,7 +216,7 @@ public:
     static uint8_t classifyFormat(std::string const& fmt,
                                   std::string const& path);
 
-    // Human-readable platform name (the F9-filter label, e.g. "Amiga",
+    // Human-readable platform name (the TAB-filter label, e.g. "Amiga",
     // "Commodore 64", "MSX") for a bare file extension. Returns "" when the
     // extension maps to no hardware platform. Used by the cmtest
     // extension_to_platform_map report to verify every playable extension is
@@ -235,7 +235,7 @@ public:
 
     // Filesystem-safe platform logo slug for a raw format byte, or "" for
     // non-hardware bytes (MP3, OGG, Radio, YouTube, Podcast, Playlist, unknown).
-    // Lets the F9 filter map a highlighted platform/category to its logo.
+    // Lets the TAB filter map a highlighted platform/category to its logo.
     static std::string platformScreenshotSlug(uint8_t formatByte);
 
     // Distinct file extension (lowercased) -> the set of platform slugs its
@@ -245,19 +245,19 @@ public:
     std::map<std::string, std::set<std::string>> extensionPlatforms();
 
     // Number of indexed songs (excluding products) per format byte (0..255).
-    // Used to show per-platform tune counts on the F9 filter screen.
+    // Used to show per-platform tune counts on the TAB filter screen.
     std::vector<int> getFormatByteCounts() const;
 
     // Number of distinct podcast shows (collections containing PODCAST-format
-    // episodes). Used to label the F9 Podcasts filter ("9 Podcasts [...]").
+    // episodes). Used to label the TAB Podcasts filter ("9 Podcasts [...]").
     int getPodcastShowCount() const;
 
     // Number of distinct sub-platforms among "Other Platforms" (OTHER-format)
-    // songs. Used to label the F9 Other Platforms filter ("N Other Platforms").
+    // songs. Used to label the TAB Other Platforms filter ("N Other Platforms").
     int getOtherPlatformCount();
 
     // Number of distinct sub-platforms among "Arcade" (ARCADE-format) songs.
-    // Used to label the F9 Arcade filter ("N Arcade").
+    // Used to label the TAB Arcade filter ("N Arcade").
     int getArcadePlatformCount();
 
     std::string getTitle(int index) const
@@ -546,7 +546,7 @@ private:
     std::vector<uint16_t> formats;
     // Platform format-byte per product (indexed by product ordinal, i.e.
     // titleIndex position - productStartIndex). Products only carry the PRODUCT
-    // byte in `formats`, so this side-channel lets the platform filter (F9)
+    // byte in `formats`, so this side-channel lets the platform filter (TAB)
     // include/exclude collections by platform. 0 = unknown (filtered out).
     std::vector<uint8_t> productPlatform;
     // Real SQL product.ROWID per indexed product (indexed by product ordinal).
@@ -561,7 +561,7 @@ private:
     // 0 = neutral (products).
     std::vector<uint16_t> formatHue;
 
-    // When a platform filter (F9) is active, the set of titleIndex indices that
+    // When a platform filter (TAB) is active, the set of titleIndex indices that
     // pass it, precomputed in setFormatFilter(). Lets short queries (< 3 chars)
     // scan the (typically small) filtered set directly instead of the sparse
     // 1-2 letter substring buckets, so filtered search responds from the first

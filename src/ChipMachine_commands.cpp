@@ -13,7 +13,15 @@ void ChipMachine::setupCommands()
         commands.emplace_back(name, f);
     };
 
-    cmd("show_main", [=] { showScreen(MAIN_SCREEN); });
+    // Listed first: the ESC key. Name renders (with '_' -> ' ') as the command
+    // label "CLEAR / CLOSE / GO BACK" -- the one entry that represents every ESC
+    // action (clear the search/command text, close a dialog, or pop back a
+    // screen). The other ESC-bound commands are hidden from the list (their
+    // shortcuts are cleared in setupRules) so ESC appears only once here. This
+    // binding itself pops back from the platform-filter screen.
+    cmd("clear_/_close_/_go_back", [=] {
+        showScreen(lastScreen);
+    });
 
     cmd("show_search", [=]() {
         if (currentScreen != SEARCH_SCREEN) {
@@ -25,12 +33,7 @@ void ChipMachine::setupCommands()
         searchUpdated = true;
     });
 
-    cmd("show_command", [=] {
-        if (currentScreen != COMMAND_SCREEN) lastScreen = currentScreen;
-        showScreen(COMMAND_SCREEN);
-    });
-
-    cmd("show_advanced", [=] {
+    cmd("show_platform_filters", [=] {
         if (currentScreen != ADVANCED_SCREEN) lastScreen = currentScreen;
         // Ensure the per-format tune counts are ready (e.g. when the index was
         // loaded from cache and the indexing-finished path never ran).
@@ -62,7 +65,7 @@ void ChipMachine::setupCommands()
             searchUpdated = true;
 
             mainFilterField.setText(
-                hasFilter ? selectedFilterName + "  (F9 to change)"
+                hasFilter ? selectedFilterName + "  (TAB to change)"
                           : "");
         }
         // Land on the search screen so the (pre-populated) results are visible
@@ -70,58 +73,30 @@ void ChipMachine::setupCommands()
         showScreen(hasFilter ? SEARCH_SCREEN : MAIN_SCREEN);
     });
 
-    cmd("close_advanced", [=] {
-        showScreen(lastScreen);
-    });
-
-    cmd("toggle_command", [=] {
-        if (currentScreen != COMMAND_SCREEN) {
-            lastScreen = currentScreen;
-            showScreen(COMMAND_SCREEN);
-        } else
-            showScreen(lastScreen);
-    });
-
-    cmd("local_file_playback", [=] {
-        std::string path = open_file_dialog();
-        if (path != "") {
-            SongInfo si;
-            si.path = path;
-            player.playSong(si);
+    cmd("play_song", [=] {
+        if (haveSelection()) {
+            auto song = getSelectedSong();
+            // A podcast SHOW row: drill into its episodes instead of playing.
+            if (utils::startsWith(song.path, "podcastshow::")) {
+                musicDatabase.setPodcastShow(std::stoi(song.path.substr(13)));
+                songList.select(0);
+                searchUpdated = true;
+                return;
+            }
+            // An Other-platforms GROUP row: drill into its songs instead.
+            if (utils::startsWith(song.path, "otherplatform::")) {
+                musicDatabase.setOtherPlatform(std::stoi(song.path.substr(15)));  
+                songList.select(0);
+                searchUpdated = true;
+                return;
+            }
+            player.playSong(song);
             showScreen(MAIN_SCREEN);
         }
-    });
+    }); 
 
-    cmd("download_current", [=] {
-        auto target = Environment::getHomeDir() / "Downloads";
-        utils::create_directory(target);
-
-        auto files = player.getSongFiles();
-        if (files.size() == 0) return;
-        for (auto const& fromFile : files) {
-            utils::path from = fromFile.getName();
-            std::string fileName;
-            std::string title = currentInfo.title;
-            std::string composer = currentInfo.composer;
-            if (composer == "" || composer == "?") composer = "Unknown";
-            if (title == "") title = currentInfo.game;
-            auto ext = utils::path_extension(from.string());
-            if (title == "" || utils::endsWith(ext, "lib"))
-                fileName = from.string();
-            else
-                fileName = utils::format("%s - %s.%s", composer, title, ext);
-            auto to = target / fileName;
-            LOGD("Downloading to '%s'", to.string());
-            if (!utils::copy(from, to)) {
-                to = target / from.filename();
-                utils::copy(from, to);
-            }
-        }
-        toast("Downloaded file");
-    });
-
-    cmd("play_pause", [=] {
-        // Nothing loaded -> F5 is a no-op (no pause state, no mute overlay).
+    cmd("pause_/_resume_playback", [=] {
+        // Nothing loaded -> SPACE is a no-op (no pause state, no mute overlay).
         if (!player.isPlaying()) return;
         auto isPaused = player.isPaused();
         player.pause(!isPaused);
@@ -134,6 +109,20 @@ void ChipMachine::setupCommands()
         } else
             Tween::make().to(timeField.add, 0.0).seconds(0.5);
     });
+
+    // Displayed as one row "VOLUME UP / DOWN   + / -": this is the '+' key (raise
+    // volume); volume_down below is the '-' key and is hidden from the list so
+    // the pair collapses to a single entry. Pre-seed the shortcut so addKey()
+    // does not overwrite it with the plain "+".
+    cmd("volume_up_/_down", [=] {
+        player.setVolume(player.getVolume() + 0.1);
+        showVolume = 30;
+    });
+    commands.back().shortcut = "+ / -";
+    cmd("volume_down", [=] {
+        player.setVolume(player.getVolume() - 0.1);
+        showVolume = 30;
+    }); 
 
     cmd("enque_song", [=] {
         if (haveSelection()) {
@@ -188,6 +177,44 @@ void ChipMachine::setupCommands()
         if (!name.empty()) toast("Font: " + name, NORMAL);
     });
 
+    cmd("local_file_playback", [=] {
+        std::string path = open_file_dialog();
+        if (path != "") {
+            SongInfo si;
+            si.path = path;
+            player.playSong(si);
+            showScreen(MAIN_SCREEN);
+        }
+    }); 
+            
+    cmd("download_current", [=] {
+        auto target = Environment::getHomeDir() / "Downloads";
+        utils::create_directory(target);
+        
+        auto files = player.getSongFiles();
+        if (files.size() == 0) return;
+        for (auto const& fromFile : files) {
+            utils::path from = fromFile.getName();
+            std::string fileName;
+            std::string title = currentInfo.title;
+            std::string composer = currentInfo.composer;
+            if (composer == "" || composer == "?") composer = "Unknown";
+            if (title == "") title = currentInfo.game;
+            auto ext = utils::path_extension(from.string());
+            if (title == "" || utils::endsWith(ext, "lib"))
+                fileName = from.string();
+            else
+                fileName = utils::format("%s - %s.%s", composer, title, ext);
+            auto to = target / fileName;
+            LOGD("Downloading to '%s'", to.string());
+            if (!utils::copy(from, to)) {
+                to = target / from.filename();
+                utils::copy(from, to);
+            }
+        }
+        toast("Downloaded file");
+    });
+
     cmd("add_current_favorite", [=] {
         auto song = dbInfo;
         song.starttune = currentTune;
@@ -213,34 +240,20 @@ void ChipMachine::setupCommands()
         searchUpdated = true;
     });
 
-    cmd("set_collection_filter", [=] {
-        auto const& song = getSelectedSong();
-        auto p = utils::split(song.path, "::");
-        if (p.size() < 2) return;
-        filter = p[0];
-        searchUpdated = true;
-    });
-
-    cmd("play_song", [=] {
-        if (haveSelection()) {
-            auto song = getSelectedSong();
-            // A podcast SHOW row: drill into its episodes instead of playing.
-            if (utils::startsWith(song.path, "podcastshow::")) {
-                musicDatabase.setPodcastShow(std::stoi(song.path.substr(13)));
-                songList.select(0);
-                searchUpdated = true;
-                return;
-            }
-            // An Other-platforms GROUP row: drill into its songs instead.
-            if (utils::startsWith(song.path, "otherplatform::")) {
-                musicDatabase.setOtherPlatform(std::stoi(song.path.substr(15)));
-                songList.select(0);
-                searchUpdated = true;
-                return;
-            }
-            player.playSong(song);
-            showScreen(MAIN_SCREEN);
+    // Single CTRL+I toggle (label "SET / CLEAR COLLECTION FILTER"): with no
+    // filter active, adopt the selected song's collection prefix; otherwise
+    // clear the filter. clear_filter (above) stays for the search-screen
+    // BACKSPACE binding.
+    cmd("set_/_clear_collection_filter", [=] {
+        if (filter.empty()) {
+            auto const& song = getSelectedSong();
+            auto p = utils::split(song.path, "::");
+            if (p.size() < 2) return;
+            filter = p[0];
+        } else {
+            filter = "";
         }
+        searchUpdated = true;
     });
 
     cmd("next_composer", [=] {
@@ -296,16 +309,6 @@ void ChipMachine::setupCommands()
         }
     });
 
-    cmd("execute_selected_command", [=] {
-        int i = commandList.selected();
-        if (matchingCommands.size() == 0) return;
-        commandList.select(-1);
-        showScreen(lastScreen);
-        auto it =
-            std::find(commands.begin(), commands.end(), *matchingCommands[i]);
-        if (it != commands.end()) it->fn();
-    });
-
     cmd("next_subtune", [=] {
         if (currentInfo.numtunes == 0)
             player.seek(-1, player.getPosition() + 10);
@@ -325,19 +328,7 @@ void ChipMachine::setupCommands()
         toast("Playlist cleared");
     });
 
-    cmd("volume_up", [=] {
-        player.setVolume(player.getVolume() + 0.1);
-        showVolume = 30;
-    });
-
-    cmd("volume_down", [=] {
-        player.setVolume(player.getVolume() - 0.1);
-        showVolume = 30;
-    });
-
     cmd("layout_screen", [=] { layoutScreen(); });
-
-    cmd("quit", [=] { grappix::screen.close(); });
 
     cmd("random_shuffle", [=] {
         toast("Random shuffle!");
@@ -388,6 +379,15 @@ void ChipMachine::setupCommands()
     cmd("close_dialog", [=] {
         if (currentDialog) currentDialog->remove();
         currentDialog = nullptr;
+    });
+
+    // Listed last, after a group divider (see groupBreaks in clearCommand).
+    cmd("this_help_menu", [=] {
+        if (currentScreen != COMMAND_SCREEN) {
+            lastScreen = currentScreen;
+            showScreen(COMMAND_SCREEN);
+        } else
+            showScreen(lastScreen);
     });
 }
 

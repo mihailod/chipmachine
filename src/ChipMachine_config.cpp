@@ -188,7 +188,9 @@ void ChipMachine::setVariable(const std::string& name, int index,
     } else if (name == "result_lines") {
         numLines = stol(val);
         songList.setVisible(numLines);
-        commandList.setVisible(numLines);
+        // The help list may need more slots than numLines to fit its dividers;
+        // fitCommandList() accounts for them (and falls back to numLines).
+        fitCommandList();
     }
 }
 

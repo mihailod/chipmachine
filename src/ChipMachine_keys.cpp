@@ -42,6 +42,8 @@ void ChipMachine::addKey(uint32_t key, statemachine::Condition const& cond,
             key &= 0xffff;
             if (key >= keycodes::UP && key <= keycodes::F12)
                 name += utils::toLower(key_names[key - keycodes::UP]);
+            else if (key == ' ')
+                name += "space bar";
             else if (key < 0x80)
                 name.append(1, tolower(key));
             if (onSearch) name += " [search]";
@@ -56,14 +58,19 @@ void ChipMachine::setupRules()
 
     using namespace statemachine;
 
-    addKey(keycodes::F1, "show_main");
-    addKey(keycodes::F2, "show_search");
     addKey(
         { keycodes::UP, keycodes::DOWN, keycodes::PAGEUP, keycodes::PAGEDOWN },
         if_equals(currentScreen, MAIN_SCREEN), "show_search");
-    addKey(keycodes::F5, "play_pause");
-    addKey(keycodes::F3, "show_command");
-    addKey(keycodes::F9, "show_advanced");
+    // Space toggles play/pause during playback. On the main screen it always
+    // pauses; on the search screen it only pauses while the query is empty --
+    // once the user has typed a word, space is a normal search separator (a
+    // leading space is never a valid first search character anyway).
+    addKey(' ', if_equals(currentScreen, MAIN_SCREEN), "pause_/_resume_playback");
+    addKey(' ',
+           if_equals(currentScreen, SEARCH_SCREEN) && if_null(currentDialog) &&
+               if_false(haveSearchChars),
+           "pause_/_resume_playback");
+    addKey(keycodes::TAB, "show_platform_filters");
 
     addKey(keycodes::BACKSPACE,
            if_equals(currentScreen, SEARCH_SCREEN) && if_null(currentDialog) &&
@@ -80,12 +87,11 @@ void ChipMachine::setupRules()
     addKey(keycodes::ENTER, if_equals(currentScreen, MAIN_SCREEN), "next_song");
     addKey(keycodes::ENTER, if_equals(currentScreen, SEARCH_SCREEN),
            "play_song");
-    addKey(keycodes::ENTER, if_equals(currentScreen, COMMAND_SCREEN),
-           "execute_selected_command");
+    // The command screen is a display-only help list: ENTER does nothing there.
     addKey(keycodes::ENTER, if_equals(currentScreen, ADVANCED_SCREEN),
            "select_filter");
     addKey(keycodes::ESCAPE, if_equals(currentScreen, ADVANCED_SCREEN),
-           "close_advanced");
+           "clear_/_close_/_go_back");
     addKey(keycodes::ENTER | SHIFT, if_equals(currentScreen, SEARCH_SCREEN),
            "enque_song");
     addKey(keycodes::F9, if_equals(currentScreen, SEARCH_SCREEN), "enque_song");
@@ -105,8 +111,6 @@ void ChipMachine::setupRules()
                if_null(currentDialog),
            "next_subtune");
     addKey(keycodes::F4, "layout_screen");
-    addKey(keycodes::ESCAPE | SHIFT, "quit");
-    addKey(keycodes::F4 | ALT, "quit");
 
     addKey('d' | CTRL, "download_current");
     addKey('z' | CTRL, "next_screenshot");
@@ -118,13 +122,37 @@ void ChipMachine::setupRules()
     addKey('o' | CTRL, "collection_shuffle");
     addKey('g' | CTRL, "favorite_shuffle");
     addKey('-', "volume_down");
-    addKey({ '+', '=' }, "volume_up");
+    addKey({ '+', '=' }, "volume_up_/_down");
     addKey('m' | CTRL, "Spectrum_Analyzer_Mode");
-    addKey(keycodes::TAB, "toggle_command");
+    addKey('h' | CTRL, "this_help_menu");
     addKey(keycodes::HOME, "local_file_playback");
-    std::string empty("");
-    addKey('i' | CTRL, if_equals(filter, empty), "set_collection_filter");
-    addKey('i' | CTRL, if_not_equals(filter, empty), "clear_filter");
+    // One CTRL+I that toggles: set the collection filter from the selected song
+    // when none is active, clear it otherwise (the command decides at runtime).
+    addKey('i' | CTRL, "set_/_clear_collection_filter");
+
+    // Keep some commands out of the command list by clearing their (display-only)
+    // shortcut so the empty-shortcut filter drops them (see clearCommand()); the
+    // keys still work. show_search is reached by typing / the arrow keys and is
+    // advertised in the startup scroller. close_dialog / clear_command /
+    // clear_search are the other ESC actions -- ESC is represented once by the
+    // "CLEAR / CLOSE / GO BACK" entry, so hide these duplicates. volume_down (the
+    // '-' key) is folded into the "VOLUME UP / DOWN   + / -" row. select_filter
+    // (ENTER on the platform-filter screen) is self-evident once you're there.
+    // this_help_menu (CTRL+H) is advertised in the help title itself, so it
+    // doesn't need its own row.
+    for (auto const& name : { "show_search", "close_dialog", "clear_command",
+                              "clear_search", "volume_down", "select_filter",
+                              "this_help_menu" }) {
+        auto it = std::find(commands.begin(), commands.end(), name);
+        if (it != commands.end()) it->shortcut.clear();
+    }
+
+    // F4 "layout screen" hot-reloads lua/screen.lua -- a developer affordance.
+    // Keep the key working, but only surface it in the command list under -d.
+    if (!debugMode) {
+        auto it = std::find(commands.begin(), commands.end(), "layout_screen");
+        if (it != commands.end()) it->shortcut.clear();
+    }
 }
 
 void ChipMachine::showScreen(Screen screen)
@@ -140,9 +168,16 @@ void ChipMachine::showScreen(Screen screen)
             Tween::make().to(scrollEffect.alpha, 0.0).seconds(0.5);
         }
         // Sync the platform-logo previews to the (new) screen: show them for the
-        // current selection on the search / F9 filter screen, clear elsewhere.
+        // current selection on the search / TAB filter screen, clear elsewhere.
         updateSearchLogo();
         updateFilterLogo();
+        // The help menu is display-only (typing starts a search instead), so
+        // always show the title and keep the unused input field (and its cursor)
+        // hidden.
+        if (screen == COMMAND_SCREEN) {
+            commandTitle.visible(true);
+            commandField.visible(false);
+        }
     }
 }
 
@@ -243,7 +278,7 @@ void ChipMachine::updateKeys()
         event |= ALT;
 
     if ((event & (CTRL | SHIFT)) == 0 && currentList) {
-        // The F9 platform list wraps around: Up from the first entry goes to the
+        // The TAB platform list wraps around: Up from the first entry goes to the
         // last, Down from the last goes back to the first.
         int n = advancedList.size();
         if (currentScreen == ADVANCED_SCREEN && key == keycodes::UP &&
@@ -266,22 +301,12 @@ void ChipMachine::updateKeys()
             key == keycodes::ESCAPE || key == keycodes::ENTER) {
             if (currentDialog != nullptr) {
                 currentDialog->on_key(event);
-            } else if (currentScreen == COMMAND_SCREEN) {
-                commandField.on_key(event);
-                auto ctext = commandField.getText();
-                if (ctext == "")
-                    clearCommand();
-                else {
-                    matchingCommands.resize(commands.size());
-                    int j = 0;
-                    for (int i = 0; i < commands.size(); i++) {
-                        if (utils::toLower(commands[i].name).find(ctext) !=
-                            std::string::npos)
-                            matchingCommands[j++] = &commands[i];
-                    }
-                    matchingCommands.resize(j);
-                }
-                commandList.setTotal(matchingCommands.size());
+            } else if (currentScreen == COMMAND_SCREEN &&
+                       !(event > ' ' && event < 0x80)) {
+                // The help menu is display-only. Non-character keys do nothing
+                // here (ENTER / editing keys); UP/DOWN scroll the list and ESC
+                // goes back, both handled elsewhere. A printable character falls
+                // through to the search path below and starts a normal search.
             } else {
                 if (hasMoved && event != ' ' && event != keycodes::BACKSPACE)
                     searchField.setText("");
@@ -336,7 +361,7 @@ void ChipMachine::updateKeys()
         updateSearchLogo();
     }
 
-    // Refresh the F9 filter's centred platform-logo backdrop when the highlight
+    // Refresh the TAB filter's centred platform-logo backdrop when the highlight
     // moves to a different platform/category.
     if (currentScreen == ADVANCED_SCREEN &&
         advancedList.selected() != last_adv_selection)

@@ -907,7 +907,7 @@ bool MusicDatabase::parseStandard(
             // `podcast = "yes"` marks a standard (.txt) collection as a podcast
             // show (Demovibes, AmigaVibes, Syntax Error): force the PODCAST
             // format byte regardless of the per-song/collection codec tag, so
-            // these land in the Podcast F9 category and use the podcast
+            // these land in the Podcast TAB category and use the podcast
             // playback/scroll paths -- without the RSS `type = "podcast"` parser.
             if (vars["podcast"] == "yes") formatField = "Podcast";
 
@@ -1223,7 +1223,7 @@ void MusicDatabase::setFilter(std::string const& collection, int type)
 }
 
 // Map a product's free-text `type` (e.g. "C64 Game", "Amiga Demo", csdb
-// "Music Collection") to a platform format byte, so collections obey the F9
+// "Music Collection") to a platform format byte, so collections obey the TAB
 // platform filter. Returns 0 (unknown) when no platform is recognised, which
 // causes the product to be hidden whenever any platform filter is active.
 static uint8_t productTypeToPlatform(std::string const& type)
@@ -1286,7 +1286,7 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
 
         // Precompute the indices that pass the filter so short queries can scan
         // them directly (see MusicDatabase::search). Cheap: one pass over the
-        // title index per F9 selection.
+        // title index per TAB selection.
         formatFilterActive = true;
         filteredCandidates.clear();
         uint32_t n = titleIndex.size();
@@ -2335,7 +2335,7 @@ void initFormats()
         format_map[f] = ARCADE;
     // Atari Jaguar folds into the Atari ST/E/Falcon/Jaguar filter.
     format_map["atari jaguar"] = ATARI;
-    // Neo Geo Pocket / pinball have no dedicated F9 filter yet -> "Other Platforms".
+    // Neo Geo Pocket / pinball have no dedicated TAB filter yet -> "Other Platforms".
     for (char const* f : { "neo geo pocket", "pinball", "other" })
         format_map[f] = OTHER;
 
@@ -2389,7 +2389,7 @@ void initFormats()
     // -----------------------------------------------------------------------
     // Formats that sit in uade_formats (so they would default to UADE/Amiga)
     // but are NOT Amiga -- they are played by their own dedicated plugins, and
-    // this only fixes the now-playing platform label / F9 filter / screenshot
+    // this only fixes the now-playing platform label / TAB filter / screenshot
     // logo. Platform attributions verified against data/misc/formats_descriptions.txt
     // and the per-format notes. (2026-06-24 audit.)
     // -----------------------------------------------------------------------
@@ -2520,7 +2520,7 @@ static uint8_t platformNameToByte(std::string s)
         { "windows", PC },           { "ms-dos", PC },
         { "ms-dos/gus", PC },        { "linux", PC },
         { "audiosurf", PC },
-        // Real hardware, but no dedicated F9 filter -> "Other Platforms".
+        // Real hardware, but no dedicated TAB filter -> "Other Platforms".
         { "other", OTHER },          { "atari jaguar", OTHER },
         { "atari lynx", OTHER },     { "atari 7800", OTHER },
         { "vectrex", OTHER },        { "intellivision", OTHER },
@@ -2710,7 +2710,7 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
 }
 
 // Human-readable platform name for a format byte, used by describeFormat().
-// Mirrors the F9 platform filters (see ChipMachine::filterOptions).
+// Mirrors the TAB platform filters (see ChipMachine::filterOptions).
 static std::string platformName(uint8_t b)
 {
     switch (b) {
@@ -3262,7 +3262,7 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     // bare platform name (manualDatabasePatch: "Amiga AGA", "ZX Spectrum
     // Beeper"); surface it as "YouTube - <platform>". Keyed on the URL, not the
     // format byte, because these now classify to their real platform (SID,
-    // AMIGA, ...) so they group under that F9 filter instead of "unclassified".
+    // AMIGA, ...) so they group under that TAB filter instead of "unclassified".
     if (s.path.find("youtube.com/") != std::string::npos ||
         s.path.find("youtu.be/") != std::string::npos) {
         // Friendlier playback labels for a few tags (the raw pouet tag is terse
@@ -3299,7 +3299,7 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
 
     // Atari 2600 (VCS / TIA) demoscene rips carry the verbose platform string
     // "Atari 2600 Video Computer System (VCS)" and are bucketed under POKEY
-    // (Atari 8Bit) for the F9 filter -- but that string is a machine descriptor,
+    // (Atari 8Bit) for the TAB filter -- but that string is a machine descriptor,
     // not a tracker name, and the files are zip/gz/mp3 rips with no meaningful
     // inner format. Surface the concise machine name (like YouTube/Podcast
     // above), so it reads "Atari 2600" instead of the misleading
@@ -3364,7 +3364,7 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     // Hippel ST/Quartet/Special FX...) keep "Atari ST/STE", but the Falcon-native
     // sample trackers -- Graoumf Tracker (.gtk), Digital Tracker (.dtm), Digi-Mix
     // (.mix) -- show "Atari Falcon" instead. They stay the ATARI platform byte
-    // (same F9 "Atari ST/STE/Falcon" filter and classification); only the
+    // (same TAB "Atari ST/STE/Falcon" filter and classification); only the
     // displayed platform word changes. Keyed on ext under b==ATARI, so the
     // unrelated .dtm variants (DeFy AdLib / DigiTrekker) -- which classify as
     // PC/AdLib, not ATARI -- are never relabelled. The Falcon logo is already
@@ -3562,7 +3562,7 @@ void MusicDatabase::generateIndex()
 
     // The "radio" collection holds live streaming stations whose format tags
     // (M3U/MP3) are shared with regular content; tag them by collection ROWID so
-    // they get a dedicated RADIO format byte (and their own F9 filter).
+    // they get a dedicated RADIO format byte (and their own TAB filter).
     int radioColl = -1;
     try {
         auto cq =
@@ -3701,7 +3701,7 @@ void MusicDatabase::generateIndex()
         uint8_t b = PRODUCT;
         formats.push_back(b | (collection << 8));
         formatHue.push_back(0); // products: neutral (no hue shift)
-        // Tag the product with a platform byte (from its `type`) so the F9
+        // Tag the product with a platform byte (from its `type`) so the TAB
         // filter can include/exclude collections by platform. Aligned with
         // productStartIndex (this is the (formats.size()-productStartIndex)'th
         // product).

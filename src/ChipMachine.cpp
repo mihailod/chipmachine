@@ -38,7 +38,7 @@ std::string compressWhitespace(std::string const& text)
 namespace chipmachine {
 
 const std::vector<FilterOption> ChipMachine::filterOptions = {
-    { "[show all]", {} },
+    { "[no filter, search all]", {} },
     { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER } },
     { "Atari ST/STE/Falcon", { ATARI } },
     { "Atari 8bit (TIA/POKEY)", { POKEY } },
@@ -74,7 +74,7 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
 };
 
 // Base color for a format byte. Shared by the now-playing list (renderSong)
-// and the F9 filter screen so platforms keep a consistent color everywhere.
+// and the TAB filter screen so platforms keep a consistent color everywhere.
 static uint32_t formatColor(int f)
 {
     static const std::map<uint32_t, uint32_t> colors = {
@@ -414,41 +414,46 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
         [=](grappix::Rectangle& rec, int y, uint32_t index, bool hilight) {
             if (index < matchingCommands.size()) {
                 auto cmd = matchingCommands[index];
+                // No selection highlight here: the whole help menu fits on one
+                // screen, so there is nothing to navigate to -- every row is
+                // drawn in the same static colour (the `hilight` flag is unused).
                 uint32_t c = 0xaa00cc00;
-                if (hilight) {
-                    static uint32_t markStartcolor = 0;
-                    if (markStartcolor != c) {
-                        markStartcolor = c;
-                        markColor = c;
-                        markTween = Tween::make()
-                                        .sine()
-                                        .repeating()
-                                        .from(markColor, hilightColor)
-                                        .seconds(1.0);
-                        markTween.start();
-                    }
-                    c = markColor;
-                }
                 int cmdPos = rec.w * 0.6;
                 std::string displayName = cmd->name;
                 for (char& ch : displayName) {
                     if (ch == '_') ch = ' ';
                 }
-                grappix::screen.text(listFont, displayName, rec.x, rec.y, c,
-                                     resultFieldTemplate.scale);
+                // Push the row down by the accumulated group-divider gaps before
+                // it (half a row per divider), so logical sets read apart without
+                // dividers being selectable rows of their own.
+                float py = rec.y + (index < matchingGap.size()
+                                        ? rec.h * matchingGap[index]
+                                        : 0.0f);
+                // Grow the font with the taller dedicated help area (see
+                // commandFontFactor in updateLists), so the roomier help screen
+                // reads bigger.
+                float fscale = resultFieldTemplate.scale * commandFontFactor;
+                grappix::screen.text(listFont, displayName, rec.x, py, c,
+                                     fscale);
                 grappix::screen.text(listFont, cmd->shortcut, rec.x + cmdPos,
-                                     rec.y, 0xffffffff,
-                                     resultFieldTemplate.scale * 0.8);
+                                     py, 0xffffffff, fscale * 0.8);
             }
         });
 
-    commandList.setTotal(commands.size());
-    clearCommand();
+    clearCommand(); // fills matchingCommands (bindable commands only)
+    commandList.setTotal(matchingCommands.size());
 
     updateLists();
 
     commandScreen.add(&commandField);
     commandScreen.add(&commandList);
+
+    commandTitle.setFont(font);
+    commandTitle.color = 0xffffffaa;
+    commandTitle.scale = searchField.scale;
+    commandTitle.visible(true);
+    commandTitle.setText(PROGRAM_NAME " " VERSION_STR " HELP MENU (CTRL+H)");
+    commandScreen.add(&commandTitle);
 
     mainFilterField.setFont(font);
     mainFilterField.visible(true);
@@ -456,7 +461,7 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     mainScreen.add(&mainFilterField);
 
     // Highlighted-platform logo drawn (dimmed) centred BEHIND the filter list,
-    // so navigating the F9 screen previews which platform is selected. Added
+    // so navigating the TAB screen previews which platform is selected. Added
     // first so it renders beneath the title and the two-column list.
     filterLogoIcon.color = 0x50ffffff;
     advancedScreen.add(&filterLogoIcon);
@@ -465,7 +470,8 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     advancedTitle.color = 0xffffffaa;
     advancedTitle.scale = searchField.scale;
     advancedTitle.visible(true);
-    advancedTitle.setText("FILTER SEARCH RESULTS BY PLATFORM / CATEGORY:");
+    advancedTitle.setText(
+        "PLATFORM FILTER (UP/DOWN/ENTER NAVIGATE & APPLY)");
     advancedScreen.add(&advancedTitle);
 
     // The filter screen lays its entries out in two columns (column-major: the
@@ -484,6 +490,12 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
                              ? 0xffffffff
                              : formatColor(opt.matchedFormats[0]);
             if (hilight) {
+                // The pulse animates baseColor <-> hilightColor. hilightColor is
+                // white, so a white base ("[Show All]") would pulse white<->white
+                // = no visible glow. Pulse it toward a grey instead so its
+                // selection reads as clearly as the coloured rows.
+                Color target =
+                    (c == 0xffffffff) ? Color(0xff707070) : hilightColor;
                 static uint32_t markStartcolor = 0;
                 if (markStartcolor != c) {
                     markStartcolor = c;
@@ -491,7 +503,7 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
                     markTween = Tween::make()
                                     .sine()
                                     .repeating()
-                                    .from(markColor, hilightColor)
+                                    .from(markColor, target)
                                     .seconds(1.0);
                     markTween.start();
                 }
@@ -554,8 +566,8 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     scrollText = "INITIAL_TEXT";
     scrollEffect.set("scrolltext",
         "Type to search . . UP+DOWN/ENTER navigate/play"
-        " . . F9=formats"
-        " . . TAB=help . . . "
+        " . . TAB=platforms"
+        " . . CTRL+H=help . . . "
     );
     starEffect.fadeIn();
     }
@@ -657,6 +669,10 @@ void ChipMachine::layoutScreen()
 
     advancedTitle.pos = { (float)topLeft.x, (float)topLeft.y };
     advancedTitle.scale = searchField.scale;
+
+    // y is reclaimed (moved up) in updateLists(); x/scale here.
+    commandTitle.pos = { (float)topLeft.x, topLeft.y * 0.90f };
+    commandTitle.scale = searchField.scale;
 
     favIcon.setArea(favPos);
 
@@ -882,7 +898,7 @@ void ChipMachine::updateSearchLogo()
 
 void ChipMachine::updateFilterLogo()
 {
-    // Preview the highlighted platform/category behind the F9 filter list.
+    // Preview the highlighted platform/category behind the TAB filter list.
     if (currentScreen != ADVANCED_SCREEN) {
         filterLogoIcon.clear();
         return;
@@ -1078,6 +1094,7 @@ void ChipMachine::loadSplashScreenshots()
 }
 
 bool ChipMachine::noImages = false;
+bool ChipMachine::debugMode = false;
 
 // Base thumbnail URL ("https://img.youtube.com/vi/<id>/") for a YouTube
 // watch/short URL, or "" if it isn't a YouTube link. Used as the screenshot
@@ -1967,14 +1984,23 @@ void ChipMachine::update()
     // visible" state at startup, and again whenever the user ESCs back to it.
     bool nowSplash = (currentScreen == MAIN_SCREEN) && !player.isPlaying() &&
                      currentInfo.title.empty() && !splashShots.empty();
-    if (nowSplash && !splashActive) {
-        // Just entered the idle state -- animate the first picture in. Safe here:
-        // update() runs on the render thread, so the GL work in restart() is ok.
+
+    // The animated platform-logo transitions play behind the idle main-screen
+    // splash AND (dimmed) behind the help/command screen. Drive the rotation
+    // whenever either is showing.
+    bool logoActive = !splashShots.empty() &&
+                      (nowSplash || currentScreen == COMMAND_SCREEN);
+    if (logoActive && !splashLogoActive) {
+        // Just entered -- animate the first picture in. Safe here: update() runs
+        // on the render thread, so the GL work in restart() is ok.
         splashTransitions.restart();
-    } else if (!nowSplash && splashActive) {
-        // Leaving the idle state -- drop the texture so no stale frame lingers.
+    } else if (!logoActive && splashLogoActive) {
+        // Left -- drop the texture so no stale frame lingers.
         splashIcon.clear();
     }
+    splashLogoActive = logoActive;
+    if (logoActive && splashTransitions.idleFor(2000)) splashTransitions.next();
+
     splashActive = nowSplash;
     if (splashActive) {
         // No audio is playing, but we want the spectrum analyzer to look alive so
@@ -1995,7 +2021,6 @@ void ChipMachine::update()
         kick(eqRight);
         kick(eqMono);
         eq = eqMono;
-        if (splashTransitions.idleFor(2000)) splashTransitions.next();
     }
 }
 
@@ -2082,6 +2107,7 @@ void ChipMachine::render(uint32_t delta)
         if (splashActive) {
             // Picture first, then the welcome banner on TOP of it (still below
             // the foreground scroller).
+            splashIcon.alphaScale = 1.0f; // full brightness on the main splash
             splashIcon.render(screenptr, delta);
             updateSplashWelcome(delta);
             splashWelcomeField.render(screenptr, delta);
@@ -2091,6 +2117,13 @@ void ChipMachine::render(uint32_t delta)
     } else if (currentScreen == ADVANCED_SCREEN) {
         advancedScreen.render(screenptr, delta);
     } else {
+        // Help/command screen: the same animated platform-logo transitions as the
+        // splash, but dimmed (same alpha as the platform-filter screen's logo) and
+        // drawn behind the text -- in front of the stars, below the letters.
+        if (splashLogoActive) {
+            splashIcon.alphaScale = 0x50 / 255.0f;
+            splashIcon.render(screenptr, delta);
+        }
         commandScreen.render(screenptr, delta);
     }
 
@@ -2104,11 +2137,14 @@ void ChipMachine::render(uint32_t delta)
     if (!indexingDatabase)
         scrollEffect.render(delta);
 
-    // While paused (F5), show a big mute symbol in the centre with a large white
-    // "F5" beside it, so the user knows what they pressed and how to un-mute.
+    // While paused (SPACE) on the main screen, show a big mute symbol in the
+    // centre with a large white "SPACE" beside it, so the user knows what they
+    // pressed and how to un-mute. Only drawn on MAIN_SCREEN -- that is where
+    // SPACE toggles pause, so the overlay would be misleading on the help /
+    // platform screens.
     // Blink once per second: visible for the first half of each second, hidden
     // for the second half.
-    if (player.isPlaying() && player.isPaused() &&
+    if (currentScreen == MAIN_SCREEN && player.isPlaying() && player.isPaused() &&
         pausedIcon.getTextureWidth() > 0 && (utils::getms() / 500) % 2 == 0) {
         // All sizes/offsets are authored against the 576px reference height and
         // multiplied by gscale so the overlay grows/shrinks with the window just
@@ -2116,11 +2152,11 @@ void ChipMachine::render(uint32_t delta)
         float gscale = screen.height() / 576.0f;
         float isz = 180.0f * gscale;
         float textScale = 2.25f * gscale;
-        auto tsz = font.get_size("F5", textScale);
+        auto tsz = font.get_size("SPACE", textScale);
         float gap = 40.0f * gscale;
         float gx = 25.0f * gscale;
         float gy = ((float)screen.height() - isz) / 2.0f;
-        screen.text(font, "F5", gx, gy + (isz - tsz.y) / 2.0f + 40 * gscale,
+        screen.text(font, "SPACE", gx, gy + (isz - tsz.y) / 2.0f + 40 * gscale,
                     0xffffffff, textScale);
         pausedIcon.setArea({ gx + tsz.x + gap, gy + 60 * gscale, isz / 2, isz / 2 });
         pausedIcon.render(screenptr, 0);

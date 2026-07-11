@@ -307,7 +307,7 @@ TEST_CASE("VGMRips non-Sega VGM routes to libvgm", "[music]")
 // ".../<game>.zip" URL (no useful extension), so every game is filed purely by
 // its `format` label. Guard that each distinct label resolves to the right
 // platform byte -- never UNKNOWN (which would make the game invisible to every
-// F9 platform filter).
+// TAB platform filter).
 TEST_CASE("VGMRips format labels classify to a platform", "[music]")
 {
     using namespace chipmachine;
@@ -366,7 +366,7 @@ TEST_CASE("generic-tagged demoscene tunes classify by extension", "[music]")
 
 // SMS Power! (smspower) files by the `format` label too (its path is a .zip pack
 // URL). The Sega 8-bit labels must resolve to SEGAMS so the games appear under
-// that F9 filter; ColecoVision (SN76489 too, but not a Sega platform) rides with
+// that TAB filter; ColecoVision (SN76489 too, but not a Sega platform) rides with
 // the other misc small consoles under OTHER. Never UNKNOWN (invisible to every
 // filter).
 TEST_CASE("SMS Power format labels classify to a platform", "[music]")
@@ -388,7 +388,7 @@ TEST_CASE("SMS Power format labels classify to a platform", "[music]")
 // the `format` column carries a platform label, so a C64/NES/SNES game's tracker
 // arrangement must file under that console (db.lua v86, "classify by game
 // platform"). Every label must resolve to a real platform (never UNKNOWN, which
-// is invisible to every F9 filter).
+// is invisible to every TAB filter).
 TEST_CASE("mirsoft platform labels classify to a platform", "[music]")
 {
     using namespace chipmachine;
@@ -3722,7 +3722,7 @@ TEST_CASE("Vice Stereo Sidplayer", "[music][vice]")
 
 // Dump the "Other Platforms" sub-platform groups (the OTHER format byte, one
 // row per distinct format string) sorted by song count, so we can eyeball which
-// deserve promotion to a top-level F9 filter. Reads the live app music.db and
+// deserve promotion to a top-level TAB filter. Reads the live app music.db and
 // applies the real classifyFormat, so it matches the GUI drill exactly.
 TEST_CASE("other_platforms", "[.]")
 {
