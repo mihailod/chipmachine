@@ -2,8 +2,6 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- "Now the vendored copy has the same latent bug — fix it too for consistency:" -- why we have 2 copies of anything? we should have only one, that was the point of unification via vendoring in external
-
 - see if there are other formats in db we don't play
 
 - global dedupe everything against everything to see stats. I think battle of the bits added dupes. when removing if all equal remove the dupe without the screenshot.
