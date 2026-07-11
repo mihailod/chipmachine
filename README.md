@@ -124,7 +124,7 @@ Metadata from these databases is ingested, normalized, deduped and cross-checked
 * CSDb - https://csdb.dk
 * ZX Art - https://zxart.ee/eng/music
 * CPC-Power - https://www.cpc-power.com
-* Zophar's Domain (Sega Genesis only) - https://www.zophar.net
+* Zophar's Domain - https://www.zophar.net
 * Vampi's MDX Collection (Sharp X68000) - https://mdx.vampi.tech
 * Demozoo - https://demozoo.org
 * Scene.org - https://scene.org

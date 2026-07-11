@@ -384,6 +384,39 @@ TEST_CASE("SMS Power format labels classify to a platform", "[music]")
     REQUIRE(mdb.classifyFormat("ColecoVision", url) == OTHER);
 }
 
+// Zophar's Domain (zophar) files by the per-platform `format` label (its path is
+// an "(EMU).zophar.zip" pack URL). All 10 sequenced-chip platform labels emitted
+// by build_zophar.py must resolve to the right console byte so the games appear
+// under that TAB filter -- never UNKNOWN (invisible to every filter). GBA rides
+// with GameBoy in the "Nintendo GameBoy/GBA" filter; Genesis under MEGADRIVE;
+// Master System / Game Gear under SEGAMS.
+TEST_CASE("Zophar format labels classify to a platform", "[music]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    const std::string url =
+        "zophar::https://fi.zophar.net/soundfiles/x/y/Game%20(EMU).zophar.zip";
+    struct { const char* fmt; uint8_t plat; } cases[] = {
+        { "Nintendo Sound Format", NES },
+        { "Super Nintendo", SNES },
+        { "Nintendo Game Boy (GB)", GAMEBOY },
+        { "Gameboy Advance", GBA },
+        { "Nintendo DS Sound Format", NDS },
+        { "Ultra64 Sound Format", NINTENDO64 },
+        { "HES", HES },
+        { "Sega Genesis", MEGADRIVE },
+        { "Sega Master System", SEGAMS },
+        { "Sega Game Gear", SEGAMS },
+    };
+    for (auto const& c : cases) {
+        INFO("format " << c.fmt);
+        uint8_t b = mdb.classifyFormat(c.fmt, url);
+        REQUIRE(b != UNKNOWN_FORMAT);
+        REQUIRE(b == c.plat);
+    }
+}
+
 // mirsoft "World of Game MODs" (mirsoft) is classified by the GAME's platform:
 // the `format` column carries a platform label, so a C64/NES/SNES game's tracker
 // arrangement must file under that console (db.lua v86, "classify by game

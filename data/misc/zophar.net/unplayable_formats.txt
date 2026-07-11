@@ -1,0 +1,22 @@
+# Zophar streamed-tier formats we do NOT decode (HELD -- not
+# imported). Revisit each: almost all route to vgmstream; ogg/wav
+# are already playable via ffmpegplugin but the zips are recorded
+# soundtracks. ext<TAB>platforms
+adx	sega-dreamcast-dsf
+asf	playstation2-psf2,xbox
+at3	playstation3-psf3,playstation-portable-psp
+aus	playstation2-psf2
+bcwav	nintendo-3ds-3sf
+dsp	nintendo-wii
+dvi	sega-saturn-ssf
+eam	playstation2-psf2,nintendo-gamecube-gcn
+genh	playstation2-psf2,sega-dreamcast-dsf
+lwav	xbox,xbox-360
+musx	playstation2-psf2
+ogg	nintendo-3ds-3sf
+oma	playstation-portable-psp
+spsd	sega-dreamcast-dsf
+ss2	playstation2-psf2
+str	playstation-psf
+wav	xbox-360
+xa	playstation-psf

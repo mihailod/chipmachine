@@ -2,7 +2,12 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- alternate green shade on help screen per divider
+- zophar streamed audio revisit: need ffmpeg to enable more formats and vgmstream to vendor and play new formats if ffmpeg can't
+Held (your call, "hold streamed"): PS1/PS2/Saturn/Dreamcast + all HD consoles. Opening their EMU zips proved they're recorded streamed audio (xa/asf/adx/at3/dsp/eam/genh/…), not chip formats — only vgmstream could play them. The revisit list is at data/misc/zophar.net/unplayable_formats.txt (18 extensions → platforms), ready for a separate vgmstream go/no-go. Note PS1-psf/Saturn-ssf have genuinely-playable subsets tangled per-game with streamed rips; splitting those needs a per-game scan, deferred with the tier.
+
+- distinguish SEGA Game Gear platform logo
+
+- distinguish GBA platform logo
 
 - see if there are other formats in db we don't play
 

@@ -411,7 +411,25 @@
 --     only ever served a generic 160x110 placeholder. Repointed to the show's own
 --     real logo banner (https://syntaxerror.nu/banner.gif). Bump forces a reindex
 --     so the collection.artwork column is rewritten.
-VERSION = 92;
+-- 93: Zophar's Domain FULL EXPANSION (Genesis pilot 335 -> 4463 games / 10
+--     platforms). The other dev's data/misc/zophar.net/list.csv inventoried the
+--     whole catalog (17712 games / 21 platforms). Ground truth (opening the
+--     "(EMU).zophar.zip" of each) splits Zophar in two: SEQUENCED CHIP platforms
+--     (homogeneous, all decodable) = NES nsf, SNES spc, Game Boy gbs, GBA
+--     minigsf, DS 2sf, N64 usf, TurboGrafx-16 hes, Genesis/Master System vgm,
+--     Game Gear sgc -- ONBOARDED; and a STREAMED-AUDIO tier (PS1/PS2/Saturn/
+--     Dreamcast + all HD consoles) whose "originals" are recorded rips
+--     (xa/asf/adx/at3/dsp/eam/genh/...), NOT chip -- HELD (only vgmstream could
+--     play them; extensions logged to data/misc/zophar.net/unplayable_formats.txt
+--     for a separate go/no-go). Deduped per platform vs the whole console corpus
+--     (modland by ext + vgmrips + smspower + rsn + nsfe): modland is deep-but-
+--     narrow per game while Zophar is game-complete, so most platforms are
+--     substantially net-new (5493 corpus dups dropped). Reuses the existing
+--     zip-by-magic subsong pipeline (songExt already covers every ext; shared
+--     gsflib/usflib/2sflib extract alongside), NO new decoders. Screenshots from
+--     the CSV's own image_url (thumbs_large), 862 matched. Built by the rewritten
+--     chipmachine/scripts/build_zophar.py --build/--screenshots. Bump forces a reindex.
+VERSION = 93;
 
 DB = {
 {
@@ -448,9 +466,13 @@ DB = {
 	color = 0xfffff
 },
 {
-	-- Zophar's Domain (pilot: Sega Genesis VGM). Each path is a full EMU zip URL
-	-- on the fi.zophar.net CDN; the host extracts it and plays the .vgm tracks as
-	-- subsongs. source empty (full URLs in the path column).
+	-- Zophar's Domain console gamerips, 10 sequenced-chip platforms (see
+	-- VERSION 93): NES/SNES/Game Boy/GBA/DS/N64/TG16/Genesis/Master System/Game
+	-- Gear. Each path is a full "(EMU).zophar.zip" URL on the fi.zophar.net CDN;
+	-- the zip-by-magic handler extracts it and plays the chip tracks (nsf/spc/
+	-- gbs/gsf/2sf/usf/hes/vgm/sgc) as subsongs, shared *lib members alongside.
+	-- The format column carries the per-platform label (classified via
+	-- MusicDatabase format_map). source empty (full URLs in the path column).
 	name = "Zophar",
 	id =  "zophar",
 	source = "",

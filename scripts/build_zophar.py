@@ -1,205 +1,254 @@
 #!/usr/bin/env python3
 """Build chipmachine/data/zophar.txt -- Zophar's Domain console gamerips.
 
-PILOT SCOPE: Sega Genesis / Mega Drive (VGM). This is the genuinely net-new part
-of Zophar -- modland already has SNES/GB/PS/N64/Saturn/NES/Dreamcast (tens of
-thousands), but has NO VGM and NO arcade. modland's only Genesis music is 265
-"Megadrive GYM" tunes, so we dedup against those and keep the rest.
+Driven by data/misc/zophar.net/list.csv (17712 games / 21 platforms, scraped by
+eliotbyte/zophar-downloader). We do NOT re-scrape Zophar -- the CSV already has
+name + platform + image_url + game_page_url per game. The EMU (original chip) zip
+URL is reconstructed from (slug,title) -- verified 200 across platforms (the CSV's
+l1/l2 link columns are misaligned on rows with a missing link, so we only trust
+the CSV for the game inventory, never for the URL).
 
-Each game is a directory under https://fi.zophar.net/soundfiles/<platform>/<slug>/
-holding "<Title> (EMU).zophar.zip" -- a zip of per-track .vgm files. The download
-URL is reconstructable from the (slug, title) pairs on the platform listing pages
-(verified), so enumeration is one listing fetch per page, no per-game requests.
-The host extracts the zip and plays the .vgm tracks as subsongs (see the
-MusicPlayerList zip-game handler).
+SCOPE (2026-07-11, user decision "ship sequenced now, hold streamed"):
+Zophar's platforms split by what the "(EMU).zophar.zip" actually contains --
+verified by opening the zips:
 
-  --build        page the Genesis listing, dedup vs modland GYM, write zophar.txt
-  --screenshots  page the listing, harvest each game's soundcover image, write
-                 zophar_screenshots.txt keyed by the song URL in zophar.txt
+  SEQUENCED CHIP (homogeneous, all decodable) -- ONBOARD:
+    NES nsf, SNES spc, Game Boy gbs, Game Boy Advance minigsf, Nintendo DS 2sf,
+    Nintendo 64 usf, TurboGrafx-16 hes, Genesis vgm, Master System vgm,
+    Game Gear sgc.  (GBA/N64 look mp3-only on the game page -- that's a preview;
+    the EMU zip holds real gsf/usf.)
+
+  STREAMED AUDIO (recorded rips: xa/asf/adx/at3/dsp/eam/genh/ogg/wav/... ) -- HELD:
+    PS1 (part psf, part xa/str), PS2 (asf/musx/genh), Saturn (part ssf, part dvi),
+    Dreamcast (adx/genh, little dsf), 3DS, GameCube, Wii, Xbox, Xbox360, PS3, PSP.
+    These are NOT chip formats -- their only playback path is vgmstream. Their
+    extensions are written to unplayable_formats.txt for a separate go/no-go.
+
+Dedup: per platform, {norm(game-title)} against the WHOLE console corpus mapped by
+format family -- modland (allmods.txt, by extension), vgmrips, smspower, rsn
+(SNES), nsfe (NES). Emitted rows are unique on {title, format}. modland's console
+coverage is deep-but-narrow (few distinct games, many tracks each); Zophar is
+game-complete, so most platforms are substantially net-new at the game level.
+
+Play pipeline (already built for the Genesis pilot): MusicPlayerList detects the
+downloaded zip by PK magic, extracts members, and plays the music-ext files as
+local subsongs.
+
+  --build        dedup list.csv vs corpus, write zophar.txt + unplayable_formats.txt
+  --screenshots  key each emitted song URL to its game's image_url (thumbs_large),
+                 write zophar_screenshots.txt
 """
 
-import html
-import os
-import re
-import sys
-import time
-import urllib.parse
-import urllib.request
+import csv, html, os, re, sys, urllib.parse
 
-PLATFORM = "sega-mega-drive-genesis"
-LISTING = "https://www.zophar.net/music/" + PLATFORM
-CDN = "https://fi.zophar.net/soundfiles/" + PLATFORM + "/"
-ALLMODS = os.path.join(os.path.dirname(__file__), "..", "data",
-                       "allmods.txt")
-OUT = os.path.join(os.path.dirname(__file__), "..", "data",
-                   "zophar.txt")
-OUT_SHOTS = os.path.join(os.path.dirname(__file__), "..", "data",
-                         "zophar_screenshots.txt")
-UA = {"User-Agent": "Mozilla/5.0 chipmachine-zophar/1.0"}
-SLEEP = 0.6
+HERE = os.path.dirname(__file__)
+DATA = os.path.normpath(os.path.join(HERE, "..", "data"))
+CSV  = os.path.join(DATA, "misc", "zophar.net", "list.csv")
+OUT       = os.path.join(DATA, "zophar.txt")
+OUT_SHOTS = os.path.join(DATA, "zophar_screenshots.txt")
+OUT_UNPL  = os.path.join(DATA, "misc", "zophar.net", "unplayable_formats.txt")
+CDN = "https://fi.zophar.net/soundfiles/"
 
-GAME_RE = re.compile(
-    r'<a href="/music/' + re.escape(PLATFORM) + r'/([^"/]+)">([^<]+)</a>')
+# slug -> (format label for db.lua classification (must resolve in the
+# MusicDatabase format_map), row extension, dedup family-key). Only the
+# sequenced-chip platforms; the streamed tier is intentionally absent.
+PLATFORM = {
+    "nintendo-nes-nsf":        ("Nintendo Sound Format",     "nsf", "NES"),
+    "nintendo-snes-spc":       ("Super Nintendo",            "spc", "SNES"),
+    "gameboy-gbs":             ("Nintendo Game Boy (GB)",    "gbs", "GB"),
+    "gameboy-advance-gsf":     ("Gameboy Advance",           "gsf", "GBA"),
+    "nintendo-ds-2sf":         ("Nintendo DS Sound Format",  "2sf", "DS"),
+    "nintendo-64-usf":         ("Ultra64 Sound Format",      "usf", "N64"),
+    "turbografx-16-hes":       ("HES",                       "hes", "TG16"),
+    "sega-mega-drive-genesis": ("Sega Genesis",              "vgm", "GEN"),
+    "sega-master-system-vgm":  ("Sega Master System",        "vgm", "SMS"),
+    "sega-game-gear-sgc":      ("Sega Game Gear",            "sgc", "GG"),
+}
+
+# Streamed-tier platforms -> the (sampled) inner extensions we can't decode yet.
+# Not imported; recorded here so --build can emit the vgmstream revisit list even
+# though we hold the rows. ogg/wav are already playable (ffmpegplugin) but the
+# zips are recorded soundtracks, so the platforms stay held as a set.
+HELD_STREAMED = {
+    "playstation-psf":          ["xa", "str"],            # + some psf (playable)
+    "playstation2-psf2":        ["asf", "musx", "genh", "aus", "eam", "ss2"],
+    "sega-saturn-ssf":          ["dvi"],                  # + some ssf (playable)
+    "sega-dreamcast-dsf":       ["adx", "genh", "spsd"],  # + some dsf (playable)
+    "nintendo-3ds-3sf":         ["ogg", "bcwav"],
+    "nintendo-gamecube-gcn":    ["eam"],
+    "nintendo-wii":             ["dsp"],
+    "xbox":                     ["lwav", "asf"],
+    "xbox-360":                 ["lwav", "wav"],
+    "playstation3-psf3":        ["at3"],
+    "playstation-portable-psp": ["at3", "oma"],
+}
 
 
 def norm(s):
-    """Normalize a game title for dedup matching (lowercase, alnum only)."""
-    return re.sub(r"[^a-z0-9]", "", html.unescape(s).lower())
+    s = html.unescape(s or "").lower()
+    s = re.sub(r"\((scd|32x|pico|mcd|sgx|gg|sms|md|arcade|emu|mp3|naomi|"
+               r"system \d+)\)", "", s)
+    return re.sub(r"[^a-z0-9]", "", s)
 
 
-# modland ALSO has these systems in VGM/VGZ under "Video Game Music/<system>/"
-# (10961 Sega Megadrive files = 621 games, + Mega CD / 32X / GYM). Dedup against
-# all of them so we keep only games modland lacks.
-MODLAND_DUP_PREFIXES = (
-    "Video Game Music/Sega Megadrive/",
-    "Video Game Music/Sega Mega CD/",
-    "Video Game Music/Sega 32X/",
-    "Megadrive GYM/",
-    "Megadrive CYM/",
-)
+def plat_of(page):  return page.split("/music/")[-1].split("/")[0]
+def slug_of(page):  return page.rstrip("/").split("/")[-1]
 
 
-def modland_dups():
-    """Normalized Sega-Megadrive game names already in modland (any of the dirs
-    above). Path layout: Video Game Music/<system>/<composer>/<game>/<track>."""
-    names = set()
-    try:
-        with open(ALLMODS, encoding="utf-8", errors="replace") as f:
-            for line in f:
-                p = line.split("\t", 1)[-1].strip()
-                if not p.startswith(MODLAND_DUP_PREFIXES):
-                    continue
-                parts = p.split("/")
-                # ".../Sega Megadrive/<composer>/<game>/<track>"  -> game = parts[3]
-                # "Megadrive GYM/<composer>/<game>.gym"           -> game = parts[2]
-                game = parts[3] if p.startswith("Video Game Music/") and len(parts) >= 5 \
-                    else re.sub(r"\.[a-z0-9]+$", "", parts[-1], flags=re.I)
-                names.add(norm(game))
-    except FileNotFoundError:
-        pass
-    return names
+# ---------------------------------------------------------------- corpus ------
+# family-key -> set(norm gamename) already in the DB, keyed by format family so a
+# NES "Batman" never dedups against an SNES "Batman".
+EXT2FAM = {
+    "nsf":"NES", "nsfe":"NES", "spc":"SNES", "rsn":"SNES", "gbs":"GB",
+    "gsf":"GBA", "minigsf":"GBA", "2sf":"DS", "mini2sf":"DS",
+    "usf":"N64", "miniusf":"N64", "usflib":"N64", "hes":"TG16",
+}
+SEGA_SUB = {"Sega Megadrive":"GEN", "Sega Mega CD":"GEN", "Sega 32X":"GEN",
+            "Sega Master System":"SMS", "Sega Game Gear":"GG",
+            "Sega SG-1000":"SMS", "Sega SC-3000":"SMS"}
 
 
-def fetch(url):
-    req = urllib.request.Request(url, headers=UA)
-    with urllib.request.urlopen(req, timeout=60) as r:
-        return r.read().decode("utf-8", "replace")
+def build_corpus():
+    fam = {}
+    def add(k, n):
+        if n: fam.setdefault(k, set()).add(n)
+    def ext_of(p):
+        m = re.search(r"\.([a-z0-9]+)$", p, re.I); return m.group(1).lower() if m else ""
+
+    with open(os.path.join(DATA, "allmods.txt"), encoding="utf-8", errors="replace") as f:
+        for line in f:
+            p = line.split("\t", 1)[-1].strip(); parts = p.split("/"); e = ext_of(p)
+            top = parts[0]
+            if top == "Megadrive GYM" or e == "gym":
+                # Megadrive GYM/<composer>/<game>.gym
+                add("GEN", norm(re.sub(r"\.[a-z0-9]+$", "", parts[-1]))); continue
+            if top == "Video Game Music" and len(parts) > 1:
+                sysk = SEGA_SUB.get(parts[1])
+                if sysk:
+                    # Video Game Music/<System>/<Composer>/<Game>/<track>.vgz (depth 5)
+                    g = parts[3] if len(parts) >= 5 else re.sub(r"\.[a-z0-9]+$", "", parts[-1])
+                    add(sysk, norm(g))
+                continue
+            # composer/game/track (depth>=4) -> game=parts[-2]; else filename stem
+            g = parts[-2] if len(parts) >= 4 else re.sub(r"\.[a-z0-9]+$", "", parts[-1])
+            k = EXT2FAM.get(e)
+            if k: add(k, norm(g))
+            if e == "sgc":  # SGC/<composer>/<game>.sgc -> Master System + Game Gear
+                add("SMS", norm(g)); add("GG", norm(g))
+
+    def tab(fn):
+        try:
+            return [l.rstrip("\n").split("\t")
+                    for l in open(os.path.join(DATA, fn), encoding="utf-8", errors="replace")]
+        except FileNotFoundError:
+            return []
+    for c in tab("rsn.txt"):   # \t title \t composer \t plat \t file
+        if len(c) >= 2: add("SNES", norm(c[1]))
+    for c in tab("nsfe.txt"):
+        if len(c) >= 2: add("NES", norm(c[1]))
+    for c in tab("vgmrips.txt"):  # "Title (System)" \t \t Arcade \t url \t vgz
+        if c and c[0]:
+            t = c[0]; n = norm(re.sub(r"\s*\([^)]*\)\s*$", "", t)); low = t.lower()
+            if any(w in low for w in ("mega drive", "genesis", "megadrive")): add("GEN", n)
+            elif "master system" in low: add("SMS", n)
+            elif "game gear" in low: add("GG", n)
+    for c in tab("smspower.txt"):
+        if c and c[0]: add("SMS", norm(c[0])); add("GG", norm(c[0]))
+    return fam
+
+
+# ---------------------------------------------------------------- build -------
+def emu_url(plat, slug, title):
+    return (CDN + plat + "/" + urllib.parse.quote(slug) + "/"
+            + urllib.parse.quote(f"{title} (EMU).zophar.zip"))
 
 
 def build():
-    dup = modland_dups()
-    rows, skipped, page = [], 0, 1
-    seen = set()
-    while True:
-        url = LISTING if page == 1 else f"{LISTING}?page={page}"
-        try:
-            html_text = fetch(url)
-        except Exception as e:
-            sys.stderr.write(f"\npage {page} failed: {e}\n")
-            break
-        games = GAME_RE.findall(html_text)
-        if not games:
-            break
-        new_on_page = 0
-        for slug, title in games:
-            if slug in seen:
+    corpus = build_corpus()
+    rows, dropped = [], 0
+    seen = set()                       # {norm title, format} uniqueness
+    stats = {}                         # plat -> [total, kept, dup]
+    with open(CSV, newline="") as f:
+        for row in csv.DictReader(f):
+            plat = plat_of(row["game_page_url"])
+            meta = PLATFORM.get(plat)
+            if not meta:
+                continue               # streamed tier: held
+            label, ext, fam = meta
+            title = html.unescape(row["name"]).strip()
+            st = stats.setdefault(plat, [0, 0, 0]); st[0] += 1
+            n = norm(title)
+            if n in corpus.get(fam, ()):        # already in the corpus
+                st[2] += 1; dropped += 1; continue
+            key = (n, ext)
+            if key in seen:
                 continue
-            seen.add(slug)
-            new_on_page += 1
-            title = html.unescape(title).strip()
-            # match modland by the base name (drop the (SCD)/(32X) hardware tag)
-            base = re.sub(r"\s*\((SCD|32X|Pico|MCD)\)\s*$", "", title)
-            if norm(base) in dup:
-                skipped += 1
-                continue
-            fname = urllib.parse.quote(f"{title} (EMU).zophar.zip")
-            path = CDN + urllib.parse.quote(slug) + "/" + fname
-            # song_template = "title composer format path ext"
-            rows.append("\t".join([title, "", "Sega Genesis", path, "vgm"]))
-        sys.stderr.write(f"\rpage {page}: {len(rows)} kept, {skipped} dup")
-        sys.stderr.flush()
-        if new_on_page == 0:
-            break
-        page += 1
-        time.sleep(SLEEP)
-    sys.stderr.write("\n")
-    out = os.path.normpath(OUT)
-    with open(out, "w") as f:
+            seen.add(key)
+            url = emu_url(plat, slug_of(row["game_page_url"]), title)
+            rows.append("\t".join([title, "", label, url, ext]))
+            st[1] += 1
+
+    with open(OUT, "w", encoding="utf-8") as f:
         f.write("\n".join(rows) + "\n")
-    print(f"wrote {len(rows)} rows ({skipped} modland-GYM dups skipped) -> {out}")
+    # vgmstream revisit list (held streamed tier)
+    unpl = {}
+    for exts in HELD_STREAMED.values():
+        for e in exts:
+            unpl[e] = unpl.get(e, 0)
+    with open(OUT_UNPL, "w", encoding="utf-8") as f:
+        f.write("# Zophar streamed-tier formats we do NOT decode (HELD -- not\n"
+                "# imported). Revisit each: almost all route to vgmstream; ogg/wav\n"
+                "# are already playable via ffmpegplugin but the zips are recorded\n"
+                "# soundtracks. ext<TAB>platforms\n")
+        plats_by_ext = {}
+        for p, exts in HELD_STREAMED.items():
+            for e in exts:
+                plats_by_ext.setdefault(e, []).append(p)
+        for e in sorted(plats_by_ext):
+            f.write(f"{e}\t{','.join(plats_by_ext[e])}\n")
+
+    print(f"wrote {len(rows)} rows ({dropped} corpus dups dropped) -> {OUT}")
+    sys.stderr.write(f"\n{'platform':28}{'total':>7}{'kept':>7}{'dup':>7}  ext\n")
+    tot = [0, 0, 0]
+    for p in sorted(stats):
+        t, k, d = stats[p]; tot = [tot[0]+t, tot[1]+k, tot[2]+d]
+        sys.stderr.write(f"{p:28}{t:7d}{k:7d}{d:7d}  {PLATFORM[p][1]}\n")
+    sys.stderr.write(f"{'TOTAL':28}{tot[0]:7d}{tot[1]:7d}{tot[2]:7d}\n")
+    print(f"held streamed tier -> {OUT_UNPL}")
 
 
-# Each game's soundcover lives in a listing-row image cell:
-#   <td class="image"><a href="/music/<platform>/<slug>"><img src="...soundcovers/
-#   <platform>/thumbs_small/<file>.jpg" ...></a></td>
-# Games without a cover render an empty cell (no <img>), so they just don't match.
-COVER_RE = re.compile(
-    r'<td class="image"><a href="/music/' + re.escape(PLATFORM) +
-    r'/([^"/]+)"><img src="(https://fi\.zophar\.net/soundcovers/[^"]+)"')
-
-
-def slug_of(url):
-    """The <slug> segment of a fi.zophar.net soundfiles song URL, or ''.
-
-    Unquoted so alternate-title slugs (stored URL-encoded in zophar.txt as
-    ...%5Balt%5D) match the listing hrefs (raw brackets)."""
-    parts = urllib.parse.urlparse(url).path.split("/")
-    try:
-        return urllib.parse.unquote(parts[parts.index(PLATFORM) + 1])
-    except (ValueError, IndexError):
-        return ""
-
-
+# ----------------------------------------------------------- screenshots ------
 def screenshots():
-    # 1) page the listing, build slug -> cover URL (upgrade the small thumb to the
-    #    large one -- same filename, just a different sibling dir on the CDN).
-    slug_cover, page, seen = {}, 1, set()
-    while True:
-        url = LISTING if page == 1 else f"{LISTING}?page={page}"
+    # image_url already in the CSV; upgrade to the hi-res sibling; key by the
+    # (platform, slug) embedded in each emitted EMU URL.
+    img = {}
+    with open(CSV, newline="") as f:
+        for row in csv.DictReader(f):
+            u = (row["image_url"] or "").strip()
+            if u:
+                img[(plat_of(row["game_page_url"]), slug_of(row["game_page_url"]))] = \
+                    u.replace("/thumbs_small/", "/thumbs_large/")
+    out, matched, total = [], 0, 0
+    for line in open(OUT, encoding="utf-8", errors="replace"):
+        c = line.rstrip("\n").split("\t")
+        if len(c) < 4 or not c[3]:
+            continue
+        total += 1
+        seg = urllib.parse.urlparse(c[3]).path.split("/")
         try:
-            html_text = fetch(url)
-        except Exception as e:
-            sys.stderr.write(f"\npage {page} failed: {e}\n")
-            break
-        found = COVER_RE.findall(html_text)
-        links = GAME_RE.findall(html_text)
-        new = [s for s, _ in links if s not in seen]
-        for s, _ in links:
-            seen.add(s)
-        for slug, cover in found:
-            slug_cover.setdefault(
-                urllib.parse.unquote(slug),
-                cover.replace("/thumbs_small/", "/thumbs_large/"))
-        sys.stderr.write(f"\rpage {page}: {len(slug_cover)} covers")
-        sys.stderr.flush()
-        if not links or not new:
-            break
-        page += 1
-        time.sleep(SLEEP)
-    sys.stderr.write("\n")
-
-    # 2) key each zophar.txt song URL to its game's cover.
-    rows, matched, total = [], 0, 0
-    with open(os.path.normpath(OUT), encoding="utf-8", errors="replace") as f:
-        for line in f:
-            c = line.rstrip("\n").split("\t")
-            if len(c) < 4 or not c[3]:
-                continue
-            total += 1
-            cover = slug_cover.get(slug_of(c[3]))
-            if cover:
-                rows.append(c[3] + "\t" + cover)
-                matched += 1
-    out = os.path.normpath(OUT_SHOTS)
-    with open(out, "w", encoding="utf-8") as f:
-        f.write("\n".join(rows) + "\n")
-    print(f"wrote {matched}/{total} screenshots -> {out}")
+            i = seg.index("soundfiles")
+            key = (seg[i+1], urllib.parse.unquote(seg[i+2]))
+        except (ValueError, IndexError):
+            continue
+        u = img.get(key)
+        if u:
+            out.append(c[3] + "\t" + u); matched += 1
+    with open(OUT_SHOTS, "w", encoding="utf-8") as f:
+        f.write("\n".join(out) + "\n")
+    print(f"wrote {matched}/{total} screenshots -> {OUT_SHOTS}")
 
 
 if __name__ == "__main__":
-    if "--build" in sys.argv:
-        build()
-    elif "--screenshots" in sys.argv:
-        screenshots()
-    else:
-        print(__doc__)
+    if "--build" in sys.argv: build()
+    elif "--screenshots" in sys.argv: screenshots()
+    else: print(__doc__)

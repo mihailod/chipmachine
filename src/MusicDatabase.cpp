@@ -2161,6 +2161,11 @@ void initFormats()
     format_map["nintendo entertainment system (nes)"] = NES;
     format_map["nintendo game boy (gb)"] = GAMEBOY;
     format_map["nintendo game boy color (gbc)"] = GAMEBOY;
+    // Zophar GBA gamerips (.gsf) carry the label "Gameboy Advance". Without this
+    // the generic startsWith("gameboy") fallback would file them under GAMEBOY,
+    // not GBA (both share the "Nintendo GameBoy/GBA" TAB filter, but keep the
+    // byte correct for colour/label).
+    format_map["gameboy advance"] = GBA;
     format_map["nintendo snes/super famicom"] = SNES;
     format_map["nec pc engine"] = HES;
     // Sega 8-bit (SN76489 PSG): Master System, Game Gear, SG-1000, SC-3000
