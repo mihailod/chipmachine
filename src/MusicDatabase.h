@@ -326,6 +326,13 @@ public:
         return dbCreatedCount.load(std::memory_order_relaxed);
     }
 
+    // Whether the in-flight init is performing a real reindex (vs a plain cached
+    // load). The startup progress bar is shown only when this is true.
+    bool isReindexing() const
+    {
+        return reindexingNow.load(std::memory_order_relaxed);
+    }
+
     SongInfo& lookup(SongInfo& song);
 
     std::vector<SongInfo> getProductSongs(uint32_t id);
@@ -608,6 +615,12 @@ private:
     // Live count of per-collection databases created (one tick per "Creating
     // '...' DB" step). Drives the first phase of the startup progress bar.
     std::atomic<int> dbCreatedCount{ 0 };
+    // True only while a run is doing a *real* reindex (version bump, new
+    // collection, podcast refresh, or missing index.dat) -- i.e. reindexNeeded
+    // fired. A plain cached load leaves this false, so the UI can suppress the
+    // "Indexing database" toast/bar entirely instead of briefly flashing it on
+    // slow machines where the cached-load window outlasts the toast delay.
+    std::atomic<bool> reindexingNow{ false };
 
     std::vector<Playlist> playLists;
     std::unordered_map<uint64_t, uint32_t> pathMap;

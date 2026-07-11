@@ -1369,15 +1369,22 @@ void ChipMachine::computeFilterCounts()
 void ChipMachine::update()
 {
     if (indexingDatabase) {
-        static int delay = 30;
-        if (delay-- == 0) toast("Indexing database", STICKY);
-
         if (!musicDatabase.busy()) {
             indexingDatabase = false;
             removeToast();
             computeFilterCounts();
-        } else
+        } else {
+            // Only show the "Indexing database" toast/bar for a real reindex.
+            // A cached load is also briefly busy(); on slower machines that
+            // window outlasts the delay and used to flash an empty progress bar
+            // even though nothing is being indexed. isReindexing() stays false
+            // for cached loads, so we wait silently instead.
+            if (musicDatabase.isReindexing()) {
+                static int delay = 30;
+                if (delay-- == 0) toast("Indexing database", STICKY);
+            }
             return;
+        }
     }
 
     if (namedToPlay != "") {

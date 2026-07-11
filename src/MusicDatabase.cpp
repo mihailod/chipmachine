@@ -1012,6 +1012,7 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
     cq.finalize();
 
     reindexNeeded = true;
+    reindexingNow.store(true, std::memory_order_relaxed);
 
     if (!local_dir.empty()) {
         if (!local_dir.is_absolute()) local_dir = workDir / local_dir;
@@ -3479,6 +3480,11 @@ void MusicDatabase::generateIndex()
         return;
     }
 
+    // A real rebuild is about to run (version bump, new collection, podcast
+    // refresh, or a missing index.dat) -- flag it so the UI shows the progress
+    // bar. A plain cached load returns above and never reaches here.
+    reindexingNow.store(true, std::memory_order_relaxed);
+
     print_fmt("Creating Search Index...\n");
 
     std::string oldComposer;
@@ -3681,6 +3687,7 @@ void MusicDatabase::initFromLuaAsync(utils::path const& workDir)
 {
     this->workDir = workDir;
     indexing = true;
+    reindexingNow.store(false, std::memory_order_relaxed);
     indexedCount.store(0, std::memory_order_relaxed);
     dbCreatedCount.store(0, std::memory_order_relaxed);
     initFuture = std::async(std::launch::async, [=]() {
@@ -3838,6 +3845,7 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
         createTables();
         db.exec(utils::format("PRAGMA user_version = %d", dbVersion));
         reindexNeeded = true;
+        reindexingNow.store(true, std::memory_order_relaxed);
     } else if (podcastsChanged) {
         // A background feed refresh found new episodes (full catalogue already
         // in the cache XML). Don't drop/re-parse the big collections -- just
@@ -3846,6 +3854,7 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
         // getSongInfo relies on (search position i <-> song.ROWID i+1).
         syncPodcastSongs();
         reindexNeeded = true;
+        reindexingNow.store(true, std::memory_order_relaxed);
     }
 
     checkingNames.clear();
