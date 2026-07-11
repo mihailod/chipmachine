@@ -6,8 +6,8 @@
 #include "pxtnService.h"
 #include "pxtnError.h"
 
-#include "../../../apone/coreutils/src/coreutils/url.h"
-#include "../../../apone/coreutils/src/coreutils/utf8.h"
+#include <coreutils/url.h>
+#include <coreutils/utf8.h>
 
 #include <cstring>
 #include <vector>

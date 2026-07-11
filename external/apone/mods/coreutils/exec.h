@@ -1,6 +1,8 @@
 #pragma once
 
-#include "log.h"
+// NOTE: only utils.h (for utils::sleepms) is needed. Do NOT add log.h here —
+// utils.h includes this header, so anything pulled in here lands in every
+// <coreutils/utils.h> consumer (log.h drags in format.h/fmt tree-wide).
 #include "utils.h"
 
 #include <cstdint>
@@ -41,7 +43,9 @@ struct ExecPipe
     // Close the write (stdin) end so the child sees EOF on stdin, flushes and
     // exits. Read end stays open to drain remaining output.
     void closeWrite();
-    explicit operator std::string();
+    // Non-explicit on purpose: main.cpp's cm_execute Lua helper relies on the
+    // implicit ExecPipe->std::string conversion (run command, capture stdout).
+    operator std::string();
 
 #ifdef _WIN32
     HANDLE hPipeRead{nullptr};
@@ -58,8 +62,8 @@ struct ExecPipe
 inline ExecPipe::ExecPipe(const std::string& cmd) {}
 inline int ExecPipe::read(uint8_t* target, int size) { return -1; }
 inline int ExecPipe::write(uint8_t* source, int size) { return 0; }
-ExecPipe::ExecPipe(ExecPipe&& other) noexcept {}
-ExecPipe& ExecPipe::operator=(ExecPipe&& other) noexcept { return *this; }
+inline ExecPipe::ExecPipe(ExecPipe&& other) noexcept {}
+inline ExecPipe& ExecPipe::operator=(ExecPipe&& other) noexcept { return *this; }
 inline bool ExecPipe::hasEnded() { return true; }
 inline ExecPipe::~ExecPipe() {}
 inline void ExecPipe::Kill() {}
@@ -148,7 +152,7 @@ __attribute__((noinline)) inline ExecPipe::ExecPipe(const std::string& cmd)
 
 __attribute__((noinline)) inline ExecPipe::~ExecPipe() { Kill(); }
 
-ExecPipe::ExecPipe(ExecPipe&& other) noexcept
+inline ExecPipe::ExecPipe(ExecPipe&& other) noexcept
 {
     pid = other.pid;
     outfd = other.outfd;
@@ -257,7 +261,7 @@ inline ExecPipe::operator std::string()
     return result;
 }
 
-inline int shellExec(const std::string& cmd, const std::string& binDir)
+inline int shellExec(const std::string& cmd, const std::string& binDir = "")
 {
     return system((binDir + "/" + cmd).c_str());
 }

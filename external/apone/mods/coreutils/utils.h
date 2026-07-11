@@ -170,42 +170,6 @@ bool isalpha(const std::string& s);
 
 float clamp(float x, float a0 = 0.0, float a1 = 1.0);
 
-#ifdef _WIN32
-typedef void* HANDLE;
-#endif
-
-struct ExecPipe {
-    ExecPipe() {}
-    ExecPipe(const std::string& cmd);
-    ~ExecPipe();
-
-    ExecPipe(ExecPipe&& other) = default;
-    ExecPipe(const ExecPipe& other) = delete;
-    ExecPipe& operator=(const ExecPipe& other) = delete;
-    ExecPipe& operator=(ExecPipe&& other) noexcept;
-
-    bool hasEnded();
-    void Kill();
-    int read(uint8_t* target, int size);
-    int write(uint8_t* source, int size);
-    operator std::string();
-
-#ifdef _WIN32
-    HANDLE hPipeRead;
-    HANDLE hPipeWrite;
-    HANDLE hProcess;
-#else
-    pid_t pid = -1;
-    int outfd;
-    int infd;
-#endif
-};
-
-inline ExecPipe execPipe(const std::string& cmd) {
-    return ExecPipe(cmd);
-}
-
-int shellExec(const std::string& cmd, const std::string& binDir = "");
 
 uint32_t crc32(const uint32_t* data, int size);
 uint32_t crc32_area(const uint32_t* data, int width, int height, int pitch);
@@ -341,3 +305,11 @@ inline void listFiles(const std::string& dirName,
 #endif
 
 } // namespace utils
+
+// ExecPipe / execPipe / shellExec live in the single vendored exec.h — the
+// chipmachine-patched, streaming-capable implementation (non-blocking reads,
+// closeWrite(), F_SETNOSIGPIPE). Included at GLOBAL scope (exec.h opens its own
+// `namespace utils`, and its <unistd.h> etc. must not land inside a namespace).
+// Placed after this header's body so exec.h sees utils::sleepms; #pragma once
+// makes the exec.h<->utils.h cycle safe.
+#include "exec.h"

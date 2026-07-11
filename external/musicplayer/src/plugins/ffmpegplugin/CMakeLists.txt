@@ -5,10 +5,11 @@ set(SOURCE_FILES FFMPEGPlugin.cpp)
 # Define the target as a static library
 add_library(ffmpegplugin STATIC ${SOURCE_FILES})
 
-# FIXED: Corrected relative path jumps to match the internal musicplayer/apone layout
-target_include_directories(ffmpegplugin PRIVATE 
-    ${CMAKE_CURRENT_SOURCE_DIR}/../.. 
-    ${CMAKE_CURRENT_SOURCE_DIR}/../../../apone/coreutils/src
+# coreutils headers (exec.h/format.h/etc.) come from the single vendored apone via
+# the linked `coreutils` target's interface include (external/apone/mods). The old
+# musicplayer/apone include dir was removed as part of the apone dedup.
+target_include_directories(ffmpegplugin PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/../..
     /opt/homebrew/include
 )
 

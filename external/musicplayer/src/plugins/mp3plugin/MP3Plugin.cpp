@@ -5,11 +5,9 @@
 #include <coreutils/fifo.h>
 #include <coreutils/split.h>
 
-// #include <coreutils/url.h>
-#include "../../../apone/coreutils/src/coreutils/url.h"
+#include <coreutils/url.h>
 
-//#include <coreutils/utf8.h>
-#include "../../../apone/coreutils/src/coreutils/utf8.h"
+#include <coreutils/utf8.h>
 
 #include <coreutils/utils.h>
 #include <coreutils/log.h>

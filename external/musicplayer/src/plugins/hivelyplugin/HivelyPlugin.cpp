@@ -5,7 +5,7 @@ extern "C"
 
 #include "HivelyPlugin.h"
 #include <coreutils/utils.h>
-#include "../../../apone/coreutils/src/coreutils/utf8.h"
+#include <coreutils/utf8.h>
 #include <set>
 
 namespace musix {

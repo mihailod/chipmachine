@@ -11,8 +11,8 @@
 // jis2unicode() + utf8_encode() for the Shift-JIS (MSX kanji) title. The
 // <coreutils/...> form isn't on this plugin's include path, so reach the
 // headers directly, exactly as S98Plugin does.
-#include "../../../apone/coreutils/src/coreutils/url.h"
-#include "../../../apone/coreutils/src/coreutils/utf8.h"
+#include <coreutils/url.h>
+#include <coreutils/utf8.h>
 
 // Vendored libkss replayer (ISC). The embedded MGSDRV Z80 driver blob it pulls
 // in (modules/drivers/mgsdrv.h) is Ain/GIGAMIX freeware, not ISC.
