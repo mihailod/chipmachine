@@ -149,7 +149,13 @@ void WebJob::start(CURLM *curlm) {
 		// Ordinary download: mimic a real browser's request headers. These are
 		// the headers every mainstream browser sends regardless of vendor, so
 		// they stay consistent with whichever UA pickUserAgent() returned.
-		slist = curl_slist_append(slist, "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8");
+		// Deliberately DO NOT advertise image/avif or image/webp: content-
+		// negotiating CDNs (e.g. uploads.podcloud.fr) honour those and return a
+		// WebP/AVIF body even for a ".jpg" URL, which stb_image cannot decode
+		// (screenshot/artwork then fails to load). Our decoder only handles
+		// PNG/JPEG/GIF, so we advertise a plain "*/*" and let the server send the
+		// original raster the URL points at.
+		slist = curl_slist_append(slist, "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
 		slist = curl_slist_append(slist, "Accept-Language: en-US,en;q=0.9");
 	}
 	header_list = std::shared_ptr<curl_slist>(slist, &curl_slist_free_all);
@@ -174,7 +180,14 @@ void WebJob::start(CURLM *curlm) {
 		curl_easy_setopt(curl, CURLOPT_DIRLISTONLY, 1L);
 	}
 	// Suppress the FTP SIZE command — costs ~500ms round-trip per transfer.
-	curl_easy_setopt(curl, CURLOPT_IGNORE_CONTENT_LENGTH, 1L);
+	// FTP ONLY: on HTTP this flag makes curl ignore Content-Length and read
+	// until the connection closes. Servers that keep the connection alive (no
+	// prompt close) then stall the transfer until their keep-alive timeout fires
+	// (~60-75s), so every HTTP download hung for over a minute (e.g. the
+	// c64takeaway.com podcast artwork). HTTP always carries a reliable body
+	// length (Content-Length or chunked/HTTP2 END_STREAM), so it never needs this.
+	if (u.rfind("ftp", 0) == 0)
+		curl_easy_setopt(curl, CURLOPT_IGNORE_CONTENT_LENGTH, 1L);
 
 	if (isStream) {
 		// SHOUTcast servers answer with "ICY 200 OK" over HTTP/1.0.

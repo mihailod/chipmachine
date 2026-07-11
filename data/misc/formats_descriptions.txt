@@ -435,8 +435,9 @@ A PSF sub-format holding a Sega Dreamcast sound program, replayed via emulation 
 ssf	Saturn Sound Format
 A PSF sub-format for Sega Saturn music, emulating the console's SCSP sound system.
 
-qsf	Capcom Q-Sound Format
-A PSF sub-format for Capcom arcade boards using the QSound chip, reproduced through emulation.
+qsf	Capcom Q-Sound Format. The .miniqsf and .qsf formats belong to the Portable Sound Format (PSF) family. They contain ripped, sequenced music data directly extracted from Capcom CPS-1 and CPS-2 arcade games (e.g., Street Fighter II, Alien vs. Predator) that utilized the famous QSound hardware.QSound is a 3D audio processing algorithm licensed by QSound Labs. The hardware was designed to create a wide, positional stereo image and immersive spatial effects using standard stereo speakers. When these sound logs (QSF files) are rendered, they preserve the signature panning and echo effects from the original arcade circuit.
+
+miniqsf	The .miniqsf and .qsf formats belong to the Portable Sound Format (PSF) family. They contain ripped, sequenced music data directly extracted from Capcom CPS-1 and CPS-2 arcade games (e.g., Street Fighter II, Alien vs. Predator) that utilized the famous QSound hardware. QSound is a 3D audio processing algorithm licensed by QSound Labs. The hardware was designed to create a wide, positional stereo image and immersive spatial effects using standard stereo speakers. When these sound logs (QSF files) are rendered, they preserve the signature panning and echo effects from the original arcade circuit.
 
 sndh	SNDH is the definitive audio file format used for archiving and playing back chiptune music from the Atari ST. Devised and standard-coded by Jochen "BDC" Knaus of the ST music group Brainstorm. Contains the original Motorola 68000 machine code assembly driver required to run the song directly on the Atari ST's hardware. Prefixed with an ASCII "SNDH" metadata header containing tags for title, artist, year, and replay speed. Files are traditionally compressed using Pack-ICE, a popular data packer from the Atari demoscene era. Specifically written to command the Atari ST's internal Yamaha YM2149 Programmable Sound Generator (PSG) chip.
 

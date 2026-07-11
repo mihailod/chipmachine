@@ -298,6 +298,9 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     iquery = musicDatabase.createQuery();
 
     searchField.setPrompt("#");
+    // Added first so the platform-logo preview draws beneath the search field
+    // and result list (it only occupies the right-hand screenshot slot anyway).
+    searchScreen.add(&searchLogoIcon);
     searchScreen.add(&searchField);
     searchField.visible(false);
 
@@ -451,6 +454,12 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     mainFilterField.visible(true);
     mainFilterField.setText("");
     mainScreen.add(&mainFilterField);
+
+    // Highlighted-platform logo drawn (dimmed) centred BEHIND the filter list,
+    // so navigating the F9 screen previews which platform is selected. Added
+    // first so it renders beneath the title and the two-column list.
+    filterLogoIcon.color = 0x50ffffff;
+    advancedScreen.add(&filterLogoIcon);
 
     advancedTitle.setFont(font);
     advancedTitle.color = 0xffffffaa;
@@ -757,6 +766,161 @@ void ChipMachine::updateScreenshotArea()
     float y = centerY - final_h * 0.5;
 
     screenShotIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
+}
+
+// Fits searchLogoIcon's current texture into the playback screenshot slot (see
+// updateScreenshotArea): inside the 0.45x0.45 box, right-anchored, centred on
+// the same line. No-op when the icon has no texture.
+void ChipMachine::positionSearchLogo()
+{
+    int bm_w = searchLogoIcon.getTextureWidth();
+    int bm_h = searchLogoIcon.getTextureHeight();
+    if (bm_w == 0 || bm_h == 0) return;
+    auto w = screen.width() * 0.45;
+    auto h = screen.height() * 0.45;
+    float d = (float)h / bm_h;
+    float d2 = (float)w / bm_w;
+    if (d2 < d) d = d2;
+    float final_w = bm_w * d;
+    float final_h = bm_h * d;
+    float x = screen.width() - final_w - (screen.width() * 0.05);
+    float centerY = topLeft.y + screen.height() * 0.1 + h * 0.5;
+    float y = centerY - final_h * 0.5;
+    searchLogoIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
+}
+
+// Loads a remote artwork URL (podcast show image) into searchLogoIcon. The
+// download runs async on the web worker; the decoded bitmap is handed to the
+// render thread via pendingSearchLogo (setBitmap touches GL). searchLogoUrl
+// tracks the desired image so a stale download that finishes after the cursor
+// moved on is discarded.
+void ChipMachine::loadSearchArtwork(const std::string& url)
+{
+    if (url.empty() || noImages) {
+        searchLogoIcon.clear();
+        searchLogoUrl = "";
+        return;
+    }
+    // Already showing (or fetching) this exact image -> nothing to do.
+    if (url == searchLogoUrl) return;
+    searchLogoUrl = url;
+    webutils::Web::getInstance().getFile(url, [this, url](utils::File f) {
+        if (searchLogoUrl != url) return; // cursor moved to another row
+        if (!f) return;
+        try {
+            auto bm = image::load_image(f.getName());
+            // Key out pure black, matching the other logo/screenshot paths.
+            for (auto& px : bm)
+                if ((px & 0xffffff) == 0) px &= 0xffffff;
+            pendingSearchLogoBm = bm;
+            pendingSearchLogoUrl = url;
+            // Publish to the render thread (which uploads the texture); pairs
+            // with the acquire-load in update().
+            pendingSearchLogo.store(true, std::memory_order_release);
+        } catch (image::image_exception& e) {
+            LOGD("Failed to load podcast artwork %s", url.c_str());
+        }
+    });
+}
+
+void ChipMachine::updateSearchLogo()
+{
+    // Preview the highlighted song's platform/extension logo in the screenshot
+    // slot so the user sees which platform it resolves to before playing it.
+    int i = (currentScreen == SEARCH_SCREEN) ? songList.selected() : -1;
+    if (i < 0 || iquery->numHits() <= 0) {
+        searchLogoIcon.clear();
+        searchLogoUrl = "";
+        return;
+    }
+    SongInfo song = musicDatabase.getSongInfo(iquery->getIndex(i));
+
+    // Podcast SHOW rows carry no hardware platform; preview the show's own
+    // artwork (a remote image) instead, loaded asynchronously into the slot.
+    static const std::string kPodcastShowPrefix = "podcastshow::";
+    if (utils::startsWith(song.path, kPodcastShowPrefix)) {
+        int rowid = std::atoi(song.path.c_str() + kPodcastShowPrefix.size());
+        loadSearchArtwork(musicDatabase.getPodcastShowArtwork(rowid));
+        return;
+    }
+
+    // Radio stations carry their station logo URL in the INFO metadata field
+    // (getSongScreenshots uses the same value as the screenshot); preview it in
+    // the slot, loaded asynchronously like podcast artwork.
+    if (utils::startsWith(song.path, "radio::")) {
+        loadSearchArtwork(song.metadata[SongInfo::INFO]);
+        return;
+    }
+
+    // Non-podcast rows use a local platform/extension logo; cancel any pending
+    // artwork request so a late podcast download can't overwrite this logo.
+    searchLogoUrl = "";
+    std::string ext = MusicDatabase::resolveExtension(song);
+    std::string platform = MusicDatabase::platformScreenshotName(song);
+    std::string format = utils::toLower(song.format);
+    // Other-platform / Arcade GROUP rows on the drill screen carry the
+    // sub-platform only in their TITLE ("Vectrex", "ColecoVision",
+    // "Arcade (Capcom)"); their format is the flat "Other"/"Arcade", which would
+    // resolve to the generic icon (or generic cabinet). Feed the title in as the
+    // format so pickPlatformOrExtLogo resolves the per-system (consoleSubLogos)
+    // or per-board (arcadeSubLogos) logo. Normalise the two arcade names that
+    // don't match the arcadeSubLogos keys 1:1 (see getOtherPlatforms).
+    if (utils::startsWith(song.path, "otherplatform::")) {
+        std::string name = utils::toLower(song.title);
+        if (name == "arcade (other)") name = "arcade";
+        else if (name == "arcade (neo geo)") name = "neo geo";
+        format = name;
+    }
+    const image::bitmap* bm = pickPlatformOrExtLogo(ext, platform, format);
+    if (!bm) {
+        searchLogoIcon.clear();
+        return;
+    }
+    searchLogoIcon.setBitmap(*bm);
+    positionSearchLogo();
+}
+
+void ChipMachine::updateFilterLogo()
+{
+    // Preview the highlighted platform/category behind the F9 filter list.
+    if (currentScreen != ADVANCED_SCREEN) {
+        filterLogoIcon.clear();
+        return;
+    }
+    int i = advancedList.selected();
+    const image::bitmap* bm = nullptr;
+    if (i >= 0 && i < (int)filterOptions.size()) {
+        // The entry's first matched format byte names its platform ("[No Filter]"
+        // matches nothing -> no logo). Map it to the per-platform logo slug.
+        auto const& fmts = filterOptions[i].matchedFormats;
+        if (!fmts.empty()) {
+            std::string slug = MusicDatabase::platformScreenshotSlug(fmts[0]);
+            if (!slug.empty()) {
+                auto it = platformShots.find(slug);
+                if (it != platformShots.end() && it->second.width() > 0)
+                    bm = &it->second;
+            }
+        }
+    }
+    if (!bm) {
+        filterLogoIcon.clear();
+        return;
+    }
+    filterLogoIcon.setBitmap(*bm);
+
+    // Fit inside a centred box (same fraction as the splash), keeping aspect.
+    int bm_w = bm->width();
+    int bm_h = bm->height();
+    float w = screen.width() * 0.5f;
+    float h = screen.height() * 0.5f;
+    float d = h / bm_h;
+    float d2 = w / bm_w;
+    if (d2 < d) d = d2;
+    float final_w = bm_w * d;
+    float final_h = bm_h * d;
+    float x = (screen.width() - final_w) * 0.5f;
+    float y = (screen.height() - final_h) * 0.5f;
+    filterLogoIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
 }
 
 // Positions the idle-splash picture centred on the screen, scaled to fill
@@ -1117,49 +1281,64 @@ static const std::map<std::string, std::string>& arcadeSubLogos()
     return m;
 }
 
-bool ChipMachine::appendPlatformOrExtLogo()
+const image::bitmap* ChipMachine::pickPlatformOrExtLogo(
+    const std::string& ext, const std::string& platformSlug,
+    const std::string& format, std::string* label)
 {
     // 0) Arcade boards: pick the per-board logo by format string (Capcom/Konami/
     //    Namco/Sega/Taito/Neo Geo/other), overriding the shared "vgz" ext logo.
     {
-        auto a = arcadeSubLogos().find(currentSongFormat);
+        auto a = arcadeSubLogos().find(format);
         if (a != arcadeSubLogos().end()) {
             auto it = extensionShots.find(a->second);
             if (it != extensionShots.end() && it->second.width() > 0) {
-                screenshots.emplace_back("ext:" + a->second, it->second);
-                LOGD("Screenshot logos: arcade='%s' logo='%s'",
-                     currentSongFormat.c_str(), a->second.c_str());
-                return true;
+                if (label) *label = "ext:" + a->second;
+                return &it->second;
             }
         }
     }
     // 1) Per-extension screenshot (e.g. mod.png, sid.png) takes priority over
     //    the platform logo.
-    if (!currentSongExt.empty()) {
-        auto it = extensionShots.find(currentSongExt);
+    if (!ext.empty()) {
+        auto it = extensionShots.find(ext);
         if (it != extensionShots.end() && it->second.width() > 0) {
-            screenshots.emplace_back("ext:" + currentSongExt, it->second);
-            LOGD("Screenshot logos: ext='%s' logo=yes", currentSongExt);
-            return true;
+            if (label) *label = "ext:" + ext;
+            return &it->second;
         }
     }
     // 2) Per-platform logo for the current song, when one is installed.
-    //    For the generic "Console" platform, prefer a per-system logo
-    //    (vectrex.png, colecovision.png, capcom.png) when one is present.
-    std::string logoSlug = currentPlatformSlug;
-    if (currentPlatformSlug == "Console") {
-        auto sub = consoleSubLogos().find(currentSongFormat);
+    //    Prefer a per-system logo keyed by the format string (vectrex.png,
+    //    colecovision.png, capcom.png) when one is present. This is NOT gated on
+    //    the "Console" platform: Vectrex/ColecoVision now classify under the
+    //    generic "Other" platform, so gating on "Console" left them showing the
+    //    generic ChipMachine icon. The consoleSubLogos keys are specific format
+    //    strings, so this only fires for those exact formats.
+    std::string logoSlug = platformSlug;
+    {
+        auto sub = consoleSubLogos().find(format);
         if (sub != consoleSubLogos().end() && platformShots.count(sub->second))
             logoSlug = sub->second;
     }
     if (!logoSlug.empty()) {
         auto it = platformShots.find(logoSlug);
         if (it != platformShots.end() && it->second.width() > 0) {
-            screenshots.emplace_back("platform:" + logoSlug, it->second);
-            LOGD("Screenshot logos: platform='%s' logo='%s' have=yes",
-                 currentPlatformSlug, logoSlug);
-            return true;
+            if (label) *label = "platform:" + logoSlug;
+            return &it->second;
         }
+    }
+    return nullptr;
+}
+
+bool ChipMachine::appendPlatformOrExtLogo()
+{
+    std::string label;
+    const image::bitmap* bm = pickPlatformOrExtLogo(
+        currentSongExt, currentPlatformSlug, currentSongFormat, &label);
+    if (bm) {
+        screenshots.emplace_back(label, *bm);
+        LOGD("Screenshot logos: platform='%s' logo='%s' have=yes",
+             currentPlatformSlug, label.c_str());
+        return true;
     }
     LOGD("Screenshot logos: platform='%s' have=none", currentPlatformSlug);
     return false;
@@ -1622,6 +1801,18 @@ void ChipMachine::update()
     // so the screenshots[] it filled are visible before restart() reads them.
     if (pendingShotRestart.exchange(false, std::memory_order_acquire))
         transitions.restart();
+
+    // A podcast-artwork download finished (on the web worker); upload it to the
+    // search-logo icon here on the render thread. Skip if the cursor has since
+    // moved to a different row (searchLogoUrl no longer matches).
+    if (pendingSearchLogo.exchange(false, std::memory_order_acquire)) {
+        if (currentScreen == SEARCH_SCREEN &&
+            pendingSearchLogoUrl == searchLogoUrl &&
+            pendingSearchLogoBm.width() > 0) {
+            searchLogoIcon.setBitmap(pendingSearchLogoBm);
+            positionSearchLogo();
+        }
+    }
 
     if (playerState == MusicPlayerList::Error) {
         player.stop();

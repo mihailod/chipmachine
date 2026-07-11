@@ -233,6 +233,11 @@ public:
     // per-platform logo. Used at startup to warn about missing images.
     static std::vector<std::string> platformScreenshotNames();
 
+    // Filesystem-safe platform logo slug for a raw format byte, or "" for
+    // non-hardware bytes (MP3, OGG, Radio, YouTube, Podcast, Playlist, unknown).
+    // Lets the F9 filter map a highlighted platform/category to its logo.
+    static std::string platformScreenshotSlug(uint8_t formatByte);
+
     // Distinct file extension (lowercased) -> the set of platform slugs its
     // songs classify to, read from the song DB. Used at startup to report which
     // extensions need a dedicated screenshot because no platform logo covers
@@ -481,6 +486,10 @@ public:
     {
         return podcastShowList;
     }
+    // The show's representative artwork URL (collection.artwork), keyed by the
+    // collection ROWID podcastShows() carries. Empty when the show has no image.
+    // Used to preview a podcast's logo while browsing the show list.
+    std::string getPodcastShowArtwork(int rowid) const;
     // Drill into one show (its ROWID) so an empty query lists that show's
     // episodes; pass -1 to go back to the show list.
     void setPodcastShow(int rowid) { podcastShowFilter = rowid; }

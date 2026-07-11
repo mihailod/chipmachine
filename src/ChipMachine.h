@@ -301,6 +301,35 @@ private:
     // appendLogoScreenshots and to tack the logo onto real screenshots.
     bool appendPlatformOrExtLogo();
 
+    // Picks the per-extension / per-platform logo bitmap for the given song
+    // attributes (mirrors appendPlatformOrExtLogo's tiered choice), returning
+    // nullptr when none is installed. When `label` is non-null it receives the
+    // screenshot name that appendPlatformOrExtLogo would use. Shared by the
+    // playback screenshot fallback and the search-list logo preview.
+    const image::bitmap* pickPlatformOrExtLogo(const std::string& ext,
+                                               const std::string& platformSlug,
+                                               const std::string& format,
+                                               std::string* label = nullptr);
+
+    // Refreshes searchLogoIcon with the highlighted song's platform/ext logo,
+    // positioned in the screenshot slot. Clears it when no song is selected or
+    // no logo exists. Podcast SHOW rows preview their remote artwork instead
+    // (via loadSearchArtwork).
+    void updateSearchLogo();
+
+    // Fits searchLogoIcon's current texture into the screenshot slot.
+    void positionSearchLogo();
+
+    // Loads a remote artwork URL (podcast show image) into searchLogoIcon,
+    // asynchronously. searchLogoUrl tracks the desired image so a late download
+    // for a row the user has already scrolled past is discarded.
+    void loadSearchArtwork(const std::string& url);
+
+    // Refreshes filterLogoIcon with the highlighted F9 filter entry's platform
+    // logo, centred behind the list. Clears it off the filter screen or when the
+    // entry has no hardware platform.
+    void updateFilterLogo();
+
     utils::path workDir;
     // Resolved folder the scroller fonts were last loaded from; used to skip a
     // redundant reload when the constructor seed and the config both point at the
@@ -356,6 +385,26 @@ private:
     Icon netIcon;
     Icon volumeIcon;
     Icon screenShotIcon;
+    // Platform/extension logo shown in the screenshot slot while browsing the
+    // search list, previewing which platform the highlighted song resolves to
+    // (the same logo playback would show). Updated on selection change, drawn
+    // only on the search screen. Textureless (cleared) when there is no logo.
+    Icon searchLogoIcon;
+    // Desired image for searchLogoIcon when it is a remote podcast-show artwork
+    // (empty for local platform/ext logos). Both the render thread and the web
+    // download callback read/write it to decide whether a finished download is
+    // still wanted (same std::string-across-threads pattern as currentScreenshot).
+    std::string searchLogoUrl;
+    // A downloaded podcast artwork handed from the web worker to the render
+    // thread: the callback fills the bitmap + url and sets the flag (release);
+    // update() consumes it (acquire) and uploads the texture (GL, render-thread).
+    std::atomic<bool> pendingSearchLogo{ false };
+    image::bitmap pendingSearchLogoBm;
+    std::string pendingSearchLogoUrl;
+    // Logo of the highlighted platform/category on the F9 filter screen, drawn
+    // dimmed and centred behind the two-column list. Textureless when the
+    // highlighted entry has no hardware platform (e.g. "[No Filter]", MP3).
+    Icon filterLogoIcon;
     // Big "muted" overlay shown in the screen centre while paused (F5), so the
     // user sees what they pressed and which key un-mutes.
     Icon pausedIcon;

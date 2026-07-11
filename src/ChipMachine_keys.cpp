@@ -139,6 +139,10 @@ void ChipMachine::showScreen(Screen screen)
             Tween::make().to(spectrumColor, spectrumColorSearch).seconds(0.5);
             Tween::make().to(scrollEffect.alpha, 0.0).seconds(0.5);
         }
+        // Sync the platform-logo previews to the (new) screen: show them for the
+        // current selection on the search / F9 filter screen, clear elsewhere.
+        updateSearchLogo();
+        updateFilterLogo();
     }
 }
 
@@ -193,6 +197,7 @@ void ChipMachine::updateKeys()
 
     searchUpdated = false;
     auto last_selection = songList.selected();
+    auto last_adv_selection = advancedList.selected();
 
     auto key = screen.get_key();
 
@@ -328,7 +333,14 @@ void ChipMachine::updateKeys()
         searchField.visible(false);
         filterField.visible(false);
         topStatus.visible(true);
+        updateSearchLogo();
     }
+
+    // Refresh the F9 filter's centred platform-logo backdrop when the highlight
+    // moves to a different platform/category.
+    if (currentScreen == ADVANCED_SCREEN &&
+        advancedList.selected() != last_adv_selection)
+        updateFilterLogo();
 
     if (searchUpdated) {
         auto s = searchField.getText();
@@ -374,6 +386,9 @@ void ChipMachine::updateKeys()
         searchField.pos.x = filterField.pos.x + filterField.getWidth() + 5;
         topStatus.visible(false);
         songList.setTotal(iquery->numHits());
+        // The result set (and thus the song under the cursor) just changed, even
+        // if the selection index didn't, so refresh the platform-logo preview.
+        updateSearchLogo();
         searchUpdated = false;
     }
 }

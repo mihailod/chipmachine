@@ -2925,6 +2925,11 @@ std::string MusicDatabase::platformScreenshotName(SongInfo const& s)
     return slug;
 }
 
+std::string MusicDatabase::platformScreenshotSlug(uint8_t formatByte)
+{
+    return platformSlugForByte(formatByte);
+}
+
 std::vector<std::string> MusicDatabase::platformScreenshotNames()
 {
     std::vector<std::string> out;
@@ -3001,6 +3006,69 @@ std::vector<int> MusicDatabase::getFormatByteCounts() const
                      : (uint32_t)formats.size();
     for (uint32_t i = 0; i < n; i++) counts[formats[i] & 0xff]++;
     return counts;
+}
+
+std::string MusicDatabase::getPodcastShowArtwork(int rowid) const
+{
+    std::lock_guard lock{ dbMutex };
+    try {
+        // 1) The curated show-level artwork (collection.artwork) -- the real logo
+        //    for most shows. EXCEPT the archive.org "services/img/<id>" endpoint,
+        //    which returns a generic auto-generated placeholder (a grayscale
+        //    waveform or the "no image" icon) when the item has no cover, e.g. the
+        //    Completely Unnecessary Podcast. Skip that so step 2 can do better.
+        {
+            auto q = db.query<std::string>(
+                "SELECT artwork FROM collection WHERE ROWID = ?", rowid);
+            if (q.step()) {
+                std::string art = q.get();
+                if (!art.empty() &&
+                    art.find("archive.org/services/img/") == std::string::npos)
+                    return art;
+            }
+        }
+        // 2) No usable show logo: fall back to the MOST COMMON episode artwork.
+        //    The show's own logo recurs across many episodes (so it wins the
+        //    count), while one-off per-episode covers appear once -- this reliably
+        //    picks the branding rather than an arbitrary episode. ROWID order is
+        //    NOT chronological (RSS feeds index newest-first, .txt oldest-first),
+        //    so "first/last episode" cannot mean "newest"; frequency is the robust
+        //    representative.
+        {
+            auto q = db.query<std::string>(
+                "SELECT artwork FROM song WHERE collection = ? AND artwork LIKE "
+                "'http%' GROUP BY artwork ORDER BY COUNT(*) DESC, MIN(ROWID) "
+                "LIMIT 1",
+                rowid);
+            if (q.step()) {
+                std::string art = q.get();
+                if (!art.empty()) return art;
+            }
+        }
+        // 3) Some shows (Demovibes) store the per-episode image URL in the
+        //    metadata column instead. Others store a text description there, which
+        //    the 'http%' filter plus the image-extension check below reject. Use
+        //    the most common one here too, for the same reason as step 2.
+        {
+            auto q = db.query<std::string>(
+                "SELECT metadata FROM song WHERE collection = ? AND metadata LIKE "
+                "'http%' GROUP BY metadata ORDER BY COUNT(*) DESC, MIN(ROWID) "
+                "LIMIT 1",
+                rowid);
+            if (q.step()) {
+                std::string m = q.get();
+                std::string lower = toLower(m);
+                auto qpos = lower.find('?'); // strip any query string
+                std::string probe =
+                    qpos == std::string::npos ? lower : lower.substr(0, qpos);
+                for (auto ext : { ".jpg", ".jpeg", ".png", ".gif" })
+                    if (endsWith(probe, ext)) return m;
+            }
+        }
+    } catch (std::exception const& e) {
+        LOGD("getPodcastShowArtwork failed: %s", e.what());
+    }
+    return "";
 }
 
 int MusicDatabase::getPodcastShowCount() const

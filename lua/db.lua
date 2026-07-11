@@ -406,7 +406,12 @@
 --     ~the whole set). NO screenshots (cracktro/keygen scene has no game art,
 --     like AMP/chipmusic). Built by chipmachine/scripts/build_keygenmusic.py --build. Bump
 --     forces a reindex.
-VERSION = 91;
+-- 92: Syntax Error podcast artwork fixed. Its old collection artwork pointed at
+--     archive.org services/img for a synthetic item id that does not exist, so it
+--     only ever served a generic 160x110 placeholder. Repointed to the show's own
+--     real logo banner (https://syntaxerror.nu/banner.gif). Bump forces a reindex
+--     so the collection.artwork column is rewritten.
+VERSION = 92;
 
 DB = {
 {
@@ -859,7 +864,11 @@ DB = {
 	song_template = "path title",
 	format = "MP3",
 	podcast = "yes",
-	artwork = "https://archive.org/services/img/podcast_syntax-error-podcast_1481271871",
+	-- The old archive.org "services/img/podcast_syntax-error-podcast_..." id is a
+	-- synthetic item that does not exist (metadata returns {}), so it only served
+	-- a generic 160x110 archive.org placeholder. Use the show's real logo banner
+	-- from its own site instead.
+	artwork = "https://syntaxerror.nu/banner.gif",
 	-- presenter = "Sol"
 	color = 0xfffff
 },
