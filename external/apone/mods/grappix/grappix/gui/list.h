@@ -68,6 +68,24 @@ public:
 
 	void render(std::shared_ptr<RenderTarget> target, uint32_t delta) override {
 		//LOGD("POSITION %f", position);
+
+		// Defensive clamp. `position` is animated through the global tween
+		// system by a RAW POINTER (see tween/tween.h TweenAttr::target), with no
+		// lifetime tie to this list -- nothing cancels a tween that still points
+		// at &position when the list is reassigned or another object's tween
+		// target aliases this address. A stale/aliased write can leave `position`
+		// as garbage (huge, negative or NaN). Because `ip` below is used as the
+		// first visible index and the loop bails when `ip >= totalItems`, a
+		// garbage value makes the list draw ZERO items -- it renders blank while
+		// its area/scissor still look correct. Snap back into the valid scroll
+		// range so the list can never silently disappear (it self-heals every
+		// frame; a later select() also clears the stray tween via to()'s dedup).
+		double maxPos = totalItems > visibleItems
+		                    ? (double)(totalItems - visibleItems)
+		                    : 0.0;
+		if(!(position >= 0.0 && position <= maxPos)) // also catches NaN
+			position = 0.0;
+
 		auto n = visibleItems+1;
 		float dummy;
 		float p = modff(position, &dummy);
@@ -171,7 +189,7 @@ public:
 	}
 
 	int size() { return totalItems; }
-	
+
 private:
 
 	Renderer *renderer;
