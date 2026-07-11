@@ -3,11 +3,6 @@
 ------
 Settings = {}
 
-TV = false
-if SCREEN_WIDTH == 720 and SCREEN_HEIGHT == 576 then
-	TV = true
-end
-
 GSCALE = SCREEN_HEIGHT / 576.0
 
 -- Make margins fully proportional to window scale
@@ -94,14 +89,9 @@ SPECH = MONO_SPECW * 3.5
 
 ]]
 
-if TV then
-  Settings.scroll = { Y1 - 100, 3.0, SCROLL_SPEED, "data/fontsmainscroll", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0, SCROLL_FONT_CHANGE_INTERVAL }
-  Settings.spectrum = { X0-40, Y1+40, 28, 80.0, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
-else
-  Settings.scroll = { Y1 - GSCALE * 130, 3.0, SCROLL_SPEED, "data/fontsmainscroll", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0, SCROLL_FONT_CHANGE_INTERVAL }
-  -- Anchor spectrum firmly to the bottom of the window
-  Settings.spectrum = { X0, SCREEN_HEIGHT - 10, SPECW, SPECH, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
-end
+Settings.scroll = { Y1 - GSCALE * 130, 3.0, SCROLL_SPEED, "data/fontsmainscroll", 0.15, 8.0, 4.0, 1, 10.0, 1.0, 40.0, 2.0, 1, 12.0, 1.0, SCROLL_FONT_CHANGE_INTERVAL }
+-- Anchor spectrum firmly to the bottom of the window
+Settings.spectrum = { X0, SCREEN_HEIGHT - 10, SPECW, SPECH, SPECTRUM_COLOR0, SPECTRUM_COLOR1 }
 
 x = SCREEN_WIDTH - 300 * GSCALE
 y = Settings.scroll[1] - 80 * GSCALE
