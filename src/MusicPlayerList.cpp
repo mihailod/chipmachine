@@ -578,6 +578,16 @@ bool MusicPlayerList::willStream(const SongInfo& info)
     if (startsWith(path, "http") && path.find("youtu") != std::string::npos)
         return true;
 
+    // LHA-packed songs (UnExoticA et al.) are fetched and extracted whole --
+    // playCurrent()'s ".lha/" branch runs BEFORE its streamable-ext path, so an
+    // .ogg/.mp3/... member is downloaded in full, not progressively streamed.
+    // Mirror that ordering here: keeping this in step means the fetch toast
+    // shows "LOADING..." (whole download) instead of "BUFFERING...", and -- more
+    // importantly -- avoids the streamed branch clearing itself off the previous
+    // song's stale play_pos while this archive is still downloading (its real
+    // playFile/play_pos reset only happens once the fetch completes).
+    if (toLower(path).find(".lha/") != std::string::npos) return false;
+
     // Same ext derivation as playCurrent: strip a "?query" and lowercase.
     auto ext = path_extension(path);
     auto qpos = ext.find('?');
