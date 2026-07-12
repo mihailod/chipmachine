@@ -2166,6 +2166,11 @@ void initFormats()
     // not GBA (both share the "Nintendo GameBoy/GBA" TAB filter, but keep the
     // byte correct for colour/label).
     format_map["gameboy advance"] = GBA;
+    // Zophar 3DS / Xbox 360 gamerips onboarded ONLY for their ffmpeg-playable
+    // ogg/wav members (the zips are streamed-audio grab-bags); no dedicated TAB
+    // filter for either console -> "Other Platforms", like Wii/GameCube/Xbox.
+    format_map["nintendo 3ds"] = OTHER;
+    format_map["xbox 360"] = OTHER;
     format_map["nintendo snes/super famicom"] = SNES;
     format_map["nec pc engine"] = HES;
     // Sega 8-bit (SN76489 PSG): Master System, Game Gear, SG-1000, SC-3000

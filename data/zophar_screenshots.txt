@@ -860,3 +860,14 @@ https://fi.zophar.net/soundfiles/turbografx-16-hes/silent-debuggers/Silent%20Deb
 https://fi.zophar.net/soundfiles/turbografx-16-hes/strider-hiryuu/Strider%20Hiryuu%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/turbografx-16-hes/thumbs_large/tg16_striderhiryu_jp.jpg
 https://fi.zophar.net/soundfiles/turbografx-16-hes/tengai-makyou-3-fuun-kabuki-den/Tengai%20Makyou%203%20-%20Fuun%20Kabuki%20Den%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/turbografx-16-hes/thumbs_large/tg16_tengaimakyoukabukiden_jp.jpg
 https://fi.zophar.net/soundfiles/turbografx-16-hes/ys-book-i-ii/Ys%20Book%20I%20%26%20II%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/turbografx-16-hes/thumbs_large/tg16_ys1and2.jpg
+https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/cave-story-3d/Cave%20Story%203D%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/nintendo-3ds-3sf/thumbs_large/360_cavestory3d.jpg
+https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/fire-emblem-fates/Fire%20Emblem%20Fates%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/nintendo-3ds-3sf/thumbs_large/3ds_fireemblemfatesbirthright.jpg
+https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/lego-star-wars-iii-the-clone-wars/LEGO%20Star%20Wars%20III%20-%20The%20Clone%20Wars%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/nintendo-3ds-3sf/thumbs_large/3ds_legostarwarsiii.jpg
+https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/pokemon-x/Pokemon%20X%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/nintendo-3ds-3sf/thumbs_large/3ds_pokemonx.jpg
+https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/sega-3d-classics-collection/Sega%203D%20Classics%20Collection%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/nintendo-3ds-3sf/thumbs_large/3ds_sega3dclassicscollection.jpg
+https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/shantae-and-the-pirates-curse/Shantae%20and%20the%20Pirate%27s%20Curse%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/nintendo-3ds-3sf/thumbs_large/3DS_shantaeandthepiratescurse_ca.jpg
+https://fi.zophar.net/soundfiles/xbox-360/bioshock-infinite/BioShock%20Infinite%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/xbox-360/thumbs_large/x360_bioshockinfinite.jpg
+https://fi.zophar.net/soundfiles/xbox-360/clive-barkers-jericho/Clive%20Barker%27s%20Jericho%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/xbox-360/thumbs_large/x360_jericho.jpg
+https://fi.zophar.net/soundfiles/xbox-360/dark-souls/Dark%20Souls%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/xbox-360/thumbs_large/x360_darksouls_ca.jpg
+https://fi.zophar.net/soundfiles/xbox-360/ridge-racer-6/Ridge%20Racer%206%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/xbox-360/thumbs_large/x360_ridgeracer6_eu.jpg
+https://fi.zophar.net/soundfiles/xbox-360/ufc-undisputed-3/UFC%20Undisputed%203%20%28EMU%29.zophar.zip	https://fi.zophar.net/soundcovers/xbox-360/thumbs_large/x360_ufcundisputed3.jpg

@@ -4461,3 +4461,129 @@ Yuu Yuu Jinsei		HES	https://fi.zophar.net/soundfiles/turbografx-16-hes/yuu-yuu-j
 Zan - Kagerou no Jidai		HES	https://fi.zophar.net/soundfiles/turbografx-16-hes/zan-kagerou-no-jidai/Zan%20-%20Kagerou%20no%20Jidai%20%28EMU%29.zophar.zip	hes
 Zero Wing		HES	https://fi.zophar.net/soundfiles/turbografx-16-hes/zero-wing/Zero%20Wing%20%28EMU%29.zophar.zip	hes
 Zero4 Champ II		HES	https://fi.zophar.net/soundfiles/turbografx-16-hes/zero4-champ-ii/Zero4%20Champ%20II%20%28EMU%29.zophar.zip	hes
+1001 Spikes		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/1001-spikes/1001%20Spikes%20%28EMU%29.zophar.zip	ogg
+3D Game Collection - 55-in-1		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/3d-game-collection-55-in-1/3D%20Game%20Collection%20-%2055-in-1%20%28EMU%29.zophar.zip	wav
+3D MahJongg		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/3d-mahjongg/3D%20MahJongg%20%28EMU%29.zophar.zip	wav
+4 Elements		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/4-elements/4%20Elements%20%28EMU%29.zophar.zip	mp2
+50 Classic Games 3D		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/50-classic-games-3d/50%20Classic%20Games%203D%20%28EMU%29.zophar.zip	wav
+AiRace Speed		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/airace-speed/AiRace%20Speed%20%28EMU%29.zophar.zip	wav
+AiRace Xeno		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/airace-xeno/AiRace%20Xeno%20%28EMU%29.zophar.zip	wav
+Alphadia		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/alphadia/Alphadia%20%28EMU%29.zophar.zip	wav
+Art Academy - Lessons for Everyone		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/art-academy-lessons-for-everyone/Art%20Academy%20-%20Lessons%20for%20Everyone%20%28EMU%29.zophar.zip	aac
+Asphault 3D		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/asphault-3d/Asphault%203D%20%28EMU%29.zophar.zip	wav
+Azada		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/azada/Azada%20%28EMU%29.zophar.zip	mp2
+Blasting Agent Ultimate Edition		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/blasting-agent-ultimate-edition/Blasting%20Agent%20Ultimate%20Edition%20%28EMU%29.zophar.zip	ogg
+BlockForm		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/blockform/BlockForm%20%28EMU%29.zophar.zip	wav
+Brain Age - Concentration Training		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/brain-age-concentration-training/Brain%20Age%20-%20Concentration%20Training%20%28EMU%29.zophar.zip	aac
+Cave Story 3D		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/cave-story-3d/Cave%20Story%203D%20%28EMU%29.zophar.zip	wav
+Centipede - Infestation		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/centipede-infestation/Centipede%20-%20Infestation%20%28EMU%29.zophar.zip	wav
+Disney Art Academy		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/disney-art-academy/Disney%20Art%20Academy%20%28EMU%29.zophar.zip	aac
+Drop Zone - Under Fire		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/drop-zone-under-fire/Drop%20Zone%20-%20Under%20Fire%20%28EMU%29.zophar.zip	ogg
+Fairune		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/fairune/Fairune%20%28EMU%29.zophar.zip	wav
+Fairune 2		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/fairune-2/Fairune%202%20%28EMU%29.zophar.zip	wav
+Fire Emblem Fates		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/fire-emblem-fates/Fire%20Emblem%20Fates%20%28EMU%29.zophar.zip	aac
+Funfair Party Games		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/funfair-party-games/Funfair%20Party%20Games%20%28EMU%29.zophar.zip	wav
+Gardenscapes		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/gardenscapes/Gardenscapes%20%28EMU%29.zophar.zip	wav
+Green Lantern - Rise of the Manhunters		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/green-lantern-rise-of-the-manhunters/Green%20Lantern%20-%20Rise%20of%20the%20Manhunters%20%28EMU%29.zophar.zip	mp2
+Grinsia		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/grinsia/Grinsia%20%28EMU%29.zophar.zip	ogg
+Gurumin 3D - A Monstrous Adventure		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/gurumin-3d-a-monstrous-adventure/Gurumin%203D%20-%20A%20Monstrous%20Adventure%20%28EMU%29.zophar.zip	aac
+Heavy Fire - The Chosen Few 3D		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/heavy-fire-the-chosen-few-3d/Heavy%20Fire%20-%20The%20Chosen%20Few%203D%20%28EMU%29.zophar.zip	wav
+Hidden Expedition - Titanic		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/hidden-expedition-titanic/Hidden%20Expedition%20-%20Titanic%20%28EMU%29.zophar.zip	mp2
+Infinite Dunamis		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/infinite-dunamis/Infinite%20Dunamis%20%28EMU%29.zophar.zip	wav
+Jewel Link - Legends of Atlantis 3D		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/jewel-link-legends-of-atlantis-3d/Jewel%20Link%20-%20Legends%20of%20Atlantis%203D%20%28EMU%29.zophar.zip	wav
+Jewel Master - Cradle of Egypt 2		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/jewel-master-cradle-of-egypt-2/Jewel%20Master%20-%20Cradle%20of%20Egypt%202%20%28EMU%29.zophar.zip	wav
+Jewel Master - Cradle of Rome 2		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/jewel-master-cradle-of-rome-2/Jewel%20Master%20-%20Cradle%20of%20Rome%202%20%28EMU%29.zophar.zip	wav
+Jewel Match 3		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/jewel-match-3/Jewel%20Match%203%20%28EMU%29.zophar.zip	wav
+Jewel Quest - The Sapphire Dragon		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/jewel-quest-the-sapphire-dragon/Jewel%20Quest%20-%20The%20Sapphire%20Dragon%20%28EMU%29.zophar.zip	mp2
+Junior Classic Games 3D		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/junior-classic-games-3d/Junior%20Classic%20Games%203D%20%28EMU%29.zophar.zip	wav
+LEGO Star Wars III - The Clone Wars		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/lego-star-wars-iii-the-clone-wars/LEGO%20Star%20Wars%20III%20-%20The%20Clone%20Wars%20%28EMU%29.zophar.zip	wav
+Let's Golf 3D		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/lets-golf-3d/Let%27s%20Golf%203D%20%28EMU%29.zophar.zip	wav
+Luxor		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/luxor/Luxor%20%28EMU%29.zophar.zip	mp2
+Mahjong Mysteries - Ancient Athena		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/mahjong-mysteries-ancient-athena/Mahjong%20Mysteries%20-%20Ancient%20Athena%20%28EMU%29.zophar.zip	wav
+Marvel Super Hero Squad - The Infinity Gauntlet		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/marvel-super-hero-squad-the-infinity-gauntlet/Marvel%20Super%20Hero%20Squad%20-%20The%20Infinity%20Gauntlet%20%28EMU%29.zophar.zip	mp2
+Mega Man Legacy Collection		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/mega-man-legacy-collection/Mega%20Man%20Legacy%20Collection%20%28EMU%29.zophar.zip	wav
+Murder on the Titanic		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/murder-on-the-titanic/Murder%20on%20the%20Titanic%20%28EMU%29.zophar.zip	wav
+Mystery Case Files - Dire Grove		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/mystery-case-files-dire-grove/Mystery%20Case%20Files%20-%20Dire%20Grove%20%28EMU%29.zophar.zip	mp2
+Mystery Case Files - Ravenhearst		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/mystery-case-files-ravenhearst/Mystery%20Case%20Files%20-%20Ravenhearst%20%28EMU%29.zophar.zip	mp2
+Mystery Case Files - Return to Ravenhearst		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/mystery-case-files-return-to-ravenhearst/Mystery%20Case%20Files%20-%20Return%20to%20Ravenhearst%20%28EMU%29.zophar.zip	mp2
+Nickelodeon Teenage Mutant Ninja Turtles		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/nickelodeon-teenage-mutant-ninja-turtles/Nickelodeon%20Teenage%20Mutant%20Ninja%20Turtles%20%28EMU%29.zophar.zip	wav
+NightSky		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/nightsky/NightSky%20%28EMU%29.zophar.zip	ogg
+Nintendo Badge Arcade		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/nintendo-badge-arcade/Nintendo%20Badge%20Arcade%20%28EMU%29.zophar.zip	aac
+OlliOlli		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/olliolli/OlliOlli%20%28EMU%29.zophar.zip	ogg
+Outdoors Unleashed - Africa 3D		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/outdoors-unleashed-africa-3d/Outdoors%20Unleashed%20-%20Africa%203D%20%28EMU%29.zophar.zip	wav
+Picross 3D Round 2		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/picross-3d-round-2/Picross%203D%20Round%202%20%28EMU%29.zophar.zip	aac
+Pixel Hunter		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/pixel-hunter/Pixel%20Hunter%20%28EMU%29.zophar.zip	wav
+Pokemon Rumble World		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/pokemon-rumble-world/Pokemon%20Rumble%20World%20%28EMU%29.zophar.zip	aac
+Pokemon X		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/pokemon-x/Pokemon%20X%20%28EMU%29.zophar.zip	aac
+Polara		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/polara/Polara%20%28EMU%29.zophar.zip	wav
+Quell Memento		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/quell-memento/Quell%20Memento%20%28EMU%29.zophar.zip	wav
+Quell Reflect		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/quell-reflect/Quell%20Reflect%20%28EMU%29.zophar.zip	wav
+Radiohammer		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/radiohammer/Radiohammer%20%28EMU%29.zophar.zip	wav
+Rhythm Heaven Megamix		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/rhythm-heaven-megamix/Rhythm%20Heaven%20Megamix%20%28EMU%29.zophar.zip	aac
+Schlag den Raab - Das 2. Spiel		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/schlag-den-raab-das-2-spiel/Schlag%20den%20Raab%20-%20Das%202.%20Spiel%20%28EMU%29.zophar.zip	wav
+Secret Mysteries in London		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/secret-mysteries-in-london/Secret%20Mysteries%20in%20London%20%28EMU%29.zophar.zip	mp2
+Secrets of the Titanic		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/secrets-of-the-titanic/Secrets%20of%20the%20Titanic%20%28EMU%29.zophar.zip	ogg
+Sega 3D Classics Collection		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/sega-3d-classics-collection/Sega%203D%20Classics%20Collection%20%28EMU%29.zophar.zip	aac
+Shantae and the Pirate's Curse		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/shantae-and-the-pirates-curse/Shantae%20and%20the%20Pirate%27s%20Curse%20%28EMU%29.zophar.zip	ogg
+Shifting World		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/shifting-world/Shifting%20World%20%28EMU%29.zophar.zip	wav
+Smurfs, The		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/smurfs-the/Smurfs%2C%20The%20%28EMU%29.zophar.zip	wav
+Teenage Mutant Ninja Turtles		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/teenage-mutant-ninja-turtles/Teenage%20Mutant%20Ninja%20Turtles%20%28EMU%29.zophar.zip	wav
+Titan Attacks!		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/titan-attacks/Titan%20Attacks%21%20%28EMU%29.zophar.zip	ogg
+Toki Tori 3D		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/toki-tori-3d/Toki%20Tori%203D%20%28EMU%29.zophar.zip	mp2
+Unlucky Mage		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/unlucky-mage/Unlucky%20Mage%20%28EMU%29.zophar.zip	wav
+VVVVVV		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/vvvvvv/VVVVVV%20%28EMU%29.zophar.zip	ogg
+Wakedas		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/wakedas/Wakedas%20%28EMU%29.zophar.zip	wav
+Wind-up Knight 2		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/wind-up-knight-2/Wind-up%20Knight%202%20%28EMU%29.zophar.zip	wav
+Witch & Hero		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/witch-hero/Witch%20%26%20Hero%20%28EMU%29.zophar.zip	wav
+Witch & Hero 2		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/witch-hero-2/Witch%20%26%20Hero%202%20%28EMU%29.zophar.zip	wav
+YAKARI - The Mystery of Four-Seasons		Nintendo 3DS	https://fi.zophar.net/soundfiles/nintendo-3ds-3sf/yakari-the-mystery-of-four-seasons/YAKARI%20-%20The%20Mystery%20of%20Four-Seasons%20%28EMU%29.zophar.zip	wav
+0 Day Attack on Earth		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/0-day-attack-on-earth/0%20Day%20Attack%20on%20Earth%20%28EMU%29.zophar.zip	wav
+3D Ultra MiniGolf Adventures		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/3d-ultra-minigolf-adventures/3D%20Ultra%20MiniGolf%20Adventures%20%28EMU%29.zophar.zip	ogg
+3D Ultra MiniGolf Adventures 2		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/3d-ultra-minigolf-adventures-2/3D%20Ultra%20MiniGolf%20Adventures%202%20%28EMU%29.zophar.zip	ogg
+Adidas miCoach		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/adidas-micoach/Adidas%20miCoach%20%28EMU%29.zophar.zip	ogg
+Assassin's Creed IV - Black Flag		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/assassins-creed-iv-black-flag/Assassin%27s%20Creed%20IV%20-%20Black%20Flag%20%28EMU%29.zophar.zip	ogg
+Assassin's Creed IV - Black Flag Freedom Cry		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/assassins-creed-iv-black-flag-freedom-cry/Assassin%27s%20Creed%20IV%20-%20Black%20Flag%20Freedom%20Cry%20%28EMU%29.zophar.zip	ogg
+Asura's Wrath		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/asuras-wrath/Asura%27s%20Wrath%20%28EMU%29.zophar.zip	wav
+Battleship		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/battleship/Battleship%20%28EMU%29.zophar.zip	ogg
+Bionic Commando Rearmed 2		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/bionic-commando-rearmed-2/Bionic%20Commando%20Rearmed%202%20%28EMU%29.zophar.zip	ogg
+BioShock Infinite		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/bioshock-infinite/BioShock%20Infinite%20%28EMU%29.zophar.zip	ogg
+Black Eyed Peas Experience, The		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/black-eyed-peas-experience-the/Black%20Eyed%20Peas%20Experience%2C%20The%20%28EMU%29.zophar.zip	ogg
+Blacklight - Tango Down		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/blacklight-tango-down/Blacklight%20-%20Tango%20Down%20%28EMU%29.zophar.zip	ogg
+Blackwater		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/blackwater/Blackwater%20%28EMU%29.zophar.zip	ogg
+Castlevania - Lords of Shadow - Mirror of Fate HD		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/castlevania-lords-of-shadow-mirror-of-fate-hd/Castlevania%20-%20Lords%20of%20Shadow%20-%20Mirror%20of%20Fate%20HD%20%28EMU%29.zophar.zip	ogg
+Clive Barker's Jericho		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/clive-barkers-jericho/Clive%20Barker%27s%20Jericho%20%28EMU%29.zophar.zip	ogg
+Dark Souls		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/dark-souls/Dark%20Souls%20%28EMU%29.zophar.zip	wav
+Deepak Chopra's Leela		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/deepak-chopras-leela/Deepak%20Chopra%27s%20Leela%20%28EMU%29.zophar.zip	ogg
+Divinity II - Ego Draconis		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/divinity-ii-ego-draconis/Divinity%20II%20-%20Ego%20Draconis%20%28EMU%29.zophar.zip	ogg
+Doritos Crash Course		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/doritos-crash-course/Doritos%20Crash%20Course%20%28EMU%29.zophar.zip	ogg
+Driver - San Francisco		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/driver-san-francisco/Driver%20-%20San%20Francisco%20%28EMU%29.zophar.zip	ogg
+Driver - San Francisco (Ubi-{a5118eae-7fde-4a46-a47b-4e17bbe2ccb2}		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/driver-san-francisco-ubi-a5118eae-7fde-4a46-a47b-4e17bbe2ccb2/Driver%20-%20San%20Francisco%20%28Ubi-%7Ba5118eae-7fde-4a46-a47b-4e17bbe2ccb2%7D%20%28EMU%29.zophar.zip	ogg
+Eets - Chowdown!		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/eets-chowdown/Eets%20-%20Chowdown%21%20%28EMU%29.zophar.zip	ogg
+Epic Mickey 2 - The Power Of Two		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/epic-mickey-2-the-power-of-two/Epic%20Mickey%202%20-%20The%20Power%20Of%20Two%20%28EMU%29.zophar.zip	ogg
+Everyone Sing!		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/everyone-sing/Everyone%20Sing%21%20%28EMU%29.zophar.zip	ogg
+Faery - Legends of Avalon		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/faery-legends-of-avalon/Faery%20-%20Legends%20of%20Avalon%20%28EMU%29.zophar.zip	ogg
+Fire Pro Wrestling		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/fire-pro-wrestling/Fire%20Pro%20Wrestling%20%28EMU%29.zophar.zip	wav
+FlatOut - Ultimate Carnage		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/flatout-ultimate-carnage/FlatOut%20-%20Ultimate%20Carnage%20%28EMU%29.zophar.zip	ogg
+Game of Thrones		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/game-of-thrones/Game%20of%20Thrones%20%28EMU%29.zophar.zip	mp2
+Gatling Gears		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/gatling-gears/Gatling%20Gears%20%28EMU%29.zophar.zip	ogg
+Hot Wheels - World's Best Driver		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/hot-wheels-worlds-best-driver/Hot%20Wheels%20-%20World%27s%20Best%20Driver%20%28EMU%29.zophar.zip	ogg
+Jurassic Park - The Game		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/jurassic-park-the-game/Jurassic%20Park%20-%20The%20Game%20%28EMU%29.zophar.zip	ogg
+Kinect Rush - A Disney Pixar Adventure		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/kinect-rush-a-disney-pixar-adventure/Kinect%20Rush%20-%20A%20Disney%20Pixar%20Adventure%20%28EMU%29.zophar.zip	ogg
+King of Fighters XIII, The		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/king-of-fighters-xiii-the/King%20of%20Fighters%20XIII%2C%20The%20%28EMU%29.zophar.zip	ogg
+Limbo		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/limbo/Limbo%20%28EMU%29.zophar.zip	ogg
+Metro 2033		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/metro-2033/Metro%202033%20%28EMU%29.zophar.zip	ogg
+Payday 2		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/payday-2/Payday%202%20%28EMU%29.zophar.zip	ogg
+Ridge Racer 6		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/ridge-racer-6/Ridge%20Racer%206%20%28EMU%29.zophar.zip	wav
+Rocketmen - Axis of Evil		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/rocketmen-axis-of-evil/Rocketmen%20-%20Axis%20of%20Evil%20%28EMU%29.zophar.zip	ogg
+Silent Hill - Homecoming		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/silent-hill-homecoming/Silent%20Hill%20-%20Homecoming%20%28EMU%29.zophar.zip	ogg
+South Park - Tenorman's Revenge		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/south-park-tenormans-revenge/South%20Park%20-%20Tenorman%27s%20Revenge%20%28EMU%29.zophar.zip	ogg
+Testament of Sherlock Holmes, The		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/testament-of-sherlock-holmes-the/Testament%20of%20Sherlock%20Holmes%2C%20The%20%28EMU%29.zophar.zip	ogg
+Torchlight		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/torchlight/Torchlight%20%28EMU%29.zophar.zip	ogg
+Transformers - Fall of Cybertron		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/transformers-fall-of-cybertron/Transformers%20-%20Fall%20of%20Cybertron%20%28EMU%29.zophar.zip	wav
+UFC Undisputed 3		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/ufc-undisputed-3/UFC%20Undisputed%203%20%28EMU%29.zophar.zip	ogg
+Wanted - Weapons of Fate		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/wanted-weapons-of-fate/Wanted%20-%20Weapons%20of%20Fate%20%28EMU%29.zophar.zip	ogg
+Who Wants To Be A Millionaire 2012 Edition		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/who-wants-to-be-a-millionaire-2012-edition/Who%20Wants%20To%20Be%20A%20Millionaire%202012%20Edition%20%28EMU%29.zophar.zip	ogg
+World Gone Sour		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/world-gone-sour/World%20Gone%20Sour%20%28EMU%29.zophar.zip	ogg
+WWE 2K14		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/wwe-2k14/WWE%202K14%20%28EMU%29.zophar.zip	ogg
+WWE SmackDown vs. Raw 2011		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/wwe-smackdown-vs-raw-2011/WWE%20SmackDown%20vs.%20Raw%202011%20%28EMU%29.zophar.zip	ogg
+Young Justice - Legacy		Xbox 360	https://fi.zophar.net/soundfiles/xbox-360/young-justice-legacy/Young%20Justice%20-%20Legacy%20%28EMU%29.zophar.zip	ogg

@@ -408,6 +408,9 @@ TEST_CASE("Zophar format labels classify to a platform", "[music]")
         { "Sega Genesis", MEGADRIVE },
         { "Sega Master System", SEGAMS },
         { "Sega Game Gear", SEGAMS },
+        // 3DS / Xbox 360 audio-rip games (ogg/wav) -> Other Platforms.
+        { "Nintendo 3DS", OTHER },
+        { "Xbox 360", OTHER },
     };
     for (auto const& c : cases) {
         INFO("format " << c.fmt);

@@ -427,8 +427,14 @@
 --     substantially net-new (5493 corpus dups dropped). Reuses the existing
 --     zip-by-magic subsong pipeline (songExt already covers every ext; shared
 --     gsflib/usflib/2sflib extract alongside), NO new decoders. Screenshots from
---     the CSV's own image_url (thumbs_large), 862 matched. Built by the rewritten
---     chipmachine/scripts/build_zophar.py --build/--screenshots. Bump forces a reindex.
+--     the CSV's own image_url (thumbs_large). Built by the rewritten
+--     chipmachine/scripts/build_zophar.py --build/--build-audio/--screenshots.
+--     ALSO onboarded (--build-audio): the 126 Nintendo 3DS / Xbox 360 games whose
+--     otherwise-streamed "(EMU)" zip carries an ffmpeg-playable ogg/wav/mp2/aac
+--     member (per-game zip-central-dir scan; the zip handler's audioExt fallback
+--     plays those and ignores the bcstm/xma/adx/... it can't). Both consoles have
+--     no TAB filter -> classify to OTHER. 4589 rows total, 873 screenshots. Bump
+--     forces a reindex.
 VERSION = 93;
 
 DB = {

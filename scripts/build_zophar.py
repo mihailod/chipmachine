@@ -35,11 +35,13 @@ downloaded zip by PK magic, extracts members, and plays the music-ext files as
 local subsongs.
 
   --build        dedup list.csv vs corpus, write zophar.txt + unplayable_formats.txt
+  --build-audio  APPEND the 3DS/Xbox360 games that carry an ffmpeg-playable
+                 (ogg/wav/mp2/...) member -- per-game zip-central-dir scan
   --screenshots  key each emitted song URL to its game's image_url (thumbs_large),
                  write zophar_screenshots.txt
 """
 
-import csv, html, os, re, sys, urllib.parse
+import csv, html, os, re, struct, sys, time, urllib.parse, urllib.request
 
 HERE = os.path.dirname(__file__)
 DATA = os.path.normpath(os.path.join(HERE, "..", "data"))
@@ -217,6 +219,84 @@ def build():
     print(f"held streamed tier -> {OUT_UNPL}")
 
 
+# ---------------------------------------------------- ogg/wav audio pass ------
+# 3DS and Xbox 360 "(EMU)" zips are heterogeneous streamed-audio grab-bags; only
+# a minority of games carry a member ffmpegplugin can decode. We keep exactly
+# those games (the zip-by-magic handler's audioExt fallback plays the ogg/wav/mp2
+# members and ignores the bcstm/xma/adx/... it can't). Reading only each zip's
+# central directory via an HTTP Range tail keeps this to ~64KB/game regardless of
+# the (often 100MB+) payload.
+AUDIO_PLATFORM = {   # slug -> format label (both classify to OTHER)
+    "nintendo-3ds-3sf": "Nintendo 3DS",
+    "xbox-360":         "Xbox 360",
+}
+FFMPEG_EXT = ("ogg", "wav", "mp2", "mp3", "flac", "m4a", "aac", "opus")
+UA = {"User-Agent": "Mozilla/5.0 chipmachine-zophar/2.0"}
+
+
+def zip_central_names(url):
+    """Member filenames from a remote zip's central directory (Range tail)."""
+    req = urllib.request.Request(url, headers={**UA, "Range": "bytes=-131072"})
+    try:
+        data = urllib.request.urlopen(req, timeout=25).read()
+    except Exception:
+        return None
+    names, i, sig = [], 0, b"PK\x01\x02"
+    while True:
+        j = data.find(sig, i)
+        if j < 0:
+            break
+        try:
+            nlen = struct.unpack_from("<H", data, j + 28)[0]
+            elen = struct.unpack_from("<H", data, j + 30)[0]
+            clen = struct.unpack_from("<H", data, j + 32)[0]
+            names.append(data[j + 46:j + 46 + nlen].decode("utf-8", "replace"))
+            i = j + 46 + nlen + elen + clen
+        except Exception:
+            i = j + 4
+    return names
+
+
+def build_audio():
+    games = []
+    with open(CSV, newline="") as f:
+        for row in csv.DictReader(f):
+            plat = plat_of(row["game_page_url"])
+            if plat in AUDIO_PLATFORM:
+                games.append((plat, row["game_page_url"], html.unescape(row["name"]).strip()))
+    rows, kept, scanned = [], 0, 0
+    per = {}
+    for plat, page, title in games:
+        scanned += 1
+        url = emu_url(plat, slug_of(page), title)
+        names = zip_central_names(url)
+        if names is None:
+            time.sleep(0.3); continue
+        # count ffmpeg-playable members; pick the most common as the row ext
+        counts = {}
+        for n in names:
+            if "." in n:
+                e = n.rsplit(".", 1)[-1].lower()
+                if e in FFMPEG_EXT:
+                    counts[e] = counts.get(e, 0) + 1
+        if counts:
+            ext = max(counts, key=counts.get)
+            rows.append("\t".join([title, "", AUDIO_PLATFORM[plat], url, ext]))
+            kept += 1
+            per[plat] = per.get(plat, 0) + 1
+        if scanned % 50 == 0:
+            sys.stderr.write(f"\rscanned {scanned}/{len(games)}, kept {kept}")
+            sys.stderr.flush()
+        time.sleep(0.25)
+    sys.stderr.write("\n")
+    # APPEND to zophar.txt (keep the sequenced rows already written by --build)
+    with open(OUT, "a", encoding="utf-8") as f:
+        if rows:
+            f.write("\n".join(rows) + "\n")
+    print(f"audio pass: kept {kept}/{scanned} games "
+          f"({', '.join(f'{k}={v}' for k,v in per.items())}) -> appended to {OUT}")
+
+
 # ----------------------------------------------------------- screenshots ------
 def screenshots():
     # image_url already in the CSV; upgrade to the hi-res sibling; key by the
@@ -250,5 +330,6 @@ def screenshots():
 
 if __name__ == "__main__":
     if "--build" in sys.argv: build()
+    elif "--build-audio" in sys.argv: build_audio()
     elif "--screenshots" in sys.argv: screenshots()
     else: print(__doc__)
