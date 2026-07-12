@@ -52,4 +52,6 @@
 #include "mikmodplugin/MikModPlugin.h"
 #include "famitrackerplugin/FamiTrackerPlugin.h"
 #include "goattrackerplugin/GoatTrackerPlugin.h"
+#include "vgmstreamplugin/VGMStreamPlugin.h"
+
 

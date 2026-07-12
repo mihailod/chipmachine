@@ -852,6 +852,32 @@ TEST_CASE("GME", "[music]") { testPlugin<musix::GMEPlugin>("testmus/gme", "nowor
 // (libvgm reads gzip directly); both must load and produce non-silent audio.
 TEST_CASE("LibVGM", "[music]") { testPlugin<musix::LibVGMPlugin>("testmus/libvgm", "nowork"); }
 
+TEST_CASE("VGMStream", "[music]") { testPlugin<musix::VGMStreamPlugin>("testmus/vgmstream", "nowork"); }
+
+TEST_CASE("VGMStream host path plays sound", "[music]")
+{
+    auto ap = std::make_shared<AudioPlayerNull>();
+    const auto injector = di::make_injector(di::bind<utils::path>.to("."),
+                                            di::bind<AudioPlayer>.to(ap));
+    musix::ChipPlugin::createPlugins("data");
+    chipmachine::MusicPlayer mp{ ap };
+    bool ok = mp.playFile("testmus/vgmstream/bakamitai.adx");
+    REQUIRE(ok);
+    int64_t sum = 0;
+    for (int i = 0; i < 20 && sum == 0; ++i) {
+        mp.update();
+        std::vector<int16_t> data(8192);
+        ap->get(data);
+        for (auto val : data) {
+            if (val != 0) {
+                sum = 1;
+                break;
+            }
+        }
+    }
+    REQUIRE(sum != 0);
+}
+
 // DefleMask .dmf (multi-system chiptune) via the vendored Furnace engine. The
 // fixtures span the DefleMask systems proven first: Genesis (YM2612+PSG, ext
 // ch3), Sega Master System (SN76489 PSG) and Game Boy. Each must load through

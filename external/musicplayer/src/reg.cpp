@@ -57,6 +57,7 @@ PLUGIN(mikmodplugin)
 PLUGIN(famitrackerplugin)
 PLUGIN(goattrackerplugin)
 PLUGIN(dmfplugin)
+PLUGIN(vgmstreamplugin)
 
 
 void register_plugins() {
@@ -111,5 +112,6 @@ void register_plugins() {
     PLUGIN2(famitrackerplugin)
     PLUGIN2(goattrackerplugin)
     PLUGIN2(dmfplugin)
+    PLUGIN2(vgmstreamplugin)
 }
 

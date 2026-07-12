@@ -2,9 +2,9 @@
 * BUGS / ISSUES (fix might need db version bump) *
 **************************************************
 
-- zophar streamed audio revisit: need ffmpeg to enable more formats and vgmstream to vendor and play new formats if ffmpeg can't
-Held (your call, "hold streamed"): PS1/PS2/Saturn/Dreamcast + all HD consoles. Opening their EMU zips proved they're recorded streamed audio (xa/asf/adx/at3/dsp/eam/genh/…), not chip formats — only vgmstream could play them. The revisit list is at data/misc/zophar.net/unplayable_formats.txt (18 extensions → platforms), ready for a separate vgmstream go/no-go. Note PS1-psf/Saturn-ssf have genuinely-playable subsets tangled per-game with streamed rips; splitting those needs a per-game scan, deferred with the tier.
+- why on earth we still have two sound pipelines!? this is exactly what unifying all the code into external was supposed to solve -- we should have one source of truth!
 
+- we need testmus files for all these formats so that cmtest can verify their playback via vgmstream
 mihailod@Mac chipmachine % cat data/misc/zophar.net/unplayable_formats.txt
 # Zophar streamed-tier formats we do NOT decode (HELD -- not
 # imported). Revisit each: almost all route to vgmstream; ogg/wav
@@ -20,13 +20,11 @@ dvi	sega-saturn-ssf
 eam	playstation2-psf2,nintendo-gamecube-gcn
 genh	playstation2-psf2,sega-dreamcast-dsf
 lwav	xbox,xbox-360
-musx	playstation2-psf2 --------- we currently have .musx as Archimedes Tracker
-ogg	nintendo-3ds-3sf -------------- ffmpeg plays this
+musx	playstation2-psf2 --------- ALERT! NOTE we currently have .musx as Archimedes Tracker
 oma	playstation-portable-psp
 spsd	sega-dreamcast-dsf
 ss2	playstation2-psf2
 str	playstation-psf
-wav	xbox-360 ---------------- ffmpeg plays this
 xa	playstation-psf
 
 mihailod@Mac chipmachine % grep -Ei "/music/(sega-dreamcast-dsf|playstation2-psf2|xbox|playstation3-psf3|playstation-portable-psp|nintendo-3ds-3sf|nintendo-wii|sega-saturn-ssf|nintendo-gamecube-gcn|xbox-360|playstation-psf)/" data/misc/zophar.net/list.csv | awk -F'/' '{print $5}' | sort | uniq -c | sort -rn
@@ -41,6 +39,11 @@ mihailod@Mac chipmachine % grep -Ei "/music/(sega-dreamcast-dsf|playstation2-psf
  316 nintendo-wii
  302 nintendo-gamecube-gcn
  223 xbox
+
+- would need new logos? xbox, xbox360, wii, gamecube
+
+- zophar streamed audio onboarding revisit: need ffmpeg to enable more formats and vgmstream to vendor and play new formats if ffmpeg can't
+Held (your call, "hold streamed"): PS1/PS2/Saturn/Dreamcast + all HD consoles. Opening their EMU zips proved they're recorded streamed audio (xa/asf/adx/at3/dsp/eam/genh/…), not chip formats — only vgmstream could play them. The revisit list is at data/misc/zophar.net/unplayable_formats.txt (18 extensions → platforms), ready for a separate vgmstream go/no-go. Note PS1-psf/Saturn-ssf have genuinely-playable subsets tangled per-game with streamed rips; splitting those needs a per-game scan, deferred with the tier.
 
 
 - distinguish SEGA Game Gear platform logo

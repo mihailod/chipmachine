@@ -57,6 +57,7 @@ extern "C" {
     void famitrackerplugin_register(); // FamiTracker (.ftm) NES 2A03 + expansions via vendored FamiTracker CX
     void goattrackerplugin_register(); // GoatTracker (.sng) C64 SID via vendored GoatTracker player + reSID
     void dmfplugin_register();         // DefleMask (.dmf) multi-system chiptune via vendored Furnace engine
+    void vgmstreamplugin_register();   // vgmstream (.adx/.hca/.fsb/... hundreds of game-audio containers) via vendored vgmstream
 }
 
 void register_plugins() {
@@ -116,4 +117,5 @@ void register_plugins() {
     famitrackerplugin_register();
     goattrackerplugin_register();
     dmfplugin_register();
+    vgmstreamplugin_register();
 }

@@ -477,6 +477,14 @@ The `.ftm` extension is shared with the Atari **Face The Music** format (magic `
 
 Extensions: `.ftm` (FamiTracker; Face The Music `.ftm` routes to OpenMPT)
 
+### vgmstream
+
+Support for **streamed console/PC game audio** — the hundreds of container formats decoded by **vgmstream** (Adam Gashlin, bnnm, Christopher Snowhill and contributors). This covers ripped in-game streams such as CRI **ADX** / **HCA**, FMOD **FSB**, Microsoft **XWB** / **XMA**, and the many platform PCM/ADPCM wrappers (Nintendo **DSP**, PlayStation **VAG**, Sony **AT3** / **AT9**, etc.). The core decode library is vendored at [external/vgmstream/](external/vgmstream/) and driven through its `libvgmstream` API; it is built without any of vgmstream's optional external codec libraries, so only the self-contained decoders are compiled.
+
+vgmstream claims a very large extension set, much of which overlaps formats already handled elsewhere in the build. `canHandle` therefore hard-declines the extensions owned by other plugins (OpenMPT trackers, GME/console chips, FFMpeg streaming audio, the ZX AY players, etc.) and content-validates the rest, so vgmstream only picks up genuinely new game-audio formats.
+
+Extensions: `.adx` `.hca` `.fsb` `.xwb` `.xma` `.dsp` `.vag` `.at3` `.at9` `.acb` `.awb` `.bcstm` `.bfstm` `.brstm` `.genh` `.txth` and roughly 700 more (see vgmstream's full [extension list](external/vgmstream/formats.c))
+
 ### AudioOverload
 
 Support for Sega Saturn and Capcom Q music
@@ -586,6 +594,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **MONOTONE (IBM PC speaker):** MONOTONE and its `.mon` format are by Jim "Trixter" Leonard of Hornet. Playback uses **PTPlayer** by Michal Procházka — the player library for the modern *Polytone* tracker, which also loads legacy Monotone files (and the `.pol` format). Licensed under BSD-3-Clause.
 * **MikMod UNITRK / UNIMOD (`.uni`):** the UNIMOD on-disk format and its reader are part of **libmikmod**, originally by Jean-Paul Mikkers ("MikMak") and Jake Stine, maintained by the libmikmod team (Raphaël Assenat, Ozkan Sezer and others). A minimal slice of libmikmod 3.3.13 is vendored at `musicplayer/src/plugins/mikmodplugin/libmikmod/` (player core + virtual mixer + `load_uni` + depackers + null driver only). Licensed under LGPL-2.1-or-later. The vendored sources are unmodified; the chipmachine glue registers only the UNI loader and null driver and pulls PCM via the virtual mixer.
 * **Ixalance (`.ixs`):** the format and its original Win32 player are by **Shortcut Software Development BV** (~2000); the music is by **Maarten van Strien**. The original sources are lost, so playback uses **webixs** — Juergen Wothke's native C++ reimplementation reverse-engineered with Ghidra from the surviving Win32 player (`https://bitbucket.org/wothke/webixs`), vendored at repo-root `webixs/` and built with `-DLINUX` (the non-Win32 path) so its pull-style render API is exposed. The format synthesizes and zlib-compresses its own wavetables, hence the zlib dependency. **Licensed CC BY-NC-SA 4.0 (NonCommercial)** — the only NonCommercial component in the project; see `webixs/LICENSE`. (Built with `-fsigned-char`, like PlayerPRO, since the decompiled code relies on signed-char semantics.)
+* **vgmstream (streamed game audio):** the library that decodes hundreds of console/PC streamed game-audio containers (CRI ADX/HCA, FMOD FSB, Microsoft XWB/XMA, platform DSP/VAG/AT3/AT9, …) by **Adam Gashlin**, **bnnm**, **Christopher Snowhill**, NicknineTheEagle, bxaimc, Thealexbarney, EdnessP and the vgmstream contributors (<https://github.com/vgmstream/vgmstream>). The core decode library is vendored at `external/vgmstream/` and driven through its `libvgmstream` API, built without any of the optional `VGM_USE_*` codec libraries. `canHandle` content/extension-gates against the formats already owned by other plugins. Licensed under the **ISC License** (some bundled codec sources carry their own permissive/public-domain notices; see `external/vgmstream/COPYING`).
 
 ---
 

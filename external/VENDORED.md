@@ -25,3 +25,4 @@ To re-sync a fork later: re-clone its URL at/after the recorded commit and re-im
 | `famitracker-cx` | https://github.com/mihailod/famitracker-cx.git | master | `202a614bd42f516c84772722ae3e6bb28d263699` |
 | `musicplayer` | git@github.com:mihailod/musicplayer.git | master | `9b9125e08b6a8883d48779e65ad18ae498050639` |
 | `furnace` | https://github.com/mihailod/furnace.git | master | `caccf29c6e719e48172496f5695597fb4bd2d0d4` |
+| `vgmstream` | https://github.com/vgmstream/vgmstream | master | `7f1ceb3058f581ed42d265c8980e44a0a281b4f6` |

@@ -158,6 +158,21 @@ Notice: Onyx Music File is the MOD-like format of the 1993 Amiga musicdisk
         documents/format_documentation/). Playback reuses libopenmpt's existing
         MOD engine.
 
+Component: vgmstream (streamed console/PC game-audio containers)
+Author: Developed by Adam Gashlin, bnnm, Christopher Snowhill, NicknineTheEagle,
+        bxaimc, Thealexbarney, EdnessP et al. (https://github.com/vgmstream/vgmstream).
+        The core decode library is vendored at external/vgmstream/ and driven
+        through its libvgmstream API by musicplayer/src/plugins/vgmstreamplugin.
+License: ISC License (permissive; some bundled codec sources carry their own
+        permissive/public-domain notices -- see external/vgmstream/COPYING).
+Notice: Covers hundreds of formats (CRI ADX/HCA, FMOD FSB, Microsoft XWB/XMA,
+        platform DSP/VAG/AT3/AT9, etc.). Built with none of vgmstream's optional
+        VGM_USE_* codec libraries, so only the self-contained decoders and the
+        bundled coding/libs helpers are compiled. The plugin compiles the sources
+        at hidden visibility and partial-links (ld -r) to localize symbols, and
+        content/extension-gates canHandle so it never contests extensions already
+        owned by the other plugins (OpenMPT, GME, FFMpeg, the ZX AY players, ...).
+
 Component: HivelyTracker (AHX/HVL)
 Author: Developed by IRIS (Peter "Yohng" V, Curt Cool)
 License: BSD-3-Clause
