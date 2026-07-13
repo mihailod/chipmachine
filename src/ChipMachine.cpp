@@ -307,6 +307,9 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     searchScreen.add(&topStatus);
     topStatus.visible(false);
 
+    searchScreen.add(&sourceStatus);
+    sourceStatus.visible(false);
+
     overlay.add(&toastField);
 
     Resources::getInstance().load<image::bitmap>(

@@ -88,6 +88,7 @@ void ChipMachine::setVariable(const std::string& name, int index,
         { "search_field", &searchField },
         { "command_field", &commandField },
         { "top_status", &topStatus },
+        { "source_status", &sourceStatus },
         { "toast_field", &toastField },
         { "result_field", &resultFieldTemplate },
         { "main_filter", &mainFilterField }

@@ -509,6 +509,9 @@ private:
     LineEdit searchField;
     TextField filterField;
     TextField topStatus;
+    // Smaller-font source-collection tag shown right after topStatus's format
+    // line (e.g. "hvsc", "mirsoft") so the user sees which DB a result is from.
+    TextField sourceStatus;
     grappix::VerticalList songList;
 
     TextField resultFieldTemplate;
