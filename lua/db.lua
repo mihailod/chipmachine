@@ -435,7 +435,32 @@
 --     plays those and ignores the bcstm/xma/adx/... it can't). Both consoles have
 --     no TAB filter -> classify to OTHER. 4589 rows total, 873 screenshots. Bump
 --     forces a reindex.
-VERSION = 93;
+-- 94: DEDUP REGRESSION FIX. Two bugs let recently-onboarded game-mod collections
+--     (mirsoft especially) SHADOW iconic originals in search results -- e.g. Rob
+--     Hubbard's C64 SIDs Delta / Monty on the Run / Commando / Sanxion were hidden
+--     by mirsoft's Amiga MOD remixes. Nothing was ever deleted: both rows stay in
+--     the DB; the loss was purely at search time. Root causes, both in
+--     MusicDatabase::search's add_unique: (a) the dedup key used the COARSE
+--     platform byte, so a mirsoft ".mod" mis-filed as "Commodore 64" (-> SID byte)
+--     collided with the real ".sid"; (b) rows with an EMPTY composer were folded
+--     together. Fix: add_unique now folds two rows only when {title, composer,
+--     REAL module ext} all match AND composer is non-empty -- false negatives
+--     (a visible duplicate) are always preferred over false positives (a hidden
+--     song). A new per-song formatKey (interned real ext) carries the true format
+--     into the index (serialized in read/writeIndex). ALSO: mirsoft is now
+--     classified by the ACTUAL module format (mod-family -> Amiga, xm/it/s3m ->
+--     PC) instead of the game's platform, so its remixes stop appearing under
+--     Commodore 64 / NES / SNES filters (data/mirsoft.txt col3 relabelled;
+--     build_mirsoft.py's format_label emits it on rebuild). ALSO NEW: a per-
+--     collection `priority` field (this file) controls SEARCH PRECEDENCE -- the
+--     order results surface AND which row wins a dedup fold. Higher = first;
+--     default 0; negative sinks below the default mass. Stored in the collection
+--     table's `priority` column, loaded every launch, applied by a stable_sort of
+--     the title matches in MusicDatabase::search. Set here: hvsc = 100 (the
+--     definitive SID archive), mirsoft/rko/amigaremix/ocremix = -100 (remixes/
+--     arrangements). Tweak any collection by adding `priority = N`. Bump forces a
+--     reindex.
+VERSION = 94;
 
 DB = {
 {
@@ -443,11 +468,15 @@ DB = {
 	-- .zip per game. source = live mirsoft base; generateIndex's mirsoft branch
 	-- registers archive.org as PRIMARY and this live host as FALLBACK. The path
 	-- column is the URL-encoded "<Game>.zip"; the ZIP-by-magic handler extracts
-	-- the .mod/.xm/.it/.s3m/.med members as subsongs. Classified by game platform
-	-- via the `format` column (see initFormats mirsoft block). Built offline from
+	-- the .mod/.xm/.it/.s3m/.med members as subsongs. Classified by the ACTUAL
+	-- module format (mod-family -> Amiga, xm/it/s3m -> PC) via the `format`
+	-- column, NOT the game's platform -- see VERSION 94 (classifying by game
+	-- platform made these remixes shadow the real single-chip originals). Built
+	-- offline from
 	-- the Internet Archive mirsoftJuly2021snapshot .tar.xz by chipmachine/scripts/build_mirsoft.py.
 	name = "World of Game MODs",
 	id =  "mirsoft",
+	priority = -100,  -- game-mod remixes/arrangements: sink below originals
 	source = "http://mirsoft.info/gamemods/",
 	song_list = "data/mirsoft.txt",
 	song_template = "title composer format path ext",
@@ -612,6 +641,10 @@ DB = {
 {
 	name = "HVSC",
 	id =  "hvsc",
+	-- priority: search precedence & dedup winner (higher surfaces first, default
+	-- 0, may be negative to sink below the default mass). HVSC is the definitive
+	-- C64 SID archive -> boost it above game-mod / remix collections.
+	priority = 100,
 	source = "https://www.hvsc.c64.org/download/C64Music/",
 	song_list = "data/hvsc.txt",
 	remote_list = "http://raw.githubusercontent.com/sasq64/cmds/master/hvsc.txt",
@@ -722,6 +755,7 @@ DB = {
 {
 	name = "remix.kwed.org",
 	id =  "rko",
+	priority = -100,  -- Remix.Kwed.Org: C64 SID remixes -> sink below HVSC
 	source = "http://remix.kwed.org/download.php/",
 	song_list = "data/rko.txt",
 	utf8 = "no",
@@ -734,6 +768,7 @@ DB = {
 {
 	name = "amigaremix",
 	id =  "amigaremix",
+	priority = -100,  -- Amiga remixes -> sink below originals
 	source = "http://amigaremix.com/listen/",
 	song_list = "data/amiremix.txt",
 	song_template = "no path title composer",
@@ -790,6 +825,7 @@ DB = {
 	-- (getSongScreenshots ocremix branch). Built by scripts/build_ocremix.py.
 	name = "OC ReMix",
 	id =  "ocremix",
+	priority = -100,  -- OverClocked ReMix: arranged game-music remixes -> sink
 	source = "",
 	song_list = "data/ocremix.txt",
 	song_template = "title game composer format path",

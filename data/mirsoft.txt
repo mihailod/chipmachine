@@ -1,85 +1,85 @@
 1000 Miglia	Massimo Perini	Amiga	1000%20Miglia.zip	mod
-1943	Nintendo Guru	NES	1943.zip	it
+1943	Nintendo Guru	PC	1943.zip	it
 2 Fast 4 U	Markus Stein	PC	2%20Fast%204%20U.zip	s3m
 7th Legion	Blair Zuppicich	PC	7th%20Legion.zip	xm
 A Bug's Drive	Dave Phaneuf	PC	A%20Bug%27s%20Drive.zip	it
-A.T.F	Frode Skaara	Commodore 64	A.T.F.zip	xm
-ATA Heroes	Antti Hanulla	Commodore 64	ATA%20Heroes.zip	s3m
-Ace 2	Rob Hubbard	Commodore 64	Ace%202.zip	mod
-Act Raiser	Yuzo Koshiro	Super Nintendo	Act%20Raiser.zip	it
+A.T.F	Frode Skaara	PC	A.T.F.zip	xm
+ATA Heroes	Antti Hanulla	PC	ATA%20Heroes.zip	s3m
+Ace 2	Rob Hubbard	Amiga	Ace%202.zip	mod
+Act Raiser	Yuzo Koshiro	PC	Act%20Raiser.zip	it
 Addams Family, The	Keith Tinman	Amiga	Addams%20Family%2C%20The.zip	med
-Adrenalynn	F. Bouquerel	Atari ST	Adrenalynn.zip	mod
-Advanced Pinball Simulator	David Whittaker, Jon-Paul Eldridge	ZX Spectrum	Advanced%20Pinball%20Simulator.zip	mod
-Adventures of Bayou Billy	Nintendo Guru	NES	Adventures%20of%20Bayou%20Billy.zip	it
-Adventures of Lolo 3	Mika Heiska	NES	Adventures%20of%20Lolo%203.zip	it
+Adrenalynn	F. Bouquerel	Amiga	Adrenalynn.zip	mod
+Advanced Pinball Simulator	David Whittaker, Jon-Paul Eldridge	Amiga	Advanced%20Pinball%20Simulator.zip	mod
+Adventures of Bayou Billy	Nintendo Guru	PC	Adventures%20of%20Bayou%20Billy.zip	it
+Adventures of Lolo 3	Mika Heiska	PC	Adventures%20of%20Lolo%203.zip	it
 Aerial Mahjong	Josh Whelchel	PC	Aerial%20Mahjong.zip	it
 Aerial Racers	Ruben Monteiro	Amiga	Aerial%20Racers.zip	mod
 Age of Empires Gold Edition		PC	Age%20of%20Empires%20Gold%20Edition.zip	xm
 Age of Wonders	Michiel van den Bos	PC	Age%20of%20Wonders.zip	it
-Airwolf	Mark Cooksey	Commodore 64	Airwolf.zip	xm
-Al Unser Jr Arcade Racing	Frederic Motte	PC	Al%20Unser%20Jr.zip	mod
+Airwolf	Mark Cooksey	PC	Airwolf.zip	xm
+Al Unser Jr Arcade Racing	Frederic Motte	Amiga	Al%20Unser%20Jr.zip	mod
 Alchemy	Peter Hajba	PC	Alchemy.zip	s3m
-Alf	Manfred Linzner (Pink)	Commodore 64	Alf.zip	mod
+Alf	Manfred Linzner (Pink)	Amiga	Alf.zip	mod
 Alice Greenfingers	Staffan Melin	PC	Alice%20Greenfingers.zip	xm
 Alice Greenfingers 2	Staffan Melin	PC	Alice%20Greenfingers%202.zip	xm
 Alien 3	Matt Furniss	Amiga	Alien%203.zip	mod
 Alien Breed 2	Allister Brimble	Amiga	Alien%20Breed%202.zip	mod
 Alien Breed 3D 2	Ben Chanter	Amiga	Alien%20Breed%203D%202.zip	mod
 Alien Breed Special Edition 92	Allister Brimble	Amiga	Alien%20Breed%20Special%20Edition%2092.zip	mod
-Alien Carnage	George Stamatiadis	PC	Alien%20Carnage.zip	mod
+Alien Carnage	George Stamatiadis	Amiga	Alien%20Carnage.zip	mod
 Alien Incident	Jonne Valtonen	PC	Alien%20Incident.zip	s3m
 All Terrain Racing	Allister Brimble	Amiga	All%20Terrain%20Racing.zip	mod
-Alloy Run	Jeroen Tel	Commodore 64	Alloy%20Run.zip	mod
+Alloy Run	Jeroen Tel	Amiga	Alloy%20Run.zip	mod
 Amazing Spider-Man	Steven Green	Amiga	Amazing%20Spider-Man.zip	mod
 Amiga Columns		Amiga	Amiga%20Columns.zip	med
-Android		Macintosh	Android.zip	xm
-Androkids		Macintosh	Androkids.zip	xm
+Android		PC	Android.zip	xm
+Androkids		PC	Androkids.zip	xm
 Anthelion		PC	Anthelion.zip	xm
 Antz	Mark Sheeky	Amiga	Antz.zip	mod
 Apano Sin	David Geschmeidler 1993	Amiga	Apano%20Sin.zip	mod
-Apocalypse Abyss		PC	Apocalypse%20Abyss.zip	mod
+Apocalypse Abyss		Amiga	Apocalypse%20Abyss.zip	mod
 Arcadrome	Andrey "LAV" Litvinov & Vitaly Romanov	PC	Arcadrome.zip	xm
-Archon Ultra	Dan Nicholson	PC	Archon%20Ultra.zip	mod
-Ardy Lightfoot	Katsuhiro Hatano, Akiko Hashimoto	Super Nintendo	Ardy%20Lightfoot.zip	it
-Ark Pandora	Ben Daglish	Commodore 64	Ark%20Pandora.zip	mod
-Arkanoid	Martin Galway	Commodore 64	Arkanoid.zip	xm
+Archon Ultra	Dan Nicholson	Amiga	Archon%20Ultra.zip	mod
+Ardy Lightfoot	Katsuhiro Hatano, Akiko Hashimoto	PC	Ardy%20Lightfoot.zip	it
+Ark Pandora	Ben Daglish	Amiga	Ark%20Pandora.zip	mod
+Arkanoid	Martin Galway	PC	Arkanoid.zip	xm
 Arcanoid: The Virtual Isles	Valery Belozercev [aka Butch]	PC	Arkanoid%20-%20The%20Virtual%20Isles.zip	s3m
-Arkanoid 2	Jonathan Dunn	Commodore 64	Arkanoid%202.zip	xm
+Arkanoid 2	Jonathan Dunn	PC	Arkanoid%202.zip	xm
 Armalyte	Justin Scharvona	Amiga	Armalyte.zip	mod
-Arnie 2	Andy Rodger	PC	Arnie%202.zip	mod
+Arnie 2	Andy Rodger	Amiga	Arnie%202.zip	mod
 Aro	Sach Jobb, David Schupner	PC	Aro.zip	it
 Assimilation	Ruben Monteiro	Amiga	Assimilation.zip	mod
 Astro Marine Corps	José Martin	Amiga	Astro%20Marine%20Corps.zip	mod
 AstroPop	Phillipe Charron	PC	AstroPop.zip	it
-Atari Karts	Fabrice Gillet	Atari Jaguar	Atari%20Karts.zip	mod
-Atlas: The Gift of Aramai	Jud Bumpas	Macintosh	Atlas%20-%20The%20Gift%20of%20Aramai.zip	xm
+Atari Karts	Fabrice Gillet	Amiga	Atari%20Karts.zip	mod
+Atlas: The Gift of Aramai	Jud Bumpas	PC	Atlas%20-%20The%20Gift%20of%20Aramai.zip	xm
 Atomic Battle Dragons	subatomicglue	PC	Atomic%20Battle%20Dragons.zip	it
 Attack of the mutant Camels (1999)	PsychoTron, Minesota	PC	Attack%20of%20the%20Mutant%20Camels.zip	xm
-Auf Wiedersehen Monty	Rob Hubbard, Ben Daglish	Commodore 64	Auf%20Wiedersehen%20Monty.zip	xm
-Axelay	Taro	Super Nintendo	Axelay.zip	it
+Auf Wiedersehen Monty	Rob Hubbard, Ben Daglish	PC	Auf%20Wiedersehen%20Monty.zip	xm
+Axelay	Taro	PC	Axelay.zip	it
 Axia	Jon Dal Kristbjornsson	PC	Axia.zip	xm
-Azgard Defence	Ivan Tugai	PC	Azgard%20Defence.zip	mod
-B.A.T. 2: The Koshan Conspiracy	Olivier Robin	PC	B.A.T.%202%20-%20The%20Koshan%20Conspiracy.zip	mod
-BMX Simulator	David Whittaker	Commodore 64	BMX%20Simulator.zip	mod
+Azgard Defence	Ivan Tugai	Amiga	Azgard%20Defence.zip	mod
+B.A.T. 2: The Koshan Conspiracy	Olivier Robin	Amiga	B.A.T.%202%20-%20The%20Koshan%20Conspiracy.zip	mod
+BMX Simulator	David Whittaker	Amiga	BMX%20Simulator.zip	mod
 Back to the Future 3		Amiga	Back%20to%20the%20Future%203.zip	mod
 Back to the Future 3	Jeroen Tel	Amiga	Back%20to%20the%20Future%203%20C64.zip	mod
-Bahamut Lagoon	Noriko Matsueda	Super Nintendo	Bahamut%20Lagoon.zip	it
-Balloon Fight		NES	Balloon%20Fight.zip	xm
+Bahamut Lagoon	Noriko Matsueda	PC	Bahamut%20Lagoon.zip	it
+Balloon Fight		PC	Balloon%20Fight.zip	xm
 Ballz3D	Valery Belozercev	PC	Ballz3D.zip	it
-Bangkok Knights	Matt Gray	Commodore 64	Bangkok%20Knights.zip	xm
-Banjo-Kazooie	D. Wise, Grant Kirkhope	Nintendo 64	Banjo-Kazooie.zip	it
-Banjo-Tooie	Grant Kirkhope	Nintendo 64	Banjo-Tooie.zip	it
-Bart and The Beanstalk in-game	Joe Smith	Game Boy	Bart%20and%20the%20Beanstalk.zip	it
+Bangkok Knights	Matt Gray	PC	Bangkok%20Knights.zip	xm
+Banjo-Kazooie	D. Wise, Grant Kirkhope	PC	Banjo-Kazooie.zip	it
+Banjo-Tooie	Grant Kirkhope	PC	Banjo-Tooie.zip	it
+Bart and The Beanstalk in-game	Joe Smith	PC	Bart%20and%20the%20Beanstalk.zip	it
 Bart vs The World	Andi McGinty	Amiga	Bart%20vs%20The%20World.zip	mod
 Bart vs the Space Mutants		Amiga	Bart%20vs%20the%20Space%20Mutants.zip	med
-Baseball Simulator 1.000	Nintendo Guru	NES	Baseball%20Simulator%201.000.zip	it
-Basil The Great Mouse Detective	Ben Daglish	Commodore 64	Basil%20The%20Great%20Mouse%20Detective.zip	mod
-Batman Returns	Yuzo Koshiro	Sega Master System	Batman%20Returns.zip	it
+Baseball Simulator 1.000	Nintendo Guru	PC	Baseball%20Simulator%201.000.zip	it
+Basil The Great Mouse Detective	Ben Daglish	Amiga	Basil%20The%20Great%20Mouse%20Detective.zip	mod
+Batman Returns	Yuzo Koshiro	PC	Batman%20Returns.zip	it
 Battle Cars 2	David Jameson	Amiga	Battle%20Cars%202.zip	mod
-Battle Girl		Macintosh	Battle%20Girl.zip	xm
-Battle Squadron	Ron Klaren	Amiga	Battle%20Squadron.zip	it
-Battle Toads Arcade	???	NES	Battle%20Toads%20Arcade.zip	mod
-Beez	Janne Kivilahti	PC	Beez.zip	mod
+Battle Girl		PC	Battle%20Girl.zip	xm
+Battle Squadron	Ron Klaren	PC	Battle%20Squadron.zip	it
+Battle Toads Arcade	???	Amiga	Battle%20Toads%20Arcade.zip	mod
+Beez	Janne Kivilahti	Amiga	Beez.zip	mod
 Bejeweled	Peter Hajba	PC	Bejeweled.zip	s3m
 Bejeweled 2	Peter Hajba	PC	Bejeweled%202.zip	it
 Bejeweled 3	Peter Hajba, Alexander Brandon	PC	Bejeweled%203.zip	it
@@ -87,68 +87,68 @@ Bejeweled Twist	Phillipe Charron, Peter Hajba	PC	Bejeweled%20Twist.zip	it
 Bengal: Game of Gods	Alexander "Manwe" Machugovski	PC	Bengal%20-%20Game%20of%20Gods.zip	it
 Berties Animal Kingdom	Darryl Sloan	Amiga	Berties%20Animal%20Kingdom.zip	mod
 Best Friends	Simon Burgess	PC	Best%20Friends.zip	xm
-Beyond the Ice Palace	David Whittaker	Commodore 64	Beyond%20the%20Ice%20Palace.zip	xm
-Big Deal, The	Jeroen Kimmel	Commodore 64	Big%20Deal%2C%20The.zip	mod
+Beyond the Ice Palace	David Whittaker	PC	Beyond%20the%20Ice%20Palace.zip	xm
+Big Deal, The	Jeroen Kimmel	Amiga	Big%20Deal%2C%20The.zip	mod
 Big Money	Peter Hajba	PC	Big%20Money.zip	it
 Big Red Adventure, The	Marco Caprelli	Amiga	Big%20Red%20Adventure%2C%20The.zip	mod
-Bionic Commando	Tim Follin	Commodore 64	Bionic%20Commando.zip	mod
-Black Knight	Robert Prince	PC	Black%20Knight.zip	mod
-Black Lamp	Tim Follin	Commodore 64	Black%20Lamp.zip	xm
-Blaster Master	???	NES	Blaster%20Master.zip	it
+Bionic Commando	Tim Follin	Amiga	Bionic%20Commando.zip	mod
+Black Knight	Robert Prince	Amiga	Black%20Knight.zip	mod
+Black Lamp	Tim Follin	PC	Black%20Lamp.zip	xm
+Blaster Master	???	PC	Blaster%20Master.zip	it
 Blockhead 2	Darryl Sloan	Amiga	Blockhead%202.zip	mod
 Bloxxit!	Nina Cording	PC	Bloxxit%21.zip	xm
 Blues Brothers		Amiga	Blues%20Brothers.zip	mod
-Blues Brothers Jukebox Adventures	Knaepen Michael	PC	Blues%20Brothers%20Jukebox%20Adventures.zip	mod
-Blum	A. Phy	Atari Falcon	Blum.zip	mod
+Blues Brothers Jukebox Adventures	Knaepen Michael	Amiga	Blues%20Brothers%20Jukebox%20Adventures.zip	mod
+Blum	A. Phy	Amiga	Blum.zip	mod
 Bolz!	Mike Genato	PC	Bolz.zip	s3m
-Bomberman	???	NES	Bomberman.zip	mod
+Bomberman	???	Amiga	Bomberman.zip	mod
 Bomberman Online	Bjorn Lynne	PC	Bomberman%20Online.zip	xm
 Bonnie's Bookstore	Barry Leitch	PC	Bonnie%27s%20Bookstore.zip	xm
 Bookworm Adventures	Reflexive Audio	PC	Bookworm%20Adventures.zip	it
-Boom (Macintosh)	Wizid	Macintosh	Boom%20%28Macintosh%29.zip	xm
-Boom (Macintosh)	Wizid	Macintosh	Boom%20%28Macintosh%29%20%28Arranged%29.zip	xm
+Boom (Macintosh)	Wizid	PC	Boom%20%28Macintosh%29.zip	xm
+Boom (Macintosh)	Wizid	PC	Boom%20%28Macintosh%29%20%28Arranged%29.zip	xm
 Borobodur	Reiner van Vliet	Amiga	Borobodur.zip	dmu
-Boulder Dash	Peter Liepa	Commodore 64	Boulder%20Dash.zip	xm
+Boulder Dash	Peter Liepa	PC	Boulder%20Dash.zip	xm
 Boulderdaesh	Ruben Monteiro	Amiga	Boulderdaesh.zip	mod
 Boxing Manager	Matt Furniss	Amiga	Boxing%20Manager.zip	mod
-BreakQuest	Jeroen Tel, Thomas Petersen, Thomas Mogensen	Macintosh	BreakQuest.zip	xm
-Breakout	Jester	Commodore 64	Breakout.zip	mod
-Breath of Fire	Beaux, MickeyV, Yakra, Jim Gilsinan IV	Super Nintendo	Breath%20of%20Fire.zip	it
-Breath of Fire 2	DarkHero, Magnus Trelane, Mika Heiska	Super Nintendo	Breath%20of%20Fire%202.zip	it
-Breath of Fire 3	Olof Lonnroth, Mika Heiska	PlayStation	Breath%20of%20Fire%203.zip	xm
+BreakQuest	Jeroen Tel, Thomas Petersen, Thomas Mogensen	PC	BreakQuest.zip	xm
+Breakout	Jester	Amiga	Breakout.zip	mod
+Breath of Fire	Beaux, MickeyV, Yakra, Jim Gilsinan IV	PC	Breath%20of%20Fire.zip	it
+Breath of Fire 2	DarkHero, Magnus Trelane, Mika Heiska	PC	Breath%20of%20Fire%202.zip	it
+Breath of Fire 3	Olof Lonnroth, Mika Heiska	PC	Breath%20of%20Fire%203.zip	xm
 Brian The Lion	Richard Ede	Amiga	Brian%20The%20Lion.zip	mod
-Brick Blaster	Christophe Resigne	PC	Brick%20Blaster.zip	mod
-Bruce Lee	John A. Fitzpatrick	Commodore 64	Bruce%20Lee.zip	xm
-Brudal Baddle	The Finn	PC	Brudal%20Baddle.zip	mod
-Brutal Impact	Erik K. Veland, Jussi Salmela, Counterpoint, Bjorn Karlsson, Andreas Viklund, John Johansson, Igneous, Kung	Macintosh	Brutal%20Impact.zip	xm
-Bubble Bobble	Peter Clarke	Commodore 64	Bubble%20Bobble.zip	mod
+Brick Blaster	Christophe Resigne	Amiga	Brick%20Blaster.zip	mod
+Bruce Lee	John A. Fitzpatrick	PC	Bruce%20Lee.zip	xm
+Brudal Baddle	The Finn	Amiga	Brudal%20Baddle.zip	mod
+Brutal Impact	Erik K. Veland, Jussi Salmela, Counterpoint, Bjorn Karlsson, Andreas Viklund, John Johansson, Igneous, Kung	PC	Brutal%20Impact.zip	xm
+Bubble Bobble	Peter Clarke	Amiga	Bubble%20Bobble.zip	mod
 Bubble Bobble Nostalgie	Valery Belozercev	PC	Bubble%20Bobble%20Nostalgie.zip	s3m
-Bubble Trouble	Yannis Brown, Matt Swoboda	Macintosh	Bubble%20Trouble.zip	xm
-Bubsy In: Fractured Furry Tales	Kevin Saville, Alastair Lindsey	Atari Jaguar	Bubsy%20In%20-%20Fractured%20Furry%20Tales.zip	mod
+Bubble Trouble	Yannis Brown, Matt Swoboda	PC	Bubble%20Trouble.zip	xm
+Bubsy In: Fractured Furry Tales	Kevin Saville, Alastair Lindsey	Amiga	Bubsy%20In%20-%20Fractured%20Furry%20Tales.zip	mod
 Bud Redhead - The Time Chase	Bojan Urosevic	PC	Bud%20Redhead%20-%20The%20Time%20Chase.zip	xm
-Bugatron	Robert Odman	Macintosh	Bugatron.zip	xm
+Bugatron	Robert Odman	PC	Bugatron.zip	xm
 Bugatron Worlds	Staffan Melin	PC	Bugatron%20Worlds.zip	xm
-Bulldog	Ben Daglish	Commodore 64	Bulldog.zip	xm
-Burger Time	Chris Cox	Commodore 64	Burger%20Time.zip	xm
-Burning Rubber	Tim Haywood	Amstrad CPC	Burning%20Rubber%20%28Amstrad%20CPC%29.zip	it
-C64 (Medleys)	Rob Hubbard, Martin Galway, Jeroen Tel, Mark Cooksey, Chris Huelsbeck (mostly)	Commodore 64	C64%20%28Medleys%29.zip	mod
+Bulldog	Ben Daglish	PC	Bulldog.zip	xm
+Burger Time	Chris Cox	PC	Burger%20Time.zip	xm
+Burning Rubber	Tim Haywood	PC	Burning%20Rubber%20%28Amstrad%20CPC%29.zip	it
+C64 (Medleys)	Rob Hubbard, Martin Galway, Jeroen Tel, Mark Cooksey, Chris Huelsbeck (mostly)	Amiga	C64%20%28Medleys%29.zip	mod
 Cactus Bruce and the Corporate Monkeys	Josh Whelchel	PC	Cactus%20Bruce%20and%20the%20Corporate%20Monkeys.zip	it
-California Games	NovoTrade	NES	California%20Games.zip	it
+California Games	NovoTrade	PC	California%20Games.zip	it
 Candy Catchup		PC	Candy%20Catchup.zip	s3m
-Candy Crisis		PC	Candy%20Crisis.zip	mod
-Captain America	Wally Beben	Commodore 64	Captain%20America.zip	xm
-Captain Commando	???	Super Nintendo	Captain%20Commando.zip	mod
+Candy Crisis		Amiga	Candy%20Crisis.zip	mod
+Captain America	Wally Beben	PC	Captain%20America.zip	xm
+Captain Commando	???	Amiga	Captain%20Commando.zip	mod
 Captain Fizz	Ray Norrish	Amiga	Captain%20Fizz.zip	mod
 Captive 2 - Liberation	Mark Knight	Amiga	Captive%202.zip	med
 Carcharodon	Torsten Gellrich	Amiga	Carcharodon.zip	mod
-Cartoon Network Speedway	Clement Saggers	Game Boy	Cartoon%20Network%20Speedway.zip	it
-Castlevania	Kukeiha Club, Kinuyo Yamashita	NES	Castlevania.zip	it
-Castlevania 2 - Simon's Quest	Kukeiha Club	NES	Castlevania%202%20-%20Simon%27s%20Quest.zip	it
-Castlevania 3	Tr3forever, K'Yorl	NES	Castlevania%203.zip	it
-Castlevania 4	Michael Nixon, SHattY, Paladyn, Jim Gilsinan IV, Frodon	Super Nintendo	Castlevania%204.zip	it
-Castlevania Symphony of the Night	Dennis Mott, King Melvyl, SHattY, Glejs, TheHaze	PlayStation	Castlevania%20Symphony%20of%20the%20Night.zip	it
-Catch the Bunny 3	David Freedman	Macintosh	Catch%20The%20Bunny%203.zip	mod
-Cauldron 2	Richard Joseph	Commodore 64	Cauldron%202.zip	it
+Cartoon Network Speedway	Clement Saggers	PC	Cartoon%20Network%20Speedway.zip	it
+Castlevania	Kukeiha Club, Kinuyo Yamashita	PC	Castlevania.zip	it
+Castlevania 2 - Simon's Quest	Kukeiha Club	PC	Castlevania%202%20-%20Simon%27s%20Quest.zip	it
+Castlevania 3	Tr3forever, K'Yorl	PC	Castlevania%203.zip	it
+Castlevania 4	Michael Nixon, SHattY, Paladyn, Jim Gilsinan IV, Frodon	PC	Castlevania%204.zip	it
+Castlevania Symphony of the Night	Dennis Mott, King Melvyl, SHattY, Glejs, TheHaze	PC	Castlevania%20Symphony%20of%20the%20Night.zip	it
+Catch the Bunny 3	David Freedman	Amiga	Catch%20The%20Bunny%203.zip	mod
+Cauldron 2	Richard Joseph	PC	Cauldron%202.zip	it
 Cave Story	Daisuke Amaya	PC	Cave%20Story.zip	xm
 Century	Ruben Monteiro	Amiga	Century.zip	mod
 Chain Reaction	Ariel Gross	PC	Chain%20Reaction.zip	s3m
@@ -157,11 +157,11 @@ Chaos Engine 2	Richard Joseph	Amiga	Chaos%20Engine%202.zip	mod
 Chaos engine	Richard Joseph	Amiga	Chaos%20engine.zip	mod
 Charlie J Cool	Matthew Mahoney	Amiga	Charlie%20J%20Cool.zip	mod
 Chicken Attack	Alexander "Manwe" Machugovsky, The SandS	PC	Chicken%20Attack.zip	xm
-Chimera	Rob Hubbard	Commodore 64	Chimera.zip	xm
-Chrono Cross	Yasunori Mitsuda	PlayStation	Chrono%20Cross.zip	it
-Chrono Trigger	Yasunori Mitsuda	Super Nintendo	Chrono%20Trigger.zip	it
+Chimera	Rob Hubbard	PC	Chimera.zip	xm
+Chrono Cross	Yasunori Mitsuda	PC	Chrono%20Cross.zip	it
+Chrono Trigger	Yasunori Mitsuda	PC	Chrono%20Trigger.zip	it
 Chuck Rock 2	Martin Iveson	Amiga	Chuck%20Rock%202.zip	mod
-Chuckie Egg: The Next Batch	Blitz Basic Library	PC	Chuckie%20Egg%20-%20The%20Next%20Batch.zip	mod
+Chuckie Egg: The Next Batch	Blitz Basic Library	Amiga	Chuckie%20Egg%20-%20The%20Next%20Batch.zip	mod
 Chuhou Joutai		PC	Chuhou%20Joutai.zip	s3m
 Chuhou Joutai 2: Paraided!	Drillimation	PC	Chuhou%20Joutai%202.zip	s3m
 Chuzzle	Reflective Audio	PC	Chuzzle.zip	it
@@ -174,62 +174,62 @@ Code name Hell Squad	Darryl Sloan	Amiga	Code%20name%20Hell%20Squad.zip	mod
 Cohort - Fighting for Rome	Christopher Denman	Amiga	Cohort%20-%20Fighting%20for%20Rome.zip	mod
 Cold blood	Darryl Sloan	Amiga	Cold%20blood.zip	mod
 Colgate	Reiner van Vliet	Amiga	Colgate.zip	dmu
-Combat Game, The	Jeroen Tel	Commodore 64	Combat%20Game%2C%20The.zip	mod
-Comic Bakery	Martin Galway	Commodore 64	Comic%20Bakery.zip	mod
+Combat Game, The	Jeroen Tel	Amiga	Combat%20Game%2C%20The.zip	mod
+Comic Bakery	Martin Galway	Amiga	Comic%20Bakery.zip	mod
 Command & Conquer	Frank Klepacki	PC	Command%20%26%20Conquer.zip	it
-Commander Keen	Robert Prince, Lee Jackson	PC	Commander%20Keen.zip	mod
+Commander Keen	Robert Prince, Lee Jackson	Amiga	Commander%20Keen.zip	mod
 Commander Keen 5	Robert Prince	PC	Commander%20Keen%205.zip	it
-Commando	Rob Hubbard	Commodore 64	Commando.zip	mod
-Conker's Bad Fur Day	Robin Beanland	Nintendo 64	Conker%27s%20Bad%20Fur%20Day.zip	it
+Commando	Rob Hubbard	Amiga	Commando.zip	mod
+Conker's Bad Fur Day	Robin Beanland	PC	Conker%27s%20Bad%20Fur%20Day.zip	it
 Conquest	Ruben Monteiro	Amiga	Conquest.zip	mod
 Conquest of Japan		Amiga	Conquest%20of%20Japan.zip	mod
-Contra	H. Maezawa, K. Sada	NES	Contra.zip	xm
-Cosmo Bots	Staffan Melin	Macintosh	Cosmo%20Bots.zip	xm
-Cosmonaut	David Whittaker	Commodore 64	Cosmonaut.zip	xm
-Crackman 97	???	PC	Crackman%2097.zip	mod
-Crash & The Boys Street Challenge	Altima	NES	Crash%20%26%20The%20Boys%20Street%20Challenge.zip	s3m
-Crash Bandicoot	Josh Mancell, Mark Mothersbaugh, Mutato Muzika	PlayStation	Crash%20Bandicoot.zip	xm
+Contra	H. Maezawa, K. Sada	PC	Contra.zip	xm
+Cosmo Bots	Staffan Melin	PC	Cosmo%20Bots.zip	xm
+Cosmonaut	David Whittaker	PC	Cosmonaut.zip	xm
+Crackman 97	???	Amiga	Crackman%2097.zip	mod
+Crash & The Boys Street Challenge	Altima	PC	Crash%20%26%20The%20Boys%20Street%20Challenge.zip	s3m
+Crash Bandicoot	Josh Mancell, Mark Mothersbaugh, Mutato Muzika	PC	Crash%20Bandicoot.zip	xm
 Crazy Brix	Pierre Martin	PC	Crazy%20Brix.zip	s3m
 Crazy Cars 3		Amiga	Crazy%20Cars%203.zip	mod
-Crazy Comets	Rob Hubbard	Commodore 64	Crazy%20Comets.zip	xm
-Crazy Drake	David Hennigan	PC	Crazy%20Drake.zip	mod
-Crazy golf	Sam	Macintosh	Crazy%20golf.zip	mod
-Creatures	Steve Rowlands	Commodore 64	Creatures.zip	xm
+Crazy Comets	Rob Hubbard	PC	Crazy%20Comets.zip	xm
+Crazy Drake	David Hennigan	Amiga	Crazy%20Drake.zip	mod
+Crazy golf	Sam	Amiga	Crazy%20golf.zip	mod
+Creatures	Steve Rowlands	PC	Creatures.zip	xm
 Creatures (Amiga)	Tim Bartlett	Amiga	Creatures%20%28Amiga%29.zip	mod
 Creepy		Amiga	Creepy.zip	mod
 Cross Check	Holger Stenzhorn	Amiga	Cross%20Check.zip	mod
-Crusader No Regret	Dan Grandpre, Todd Parsons, Andrew Sega	PC	Crusader%20No%20Regret.zip	mod
-Crusader No Remorse	Dan Grandpre, Andrew Sega	PC	Crusader%20No%20Remorse.zip	mod
-Crusader: No Remorse	Dan Grandpre, Andrew Sega	PC	Crusader%20no%20Remorse%20%28Arranged%29.zip	mod
-Crystalis	Andy Church	NES	Crystalis.zip	it
+Crusader No Regret	Dan Grandpre, Todd Parsons, Andrew Sega	Amiga	Crusader%20No%20Regret.zip	mod
+Crusader No Remorse	Dan Grandpre, Andrew Sega	Amiga	Crusader%20No%20Remorse.zip	mod
+Crusader: No Remorse	Dan Grandpre, Andrew Sega	Amiga	Crusader%20no%20Remorse%20%28Arranged%29.zip	mod
+Crystalis	Andy Church	PC	Crystalis.zip	it
 Cube-X	Andre Warschun	Amiga	Cube-X.zip	mod
 Cultris	Martin Freij, Jeroen Tel, Thomas E. Petersen, Mark Knight, Jonne Valtonen, TBO, Karsten Koch	PC	Cultris.zip	xm
 Cybernetix	Blair Zuppicich	Amiga	Cybernetix.zip	mod
-Cybernoid	Jeroen Tel	Commodore 64	Cybernoid.zip	mod
-Cybernoid 2	Jeroen Tel	Amiga	Cybernoid%202.zip	xm
+Cybernoid	Jeroen Tel	Amiga	Cybernoid.zip	mod
+Cybernoid 2	Jeroen Tel	PC	Cybernoid%202.zip	xm
 Cyril Cyberpunk	Reality Studios	PC	Cyril%20Cyberpunk.zip	s3m
 Cytadela	Artur Opala	Amiga	Cytadela.zip	mod
-DNA Warrior	Laxity	Commodore 64	DNA%20Warrior.zip	mod
-DX-Ball	Doublestar Labratories, DNA-Groove, Sidewinder	Macintosh	DX%20Ball.zip	s3m
-DX-Ball 2	Eric Gieseke	PC	DX-Ball%202.zip	mod
-Dark Earth	Frederic Motte	PC	Dark%20Earth.zip	mod
-Dark Fusion	Ben Daglish	Commodore 64	Dark%20Fusion.zip	xm
+DNA Warrior	Laxity	Amiga	DNA%20Warrior.zip	mod
+DX-Ball	Doublestar Labratories, DNA-Groove, Sidewinder	PC	DX%20Ball.zip	s3m
+DX-Ball 2	Eric Gieseke	Amiga	DX-Ball%202.zip	mod
+Dark Earth	Frederic Motte	Amiga	Dark%20Earth.zip	mod
+Dark Fusion	Ben Daglish	PC	Dark%20Fusion.zip	xm
 Dark Vengeance	Andrew Schlesinger, Alexander Brandon, Mark Styles	PC	Dark%20Vengeance.zip	xm
 Death Rally	Jonne Valtonen	PC	Death%20Rally.zip	s3m
 Death or Glory	Chris Korte	Amiga	Death%20or%20Glory.zip	mod
-Deep Strike	Rob Hubbard	Commodore 64	Deep%20Strike.zip	mod
-Deflektor	Ben Daglish	Commodore 64	Deflektor.zip	xm
+Deep Strike	Rob Hubbard	Amiga	Deep%20Strike.zip	mod
+Deflektor	Ben Daglish	PC	Deflektor.zip	xm
 Deja Vu	Martin Iveson	Amiga	Deja%20Vu.zip	mod
 Deja Vu 2	Martin Iveson	Amiga	Deja%20Vu%202.zip	mod
-Deliverance (C64)	Matt Gray	Commodore 64	Deliverance%20%28C64%29.zip	xm
-Delta	Rob Hubbard	Commodore 64	Delta.zip	mod
-Demon's Crest	CheapAlert	Super Nintendo	Demon%27s%20Crest.zip	it
+Deliverance (C64)	Matt Gray	PC	Deliverance%20%28C64%29.zip	xm
+Delta	Rob Hubbard	Amiga	Delta.zip	mod
+Demon's Crest	CheapAlert	PC	Demon%27s%20Crest.zip	it
 Der Reeder		Amiga	Der%20Reeder.zip	mod
 Desert Strike	Jason Whitely	Amiga	Desert%20Strike.zip	mod
 Desert Wolf	Grzegorz Wroblewski	Amiga	Desert%20Wolf.zip	mod
-Destiny Of An Emperor	Motomiya & Shueisha Hiroshi	NES	Destiny%20of%20an%20Emperor.zip	it
+Destiny Of An Emperor	Motomiya & Shueisha Hiroshi	PC	Destiny%20of%20an%20Emperor.zip	it
 Deus Ex	Alexander Brandon, Dan Grandpre, Michiel van den Bos	PC	Deus%20Ex.zip	it
-Devil World		NES	Devil%20World.zip	xm
+Devil World		PC	Devil%20World.zip	xm
 Diabolik 01	Gian Luca Gaiba	Amiga	Diabolik%2001.zip	mod
 Diabolik 02	Gian Luca Gaiba	Amiga	Diabolik%2002.zip	mod
 Diabolik 03	Gian Luca Gaiba	Amiga	Diabolik%2003.zip	mod
@@ -239,93 +239,93 @@ Diabolik 07	Gian Luca Gaiba	Amiga	Diabolik%2007.zip	mod
 Diabolik 08	Gian Luca Gaiba	Amiga	Diabolik%2008.zip	mod
 Diabolik 11	Gian Luca Gaiba	Amiga	Diabolik%2011.zip	mod
 Diamond Drop	Nina Cording	PC	Diamond%20Drop.zip	xm
-Diddy Kong Racing	David Wise	Nintendo 64	Diddy%20Kong%20Racing.zip	it
-Die Hard	Gwilym Wogan	NES	Die%20Hard.zip	xm
-Die Hard Trilogy	Glejs	PlayStation	Die%20Hard%20Trilogy.zip	xm
-Dig Dug	Tr3forever	Arcade	Dig%20Dug.zip	it
-Diggers		PC	Diggers.zip	mod
-Digital Messiah	eXodus	Macintosh	Digital%20Messiah.zip	mod
+Diddy Kong Racing	David Wise	PC	Diddy%20Kong%20Racing.zip	it
+Die Hard	Gwilym Wogan	PC	Die%20Hard.zip	xm
+Die Hard Trilogy	Glejs	PC	Die%20Hard%20Trilogy.zip	xm
+Dig Dug	Tr3forever	PC	Dig%20Dug.zip	it
+Diggers		Amiga	Diggers.zip	mod
+Digital Messiah	eXodus	Amiga	Digital%20Messiah.zip	mod
 Dionysus	Tim Wright	Amiga	Dionysus.zip	mod
-Dizzy	Jon-Paul Eldridge	ZX Spectrum	Dizzy.zip	mod
-Donald Duck's Playground	???	Commodore 64	Donald%20Duck%27s%20Playground.zip	s3m
-Done in 50 Seconds		PC	Done%20in%2050%20seconds.zip	mod
-Donkey Kong 64	David Wise	Nintendo 64	Donkey%20Kong%2064.zip	it
-Donkey Kong Country	David Wise	Super Nintendo	Donkey%20Kong%20Country.zip	it
+Dizzy	Jon-Paul Eldridge	Amiga	Dizzy.zip	mod
+Donald Duck's Playground	???	PC	Donald%20Duck%27s%20Playground.zip	s3m
+Done in 50 Seconds		Amiga	Done%20in%2050%20seconds.zip	mod
+Donkey Kong 64	David Wise	PC	Donkey%20Kong%2064.zip	it
+Donkey Kong Country	David Wise	PC	Donkey%20Kong%20Country.zip	it
 Doom	Robert Prince	PC	Doom.zip	xm
-Double Dragon	Kazu Yamane	Commodore 64	Double%20Dragon.zip	xm
+Double Dragon	Kazu Yamane	PC	Double%20Dragon.zip	xm
 Double Dragon 2	Tomas Dahlgren	Amiga	Double%20Dragon%202.zip	mod
 Double Dragon 3	Andrew Barnabas	Amiga	Double%20Dragon%203.zip	mod
-Double Dragon 3	Tecnos Japan Sound Team	NES	Double%20Dragon%203%20%28NES%2C%20Arranged%29.zip	xm
-Dragon Ball Z	Bandai	Super Nintendo	Dragon%20Ball%20Z.zip	xm
-Dragon Force	???	Sega Saturn	Dragon%20Force.zip	it
-Dragon Quest	Koichi Sugiyama	NES	Dragon%20Quest.zip	s3m
-Dragon Quest 2	Koichi Sugiyama	NES	Dragon%20Quest%202.zip	it
-Dragon Quest 3	Koichi Sugiyama	NES	Dragon%20Quest%203.zip	it
-Dragon Quest 4	Koichi Sugiyama	NES	Dragon%20Quest%204.zip	it
-Dragon Quest 6	Koichi Sugiyama	Super Nintendo	Dragon%20Quest%206.zip	it
-Dragon's Lair	Rob Hubbard	Commodore 64	Dragon%27s%20Lair.zip	xm
+Double Dragon 3	Tecnos Japan Sound Team	PC	Double%20Dragon%203%20%28NES%2C%20Arranged%29.zip	xm
+Dragon Ball Z	Bandai	PC	Dragon%20Ball%20Z.zip	xm
+Dragon Force	???	PC	Dragon%20Force.zip	it
+Dragon Quest	Koichi Sugiyama	PC	Dragon%20Quest.zip	s3m
+Dragon Quest 2	Koichi Sugiyama	PC	Dragon%20Quest%202.zip	it
+Dragon Quest 3	Koichi Sugiyama	PC	Dragon%20Quest%203.zip	it
+Dragon Quest 4	Koichi Sugiyama	PC	Dragon%20Quest%204.zip	it
+Dragon Quest 6	Koichi Sugiyama	PC	Dragon%20Quest%206.zip	it
+Dragon's Lair	Rob Hubbard	PC	Dragon%27s%20Lair.zip	xm
 Dragonninja	Jean Baudlot	Amiga	Dragonninja.zip	mod
-DripDrop		Macintosh	DripDrop.zip	xm
-Drug Killer	Karsten Koch	PC	Drug%20Killer.zip	mod
-Druid	David M. Hanlon	Commodore 64	Druid.zip	mod
-Druid 2	David M. Hanlon	Commodore 64	Druid%202.zip	mod
-Duck Tales	Kasper Hoeglund, Zalza	NES	Duck%20Tales.zip	xm
-Dumb 'n' Bummer		PC	Dumb%20%27n%27%20Bummer.zip	mod
-Dutch Breeze	Reyn Ouwehand	Commodore 64	Dutch%20Breeze.zip	mod
+DripDrop		PC	DripDrop.zip	xm
+Drug Killer	Karsten Koch	Amiga	Drug%20Killer.zip	mod
+Druid	David M. Hanlon	Amiga	Druid.zip	mod
+Druid 2	David M. Hanlon	Amiga	Druid%202.zip	mod
+Duck Tales	Kasper Hoeglund, Zalza	PC	Duck%20Tales.zip	xm
+Dumb 'n' Bummer		Amiga	Dumb%20%27n%27%20Bummer.zip	mod
+Dutch Breeze	Reyn Ouwehand	Amiga	Dutch%20Breeze.zip	mod
 Dylan Dog Return to Sunset	Gian Luca Gaiba	Amiga	Dylan%20Dog%20Return%20to%20Sunset.zip	mod
 Dylan Dog The Mummy	Gian Luca Gaiba	Amiga	Dylan%20Dog%20The%20Mummy.zip	mod
 Dylan Dog The Murders	Cristiano Cicci Cieri	Amiga	Dylan%20Dog%20The%20Murders.zip	mod
 Dylan Dog Through Looking	Massimo Perini	Amiga	Dylan%20Dog%20Through%20Looking.zip	mod
 Dynomite	Peter Hajba	PC	Dynomite.zip	it
 E-Motion		Amiga	E-Motion.zip	mod
-Earthbound	Keiichi Suzuki	Super Nintendo	Earthbound.zip	it
-Elektra Glide	David Whittaker 1986	Commodore 64	Elektra%20Glide.zip	xm
-Elevator Action	David Whittaker	Commodore 64	Elevator%20Action.zip	xm
-Eliminator	Jeroen Tel	Commodore 64	Eliminator.zip	it
-Elite	David Dunn, Aidan Bell	Commodore 64	Elite.zip	xm
+Earthbound	Keiichi Suzuki	PC	Earthbound.zip	it
+Elektra Glide	David Whittaker 1986	PC	Elektra%20Glide.zip	xm
+Elevator Action	David Whittaker	PC	Elevator%20Action.zip	xm
+Eliminator	Jeroen Tel	PC	Eliminator.zip	it
+Elite	David Dunn, Aidan Bell	PC	Elite.zip	xm
 Elvira: Mistress of the Dark	David Hasler	Amiga	Elvira%20-%20Mistress%20of%20the%20Dark.zip	mod
 Elvira 2: The Jaws Of Cerberus	David Hasler	Amiga	Elvira%202%20-%20The%20Jaws%20of%20Cerberus.zip	mod
-Enigmatic Movements	Jochen De Schepper	Macintosh	Enigmatic%20Movements.zip	xm
+Enigmatic Movements	Jochen De Schepper	PC	Enigmatic%20Movements.zip	xm
 Epic Pinball	Robert Allen	PC	Epic%20Pinball.zip	s3m
-Escape from Delirium	Walter Koch	PC	Escape%20from%20Delirium.zip	mod
-Evasive Action	Frederic Motte, Mark Knight	PC	Evasive%20Action.zip	mod
+Escape from Delirium	Walter Koch	Amiga	Escape%20from%20Delirium.zip	mod
+Evasive Action	Frederic Motte, Mark Knight	Amiga	Evasive%20Action.zip	mod
 Evil Spirit	Jarko Liimatainen	Amiga	Evil%20Spirit.zip	mod
-Excitebike	???	NES	Excitebike.zip	it
-Expert Pinball		PC	Expert%20Pinball.zip	mod
+Excitebike	???	PC	Excitebike.zip	it
+Expert Pinball		Amiga	Expert%20Pinball.zip	mod
 Explora 2	Jean-Marc Grignon	Amiga	Explora%202.zip	mod
 Explora 3	Evens Salies	Amiga	Explora%203.zip	mod
 Extreme Pinball	Robert Allen	PC	Extreme%20Pinball.zip	s3m
 Eye of the Beholder	Paul S. Mudra	Amiga	Eye%20of%20the%20Beholder.zip	mod
-F-Zero	Michael Nixon	Super Nintendo	F-Zero.zip	it
-F1 Race	NESMusa	Arcade	F1%20Race.zip	s3m
+F-Zero	Michael Nixon	PC	F-Zero.zip	it
+F1 Race	NESMusa	PC	F1%20Race.zip	s3m
 F1 World Championship Ed	Paul Tankard, Mike Ash	Amiga	F1%20World%20Championship%20Ed.zip	mod
 FX Fighter	Justin Scharnova, Martin Gwynn Jones	PC	FX%20Fighter.zip	it
-Falcon Patrol	Steve Lee	Commodore 64	Falcon%20Patrol.zip	xm
+Falcon Patrol	Steve Lee	PC	Falcon%20Patrol.zip	xm
 Fatman Adventures	Sergey Nechaeff	PC	Fatman%20Adventures.zip	xm
-Faxanadu	???	NES	Faxanadu.zip	s3m
+Faxanadu	???	PC	Faxanadu.zip	s3m
 Federation	Gordon Miller	Amiga	Federation.zip	mod
 Feeding Frenzy 2 Shipwreck Showdown	Phillipe Charron, Guy Whitmore	PC	Feeding%20Frenzy%202%20Shipwreck%20Showdown.zip	it
 Final Countdown	Torsten Gellrich	Amiga	Final%20Countdown.zip	mod
 Final Fantasy (Series Crossover)	Nobuo Uematsu	PC	Final%20Fantasy%20%28Series%20Crossover%29.zip	it
-Final Fantasy 2	Nobuo Uematsu	NES	Final%20Fantasy%202.zip	it
-Final Fantasy 3	Nobuo Uematsu	NES	Final%20Fantasy%203.zip	it
-Final Fantasy 4	Nobuo Uematsu	Super Nintendo	Final%20Fantasy%204.zip	it
-Final Fantasy 5	Nobuo Uematsu	Super Nintendo	Final%20Fantasy%205.zip	it
-Final Fantasy 6	Nobuo Uematsu	Super Nintendo	Final%20Fantasy%206.zip	it
-Final Fantasy 7	Nobuo Uematsu	PlayStation	Final%20Fantasy%207.zip	it
-Final Fantasy 8	Nobuo Uematsu	PlayStation	Final%20Fantasy%208.zip	it
-Final Fantasy 9	Nobuo Uematsu	PlayStation	Final%20Fantasy%209.zip	it
-Final Fantasy Adventure	Kenji Ito	Game Boy	Final%20Fantasy%20Adventure.zip	it
-Final Fantasy Legend	???	Game Boy	Final%20Fantasy%20Legend.zip	s3m
-Final Fantasy Legend 2	Kenji Ito	Game Boy	Final%20Fantasy%20Legend%202.zip	it
-Final Fantasy Legend 3	???	Game Boy	Final%20Fantasy%20Legend%203.zip	s3m
-Final Fantasy Mystic Quest	Ryuji Sasai, Yasuhiro Kawakami	Super Nintendo	Final%20Fantasy%20Mystic%20Quest.zip	it
-Final Fantasy Tactics	Masaharu Iwata, Hitoshi Sakimoto	PlayStation	Final%20Fantasy%20Tactics.zip	xm
+Final Fantasy 2	Nobuo Uematsu	PC	Final%20Fantasy%202.zip	it
+Final Fantasy 3	Nobuo Uematsu	PC	Final%20Fantasy%203.zip	it
+Final Fantasy 4	Nobuo Uematsu	PC	Final%20Fantasy%204.zip	it
+Final Fantasy 5	Nobuo Uematsu	PC	Final%20Fantasy%205.zip	it
+Final Fantasy 6	Nobuo Uematsu	PC	Final%20Fantasy%206.zip	it
+Final Fantasy 7	Nobuo Uematsu	PC	Final%20Fantasy%207.zip	it
+Final Fantasy 8	Nobuo Uematsu	PC	Final%20Fantasy%208.zip	it
+Final Fantasy 9	Nobuo Uematsu	PC	Final%20Fantasy%209.zip	it
+Final Fantasy Adventure	Kenji Ito	PC	Final%20Fantasy%20Adventure.zip	it
+Final Fantasy Legend	???	PC	Final%20Fantasy%20Legend.zip	s3m
+Final Fantasy Legend 2	Kenji Ito	PC	Final%20Fantasy%20Legend%202.zip	it
+Final Fantasy Legend 3	???	PC	Final%20Fantasy%20Legend%203.zip	s3m
+Final Fantasy Mystic Quest	Ryuji Sasai, Yasuhiro Kawakami	PC	Final%20Fantasy%20Mystic%20Quest.zip	it
+Final Fantasy Tactics	Masaharu Iwata, Hitoshi Sakimoto	PC	Final%20Fantasy%20Tactics.zip	xm
 Final Fight		Amiga	Final%20Fight.zip	mod
-Final Fight	Youki Chan's papa	Super Nintendo	Final%20Fight%20%28Arranged%29.zip	it
-Final Frontier	Kari Stadler	Macintosh	Final%20Frontier.zip	mod
+Final Fight	Youki Chan's papa	PC	Final%20Fight%20%28Arranged%29.zip	it
+Final Frontier	Kari Stadler	Amiga	Final%20Frontier.zip	mod
 Final Odyssey	Darryl Sloan	Amiga	Final%20Odyssey.zip	mod
-Fire Emblem 3	Yuka Tsujiyoko	Super Nintendo	Fire%20Emblem%203.zip	xm
+Fire Emblem 3	Yuka Tsujiyoko	PC	Fire%20Emblem%203.zip	xm
 Flux LE	Victor Vergara, Dj BaBs, Reptile, Sky, Rapture	PC	Flux%20LE.zip	xm
 Flyin` High	Chipy	Amiga	Flyin%27%20High.zip	mod
 Flying Tigers	Karsten Koch, Lutz Roeder	PC	Flying%20Tigers.zip	s3m
@@ -334,66 +334,66 @@ Flynn Sprint	Mike Janiszewski, Edge / Unexpected	PC	Flynn%20Sprint.zip	s3m
 Forest Dumb	Tomasz Liebich	Amiga	Forest%20Dumb.zip	mod
 Formula 1 Grand Prix		Amiga	Formula%20One%20Grand%20Prix.zip	mod
 Fortified	Karsten Koch	PC	Fortified.zip	s3m
-Fracas	Brandon Franklin	Macintosh	Fracas.zip	xm
-Frankenstein	Mike Clarke	Sega Mega Drive	Frankenstein%20%28Sega%20CD%29.zip	mod
-Franko	Slawomir Mrozek	PC	Franko.zip	mod
-Fury3 & Hellbender		PC	Fury%203%20%26%20Hellbender.zip	mod
-Future Dimension	Mathias Ruch	PC	Future%20Dimension.zip	mod
+Fracas	Brandon Franklin	PC	Fracas.zip	xm
+Frankenstein	Mike Clarke	Amiga	Frankenstein%20%28Sega%20CD%29.zip	mod
+Franko	Slawomir Mrozek	Amiga	Franko.zip	mod
+Fury3 & Hellbender		Amiga	Fury%203%20%26%20Hellbender.zip	mod
+Future Dimension	Mathias Ruch	Amiga	Future%20Dimension.zip	mod
 Future Wars	Jean Baudlot	Amiga	Future%20Wars.zip	mod
 Future Wars	Venger	Amiga	Future%20Wars%20%28Arranged%29.zip	mod
 Fuzzy's World	David G.B.	PC	Fuzzy%27s%20World.zip	it
-GL Tron	Peter Hajba	Macintosh	GL%20Tron.zip	it
-Galactic Revolt	Julian Meinold	Macintosh	Galactic%20Revolt.zip	xm
-Galaxus	Madokan, Soulman, Frederic Motte, MDC, demuc, hunz	Macintosh	Galaxus.zip	mod
+GL Tron	Peter Hajba	PC	GL%20Tron.zip	it
+Galactic Revolt	Julian Meinold	PC	Galactic%20Revolt.zip	xm
+Galaxus	Madokan, Soulman, Frederic Motte, MDC, demuc, hunz	Amiga	Galaxus.zip	mod
 GameBox Classics		PC	GameBox%20Classics.zip	xm
 GameBox Gems		PC	GameBox%20Gems.zip	xm
-GardenGolf	Andrew Dobrowolski	Macintosh	GardenGolf.zip	xm
+GardenGolf	Andrew Dobrowolski	PC	GardenGolf.zip	xm
 Gemsweeper	Staffan Melin, Dan Nyman	PC	Gemsweeper.zip	xm
-Genso Suikoden	KCE Japan Sound Team	PlayStation	Genso%20Suikoden.zip	mod
-Gerry the Germ	Rob Hubbard	Commodore 64	Gerry%20the%20Germ.zip	mod
-Ghostbusters	Adam Bellin	Commodore 64	Ghostbusters.zip	mod
+Genso Suikoden	KCE Japan Sound Team	Amiga	Genso%20Suikoden.zip	mod
+Gerry the Germ	Rob Hubbard	Amiga	Gerry%20the%20Germ.zip	mod
+Ghostbusters	Adam Bellin	Amiga	Ghostbusters.zip	mod
 Ghostbusters 2	David Lowe	Amiga	Ghostbusters%202.zip	mod
 Giana's Return	Alexander Oldemeier, David Wuttke	PC	Giana%27s%20Return.zip	xm
-Great Giana Sisters, The	Chris Huelsbeck	Commodore 64	Gianna%20Sisters.zip	xm
-Giant Sisters	TU	PC	Giant%20Sisters.zip	mod
-Giant Sisters Xmas	Various Authors	PC	Giant%20Sisters%20Xmas.zip	mod
+Great Giana Sisters, The	Chris Huelsbeck	PC	Gianna%20Sisters.zip	xm
+Giant Sisters	TU	Amiga	Giant%20Sisters.zip	mod
+Giant Sisters Xmas	Various Authors	Amiga	Giant%20Sisters%20Xmas.zip	mod
 Giant worlds	Instant Remedy, Pink of Abyss, Virgill of Haujobb, Dalezy	PC	Giant%20worlds.zip	xm
-Gnome vs KDE	Tony Young	NES	Gnome%20vs%20KDE.zip	it
+Gnome vs KDE	Tony Young	PC	Gnome%20vs%20KDE.zip	it
 Godfather, The	Justin Scharvona	Amiga	Godfather%2C%20The.zip	mod
 Gold Sprinter	Valery Belozercev	PC	Gold%20Sprinter.zip	s3m
-Golden Axe	Jeroen Tel	Commodore 64	Golden%20Axe.zip	xm
-Golden Sun	Motoi Sakuraba	Game Boy	Golden%20Sun%2C%20The.zip	xm
-Goonies 2	Tr3forever, SnuFF, Jim Gilsinan IV, Brainstorm, Dalezy, Kasper Hoeglund	NES	Goonies%202.zip	it
-Grand Monster Slam	Chris Huelsbeck	Commodore 64	Grand%20Monster%20Slam.zip	xm
+Golden Axe	Jeroen Tel	PC	Golden%20Axe.zip	xm
+Golden Sun	Motoi Sakuraba	PC	Golden%20Sun%2C%20The.zip	xm
+Goonies 2	Tr3forever, SnuFF, Jim Gilsinan IV, Brainstorm, Dalezy, Kasper Hoeglund	PC	Goonies%202.zip	it
+Grand Monster Slam	Chris Huelsbeck	PC	Grand%20Monster%20Slam.zip	xm
 Grand Prix 2	John Broomhall, Andy Parton	PC	Grand%20Prix%202.zip	it
-Grand Prix Circuit	Kris Hatlelid	Commodore 64	Grand%20Prix%20Circuit.zip	xm
-Grand Prix Simulator 2	David Whittaker	ZX Spectrum	Grand%20Prix%20Simulator%202.zip	mod
-Grav 2	Dave Gymer	Atari ST	Grav%202.zip	mod
-Grav 2	Dave Gymer	Atari ST	Grav%202%20%28Arranged%29.zip	mod
+Grand Prix Circuit	Kris Hatlelid	PC	Grand%20Prix%20Circuit.zip	xm
+Grand Prix Simulator 2	David Whittaker	Amiga	Grand%20Prix%20Simulator%202.zip	mod
+Grav 2	Dave Gymer	Amiga	Grav%202.zip	mod
+Grav 2	Dave Gymer	Amiga	Grav%202%20%28Arranged%29.zip	mod
 Gravity	Jonne Valtonen	PC	Gravity.zip	it
 Great Giana Sisters, The	Thomas Lopatic	Amiga	Great%20Giana%20Sisters%2C%20The%20%28Amiga%29.zip	mod
-Gremlins 2	Kent Hansen	NES	Gremlins%202.zip	xm
+Gremlins 2	Kent Hansen	PC	Gremlins%202.zip	xm
 GridWars	Swith	PC	GridWars.zip	it
-Gryzor	Jason Brooke	Commodore 64	Gryzor.zip	xm
-Guardian Legend, The	Miyamo Shant	NES	Guardian%20Legend%2C%20The.zip	xm
-Guimo	Patryk Lykawka	PC	Guimo.zip	mod
-Gutz	Fred Gray	Commodore 64	Gutz.zip	xm
+Gryzor	Jason Brooke	PC	Gryzor.zip	xm
+Guardian Legend, The	Miyamo Shant	PC	Guardian%20Legend%2C%20The.zip	xm
+Guimo	Patryk Lykawka	Amiga	Guimo.zip	mod
+Gutz	Fred Gray	PC	Gutz.zip	xm
 Guy Spy	Marc François, Mark Knight	Amiga	Guy%20Spy.zip	mod
-Gyroscope	Mark Alphingwood	Commodore 64	Gyroscope.zip	mod
-Hadron	Baroque, Jester, Mac of Legion Design, Karsten Koch, Psych-d	Macintosh	Hadron.zip	mod
-Hammerfist	Wally Beben	Commodore 64	Hammerfist.zip	it
+Gyroscope	Mark Alphingwood	Amiga	Gyroscope.zip	mod
+Hadron	Baroque, Jester, Mac of Legion Design, Karsten Koch, Psych-d	Amiga	Hadron.zip	mod
+Hammerfist	Wally Beben	PC	Hammerfist.zip	it
 Hamsterball Gold	Peter Hajba	PC	Hamsterball%20Gold.zip	it
-Hannibal	Eike Steffen	PC	Hannibal.zip	mod
+Hannibal	Eike Steffen	Amiga	Hannibal.zip	mod
 Hard Drivin' 2	Matt Furniss	Amiga	Hard%20Drivin%27%202.zip	mod
 Harlequinn	Barry Leitch	Amiga	Harlequinn.zip	mod
 Harley Davidson	Kevin Collier	Amiga	Harley%20Davidson.zip	mod
-Harvest Moon	???	Game Boy	Harvest%20Moon.zip	it
+Harvest Moon	???	PC	Harvest%20Moon.zip	it
 Haunted	Darryl Sloan	Amiga	Haunted.zip	mod
-Hawkeye	Jeroen Tel	Commodore 64	Hawkeye.zip	mod
+Hawkeye	Jeroen Tel	Amiga	Hawkeye.zip	mod
 Hazard Ball	Xaser, Stamen	PC	Hazard%20Ball.zip	s3m
 Head Quarters	Ruben Monteiro	Amiga	Head%20Quarters.zip	mod
 Heavy Weapon	Yannis Brown	PC	Heavy%20Weapon.zip	it
-Helicopter Jagd	Martin Galway	Commodore 64	Helicopter%20Jagd.zip	mod
+Helicopter Jagd	Martin Galway	Amiga	Helicopter%20Jagd.zip	mod
 Hero Quest 2	Patrick Phelan	Amiga	Hero%20Quest%202.zip	mod
 Hexalot	Staffan Melin	PC	Hexalot.zip	xm
 Hilt	Mark Sheeky	Amiga	Hilt.zip	mod
@@ -401,39 +401,39 @@ Hilt 2	Mark Sheeky	Amiga	Hilt%202.zip	mod
 Hocus Pocus	Jim Dose	PC	Hocus%20Pocus.zip	it
 Hoi	Ramon Braumuller	Amiga	Hoi.zip	dmu
 Holiday Lemmings	Brian Johnston, Tim Wright	Amiga	Holiday%20Lemmings.zip	mod
-Hollow Ground	Staffan Angere	Macintosh	Hollow%20Ground.zip	xm
+Hollow Ground	Staffan Angere	PC	Hollow%20Ground.zip	xm
 Hollywood Pictures		Amiga	Hollywood%20Pictures.zip	mod
-Horde, The	E. Berge, Riku Nuottajarvi	PC	Horde%2C%20The.zip	mod
+Horde, The	E. Berge, Riku Nuottajarvi	Amiga	Horde%2C%20The.zip	mod
 Hotdog	Darryl Sloan	Amiga	Hotdog.zip	mod
-Hover Bovver	Phil Gregg	Commodore 64	Hover%20Bovver.zip	mod
+Hover Bovver	Phil Gregg	Amiga	Hover%20Bovver.zip	mod
 Huckleberry Hound	Phil Clarke	Amiga	Huckleberry%20Hound.zip	mod
-Human Race	Rob Hubbard	Commodore 64	Human%20Race.zip	xm
+Human Race	Rob Hubbard	PC	Human%20Race.zip	xm
 Humans	Ian Howe, Barry Leitch	Amiga	Humans.zip	mod
-Hunchback 2	Martin Galway	Commodore 64	Hunchback%202.zip	xm
-Hunter's Moon	Matt Gray	Commodore 64	Hunter%27s%20Moon.zip	mod
+Hunchback 2	Martin Galway	PC	Hunchback%202.zip	xm
+Hunter's Moon	Matt Gray	Amiga	Hunter%27s%20Moon.zip	mod
 Hurrican	Joerg Winterstein	PC	Hurrican.zip	it
-Hypaball	Keith Tinman	Commodore 64	Hypaball.zip	xm
-Hysteria	Fred Gray	Commodore 64	Hysteria.zip	xm
+Hypaball	Keith Tinman	PC	Hypaball.zip	xm
+Hysteria	Fred Gray	PC	Hysteria.zip	xm
 I've Got Some Balls!	Andrei Stepanov, Sebastian Aaltonen	PC	I%27ve%20Got%20Some%20Balls%21.zip	it
-IK Plus	Rob Hubbard	Commodore 64	IK%20Plus.zip	xm
+IK Plus	Rob Hubbard	PC	IK%20Plus.zip	xm
 Impossible Mission 2025	Allister Brimble	Amiga	Impossible%20Mission%202025.zip	mod
-Impulse	Alphaville, Misty, Daeron	Atari Falcon	Impulse.zip	mod
-In pursuit of Greed	Andrew Sega	PC	In%20Pursuit%20of%20Greed.zip	mod
-Infodroid	Fred Gray	Commodore 64	Infodroid.zip	it
-Inner Worlds	Daniel Hansson, Nikola 'Juice' Fox, Michiel "MiG" Helsloot, Rasto Skultety, Rob Wells, Paul Schmelzenbach, Pasi "SmiL" Tervonen	PC	Inner%20Worlds.zip	mod
+Impulse	Alphaville, Misty, Daeron	Amiga	Impulse.zip	mod
+In pursuit of Greed	Andrew Sega	Amiga	In%20Pursuit%20of%20Greed.zip	mod
+Infodroid	Fred Gray	PC	Infodroid.zip	it
+Inner Worlds	Daniel Hansson, Nikola 'Juice' Fox, Michiel "MiG" Helsloot, Rasto Skultety, Rob Wells, Paul Schmelzenbach, Pasi "SmiL" Tervonen	Amiga	Inner%20Worlds.zip	mod
 Insaniquarium	George Fan, Jonne Valtonen	PC	Insaniquarium.zip	xm
 Intense	Paul Tankard	Amiga	Intense.zip	mod
 Interchange		Amiga	Interchange.zip	mod
-International Karate	Rob Hubbard	Commodore 64	International%20Karate.zip	xm
+International Karate	Rob Hubbard	PC	International%20Karate.zip	xm
 International Rugby Challenge	Matt Furniss	Amiga	International%20Rugby%20Challenge.zip	mod
-Interpose	Lars Kristian Aasbrenn	PC	Interpose.zip	mod
-Iron Seed	Andrew Sega	PC	Iron%20Seed.zip	mod
-Ishar	Fabrice Hautecloque	Atari ST	Ishar.zip	mod
-Ishar 2	Fabrice Hautecloque	Atari ST	Ishar%202.zip	mod
-Ishar 3	Fabrice Hautecloque	Atari ST	Ishar%203.zip	mod
+Interpose	Lars Kristian Aasbrenn	Amiga	Interpose.zip	mod
+Iron Seed	Andrew Sega	Amiga	Iron%20Seed.zip	mod
+Ishar	Fabrice Hautecloque	Amiga	Ishar.zip	mod
+Ishar 2	Fabrice Hautecloque	Amiga	Ishar%202.zip	mod
+Ishar 3	Fabrice Hautecloque	Amiga	Ishar%203.zip	mod
 Ivanhoe	Pierre-Eric Loriaux, Jean Baudlot	Amiga	Ivanhoe.zip	mod
 Jahangir Khan WC Squash	Matt Furniss	Amiga	Jahangir%20Khan%20WC%20Squash.zip	mod
-Jailbreak	Krysztofiak Patrice	Macintosh	Jailbreak.zip	mod
+Jailbreak	Krysztofiak Patrice	Amiga	Jailbreak.zip	mod
 James Pond 2 Robocod	Richard Joseph	Amiga	James%20Pond%202%20Robocod.zip	mod
 Janosik	Adam Caroll	Amiga	Janosik.zip	mod
 Jazz Jackrabbit	Robert Allen, Joshua Jensen	PC	Jazz%20Jackrabbit.zip	s3m
@@ -441,462 +441,462 @@ Jazz Jackrabbit: Holiday Hare 1994	Robert Allen, Joshua Jensen	PC	Jazz%20Jackrab
 Jazz Jackrabbit 2: The Secret Files	Alexander Brandon	PC	Jazz%20Jackrabbit%202%20-%20The%20Secret%20Files.zip	it
 Jazz Jackrabbit 3	Alexander Brandon, Bass Productions	PC	Jazz%20Jackrabbit%203.zip	it
 Jeanne D'Pac	Konstantin Elgazin	PC	Jeanne%20D%27Pac.zip	xm
-Jet Bike Simulator	David Whittaker	ZX Spectrum	Jet%20Bike%20Simulator.zip	mod
+Jet Bike Simulator	David Whittaker	Amiga	Jet%20Bike%20Simulator.zip	mod
 Jet set miner Willy	Matt Simmonds	PC	Jet%20set%20miner%20Willy.zip	xm
 Jetset Willy	Matt Simmonds	PC	Jetset%20Willy.zip	xm
 Jewel of Atlantis	Anton Shmidt	PC	Jewel%20of%20Atlantis.zip	it
-Jinks	Chris Huelsbeck	Commodore 64	Jinks.zip	xm
-Jinn Genie	Thomas Mogensen (Drax)	Commodore 64	Jinn%20Genie.zip	xm
+Jinks	Chris Huelsbeck	PC	Jinks.zip	xm
+Jinn Genie	Thomas Mogensen (Drax)	PC	Jinn%20Genie.zip	xm
 John Barnes European Football	Matt Furniss	Amiga	John%20Barnes%20European%20Football.zip	mod
-Journey to Silius	Yakra	NES	Journey%20to%20Silius.zip	s3m
-Judge Dredd	Neil Brennan	Commodore 64	Judge%20Dredd.zip	s3m
-Jump Out	Marcus Funk	Commodore 64	Jump%20Out.zip	mod
-Jump Zampoli		Macintosh	Jump%20Zampoli.zip	s3m
+Journey to Silius	Yakra	PC	Journey%20to%20Silius.zip	s3m
+Judge Dredd	Neil Brennan	PC	Judge%20Dredd.zip	s3m
+Jump Out	Marcus Funk	Amiga	Jump%20Out.zip	mod
+Jump Zampoli		PC	Jump%20Zampoli.zip	s3m
 Jumping Jack	Matt Simmonds	PC	Jumping%20Jack.zip	xm
-Jurassic Park	Jonathan Dunn	NES	Jurassic%20Park%20%28NES%29.zip	it
+Jurassic Park	Jonathan Dunn	PC	Jurassic%20Park%20%28NES%29.zip	it
 Jurassic Realm	Ariel Gross	PC	Jurassic%20Realm.zip	it
 Kajko & Kokosz	Piotr Bendyk	Amiga	Kajko%20and%20Kokosz.zip	mod
-Katakis	Chris Huelsbeck	Commodore 64	Katakis.zip	mod
+Katakis	Chris Huelsbeck	Amiga	Katakis.zip	mod
 Kid Gloves 2	Tim Bartlett	Amiga	Kid%20Gloves%202.zip	mod
-Kid Icarus	Hiro "Hip" Tanaka	Game Boy	Kid%20Icarus.zip	xm
-Kikstart 2	Shaun Southern	Commodore 64	Kikstart%202.zip	xm
-Killer Instinct	R. Beanland, G. Norgate	Super Nintendo	Killer%20Instinct.zip	it
+Kid Icarus	Hiro "Hip" Tanaka	PC	Kid%20Icarus.zip	xm
+Kikstart 2	Shaun Southern	PC	Kikstart%202.zip	xm
+Killer Instinct	R. Beanland, G. Norgate	PC	Killer%20Instinct.zip	it
 Killing Game Show, The	Ray Norrish	Amiga	Killing%20Game%20Show%2C%20The.zip	mod
-Kinetix	Jeroen Tel	Commodore 64	Kinetix.zip	xm
-King of Fighters 2000, The	Yoshihiro Ohno	Arcade	King%20of%20Fighters%202000%2C%20The.zip	xm
-King of Parking	Virgin	Macintosh	King%20of%20Parking.zip	mod
+Kinetix	Jeroen Tel	PC	Kinetix.zip	xm
+King of Fighters 2000, The	Yoshihiro Ohno	PC	King%20of%20Fighters%202000%2C%20The.zip	xm
+King of Parking	Virgin	Amiga	King%20of%20Parking.zip	mod
 Kingdom at War	Hans van Vliet	PC	Kingdom%20at%20War.zip	s3m
-Kirby's Dream Land	Pierre Martin	Game Boy	Kirby%27s%20Dream%20Land.zip	it
-Knucklebusters	Rob Hubbard	Commodore 64	Knucklebusters.zip	mod
-Kong Strikes Back	Martin Galway	Commodore 64	Kong%20Strikes%20Back.zip	xm
-Krakout	Ben Daglish	Commodore 64	Krakout.zip	mod
+Kirby's Dream Land	Pierre Martin	PC	Kirby%27s%20Dream%20Land.zip	it
+Knucklebusters	Rob Hubbard	Amiga	Knucklebusters.zip	mod
+Kong Strikes Back	Martin Galway	PC	Kong%20Strikes%20Back.zip	xm
+Krakout	Ben Daglish	Amiga	Krakout.zip	mod
 Kupiec	Piotr Kaczmarek	Amiga	Kupiec.zip	mod
-Led Storm	Tim Follin	Commodore 64	LED%20Storm%20%28C64%29.zip	mod
-Lady Tut	Antti Lehtonen	Commodore 64	Lady%20Tut.zip	s3m
-Landstalker		Sega Mega Drive	Landstalker.zip	xm
+Led Storm	Tim Follin	Amiga	LED%20Storm%20%28C64%29.zip	mod
+Lady Tut	Antti Lehtonen	PC	Lady%20Tut.zip	s3m
+Landstalker		PC	Landstalker.zip	xm
 Lesuire Suit Larry	Chris Brayman, Al Lowe	PC	Larry%201.zip	xm
-Laser Dolphin	Michiel Kamermans	Macintosh	Laser%20Dolphin.zip	s3m
-Lasers and Men	Arnaud Linz	Atari Falcon	Lasers%20and%20Men.zip	mod
-Last Mission	David Whittaker	Commodore 64	Last%20Mission.zip	s3m
-Last Ninja	Ben Daglish	Commodore 64	Last%20Ninja.zip	xm
+Laser Dolphin	Michiel Kamermans	PC	Laser%20Dolphin.zip	s3m
+Lasers and Men	Arnaud Linz	Amiga	Lasers%20and%20Men.zip	mod
+Last Mission	David Whittaker	PC	Last%20Mission.zip	s3m
+Last Ninja	Ben Daglish	PC	Last%20Ninja.zip	xm
 Last Ninja 2	Mike Clarke	Amiga	Last%20Ninja%202.zip	mod
-Last Ninja 2 (C64)	Matt Gray	Commodore 64	Last%20Ninja%202%20%28C64%29.zip	mod
-Last Ninja 3	Reyn Ouwehand	Commodore 64	Last%20Ninja%203.zip	xm
+Last Ninja 2 (C64)	Matt Gray	Amiga	Last%20Ninja%202%20%28C64%29.zip	mod
+Last Ninja 3	Reyn Ouwehand	PC	Last%20Ninja%203.zip	xm
 Last Ninja 3, The	Reyn Ouwehand	Amiga	Last%20Ninja%203%20%28Amiga%29.zip	mod
 Last Ninja Remix		Amiga	Last%20Ninja%20Remix.zip	mod
-Last Ninja Remix (C64)	Reyn Ouwehand	Commodore 64	Last%20Ninja%20Remix%20%28C64%29.zip	xm
+Last Ninja Remix (C64)	Reyn Ouwehand	PC	Last%20Ninja%20Remix%20%28C64%29.zip	xm
 Lazarus	Wojciech Panufnik	Amiga	Lazarus.zip	mod
-Leaving Teramis	Jochen Hippel	Commodore 64	Leaving%20Teramis.zip	xm
+Leaving Teramis	Jochen Hippel	PC	Leaving%20Teramis.zip	xm
 Led Storm	Jogeir Liljedahl (1991)	Amiga	Led%20Storm.zip	mod
-Legend Of Kyrandia, The	Frank Klepacki, Dwight K. Okahara	Amiga	Legend%20of%20Kyrandia.zip	it
+Legend Of Kyrandia, The	Frank Klepacki, Dwight K. Okahara	PC	Legend%20of%20Kyrandia.zip	it
 Lemmings 2	Brian Johnston, Raymond Usher, David Whittaker	Amiga	Lemmings%202.zip	mod
 Lemmings 3		Amiga	Lemmings%203.zip	mod
-Leyendas de Lhodrye: La luz del druida	Juan M. Servera	PC	Leyendas%20de%20Lhodrye%20-%20La%20luz%20del%20druida.zip	mod
+Leyendas de Lhodrye: La luz del druida	Juan M. Servera	Amiga	Leyendas%20de%20Lhodrye%20-%20La%20luz%20del%20druida.zip	mod
 The Lion King	Allister Brimble	PC	Lion%20King%2C%20The%20%28PC%29.zip	s3m
 Little Puff in Dragonland		Amiga	Little%20Puff%20in%20Dragonland.zip	mod
-Live and Let Die	Mark Cooksey	Commodore 64	Live%20and%20Let%20Die.zip	xm
-Lock On	DarkHero	Super Nintendo	Lock%20On.zip	it
+Live and Let Die	Mark Cooksey	PC	Live%20and%20Let%20Die.zip	xm
+Lock On	DarkHero	PC	Lock%20On.zip	it
 Locomotion		Amiga	Locomotion.zip	mod
-Logical	Rudolf Stember	Commodore 64	Logical.zip	xm
-Lone Ranger, The	Tr3forever	NES	Lone%20Ranger%2C%20The.zip	it
+Logical	Rudolf Stember	PC	Logical.zip	xm
+Lone Ranger, The	Tr3forever	PC	Lone%20Ranger%2C%20The.zip	it
 Lords of Empyria	Pat Miller	PC	Lords%20of%20Empyria.zip	it
 Lotus 2	Barry Leitch	Amiga	Lotus%202.zip	mod
 Lotus 3	Patrick Phelan	Amiga	Lotus%203.zip	mod
-Lotus 3	Patrick Phelan	Amiga	Lotus%203%20%28Arranged%29.zip	it
-Lufia & The Fortress of Doom	Yasunori Shiono	Super Nintendo	Lufia%20%26%20The%20Fortress%20of%20Doom.zip	xm
-Lufia 2	Yasunori Shiono	Super Nintendo	Lufia%202.zip	s3m
-Lunar 2 Eternal Blue	???	Sega Mega Drive	Lunar%202%20Eternal%20Blue.zip	xm
-Lunar Silver Star Story	???	PlayStation	Lunar%20Silver%20Star%20Story.zip	xm
-Lunar The Silver Star	???	Sega Mega Drive	Lunar%20The%20Silver%20Star.zip	xm
-MacPuyo	Sam Coxwell	Macintosh	MacPuyo.zip	s3m
-MacWorm	Sigmar Karl Steffansson	Macintosh	MacWorm.zip	mod
-Mach Rider	???	NES	Mach%20Rider.zip	it
-Magic Flute	Thomas Detert	Commodore 64	Magic%20Flute.zip	xm
-Magic Knight Rayearth	SHattY	Sega Saturn	Magic%20Knight%20Rayearth.zip	it
+Lotus 3	Patrick Phelan	PC	Lotus%203%20%28Arranged%29.zip	it
+Lufia & The Fortress of Doom	Yasunori Shiono	PC	Lufia%20%26%20The%20Fortress%20of%20Doom.zip	xm
+Lufia 2	Yasunori Shiono	PC	Lufia%202.zip	s3m
+Lunar 2 Eternal Blue	???	PC	Lunar%202%20Eternal%20Blue.zip	xm
+Lunar Silver Star Story	???	PC	Lunar%20Silver%20Star%20Story.zip	xm
+Lunar The Silver Star	???	PC	Lunar%20The%20Silver%20Star.zip	xm
+MacPuyo	Sam Coxwell	PC	MacPuyo.zip	s3m
+MacWorm	Sigmar Karl Steffansson	Amiga	MacWorm.zip	mod
+Mach Rider	???	PC	Mach%20Rider.zip	it
+Magic Flute	Thomas Detert	PC	Magic%20Flute.zip	xm
+Magic Knight Rayearth	SHattY	PC	Magic%20Knight%20Rayearth.zip	it
 Magical Book	Robert Chojnacki	Amiga	Magical%20Book.zip	mod
 Magnes	Stone	PC	Magnes.zip	xm
 Manchester United	Matt Furniss	Amiga	Manchester%20United.zip	mod
-Manchester United The Double		PC	Manchester%20United%20The%20Double.zip	mod
-Maniac Mansion	David Warhol	NES	Maniac%20Mansion.zip	it
-Maniac Mansion (C64)	Chris Grigg, David Lawrence	Commodore 64	Maniac%20Mansion%20%28C64%29.zip	s3m
-Manic Miner	Edvard Grieg	ZX Spectrum	Manic%20Miner.zip	xm
+Manchester United The Double		Amiga	Manchester%20United%20The%20Double.zip	mod
+Maniac Mansion	David Warhol	PC	Maniac%20Mansion.zip	it
+Maniac Mansion (C64)	Chris Grigg, David Lawrence	PC	Maniac%20Mansion%20%28C64%29.zip	s3m
+Manic Miner	Edvard Grieg	PC	Manic%20Miner.zip	xm
 Manic miner PC	Edvard Grieg, Matthew Simmonds	PC	Manic%20Miner%20PC.zip	xm
-Mantra	Ben Birney	Macintosh	Mantra.zip	mod
+Mantra	Ben Birney	Amiga	Mantra.zip	mod
 Marathon	Ruben Monteiro	Amiga	Marathon.zip	mod
-Marble Madness	Omar Carlo	NES	Marble%20Madness.zip	it
-Marble Madness		NES	MarbleMadness.zip	it
-Marbles		PC	Marbles.zip	mod
-Marbles Deluxe	Eliran Ben-Ishai	Macintosh	Marbles%20Deluxe.zip	xm
-Mario Kart 64	Kenta Negata	Nintendo 64	Mario%20Kart%2064.zip	it
-Mars Rising	Eiric Speirer	Macintosh	Mars%20Rising.zip	xm
+Marble Madness	Omar Carlo	PC	Marble%20Madness.zip	it
+Marble Madness		PC	MarbleMadness.zip	it
+Marbles		Amiga	Marbles.zip	mod
+Marbles Deluxe	Eliran Ben-Ishai	PC	Marbles%20Deluxe.zip	xm
+Mario Kart 64	Kenta Negata	PC	Mario%20Kart%2064.zip	it
+Mars Rising	Eiric Speirer	PC	Mars%20Rising.zip	xm
 Master Axe		Amiga	Master%20Axe.zip	mod
-Master of Magic	Rob Hubbard	Commodore 64	Master%20of%20Magic.zip	mod
+Master of Magic	Rob Hubbard	Amiga	Master%20of%20Magic.zip	mod
 McDonald's Land	Andi McGinty	Amiga	McDonald%27s%20Land.zip	mod
-Mega Man	Chanchacorin Manami, Yuukichan's Papa	NES	Mega%20Man.zip	s3m
-Mega Man 2	Chanchacorin Manami, Yuukichan's Papa, Manami Ietel, Ogeretsu Kun	NES	Mega%20Man%202.zip	it
-Mega Man 3	Bun-Bun	NES	Mega%20Man%203.zip	it
-Megaman 4	Ojalin, Bunbun	NES	Mega%20Man%204.zip	mod
-Mega Man 5	Mari	NES	Mega%20Man%205.zip	s3m
-Megaman 6	Yuko	NES	Mega%20Man%206.zip	s3m
-Mega Man 7	Capcom	Super Nintendo	Mega%20Man%207.zip	mod
-Mega Man 9	Capcom	Super Nintendo	Mega%20Man%209.zip	s3m
-Megaman X	Jihun Lee, The Jade Monkey, The Dark Eternal, KillahPea, Mesuck, Casey McCann, Robstazz, Pontus Palmenas	Super Nintendo	Mega%20Man%20X.zip	it
-Mega Man X2	Lorence	Super Nintendo	Mega%20Man%20X2.zip	xm
-Mega Man X3	TSSF, djDarkX	Super Nintendo	Mega%20Man%20X3.zip	it
-Mega Man X4	Toshihiko Horiyama	PlayStation	Mega%20Man%20X4.zip	mod
-Mega Man X5	No More Jetboards	PlayStation	Mega%20Man%20X5.zip	it
-Mega-Apocalypse	Rob Hubbard	Commodore 64	Mega-Apocalypse.zip	xm
+Mega Man	Chanchacorin Manami, Yuukichan's Papa	PC	Mega%20Man.zip	s3m
+Mega Man 2	Chanchacorin Manami, Yuukichan's Papa, Manami Ietel, Ogeretsu Kun	PC	Mega%20Man%202.zip	it
+Mega Man 3	Bun-Bun	PC	Mega%20Man%203.zip	it
+Megaman 4	Ojalin, Bunbun	Amiga	Mega%20Man%204.zip	mod
+Mega Man 5	Mari	PC	Mega%20Man%205.zip	s3m
+Megaman 6	Yuko	PC	Mega%20Man%206.zip	s3m
+Mega Man 7	Capcom	Amiga	Mega%20Man%207.zip	mod
+Mega Man 9	Capcom	PC	Mega%20Man%209.zip	s3m
+Megaman X	Jihun Lee, The Jade Monkey, The Dark Eternal, KillahPea, Mesuck, Casey McCann, Robstazz, Pontus Palmenas	PC	Mega%20Man%20X.zip	it
+Mega Man X2	Lorence	PC	Mega%20Man%20X2.zip	xm
+Mega Man X3	TSSF, djDarkX	PC	Mega%20Man%20X3.zip	it
+Mega Man X4	Toshihiko Horiyama	Amiga	Mega%20Man%20X4.zip	mod
+Mega Man X5	No More Jetboards	PC	Mega%20Man%20X5.zip	it
+Mega-Apocalypse	Rob Hubbard	PC	Mega-Apocalypse.zip	xm
 Megaforce	Karsten Obarski	Amiga	Megaforce.zip	mod
 Meganoid	Reiner van Vliet	Amiga	Meganoid.zip	mod
 Mental Overload	Skidz	Amiga	Mental%20Overload.zip	mod
-Metal Gear	Kazuki Muraoka	NES	Metal%20Gear.zip	it
-Metal Gear 2 - Snake's Revenge	T.Ogura	NES	Metal%20Gear%202%20-%20Snake%27s%20Revenge.zip	xm
-Metal Slug	???	Arcade	Metal%20Slug.zip	mod
-Metal Slug X	???	Arcade	Metal%20Slug%20X.zip	mod
+Metal Gear	Kazuki Muraoka	PC	Metal%20Gear.zip	it
+Metal Gear 2 - Snake's Revenge	T.Ogura	PC	Metal%20Gear%202%20-%20Snake%27s%20Revenge.zip	xm
+Metal Slug	???	Amiga	Metal%20Slug.zip	mod
+Metal Slug X	???	Amiga	Metal%20Slug%20X.zip	mod
 Metallic Warfare	Darryl Sloan	Amiga	Metallic%20Warfare.zip	mod
-Metro-Cross	Nobuyuki Ohnogi	Commodore 64	Metro-Cross.zip	xm
-Metroid	Hirokazu Tanaka	NES	Metroid.zip	xm
-Miami Vice	Martin Galway	Commodore 64	Miami%20Vice.zip	mod
-Micro Machines 2: Turbo Tournament	Tim Bartlett	PC	Micro%20Machines%202.zip	mod
-Microprose soccer	Ukulele	Commodore 64	Microprose%20Soccer%20%28C64%29.zip	mod
-Midnight Resistance	Keith Tinman	Commodore 64	Midnight%20Resistance.zip	it
+Metro-Cross	Nobuyuki Ohnogi	PC	Metro-Cross.zip	xm
+Metroid	Hirokazu Tanaka	PC	Metroid.zip	xm
+Miami Vice	Martin Galway	Amiga	Miami%20Vice.zip	mod
+Micro Machines 2: Turbo Tournament	Tim Bartlett	Amiga	Micro%20Machines%202.zip	mod
+Microprose soccer	Ukulele	Amiga	Microprose%20Soccer%20%28C64%29.zip	mod
+Midnight Resistance	Keith Tinman	PC	Midnight%20Resistance.zip	it
 Might and Magic 3: Isles of Terra	Todd Hendrix	PC	Might%20and%20Magic%203%20-%20Isles%20of%20Terra.zip	it
-Mighty Max	DarkHero	Super Nintendo	Mighty%20Max.zip	it
-Mikie	Martin Galway	Commodore 64	Mikie.zip	mod
-Mildew	F8/u4ia, Swordlord, Jonne Valtonen, Psycholizer, Lord Mista, Bartesek	Macintosh	Mildew.zip	mod
-Mind Out!	Mark .P	Macintosh	Mind%20Out%21.zip	mod
+Mighty Max	DarkHero	PC	Mighty%20Max.zip	it
+Mikie	Martin Galway	Amiga	Mikie.zip	mod
+Mildew	F8/u4ia, Swordlord, Jonne Valtonen, Psycholizer, Lord Mista, Bartesek	Amiga	Mildew.zip	mod
+Mind Out!	Mark .P	Amiga	Mind%20Out%21.zip	mod
 Mine Bombers	Olli Attila	PC	Mine%20Bombers.zip	s3m
 Minskies	Ian Jolly	Amiga	Minskies.zip	mod
 Moktar		Amiga	Moktar.zip	mod
 Secret of the Monkey Island, The	Orig. by various authors	Amiga	Monkey%20Island.zip	mod
-Monkey Island 2	Steven O'Brien	Amiga	Monkey%20Island%202.zip	xm
-Monkey Shines	Petteri Lajunen, Ville-Eemeli Käkelä	Macintosh	Monkey%20Shines.zip	xm
-Monty on the Run	Rob Hubbard	Commodore 64	Monty%20on%20the%20Run.zip	mod
-Moon Patrol	Tr3forever	Arcade	Moon%20Patrol.zip	it
+Monkey Island 2	Steven O'Brien	PC	Monkey%20Island%202.zip	xm
+Monkey Shines	Petteri Lajunen, Ville-Eemeli Käkelä	PC	Monkey%20Shines.zip	xm
+Monty on the Run	Rob Hubbard	Amiga	Monty%20on%20the%20Run.zip	mod
+Moon Patrol	Tr3forever	PC	Moon%20Patrol.zip	it
 Moonstone		Amiga	Moonstone.zip	mod
-Morphello	Bjorn Lynne	PC	Morphello.zip	mod
-Mortal Kombat	DJ Lizard, Reptile & Sky	Arcade	Mortal%20Kombat.zip	it
+Morphello	Bjorn Lynne	Amiga	Morphello.zip	mod
+Mortal Kombat	DJ Lizard, Reptile & Sky	PC	Mortal%20Kombat.zip	it
 Mortal Kombat 2	Anthony Putson	Amiga	Mortal%20Kombat%202.zip	mod
-Mother	Akio Ohmori, Ritsuo Kamimura, Keiichi Suzuki, Hirokazu Tanaka	NES	Mother.zip	it
-Mr. Do's Castle	Tr3forever	Arcade	Mr.%20Do%27s%20Castle.zip	it
+Mother	Akio Ohmori, Ritsuo Kamimura, Keiichi Suzuki, Hirokazu Tanaka	PC	Mother.zip	it
+Mr. Do's Castle	Tr3forever	PC	Mr.%20Do%27s%20Castle.zip	it
 Mr. Nutz	Rudolf Stember	Amiga	Mr.%20Nutz.zip	mod
 Mr Tomato	Tomasz Liebich	Amiga	Mr.%20Tomato.zip	mod
-Munchies	Patrick Pose	Macintosh	Munchies.zip	mod
-Mutants	Fred Gray	Commodore 64	Mutants.zip	mod
-My Hero	Tr3forever	Arcade	My%20Hero.zip	it
-Mystic Towers	Steven Baker	PC	Mystic%20Towers.zip	mod
+Munchies	Patrick Pose	Amiga	Munchies.zip	mod
+Mutants	Fred Gray	Amiga	Mutants.zip	mod
+My Hero	Tr3forever	PC	My%20Hero.zip	it
+Mystic Towers	Steven Baker	Amiga	Mystic%20Towers.zip	mod
 Myth		Amiga	Myth.zip	med
-Myth (C64)	Jeroen Tel	Commodore 64	Myth%20%28C64%29.zip	xm
-Mithri	Lousy Spy	Game Boy	Mythri.zip	it
-Necrodome		PC	Necrodome.zip	mod
-Need for Speed (Pocket PC)		PC	Need%20for%20speed%20%28Pocket%20PC%29.zip	mod
-Nemesis the Warlock	Rob Hubbard	Commodore 64	Nemesis%20the%20Warlock.zip	xm
+Myth (C64)	Jeroen Tel	PC	Myth%20%28C64%29.zip	xm
+Mithri	Lousy Spy	PC	Mythri.zip	it
+Necrodome		Amiga	Necrodome.zip	mod
+Need for Speed (Pocket PC)		Amiga	Need%20for%20speed%20%28Pocket%20PC%29.zip	mod
+Nemesis the Warlock	Rob Hubbard	PC	Nemesis%20the%20Warlock.zip	xm
 Neon Wars	Eliran Ben-Ishai	PC	Neon%20Wars.zip	it
-Netherworld (C64)	Jori Olkkonen	Commodore 64	Netherworld%20%28C64%29.zip	mod
-Newzeland Story	Jonathan Dunn	Commodore 64	Newzeland%20Story.zip	xm
+Netherworld (C64)	Jori Olkkonen	Amiga	Netherworld%20%28C64%29.zip	mod
+Newzeland Story	Jonathan Dunn	PC	Newzeland%20Story.zip	xm
 Nick Faldos Golf	Andi McGinty	Amiga	Nick%20Faldos%20Golf.zip	mod
 Nicky 2		Amiga	Nicky%202.zip	mod
 Nicky Boom 2	Alain Lambin	Amiga	Nicky%20Boom%202.zip	mod
 Nigel Mansell Grand Prix	Patrick Phelan	Amiga	Nigel%20Mansell%20Grand%20Prix.zip	mod
-Ninja Gaiden	More Yamasan, B. Hasake	NES	Ninja%20Gaiden.zip	xm
+Ninja Gaiden	More Yamasan, B. Hasake	PC	Ninja%20Gaiden.zip	xm
 Ninja Rabbits	Phillip Nixon	Amiga	Ninja%20Rabbits.zip	mod
-Nort	James Reid	Macintosh	Nort.zip	xm
-Northstar	Ben Daglish	Commodore 64	Northstar.zip	xm
-Nuts and Milk		NES	Nuts%20and%20Milk.zip	xm
-Obliterator	David Whittaker	Atari ST	Obliterator.zip	mod
-Obscure Blitz	Anthony Putson	PC	Obscure%20Blitz.zip	mod
-Obscure Plorrds	Anthony Putson	PC	Obscure%20Plorrds.zip	mod
-Ocean Loaders	Jonathan Dunn, Martin Galway, Peter Clarke	Commodore 64	Ocean%20Loaders.zip	xm
-Ogre Battle	Erdrick, Lis Vender	Super Nintendo	Ogre%20Battle.zip	it
+Nort	James Reid	PC	Nort.zip	xm
+Northstar	Ben Daglish	PC	Northstar.zip	xm
+Nuts and Milk		PC	Nuts%20and%20Milk.zip	xm
+Obliterator	David Whittaker	Amiga	Obliterator.zip	mod
+Obscure Blitz	Anthony Putson	Amiga	Obscure%20Blitz.zip	mod
+Obscure Plorrds	Anthony Putson	Amiga	Obscure%20Plorrds.zip	mod
+Ocean Loaders	Jonathan Dunn, Martin Galway, Peter Clarke	PC	Ocean%20Loaders.zip	xm
+Ogre Battle	Erdrick, Lis Vender	PC	Ogre%20Battle.zip	it
 One Must Fall 2097	Kenny Chou	PC	One%20Must%20Fall%202097.zip	s3m
-One man and his Droid	Rob Hubbard	Commodore 64	One%20man%20and%20his%20Droid.zip	xm
-Operation Gunship	David Whittaker	ZX Spectrum	Operation%20Gunship.zip	mod
+One man and his Droid	Rob Hubbard	PC	One%20man%20and%20his%20Droid.zip	xm
+Operation Gunship	David Whittaker	Amiga	Operation%20Gunship.zip	mod
 Operation Stealth	Jean Baudlot	PC	Operation%20Stealth.zip	it
-Operation Wolf	Jonathan Dunn	Commodore 64	Operation%20Wolf%20%28C64%29.zip	mod
+Operation Wolf	Jonathan Dunn	Amiga	Operation%20Wolf%20%28C64%29.zip	mod
 Ortografia 2	Bart³omiej Gudowski	Amiga	Ortografia%202.zip	mod
 Out to Lunch	Mark Knight	Amiga	Out%20to%20Lunch.zip	mod
-Outer Ridge	Karsten Koch	PC	Outer%20Ridge.zip	mod
-Outgard	Dieter Marfurt	Atari ST	Outgard.zip	mod
-Oxide	???	NES	Oxide.zip	xm
+Outer Ridge	Karsten Koch	Amiga	Outer%20Ridge.zip	mod
+Outgard	Dieter Marfurt	Amiga	Outgard.zip	mod
+Oxide	???	PC	Oxide.zip	xm
 Pac Brothers	Olli Attila	PC	Pac%20Brothers.zip	s3m
-Pac-Man	Toshio Kai	Arcade	Pac-Man.zip	xm
-PacMac Deluxe	Rive Gauch, Frank Zappa	Macintosh	PacMac%20Deluxe.zip	mod
+Pac-Man	Toshio Kai	PC	Pac-Man.zip	xm
+PacMac Deluxe	Rive Gauch, Frank Zappa	Amiga	PacMac%20Deluxe.zip	mod
 Pacadou	Konstantin Elgazin	PC	Pacadou.zip	s3m
-Painium Disaster	Martin Kleinhenz	Atari Falcon	Painium%20Disaster.zip	mod
-Panther	David Whittaker	Commodore 64	Panther.zip	mod
-Paperboy	Mark Cooksey	Commodore 64	Paperboy.zip	mod
+Painium Disaster	Martin Kleinhenz	Amiga	Painium%20Disaster.zip	mod
+Panther	David Whittaker	Amiga	Panther.zip	mod
+Paperboy	Mark Cooksey	Amiga	Paperboy.zip	mod
 Paradoxion	Staffan Melin, Victor Vergara	PC	Paradoxion.zip	xm
-Parallax	Martin Galway	Commodore 64	Parallax.zip	mod
-Parasite Eve	Yoko Shimomura	PlayStation	Parasite%20Eve.zip	it
+Parallax	Martin Galway	Amiga	Parallax.zip	mod
+Parasite Eve	Yoko Shimomura	PC	Parasite%20Eve.zip	it
 Parasol Stars	Matthew Cannon	Amiga	Parasol%20Stars.zip	med
 Pekka Kana 2	Janne Kivilahti	PC	Pekka%20Kana%202.zip	xm
-Pengo	Tr3forever	Arcade	Pengo.zip	it
+Pengo	Tr3forever	PC	Pengo.zip	it
 Perihellion		Amiga	Perihellion.zip	mod
-Phantasy Star	Tokuhiko Uwabo	Sega Master System	Phantasy%20Star.zip	it
-Phantasy Star 3	Spencer Reyneke	Sega Mega Drive	Phantasy%20Star%203.zip	xm
-Phantasy Star 4	I. Takeuchi, M. Nagagaki	Sega Mega Drive	Phantasy%20Star%204.zip	xm
-Phantoms of Asteroid	Rob Hubbard	Commodore 64	Phantoms%20of%20Asteroid.zip	xm
-Phil's Mac World		Macintosh	Phil%27s%20Mac%20World.zip	mod
-Pi r Squared	Jason Brooke	Commodore 64	Pi%20r%20Squared.zip	xm
+Phantasy Star	Tokuhiko Uwabo	PC	Phantasy%20Star.zip	it
+Phantasy Star 3	Spencer Reyneke	PC	Phantasy%20Star%203.zip	xm
+Phantasy Star 4	I. Takeuchi, M. Nagagaki	PC	Phantasy%20Star%204.zip	xm
+Phantoms of Asteroid	Rob Hubbard	PC	Phantoms%20of%20Asteroid.zip	xm
+Phil's Mac World		Amiga	Phil%27s%20Mac%20World.zip	mod
+Pi r Squared	Jason Brooke	PC	Pi%20r%20Squared.zip	xm
 Pick Out		Amiga	Pick%20Out.zip	mod
-Pie Bill Gates!	Dma Sc, U4ia	Atari ST	Pie%20Bill%20Gates%21.zip	mod
-Pinball 3D-VCR	Anthony Paton	PC	Pinball%203D-VCR.zip	mod
+Pie Bill Gates!	Dma Sc, U4ia	Amiga	Pie%20Bill%20Gates%21.zip	mod
+Pinball 3D-VCR	Anthony Paton	Amiga	Pinball%203D-VCR.zip	mod
 Pinball Brain Damage	Andreas Kover	Amiga	Pinball%20Brain%20Damage.zip	mod
-Pinball Dreams 2	Anthony Putson, Matthew Simmonds, Anthony Bowker, Andrew Barnabas	PC	Pinball%20Dreams%202.zip	mod
-Pinball Dreams Deluxe	Anthony Putson	PC	Pinball%20Dreams%20Deluxe.zip	mod
-Pinball Mania	Anthony Paton	PC	Pinball%20Mania.zip	mod
+Pinball Dreams 2	Anthony Putson, Matthew Simmonds, Anthony Bowker, Andrew Barnabas	Amiga	Pinball%20Dreams%202.zip	mod
+Pinball Dreams Deluxe	Anthony Putson	Amiga	Pinball%20Dreams%20Deluxe.zip	mod
+Pinball Mania	Anthony Paton	Amiga	Pinball%20Mania.zip	mod
 Pinball World	Anthony Putson	PC	Pinball%20World.zip	s3m
 Pinball from Future Crew	Jonne Valtonen	PC	Pinball%20from%20Future%20Crew.zip	s3m
 Piranha	Simo Paakkanen, Plant, Eric Streidell	PC	Piranha.zip	it
 Pizza Worm	Izzard	PC	Pizza%20Worm.zip	s3m
 Plants vs Zombies	Laura Shigihara	PC	Plants%20vs%20Zombies.zip	xm
-Platoon	Jonathan Dunn	Commodore 64	Platoon.zip	s3m
+Platoon	Jonathan Dunn	PC	Platoon.zip	s3m
 Pleurghburg: Dark Ages	Chrille Blomqvist, Benjamin Pettengill	PC	Pleurghburg%20-%20Dark%20Ages.zip	xm
 Pocket Tanks	Eliran Ben-Ishai	PC	Pocket%20Tanks.zip	it
-Pokemon	Raichu876, Lis Vender, Danilo Nishimura, Asmodeus	Game Boy	Pokemon.zip	it
-Pong Wars	John Williams, Brendan Kibbee	Macintosh	Pong%20Wars.zip	xm
-Pop-Pop	Phobium, In Tense, Jean Nine	Macintosh	Pop-Pop.zip	xm
+Pokemon	Raichu876, Lis Vender, Danilo Nishimura, Asmodeus	PC	Pokemon.zip	it
+Pong Wars	John Williams, Brendan Kibbee	PC	Pong%20Wars.zip	xm
+Pop-Pop	Phobium, In Tense, Jean Nine	PC	Pop-Pop.zip	xm
 Poppit! To Go	Jonne Valtonen	PC	Poppit%21%20To%20Go.zip	it
-Postman Pat	Barry Leitch	Commodore 64	Postman%20Pat.zip	xm
-Power up	Martin Iveson, Sami Jarvinen	Atari ST	Power%20Up.zip	mod
-Powerball		Macintosh	Powerball.zip	mod
+Postman Pat	Barry Leitch	PC	Postman%20Pat.zip	xm
+Power up	Martin Iveson, Sami Jarvinen	Amiga	Power%20Up.zip	mod
+Powerball		Amiga	Powerball.zip	mod
 Prehistorik 2		Amiga	Prehistorik%202.zip	mod
 Premier Manager	Patrick Phelan	Amiga	Premier%20Manager.zip	mod
 Prince of the YolkFolk Dizzy	Matt Simmonds	Amiga	Prince%20of%20the%20YolkFolk.zip	mod
-Project Magellan	Andrew Davis	Macintosh	Project%20Magellan.zip	s3m
+Project Magellan	Andrew Davis	PC	Project%20Magellan.zip	s3m
 Prophecy - Viking Child	Barry Leitch	Amiga	Prophecy%20-%20Viking%20Child.zip	mod
-Psycho Pinball	Tim Bartlett	PC	Psycho%20Pinball.zip	mod
-Punch-Out	Erdrick	NES	Punch-Out.zip	it
+Psycho Pinball	Tim Bartlett	Amiga	Psycho%20Pinball.zip	mod
+Punch-Out	Erdrick	PC	Punch-Out.zip	it
 Push-Push Penguin	Matthew Simmonds	PC	Push-Push%20Penguin.zip	xm
 Pyramid Runner	Sergey Eybog, The SandS, Nikita Ometov	PC	Pyramid%20Runner.zip	it
 Q-Lat2	Janne Kivilahti	PC	Q-Lat2.zip	xm
-Quadrax	Martin Hornak	PC	Quadrax.zip	mod
+Quadrax	Martin Hornak	Amiga	Quadrax.zip	mod
 Quake	Jeehun Hwang, Rob Patterson, Trent Reznor	PC	Quake.zip	xm
-Quake Rally	Virgill	PC	Quake%20Rally.zip	mod
-Quedex	Matt Gray	Commodore 64	Quedex.zip	xm
-Quik, Thunder Rabbit	Philippe Veriere	PC	Quik%2C%20Thunder%20Rabbit.zip	mod
-R-Type C64	Ramiro Vaca	Commodore 64	R-Type%20C64.zip	mod
-Radical Dreamers	Yasunori Mitsuda	Super Nintendo	Radical%20Dreamers.zip	it
-Radical Rebound	Carlos Del Alamo	Macintosh	Radical%20Rebound.zip	mod
-Radix: Beyond the Void	Marc Gravelle	PC	Radix%20-%20Beyond%20the%20Void.zip	mod
-Raiden	???	Arcade	Raiden.zip	xm
-Rain'Net	Aquarium	Macintosh	Rain%27Net.zip	mod
+Quake Rally	Virgill	Amiga	Quake%20Rally.zip	mod
+Quedex	Matt Gray	PC	Quedex.zip	xm
+Quik, Thunder Rabbit	Philippe Veriere	Amiga	Quik%2C%20Thunder%20Rabbit.zip	mod
+R-Type C64	Ramiro Vaca	Amiga	R-Type%20C64.zip	mod
+Radical Dreamers	Yasunori Mitsuda	PC	Radical%20Dreamers.zip	it
+Radical Rebound	Carlos Del Alamo	Amiga	Radical%20Rebound.zip	mod
+Radix: Beyond the Void	Marc Gravelle	Amiga	Radix%20-%20Beyond%20the%20Void.zip	mod
+Raiden	???	PC	Raiden.zip	xm
+Rain'Net	Aquarium	Amiga	Rain%27Net.zip	mod
 Rainbow Islands	Jason Page	Amiga	Rainbow%20Islands.zip	mod
 Rallye Master	Karsten Obarski	Amiga	Rallye%20Master.zip	mod
-Rambo	Martin Galway	Commodore 64	Rambo.zip	mod
-Rambo 3	Jonathan Dunn	Commodore 64	Rambo%203.zip	xm
-Rampage	Lauri Turjansalo (Cirdan)	Commodore 64	Rampage.zip	xm
+Rambo	Martin Galway	Amiga	Rambo.zip	mod
+Rambo 3	Jonathan Dunn	PC	Rambo%203.zip	xm
+Rampage	Lauri Turjansalo (Cirdan)	PC	Rampage.zip	xm
 Ravage	TTY, Zyx, Bas 41, Redferne, Prophet (UK), Trashcan, The Master, TDK	PC	Ravage.zip	xm
-Realmz	u4ia, Jason Tracer, Luigi Smythe, Antti Kujanpaa, Karsten Rohrbach	PC	Realmz.zip	mod
-Rebel Runner - Operation: Digital Code	Choo Sung Ho, Jussi Makinen, Chae Se Byu	PC	Rebel%20Runner%20-%20Operation%20-%20Digital%20Code.zip	mod
-Record Of Lodoss War	Gian Luca Di Martino	Super Nintendo	Record%20Of%20Lodoss%20War.zip	xm
-Red Max	David Whittaker	Commodore 64	Red%20Max.zip	xm
+Realmz	u4ia, Jason Tracer, Luigi Smythe, Antti Kujanpaa, Karsten Rohrbach	Amiga	Realmz.zip	mod
+Rebel Runner - Operation: Digital Code	Choo Sung Ho, Jussi Makinen, Chae Se Byu	Amiga	Rebel%20Runner%20-%20Operation%20-%20Digital%20Code.zip	mod
+Record Of Lodoss War	Gian Luca Di Martino	PC	Record%20Of%20Lodoss%20War.zip	xm
+Red Max	David Whittaker	PC	Red%20Max.zip	xm
 Regent	Martin Martin	Amiga	Regent.zip	mod
-Resident Evil: CODE: Veronica	Mika Heiska	Dreamcast	Resident%20Evil%20-%20Code%20-%20Veronica.zip	it
-Retrograde	Steve Rowlands	Commodore 64	Retrograde.zip	mod
-Reunion	Tamas Kreiner, Krisztian Kornyei	PC	Reunion.zip	mod
+Resident Evil: CODE: Veronica	Mika Heiska	PC	Resident%20Evil%20-%20Code%20-%20Veronica.zip	it
+Retrograde	Steve Rowlands	Amiga	Retrograde.zip	mod
+Reunion	Tamas Kreiner, Krisztian Kornyei	Amiga	Reunion.zip	mod
 Revenge of the Chicken	Sergey Kaminsky	PC	Revenge%20of%20the%20Chicken.zip	xm
-Reversi Unlimited	Johnny Hates Jazz	Macintosh	Reversi%20Unlimited.zip	s3m
-Ricochet	Rob Hubbard	Commodore 64	Ricochet.zip	xm
-Rings of Medusa	Jochen Hippel	Commodore 64	Rings%20of%20Medusa.zip	xm
-Rival Ball	Sidewinder	Macintosh	Rival%20Ball.zip	mod
-River City Ransom	Kazuo Sawa	NES	River%20City%20Ransom.zip	it
-Road Riot 4WD	Matthew Simmonds	Atari Falcon	Road%20Riot%204WD.zip	mod
+Reversi Unlimited	Johnny Hates Jazz	PC	Reversi%20Unlimited.zip	s3m
+Ricochet	Rob Hubbard	PC	Ricochet.zip	xm
+Rings of Medusa	Jochen Hippel	PC	Rings%20of%20Medusa.zip	xm
+Rival Ball	Sidewinder	Amiga	Rival%20Ball.zip	mod
+River City Ransom	Kazuo Sawa	PC	River%20City%20Ransom.zip	it
+Road Riot 4WD	Matthew Simmonds	Amiga	Road%20Riot%204WD.zip	mod
 Robbox	Sergey Eybog, Vladimir Tugay, Ivan Sidoruk	PC	Robbox.zip	it
-Robocop	Jonathan Dunn	Commodore 64	Robocop.zip	xm
-Robocop 3 (C64)	Jeroen Tel	Commodore 64	Robocop%203%20%28C64%29.zip	xm
+Robocop	Jonathan Dunn	PC	Robocop.zip	xm
+Robocop 3 (C64)	Jeroen Tel	PC	Robocop%203%20%28C64%29.zip	xm
 Robots: Power On!	Dmitry Petrovski	PC	Robots%20-%20Power%20On%21.zip	it
-Rocket Knight Adventures	???	Sega Mega Drive	Rocket%20Knight%20Adventures.zip	mod
-Rockman and Forte	Capcom	Super Nintendo	Rockman%20and%20Forte.zip	mod
-Roland's Rat Race	Martin Galway	Commodore 64	Roland%27s%20Rat%20Race.zip	mod
-Rollin	Karsten Koch, Frans Bouma	PC	Rollin.zip	mod
-Romancing SaGa	???	Super Nintendo	Romancing%20SaGa.zip	it
-Romancing SaGa 2	Kenji Ito	Super Nintendo	Romancing%20SaGa%202.zip	it
-Romancing SaGa 3	Kenji Ito	Super Nintendo	Romancing%20SaGa%203.zip	it
-'Round'n'Round	Michael Andersson	Macintosh	Round%27n%27Round.zip	mod
-Rubicon	Jeroen Tel, Reyn Ouwehand	Commodore 64	Rubicon.zip	mod
-Rudra's Treasure	Ryuji Sasai	Super Nintendo	Rudra%27s%20Treasure.zip	it
+Rocket Knight Adventures	???	Amiga	Rocket%20Knight%20Adventures.zip	mod
+Rockman and Forte	Capcom	Amiga	Rockman%20and%20Forte.zip	mod
+Roland's Rat Race	Martin Galway	Amiga	Roland%27s%20Rat%20Race.zip	mod
+Rollin	Karsten Koch, Frans Bouma	Amiga	Rollin.zip	mod
+Romancing SaGa	???	PC	Romancing%20SaGa.zip	it
+Romancing SaGa 2	Kenji Ito	PC	Romancing%20SaGa%202.zip	it
+Romancing SaGa 3	Kenji Ito	PC	Romancing%20SaGa%203.zip	it
+'Round'n'Round	Michael Andersson	Amiga	Round%27n%27Round.zip	mod
+Rubicon	Jeroen Tel, Reyn Ouwehand	Amiga	Rubicon.zip	mod
+Rudra's Treasure	Ryuji Sasai	PC	Rudra%27s%20Treasure.zip	it
 Rumble Cube	Jonne Valtonen	PC	Rumble%20Cube.zip	it
-Rush'n'Attack	???	NES	Rush%27n%27Attack.zip	it
-Rygar	???	NES	Rygar.zip	it
+Rush'n'Attack	???	PC	Rush%27n%27Attack.zip	it
+Rygar	???	PC	Rygar.zip	it
 S.C. Out	Frederic Motte	Amiga	S.C.%20Out.zip	mod
-STune	Slaxx, nhp	Atari ST	STune.zip	mod
-SaGa Frontier	???	PlayStation	SaGa%20Frontier.zip	it
-Sanxion	Rob Hubbard	Commodore 64	Sanxion.zip	mod
-Save the World	Ryan Cramer, Frederic Motte	Macintosh	Save%20The%20World.zip	s3m
-Sceptre of Baghdad	Feekzoid	Commodore 64	Sceptre%20of%20Baghdad.zip	mod
-Scout	Jeroen Tel	Commodore 64	Scout.zip	mod
-Screamer	Allister Brimble	PC	Screamer.zip	mod
-Scumball	Tim Follin	Commodore 64	Scumball.zip	xm
+STune	Slaxx, nhp	Amiga	STune.zip	mod
+SaGa Frontier	???	PC	SaGa%20Frontier.zip	it
+Sanxion	Rob Hubbard	Amiga	Sanxion.zip	mod
+Save the World	Ryan Cramer, Frederic Motte	PC	Save%20The%20World.zip	s3m
+Sceptre of Baghdad	Feekzoid	Amiga	Sceptre%20of%20Baghdad.zip	mod
+Scout	Jeroen Tel	Amiga	Scout.zip	mod
+Screamer	Allister Brimble	Amiga	Screamer.zip	mod
+Scumball	Tim Follin	PC	Scumball.zip	xm
 The Seal Of Nehahra	Purusa	PC	Seal%20of%20Nehahra%2C%20The.zip	xm
-Secret of Evermore	Jeremy Soule	Super Nintendo	Secret%20of%20Evermore.zip	xm
-Secret of Mana	Hiroki Kikuta	Super Nintendo	Secret%20of%20Mana.zip	it
+Secret of Evermore	Jeremy Soule	PC	Secret%20of%20Evermore.zip	xm
+Secret of Mana	Hiroki Kikuta	PC	Secret%20of%20Mana.zip	it
 Seek and Destroy	Blaire Zuppicich	Amiga	Seek%20and%20Destroy.zip	med
-Seiken Densetsu 3	Hiroki Kikuta	Super Nintendo	Seiken%20Densetsu%203.zip	it
-Seiken Densetsu 4	???	PlayStation	Seiken%20Densetsu%204.zip	it
-Seiklus	Radix, Emax, Soren Gessele	PC	Seiklus.zip	mod
+Seiken Densetsu 3	Hiroki Kikuta	PC	Seiken%20Densetsu%203.zip	it
+Seiken Densetsu 4	???	PC	Seiken%20Densetsu%204.zip	it
+Seiklus	Radix, Emax, Soren Gessele	Amiga	Seiklus.zip	mod
 Sensible Soccer v1.0		Amiga	Sensible%20Soccer%20v10.zip	mod
 Sensible Soccer v1.1		Amiga	Sensible%20Soccer%20v11.zip	mod
-Sentry (Sentinel Remake)	Silvio Banzi	PC	Sentry.zip	mod
+Sentry (Sentinel Remake)	Silvio Banzi	Amiga	Sentry.zip	mod
 Settlers, The	Markus Kludzuweit, Haiko Ruttmann	Amiga	Settlers%2C%20The.zip	mod
 Sex Machine		Amiga	Sex%20Machine.zip	mod
 Sextris		Amiga	Sextris.zip	mod
-Shades	Chris Huelsbeck	Commodore 64	Shades.zip	mod
-Shadow Dancer	Tsukachan	Sega Mega Drive	Shadow%20Dancer.zip	it
-Shadow Fire	Fred Gray	Commodore 64	Shadow%20Fire.zip	mod
+Shades	Chris Huelsbeck	Amiga	Shades.zip	mod
+Shadow Dancer	Tsukachan	PC	Shadow%20Dancer.zip	it
+Shadow Fire	Fred Gray	Amiga	Shadow%20Fire.zip	mod
 Shadow of the 3rd Moon	Ruben Monteiro	Amiga	Shadow%20of%20the%203rd%20Moon.zip	mod
 Shadow of the Beast 2	Tim Wright, Lee Wright	Amiga	Shadow%20of%20the%20Beast%202.zip	mod
 Shadow of the Beast 3	Tim Wright	Amiga	Shadow%20of%20the%20Beast%203.zip	mod
-ShadowWraith	Steven Allen, Andrew Schlesinger, Volker Tripp, Thomas Chenhall	Macintosh	ShadowWraith.zip	mod
-Shadowgate	Kend Hansen	NES	Shadowgate.zip	xm
-Shadowrun	Marshall Parker	Super Nintendo	Shadowrun.zip	it
-Shao-Lin's Road	Clever Music	Commodore 64	Shao-Lin%27s%20Road.zip	s3m
-Shapes II	Jens Nilsson	Macintosh	Shapes%202.zip	xm
-Shining Force	???	Sega Mega Drive	Shining%20Force.zip	mod
-Shogun	The Crowded Hour	Commodore 64	Shogun.zip	it
-Shoot Me		Macintosh	Shoot%20Me.zip	mod
-Short Circuit	Martin Galway	Commodore 64	Short%20Circuit.zip	mod
-Sid Sucks		PC	Sid%20Sucks.zip	mod
-Sigma 7	Rob Hubbard	Commodore 64	Sigma%207.zip	mod
-Silent Hill	Akira Yamaoka	PlayStation	Silent%20Hill.zip	xm
+ShadowWraith	Steven Allen, Andrew Schlesinger, Volker Tripp, Thomas Chenhall	Amiga	ShadowWraith.zip	mod
+Shadowgate	Kend Hansen	PC	Shadowgate.zip	xm
+Shadowrun	Marshall Parker	PC	Shadowrun.zip	it
+Shao-Lin's Road	Clever Music	PC	Shao-Lin%27s%20Road.zip	s3m
+Shapes II	Jens Nilsson	PC	Shapes%202.zip	xm
+Shining Force	???	Amiga	Shining%20Force.zip	mod
+Shogun	The Crowded Hour	PC	Shogun.zip	it
+Shoot Me		Amiga	Shoot%20Me.zip	mod
+Short Circuit	Martin Galway	Amiga	Short%20Circuit.zip	mod
+Sid Sucks		Amiga	Sid%20Sucks.zip	mod
+Sigma 7	Rob Hubbard	Amiga	Sigma%207.zip	mod
+Silent Hill	Akira Yamaoka	PC	Silent%20Hill.zip	xm
 Silent Service 2		Amiga	Silent%20Service%202.zip	mod
 Silverball	Robert Allen, Joshua Jensen	PC	Silverball.zip	s3m
 Sim City 2000	Mark Alan Knight	Amiga	Sim%20City%202000.zip	med
 Simpsons, The	Jonathan Dunn, Danny Elfman	Amiga	Simpsons%2C%20The.zip	med
-Simpsons, The	Jonathan Dunn, Danny Elfman	Amiga	Simpsons%2C%20The%20%28Remix%29.zip	xm
-Skate or Die	Rob Hubbard	Commodore 64	Skate%20or%20Die.zip	xm
-Skate Or Die 2	Rob Hubbard	NES	Skate%20or%20Die%202.zip	it
+Simpsons, The	Jonathan Dunn, Danny Elfman	PC	Simpsons%2C%20The%20%28Remix%29.zip	xm
+Skate or Die	Rob Hubbard	PC	Skate%20or%20Die.zip	xm
+Skate Or Die 2	Rob Hubbard	PC	Skate%20or%20Die%202.zip	it
 Skid Marks 2		Amiga	Skid%20Marks%202.zip	med
-Skittles 2	Gustaf Grefberg, Peter Hajba, Timewalker, Jester/Pygmy, Jason/Silents, Alexander Brandon, Armadon/Explizit, Nemesis, Leviathan, Ng Pei Sin, Sirrus	Macintosh	Skittles%202.zip	s3m
+Skittles 2	Gustaf Grefberg, Peter Hajba, Timewalker, Jester/Pygmy, Jason/Silents, Alexander Brandon, Armadon/Explizit, Nemesis, Leviathan, Ng Pei Sin, Sirrus	PC	Skittles%202.zip	s3m
 Skoczny Jacus	Sebastian Ga	Amiga	Skoczny%20Janus.zip	mod
 SkoolDaze	Matt Simmonds	PC	SkoolDaze.zip	xm
 Skull and Crossbones	Matt Furniss	Amiga	Skull%20and%20Crossbones.zip	mod
 Skyworker		Amiga	Skyworker.zip	med
 SleepWalker (Dinamic Multimedia)	Victor Vergara	PC	SleepWalker%20%28Dinamic%20Multimedia%29.zip	xm
 Sleeping Gods Lie		Amiga	Sleeping%20Gods%20Lie.zip	mod
-Slithereens	Eric Speier	Macintosh	Slithereens.zip	xm
+Slithereens	Eric Speier	PC	Slithereens.zip	xm
 Smash		Amiga	Smash.zip	mod
-Smashing Windows	The Wizard	Macintosh	Smashing%20Windows.zip	mod
-Snavely	Tomas Danko, Karsten Obarski	Macintosh	Snavely.zip	mod
-Solar Jetman	???	NES	Solar%20Jetman.zip	mod
+Smashing Windows	The Wizard	Amiga	Smashing%20Windows.zip	mod
+Snavely	Tomas Danko, Karsten Obarski	Amiga	Snavely.zip	mod
+Solar Jetman	???	Amiga	Solar%20Jetman.zip	mod
 Soldat	Michal Marcinkowski, Marshall Anderson	PC	Soldat.zip	it
-Solomon's Key	David Whittaker	Commodore 64	Solomon%27s%20Key.zip	xm
-Sonic (SNES)	Michael Nixon	Super Nintendo	Sonic%20%28SNES%29.zip	it
-Sonic The Hedgehog 3	Noah Sproat, Archacki200, R.J.Sviestins	PC	Sonic%20The%20Hedgehog%203.zip	mod
+Solomon's Key	David Whittaker	PC	Solomon%27s%20Key.zip	xm
+Sonic (SNES)	Michael Nixon	PC	Sonic%20%28SNES%29.zip	it
+Sonic The Hedgehog 3	Noah Sproat, Archacki200, R.J.Sviestins	Amiga	Sonic%20The%20Hedgehog%203.zip	mod
 Sooty and Sweep	Ray Norrish	Amiga	Sooty%20and%20Sweep.zip	mod
-Soukaigi	Altima	PlayStation	Soukaigi.zip	it
-Soul Blade	Nintendo Guru, Crono	PlayStation	Soul%20Blade.zip	it
-Soulblazer	Yakra	Super Nintendo	Soulblazer.zip	it
+Soukaigi	Altima	PC	Soukaigi.zip	it
+Soul Blade	Nintendo Guru, Crono	PC	Soul%20Blade.zip	it
+Soulblazer	Yakra	PC	Soulblazer.zip	it
 Space Crusade		Amiga	Space%20Crusade.zip	mod
-Space Debris	Captain	Macintosh	Space%20Debris.zip	mod
-Space Doubt	Lauri Turjansalo (Cirdan), Antti Lehtonen (Apple)	Commodore 64	Space%20Doubt.zip	xm
-Space Harrier	Mark Cooksey	Commodore 64	Space%20Harrier.zip	mod
+Space Debris	Captain	Amiga	Space%20Debris.zip	mod
+Space Doubt	Lauri Turjansalo (Cirdan), Antti Lehtonen (Apple)	PC	Space%20Doubt.zip	xm
+Space Harrier	Mark Cooksey	Amiga	Space%20Harrier.zip	mod
 Space Harrier 2	Matt Furniss	Amiga	Space%20Harrier%202.zip	mod
 Space Invasion	Joerg Winterstein	PC	Space%20Invasion.zip	it
 Speed Haste	Victor Segura	PC	Speed%20Haste.zip	s3m
 Speedball 2		Amiga	Speedball%202.zip	mod
-Speedball 2 (Pocket PC)	Anthony Dun	PC	Speedball%202%20%28Pocket%20PC%29.zip	mod
-Spellbound	Rob Hubbard	Commodore 64	Spellbound.zip	xm
+Speedball 2 (Pocket PC)	Anthony Dun	Amiga	Speedball%202%20%28Pocket%20PC%29.zip	mod
+Spellbound	Rob Hubbard	PC	Spellbound.zip	xm
 Spellbound (Amiga)	Ray Norrish	Amiga	Spellbound%20%28Amiga%29.zip	mod
-Spellunker - Ace's Aztec Adventure	Harry Mack	PC	Spellunker%20-%20Ace%27s%20Aztec%20Adventure.zip	mod
+Spellunker - Ace's Aztec Adventure	Harry Mack	Amiga	Spellunker%20-%20Ace%27s%20Aztec%20Adventure.zip	mod
 Speris Legacy, The	Ian Ford, Ian Jolly, Keith Baker	Amiga	Speris%20Legacy%2C%20The.zip	mod
 Tennis (Spreadpoint) ??	Karsten Obarski	Amiga	Spreadpoint.zip	mod
-Spy vs Spy	Mike Riedel	Commodore 64	Spy%20vs%20Spy.zip	xm
-Spy vs Spy 2	Mark Riedel	Commodore 64	Spy%20vs%20Spy%202.zip	xm
+Spy vs Spy	Mike Riedel	PC	Spy%20vs%20Spy.zip	xm
+Spy vs Spy 2	Mark Riedel	PC	Spy%20vs%20Spy%202.zip	xm
 Spy who loved me, The	Matt Furniss	Amiga	Spy%20who%20loved%20me%2C%20The.zip	mod
-Stack-Up (NES)	Hirokazu Tanaka	NES	Stack-Up%20%28NES%29.zip	it
+Stack-Up (NES)	Hirokazu Tanaka	PC	Stack-Up%20%28NES%29.zip	it
 Star Blaze	Dmitry Cashev	PC	Star%20Blaze.zip	xm
-Star Chaos	m.c.mp	Macintosh	Star%20Chaos.zip	mod
-Star Control 2	Dan Nicholson, Riku Nuottojarvi, Eric Berge, Erol Otus, Aaron Grier, Marc Brown, Kevin Palivec, Tommy Dunbar, Burke Treischma	PC	Star%20Control%202.zip	mod
-Starfox	Michael Nixon, Michael Burke	Super Nintendo	Star%20Fox.zip	it
-Star Ocean 2	Motoi Sakuraba	PlayStation	Star%20Ocean%202.zip	it
-Star Paws	Rob Hubbard	Commodore 64	Star%20Paws.zip	mod
-Star Reach	Neil d. Voss, Dan Nicholson	PC	Star%20Reach.zip	mod
-Star Soldier	Antti Lehtonen	Commodore 64	Star%20Soldier.zip	s3m
-Star Soldier	Yair Charutz	NES	Star%20Soldier%20%28NES%29.zip	it
+Star Chaos	m.c.mp	Amiga	Star%20Chaos.zip	mod
+Star Control 2	Dan Nicholson, Riku Nuottojarvi, Eric Berge, Erol Otus, Aaron Grier, Marc Brown, Kevin Palivec, Tommy Dunbar, Burke Treischma	Amiga	Star%20Control%202.zip	mod
+Starfox	Michael Nixon, Michael Burke	PC	Star%20Fox.zip	it
+Star Ocean 2	Motoi Sakuraba	PC	Star%20Ocean%202.zip	it
+Star Paws	Rob Hubbard	Amiga	Star%20Paws.zip	mod
+Star Reach	Neil d. Voss, Dan Nicholson	Amiga	Star%20Reach.zip	mod
+Star Soldier	Antti Lehtonen	PC	Star%20Soldier.zip	s3m
+Star Soldier	Yair Charutz	PC	Star%20Soldier%20%28NES%29.zip	it
 Star Woids	Rob Wells	Amiga	Star%20Woids.zip	med
-StarTropics		NES	StarTropics.zip	it
-Starbirds	Sam Jordan	Amiga	Starbirds.zip	xm
-Starforce Nova	Mark Cooksey	Commodore 64	Starforce%20Nova.zip	xm
-Stationary Ark, The	Mark Cooksey	Commodore 64	Stationary%20Ark%2C%20The.zip	s3m
+StarTropics		PC	StarTropics.zip	it
+Starbirds	Sam Jordan	PC	Starbirds.zip	xm
+Starforce Nova	Mark Cooksey	PC	Starforce%20Nova.zip	xm
+Stationary Ark, The	Mark Cooksey	PC	Stationary%20Ark%2C%20The.zip	s3m
 Steel Shot	Karsten Koch	PC	Steel%20Shot.zip	s3m
-Stellar Stryker	Chris Ploran	PC	Stellar%20Stryker.zip	mod
-Stormlord	Johannes Bjerregaard	Commodore 64	Stormlord.zip	xm
-Strange War	Eric Hennequin	Atari ST	Strange%20War.zip	mod
+Stellar Stryker	Chris Ploran	Amiga	Stellar%20Stryker.zip	mod
+Stormlord	Johannes Bjerregaard	PC	Stormlord.zip	xm
+Strange War	Eric Hennequin	Amiga	Strange%20War.zip	mod
 Strategic Assault		PC	Strategic%20Assault.zip	xm
-Street Fighter	Antti Lehtonen (Apple)	Commodore 64	Street%20Fighter.zip	it
-Street Fighter 2	Matthew Simmonds, TSSF, Tr3forever	Amiga	Street%20Fighter%202.zip	it
-Streets of Rage	Yozu H.	Sega Mega Drive	Streets%20of%20Rage.zip	xm
+Street Fighter	Antti Lehtonen (Apple)	PC	Street%20Fighter.zip	it
+Street Fighter 2	Matthew Simmonds, TSSF, Tr3forever	PC	Street%20Fighter%202.zip	it
+Streets of Rage	Yozu H.	PC	Streets%20of%20Rage.zip	xm
 Stronghold	Steven Scherer	PC	Stronghold.zip	it
-Suicide Express	Tony Crowther	Commodore 64	Suicide%20Express.zip	it
+Suicide Express	Tony Crowther	PC	Suicide%20Express.zip	it
 Acid Tetris	Jon Dal Kristbjornsson, Jean-Paul Mikkers, Chris Emerle, Scott Emerle, Liam Hesse, Bobby Tamburrino	PC	Super%20ACiD%20Block%20Attack.zip	s3m
-Super Adventure Island	Yuzo Koshiro	Super Nintendo	Super%20Adventure%20Island.zip	it
+Super Adventure Island	Yuzo Koshiro	PC	Super%20Adventure%20Island.zip	it
 Super Bubble Mania	Joseph Picard	PC	Super%20Bubble%20Mania.zip	s3m
-Super Cars	Ben Daglish	Commodore 64	Super%20Cars.zip	xm
+Super Cars	Ben Daglish	PC	Super%20Cars.zip	xm
 Super Cars 2	Ian Howe, Barry Leitch	Amiga	Super%20Cars%202.zip	mod
-Super DX-Ball	Eliran Ben-Ishai	Macintosh	Super%20DX-Ball.zip	it
-Super Dodgeball	Nintendo Guru, Altima	NES	Super%20Dodgeball.zip	it
+Super DX-Ball	Eliran Ben-Ishai	PC	Super%20DX-Ball.zip	it
+Super Dodgeball	Nintendo Guru, Altima	PC	Super%20Dodgeball.zip	it
 Super Mario: Blue Twilight DX	Nobuo Uematsu, Koji Kondo, Tomoya Tomita, Masanari Iwata, Harumi Ueko, Masahiko Kimura, Masaya Kuzume, Capcom Sound Team, Marc Gordon, Yoko Shimura	PC	Super%20Mario%20-%20Blue%20Twilight%20DX.zip	it
-Super Mario 64	Koji Kondo	Nintendo 64	Super%20Mario%2064.zip	it
-Super Mario Advance	Koji Kondo	Game Boy	Super%20Mario%20Advance.zip	xm
-Super Mario All-Stars	Koji Kondo	Super Nintendo	Super%20Mario%20All-Stars.zip	it
-Super Mario Bros	Koji Kondo	NES	Super%20Mario%20Bros.zip	it
-Super Mario Bros 2	Koji Kondo	NES	Super%20Mario%20Bros%202.zip	it
-Super Mario Bros 3	Koji Kondo	NES	Super%20Mario%20Bros%203.zip	it
-Super Mario Kart	Soyo Oka, Taro Bando	Super Nintendo	Super%20Mario%20Kart.zip	it
-Super Mario Land	C. Lowe, N. Tennant, Daniel Genz, Hiro Tanaka	Game Boy	Super%20Mario%20Land.zip	mod
-Super Mario Land 2	Kazumi Totaka	Game Boy	Super%20Mario%20Land%202.zip	xm
-Super Mario RPG	Yoko Shimomura	Super Nintendo	Super%20Mario%20RPG.zip	it
-Super Mario World	Koji Kondo	Super Nintendo	Super%20Mario%20World.zip	it
-Super Mario World 2	Koji Kondo	Super Nintendo	Super%20Mario%20World%202.zip	it
-Super Mario World 2	Koji Kondo	Super Nintendo	Super%20Mario%20World%202%20AST.zip	it
-Super Metroid	Koji Kondo	Super Nintendo	Super%20Metroid.zip	it
-Super Monaco Grand Prix	Jeroen Tel	Commodore 64	Super%20Monaco%20Grand%20Prix.zip	mod
-Super Panic Monsters	Jose Ma. Fernandez Benitez	PC	Super%20Panic%20Monsters.zip	mod
-Super Smash Brothers 64	???	Nintendo 64	Super%20Smash%20Brothers%2064.zip	mod
-Super Spike V'Ball	Nintendo Guru	NES	Super%20Spike%20V%27Ball.zip	it
-Super Street Fighter 2	Nintendo Guru, Tushino	Super Nintendo	Super%20Street%20Fighter%202.zip	it
-Super Street Fighter 2 Turbo	Alfh Lyra	PlayStation	Super%20Street%20Fighter%202%20Turbo.zip	it
+Super Mario 64	Koji Kondo	PC	Super%20Mario%2064.zip	it
+Super Mario Advance	Koji Kondo	PC	Super%20Mario%20Advance.zip	xm
+Super Mario All-Stars	Koji Kondo	PC	Super%20Mario%20All-Stars.zip	it
+Super Mario Bros	Koji Kondo	PC	Super%20Mario%20Bros.zip	it
+Super Mario Bros 2	Koji Kondo	PC	Super%20Mario%20Bros%202.zip	it
+Super Mario Bros 3	Koji Kondo	PC	Super%20Mario%20Bros%203.zip	it
+Super Mario Kart	Soyo Oka, Taro Bando	PC	Super%20Mario%20Kart.zip	it
+Super Mario Land	C. Lowe, N. Tennant, Daniel Genz, Hiro Tanaka	Amiga	Super%20Mario%20Land.zip	mod
+Super Mario Land 2	Kazumi Totaka	PC	Super%20Mario%20Land%202.zip	xm
+Super Mario RPG	Yoko Shimomura	PC	Super%20Mario%20RPG.zip	it
+Super Mario World	Koji Kondo	PC	Super%20Mario%20World.zip	it
+Super Mario World 2	Koji Kondo	PC	Super%20Mario%20World%202.zip	it
+Super Mario World 2	Koji Kondo	PC	Super%20Mario%20World%202%20AST.zip	it
+Super Metroid	Koji Kondo	PC	Super%20Metroid.zip	it
+Super Monaco Grand Prix	Jeroen Tel	Amiga	Super%20Monaco%20Grand%20Prix.zip	mod
+Super Panic Monsters	Jose Ma. Fernandez Benitez	Amiga	Super%20Panic%20Monsters.zip	mod
+Super Smash Brothers 64	???	Amiga	Super%20Smash%20Brothers%2064.zip	mod
+Super Spike V'Ball	Nintendo Guru	PC	Super%20Spike%20V%27Ball.zip	it
+Super Street Fighter 2	Nintendo Guru, Tushino	PC	Super%20Street%20Fighter%202.zip	it
+Super Street Fighter 2 Turbo	Alfh Lyra	PC	Super%20Street%20Fighter%202%20Turbo.zip	it
 Super Taekwondo Master	Szymon Kosecki	Amiga	Super%20Taekwondo%20Master.zip	mod
-Super Turrican	Chris Huelsbeck	Super Nintendo	Super%20Turrican.zip	it
-Super Turrican 2	Chris Huelsbeck	Super Nintendo	Super%20Turrican%202.zip	it
+Super Turrican	Chris Huelsbeck	PC	Super%20Turrican.zip	it
+Super Turrican 2	Chris Huelsbeck	PC	Super%20Turrican%202.zip	it
 Superhero (Amiga)	Mike Clarke	Amiga	Superhero%20%28Amiga%29.zip	mod
-Supremacy	Jeroen Tel	Commodore 64	Supremacy.zip	mod
+Supremacy	Jeroen Tel	Amiga	Supremacy.zip	mod
 Switchblade 2	Barry Leitch	Amiga	Switchblade%202.zip	mod
 System Shock 2	yOda	PC	System%20Shock%202.zip	xm
 Trauma Zero	Fabio Barzagli Fby	Amiga	T-Zero.zip	mod
 Takatis - A Tribute to Manfred Trenz	Joerg Winterstein	PC	Takatis%20-%20A%20Tribute%20to%20Manfred%20Trenz.zip	it
-Tales of Destiny	???	PlayStation	Tales%20of%20Destiny.zip	it
-Tango Master	Alfredo Sanchez	Arcade	Tango%20Master.zip	xm
-Target Renegade	Gary Biasillo	Commodore 64	Target%20Renegade.zip	xm
-Task 3	???	Commodore 64	Task%203.zip	xm
+Tales of Destiny	???	PC	Tales%20of%20Destiny.zip	it
+Tango Master	Alfredo Sanchez	PC	Tango%20Master.zip	xm
+Target Renegade	Gary Biasillo	PC	Target%20Renegade.zip	xm
+Task 3	???	PC	Task%203.zip	xm
 Team Yankee		Amiga	Team%20Yankee.zip	mod
-Teenage Mutant Ninja Turtles	Tr3forever, Mika Heiska	NES	Teenage%20Mutant%20Ninja%20Turtles.zip	it
-Teenagent	Radek Szamrej	PC	Teenagent.zip	mod
+Teenage Mutant Ninja Turtles	Tr3forever, Mika Heiska	PC	Teenage%20Mutant%20Ninja%20Turtles.zip	it
+Teenagent	Radek Szamrej	Amiga	Teenagent.zip	mod
 Temple of Enlightened Souls	Hannes Seifert	Amiga	Temple%20of%20Enlightened%20Souls.zip	mod
 Tennis Cup	Michel Winogradoff	Amiga	Tennis%20Cup.zip	mod
-Terminal Velocity	Kyle Richards	PC	Terminal%20Velocity.zip	mod
+Terminal Velocity	Kyle Richards	Amiga	Terminal%20Velocity.zip	mod
 Terminator 2	Dean Evans	Amiga	Terminator%202.zip	med
 Terminator 2 Arcade Game	Allister Brimble	Amiga	Terminator%202%20Arcade%20Game.zip	mod
-Terra Cresta	Martin Galway	Commodore 64	Terra%20Cresta.zip	mod
-Terrafighter	Adam Gilmore	Commodore 64	Terrafighter.zip	xm
-Terranigma	Masanori Hikichi, Miyoko Kobayashi	Super Nintendo	Terranigma.zip	it
+Terra Cresta	Martin Galway	Amiga	Terra%20Cresta.zip	mod
+Terrafighter	Adam Gilmore	PC	Terrafighter.zip	xm
+Terranigma	Masanori Hikichi, Miyoko Kobayashi	PC	Terranigma.zip	it
 Terrorstricken	Darryl Sloan	Amiga	Terrorstricken.zip	mod
-Test Drive	Patrick Payne	Commodore 64	Test%20Drive.zip	mod
-Test Drive 2	Kris Hatlelid, Kevin Pickell	Commodore 64	Test%20Drive%202.zip	xm
+Test Drive	Patrick Payne	Amiga	Test%20Drive.zip	mod
+Test Drive 2	Kris Hatlelid, Kevin Pickell	PC	Test%20Drive%202.zip	xm
 Test Drive 2	Kris Hatlelid, Kevin Pickell	Amiga	Test%20Drive%202%20%28Amiga%29.zip	mod
 Tetrinet	Eliminator	PC	Tetrinet.zip	it
-Tetris (Consoles)	Russian Folk	Arcade	Tetris%20%28Consoles%29.zip	xm
-Tetris Attack	???	Super Nintendo	Tetris%20Attack.zip	mod
+Tetris (Consoles)	Russian Folk	PC	Tetris%20%28Consoles%29.zip	xm
+Tetris Attack	???	Amiga	Tetris%20Attack.zip	mod
 Tetrix	Markus Olinger	Amiga	Tetrix.zip	mod
-Thanatos 3D: Army of the Night		PC	Thanatos%203D.zip	mod
-Thing on a Spring	Rob Hubbard	Commodore 64	Thing%20on%20a%20Spring.zip	mod
-Think Twice 2	Jochen Kimmel	Commodore 64	Think%20Twice%202.zip	xm
+Thanatos 3D: Army of the Night		Amiga	Thanatos%203D.zip	mod
+Thing on a Spring	Rob Hubbard	Amiga	Thing%20on%20a%20Spring.zip	mod
+Think Twice 2	Jochen Kimmel	PC	Think%20Twice%202.zip	xm
 Thomas the Tank Engine 2	Paul Tankard	Amiga	Thomas%20the%20Tank%20Engine%202.zip	mod
-Thrust	Rob Hubbard	Commodore 64	Thrust.zip	xm
-Thunder Blade	Mark Tait	Commodore 64	Thunder%20Blade.zip	xm
-Tic Tac Toe	Ge-Tai Lin	Macintosh	Tic%20Tac%20Toe.zip	s3m
-Tiles and Tribulations		Macintosh	Tiles%20and%20Tribulations.zip	mod
+Thrust	Rob Hubbard	PC	Thrust.zip	xm
+Thunder Blade	Mark Tait	PC	Thunder%20Blade.zip	xm
+Tic Tac Toe	Ge-Tai Lin	PC	Tic%20Tac%20Toe.zip	s3m
+Tiles and Tribulations		Amiga	Tiles%20and%20Tribulations.zip	mod
 Time		Amiga	Time.zip	mod
 Time Runners 01	Gian Luca Gaiba	Amiga	Time%20Runners%2001.zip	mod
 Time Runners 02	Gian Luca Gaiba	Amiga	Time%20Runners%2002.zip	mod
@@ -923,39 +923,39 @@ Time Runners 24	Gian Luca Gaiba	Amiga	Time%20Runners%2024.zip	mod
 Time Runners 25	Gian Luca Gaiba	Amiga	Time%20Runners%2025.zip	mod
 Time Runners 26	Gian Luca Gaiba	Amiga	Time%20Runners%2026.zip	mod
 Time Runners 30	Gian Luca Gaiba	Amiga	Time%20Runners%2030.zip	mod
-Times of Lore	Martin Galway	Commodore 64	Times%20of%20Lore.zip	xm
-Tin Tin on the Moon	Jeroen Tel	Commodore 64	Tin%20Tin%20on%20the%20Moon.zip	xm
+Times of Lore	Martin Galway	PC	Times%20of%20Lore.zip	xm
+Tin Tin on the Moon	Jeroen Tel	PC	Tin%20Tin%20on%20the%20Moon.zip	xm
 Tip Off		Amiga	Tip%20Off.zip	mod
 Toki Tori	CJH	PC	Toki%20Tori.zip	xm
 Tokkobot		PC	Tokkobot.zip	s3m
 Top Gear 2		Amiga	Top%20Gear%202.zip	mod
-Top Gun	Jacob Kaufman	NES	Top%20Gun.zip	s3m
-Towers 2	Eric Richardson	Atari Falcon	Towers%202.zip	mod
-Traffic Jam Extreme	Yannis Brown	Macintosh	Traffic%20Jam%20Extreme.zip	xm
-Treasure Hunter G	???	Super Nintendo	Treasure%20Hunter%20G.zip	it
+Top Gun	Jacob Kaufman	PC	Top%20Gun.zip	s3m
+Towers 2	Eric Richardson	Amiga	Towers%202.zip	mod
+Traffic Jam Extreme	Yannis Brown	PC	Traffic%20Jam%20Extreme.zip	xm
+Treasure Hunter G	???	PC	Treasure%20Hunter%20G.zip	it
 Trex Warrior	Skinny Bone	Amiga	Trex%20Warrior.zip	mod
 Trial Challenge		PC	Trial%20Challenge.zip	xm
 Tricky Quiky Games	J. Schmonsees	Amiga	Tricky%20Quiky%20Games.zip	mod
-Trivia	Jeroen Tel	Commodore 64	Trivia.zip	mod
-Tron 96	Dax	Macintosh	Tron%2096.zip	mod
-Tsumera Pinball		PC	Tsumera%20Pinball.zip	mod
-Tubular Worlds	Darius Zendeh	Macintosh	Tubular%20Worlds.zip	mod
-Turbo Lode (Loderunner Remake)		PC	Turbo%20Lode.zip	mod
-Turbo Out Run	Maniacs of Noise	Commodore 64	Turbo%20Out%20Run.zip	xm
+Trivia	Jeroen Tel	Amiga	Trivia.zip	mod
+Tron 96	Dax	Amiga	Tron%2096.zip	mod
+Tsumera Pinball		Amiga	Tsumera%20Pinball.zip	mod
+Tubular Worlds	Darius Zendeh	Amiga	Tubular%20Worlds.zip	mod
+Turbo Lode (Loderunner Remake)		Amiga	Turbo%20Lode.zip	mod
+Turbo Out Run	Maniacs of Noise	PC	Turbo%20Out%20Run.zip	xm
 Turbo Thrust	Mark Sheeky	Amiga	Turbo%20Thrust.zip	mod
 Turrican 2	Chris Huelsbeck	Amiga	Turrican%202.zip	mod
-Turrican 2 C64	Markus Siebold	Commodore 64	Turrican%202%20C64.zip	xm
-Turrican	Ramiro Vaca	Commodore 64	Turrican%20C64.zip	it
+Turrican 2 C64	Markus Siebold	PC	Turrican%202%20C64.zip	xm
+Turrican	Ramiro Vaca	PC	Turrican%20C64.zip	it
 Tux Racer	Joseph Toscano	PC	Tux%20Racer.zip	it
 Typer Shark	Jonne Valtonen	PC	Typer%20Shark.zip	it
 Tyrian	Alexander Brandon	PC	Tyrian.zip	it
-UN Squadron	Mari Maruta	Arcade	UN%20Squadron.zip	it
-Ufouria: The Saga	Naoki Kodaka	NES	Uforia%20-%20The%20Saga.zip	it
-Ultima 3	Kenneth Arnold	Macintosh	Ultima%203.zip	mod
+UN Squadron	Mari Maruta	PC	UN%20Squadron.zip	it
+Ufouria: The Saga	Naoki Kodaka	PC	Uforia%20-%20The%20Saga.zip	it
+Ultima 3	Kenneth Arnold	Amiga	Ultima%203.zip	mod
 Ultimate Soccer Manager		Amiga	Ultimate%20Soccer%20Manager.zip	mod
-Uncover It	Mobius, Lech Balcerzak	PC	Uncover%20It.zip	mod
-Unicycle		Macintosh	Unicycle.zip	xm
-Uninvited	???	NES	Uninvited.zip	mod
+Uncover It	Mobius, Lech Balcerzak	Amiga	Uncover%20It.zip	mod
+Unicycle		PC	Unicycle.zip	xm
+Uninvited	???	Amiga	Uninvited.zip	mod
 Unreal (Epic Megagames)	Alexander Brandon, Andrew Sega, Michiel van den Bos, Dan Grandpre	PC	Unreal.zip	s3m
 Unreal Mission Pack 1: Return to Na Pali	Alexander Brandon, Andrew Sega, Michiel van den Bos, Dan Grandpre, Paul Schultz	PC	Unreal%20Mission%20Pack%201%20-%20Return%20to%20Na%20Pali.zip	s3m
 Unreal Tournament	Alexander Brandon, Peter Hajba, Andrew Sega, Michiel van den Bos, Dan Grandpre, Tero Kostermaa	PC	Unreal%20Tournament.zip	it
@@ -966,84 +966,84 @@ Unreal Tournament: Operation Na Pali	Boris Nonte, James Hamer-Morton, Peter Hajb
 Untouchables, The	Keith Tinman	Amiga	Untouchables%2C%20The.zip	mod
 Uplink	Karsten Koch, Simon Carless, Peter Hajba, Stefano Palmonari, Dirk McKenzie, Ryan Cramer, Timelord	PC	Uplink.zip	s3m
 Uropa 2	Stephen Smith	Amiga	Uropa%202.zip	mod
-Usagi Yojimbo	Greg Holland	Commodore 64	Usagi%20Yojimbo.zip	xm
+Usagi Yojimbo	Greg Holland	PC	Usagi%20Yojimbo.zip	xm
 Utopia	Barry Leitch	Amiga	Utopia.zip	mod
 Vabank	Arthur	Amiga	Vabank.zip	mod
 Valhalla 2	Private Affair	Amiga	Valhalla%202.zip	mod
 Valhalla 3	Private Affair	Amiga	Valhalla%203.zip	mod
 Vanguard Ace	KeX3	PC	Vanguard%20Ace.zip	xm
 Vertrix 2	Cedric Castel	PC	Vertrix%202.zip	xm
-Video Meanies	Tony Kelly	Commodore 64	Video%20Meanies.zip	s3m
-Vigilance on Talos V	John Pollard	PC	Vigilance%20on%20Talos%20V.zip	mod
-Virtua Racing		Sega Mega Drive	Virtua%20Racing.zip	xm
+Video Meanies	Tony Kelly	PC	Video%20Meanies.zip	s3m
+Vigilance on Talos V	John Pollard	Amiga	Vigilance%20on%20Talos%20V.zip	mod
+Virtua Racing		PC	Virtua%20Racing.zip	xm
 Virtual Karting	Ruben Monteiro	Amiga	Virtual%20Karting.zip	mod
-Virtual Pong	Baroque	Macintosh	Virtual%20Pong.zip	mod
-Vixen	Jason Brooke	Commodore 64	Vixen.zip	xm
+Virtual Pong	Baroque	Amiga	Virtual%20Pong.zip	mod
+Vixen	Jason Brooke	PC	Vixen.zip	xm
 Voxatron	Joseph White	PC	Voxatron.zip	xm
 Warblade	Yannis Brown, Peter Hajba, Seth Peele, Drax, Maniac	PC	Warblade.zip	it
 Warcraft 2	Glenn Stafford	PC	Warcraft%202.zip	it
-Warhawk	Rob Hubbard	Commodore 64	Warhawk.zip	xm
-Warheads	Simeon Peebler	PC	Warheads.zip	mod
+Warhawk	Rob Hubbard	PC	Warhawk.zip	xm
+Warheads	Simeon Peebler	Amiga	Warheads.zip	mod
 Warm up		Amiga	Warm%20up.zip	mod
 Wasted Dreams	Darryl Sloan	Amiga	Wasted%20Dreams.zip	mod
-Water Bugs	Staffan Melin	Macintosh	Water%20Bugs.zip	xm
+Water Bugs	Staffan Melin	PC	Water%20Bugs.zip	xm
 Waxworks	Jezz Woodroffe	Amiga	Waxworks.zip	mod
-Way of the Exploding Fist	Greg Holland, Neil Brennan	Commodore 64	Way%20of%20the%20Exploding%20Fist.zip	mod
+Way of the Exploding Fist	Greg Holland, Neil Brennan	Amiga	Way%20of%20the%20Exploding%20Fist.zip	mod
 Werner Flaschbier		Amiga	Werner%20Flaschbier.zip	mod
 Whale's voyage 2	Hannes Seifert	Amiga	Whale%27s%20voyage%202.zip	mod
 Whales Voyage 2	Clemens Helbock, Hannes Seifert	Amiga	Whales%20Voyage%202.zip	mod
-Wild ARMs	Michiko Naruke	PlayStation	Wild%20ARMs.zip	it
+Wild ARMs	Michiko Naruke	PC	Wild%20ARMs.zip	it
 Wild West Billy	Staffan Melin	PC	Wild%20West%20Billy.zip	xm
 Wings (1996)	Jussi Huhtala, Juha Rantala, Joonas Wilska, Juha Lehtioksa, Ossi Ojutkangas, Onni Ojutkangas, Oskari Pontinen, Toni Puronvarsi	PC	Wings%20%281996%29.zip	s3m
 Winter Olympics Lilehammer 94	Tim Haywood	Amiga	Winter%20Olympics%20Lilehammer%2094.zip	mod
 Wiz 2	Coma	Amiga	Wiz%202.zip	mod
-Wizardry	Mike Aslop	Commodore 64	Wizardry.zip	mod
-Wizball	Martin Galway	Commodore 64	Wizball.zip	mod
+Wizardry	Mike Aslop	Amiga	Wizardry.zip	mod
+Wizball	Martin Galway	Amiga	Wizball.zip	mod
 Wizkid	Richard Joseph	Amiga	Wizkid.zip	mod
 Wobbly Bobbly	Laura Shigihara	PC	Wobbly%20Bobbly.zip	xm
-Woden		Macintosh	Woden.zip	xm
-Wonderboy	Erik S.	Commodore 64	Wonderboy.zip	xm
-Wonderboy 3	Shin-ichi Sakamoto	Sega Master System	Wonderboy%203.zip	xm
+Woden		PC	Woden.zip	xm
+Wonderboy	Erik S.	PC	Wonderboy.zip	xm
+Wonderboy 3	Shin-ichi Sakamoto	PC	Wonderboy%203.zip	xm
 Wonderland (Midnight Synergy)	Jonne Valtonen	PC	Wonderland%20%28Midnight%20Synergy%29.zip	it
 Word Whomp To Go	Jonne Valtonen	PC	Word%20Whomp%20To%20Go.zip	it
 World Champ Boxing Manager	Matt Furniss	Amiga	World%20Champ%20Boxing%20Manager.zip	mod
 World Cup 90		Amiga	World%20Cup%2090.zip	mod
 Worms	Bjorn Lynne	Amiga	Worms.zip	mod
 Worms	Bjorn Lynne	Amiga	Worms%20%28Arranged%29.zip	mod
-Wotanoid	Rob Hubbard, Matthew Simmonds, Heartbeat	Atari Falcon	Wotanoid.zip	mod
-Xenogears	Yasunori Mitsuda	PlayStation	Xenogears.zip	it
+Wotanoid	Rob Hubbard, Matthew Simmonds, Heartbeat	Amiga	Wotanoid.zip	mod
+Xenogears	Yasunori Mitsuda	PC	Xenogears.zip	it
 Xenon 2 The Megablast	David Whittaker	Amiga	Xenon%202.zip	mod
 Xenophobe	Barry Leitch	Amiga	Xenophobe.zip	mod
 Xiphos	Barry Leitch	Amiga	Xiphos.zip	mod
 Xixit	Andy Sega, Kenny Chou, Andrew Wise, Jon Dal Kristbjornsson	PC	Xixit.zip	s3m
 Xpedition		Amiga	Xpedition.zip	mod
 Xtreme Tankz Madness 2	Andrej Komatovic	PC	Xtreme%20Tankz%20Madness%202.zip	it
-Yie Ar Kung Fu	Jean Michael Jarre (C64 version by Martin Galway)	Commodore 64	Yie%20Ar%20Kung%20Fu.zip	mod
-Yogi's Great Escape	Julian Potts	Commodore 64	Yogi%27s%20Great%20Escape.zip	xm
+Yie Ar Kung Fu	Jean Michael Jarre (C64 version by Martin Galway)	Amiga	Yie%20Ar%20Kung%20Fu.zip	mod
+Yogi's Great Escape	Julian Potts	PC	Yogi%27s%20Great%20Escape.zip	xm
 Yolanda	Phil Bak	Amiga	Yolanda.zip	mod
-Ys 3	???	PC Engine	Ys%203.zip	it
-Ys Book 1&2	???	PC Engine	Ys%20Book%201%262.zip	it
+Ys 3	???	PC	Ys%203.zip	it
+Ys Book 1&2	???	PC	Ys%20Book%201%262.zip	it
 Z-Ball	Robert Ãdman	PC	Z-Ball.zip	xm
 Zak McKracken 2	Wolk	PC	Zak%20McKracken%202.zip	xm
 Zalycon	Various Authors	Amiga	Zalycon.zip	mod
-Zamzara	Charles Deenen	Commodore 64	Zamzara.zip	mod
-Zanac	Miyamoto	NES	Zanac.zip	it
-Zap 'T' Balls	Quinton Davie, 16 beat	Macintosh	Zap%20%27t%27%20Balls.zip	mod
-Zarjaz	Ben Daglish	Commodore 64	Zarjaz.zip	mod
+Zamzara	Charles Deenen	Amiga	Zamzara.zip	mod
+Zanac	Miyamoto	PC	Zanac.zip	it
+Zap 'T' Balls	Quinton Davie, 16 beat	Amiga	Zap%20%27t%27%20Balls.zip	mod
+Zarjaz	Ben Daglish	Amiga	Zarjaz.zip	mod
 Zeewolf2	Allister Brimble	Amiga	Zeewolf2.zip	mod
-Zelda	Koji Kondo	NES	Zelda.zip	xm
-Zelda 2	Koji Kondo	NES	Zelda%202.zip	it
-Zelda 3	Koji Kondo	Super Nintendo	Zelda%203.zip	it
-Zelda 4	Koji Kondo	Game Boy	Zelda%204.zip	it
-Zelda 5	Koji Kondo	Nintendo 64	Zelda%205.zip	it
-Zelda 6 - Majora's Mask	Koji Kondo	Nintendo 64	Zelda%206%20-%20Majora%27s%20Mask.zip	it
-Zippy Race	Traverse USA	Arcade	Zippy%20Race.zip	xm
+Zelda	Koji Kondo	PC	Zelda.zip	xm
+Zelda 2	Koji Kondo	PC	Zelda%202.zip	it
+Zelda 3	Koji Kondo	PC	Zelda%203.zip	it
+Zelda 4	Koji Kondo	PC	Zelda%204.zip	it
+Zelda 5	Koji Kondo	PC	Zelda%205.zip	it
+Zelda 6 - Majora's Mask	Koji Kondo	PC	Zelda%206%20-%20Majora%27s%20Mask.zip	it
+Zippy Race	Traverse USA	PC	Zippy%20Race.zip	xm
 Zodiac Tower	Ariel Gross	PC	Zodiac%20Tower.zip	it
-Zoids	Rob Hubbard	Commodore 64	Zoids.zip	xm
+Zoids	Rob Hubbard	PC	Zoids.zip	xm
 Zombie Apocalypse 2	Blair Zuppicich	Amiga	Zombie%20Apocalypse%202.zip	med
 Zone crazy		Amiga	Zone%20crazy.zip	mod
 Zool	Patrick Phelan	Amiga	Zool.zip	mod
-Zoolook	Rob Hubbard	Commodore 64	Zoolook.zip	xm
+Zoolook	Rob Hubbard	PC	Zoolook.zip	xm
 Zorlim's Arcade Volleyball	Olli Leino	PC	Zorlim%27s%20Arcade%20Volleyball.zip	s3m
 Zuma	Phillipe Charon	PC	Zuma.zip	it
 Zuma's Revenge	Phillipe Charon, Stephane Brault	PC	Zuma%27s%20Revenge.zip	it

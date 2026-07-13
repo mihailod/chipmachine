@@ -420,11 +420,13 @@ TEST_CASE("Zophar format labels classify to a platform", "[music]")
     }
 }
 
-// mirsoft "World of Game MODs" (mirsoft) is classified by the GAME's platform:
-// the `format` column carries a platform label, so a C64/NES/SNES game's tracker
-// arrangement must file under that console (db.lua v86, "classify by game
-// platform"). Every label must resolve to a real platform (never UNKNOWN, which
-// is invisible to every TAB filter).
+// mirsoft "World of Game MODs" (mirsoft) is classified by the ACTUAL module
+// format as of db.lua v94: its `format` column is now "Amiga" (mod-family), "PC"
+// (xm/it/s3m) or "Atari ST", NOT the game's platform -- classifying by game
+// platform gave a C64 game's .mod the SID byte and made it shadow the real HVSC
+// SID in search dedup. Whatever label a row carries, it must resolve to a real
+// platform (never UNKNOWN, invisible to every TAB filter). The console labels
+// below are retained mappings still used by other collections (hvsc, zophar, ...).
 TEST_CASE("mirsoft platform labels classify to a platform", "[music]")
 {
     using namespace chipmachine;
@@ -449,6 +451,37 @@ TEST_CASE("mirsoft platform labels classify to a platform", "[music]")
         REQUIRE(b != UNKNOWN_FORMAT);
         REQUIRE(b == c.plat);
     }
+}
+
+// REGRESSION (db.lua v94): a game-mod collection must never SHADOW a distinct
+// original in search results. mirsoft ships an Amiga MOD remix of Rob Hubbard's
+// C64 classic "Delta"; HVSC ships the real SID. They share {title, composer} but
+// differ in real format, so search() must return BOTH. Earlier the dedup keyed on
+// the coarse platform byte (mirsoft's .mod was mis-filed "Commodore 64" -> SID),
+// so the remix and the legendary SID collided and only one survived. Guards both
+// halves of the fix: the ext-derived platform label AND the real-format dedup key.
+TEST_CASE("search keeps same-name different-format songs", "[database]")
+{
+    using namespace chipmachine;
+    const auto injector = di::make_injector(di::bind<utils::path>.to("."));
+    auto mdb = injector.create<std::unique_ptr<MusicDatabase>>();
+    REQUIRE(mdb->initFromLua(utils::path(".")) == true);
+
+    std::vector<int> result;
+    mdb->search("Delta/Rob Hubbard", result, 500);
+
+    int sidPos = -1, amigaPos = -1;
+    for (size_t i = 0; i < result.size(); i++) {
+        auto s = mdb->getSongInfo(result[i]);
+        if (s.title != "Delta" || s.composer != "Rob Hubbard") continue;
+        uint8_t b = MusicDatabase::classifyFormat(s.format, s.path);
+        if (b == SID && sidPos < 0) sidPos = (int)i;     // real HVSC .sid
+        if (b == AMIGA && amigaPos < 0) amigaPos = (int)i; // mirsoft .mod remix
+    }
+    REQUIRE(sidPos >= 0);    // the SID survived dedup
+    REQUIRE(amigaPos >= 0);  // the remix survived too
+    // priority: hvsc (100) outranks mirsoft (-100), so the SID surfaces first.
+    REQUIRE(sidPos < amigaPos);
 }
 
 // The "no new format" claim: mirsoft holds only mainstream tracker modules, even

@@ -1,13 +1,5 @@
-**************************************************
-* BUGS / ISSUES (fix might need db version bump) *
-**************************************************
+- show for each song in search results next to the format on the top from which db it came from
 
-- MAJOR DATA REGRESSION!!! some songs disappeared because they were wrongly deduped against other songs!!! i think this is what one of recent onboarding did, maybe zophar, not sure...
-examples:
-Delta by Rob Hubbard the most important legendary SID version disappeared and replaced by an amiga version: 
-[web.h:370] target: /Users/mihailod/Library/Caches/chipmachine/_webfiles/https%3a%2f%2farchive.org%2fdownload%2fmirsoftJuly2021snapshot%2fgamemods/Delta.zip
-it even shows among the commodore 64 files when i filter on commodore 64!
-this should be a delta from the hvsc db!!!!
 
 - need progress bar when downloading large files (for example xbox zips from zophar). if the wait is more than 5 seconds (playback did not start), draw a progress bar below "LOADING..." / "BUFFERING..." (reuse the one we are drawing for db indexing) and use the file size of the downloading file to calculate the progress
 
@@ -70,7 +62,6 @@ mihailod@Mac chipmachine % grep -Ei "/music/(sega-dreamcast-dsf|playstation2-psf
 
 - songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
 
-- tag each song with database it came from and display also that discreetly on the playback screen
 - have another screen similar to Platforms but Databases -- wanna be able to restrict results to just one database and i pick there. we list all there (45 now i think) and user can go up/down in the table like now with formats and select one and then we restrict search result to show only results from that db
 
 --------------
@@ -92,6 +83,4 @@ cosmetic/low priority:
 
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 
-major new features
-==================
 - Separate db from code and auto-update db independently from code
