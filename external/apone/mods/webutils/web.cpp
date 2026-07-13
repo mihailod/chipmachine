@@ -321,7 +321,13 @@ void WebJob::finish() {
 	LOGD("CODE %d", rc);
 
 	if(targetFile) {
-		if(rc != 200 && rc != 226) {
+		// A cancelled job (stop() via RemoteLoader::cancel, or ~Web teardown)
+		// is treated like a failed transfer: drop whatever was written so a
+		// partial/aborted body never lingers in the cache and gets served as a
+		// truncated tune on the next selection. writeFunc removes the file when
+		// IT sees the stop, but an abort raised from progressFunc happens before
+		// any write, so the partial file must also be dropped here.
+		if(stopped || (rc != 200 && rc != 226)) {
 			if(targetFile.exists())
 				targetFile.remove();
 			targetFile = utils::File();
@@ -345,7 +351,16 @@ void WebJob::finish() {
 	}
 	if(streamCb)
 		streamCb(*this, nullptr, 0);
-	call_handler();
+	// A cancelled whole-file download must NOT invoke its completion callback.
+	// By the time the abort lands, the player has already switched to another
+	// song; firing the stale callback reaches into MusicPlayerList and forces
+	// THAT song's Loading state to Error while underflowing its outstanding-file
+	// counter -- which is exactly why every track selected after an interrupted
+	// download failed to play (the whole cache was fine; the state was poisoned).
+	// The abandoned song simply drops here. (Streaming jobs use streamCb, not
+	// call_handler, so their teardown above is unaffected.)
+	if(!stopped)
+		call_handler();
 	targetFile = utils::File();
 	// NOTE: the curl easy handle is freed by the caller (Web::run) under m,
 	// right after this returns. Do NOT curl_easy_cleanup() here: finish() runs
