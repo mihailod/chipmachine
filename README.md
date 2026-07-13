@@ -18,11 +18,11 @@ While ensuring the player runs on modern Apple hardware, my passion for it has e
 Despite the massive expansion under the hood, the core experience remains untouched: instant, incremental autocomplete search across the entire global library, delivering instant zero-latency (for cached songs) playback from a single, simple, unified interface.
 
 **(Screenshots might show features from dev in progress (not released) code.)**
-[![Screenshot](data/misc/amegas.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
+[![Screenshot](data/misc/amegas.png)](https://youtu.be/WsNhwxY1c08)
 **(Screenshots might show features from dev in progress (not released) code.)**
-[![Screenshot](data/misc/formats.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
+[![Screenshot](data/misc/formats.png)](https://youtu.be/WsNhwxY1c08)
 **(Screenshots might show features from dev in progress (not released) code.)**
-[![Screenshot](data/misc/search.png)](https://www.youtube.com/watch?v=Akn8Grtb9QY)
+[![Screenshot](data/misc/search.png)](https://youtu.be/WsNhwxY1c08)
 
 ## Intro
 
