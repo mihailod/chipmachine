@@ -1,4 +1,4 @@
-- need progress bar when downloading large files (for example xbox zips from zophar). if the wait is more than 5 seconds (playback did not start), draw a progress bar below "LOADING..." / "BUFFERING..." (reuse the one we are drawing for db indexing) and use the file size of the downloading file to calculate the progress
+- pesic pr
 
 - now when we have vgmstream plugin, we need testmus files for all these formats so that cmtest can verify their playback via vgmstream before we onboard the slew of streaming data from zophar
 mihailod@Mac chipmachine % cat data/misc/zophar.net/unplayable_formats.txt (this was deemed unplayable before we implemented the new vgmstream plugin)

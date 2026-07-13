@@ -190,6 +190,11 @@ public:
     void toast(const std::string& txt, ToastType type = NORMAL);
     void removeToast();
 
+    // Draws a spectrum-coloured progress bar (fraction in [0,1]) centred just
+    // below the current toast. Shared by the startup DB-indexing screen and the
+    // LOADING/BUFFERING download bar.
+    void drawProgressBar(float frac);
+
     void setScrolltext(const std::string& txt);
     void shuffleSongs(int what, int limit);
 
@@ -607,6 +612,10 @@ private:
     bool loadingToastIsLocal = false;
     bool loadingToastStreamed = false;
     std::string loadingToastPath;
+    // Timestamp (ms) when the LOADING/BUFFERING toast was shown. The download
+    // progress bar only appears once the wait exceeds 5s, so a quick fetch never
+    // flashes a bar.
+    uint32_t loadingToastStartMs = 0;
     std::string scrollText;
 
     struct Command

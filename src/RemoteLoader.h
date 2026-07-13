@@ -70,6 +70,23 @@ public:
 
     void update() { webgetter.poll(); }
 
+    // Progress of the current whole-file download (load()) or stream, for the
+    // GUI's LOADING/BUFFERING progress bar. Fills `downloaded`/`total` (bytes)
+    // and returns true only when a transfer is in flight AND its total size is
+    // known; returns false otherwise (no active fetch, or an open-ended stream
+    // whose size the server never reported).
+    [[nodiscard]] bool downloadProgress(int64_t& downloaded,
+                                        int64_t& total) const
+    {
+        // Ignore a finished job left in lastSession by a previous song (it would
+        // otherwise report a stale 100%): only an in-flight transfer counts.
+        if (!lastSession || lastSession->done()) return false;
+        total = lastSession->totalBytes();
+        if (total <= 0) return false;
+        downloaded = lastSession->downloadedBytes();
+        return true;
+    }
+
     static constexpr int DATA = 0;
     static constexpr int PARAMETER = 1;
     static constexpr int END = 2;

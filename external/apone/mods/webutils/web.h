@@ -37,7 +37,8 @@ public:
 	    : curl(o.curl), headers(o.headers), url(o.url), data(o.data),
 	      targetFile(o.targetFile), orgFile(o.orgFile), streamCb(o.streamCb),
 	      isDone(o.isDone), stopped(o.stopped.load()), dirList(o.dirList),
-	      cLength(o.cLength), tid(o.tid), header_list(o.header_list),
+	      cLength(o.cLength), dlNow(o.dlNow.load()), dlTotal(o.dlTotal.load()),
+	      tid(o.tid), header_list(o.header_list),
 	      alias_list(o.alias_list) {}
 	bool done() const { return isDone; }
 	long code() const {
@@ -48,7 +49,15 @@ public:
 	}
 	
 	int64_t contentLength() { return cLength; }
-	
+
+	// Live download progress, updated by curl's transfer-info callback on the web
+	// thread (both values are atomic snapshots). downloadedBytes() is the bytes
+	// received so far; totalBytes() is curl's reported transfer size, falling back
+	// to the Content-Length header. totalBytes() is 0 when the size is unknown
+	// (e.g. an open-ended radio stream), so callers gate the progress bar on it.
+	int64_t downloadedBytes() const { return dlNow; }
+	int64_t totalBytes() const { return dlTotal > 0 ? dlTotal.load() : cLength; }
+
 	std::string getHeader(const std::string &name) {
 		auto it = headers.find(name);
 		if (it != headers.end()) return it->second;
@@ -90,6 +99,8 @@ protected:
 	void start(CURLM *curlm);
 	static size_t writeFunc(void *ptr, size_t size, size_t x, void *userdata);
 	static size_t headerFunc(char *text, size_t size, size_t n, void *userdata);
+	static int progressFunc(void *userdata, curl_off_t dltotal, curl_off_t dlnow,
+	                        curl_off_t ultotal, curl_off_t ulnow);
 	void finish();
 	void destroy();
 
@@ -108,6 +119,10 @@ protected:
 	std::atomic<bool> stopped{false};
 	bool dirList = false;
 	int64_t cLength = 0;
+	// Download progress, written by progressFunc() on the web thread and read by
+	// the GUI thread (RemoteLoader::downloadProgress) — atomic to avoid a race.
+	std::atomic<int64_t> dlNow{0};
+	std::atomic<int64_t> dlTotal{0};
 	std::thread::id tid;
 
 	std::shared_ptr<curl_slist> header_list;

@@ -230,6 +230,12 @@ void WebJob::start(CURLM *curlm) {
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeFunc);
 	curl_easy_setopt(curl, CURLOPT_HEADERDATA, this);
 	curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, headerFunc);
+	// Track bytes-downloaded/total so the GUI can show a progress bar on slow
+	// fetches (e.g. large Zophar zips). NOPROGRESS must be off for the callback
+	// to fire.
+	curl_easy_setopt(curl, CURLOPT_XFERINFODATA, this);
+	curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, progressFunc);
+	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
 	curl_multi_add_handle(curlm, curl);
 
 	{
@@ -260,6 +266,17 @@ size_t WebJob::writeFunc(void *ptr, size_t size, size_t x, void *userdata) {
 		memcpy(&job->data[pos], ptr, size);
 	}
 	return size;
+}
+
+int WebJob::progressFunc(void *userdata, curl_off_t dltotal, curl_off_t dlnow,
+                         curl_off_t /*ultotal*/, curl_off_t /*ulnow*/) {
+	WebJob* job = static_cast<WebJob*>(userdata);
+	job->dlTotal = static_cast<int64_t>(dltotal);
+	job->dlNow = static_cast<int64_t>(dlnow);
+	// Returning non-zero aborts the transfer; honour a stop() requested from
+	// another thread so a cancelled download tears down promptly even if no
+	// write callback is currently firing.
+	return job->stopped ? 1 : 0;
 }
 
 size_t WebJob::headerFunc(char *text, size_t size, size_t n, void *userdata) {
