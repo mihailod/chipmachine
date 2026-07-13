@@ -654,14 +654,6 @@ private:
     // starfield). Configured in the constructor with callbacks into `screenshots`
     // and updateScreenshotArea().
     ScreenshotTransitions transitions;
-    // Screenshot download callbacks can fire on the web worker thread (async
-    // download) OR synchronously on the render thread (cache hit, via
-    // getFile->call_handler). transitions.restart()/next() touch OpenGL, which
-    // is only valid on the render thread. So the web-callback path just raises
-    // this flag; update() (always the render thread) consumes it and does the
-    // GL-touching restart. Must not block here -- run_safely would deadlock when
-    // the callback already runs on the render thread.
-    std::atomic<bool> pendingShotRestart{false};
     struct NamedBitmap
     {
         NamedBitmap() {}
@@ -681,6 +673,22 @@ private:
     };
     std::vector<NamedBitmap> screenshots;
     std::string currentScreenshot;
+    // Screenshot download callbacks can fire on the web worker thread (async
+    // download) OR synchronously on the render thread (cache hit, via
+    // getFile->call_handler). Mutating `screenshots` from the worker thread while
+    // the render thread reads it (the transition source callbacks) / clears it
+    // (loadScreenshot) is an unsynchronized data race that corrupts the heap
+    // (observed as libmalloc "free block" / autorelease-pool page stomps that
+    // later crash in unrelated code such as the font glyph loader). So the
+    // callback only DECODES into pendingShotBms under pendingShotLock and raises
+    // pendingShotReady; update() (always the render thread) installs the bitmaps
+    // into `screenshots`, appends the logo fallback and restarts the transitions.
+    // pendingShotKey is the request URL the staged bitmaps belong to, so a result
+    // that arrives after the song changed can be dropped.
+    std::mutex pendingShotLock;
+    std::vector<NamedBitmap> pendingShotBms;
+    std::string pendingShotKey;
+    std::atomic<bool> pendingShotReady{ false };
     // Splash animation shown while the app is idle on the main screen (nothing
     // playing, "only the scroller visible"). Rotates the platform + extension
     // pictures, centred and large, reusing the same transition effects as the

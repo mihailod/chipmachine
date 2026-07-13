@@ -1,5 +1,3 @@
-- pesic pr
-
 - now when we have vgmstream plugin, we need testmus files for all these formats so that cmtest can verify their playback via vgmstream before we onboard the slew of streaming data from zophar
 mihailod@Mac chipmachine % cat data/misc/zophar.net/unplayable_formats.txt (this was deemed unplayable before we implemented the new vgmstream plugin)
 # Zophar streamed-tier formats we do NOT decode (HELD -- not
@@ -50,6 +48,9 @@ mihailod@Mac chipmachine % grep -Ei "/music/(sega-dreamcast-dsf|playstation2-psf
 - see if there are other formats in db we don't play
 
 - global dedupe everything against everything to see stats. I think battle of the bits added dupes. when removing if all equal remove the dupe without the screenshot.
+
+- investigate: refactor ui code from engine code
+- investigate: refactor to only invoke cm instead calling code so that there is truly one playback pipeline
 
 - i see files with no screenshots while almost identical files have them -- can we somehow annotate more songs with screenshots if a super-similar file has it?
 

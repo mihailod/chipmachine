@@ -1177,13 +1177,27 @@ void ChipMachine::loadScreenshot(const std::string& shot)
     currentPlatformSlug = slug;
 
     auto parts = utils::split(shot, ";");
-    // One callback fires per requested part; count them down so we know when
-    // every download has settled (success or failure) before finalizing.
-    auto remaining = std::make_shared<int>((int)parts.size());
-    auto cb = [=](utils::File f) {
-        // Bail if the song changed (or went to the logo-only path) meanwhile.
-        if (currentScreenshot != shot)
-            return;
+    // The callback fires once per requested part and MAY run on the web worker
+    // thread (async download) or synchronously on the render thread (cache hit).
+    // It must NOT touch any shared ChipMachine state -- in particular the
+    // `screenshots` vector, which the render thread reads every frame (transition
+    // source callbacks) and clears (loadScreenshot). Doing so from the worker
+    // thread is a data race that corrupts the heap. So the callback only DECODES
+    // the downloaded file(s) into a captured, self-locked accumulator; when the
+    // last part settles it publishes the decoded bitmaps to pendingShotBms and
+    // raises pendingShotReady. update() on the render thread then installs them
+    // into `screenshots`, appends the logo fallback and restarts the transitions
+    // -- so all shared state and all GL calls stay on the render thread.
+    struct ShotAccum
+    {
+        std::mutex m;
+        std::vector<NamedBitmap> bms;
+        int remaining;
+    };
+    auto acc = std::make_shared<ShotAccum>();
+    acc->remaining = (int)parts.size();
+    auto cb = [this, acc, shot](utils::File f) {
+        std::vector<NamedBitmap> decoded;
         if (f) {
             try {
                 if (utils::toLower(utils::path_extension(
@@ -1193,69 +1207,39 @@ void ChipMachine::loadScreenshot(const std::string& shot)
                             if ((px & 0xffffff) == 0)
                                 px &= 0xffffff;
                         }
-                        screenshots.emplace_back(f.getFileName(), bm);
+                        decoded.emplace_back(f.getFileName(), bm);
                     }
                 } else {
                     auto bm = image::load_image(f.getName());
                     for (auto& px : bm) {
                         if ((px & 0xffffff) == 0) px &= 0xffffff;
                     }
-                    screenshots.emplace_back(f.getFileName(), bm);
+                    decoded.emplace_back(f.getFileName(), bm);
                 }
             } catch (image::image_exception& e) {
                 LOGD("Failed to load image");
             }
         }
 
-        if (--(*remaining) <= 0) {
-            // All downloads settled. Sort the real screenshots. Only fall back
-            // to the platform + ChipMachine logos when no real screenshot loaded
-            // (e.g. every download failed) -- if the song has art, show only it.
-            screenshots.erase(std::remove(screenshots.begin(),
-                                          screenshots.end(), ""),
-                              screenshots.end());
-            sort(screenshots.begin(), screenshots.end());
-            if (screenshots.empty()) {
-                // Every download failed. For a YouTube song, walk the video's own
-                // thumbnails before the (often mis-guessed) platform logo, so the
-                // picture stays on-topic: matched external art -> sddefault ->
-                // hqdefault (present for every video) -> logo. Comparing against
-                // `shot` tells us which rung just failed, so we step down without
-                // looping.
-                std::string base = youtubeThumbBase(currentInfo.path);
-                if (!base.empty()) {
-                    std::string sd = base + "sddefault.jpg";
-                    std::string hq = base + "hqdefault.jpg";
-                    if (shot != sd && shot != hq) {
-                        loadScreenshot(sd);
-                        return;
-                    }
-                    if (shot == sd) {
-                        loadScreenshot(hq);
-                        return;
-                    }
-                    // shot == hq: even the guaranteed thumbnail failed -> logo.
-                }
-                appendLogoScreenshots();
-            } else {
-                // Song has real screenshots -- still append the platform (or
-                // extension) logo as the final frame so it always rotates in
-                // last. No generic icon here: if there is no platform/ext logo,
-                // just rotate the real screenshots as before.
-                appendPlatformOrExtLogo();
-            }
-            // Do NOT call transitions.restart() here: this callback may run on
-            // the web worker thread (async download, no GL context), and
-            // restart()->next() touches OpenGL (releasing held textures such as
-            // the cube-flip's cubeTexOld runs glDeleteTextures -> crash off the
-            // render thread). It may ALSO run synchronously on the render thread
-            // (cache hit, via getFile->call_handler), so we can't block/marshal
-            // either (run_safely would self-deadlock). Just flag it; update() on
-            // the render thread consumes the flag and does the GL-touching
-            // restart. screenshots[] filled above is published by this
-            // release-store; update() acquire-loads before reading it.
-            pendingShotRestart.store(true, std::memory_order_release);
+        bool done;
+        {
+            std::lock_guard<std::mutex> lg(acc->m);
+            for (auto& nb : decoded)
+                acc->bms.push_back(std::move(nb));
+            done = (--acc->remaining <= 0);
         }
+        if (!done)
+            return;
+
+        // All parts settled. Hand the decoded screenshots to the render thread;
+        // it validates the request is still current before installing (see the
+        // pendingShotReady handler in update()).
+        {
+            std::lock_guard<std::mutex> lg(pendingShotLock);
+            pendingShotBms = std::move(acc->bms);
+            pendingShotKey = shot;
+        }
+        pendingShotReady.store(true, std::memory_order_release);
     };
     for (auto& p : parts)
         webutils::Web::getInstance().getFile(p, cb);
@@ -1821,12 +1805,62 @@ void ChipMachine::update()
         }
     }
 
-    // A screenshot download callback (possibly on the web worker thread) asked
-    // to (re)start the transition. Do the GL-touching restart here, on the
-    // render thread. acquire-load pairs with the release-store in loadScreenshot
-    // so the screenshots[] it filled are visible before restart() reads them.
-    if (pendingShotRestart.exchange(false, std::memory_order_acquire))
-        transitions.restart();
+    // A screenshot download settled (its callback may have run on the web worker
+    // thread). Install the decoded bitmaps into `screenshots` HERE, on the render
+    // thread, so the transition callbacks that read `screenshots` -- and the GL
+    // work in transitions.restart() -- never race the downloader. acquire pairs
+    // with the release-store in the download callback.
+    if (pendingShotReady.exchange(false, std::memory_order_acquire)) {
+        std::vector<NamedBitmap> bms;
+        std::string key;
+        {
+            std::lock_guard<std::mutex> lg(pendingShotLock);
+            bms = std::move(pendingShotBms);
+            pendingShotBms.clear();
+            key = pendingShotKey;
+        }
+        // Drop the result if the song (and thus the wanted screenshot) changed
+        // while the download was in flight.
+        if (key == currentScreenshot) {
+            screenshots = std::move(bms);
+            // Discard failed/empty entries, then sort for a stable rotation.
+            screenshots.erase(
+                std::remove(screenshots.begin(), screenshots.end(), ""),
+                screenshots.end());
+            std::sort(screenshots.begin(), screenshots.end());
+            if (screenshots.empty()) {
+                // Every download failed. For a YouTube song, walk the video's own
+                // thumbnails before the (often mis-guessed) platform logo, so the
+                // picture stays on-topic: sddefault -> hqdefault (present for
+                // every video) -> logo. `key` tells us which rung just failed, so
+                // we step down without looping.
+                std::string base = youtubeThumbBase(currentInfo.path);
+                bool retried = false;
+                if (!base.empty()) {
+                    std::string sd = base + "sddefault.jpg";
+                    std::string hq = base + "hqdefault.jpg";
+                    if (key != sd && key != hq) {
+                        loadScreenshot(sd);
+                        retried = true;
+                    } else if (key == sd) {
+                        loadScreenshot(hq);
+                        retried = true;
+                    }
+                    // key == hq: even the guaranteed thumbnail failed -> logo.
+                }
+                if (!retried) {
+                    appendLogoScreenshots();
+                    transitions.restart();
+                }
+            } else {
+                // Song has real screenshots -- still append the platform (or
+                // extension) logo as the final frame so it always rotates in
+                // last.
+                appendPlatformOrExtLogo();
+                transitions.restart();
+            }
+        }
+    }
 
     // A podcast-artwork download finished (on the web worker); upload it to the
     // search-logo icon here on the render thread. Skip if the cursor has since
