@@ -970,9 +970,20 @@ bool MusicDatabase::parseStandard(
     return true;
 }
 
-// The extension a song path would route on, lowercased and without the leading
-// dot, for matching against the not_supported_extensions list. Handles MULTI:
-// groups (the first member decides) and URL query strings (".ay?x" -> "ay").
+// The extension a single (non-MULTI) path routes on, lowercased and without the
+// leading dot, for matching against the not_supported_extensions list. Handles
+// URL query strings (".ay?x" -> "ay").
+static std::string pathExtension(std::string const& p)
+{
+    auto ext = toLower(utils::path_extension(p));
+    auto q = ext.find('?');
+    if (q != std::string::npos) ext = ext.substr(0, q);
+    return ext;
+}
+
+// The extension a song path would route on. MULTI: groups are decided by their
+// first member -- see songIsUnsupported() for why the skip gate does NOT use
+// this for them.
 static std::string routingExtension(std::string p)
 {
     if (startsWith(p, "MULTI:")) {
@@ -980,10 +991,71 @@ static std::string routingExtension(std::string p)
         auto tab = p.find('\t');
         if (tab != std::string::npos) p = p.substr(0, tab);
     }
-    auto ext = toLower(utils::path_extension(p));
+    return pathExtension(p);
+}
+
+// The extension a *song* actually routes on. An `ext` template column overrides
+// the path: those collections carry the real format there and the path can't be
+// parsed for it -- modarchive/zophar/vgmrips paths end in ".zip", and an amp
+// path is a bare module id ("152352") with no dot at all. Matching only the path
+// (as the gate first did) left the not_supported_extensions list unenforceable
+// for ~237k songs, i.e. ~31% of the index: a line added for any amp/modarchive/
+// zophar format would look right and silently drop nothing. The column is stored
+// verbatim from the list file, so it arrives mixed-case ("MOD" vs "mod") and
+// needs the same normalization as a path extension.
+static std::string routingExtension(SongInfo const& song)
+{
+    if (song.ext.empty()) return routingExtension(song.path);
+    auto ext = toLower(song.ext);
+    auto a = ext.find_first_not_of(" \t");
+    if (a == std::string::npos) return routingExtension(song.path);
+    auto b = ext.find_last_not_of(" \t");
+    ext = ext.substr(a, b - a + 1);
+    if (ext[0] == '.') ext.erase(0, 1);
     auto q = ext.find('?');
     if (q != std::string::npos) ext = ext.substr(0, q);
-    return ext;
+    return ext.empty() ? routingExtension(song.path) : ext;
+}
+
+// Should this song be dropped from the index because we have no decoder for it?
+//
+// A MULTI: group is one GUI entry backed by several files, and its members are
+// not interchangeable: a group routinely LEADS with a companion (a sample bank,
+// a shared lib, a stale backup) and carries the real tunes after it, e.g.
+//   MULTI:Quartet ST/<artist>/<game>/SMP.set  <tab> ....4v <tab> ....4v
+//   MULTI:Playstation 2 Sound Format/.../<x>.psf2lib <tab> ....minipsf2
+//   MULTI:IFF-SMUS/Dr. Awesome/Awesome-3/Awesome-3.SMUS.bak <tab> ....smus
+// So judging a group by its first member (what routingExtension does) would drop
+// the whole group -- 451 playable songs across .set/.psf2lib/.bak alone -- the
+// moment a companion extension is listed. Only skip a group when EVERY member is
+// unsupported; one playable member keeps the entry. Standalone companion rows
+// (the 149 bare "*.set" tunes-that-aren't) still match and are dropped, which is
+// the point of listing them.
+static bool songIsUnsupported(SongInfo const& song,
+                              std::set<std::string> const& unsupported)
+{
+    if (unsupported.empty()) return false;
+    // An `ext` template column names the format outright; it wins over the path
+    // for both plain rows and groups.
+    if (!song.ext.empty()) return unsupported.count(routingExtension(song)) > 0;
+    if (!startsWith(song.path, "MULTI:")) {
+        return unsupported.count(routingExtension(song.path)) > 0;
+    }
+    bool any = false;
+    std::string const members = song.path.substr(6);
+    size_t pos = 0;
+    while (pos <= members.size()) {
+        auto tab = members.find('\t', pos);
+        auto end = (tab == std::string::npos) ? members.size() : tab;
+        auto member = members.substr(pos, end - pos);
+        if (!member.empty()) {
+            any = true;
+            if (unsupported.count(pathExtension(member)) == 0) return false;
+        }
+        if (tab == std::string::npos) break;
+        pos = tab + 1;
+    }
+    return any;
 }
 
 void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
@@ -1139,10 +1211,7 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // data/misc/not_supported_extensions.txt: we have no decoder for
                 // them, so indexing them only yields broken GUI entries that
                 // download then can't play.
-                if (!unsupportedExts.empty() &&
-                    unsupportedExts.count(routingExtension(song.path)) > 0) {
-                    return;
-                }
+                if (songIsUnsupported(song, unsupportedExts)) { return; }
                 query
                     .bind(song.title, song.game, song.composer, song.format,
                           song.path, collection_id,

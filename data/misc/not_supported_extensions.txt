@@ -250,3 +250,124 @@
 # N163/5B expansion dead-end above. Would need its own parser AND a 0CC-aware
 # engine. Parked with .0cc.
 .kftm
+
+# --- demoscene executables / disk images, 2nd pass (2026-07-14) ---
+# Same class as the .ps1/.tic entries in the 2026-07-10 block above, found by
+# re-auditing the whole live index (776,777 rows) for extensions that route to
+# no plugin and are not listed here. All reached us through demozoo/scene.org
+# compo-directory URL onboarding: they are ROMs, disk/tape images and native
+# executables whose music is produced by running the machine code, not by
+# decoding a module. Playing any of them means hosting the whole target system
+# (a C64/CPU+VIC+SID, a 6502 NES, a 68k Genesis, an x86 PC), which no plugin in
+# the stack does -- GME plays the *ripped* chip logs (nsf/gbs/vgm/sid), never
+# the parent ROM or image. Each just downloads and then dead-ends in the GUI.
+
+# c64 disk image (compo entries submitted as a whole .d64 disk, not a .sid rip)
+.d64
+
+# native executable music (DOS/Windows PE "executable music" compo entries)
+.exe
+
+# ines nes rom -- executable music as a cartridge image, not an .nsf rip
+.nes
+
+# sega genesis/mega drive rom -- likewise not a .vgm/.gym rip
+.gen
+
+# zx spectrum / c64 tape image (beeper + ay compo entries shipped as .tap)
+.tap
+
+# .tsd -- 26 files, two unrelated dead ends that share the extension: 24 are
+# Fujiology Atari ST compo files (MUSIC/FT/TUNEZ/T/TAO/TSD/), and 2 are modland
+# "TSS/- unknown/galg main.tsd|galg title.tsd" -- i.e. members of the TSS format
+# dir, whose own .tss tunes are equally undecodable (no open TSS replayer in
+# UADE/OpenMPT/libxmp/ZXTune/rePlayer). NOT a demoscene executable like the rest
+# of this block; documented here because both variants are unplayable today.
+# Re-open the modland pair if a TSS replayer ever lands (it would cover .tss too).
+.tsd
+
+# .spi -- 3 Fujiology files, all under MUSIC/FT/TUNEZ/G/GEM_TWO/EPSS/. Unidentified
+# Atari ST "EPSS" format; no reader anywhere in the stack and no public spec found.
+.spi
+
+# --- MusicMaker V8 instrument packs indexed as songs (2026-07-14) ---
+# modland "MusicMaker V8 Old/- unknown/" ships 7 files: 2 real tunes
+# (best of guitars.sdata, moveback.sdata -- "sdata" is a UADE supported_ext,
+# eagleplayer.conf "MusicMaker-8V prefixes=mm8,sdata") and 5 members of their
+# 3-part instrument pack. UADEPlugin::getSecondaryFiles already pulls the pack
+# in for the .sdata ("<name>.ip" samples + "<name>.ip.l"/"<name>.ip.n" metadata,
+# see UADEPlugin.cpp ~line 826), so the packs must NOT be indexed as standalone
+# songs -- they are not tunes and render nothing on their own. Skipping them here
+# does not affect the .sdata tunes, which keep fetching all three parts.
+# test.cpp's shouldIgnoreFile already treats ip/.ip. as aux for the same reason.
+.ip
+
+# The pack's other two members (".ip.l"/".ip.n") are deliberately NOT listed.
+# They route on the last dot, i.e. "l" and "n", and single letters collide with
+# Amiga prefix-form names whose TITLE happens to end that way: adding ".l" was
+# tried and immediately dropped a real playable tune --
+# "/Demo/Larsen_Sten/Egregious.lha/unic.take-no-fab by s.l.l", which routes on
+# its "unic" prefix (UnIC Tracker, a UADE supported_ext) and only looks like a
+# ".l" file to an extension matcher. ".n" measured clean today, but it is the
+# same shape and one new title ending in ".n" would silently kill a good song.
+# The 3 leftover .ip.l/.ip.n rows stay indexed; that cosmetic wart is a better
+# trade than a routing regression. A companion-aware indexer rule (cf. test.cpp
+# shouldIgnoreFile's ".ip." pattern) is the right fix if it is ever worth doing.
+
+# --- companion files indexed as standalone songs (2026-07-14) ---
+# These are support files, never tunes: they carry no sequence data and render
+# nothing on their own, but modland/AMP ship them next to the songs and the
+# indexer listed them as rows. The plugins already fetch each one as a secondary
+# file of the tune that needs it, so dropping the standalone rows costs nothing.
+#
+# SAFE ONLY BECAUSE THE GATE IS MULTI-AWARE: all three of these also appear as
+# the FIRST member of MULTI: groups whose later members are real, playable tunes.
+# songIsUnsupported() (MusicDatabase.cpp) skips a group only when EVERY member is
+# unsupported, so the groups below survive while the standalone rows are dropped.
+# Listing any of these under a first-member-decides gate would have deleted 451
+# playable songs (74 Quartet .4v + 374 .minipsf2 + 3 .smus). Keep that in mind
+# before adding any further companion extension here.
+
+# quartet st sample bank ("SMP.set" / "<tune>.set"), paired with the .4v songs
+# that quartetplugin plays. 149 standalone rows; the 9 "MULTI:.../SMP.set + .4v"
+# groups keep working.
+.set
+
+# playstation 2 sound format shared driver/sample lib, referenced by the
+# .psf2/.minipsf2 tunes in the same dir (heplugin pulls it in as a psflib).
+# Never a standalone row today -- all 6 rows are MULTI groups that survive -- so
+# this line is pre-emptive: it stops a bare "*.psf2lib" from ever becoming an
+# entry if a future rip lists one.
+.psf2lib
+
+# edlib d01 (.d01 song + .s01 instrument bank, modland "Ad Lib/EdLib D01/JCH/",
+# 3 tunes = 6 rows). TESTED, DO NOT "just add d01 to adplugin supported_ext" --
+# that would make canHandle claim the file and fromFile then fail, turning a
+# clean Skip into a hard FAIL. AdPlug's Cd00Player rejects these two ways over,
+# verified by linking libadplugin.a directly and calling Cd00Player::load():
+#   crooner.d00         -> LOADED (control)    crooner.d01 -> REJECTED
+#   crooner.d01 renamed to .d00 -> STILL REJECTED
+# Why: D01 is NOT a renamed D00. Decoded against the real d00header (id[6] then
+# type,version,speed,subsongs,soundcard) the marker byte differs --
+#   .d00 = type 0x00 / version 2      (single file, instruments inline)
+#   .d01 = type 0x80 / version 1      (song only)
+#   .s01 = type 0x01 / version 0      (the external instrument bank)
+# so the v2-4 branch (needs type==0) declines, and the fallback v0/v1 branch
+# hard-requires a ".d00" extension *inside the library* (d00.cpp ~line 92); after
+# a rename it passes that but then reads a d00header1 at offset 0, where "version"
+# lands on the 'J' of the JCH magic (0x4A > 1) and rejects again. Not the
+# "reheadered old-style song" case either -- there is no valid old header at 0x6b
+# (reads version=219, i.e. song data). Cd00Player only plays single-file modules
+# with instruments inline; D01 splits the ~20KB bank into the .s01, so real
+# support means REing the D01 layout + external-bank resolution.
+# ROI is poor: of the 3 tunes, "crooner" and "the alibi" ALREADY play from
+# "Ad Lib/EdLib D00/JCH/" (both verified LOADED), so only "gorgeous" is net-new.
+# Same dead-end shape as .edl above. Re-open if an open D01 reader ever lands.
+.d01
+.s01
+
+# stale editor backups: modland's "IFF-SMUS/Dr. Awesome/*/[Awesome-N].SMUS.bak"
+# and one chipmusic.org "dj-brama-style_kamu.mp3.bak" (an S3 backup artifact
+# whose ".bak" tail hides the .mp3 from FFMPEGPlugin's ext gate, so it dead-ends
+# instead of playing). The 3 SMUS groups keep their playable .smus members.
+.bak
