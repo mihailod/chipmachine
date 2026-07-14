@@ -136,6 +136,10 @@ private:
 struct FilterOption {
     std::string name;
     std::vector<uint8_t> matchedFormats;
+    // A grouping entry (e.g. "Nintendo", "Sony"): selecting it does not apply a
+    // filter but drills into a 2nd-level list of these child options, which
+    // themselves apply the filter. Empty for ordinary (leaf) entries.
+    std::vector<FilterOption> children;
 };
 
 class ChipMachine
@@ -537,6 +541,28 @@ private:
     // Per-filterOptions tune counts, shown as "[N tunes]" on the TAB screen.
     // Populated once the database finishes indexing.
     std::vector<int> filterCounts;
+    // Raw per-format-byte tune counts (index = format byte), plus the grand
+    // total. Kept so a drilled-in submenu can count its children on the fly.
+    std::vector<int> filterByteCounts;
+    int filterTotalCount = 0;
+    // TAB filter drill-down state. activeFilterOptions points at the list the
+    // advancedList currently renders: the static top-level filterOptions, or
+    // drillOptions (one group's children). drillReturnIndex is the top-level row
+    // to re-select when popping back out with ESC.
+    const std::vector<FilterOption>* activeFilterOptions = nullptr;
+    std::vector<FilterOption> drillOptions;
+    int drillReturnIndex = 0;
+
+    // The filter list currently shown on the TAB screen (top-level or a drill).
+    const std::vector<FilterOption>& currentFilterOptions() const
+    {
+        return activeFilterOptions ? *activeFilterOptions : filterOptions;
+    }
+    // Tune count for a filter option (sum of its formats, or of its children).
+    int filterOptionCount(FilterOption const& opt) const;
+    // Switch the TAB list between the top level (opts == nullptr) and a drilled
+    // submenu (opts == &drillOptions), resizing the list and selecting `sel`.
+    void setFilterLevel(const std::vector<FilterOption>* opts, int sel);
     // Number of distinct podcast shows, used to prefix the TAB "Podcasts" label
     // ("9 Podcasts  [N episodes]"). Populated alongside filterCounts.
     int podcastShowCount = 0;

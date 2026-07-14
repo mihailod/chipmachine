@@ -476,7 +476,15 @@
 --     platformscreenshots/: "Nintendo 3DS.png", "Nintendo GameCube.png",
 --     "Nintendo Wii.png", "PlayStation 3.png", "PlayStation Portable.png",
 --     "Xbox.png", "Xbox 360.png". Bump forces a reindex.
-VERSION = 95;
+-- 96: The single APPLE format byte (which fronted Apple IIGS + Macintosh + Mac OS
+--     + iOS) is split into four bytes so the TAB "Apple" group can drill into all
+--     four sub-platforms like Nintendo/Sony/Sega/Microsoft. APPLE now means Apple
+--     IIGS only ("apple ii*"/soundsmith); new APPLEMAC (Macintosh classic /
+--     PlayerPRO .mad), MACOS ("macos"/"macosx *"), IOS ("ios"). classifyFormat
+--     reassigns these format strings, so their songs must be re-stamped -> the
+--     bump forces a reindex. Optional logos under data/misc/platformscreenshots/:
+--     "Original Apple Mac.png", "Mac OS.png", "iOS.png".
+VERSION = 96;
 
 DB = {
 {

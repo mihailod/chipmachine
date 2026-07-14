@@ -20,6 +20,12 @@ void ChipMachine::setupCommands()
     // shortcuts are cleared in setupRules) so ESC appears only once here. This
     // binding itself pops back from the platform-filter screen.
     cmd("clear_/_close_/_go_back", [=] {
+        // On the TAB screen, ESC from inside a drilled-in group submenu pops
+        // back to the top-level platform list rather than closing the screen.
+        if (currentScreen == ADVANCED_SCREEN && activeFilterOptions != nullptr) {
+            setFilterLevel(nullptr, drillReturnIndex);
+            return;
+        }
         showScreen(lastScreen);
     });
 
@@ -38,21 +44,35 @@ void ChipMachine::setupCommands()
         // Ensure the per-format tune counts are ready (e.g. when the index was
         // loaded from cache and the indexing-finished path never ran).
         if (filterCounts.empty()) computeFilterCounts();
+        // Always open at the top level (reset any prior drill state).
+        if (activeFilterOptions != nullptr) setFilterLevel(nullptr, drillReturnIndex);
         showScreen(ADVANCED_SCREEN);
     });
 
     cmd("select_filter", [=] {
         int idx = advancedList.selected();
+        auto const& opts = currentFilterOptions();
+        if (idx >= 0 && idx < (int)opts.size()) {
+            auto const& sel = opts[idx];
+            // A group ("Nintendo"/"Sony"): drill into its child platforms. Users
+            // return to the top level with ESC (no explicit back row).
+            if (!sel.children.empty()) {
+                drillReturnIndex = idx;
+                drillOptions.clear();
+                for (auto const& ch : sel.children)
+                    drillOptions.push_back(ch);
+                setFilterLevel(&drillOptions, 0);
+                return;
+            }
+        }
         bool hasFilter = false;
-        if (idx >= 0 && idx < filterOptions.size()) {
-            auto const& opt = filterOptions[idx];
+        if (idx >= 0 && idx < (int)opts.size()) {
+            auto const& opt = opts[idx];
             // The no-filter entry is the one with no formats (its label is
             // user-editable, so match on that rather than the name).
             hasFilter = !opt.matchedFormats.empty();
             selectedFilterName = hasFilter ? opt.name : "";
-            activeFilterCount = (hasFilter && idx < (int)filterCounts.size())
-                                    ? filterCounts[idx]
-                                    : 0;
+            activeFilterCount = hasFilter ? filterOptionCount(opt) : 0;
             musicDatabase.setFormatFilter(opt.matchedFormats);
 
             iquery->invalidate();
@@ -288,6 +308,15 @@ void ChipMachine::setupCommands()
             musicDatabase.setOtherPlatform(-1);
             songList.select(0);
             searchUpdated = true;
+            return;
+        }
+        // At a sub-platform / podcast SHOW listing (a multi-level drill filter is
+        // active but not drilled into a group): ESC steps back up to the TAB
+        // platform filter rather than jumping all the way out to the main screen.
+        if (searchField.getText() == "" &&
+            (musicDatabase.otherFilterActive_() ||
+             musicDatabase.podcastFilterActive_())) {
+            showScreen(ADVANCED_SCREEN);
             return;
         }
         if (searchField.getText() == "")

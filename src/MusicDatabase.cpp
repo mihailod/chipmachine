@@ -2181,8 +2181,8 @@ void initFormats()
     // .mod among these are genuine Amiga ProTracker modules and get pulled to
     // Amiga by the .mod correction near the end of formatToByte.)
     format_map["atari jaguar"] = OTHER;
-    format_map["soundsmith"] = APPLE; // Apple IIgs SoundSmith
-    format_map["playerpro"] = APPLE;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
+    format_map["soundsmith"] = APPLE;    // Apple IIgs SoundSmith
+    format_map["playerpro"] = APPLEMAC;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
     format_map["jaytrax"] = TRACKER;  // JayTrax (.jxs), cross-platform synth tracker -- not UADE/Amiga
     format_map["ultra64 sound format"] = NINTENDO64;
     format_map["nintendo ds sound format"] = NDS;
@@ -2363,7 +2363,7 @@ void initFormats()
     format_map["ibm pc"] = PC;
     format_map["zx spectrum"] = SPECTRUM;
     format_map["commodore 64"] = SID;
-    format_map["apple ii"] = APPLE;
+    format_map["apple ii"] = APPLE;   // Apple IIGS
     format_map["apple iigs"] = APPLE;
     // Arcade boards get their own top-level filter ("Arcade"), which drills into
     // these sub-platforms (recovered from the format string, see buildSubPlatforms).
@@ -2386,7 +2386,7 @@ void initFormats()
     // now emits; the console labels below are retained only for OTHER collections.
     format_map["amiga"] = AMIGA;
     format_map["pc"] = PC;                   // PC DOS/Windows game tracker mods
-    format_map["macintosh"] = APPLE;
+    format_map["macintosh"] = APPLEMAC;
     format_map["playstation"] = PLAYSTATION;
     format_map["atari falcon"] = ATARI;
     format_map["nintendo 64"] = NINTENDO64;
@@ -2551,8 +2551,8 @@ static uint8_t platformNameToByte(std::string s)
         { "zx spectrum beeper", ZXBEEPER },
         { "amstrad cpc", AMSTRAD },  { "amstrad plus", AMSTRAD },
         { "apple ii", APPLE },       { "apple ii gs", APPLE },
-        { "macos", APPLE },          { "macosx intel", APPLE },
-        { "macosx ppc", APPLE },     { "ios", APPLE },
+        { "macos", MACOS },          { "macosx intel", MACOS },
+        { "macosx ppc", MACOS },     { "ios", IOS },
         { "acorn", ACORN },          { "bbc micro", ACORN },
         { "msx", MSX },              { "msx 2", MSX },
         { "msx turbo-r", MSX },
@@ -2791,6 +2791,9 @@ static std::string platformName(uint8_t b)
     case AMSTRAD: return "Amstrad CPC";
     case ACORN: return "Acorn Archimedes";
     case APPLE: return "Apple IIGS";
+    case APPLEMAC: return "Original Apple Mac";
+    case MACOS: return "Mac OS";
+    case IOS: return "iOS";
     case NES: return "Nintendo NES";
     case SNES: return "Nintendo SNES";
     case GAMEBOY:
@@ -3434,7 +3437,7 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
         plat = "Atari Falcon";
     }
 
-    if (b == APPLE && ext == "MAD") {
+    if (b == APPLEMAC && ext == "MAD") {
         plat = "Macintosh";
     }
 

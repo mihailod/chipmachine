@@ -129,7 +129,16 @@ enum Formats
     XBOX,       // Microsoft Xbox
     XBOX360,    // Microsoft Xbox 360
 
-    PRODUCT = 0x40
+    PRODUCT = 0x40,
+
+    // Apple sub-platforms. APPLE (0x50 region below is full) historically fronted
+    // all four; it now means Apple IIGS specifically, and these three split off
+    // the Macintosh / Mac OS / iOS tunes so the TAB "Apple" group can drill into
+    // all four. Placed after the PRODUCT anchor (0x41-0x43); nothing treats
+    // PRODUCT as the max byte, and getFormatByteCounts()/formatColor cover 0..255.
+    APPLEMAC, // Original Apple Macintosh (classic Mac OS trackers, PlayerPRO .mad)
+    MACOS,    // Mac OS / macOS (PPC + Intel)
+    IOS       // Apple iOS
 
 };
 

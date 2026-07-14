@@ -52,23 +52,36 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "Amstrad CPC", { AMSTRAD } },
     { "Sam Coupe", { SAMCOUPE } },
     { "Acorn Archimedes", { ACORN } },
-    { "Apple Mac/IIGS/MacOS/iOS", { APPLE } },
-    { "Sony PlayStation 1/2", { PLAYSTATION, PLAYSTATION2 } },
-    { "Sony PlayStation 3", { PS3 } },
-    { "Sony PSP", { PSP } },
-    { "Nintendo NES", { NES } },
-    { "Nintendo SNES", { SNES } },
-    { "Nintendo GameBoy/GBA", { GAMEBOY, GBA } },
-    { "Nintendo 64", { NINTENDO64 } },
-    { "Nintendo DS", { NDS } },
-    { "Nintendo 3DS", { N3DS } },
-    { "Nintendo GameCube", { GAMECUBE } },
-    { "Nintendo Wii", { WII } },
-    { "Microsoft Xbox", { XBOX } },
-    { "Microsoft Xbox 360", { XBOX360 } },
-    { "Sega 8bit", { SEGAMS } },
-    { "Sega 16bit/32X/Saturn", { SEGA, MEGADRIVE, SATURN } },
-    { "Sega Dreamcast", { DREAMCAST } },
+    { "Apple", {}, {
+        { "Original Apple Mac", { APPLEMAC } },
+        { "Apple IIGS", { APPLE } },
+        { "Mac OS", { MACOS } },
+        { "iOS", { IOS } },
+    } },
+    { "Sony", {}, {
+        { "Sony PlayStation 1/2", { PLAYSTATION, PLAYSTATION2 } },
+        { "Sony PlayStation 3", { PS3 } },
+        { "Sony PSP", { PSP } },
+    } },
+    { "Nintendo", {}, {
+        { "Nintendo NES", { NES } },
+        { "Nintendo SNES", { SNES } },
+        { "Nintendo GameBoy/GBA", { GAMEBOY, GBA } },
+        { "Nintendo 64", { NINTENDO64 } },
+        { "Nintendo DS", { NDS } },
+        { "Nintendo 3DS", { N3DS } },
+        { "Nintendo GameCube", { GAMECUBE } },
+        { "Nintendo Wii", { WII } },
+    } },
+    { "Microsoft", {}, {
+        { "Microsoft Xbox", { XBOX } },
+        { "Microsoft Xbox 360", { XBOX360 } },
+    } },
+    { "Sega", {}, {
+        { "Sega 8bit", { SEGAMS } },
+        { "Sega 16bit/32X/Saturn", { SEGA, MEGADRIVE, SATURN } },
+        { "Sega Dreamcast", { DREAMCAST } },
+    } },
     { "PC-98/X68000/FM Towns", { JPFM } },
     { "PC Engine/TurboGrafx-16", { HES } },
     { "WonderSwan", { WONDERSWAN } },
@@ -108,6 +121,7 @@ static uint32_t formatColor(int f)
         { ATARI, 0xffcccc33 },   { POKEY, 0xffee7711 },
         { MP3, 0xff88ff88 },
         { APPLE, 0xff66cccc },
+        { APPLEMAC, 0xffaaaaaa }, { MACOS, 0xff88bbcc }, { IOS, 0xffcccccc },
         { M3U, 0xffaaddaa },     { RADIO, 0xffff7722 },
         { YOUTUBE, 0xffff0000 },
         { PODCAST, 0xff22bbff },
@@ -183,7 +197,8 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
     auto res = iquery->getResult(index);
     auto parts = utils::split(res, "\t");
     int f = std::stol(parts[3]) & 0xff;
-    bool isShow = std::stol(parts[2]) >= MusicDatabase::PODCAST_SHOW_INDEX;
+    long fullIndex = std::stol(parts[2]);
+    bool isShow = fullIndex >= MusicDatabase::PODCAST_SHOW_INDEX;
 
     if (isShow) {
         // Podcast show row: a drillable group, shown like a folder.
@@ -200,7 +215,6 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
             text = utils::format("%s / %s", parts[0], parts[1]);
     }
     uint32_t base = formatColor(f);
-    long fullIndex = std::stol(parts[2]);
     if (fullIndex >= MusicDatabase::OTHER_PLATFORM_INDEX) {
         // Other Platforms group row: the OTHER byte is one flat deep red, so
         // give each sub-platform its own colour, spread evenly across all groups
@@ -500,13 +514,21 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     advancedList = VerticalList(
         listrec, (int)filterOptions.size(),
         [=](grappix::Rectangle& rec, int y, uint32_t index, bool hilight) {
-            if (index >= filterOptions.size()) return;
-            auto const& opt = filterOptions[index];
+            auto const& opts = currentFilterOptions();
+            if (index >= opts.size()) return;
+            auto const& opt = opts[index];
             // Inherit the platform's color (see formatColor / renderSong); the
-            // "[No Filter]" entry has no single format, so render it white.
-            uint32_t c = opt.matchedFormats.empty()
-                             ? 0xffffffff
-                             : formatColor(opt.matchedFormats[0]);
+            // "[No Filter]" entry has no single format, so render white. A group
+            // ("Nintendo"/"Sony") borrows the colour of its first child platform.
+            uint8_t colorByte =
+                !opt.matchedFormats.empty()
+                    ? opt.matchedFormats[0]
+                    : (!opt.children.empty() &&
+                       !opt.children[0].matchedFormats.empty()
+                           ? opt.children[0].matchedFormats[0]
+                           : 0);
+            uint32_t c =
+                (colorByte == 0) ? 0xffffffff : formatColor(colorByte);
             if (hilight) {
                 // The pulse animates baseColor <-> hilightColor. hilightColor is
                 // white, so a white base ("[Show All]") would pulse white<->white
@@ -530,6 +552,9 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
             std::string label = opt.name;
             uint8_t fmt0 =
                 opt.matchedFormats.empty() ? 0 : opt.matchedFormats[0];
+            // A drilled-in submenu lays its (short) list out in a single column
+            // aligned to the top-level's left column, rather than two columns.
+            bool drilled = (activeFilterOptions != nullptr);
             // Prefix the Podcasts entry with the number of distinct shows, e.g.
             // "9 Podcasts  [1,497 episodes]".
             if (fmt0 == PODCAST && podcastShowCount > 0)
@@ -541,38 +566,47 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
             // Same for the Arcade entry, e.g. "6 Arcade  [N tunes]".
             if (fmt0 == ARCADE && arcadePlatformCount > 0)
                 label = utils::format("%d %s", arcadePlatformCount, opt.name);
-            if (index < filterCounts.size()) {
+            // A group ("Nintendo"/"Sony"): prefix with its sub-platform count,
+            // e.g. "8 Nintendo  [N tunes]".
+            if (!opt.children.empty())
+                label = utils::format("%d %s", (int)opt.children.size(),
+                                      opt.name);
+            {
+                int cnt = filterOptionCount(opt);
                 if (fmt0 == RADIO) {
                     // Each radio entry IS one station, so just count-prefix the
                     // name ("10 Radio Stations") -- no "[N streams]" bracket.
-                    label = utils::format("%s %s",
-                                          withCommas(filterCounts[index]),
-                                          opt.name);
+                    label = utils::format("%s %s", withCommas(cnt), opt.name);
                 } else {
                     // Count unit by platform: "[No Filter]" spans everything
                     // (tunes + podcasts + radio) so it counts in "items";
                     // podcasts in episodes, everything else in tunes.
-                    const char* unit = opt.matchedFormats.empty()
-                                           ? "items"
-                                           : (fmt0 == PODCAST ? "episodes"
-                                                              : "tunes");
-                    label += utils::format("  [%s %s]",
-                                           withCommas(filterCounts[index]),
-                                           unit);
+                    const char* unit =
+                        (opt.matchedFormats.empty() && opt.children.empty())
+                            ? "items"
+                            : (fmt0 == PODCAST ? "episodes" : "tunes");
+                    label += utils::format("  [%s %s]", withCommas(cnt), unit);
                 }
             }
 
-            int rows = ((int)filterOptions.size() + 1) / 2;
-            int col = (int)index / rows;
-            int row = (int)index % rows;
-            // Leave the top row of the right column empty so "[No Filter]"
-            // (alone at the top of the left column) stands out: shift the right
-            // column down by one row.
-            row += col;
             float lineH = advancedArea.h / (float)numLines;
-            float colW = advancedArea.w / 2.0f;
-            float px = advancedArea.x + col * colW;
-            float py = advancedArea.y + lineH * (row + 1);
+            float px, py;
+            if (drilled) {
+                // Single column, aligned to the top-level's left column.
+                px = advancedArea.x;
+                py = advancedArea.y + lineH * ((int)index + 1);
+            } else {
+                int rows = ((int)opts.size() + 1) / 2;
+                int col = (int)index / rows;
+                int row = (int)index % rows;
+                // Leave the top row of the right column empty so "[No Filter]"
+                // (alone at the top of the left column) stands out: shift the
+                // right column down by one row.
+                row += col;
+                float colW = advancedArea.w / 2.0f;
+                px = advancedArea.x + col * colW;
+                py = advancedArea.y + lineH * (row + 1);
+            }
             grappix::screen.text(listFont, label, px, py, c,
                                  resultFieldTemplate.scale * 0.9f);
         });
@@ -922,11 +956,18 @@ void ChipMachine::updateFilterLogo()
         return;
     }
     int i = advancedList.selected();
+    auto const& opts = currentFilterOptions();
     const image::bitmap* bm = nullptr;
-    if (i >= 0 && i < (int)filterOptions.size()) {
+    if (i >= 0 && i < (int)opts.size()) {
         // The entry's first matched format byte names its platform ("[No Filter]"
-        // matches nothing -> no logo). Map it to the per-platform logo slug.
-        auto const& fmts = filterOptions[i].matchedFormats;
+        // matches nothing -> no logo). A group borrows its first child's
+        // platform. Map it to the per-platform logo slug.
+        auto const& opt = opts[i];
+        std::vector<uint8_t> const& fmts =
+            !opt.matchedFormats.empty()
+                ? opt.matchedFormats
+                : (!opt.children.empty() ? opt.children[0].matchedFormats
+                                         : opt.matchedFormats);
         if (!fmts.empty()) {
             std::string slug = MusicDatabase::platformScreenshotSlug(fmts[0]);
             if (!slug.empty()) {
@@ -1538,6 +1579,18 @@ std::string ChipMachine::withCommas(int n)
     return s;
 }
 
+void ChipMachine::setFilterLevel(const std::vector<FilterOption>* opts, int sel)
+{
+    activeFilterOptions = opts;
+    int n = (int)currentFilterOptions().size();
+    advancedList.setTotal(n);
+    advancedList.setVisible(n);
+    if (sel < 0) sel = 0;
+    if (sel >= n) sel = n - 1;
+    advancedList.select(sel);
+    updateFilterLogo();
+}
+
 void ChipMachine::computeFilterCounts()
 {
     if (musicDatabase.busy()) return; // not indexed yet -- retry later
@@ -1550,18 +1603,26 @@ void ChipMachine::computeFilterCounts()
     podcastShowCount = musicDatabase.getPodcastShowCount();
     otherPlatformCount = musicDatabase.getOtherPlatformCount();
     arcadePlatformCount = musicDatabase.getArcadePlatformCount();
+    filterByteCounts = counts;
+    filterTotalCount = total;
     filterCounts.assign(filterOptions.size(), 0);
-    for (size_t i = 0; i < filterOptions.size(); i++) {
-        auto const& opt = filterOptions[i];
-        if (opt.matchedFormats.empty()) {
-            filterCounts[i] = total; // "[Show All]"
-        } else {
-            int s = 0;
-            for (uint8_t b : opt.matchedFormats)
-                s += counts[b];
-            filterCounts[i] = s;
-        }
-    }
+    for (size_t i = 0; i < filterOptions.size(); i++)
+        filterCounts[i] = filterOptionCount(filterOptions[i]);
+}
+
+// Tune count for a filter option: the grand total for the "[Show All]" entry
+// (no formats, no children), the sum of its children's counts for a group, or
+// the sum of its matched format bytes otherwise. Requires filterByteCounts.
+int ChipMachine::filterOptionCount(FilterOption const& opt) const
+{
+    if (opt.matchedFormats.empty() && opt.children.empty())
+        return filterTotalCount; // "[Show All]"
+    int s = 0;
+    for (auto const& ch : opt.children)
+        s += filterOptionCount(ch);
+    for (uint8_t b : opt.matchedFormats)
+        if (b < filterByteCounts.size()) s += filterByteCounts[b];
+    return s;
 }
 
 void ChipMachine::update()
