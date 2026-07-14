@@ -20,7 +20,6 @@
 --     bare-named song; "SoundSmith" maps to the Apple IIgs platform/format
 -- 31: added Kohina radio station, removed .snd files
 -- 32: ext field added to SongInfo and DB; parseStandard now recognizes "ext" keyword
--- 33: added Karolina radio station
 -- 34: skip KrisHatlelid "songplay" driver files (companion, not a standalone
 --     song; it sorted before the .kh and became the MULTI: primary -> silent)
 -- 35: The Sid Station radio: switched from the :2199 HTTPS .pls redirector
@@ -484,7 +483,32 @@
 --     reassigns these format strings, so their songs must be re-stamped -> the
 --     bump forces a reindex. Optional logos under data/misc/platformscreenshots/:
 --     "Original Apple Mac.png", "Mac OS.png", "iOS.png".
-VERSION = 96;
+-- 97: `priority` is now set on EVERY collection (was: 4 of them), giving search
+--     results a deliberate house order instead of DB-declaration order. Data-only
+--     change -- no engine change; the existing stable_sort in
+--     MusicDatabase::search already reads the column. The tiers, high to low:
+--       100  manual patch, HVSC, Modland -- the definitive/corrective sources,
+--            they must win every dedup fold.
+--        95  single-chip native archives: sndh, asma, csdb, hvtc, bitworld,
+--            unexotica, vampi, zxart, zxtunes, cpcpower, projectay, oplarchive,
+--            nsfe, smspower.
+--        90  modarchive, amp -- broad tracker mirrors that overlap Modland
+--            heavily; below it so Modland (better metadata) wins the fold.
+--        80  botb, chipmusic, keygenmusic -- original chip works, but community/
+--            rendered rather than archival.
+--        60  playlists.
+--        50  mirsoft -- real game module rips, thin metadata (was -100; the v94
+--            add_unique fix on {title, composer, real ext} is what actually
+--            stopped it shadowing HVSC, so the -100 sledgehammer is no longer
+--            needed -- but it stays under the archives).
+--        40  video game music: gb64, rsn, vgmrips.
+--        30  demoscene: sceneorg, demozoo.
+--       -50  remixes / rendered MP3 / streamed: amigaremix, ocremix, rko,
+--            scenesat, pouet, zophar.
+--       -80  podcasts (all nine).
+--      -100  radio streams.
+--     Bump forces a reindex.
+VERSION = 97;
 
 DB = {
 {
@@ -500,7 +524,7 @@ DB = {
 	-- the Internet Archive mirsoftJuly2021snapshot .tar.xz by chipmachine/scripts/build_mirsoft.py.
 	name = "World of Game MODs",
 	id =  "mirsoft",
-	priority = -100,  -- game-mod remixes/arrangements: sink below originals
+	priority = 50,  -- game tracker modules: real rips, but thin metadata -> below the archives
 	source = "http://mirsoft.info/gamemods/",
 	song_list = "data/mirsoft.txt",
 	song_template = "title composer format path ext",
@@ -509,6 +533,7 @@ DB = {
 {
 	name = "unexotica",
 	id =  "unexotica",
+	priority = 95,  -- native Amiga game chip rips
 	source = "ftp://files.exotica.org.uk/pub/exotica/media/audio/UnExoticA",
 	song_list = "data/unexotica.txt",
         song_template = "title game format composer path",
@@ -519,6 +544,7 @@ DB = {
 	-- full mdx.vampi.tech/data/<file> URL (source empty). Plays via mdxplugin.
 	name = "Vampi MDX",
 	id =  "vampi",
+	priority = 95,  -- native X68000 MDX chip archive
 	source = "",
 	song_list = "data/vampi.txt",
 	song_template = "title composer format path ext",
@@ -534,6 +560,7 @@ DB = {
 	-- MusicDatabase format_map). source empty (full URLs in the path column).
 	name = "Zophar",
 	id =  "zophar",
+	priority = -50,  -- mostly recorded rips (streamed tier) -> sink below the native chip sources
 	source = "",
 	song_list = "data/zophar.txt",
 	song_template = "title composer format path ext",
@@ -549,6 +576,7 @@ DB = {
 	-- chipmachine/scripts/build_vgmrips.py.
 	name = "VGMRips",
 	id =  "vgmrips",
+	priority = 40,  -- video game music
 	source = "",
 	song_list = "data/vgmrips.txt",
 	song_template = "title composer format path ext",
@@ -565,6 +593,7 @@ DB = {
 	-- chipmachine/scripts/build_smspower.py.
 	name = "SMS Power",
 	id =  "smspower",
+	priority = 95,  -- native Sega 8-bit VGM rips
 	source = "",
 	song_list = "data/smspower.txt",
 	song_template = "title composer format path ext",
@@ -576,6 +605,7 @@ DB = {
 	-- /YM/ files; source is empty.
 	name = "CPC-Power",
 	id =  "cpcpower",
+	priority = 95,  -- native Amstrad CPC YM archive
 	source = "",
 	song_list = "data/cpcpower.txt",
 	song_template = "title composer format path ext",
@@ -587,6 +617,7 @@ DB = {
 	-- libvgmplugin (GME can't decode OPL); format "OPL Archive" -> AdLib/OPL.
 	name = "OPL Archive",
 	id =  "oplarchive",
+	priority = 95,  -- native OPL2/OPL3 rips
 	source = "",
 	song_list = "data/oplarchive.txt",
 	song_template = "title composer format path ext",
@@ -602,6 +633,7 @@ DB = {
 	-- chipmachine/scripts/build_demozoo.py.
 	name = "Demozoo",
 	id =  "demozoo",
+	priority = 30,  -- demoscene music
 	source = "",
 	song_list = "data/demozoo.txt",
 	song_template = "title composer format path ext",
@@ -615,6 +647,7 @@ DB = {
 	-- chipmachine/scripts/build_sceneorg.py from data/misc/scene.org/*.tsv.
 	name = "scene.org",
 	id =  "sceneorg",
+	priority = 30,  -- demoscene music
 	source = "",
 	song_list = "data/sceneorg.txt",
 	song_template = "title composer format path ext",
@@ -623,6 +656,7 @@ DB = {
 {
 	name = "modarchive",
 	id =  "modarchive",
+	priority = 90,  -- broad tracker mirror: overlaps modland, let modland win folds
 	source = "https://api.modarchive.org/downloads.php?moduleid=",
 	song_list = "data/modarchive.txt",
 	song_template = "title ext path format",
@@ -634,6 +668,7 @@ DB = {
 	-- music.zxart.ee/music/), so `source` is empty and the URL is used verbatim.
 	name = "zxart.ee",
 	id =  "zxart",
+	priority = 95,  -- native ZX Spectrum AY archive
 	source = "",
 	song_list = "data/zxart.txt",
 	song_template = "title composer format path ext",
@@ -651,6 +686,7 @@ DB = {
 	-- chipmachine/scripts/build_zxtunes.py.
 	name = "zxtunes.com",
 	id =  "zxtunes",
+	priority = 95,  -- native ZX Spectrum AY archive
 	source = "https://zxtunes.com/downloads.php?id=",
 	song_list = "data/zxtunes.txt",
 	song_template = "title composer format path ext",
@@ -659,6 +695,7 @@ DB = {
 {
 	name = "Playlists",
 	id =  "pl",
+	priority = 60,  -- user playlists: above the bulk archives, below the canonical chip sources
 	local_dir = "data/playlists",
 	color = 0xfffff
 },
@@ -666,8 +703,9 @@ DB = {
 	name = "HVSC",
 	id =  "hvsc",
 	-- priority: search precedence & dedup winner (higher surfaces first, default
-	-- 0, may be negative to sink below the default mass). HVSC is the definitive
-	-- C64 SID archive -> boost it above game-mod / remix collections.
+	-- 0, may be negative to sink below the default mass). Every collection now
+	-- carries one -- see the VERSION 97 note for the tier scheme. HVSC is the
+	-- definitive C64 SID archive -> top tier.
 	priority = 100,
 	source = "https://www.hvsc.c64.org/download/C64Music/",
 	song_list = "data/hvsc.txt",
@@ -677,6 +715,7 @@ DB = {
 {
 	name = "Gamebase64",
 	id =  "gb64",
+	priority = 40,  -- video game music
 	prod_list = "data/Games.csv",
 	-- gb64.com is now behind a Cloudflare JS/Turnstile challenge that returns 403
 	-- to every non-browser client (no User-Agent or header trick gets past it).
@@ -690,6 +729,7 @@ DB = {
 {
 	name = "CSDb",
 	id =  "csdb",
+	priority = 95,  -- native C64 demoscene chip rips
 	local_dir = "",
 	prod_list = "data/csdb.xml",
 	color = 0xfffff
@@ -697,6 +737,7 @@ DB = {
 {
 	name = "Modland",
 	id =  "modland",
+	priority = 100,  -- the definitive Amiga/tracker archive
 	source = "ftp://ftp.modland.com/pub/modules/",
 	song_list = "data/allmods.txt",
 	local_dir = "/opt/Music/MODLAND",
@@ -711,6 +752,7 @@ DB = {
 	-- by magic, then the `ext` column routes it. Built by chipmachine/scripts/build_amp.py.
 	name = "Amp",
 	id =  "amp",
+	priority = 90,  -- broad tracker mirror: overlaps modland, let modland win folds
 	source = "http://amp.dascene.net/downmod.php?index=",
 	song_list = "data/amp.txt",
 	song_template = "title composer format path ext",
@@ -719,6 +761,7 @@ DB = {
 {
 	name = "Bitworld",
 	id =  "bitworld",
+	priority = 95,  -- native Amiga demoscene chip rips
 	prod_list = "data/bitworld.txt",
 	screen_source = "http://kestra.exotica.org.uk/files/screenies/",
 	color = 0xfffff
@@ -726,6 +769,7 @@ DB = {
 {
 	name = "HVTC",
 	id =  "hvtc",
+	priority = 95,  -- native Plus/4 chip archive
 	source = "http://plus4world.powweb.com/feat/tedsound/hvtc/",
 	song_list = "data/hvtc.txt",
 	-- this one has local files! (like nsfe -> music/Console)
@@ -742,6 +786,7 @@ DB = {
 	-- gmeplugin (Ayfly renders CPC rips silent). source empty (local files).
 	name = "Project AY",
 	id =  "projectay",
+	priority = 95,  -- native ZX/CPC AY rips
 	source = "",
 	song_list = "data/projectay.txt",
 	song_template = "title composer format path ext",
@@ -751,6 +796,7 @@ DB = {
  {
 	name = "snesmusic.org",
 	id =  "rsn",
+	priority = 40,  -- video game music
 	source = "http://snesmusic.org/v2/download.php?spcNow=",
 	make_source = snes,
 	song_list = "data/rsn.txt",
@@ -761,6 +807,7 @@ DB = {
 {
 	name = "sndh",
 	id =  "sndh",
+	priority = 95,  -- native Atari ST chip archive
 	source = "http://sndh.atari.org/sndh/sndh_lf/",
 	song_list = "data/sndh.txt",
 	remote_list = "http://raw.githubusercontent.com/sasq64/cmds/master/sndh.txt",
@@ -770,6 +817,7 @@ DB = {
 {
 	name = "asma",
 	id =  "asma",
+	priority = 95,  -- native Atari 8-bit POKEY archive
 	source = "http://asma.atari.org/asma/",
 	song_list = "data/asma.txt",
 	remote_list = "http://raw.githubusercontent.com/sasq64/cmds/master/asma.txt",
@@ -779,7 +827,7 @@ DB = {
 {
 	name = "remix.kwed.org",
 	id =  "rko",
-	priority = -100,  -- Remix.Kwed.Org: C64 SID remixes -> sink below HVSC
+	priority = -50,  -- Remix.Kwed.Org: C64 SID remixes -> sink below HVSC
 	source = "http://remix.kwed.org/download.php/",
 	song_list = "data/rko.txt",
 	utf8 = "no",
@@ -792,7 +840,7 @@ DB = {
 {
 	name = "amigaremix",
 	id =  "amigaremix",
-	priority = -100,  -- Amiga remixes -> sink below originals
+	priority = -50,  -- Amiga remixes -> sink below originals
 	source = "http://amigaremix.com/listen/",
 	song_list = "data/amiremix.txt",
 	song_template = "no path title composer",
@@ -804,6 +852,7 @@ DB = {
 {
 	name = "scenesat",
 	id =  "scenesat",
+	priority = -50,  -- rendered/streamed audio -> sink below the native chip sources
 	source = "https://static.scenesat.com/",
 	song_list = "data/scenesat.txt",
 	song_template = "composer game title format path",
@@ -819,6 +868,7 @@ DB = {
 	-- Unclassified MP3/OGG. Built by chipmachine/scripts/build_chipmusic.py.
 	name = "Chipmusic",
 	id =  "chipmusic",
+	priority = 80,  -- community chiptune, rendered MP3 rather than the native module
 	source = "",
 	song_list = "data/chipmusic.txt",
 	song_template = "title composer format path",
@@ -834,6 +884,7 @@ DB = {
 	-- (getSongScreenshots botb branch). Built by scripts/build_botb.py.
 	name = "Battle of the Bits",
 	id =  "botb",
+	priority = 80,  -- original community chiptunes, but composed-for-compo rather than archival
 	source = "",
 	song_list = "data/botb.txt",
 	song_template = "title composer format path ext",
@@ -849,7 +900,7 @@ DB = {
 	-- (getSongScreenshots ocremix branch). Built by scripts/build_ocremix.py.
 	name = "OC ReMix",
 	id =  "ocremix",
-	priority = -100,  -- OverClocked ReMix: arranged game-music remixes -> sink
+	priority = -50,  -- OverClocked ReMix: arranged game-music remixes -> sink below originals
 	source = "",
 	song_list = "data/ocremix.txt",
 	song_template = "title game composer format path",
@@ -864,6 +915,7 @@ DB = {
 	-- Built by scripts/build_keygenmusic.py.
 	name = "keygenmusic",
 	id =  "keygenmusic",
+	priority = 80,  -- scene chip/tracker tunes, dupes modland/modarchive in part
 	source = "",
 	song_list = "data/keygenmusic.txt",
 	song_template = "title composer format path ext",
@@ -885,6 +937,7 @@ DB = {
 {
 	name = "Demovibes",
 	id =  "demovibes",
+	priority = -80,  -- podcast
 	source = "https://www.demovibes.org/downloads/",
 	song_list = "data/demovibes.txt",
 	podcast = "yes",
@@ -893,6 +946,7 @@ DB = {
 {
 	name = "Amigavibes",
 	id =  "amigavibes",
+	priority = -80,  -- podcast
 	source = "https://stats.podcloud.fr/amigavibes/",
 	song_list = "data/amigavibes.txt",
 	song_template = "title format path",
@@ -903,6 +957,7 @@ DB = {
 {
 	name = "Radio",
 	id =  "radio",
+	priority = -100,  -- live radio streams: last
 	source = "",
 	song_list = "data/radio.txt",
 	color = 0xfffff
@@ -947,6 +1002,7 @@ DB = {
 {
 	name = "Syntax Error",
 	id =  "syntax",
+	priority = -80,  -- podcast
 	source = "http://se-ksd-01.files.syntaxerror.nu/mp3/",
 	song_list = "data/syntax.txt",
 	song_template = "path title",
@@ -963,6 +1019,7 @@ DB = {
 {
         name = "NSFE",
         id = "nsfe",
+        priority = 95,  -- native NES 2A03 rips
         source = "",
         song_list = "data/nsfe.txt",
         -- this one has local files!
@@ -974,6 +1031,7 @@ DB = {
 {
 	name = "C64 Take-away",
 	id = "takeaway",
+	priority = -80,  -- podcast
 	type =  "podcast",
 	source = "",
 	song_list = "data/c64takeaway.xml",
@@ -984,6 +1042,7 @@ DB = {
 {
 	name = "Completely Unnecessary Podcast",
 	id = "cupodcast",
+	priority = -80,  -- podcast
 	type = "podcast",
 	source = "",
 	-- Full catalogue (395 eps, 2013-) snapshotted from the live Anchor feed;
@@ -998,6 +1057,7 @@ DB = {
 	-- Chiptune music-mix show (Dj CUTMAN); ran 2013-2017, full archive.
 	name = "This Week in Chiptune",
 	id = "twic",
+	priority = -80,  -- podcast
 	type = "podcast",
 	source = "",
 	song_list = "data/twic.xml",
@@ -1009,6 +1069,7 @@ DB = {
 	-- Video game music podcast: discussion + tracks, with interviews.
 	name = "Pixelated Audio",
 	id = "pixelated",
+	priority = -80,  -- podcast
 	type = "podcast",
 	source = "",
 	song_list = "data/pixelated.xml",
@@ -1020,6 +1081,7 @@ DB = {
 	-- KNGI Network VGM music show (original tracks, OSTs, chiptunes).
 	name = "GameFuel",
 	id = "gamefuel",
+	priority = -80,  -- podcast
 	type = "podcast",
 	source = "",
 	song_list = "data/gamefuel.xml",
@@ -1031,6 +1093,7 @@ DB = {
 	-- KNGI Network video game music + remixes show.
 	name = "Nitro Game Injection",
 	id = "nitro",
+	priority = -80,  -- podcast
 	type = "podcast",
 	source = "",
 	song_list = "data/nitro.xml",
@@ -1041,6 +1104,7 @@ DB = {
 {
 	name = "Pouet/Youtube",
 	id =  "pouet",
+	priority = -50,  -- YouTube-backed demo audio -> sink below the native chip sources
 	source = "",
 	song_list = "data/pouet.txt",
 	screen_source = "http://content.pouet.net/files/screenshots/",
@@ -1053,6 +1117,7 @@ DB = {
 	-- verbatim per song (song_template `screenshot` keyword). source empty.
 	name = "Manual Patch",
 	id =  "manualpatch",
+	priority = 100,  -- manual metadata corrections: must win every dedup fold
 	source = "",
 	song_list = "data/manualDatabasePatch.txt",
 	song_template = "title format composer path screenshot info",
