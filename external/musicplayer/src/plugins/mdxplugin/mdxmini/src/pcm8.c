@@ -136,6 +136,16 @@ _pcm8_finalize(void* in_self)
 {
   pcm8_instances* self = (pcm8_instances *)in_self;
   if (self) {
+    /* pcm8_open() allocates these lazily and never frees them
+       (pcm8_close()'s free path is dead code), so release them here to
+       avoid leaking ~12KB per player instance. */
+    int i;
+    for ( i=0 ; i<2 ; i++ ) {
+      if ( self->ym2151_voice[i] ) free( self->ym2151_voice[i] );
+    }
+    if ( self->sample_buffer2 ) free( self->sample_buffer2 );
+    if ( self->sample_buffer )  free( self->sample_buffer );
+    if ( self->pcm_buffer )     free( self->pcm_buffer );
     free(self);
   }
 }

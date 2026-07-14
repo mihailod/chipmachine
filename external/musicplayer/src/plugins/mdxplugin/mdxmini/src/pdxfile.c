@@ -97,6 +97,17 @@ static void store_pdx_data( PDX_DATA *pdx, unsigned char *buf, int buflen ) {
 	continue;
       }
 
+      /* Reject entries whose sample range [address, address+size) falls
+	 outside the file. Without this a malformed/truncated .pdx can make
+	 adpcm2pcm() (and the raw-16bit path) read at an arbitrary address:
+	 in particular size==1 makes orig_size==0, so the per-byte checks in
+	 the 16bit loops below never run and never validate 'address'. */
+      if ( address >= buflen || size > (long)buflen - address ) {
+	pdx->tone[num].data = NULL;
+	pdx->tone[num].size=0;
+	continue;
+      }
+
       /* 16bit pcm */
       pdx->tone[num].orig_data = (int *)malloc(sizeof(int)*size/2);
       if (!pdx->tone[num].orig_data) {
