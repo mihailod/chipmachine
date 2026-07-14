@@ -877,7 +877,13 @@ void MusicPlayerList::playCurrent()
                     "mmd2", "mmd3", "dbm", "digi", "ahx", "hvl", "thx", "dmf",
                     "ptm", "stm", "ult", "amf", "psm", "mt2", "gt2", "dtm", "fc",
                     "fc13", "fc14", "aon", "smod", "dw", "cust", "mptm", "dmu",
-                    "dmu2" };  // dmu/dmu2 = Digital Mugician (UADE), in mirsoft zips
+                    "dmu2",   // dmu/dmu2 = Digital Mugician (UADE), in mirsoft zips
+                    // Zophar streamed-tier console rips played via vgmstream (see
+                    // db.lua "Zophar streamed"): PS1/PS2/Saturn/Dreamcast/Xbox/
+                    // Xbox360/Wii/GameCube/3DS/PS3/PSP. .musx is content-routed
+                    // (Archimedes "MUSX" magic vs PS2) by the plugins themselves.
+                    "adx", "asf", "at3", "aus", "bcwav", "dsp", "dvi", "eam",
+                    "genh", "lwav", "oma", "spsd", "ss2", "str", "xa", "musx" };
                 static const std::set<std::string> audioExt = {
                     "mp3", "ogg", "flac", "wav", "mp2", "m4a", "aac", "opus" };
                 std::string dir = f0.getName() + "_x";

@@ -1,3 +1,5 @@
+- make all platforms fit the platform screen -- will need to unify some like sony and nintendo and implement the drill like we do with podcasts
+
 - distinguish SEGA Game Gear platform logo? or unified pic macter/game gear
 
 - distinguish GBA platform logo? or have a unified picture for GB and GBA

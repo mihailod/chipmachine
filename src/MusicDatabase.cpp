@@ -2197,11 +2197,9 @@ void initFormats()
     // not GBA (both share the "Nintendo GameBoy/GBA" TAB filter, but keep the
     // byte correct for colour/label).
     format_map["gameboy advance"] = GBA;
-    // Zophar 3DS / Xbox 360 gamerips onboarded ONLY for their ffmpeg-playable
-    // ogg/wav members (the zips are streamed-audio grab-bags); no dedicated TAB
-    // filter for either console -> "Other Platforms", like Wii/GameCube/Xbox.
-    format_map["nintendo 3ds"] = OTHER;
-    format_map["xbox 360"] = OTHER;
+    // (Zophar 3DS / Xbox 360 / Wii / GameCube / Xbox / PS3 / PSP streamed consoles
+    // are classified to their own bytes in the Zophar streamed-tier block below,
+    // now that vgmstream decodes their rips -- they were formerly OTHER.)
     format_map["nintendo snes/super famicom"] = SNES;
     format_map["nec pc engine"] = HES;
     // Sega 8-bit (SN76489 PSG): Master System, Game Gear, SG-1000, SC-3000
@@ -2394,6 +2392,20 @@ void initFormats()
     format_map["nintendo 64"] = NINTENDO64;
     format_map["sega saturn"] = SATURN;
     format_map["dreamcast"] = DREAMCAST;
+
+    // --- Zophar streamed-tier consoles (build_zophar.py --build-streamed) -------
+    // Recorded game-audio rips (adx/at3/lwav/dsp/...) played via vgmstream/ffmpeg.
+    // The row's format string is the platform label, and its path is a
+    // "(EMU).zophar.zip" URL, so classification is label-driven (no ext fallback).
+    // These platforms previously fell into OTHER (see the overrides below).
+    format_map["sega dreamcast"] = DREAMCAST;
+    format_map["playstation 3"] = PS3;
+    format_map["playstation portable"] = PSP;
+    format_map["nintendo gamecube"] = GAMECUBE;
+    format_map["nintendo wii"] = WII;
+    format_map["nintendo 3ds"] = N3DS;      // was OTHER (3DS ogg/bcwav rips)
+    format_map["xbox"] = XBOX;
+    format_map["xbox 360"] = XBOX360;
     // chipmusic.org rendered-MP3 tracks that carry no platform-bearing tag land
     // in the generic "Chipmusic" bucket -> the existing Unclassified MP3/OGG
     // filter (the classifiable majority route to Game Boy/C64/NES/Atari ST/Amiga/
@@ -2555,8 +2567,9 @@ static uint8_t platformNameToByte(std::string s)
         { "gameboy", GAMEBOY },      { "gameboy color", GAMEBOY },
         { "gameboy advance", GBA },
         { "nec turbografx/pc engine", HES }, { "nec pc engine", HES },
-        { "playstation", PLAYSTATION }, { "playstation 2", PLAYSTATION },
-        { "playstation 3", PLAYSTATION }, { "playstation portable", PLAYSTATION },
+        { "playstation", PLAYSTATION }, { "playstation 2", PLAYSTATION2 },
+        { "playstation 3", PS3 },    { "playstation portable", PSP },
+        { "nintendo 3ds", N3DS },
         { "windows", PC },           { "ms-dos", PC },
         { "ms-dos/gus", PC },        { "linux", PC },
         { "audiosurf", PC },
@@ -2572,8 +2585,9 @@ static uint8_t platformNameToByte(std::string s)
         { "trs-80/coco/dragon", OTHER }, { "spectravideo 3x8", OTHER },
         { "wonderswan", OTHER },     { "neogeo pocket", OTHER },
         { "virtual boy", OTHER },    { "pokemon mini", OTHER },
-        { "nintendo wii", OTHER },   { "gamecube", OTHER },
-        { "xbox", OTHER },           { "xbox 360", OTHER },
+        { "nintendo wii", WII },     { "gamecube", GAMECUBE },
+        { "nintendo gamecube", GAMECUBE },
+        { "xbox", XBOX },            { "xbox 360", XBOX360 },
         // No hardware chip identity of their own (fantasy consoles, web/VM,
         // mobile, calculators, compo buckets) -> "Other Platforms".
         { "wild", OTHER },           { "javascript", OTHER },
@@ -2783,6 +2797,9 @@ static std::string platformName(uint8_t b)
     case GBA: return "Nintendo Game Boy";
     case NINTENDO64: return "Nintendo 64";
     case NDS: return "Nintendo DS";
+    case N3DS: return "Nintendo 3DS";
+    case GAMECUBE: return "Nintendo GameCube";
+    case WII: return "Nintendo Wii";
     case SEGA:
     case MEGADRIVE: return "Sega Mega Drive";
     case SEGAMS: return "Sega 8-bit";
@@ -2791,6 +2808,10 @@ static std::string platformName(uint8_t b)
     case WONDERSWAN: return "WonderSwan";
     case PLAYSTATION:
     case PLAYSTATION2: return "PlayStation";
+    case PS3: return "PlayStation 3";
+    case PSP: return "PlayStation Portable";
+    case XBOX: return "Xbox";
+    case XBOX360: return "Xbox 360";
     case HES: return "PC Engine";
     case OTHER: return "Other";
     case ARCADE: return "Arcade";

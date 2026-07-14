@@ -116,6 +116,19 @@ enum Formats
 
     UADE,
 
+    // Zophar streamed-tier consoles (recorded rips played via vgmstream/ffmpeg).
+    // Deliberately placed here in the free 57-63 range (after UADE, before the
+    // fixed PRODUCT=0x40 anchor): the console region above ends at ARCADE=46 with
+    // only one slot before the fixed TRACKER=0x30 anchor, so inserting them there
+    // would push ARCADE past 0x30 and collide with the tracker bytes.
+    N3DS,       // Nintendo 3DS
+    GAMECUBE,   // Nintendo GameCube
+    WII,        // Nintendo Wii
+    PS3,        // Sony PlayStation 3
+    PSP,        // Sony PlayStation Portable
+    XBOX,       // Microsoft Xbox
+    XBOX360,    // Microsoft Xbox 360
+
     PRODUCT = 0x40
 
 };

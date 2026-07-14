@@ -408,9 +408,19 @@ TEST_CASE("Zophar format labels classify to a platform", "[music]")
         { "Sega Genesis", MEGADRIVE },
         { "Sega Master System", SEGAMS },
         { "Sega Game Gear", SEGAMS },
-        // 3DS / Xbox 360 audio-rip games (ogg/wav) -> Other Platforms.
-        { "Nintendo 3DS", OTHER },
-        { "Xbox 360", OTHER },
+        // Streamed tier (db.lua v95): recorded rips played via vgmstream/ffmpeg,
+        // each with its own platform byte (formerly OTHER / folded into PlayStation).
+        { "Playstation", PLAYSTATION },
+        { "Playstation 2", PLAYSTATION2 },
+        { "Sega Saturn", SATURN },
+        { "Sega Dreamcast", DREAMCAST },
+        { "Nintendo 3DS", N3DS },
+        { "Nintendo GameCube", GAMECUBE },
+        { "Nintendo Wii", WII },
+        { "Xbox", XBOX },
+        { "Xbox 360", XBOX360 },
+        { "Playstation 3", PS3 },
+        { "Playstation Portable", PSP },
     };
     for (auto const& c : cases) {
         INFO("format " << c.fmt);

@@ -460,7 +460,23 @@
 --     definitive SID archive), mirsoft/rko/amigaremix/ocremix = -100 (remixes/
 --     arrangements). Tweak any collection by adding `priority = N`. Bump forces a
 --     reindex.
-VERSION = 94;
+-- 95: Zophar STREAMED TIER onboarded (the held set from v93, unblocked by the new
+--     vgmstream plugin + its FFmpeg backend for ATRAC .at3/.oma). 7056 net-new
+--     recorded-rip games across 11 consoles APPENDED into the same "Zophar"
+--     collection (data/zophar.txt, one build_zophar.py --build now emits both
+--     tiers): PS1 xa/str, PS2 asf/genh/aus/eam/ss2/musx, Saturn dvi, Dreamcast
+--     adx/spsd, Xbox lwav/asf, Xbox360 lwav/wav, Wii dsp, GameCube dsp/eam, 3DS
+--     bcwav/ogg, PS3 at3, PSP at3/oma. Deduped vs modland's PS1/PS2/Saturn/
+--     Dreamcast Sound-Format dirs (game-title match); the rest are net-new. The
+--     zip-by-magic handler now lists the vgmstream exts in songExt so the members
+--     play as subsongs. SEVEN new platform bytes + TAB filters + logos: Nintendo
+--     3DS / GameCube / Wii, Sony PS3 / PSP, Microsoft Xbox / Xbox 360 (formerly all
+--     OTHER or folded into PlayStation); .musx stays content-routed (Archimedes
+--     "MUSX" magic vs PS2 vgmstream). Logos to add under data/misc/
+--     platformscreenshots/: "Nintendo 3DS.png", "Nintendo GameCube.png",
+--     "Nintendo Wii.png", "PlayStation 3.png", "PlayStation Portable.png",
+--     "Xbox.png", "Xbox 360.png". Bump forces a reindex.
+VERSION = 95;
 
 DB = {
 {
