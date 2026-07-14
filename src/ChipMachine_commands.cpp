@@ -310,12 +310,10 @@ void ChipMachine::setupCommands()
             searchUpdated = true;
             return;
         }
-        // At a sub-platform / podcast SHOW listing (a multi-level drill filter is
-        // active but not drilled into a group): ESC steps back up to the TAB
-        // platform filter rather than jumping all the way out to the main screen.
-        if (searchField.getText() == "" &&
-            (musicDatabase.otherFilterActive_() ||
-             musicDatabase.podcastFilterActive_())) {
+        // Any platform filter is active (reached via the TAB screen): ESC steps
+        // back up to that platform filter rather than jumping all the way out to
+        // the main screen. Only an unfiltered search returns to MAIN.
+        if (searchField.getText() == "" && musicDatabase.hasFormatFilter()) {
             showScreen(ADVANCED_SCREEN);
             return;
         }
