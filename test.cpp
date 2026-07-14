@@ -446,7 +446,7 @@ TEST_CASE("mirsoft platform labels classify to a platform", "[music]")
     struct { const char* fmt; uint8_t plat; } cases[] = {
         { "Amiga", AMIGA },              { "Commodore 64", SID },
         { "PC", PC },                    { "NES", NES },
-        { "Super Nintendo", SNES },      { "Macintosh", APPLE },
+        { "Super Nintendo", SNES },      { "Macintosh", APPLEMAC },
         { "PlayStation", PLAYSTATION },  { "Game Boy", GAMEBOY },
         { "Nintendo 64", NINTENDO64 },   { "Sega Mega Drive", MEGADRIVE },
         { "Sega Master System", SEGAMS },{ "Sega Saturn", SATURN },

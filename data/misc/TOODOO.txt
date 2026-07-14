@@ -1,17 +1,8 @@
-
-- distinguish SEGA Game Gear platform logo? or unified pic master/game gear
-
-- distinguish GBA platform logo? or have a unified picture for GB and GBA
-
-
 - revisit db priority to see which search results should show 1st
 
 - see if there are other formats in db we don't play
 
 - global dedupe everything against everything to see stats. I think battle of the bits added dupes. when removing if all equal remove the dupe without the screenshot.
-
-- investigate: refactor ui code from engine code
-- investigate: refactor to only invoke cm instead calling code so that there is truly one playback pipeline
 
 - i see files with no screenshots while almost identical files have them -- can we somehow annotate more songs with screenshots if a super-similar file has it?
 
@@ -43,3 +34,6 @@ cosmetic/low priority:
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 
 - Separate db from code and auto-update db independently from code
+
+- investigate: refactor ui code from engine code
+- (started and parked for now) investigate: refactor to only invoke cm instead calling code so that there is truly one playback pipeline
