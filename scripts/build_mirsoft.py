@@ -41,9 +41,14 @@ its name matches a SAME-PLATFORM game collection already indexed, OR when every
 one of its modules is a byte-plausible (basename-stem, size) match in modland+amp
 (the only local indexes carrying sizes). ~1000 net-new games are kept.
 
-CLASSIFICATION (item 4): by mirsoft's per-game Platform field (Amiga, C64, PC,
-NES, SNES, Mac, ...). The emitted `format` column is a canonical platform label
-that MusicDatabase::initFormats maps to a platform byte (see the mirsoft block).
+CLASSIFICATION (item 4): by the ACTUAL module format, not the game's platform.
+mirsoft rips a game's music as an Amiga/PC tracker module, so classifying by game
+platform gave a C64 game's .mod the SID byte and made it shadow the real HVSC SID
+of the same title+composer in the app's search dedup (Delta, Monty on the Run,
+...). The emitted `format` column is therefore an ext-derived label (mod-family ->
+Amiga, DOS/Windows trackers -> PC; see format_label) that initFormats maps to the
+matching platform byte. The per-game Platform field is still used only to pick the
+same-platform collection to name-dedup against (see DEDUP above).
 
   --build --snapshot <dir>   parse info.txt, dedup, classify, write mirsoft.txt
   --screenshots              (see build_mirsoft.py --screenshots; MobyGames-free
@@ -121,6 +126,30 @@ def platform_label(raw):
     if "pc" in p:            # PC, PC Dos, PC Windows, PC-DOS, Pocket PC
         return "PC"
     return "PC"
+
+
+# Emitted `format` column label -- derived from the ACTUAL module extension, not
+# the game's platform. mirsoft rips a C64/NES/SNES game's music as an Amiga/PC
+# tracker module, so classifying by game platform gave those .mod/.xm files the
+# console's platform byte (e.g. "Commodore 64" -> SID) and made them collide
+# with -- and shadow -- the real single-chip tunes (HVSC SIDs etc.) in the
+# app's search dedup. Classify by the real format instead: mod-family -> Amiga,
+# the DOS/Windows trackers -> PC (matching MusicDatabase::platformName's
+# grouping of PROTRACKER/AMIGA vs FAST/SCREAM/IMPULSE tracker). The game-platform
+# label (platform_label) is still used for the name-dedup selection above.
+_AMIGA_EXTS = {"mod", "okt", "med", "mmd0", "mmd1", "mmd2", "mmd3", "dbm",
+               "digi", "ahx", "hvl", "thx", "fc", "fc13", "fc14", "aon",
+               "smod", "dw", "cust", "dmu", "dmu2"}
+_ATARI_EXTS = {"dtm"}  # Digital Tracker (Atari ST/Falcon)
+
+
+def format_label(ext):
+    e = ext.lower()
+    if e in _AMIGA_EXTS:
+        return "Amiga"
+    if e in _ATARI_EXTS:
+        return "Atari ST"
+    return "PC"  # xm/it/s3m/mtm/669/far/ptm/stm/ult/amf/psm/mt2/gt2/mptm/dmf
 
 
 # Which already-indexed game collections to name-dedup against, per label.
@@ -264,10 +293,13 @@ def build(snapshot):
             composer = meta.get("Tracker", "").strip()
         if composer.lower() in ("unknown", "?", "n/a", "-"):
             composer = ""
+        # col3 = real-format label (Amiga/PC/...), NOT the game platform, so the
+        # row's platform byte matches the module it actually contains.
+        emit_label = format_label(ext)
         path = urllib.parse.quote(g + ".zip")
-        rows.append("\t".join([name, composer, label, path, ext]))
+        rows.append("\t".join([name, composer, emit_label, path, ext]))
         kept += 1
-        plat_ct[label] += 1
+        plat_ct[emit_label] += 1
     with open(OUT, "w", encoding="utf-8") as f:
         f.write("\n".join(rows) + "\n")
     print(f"wrote {kept} games -> {OUT}")

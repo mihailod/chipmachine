@@ -194,25 +194,26 @@ void WebJob::start(CURLM *curlm) {
 		curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
 		curl_easy_setopt(curl, CURLOPT_HTTP200ALIASES, alias_list.get());
 	} else {
-		// Browsers speak HTTP/1.1+; HTTP/1.0 alone is a tell. Let curl negotiate
-		// up to HTTP/2 when the server offers it (keeps e.g. web.archive.org
-		// screenshots fast).
-		curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2TLS);
-		// ...but FORBID connection reuse. libcurl's HTTP/2 connection-cache
-		// pruning (prune_dead_connections -> http2_data_done -> Curl_bufq_free)
-		// corrupts the heap and crashes (EXC_BAD_ACCESS) when a STALE cached HTTP/2
-		// connection is pruned as a new transfer starts -- reliably hit by an
-		// HTTPS fetch (zxart.ee, fi.zophar.net, ...) followed by an FTP modland
-		// fetch on the same multi handle. Closing each connection after its
-		// transfer (no caching) means there is never a stale connection to prune,
-		// so the buggy path can't fire -- on ANY host, not just one we special-case.
-		// (The proper cure is a libcurl bump; this is the safe mitigation that
-		// keeps HTTP/2 working.)
+		// Force HTTP/1.1 -- do NOT negotiate up to HTTP/2.
+		//
+		// libcurl's HTTP/2 teardown (http2_data_done -> Curl_bufq_free, and the
+		// prune_dead_connections path) corrupts the heap on this build: a single
+		// fresh HTTPS/HTTP-2 download reliably poisons a nearby free block, which
+		// then trace-traps much later in an unrelated allocation (usually font
+		// make_text). It is a small, layout-dependent stray write -- invisible to
+		// ASan/guard-malloc (layout shifts hide it) and it vanishes once every URL
+		// is cached (no transfer runs). CURLOPT_FORBID_REUSE below was the earlier
+		// mitigation (avoid pruning STALE cached connections) but it is NOT enough:
+		// the HTTP/2 close still runs per transfer. Dropping to HTTP/1.1 removes
+		// the buggy code path entirely. Downloads here are small files; the only
+		// thing lost is a little multiplexing speed. (Proper cure: bump libcurl.)
+		curl_easy_setopt(curl, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+		// FORBID connection reuse (kept as belt-and-suspenders; harmless on 1.1).
 		// HTTP(S) ONLY: on FTP, FORBID_REUSE makes curl close the control
 		// connection after each file, so the last response code captured is the
 		// QUIT reply 221 instead of the transfer's 226 -> WebJob::finish() treats
 		// !=200/226 as failure and DELETES the file, breaking every modland FTP
-		// download. FTP has no HTTP/2 cache to corrupt, so it doesn't need this.
+		// download.
 		if (u.rfind("http", 0) == 0)
 			curl_easy_setopt(curl, CURLOPT_FORBID_REUSE, 1L);
 		// Advertise and transparently decode the compression a browser would
@@ -230,6 +231,12 @@ void WebJob::start(CURLM *curlm) {
 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeFunc);
 	curl_easy_setopt(curl, CURLOPT_HEADERDATA, this);
 	curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, headerFunc);
+	// Track bytes-downloaded/total so the GUI can show a progress bar on slow
+	// fetches (e.g. large Zophar zips). NOPROGRESS must be off for the callback
+	// to fire.
+	curl_easy_setopt(curl, CURLOPT_XFERINFODATA, this);
+	curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, progressFunc);
+	curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
 	curl_multi_add_handle(curlm, curl);
 
 	{
@@ -262,29 +269,50 @@ size_t WebJob::writeFunc(void *ptr, size_t size, size_t x, void *userdata) {
 	return size;
 }
 
+int WebJob::progressFunc(void *userdata, curl_off_t dltotal, curl_off_t dlnow,
+                         curl_off_t /*ultotal*/, curl_off_t /*ulnow*/) {
+	WebJob* job = static_cast<WebJob*>(userdata);
+	job->dlTotal = static_cast<int64_t>(dltotal);
+	job->dlNow = static_cast<int64_t>(dlnow);
+	// Returning non-zero aborts the transfer; honour a stop() requested from
+	// another thread so a cancelled download tears down promptly even if no
+	// write callback is currently firing.
+	return job->stopped ? 1 : 0;
+}
+
 size_t WebJob::headerFunc(char *text, size_t size, size_t n, void *userdata) {
 	WebJob* job = static_cast<WebJob*>(userdata);
-	size *= n;
-	int sz = size-1;
-	while(sz > 0 && (text[sz-1] == '\n' || text[sz-1] == '\r'))
-		sz--;
-	text[sz] = 0;
-	char *split = strstr(text, ":");
+	size_t total = size * n;
+
+	// IMPORTANT: curl's header buffer is NOT NUL-terminated and must be treated
+	// as READ-ONLY. The previous code wrote a NUL into it (text[sz] = 0) to be
+	// able to strstr() it -- two heap bugs:
+	//   1. a 0-length header callback (total == 0) made sz == -1, so text[-1] = 0
+	//      wrote one byte BEFORE curl's buffer (heap underflow);
+	//   2. even in-bounds, mutating the buffer corrupts curl's internal HTTP/2
+	//      (nghttp2/HPACK) header storage, which shares that memory.
+	// Both are small, layout-dependent stray writes that poison the heap and
+	// later crash in an unrelated allocation (typically font make_text). Copy
+	// the header into a std::string and parse THAT; never touch curl's buffer.
+	std::string line(text, total);
+	while(!line.empty() && (line.back() == '\n' || line.back() == '\r'))
+		line.pop_back();
+
 	std::string name, val;
-	if(!split)	
-		name = std::string(text, sz);
-	else {
-		int pos = split-text;
-		name = std::string(text, 0, pos);
-		pos++;
-		if(text[pos] == ' ') pos++;
-		val = std::string(text, pos, sz-pos);
+	auto colon = line.find(':');
+	if(colon == std::string::npos) {
+		name = line;
+	} else {
+		name = line.substr(0, colon);
+		size_t pos = colon + 1;
+		if(pos < line.size() && line[pos] == ' ') pos++;
+		val = line.substr(pos);
 		job->headers[name] = val;
-	}	
+	}
 
 	LOGV("HEADER: '%s = %s'", name, val);
 	if(name == "Content-Length") {
-		job->cLength = std::stol(val);
+		try { job->cLength = std::stol(val); } catch(...) {}
 	} else
 	if(name== "Location") {
 		std::string newUrl = val;
@@ -295,7 +323,7 @@ size_t WebJob::headerFunc(char *text, size_t size, size_t n, void *userdata) {
 #endif
 	}
 
-	return size;
+	return total;
 }
 
 void WebJob::finish() {
@@ -304,7 +332,13 @@ void WebJob::finish() {
 	LOGD("CODE %d", rc);
 
 	if(targetFile) {
-		if(rc != 200 && rc != 226) {
+		// A cancelled job (stop() via RemoteLoader::cancel, or ~Web teardown)
+		// is treated like a failed transfer: drop whatever was written so a
+		// partial/aborted body never lingers in the cache and gets served as a
+		// truncated tune on the next selection. writeFunc removes the file when
+		// IT sees the stop, but an abort raised from progressFunc happens before
+		// any write, so the partial file must also be dropped here.
+		if(stopped || (rc != 200 && rc != 226)) {
 			if(targetFile.exists())
 				targetFile.remove();
 			targetFile = utils::File();
@@ -328,7 +362,16 @@ void WebJob::finish() {
 	}
 	if(streamCb)
 		streamCb(*this, nullptr, 0);
-	call_handler();
+	// A cancelled whole-file download must NOT invoke its completion callback.
+	// By the time the abort lands, the player has already switched to another
+	// song; firing the stale callback reaches into MusicPlayerList and forces
+	// THAT song's Loading state to Error while underflowing its outstanding-file
+	// counter -- which is exactly why every track selected after an interrupted
+	// download failed to play (the whole cache was fine; the state was poisoned).
+	// The abandoned song simply drops here. (Streaming jobs use streamCb, not
+	// call_handler, so their teardown above is unaffected.)
+	if(!stopped)
+		call_handler();
 	targetFile = utils::File();
 	// NOTE: the curl easy handle is freed by the caller (Web::run) under m,
 	// right after this returns. Do NOT curl_easy_cleanup() here: finish() runs

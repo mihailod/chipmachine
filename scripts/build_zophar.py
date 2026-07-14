@@ -67,22 +67,35 @@ PLATFORM = {
     "sega-game-gear-sgc":      ("Sega Game Gear",            "sgc", "GG"),
 }
 
-# Streamed-tier platforms -> the (sampled) inner extensions we can't decode yet.
-# Not imported; recorded here so --build can emit the vgmstream revisit list even
-# though we hold the rows. ogg/wav are already playable (ffmpegplugin) but the
-# zips are recorded soundtracks, so the platforms stay held as a set.
-HELD_STREAMED = {
-    "playstation-psf":          ["xa", "str"],            # + some psf (playable)
-    "playstation2-psf2":        ["asf", "musx", "genh", "aus", "eam", "ss2"],
-    "sega-saturn-ssf":          ["dvi"],                  # + some ssf (playable)
-    "sega-dreamcast-dsf":       ["adx", "genh", "spsd"],  # + some dsf (playable)
-    "nintendo-3ds-3sf":         ["ogg", "bcwav"],
-    "nintendo-gamecube-gcn":    ["eam"],
-    "nintendo-wii":             ["dsp"],
-    "xbox":                     ["lwav", "asf"],
-    "xbox-360":                 ["lwav", "wav"],
-    "playstation3-psf3":        ["at3"],
-    "playstation-portable-psp": ["at3", "oma"],
+# Streamed-tier platforms -- NOW ONBOARDED (2026-07-13) via the vgmstream plugin
+# (adx/asf/at3/aus/bcwav/dsp/dvi/eam/genh/lwav/oma/spsd/ss2/str/xa + ATRAC once
+# VGM_USE_FFMPEG was enabled) plus ffmpeg (ogg/wav) and the existing ssf/dsf. Each
+# is emitted by --build (integrated with the sequenced tier) into the SAME
+# zophar.txt collection. slug -> (format label -- MUST resolve in MusicDatabase's
+# format_map -- , representative row extension for display, dedup family key or
+# None). Family keys map to the modland console sound-format dirs in build_corpus;
+# consoles modland lacks (Xbox/Wii/GameCube/3DS/PS3/PSP) dedup within-tier only.
+STREAMED = {
+    "playstation-psf":          ("Playstation",          "xa",    "PSX"),
+    "playstation2-psf2":        ("Playstation 2",        "asf",   "PS2"),
+    "sega-saturn-ssf":          ("Sega Saturn",          "dvi",   "SAT"),
+    "sega-dreamcast-dsf":       ("Sega Dreamcast",       "adx",   "DC"),
+    "nintendo-3ds-3sf":         ("Nintendo 3DS",         "bcwav", None),
+    "nintendo-gamecube-gcn":    ("Nintendo GameCube",    "dsp",   None),
+    "nintendo-wii":             ("Nintendo Wii",         "dsp",   None),
+    "xbox":                     ("Xbox",                 "lwav",  None),
+    "xbox-360":                 ("Xbox 360",             "lwav",  None),
+    "playstation3-psf3":        ("Playstation 3",        "at3",   None),
+    "playstation-portable-psp": ("Playstation Portable", "at3",   None),
+}
+
+# modland top-level dirs whose game titles dedup the streamed rips of the same
+# console family (game-title match within family; see build_corpus).
+CONSOLE_TOPDIR = {
+    "Playstation Sound Format":   "PSX",
+    "Playstation 2 Sound Format": "PS2",
+    "Saturn Sound Format":        "SAT",
+    "Dreamcast Sound Format":     "DC",
 }
 
 
@@ -121,6 +134,11 @@ def build_corpus():
         for line in f:
             p = line.split("\t", 1)[-1].strip(); parts = p.split("/"); e = ext_of(p)
             top = parts[0]
+            if top in CONSOLE_TOPDIR:
+                # <Sound Format dir>/<composer>/<game>/<track>.ext (depth>=4) ->
+                # game=parts[-2]; shallower rips fall back to the filename stem.
+                g = parts[-2] if len(parts) >= 4 else re.sub(r"\.[a-z0-9]+$", "", parts[-1])
+                add(CONSOLE_TOPDIR[top], norm(g)); continue
             if top == "Megadrive GYM" or e == "gym":
                 # Megadrive GYM/<composer>/<game>.gym
                 add("GEN", norm(re.sub(r"\.[a-z0-9]+$", "", parts[-1]))); continue
@@ -170,16 +188,35 @@ def build():
     rows, dropped = [], 0
     seen = set()                       # {norm title, format} uniqueness
     stats = {}                         # plat -> [total, kept, dup]
+    # streamed-tier uniqueness is per-platform (a PS3 and a PSP game can share a
+    # title -> keyed by (norm title, slug), not by the shared representative ext).
+    seen_streamed = set()
     with open(CSV, newline="") as f:
         for row in csv.DictReader(f):
             plat = plat_of(row["game_page_url"])
+            title = html.unescape(row["name"]).strip()
+            n = norm(title)
+
+            sm = STREAMED.get(plat)
+            if sm:                                    # streamed tier (vgmstream)
+                label, ext, fam = sm
+                st = stats.setdefault(plat, [0, 0, 0]); st[0] += 1
+                if fam and n in corpus.get(fam, ()):  # already in modland
+                    st[2] += 1; dropped += 1; continue
+                key = (n, plat)
+                if key in seen_streamed:
+                    continue
+                seen_streamed.add(key)
+                url = emu_url(plat, slug_of(row["game_page_url"]), title)
+                rows.append("\t".join([title, "", label, url, ext]))
+                st[1] += 1
+                continue
+
             meta = PLATFORM.get(plat)
             if not meta:
-                continue               # streamed tier: held
+                continue               # a platform we do not onboard
             label, ext, fam = meta
-            title = html.unescape(row["name"]).strip()
             st = stats.setdefault(plat, [0, 0, 0]); st[0] += 1
-            n = norm(title)
             if n in corpus.get(fam, ()):        # already in the corpus
                 st[2] += 1; dropped += 1; continue
             key = (n, ext)
@@ -192,31 +229,16 @@ def build():
 
     with open(OUT, "w", encoding="utf-8") as f:
         f.write("\n".join(rows) + "\n")
-    # vgmstream revisit list (held streamed tier)
-    unpl = {}
-    for exts in HELD_STREAMED.values():
-        for e in exts:
-            unpl[e] = unpl.get(e, 0)
-    with open(OUT_UNPL, "w", encoding="utf-8") as f:
-        f.write("# Zophar streamed-tier formats we do NOT decode (HELD -- not\n"
-                "# imported). Revisit each: almost all route to vgmstream; ogg/wav\n"
-                "# are already playable via ffmpegplugin but the zips are recorded\n"
-                "# soundtracks. ext<TAB>platforms\n")
-        plats_by_ext = {}
-        for p, exts in HELD_STREAMED.items():
-            for e in exts:
-                plats_by_ext.setdefault(e, []).append(p)
-        for e in sorted(plats_by_ext):
-            f.write(f"{e}\t{','.join(plats_by_ext[e])}\n")
 
     print(f"wrote {len(rows)} rows ({dropped} corpus dups dropped) -> {OUT}")
-    sys.stderr.write(f"\n{'platform':28}{'total':>7}{'kept':>7}{'dup':>7}  ext\n")
+    sys.stderr.write(f"\n{'platform':28}{'total':>7}{'kept':>7}{'dup':>7}  label\n")
     tot = [0, 0, 0]
     for p in sorted(stats):
         t, k, d = stats[p]; tot = [tot[0]+t, tot[1]+k, tot[2]+d]
-        sys.stderr.write(f"{p:28}{t:7d}{k:7d}{d:7d}  {PLATFORM[p][1]}\n")
+        label = (PLATFORM.get(p) or STREAMED.get(p))[0]
+        tier = "seq" if p in PLATFORM else "str"
+        sys.stderr.write(f"{p:28}{t:7d}{k:7d}{d:7d}  [{tier}] {label}\n")
     sys.stderr.write(f"{'TOTAL':28}{tot[0]:7d}{tot[1]:7d}{tot[2]:7d}\n")
-    print(f"held streamed tier -> {OUT_UNPL}")
 
 
 # ---------------------------------------------------- ogg/wav audio pass ------
@@ -258,6 +280,11 @@ def zip_central_names(url):
 
 
 def build_audio():
+    # SUPERSEDED (db.lua v95): 3DS and Xbox 360 are now full streamed-tier platforms
+    # emitted by --build (STREAMED map), so this ogg/wav-only pass would duplicate
+    # them. Kept for reference; refuse to run so it can't append dup rows.
+    sys.exit("--build-audio is superseded by --build's streamed tier (db.lua v95); "
+             "3DS/Xbox 360 are emitted there. Nothing to do.")
     games = []
     with open(CSV, newline="") as f:
         for row in csv.DictReader(f):

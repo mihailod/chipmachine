@@ -26,7 +26,13 @@ target_include_directories(vgmstreamplugin_objs PRIVATE
     ${VGMSTREAM_DIR}/layout
     ${VGMSTREAM_DIR}/meta
     ${VGMSTREAM_DIR}/util
+    /opt/homebrew/include
 )
+
+# Enable vgmstream's FFmpeg codec backend so ATRAC3 (.at3) / ATRAC3plus (.oma) and
+# other ffmpeg-gated codecs decode. Uses the same system FFmpeg that ffmpegplugin
+# links.
+target_compile_definitions(vgmstreamplugin_objs PRIVATE VGM_USE_FFMPEG)
 
 # Apply signed char, warnings suppression, and hidden visibility to the vgmstream sources
 target_compile_options(vgmstreamplugin_objs PRIVATE
@@ -53,7 +59,7 @@ add_library(vgmstreamplugin STATIC ${VGMSTREAM_COMBINED})
 add_dependencies(vgmstreamplugin vgmstreamplugin_combine)
 set_target_properties(vgmstreamplugin PROPERTIES LINKER_LANGUAGE CXX)
 
-target_link_libraries(vgmstreamplugin PRIVATE coreutils)
+target_link_libraries(vgmstreamplugin PRIVATE coreutils avcodec avformat avutil swresample)
 if(NOT WIN32)
     target_link_libraries(vgmstreamplugin PRIVATE m)
 endif()

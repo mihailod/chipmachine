@@ -350,11 +350,25 @@ void ChipMachine::updateKeys()
 	bool islocal = remoteLoader.isLocalFile(song.path) ||
 	               RemoteLoader::isLocalAsset(song.path);
 	if (islocal) {
-	    topStatus.setText(utils::format("Format: %s (%s)%s", song.format,ext, "+"));	
+	    topStatus.setText(utils::format("Format: %s (%s)%s", song.format,ext, "+"));
 	} else {
             if (ext != "") topStatus.setText(utils::format("Format: %s (%s)%s", song.format,ext, isoffline ? "*" : ""));
             else topStatus.setText(utils::format("Format: %s %s", song.format, isoffline ? "*" : ""));
         }
+        // Source DB tag: getSongInfo prefixes song.path with the collection id
+        // ("hvsc::...", "mirsoft::..."). Show it in the smaller sourceStatus field
+        // just to the right of the format line. Skip the non-collection pseudo
+        // prefixes (playlists / group / show / product rows).
+        std::string src;
+        auto dp = song.path.find("::");
+        if (dp != std::string::npos) src = song.path.substr(0, dp);
+        if (src == "playlist" || src == "otherplatform" ||
+            src == "podcastshow" || src == "product")
+            src = "";
+        sourceStatus.setText(src);
+        sourceStatus.pos.x = topStatus.pos.x + topStatus.getWidth() + 15;
+        sourceStatus.visible(src != "");
+
         searchField.visible(false);
         filterField.visible(false);
         topStatus.visible(true);
@@ -410,6 +424,7 @@ void ChipMachine::updateKeys()
         filterField.visible(true);
         searchField.pos.x = filterField.pos.x + filterField.getWidth() + 5;
         topStatus.visible(false);
+        sourceStatus.visible(false);
         songList.setTotal(iquery->numHits());
         // The result set (and thus the song under the cursor) just changed, even
         // if the selection index didn't, so refresh the platform-logo preview.

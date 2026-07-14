@@ -54,11 +54,18 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "Acorn Archimedes", { ACORN } },
     { "Apple Mac/IIGS/MacOS/iOS", { APPLE } },
     { "Sony PlayStation 1/2", { PLAYSTATION, PLAYSTATION2 } },
+    { "Sony PlayStation 3", { PS3 } },
+    { "Sony PSP", { PSP } },
     { "Nintendo NES", { NES } },
     { "Nintendo SNES", { SNES } },
     { "Nintendo GameBoy/GBA", { GAMEBOY, GBA } },
     { "Nintendo 64", { NINTENDO64 } },
     { "Nintendo DS", { NDS } },
+    { "Nintendo 3DS", { N3DS } },
+    { "Nintendo GameCube", { GAMECUBE } },
+    { "Nintendo Wii", { WII } },
+    { "Microsoft Xbox", { XBOX } },
+    { "Microsoft Xbox 360", { XBOX360 } },
     { "Sega 8bit", { SEGAMS } },
     { "Sega 16bit/32X/Saturn", { SEGA, MEGADRIVE, SATURN } },
     { "Sega Dreamcast", { DREAMCAST } },
@@ -90,6 +97,10 @@ static uint32_t formatColor(int f)
         { DREAMCAST, 0xffee8844 }, { SATURN, 0xff4488cc },
         { WONDERSWAN, 0xff88ccaa }, { PLAYSTATION, 0xffbbbbbb },
         { PLAYSTATION2, 0xffbbbbbb },
+        { N3DS, 0xffcc4477 },     { GAMECUBE, 0xff7755bb },
+        { WII, 0xffddddee },      { PS3, 0xff8899bb },
+        { PSP, 0xff6677aa },      { XBOX, 0xff33bb44 },
+        { XBOX360, 0xff55cc66 },
         { SID, 0xffcc8844 },     { PRG, 0xffbb66cc },
         { ZXBEEPER, 0xffff88dd }, { ZXAY, 0xffbb88ff }, { SPECTRUM, 0xffbb88ff },
         { MSX, 0xff66ddaa },     { AMSTRAD, 0xff44aadd },
@@ -306,6 +317,9 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
 
     searchScreen.add(&topStatus);
     topStatus.visible(false);
+
+    searchScreen.add(&sourceStatus);
+    sourceStatus.visible(false);
 
     overlay.add(&toastField);
 
@@ -1174,13 +1188,27 @@ void ChipMachine::loadScreenshot(const std::string& shot)
     currentPlatformSlug = slug;
 
     auto parts = utils::split(shot, ";");
-    // One callback fires per requested part; count them down so we know when
-    // every download has settled (success or failure) before finalizing.
-    auto remaining = std::make_shared<int>((int)parts.size());
-    auto cb = [=](utils::File f) {
-        // Bail if the song changed (or went to the logo-only path) meanwhile.
-        if (currentScreenshot != shot)
-            return;
+    // The callback fires once per requested part and MAY run on the web worker
+    // thread (async download) or synchronously on the render thread (cache hit).
+    // It must NOT touch any shared ChipMachine state -- in particular the
+    // `screenshots` vector, which the render thread reads every frame (transition
+    // source callbacks) and clears (loadScreenshot). Doing so from the worker
+    // thread is a data race that corrupts the heap. So the callback only DECODES
+    // the downloaded file(s) into a captured, self-locked accumulator; when the
+    // last part settles it publishes the decoded bitmaps to pendingShotBms and
+    // raises pendingShotReady. update() on the render thread then installs them
+    // into `screenshots`, appends the logo fallback and restarts the transitions
+    // -- so all shared state and all GL calls stay on the render thread.
+    struct ShotAccum
+    {
+        std::mutex m;
+        std::vector<NamedBitmap> bms;
+        int remaining;
+    };
+    auto acc = std::make_shared<ShotAccum>();
+    acc->remaining = (int)parts.size();
+    auto cb = [this, acc, shot](utils::File f) {
+        std::vector<NamedBitmap> decoded;
         if (f) {
             try {
                 if (utils::toLower(utils::path_extension(
@@ -1190,69 +1218,39 @@ void ChipMachine::loadScreenshot(const std::string& shot)
                             if ((px & 0xffffff) == 0)
                                 px &= 0xffffff;
                         }
-                        screenshots.emplace_back(f.getFileName(), bm);
+                        decoded.emplace_back(f.getFileName(), bm);
                     }
                 } else {
                     auto bm = image::load_image(f.getName());
                     for (auto& px : bm) {
                         if ((px & 0xffffff) == 0) px &= 0xffffff;
                     }
-                    screenshots.emplace_back(f.getFileName(), bm);
+                    decoded.emplace_back(f.getFileName(), bm);
                 }
             } catch (image::image_exception& e) {
                 LOGD("Failed to load image");
             }
         }
 
-        if (--(*remaining) <= 0) {
-            // All downloads settled. Sort the real screenshots. Only fall back
-            // to the platform + ChipMachine logos when no real screenshot loaded
-            // (e.g. every download failed) -- if the song has art, show only it.
-            screenshots.erase(std::remove(screenshots.begin(),
-                                          screenshots.end(), ""),
-                              screenshots.end());
-            sort(screenshots.begin(), screenshots.end());
-            if (screenshots.empty()) {
-                // Every download failed. For a YouTube song, walk the video's own
-                // thumbnails before the (often mis-guessed) platform logo, so the
-                // picture stays on-topic: matched external art -> sddefault ->
-                // hqdefault (present for every video) -> logo. Comparing against
-                // `shot` tells us which rung just failed, so we step down without
-                // looping.
-                std::string base = youtubeThumbBase(currentInfo.path);
-                if (!base.empty()) {
-                    std::string sd = base + "sddefault.jpg";
-                    std::string hq = base + "hqdefault.jpg";
-                    if (shot != sd && shot != hq) {
-                        loadScreenshot(sd);
-                        return;
-                    }
-                    if (shot == sd) {
-                        loadScreenshot(hq);
-                        return;
-                    }
-                    // shot == hq: even the guaranteed thumbnail failed -> logo.
-                }
-                appendLogoScreenshots();
-            } else {
-                // Song has real screenshots -- still append the platform (or
-                // extension) logo as the final frame so it always rotates in
-                // last. No generic icon here: if there is no platform/ext logo,
-                // just rotate the real screenshots as before.
-                appendPlatformOrExtLogo();
-            }
-            // Do NOT call transitions.restart() here: this callback may run on
-            // the web worker thread (async download, no GL context), and
-            // restart()->next() touches OpenGL (releasing held textures such as
-            // the cube-flip's cubeTexOld runs glDeleteTextures -> crash off the
-            // render thread). It may ALSO run synchronously on the render thread
-            // (cache hit, via getFile->call_handler), so we can't block/marshal
-            // either (run_safely would self-deadlock). Just flag it; update() on
-            // the render thread consumes the flag and does the GL-touching
-            // restart. screenshots[] filled above is published by this
-            // release-store; update() acquire-loads before reading it.
-            pendingShotRestart.store(true, std::memory_order_release);
+        bool done;
+        {
+            std::lock_guard<std::mutex> lg(acc->m);
+            for (auto& nb : decoded)
+                acc->bms.push_back(std::move(nb));
+            done = (--acc->remaining <= 0);
         }
+        if (!done)
+            return;
+
+        // All parts settled. Hand the decoded screenshots to the render thread;
+        // it validates the request is still current before installing (see the
+        // pendingShotReady handler in update()).
+        {
+            std::lock_guard<std::mutex> lg(pendingShotLock);
+            pendingShotBms = std::move(acc->bms);
+            pendingShotKey = shot;
+        }
+        pendingShotReady.store(true, std::memory_order_release);
     };
     for (auto& p : parts)
         webutils::Web::getInstance().getFile(p, cb);
@@ -1656,6 +1654,7 @@ void ChipMachine::update()
                 } else if (!loadingToastShown) {
                     toast("BUFFERING...", STICKY);
                     loadingToastShown = true;
+                    loadingToastStartMs = utils::getms();
                 }
             } else if (playerState == MusicPlayerList::Loading) {
                 // Whole-file download in flight -> "LOADING..." (skip if it is
@@ -1670,6 +1669,7 @@ void ChipMachine::update()
                     if (!cached) {
                         toast("LOADING...", STICKY);
                         loadingToastShown = true;
+                        loadingToastStartMs = utils::getms();
                     } else {
                         loadingToastResolved = true;
                     }
@@ -1816,12 +1816,62 @@ void ChipMachine::update()
         }
     }
 
-    // A screenshot download callback (possibly on the web worker thread) asked
-    // to (re)start the transition. Do the GL-touching restart here, on the
-    // render thread. acquire-load pairs with the release-store in loadScreenshot
-    // so the screenshots[] it filled are visible before restart() reads them.
-    if (pendingShotRestart.exchange(false, std::memory_order_acquire))
-        transitions.restart();
+    // A screenshot download settled (its callback may have run on the web worker
+    // thread). Install the decoded bitmaps into `screenshots` HERE, on the render
+    // thread, so the transition callbacks that read `screenshots` -- and the GL
+    // work in transitions.restart() -- never race the downloader. acquire pairs
+    // with the release-store in the download callback.
+    if (pendingShotReady.exchange(false, std::memory_order_acquire)) {
+        std::vector<NamedBitmap> bms;
+        std::string key;
+        {
+            std::lock_guard<std::mutex> lg(pendingShotLock);
+            bms = std::move(pendingShotBms);
+            pendingShotBms.clear();
+            key = pendingShotKey;
+        }
+        // Drop the result if the song (and thus the wanted screenshot) changed
+        // while the download was in flight.
+        if (key == currentScreenshot) {
+            screenshots = std::move(bms);
+            // Discard failed/empty entries, then sort for a stable rotation.
+            screenshots.erase(
+                std::remove(screenshots.begin(), screenshots.end(), ""),
+                screenshots.end());
+            std::sort(screenshots.begin(), screenshots.end());
+            if (screenshots.empty()) {
+                // Every download failed. For a YouTube song, walk the video's own
+                // thumbnails before the (often mis-guessed) platform logo, so the
+                // picture stays on-topic: sddefault -> hqdefault (present for
+                // every video) -> logo. `key` tells us which rung just failed, so
+                // we step down without looping.
+                std::string base = youtubeThumbBase(currentInfo.path);
+                bool retried = false;
+                if (!base.empty()) {
+                    std::string sd = base + "sddefault.jpg";
+                    std::string hq = base + "hqdefault.jpg";
+                    if (key != sd && key != hq) {
+                        loadScreenshot(sd);
+                        retried = true;
+                    } else if (key == sd) {
+                        loadScreenshot(hq);
+                        retried = true;
+                    }
+                    // key == hq: even the guaranteed thumbnail failed -> logo.
+                }
+                if (!retried) {
+                    appendLogoScreenshots();
+                    transitions.restart();
+                }
+            } else {
+                // Song has real screenshots -- still append the platform (or
+                // extension) logo as the final frame so it always rotates in
+                // last.
+                appendPlatformOrExtLogo();
+                transitions.restart();
+            }
+        }
+    }
 
     // A podcast-artwork download finished (on the web worker); upload it to the
     // search-logo icon here on the render thread. Skip if the cursor has since
@@ -2057,6 +2107,66 @@ void ChipMachine::removeToast()
     toastField.color = 0;
 }
 
+void ChipMachine::drawProgressBar(float frac)
+{
+    if (frac < 0.0f) frac = 0.0f;
+    if (frac > 1.0f) frac = 1.0f;
+
+    float gscale = screen.height() / 576.0f;
+
+    float cx = topLeft.x + (downRight.x - topLeft.x) * 0.5f;
+    float barW = (downRight.x - topLeft.x) * 0.5f;
+    float barH = 44.0f * gscale;
+    float barX = cx - barW * 0.5f;
+    float barY = toastField.pos.y + toastField.getHeight() + 12.0f * gscale;
+    float b = std::max(2.0f, 2.0f * gscale); // border thickness
+
+    const uint32_t white = 0xffffffff;
+    // White outline, black interior.
+    screen.rectangle(barX, barY, barW, barH, white);
+    screen.rectangle(barX + b, barY + b, barW - 2 * b, barH - 2 * b, 0xff000000);
+
+    // Colour ramps red -> yellow -> green across the FULL bar width, revealed
+    // left-to-right up to `frac`. So the fill starts red and its leading edge
+    // shifts toward green as it approaches 100% (done).
+    auto specColor = [](float t) -> uint32_t {
+        if (t < 0.0f) t = 0.0f;
+        if (t > 1.0f) t = 1.0f;
+        float r, g;
+        if (t < 0.5f) { r = 1.0f; g = t / 0.5f; }         // red -> yellow
+        else { r = 1.0f - (t - 0.5f) / 0.5f; g = 1.0f; }  // yellow -> green
+        return 0xff000000u | ((uint32_t)(r * 255.0f) << 16) |
+               ((uint32_t)(g * 255.0f) << 8);
+    };
+    float innerX = barX + b;
+    float innerY = barY + b;
+    float innerW = barW - 2 * b;
+    float innerH = barH - 2 * b;
+    float filledW = innerW * frac;
+    const int strips = 64;
+    float stripW = innerW / strips;
+    for (int i = 0; i < strips; i++) {
+        float left = i * stripW;
+        if (left >= filledW) break;
+        float w = std::min(stripW, filledW - left);
+        screen.rectangle(innerX + left, innerY, w, innerH,
+                         specColor((i + 0.5f) / strips));
+    }
+
+    std::string pct = utils::format("%d%%", (int)(frac * 100.0f));
+    float tScale = 0.6f * gscale;
+    auto tsz = font.get_size(pct, tScale);
+    // Centre the line box in the bar, then apply an explicit pixel nudge
+    // (progressPctYNudge) because this font's glyphs sit high within their line
+    // box. The nudge is in gscale pixels for a predictable 1:1 lever. Once the
+    // fill passes the centred label (>= 50%), switch it to black so it stays
+    // legible against the bright fill.
+    uint32_t textColor = (frac >= 0.5f) ? 0xff000000 : white;
+    screen.text(font, pct, cx - tsz.x * 0.5f,
+                barY + (barH - tsz.y) * 0.5f + progressPctYNudge * gscale,
+                textColor, tScale);
+}
+
 void ChipMachine::render(uint32_t delta)
 {
     if (screen.size() != screenSize) {
@@ -2173,7 +2283,6 @@ void ChipMachine::render(uint32_t delta)
     // centred inside. Progress is (rows processed / progressMaxSongs); since the
     // real DB size isn't known up-front we assume progressMaxSongs and clamp.
     if (indexingDatabase && toastField.getText() != "") {
-        float gscale = screen.height() / 576.0f;
         // Two-phase progress: the DB-creation ticks fill the first
         // progressDbPhase of the bar, the row indexing fills the rest.
         float dbFrac = (float)musicDatabase.getDbCreatedCount() /
@@ -2184,61 +2293,16 @@ void ChipMachine::render(uint32_t delta)
         if (rowFrac > 1.0f) rowFrac = 1.0f;
         float frac = progressDbPhase * dbFrac +
                      (1.0f - progressDbPhase) * rowFrac;
-        if (frac < 0.0f) frac = 0.0f;
-        if (frac > 1.0f) frac = 1.0f;
-
-        float cx = topLeft.x + (downRight.x - topLeft.x) * 0.5f;
-        float barW = (downRight.x - topLeft.x) * 0.5f;
-        float barH = 44.0f * gscale;
-        float barX = cx - barW * 0.5f;
-        float barY = toastField.pos.y + toastField.getHeight() + 12.0f * gscale;
-        float b = std::max(2.0f, 2.0f * gscale); // border thickness
-
-        const uint32_t white = 0xffffffff;
-        // White outline, black interior.
-        screen.rectangle(barX, barY, barW, barH, white);
-        screen.rectangle(barX + b, barY + b, barW - 2 * b, barH - 2 * b,
-                         0xff000000);
-
-        // Spectrum-analyzer fill: colour ramps green -> yellow -> red across the
-        // FULL bar width, revealed left-to-right up to `frac`. So the fill starts
-        // green and its leading edge shifts toward red as it approaches 100%.
-        auto specColor = [](float t) -> uint32_t {
-            if (t < 0.0f) t = 0.0f;
-            if (t > 1.0f) t = 1.0f;
-            float r, g;
-            if (t < 0.5f) { r = t / 0.5f; g = 1.0f; }         // green -> yellow
-            else { r = 1.0f; g = 1.0f - (t - 0.5f) / 0.5f; }  // yellow -> red
-            return 0xff000000u | ((uint32_t)(r * 255.0f) << 16) |
-                   ((uint32_t)(g * 255.0f) << 8);
-        };
-        float innerX = barX + b;
-        float innerY = barY + b;
-        float innerW = barW - 2 * b;
-        float innerH = barH - 2 * b;
-        float filledW = innerW * frac;
-        const int strips = 64;
-        float stripW = innerW / strips;
-        for (int i = 0; i < strips; i++) {
-            float left = i * stripW;
-            if (left >= filledW) break;
-            float w = std::min(stripW, filledW - left);
-            screen.rectangle(innerX + left, innerY, w, innerH,
-                             specColor((i + 0.5f) / strips));
-        }
-
-        std::string pct = utils::format("%d%%", (int)(frac * 100.0f));
-        float tScale = 0.6f * gscale;
-        auto tsz = font.get_size(pct, tScale);
-        // Centre the line box in the bar, then apply an explicit pixel nudge
-        // (progressPctYNudge) because this font's glyphs sit high within their
-        // line box. The nudge is in gscale pixels for a predictable 1:1 lever.
-        // Once the fill passes the centred label (>= 50%), switch it to black so
-        // it stays legible against the bright fill.
-        uint32_t textColor = (frac >= 0.5f) ? 0xff000000 : white;
-        screen.text(font, pct, cx - tsz.x * 0.5f,
-                    barY + (barH - tsz.y) * 0.5f + progressPctYNudge * gscale,
-                    textColor, tScale);
+        drawProgressBar(frac);
+    } else if (loadingToastShown && toastField.getText() != "" &&
+               utils::getms() - loadingToastStartMs > 5000) {
+        // Slow remote fetch/prebuffer (e.g. a large Zophar zip): once the wait
+        // passes 5s and playback still hasn't started, show how much of the file
+        // has downloaded below the LOADING/BUFFERING toast. Gated on a known
+        // total size, so open-ended radio streams never draw a bar.
+        int64_t dl = 0, total = 0;
+        if (remoteLoader.downloadProgress(dl, total))
+            drawProgressBar((float)dl / (float)total);
     }
 
     // Drawn last so the volume bar always sits on top of every screen element

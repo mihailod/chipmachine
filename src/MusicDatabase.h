@@ -116,6 +116,19 @@ enum Formats
 
     UADE,
 
+    // Zophar streamed-tier consoles (recorded rips played via vgmstream/ffmpeg).
+    // Deliberately placed here in the free 57-63 range (after UADE, before the
+    // fixed PRODUCT=0x40 anchor): the console region above ends at ARCADE=46 with
+    // only one slot before the fixed TRACKER=0x30 anchor, so inserting them there
+    // would push ARCADE past 0x30 and collide with the tracker bytes.
+    N3DS,       // Nintendo 3DS
+    GAMECUBE,   // Nintendo GameCube
+    WII,        // Nintendo Wii
+    PS3,        // Sony PlayStation 3
+    PSP,        // Sony PlayStation Portable
+    XBOX,       // Microsoft Xbox
+    XBOX360,    // Microsoft Xbox 360
+
     PRODUCT = 0x40
 
 };
@@ -561,6 +574,14 @@ private:
     // 0 = neutral (products).
     std::vector<uint16_t> formatHue;
 
+    // Per-entry REAL-format token (interned id of the true module extension),
+    // aligned with `formats`. Used only by search()'s add_unique dedup so it
+    // folds two rows only when their ACTUAL format matches -- not the coarse
+    // platform byte. This distinguishes e.g. a mirsoft ".mod" remix filed under
+    // Commodore 64 from the real HVSC ".sid", which share {title,composer,byte}
+    // and would otherwise shadow each other. 0 = unknown format (never folds).
+    std::vector<uint32_t> formatKey;
+
     // When a platform filter (TAB) is active, the set of titleIndex indices that
     // pass it, precomputed in setFormatFilter(). Lets short queries (< 3 chars)
     // scan the (typically small) filtered set directly instead of the sparse
@@ -635,6 +656,12 @@ private:
     std::unordered_map<uint64_t, uint32_t> pathMap;
     uint32_t productStartIndex{};
     std::vector<uint8_t> dontIndex;
+
+    // Search precedence per collection ROWID (from the collection table's
+    // `priority` column, set in db.lua). Higher = surfaces first and wins the
+    // dedup when two rows would otherwise fold. Loaded on every launch (cached
+    // or rebuilt) in generateIndex; search() stable-sorts title matches by it.
+    std::vector<int> collPriority;
 };
 } // namespace chipmachine
 

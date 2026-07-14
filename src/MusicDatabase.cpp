@@ -69,7 +69,8 @@ void MusicDatabase::createTables()
 {
     db.exec("CREATE TABLE IF NOT EXISTS collection (name STRING, url STRING, "
             "localdir STRING, "
-            "description STRING, id UNIQUE, version INTEGER, artwork STRING)");
+            "description STRING, id UNIQUE, version INTEGER, artwork STRING, "
+            "priority INTEGER)");
     db.exec("CREATE TABLE IF NOT EXISTS song (title STRING, game STRING, "
             "composer STRING, "
             "format STRING, path STRING, collection INTEGER, metadata STRING, "
@@ -1026,9 +1027,14 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
     // Store the raw relative local_dir from vars so the DB is portable across
     // install locations (dev tree, /Applications, etc.). generateIndex()
     // resolves it against the current workDir at runtime.
+    // priority: search precedence & dedup winner (higher surfaces first). Default
+    // 0; set per-collection in db.lua (e.g. hvsc high, remixes negative).
+    int priority = 0;
+    try { priority = std::stoi(vars["priority"]); } catch (...) {}
     db.exec("INSERT INTO collection (name, id, url, localdir, description, "
-            "artwork) VALUES (?, ?, ?, ?, ?, ?)",
-            name, id, source, vars["local_dir"], description, vars["artwork"]);
+            "artwork, priority) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            name, id, source, vars["local_dir"], description, vars["artwork"],
+            priority);
     auto collection_id = db.last_rowid();
     dontIndex.resize(collection_id + 1);
     dontIndex[collection_id] = 0;
@@ -1349,8 +1355,20 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
             std::string title = titleIndex.getString(index);
             std::string composer =
                 composerIndex.getString(titleToComposer[index]);
-            uint8_t fmt = formats[index] & 0xff;
-            identity = title + "\t" + composer + "\t" + std::to_string(fmt);
+            // Fold two songs only when title, composer AND the REAL format all
+            // match. If the author or the format is unknown, keep both -- a
+            // false negative (a visible duplicate) is always preferable to a
+            // false positive that shadows a distinct song. Keying on the real
+            // format token (not the coarse platform byte) stops e.g. a mirsoft
+            // ".mod" remix filed under Commodore 64 from hiding the real HVSC
+            // ".sid" of the same title+composer.
+            uint32_t fk =
+                (index < (int)formatKey.size()) ? formatKey[index] : 0;
+            if (composer.empty() || fk == 0) {
+                result.push_back(index);
+                return true;
+            }
+            identity = title + "\t" + composer + "\t" + std::to_string(fk);
         }
 
         if (seen.find(identity) == seen.end()) {
@@ -1482,6 +1500,19 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
 
     std::vector<int> tresult;
     titleIndex.search(title_query, tresult, searchLimit);
+    // Order title matches by collection priority (higher first) so preferred
+    // sources -- e.g. HVSC over remix collections -- surface first AND win the
+    // dedup (add_unique keeps the first-seen of any fold). Stable, so rows of
+    // equal priority keep their existing (index) order. Priority defaults to 0.
+    if (!collPriority.empty()) {
+        std::stable_sort(tresult.begin(), tresult.end(), [&](int a, int b) {
+            auto prio = [&](int idx) {
+                int coll = formats[idx] >> 8;
+                return coll < (int)collPriority.size() ? collPriority[coll] : 0;
+            };
+            return prio(a) > prio(b);
+        });
+    }
     for (int index : tresult) {
         if (!passesOtherDrill(index)) continue;
         if (!add_unique(index))
@@ -2166,11 +2197,9 @@ void initFormats()
     // not GBA (both share the "Nintendo GameBoy/GBA" TAB filter, but keep the
     // byte correct for colour/label).
     format_map["gameboy advance"] = GBA;
-    // Zophar 3DS / Xbox 360 gamerips onboarded ONLY for their ffmpeg-playable
-    // ogg/wav members (the zips are streamed-audio grab-bags); no dedicated TAB
-    // filter for either console -> "Other Platforms", like Wii/GameCube/Xbox.
-    format_map["nintendo 3ds"] = OTHER;
-    format_map["xbox 360"] = OTHER;
+    // (Zophar 3DS / Xbox 360 / Wii / GameCube / Xbox / PS3 / PSP streamed consoles
+    // are classified to their own bytes in the Zophar streamed-tier block below,
+    // now that vgmstream decodes their rips -- they were formerly OTHER.)
     format_map["nintendo snes/super famicom"] = SNES;
     format_map["nec pc engine"] = HES;
     // Sega 8-bit (SN76489 PSG): Master System, Game Gear, SG-1000, SC-3000
@@ -2349,13 +2378,12 @@ void initFormats()
     for (char const* f : { "neo geo pocket", "pinball", "other" })
         format_map[f] = OTHER;
 
-    // mirsoft.info "World of Game MODs" is classified by the GAME's platform, so
-    // its `format` column carries a platform label rather than a module format --
-    // a C64/NES/SNES game's .mod/.xm/.it arrangement files under that console,
-    // per the "classify by game platform" choice (db.lua v86). Most labels it
-    // emits are already mapped above (commodore 64->SID, zx spectrum, atari st,
-    // amstrad cpc, super nintendo, nes, game boy, sega mega drive/master system,
-    // pc engine, arcade, atari jaguar); these are the few nothing else declared.
+    // mirsoft.info "World of Game MODs": as of db.lua v94 its `format` column is
+    // the ACTUAL module format (mod-family -> "Amiga", xm/it/s3m -> "PC", a few
+    // "Atari ST"), NOT the game's platform. Classifying by game platform (v86)
+    // gave a C64 game's .mod the SID byte and made it shadow the real HVSC SID in
+    // search dedup, so it was reverted. "amiga"/"pc"/"atari st" are the labels it
+    // now emits; the console labels below are retained only for OTHER collections.
     format_map["amiga"] = AMIGA;
     format_map["pc"] = PC;                   // PC DOS/Windows game tracker mods
     format_map["macintosh"] = APPLE;
@@ -2364,6 +2392,20 @@ void initFormats()
     format_map["nintendo 64"] = NINTENDO64;
     format_map["sega saturn"] = SATURN;
     format_map["dreamcast"] = DREAMCAST;
+
+    // --- Zophar streamed-tier consoles (build_zophar.py --build-streamed) -------
+    // Recorded game-audio rips (adx/at3/lwav/dsp/...) played via vgmstream/ffmpeg.
+    // The row's format string is the platform label, and its path is a
+    // "(EMU).zophar.zip" URL, so classification is label-driven (no ext fallback).
+    // These platforms previously fell into OTHER (see the overrides below).
+    format_map["sega dreamcast"] = DREAMCAST;
+    format_map["playstation 3"] = PS3;
+    format_map["playstation portable"] = PSP;
+    format_map["nintendo gamecube"] = GAMECUBE;
+    format_map["nintendo wii"] = WII;
+    format_map["nintendo 3ds"] = N3DS;      // was OTHER (3DS ogg/bcwav rips)
+    format_map["xbox"] = XBOX;
+    format_map["xbox 360"] = XBOX360;
     // chipmusic.org rendered-MP3 tracks that carry no platform-bearing tag land
     // in the generic "Chipmusic" bucket -> the existing Unclassified MP3/OGG
     // filter (the classifiable majority route to Game Boy/C64/NES/Atari ST/Amiga/
@@ -2525,8 +2567,9 @@ static uint8_t platformNameToByte(std::string s)
         { "gameboy", GAMEBOY },      { "gameboy color", GAMEBOY },
         { "gameboy advance", GBA },
         { "nec turbografx/pc engine", HES }, { "nec pc engine", HES },
-        { "playstation", PLAYSTATION }, { "playstation 2", PLAYSTATION },
-        { "playstation 3", PLAYSTATION }, { "playstation portable", PLAYSTATION },
+        { "playstation", PLAYSTATION }, { "playstation 2", PLAYSTATION2 },
+        { "playstation 3", PS3 },    { "playstation portable", PSP },
+        { "nintendo 3ds", N3DS },
         { "windows", PC },           { "ms-dos", PC },
         { "ms-dos/gus", PC },        { "linux", PC },
         { "audiosurf", PC },
@@ -2542,8 +2585,9 @@ static uint8_t platformNameToByte(std::string s)
         { "trs-80/coco/dragon", OTHER }, { "spectravideo 3x8", OTHER },
         { "wonderswan", OTHER },     { "neogeo pocket", OTHER },
         { "virtual boy", OTHER },    { "pokemon mini", OTHER },
-        { "nintendo wii", OTHER },   { "gamecube", OTHER },
-        { "xbox", OTHER },           { "xbox 360", OTHER },
+        { "nintendo wii", WII },     { "gamecube", GAMECUBE },
+        { "nintendo gamecube", GAMECUBE },
+        { "xbox", XBOX },            { "xbox 360", XBOX360 },
         // No hardware chip identity of their own (fantasy consoles, web/VM,
         // mobile, calculators, compo buckets) -> "Other Platforms".
         { "wild", OTHER },           { "javascript", OTHER },
@@ -2753,6 +2797,9 @@ static std::string platformName(uint8_t b)
     case GBA: return "Nintendo Game Boy";
     case NINTENDO64: return "Nintendo 64";
     case NDS: return "Nintendo DS";
+    case N3DS: return "Nintendo 3DS";
+    case GAMECUBE: return "Nintendo GameCube";
+    case WII: return "Nintendo Wii";
     case SEGA:
     case MEGADRIVE: return "Sega Mega Drive";
     case SEGAMS: return "Sega 8-bit";
@@ -2761,6 +2808,10 @@ static std::string platformName(uint8_t b)
     case WONDERSWAN: return "WonderSwan";
     case PLAYSTATION:
     case PLAYSTATION2: return "PlayStation";
+    case PS3: return "PlayStation 3";
+    case PSP: return "PlayStation Portable";
+    case XBOX: return "Xbox";
+    case XBOX360: return "Xbox 360";
     case HES: return "PC Engine";
     case OTHER: return "Other";
     case ARCADE: return "Arcade";
@@ -3490,6 +3541,7 @@ void MusicDatabase::readIndex(apone::File&& f)
     readVector(productPlatform, f);
     readVector(productRowid, f);
     readVector(formatHue, f);
+    readVector(formatKey, f);
 
     titleIndex.load(f);
     composerIndex.load(f);
@@ -3507,6 +3559,7 @@ void MusicDatabase::writeIndex(apone::File&& f)
     writeVector(productPlatform, f);
     writeVector(productRowid, f);
     writeVector(formatHue, f);
+    writeVector(formatKey, f);
 
     titleIndex.dump(f);
     composerIndex.dump(f);
@@ -3551,6 +3604,25 @@ void MusicDatabase::generateIndex()
             loader.registerSource(c.name, c.url, c.local_dir.string());
         }
     }
+    // Load per-collection search priority (ROWID-indexed). Done here -- before
+    // the cached-index early-return -- so it is available every launch, since
+    // search() runs whether or not the title index was rebuilt.
+    collPriority.clear();
+    try {
+        auto pq = db.query<int, int>(
+            "SELECT ROWID, IFNULL(priority, 0) FROM collection");
+        while (pq.step()) {
+            auto [rowid, prio] = pq.get_tuple();
+            if (rowid >= (int)collPriority.size())
+                collPriority.resize(rowid + 1, 0);
+            collPriority[rowid] = prio;
+        }
+    } catch (...) {
+        // Pre-priority-column DB (older schema that a version bump will rebuild):
+        // fall back to no reordering rather than crashing.
+        collPriority.clear();
+    }
+
     auto indexPath = Environment::getCacheDir() / "index.dat";
 
     if (!reindexNeeded && utils::exists(indexPath)) {
@@ -3567,8 +3639,9 @@ void MusicDatabase::generateIndex()
 
     std::string oldComposer;
     auto query = db.query<std::string, std::string, std::string, std::string,
-                          std::string, int>(
-        "SELECT title, game, format, composer, path, collection FROM song");
+                          std::string, int, std::string>(
+        "SELECT title, game, format, composer, path, collection, "
+        "IFNULL(ext,'') FROM song");
 
     // The "radio" collection holds live streaming stations whose format tags
     // (M3U/MP3) are shared with regular content; tag them by collection ROWID so
@@ -3606,12 +3679,33 @@ void MusicDatabase::generateIndex()
     titleIndex.reserve(700000);
     composerIndex.reserve(60000);
     formats.reserve(700000);
+    formatKey.reserve(700000);
 
     int step = 700000 / 5;
 
     std::unordered_map<std::string, std::vector<uint32_t>> composers;
 
-    std::string title, game, fmt, composer, path;
+    // Intern the REAL module extension of each song into a small stable id for
+    // the search dedup key (formatKey). 0 is reserved for "unknown format".
+    std::unordered_map<std::string, uint32_t> extIds;
+    auto internExt = [&](std::string const& fmtStr,
+                         std::string const& pathStr) -> uint32_t {
+        // Prefer the stored `ext` column (the true format even when the path is
+        // a container like "<Game>.zip"); fall back to the path's extension.
+        std::string e = toLower(fmtStr);
+        if (e.empty()) {
+            e = toLower(utils::path_extension(pathStr));
+            if (!e.empty() && e[0] == '.') e = e.substr(1);
+        }
+        if (e.empty()) return 0;
+        auto it = extIds.find(e);
+        if (it != extIds.end()) return it->second;
+        uint32_t id = (uint32_t)extIds.size() + 1;
+        extIds.emplace(e, id);
+        return id;
+    };
+
+    std::string title, game, fmt, composer, path, ext;
     int collection;
 
     while (count < 1000000) {
@@ -3625,7 +3719,11 @@ void MusicDatabase::generateIndex()
         if (count % 2000 == 0)
             indexedCount.store(count, std::memory_order_relaxed);
 
-        tie(title, game, fmt, composer, path, collection) = query.get_tuple();
+        tie(title, game, fmt, composer, path, collection, ext) =
+            query.get_tuple();
+
+        // Real-format token for the search dedup key (see add_unique).
+        formatKey.push_back(internExt(ext, path));
 
         uint8_t b = formatToByte(fmt, path, collection);
         if (collection == radioColl)
@@ -3711,6 +3809,9 @@ void MusicDatabase::generateIndex()
         uint8_t b = PRODUCT;
         formats.push_back(b | (collection << 8));
         formatHue.push_back(0); // products: neutral (no hue shift)
+        // Products share one stable format token, so they still dedup by
+        // {title,composer} (as before), never on a real module extension.
+        formatKey.push_back(internExt("product", ""));
         // Tag the product with a platform byte (from its `type`) so the TAB
         // filter can include/exclude collections by platform. Aligned with
         // productStartIndex (this is the (formats.size()-productStartIndex)'th
@@ -3858,10 +3959,13 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
     lua["set_db_var"] = [&](std::string const& name, sol::object val) {
         if (val.is<std::string>())
             dbmap[name] = val.as<std::string>();
-        else if (val.is<uint32_t>())
-            dbmap[name] = std::to_string(val.as<uint32_t>());
         else if (val.is<bool>())
             dbmap[name] = val.as<bool>() ? "yes" : "no";
+        else if (val.get_type() == sol::type::number)
+            // Signed so negative priorities (sink a collection below the
+            // default-0 mass) survive; positive numbers (color, priority) are
+            // unaffected.
+            dbmap[name] = std::to_string(val.as<int64_t>());
         else
             dbmap[name] = "";
     };

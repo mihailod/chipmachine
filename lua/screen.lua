@@ -130,6 +130,9 @@ TEXT_HEIGHT = 24 * LSCALE
 
 Settings.search_field = { X0, Y0, LSCALE, SEARCH_COLOR }
 Settings.top_status = { X0, Y0, LSCALE, FORMAT_COLOR }
+-- source DB tag: same top line, smaller & dimmer; its X is set at runtime to sit
+-- just after the format text (see ChipMachine_keys.cpp).
+Settings.source_status = { X0, Y0, LSCALE * 0.65, 0xffffff66 }
 
 Settings.result_field = { X0, Y0+TEXT_HEIGHT, LSCALE, RESULT_COLOR }
 Settings.result_lines = (Y1-Y0)/(TEXT_HEIGHT*LINE_HEIGHT)

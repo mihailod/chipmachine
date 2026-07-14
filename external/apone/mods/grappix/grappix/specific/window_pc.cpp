@@ -6,6 +6,7 @@
 #include <functional>
 #include <chrono>
 #include <thread>
+#include <mutex>
 #include <GLFW/glfw3.h>
 
 //#include <math.h>
@@ -63,27 +64,27 @@ static void key_fn(GLFWwindow*, int key, int scancode, int action, int mods) {
 
 	if(!keyRepeat && action == GLFW_REPEAT) return;
 	
-    bool pressed = (action == GLFW_PRESS || action == GLFW_REPEAT);
+	bool pressed = (action == GLFW_PRESS || action == GLFW_REPEAT);
 
-    if(key >= 'A' && key <= 'Z')
-        putEvent<KeyEvent>(key + 0x20 | (pressed ? 0 : 0x80000000));
-    else if(key < 0x7f && literals.find((char)key) != std::string::npos)
-        putEvent<KeyEvent>(key | (pressed ? 0 : 0x80000000));
-    else
-    for(auto t : Window::translate) {
-        if(t.second == key) {
-            putEvent<KeyEvent>(t.first | (pressed ? 0 : 0x80000000));
-            return;	
-        }
-    }
-    //if(mods & GLFW_MOD_CONTROL)
-    //    putEvent<KeyEvent>(key);
+	if(key >= 'A' && key <= 'Z')
+		putEvent<KeyEvent>(key + 0x20 | (pressed ? 0 : 0x80000000));
+	else if(key < 0x7f && literals.find((char)key) != std::string::npos)
+		putEvent<KeyEvent>(key | (pressed ? 0 : 0x80000000));
+	else
+	for(auto t : Window::translate) {
+		if(t.second == key) {
+			putEvent<KeyEvent>(t.first | (pressed ? 0 : 0x80000000));
+			return;	
+		}
+	}
+	//if(mods & GLFW_MOD_CONTROL)
+	//    putEvent<KeyEvent>(key);
 	
 }
 
 static void char_fn(GLFWwindow *gwin, unsigned int codepoint) {
 
-    //LOGD("CHAR %x", codepoint);
+	//LOGD("CHAR %x", codepoint);
 	//if(glfwGetKey(gwin, GLFW_KEY_LEFT_CONTROL) || glfwGetKey(gwin, GLFW_KEY_RIGHT_CONTROL))
 	//	return;
 //	putEvent<KeyEvent>(codepoint);
@@ -124,10 +125,16 @@ static void glfw_error(int code, const char *text) {
 	LOGE("GLFW: %s (%d)", text, code);
 }
 
+// Thread-safe window title staging buffers
+static std::string pending_title = "";
+static bool title_dirty = false;
+static std::mutex title_mutex;
+
 void Window::setTitle(const std::string &t) {
+	std::lock_guard<std::mutex> lock(title_mutex);
 	title = t;
-	if(gwindow)
-		glfwSetWindowTitle(gwindow, t.c_str());
+	pending_title = t;
+	title_dirty = true;
 }
 
 void Window::open(int w, int h, bool fs) {
@@ -206,9 +213,9 @@ void Window::open(int w, int h, bool fs) {
 
 	//gwindow = glfwOpenWindow(_width, _height, mode.RedBits, mode.GreenBits, mode.BlueBits, 8, 8, 0, fs ? GLFW_FULLSCREEN : GLFW_WINDOW);
 	gwindow = glfwCreateWindow(_width, _height, title.c_str(), fs ? monitor : nullptr, nullptr);
-    if (monitor && !fs) {
-        glfwSetWindowPos(gwindow, (mode->width - _width) / 2, (mode->height - _height) / 2);
-    }
+	if (monitor && !fs) {
+		glfwSetWindowPos(gwindow, (mode->width - _width) / 2, (mode->height - _height) / 2);
+	}
 	glfwMakeContextCurrent(gwindow);
 	//LOGD("%p WH %d %d", gwindow, _width, _height);
 
@@ -237,7 +244,7 @@ void Window::open(int w, int h, bool fs) {
 	setup(_width, _height);
 
 	//glDebugMessageInsertARB(GL_DEBUG_SOURCE_APPLICATION_ARB, GL_DEBUG_TYPE_ERROR_ARB, 1,
-     //        GL_DEBUG_SEVERITY_HIGH_ARB, 5, "YAY! ");
+	 //        GL_DEBUG_SEVERITY_HIGH_ARB, 5, "YAY! ");
 
 	glfwSetWindowFocusCallback(gwindow, focus_fn);
 	glfwSetKeyCallback(gwindow, key_fn);
@@ -338,21 +345,57 @@ void Window::flip() {
 		return;
 
 	glfwSwapBuffers(gwindow);
+
+	// Flush staged window title modifications safely on the main loop before event processing
+	{
+		std::lock_guard<std::mutex> lock(title_mutex);
+		if(title_dirty) {
+			// Sanitise title to ensure strict, valid UTF-8 compliance before feeding it to AppKit
+			std::string sanitized_title = "";
+			sanitized_title.reserve(pending_title.size());
+			
+			for (size_t i = 0; i < pending_title.size(); ) {
+				unsigned char c = pending_title[i];
+				if (c < 0x80) {
+					sanitized_title += c;
+					i += 1;
+				} else if ((c & 0xE0) == 0xC0) {
+					if (i + 1 < pending_title.size() && (pending_title[i + 1] & 0xC0) == 0x80) {
+						sanitized_title.append(pending_title, i, 2);
+						i += 2;
+					} else { sanitized_title += '?'; i += 1; }
+				} else if ((c & 0xF0) == 0xE0) {
+					if (i + 2 < pending_title.size() && (pending_title[i + 1] & 0xC0) == 0x80 && (pending_title[i + 2] & 0xC0) == 0x80) {
+						sanitized_title.append(pending_title, i, 3);
+						i += 3;
+					} else { sanitized_title += '?'; i += 1; }
+				} else if ((c & 0xF8) == 0xF0) {
+					if (i + 3 < pending_title.size() && (pending_title[i + 1] & 0xC0) == 0x80 && (pending_title[i + 2] & 0xC0) == 0x80 && (pending_title[i + 3] & 0xC0) == 0x80) {
+						sanitized_title.append(pending_title, i, 4);
+						i += 4;
+					} else { sanitized_title += '?'; i += 1; }
+				} else {
+					sanitized_title += '?';
+					i += 1;
+				}
+			}
+
+			glfwSetWindowTitle(gwindow, sanitized_title.c_str());
+			title_dirty = false;
+		}
+	}
+
+	// Explicitly unbind context elements before native AppKit window processing runs
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glUseProgram(0);
+
 	glfwPollEvents();
 	if(glfwWindowShouldClose(gwindow)) {
 		close();
 	}
 
 	// --- Precise frame pacing ------------------------------------------------
-	// glfwSwapInterval(1) is requested, but the legacy NSOpenGL-on-Metal path on
-	// macOS does not reliably block on the vertical blank, so the loop free-runs
-	// with irregular timing. The old `if(d<8) sleepms(8)` cap made it worse: a
-	// coarse, jittery pre-swap delay that beat against the 16.67ms vblank, so
-	// frames randomly missed a refresh -> visible scroll judder. Instead, pace
-	// the loop to the display's real refresh interval with a high-resolution
-	// clock: sleep to ~1ms short of the next boundary, then spin the remainder
-	// for a tight, steady cadence. Combined with delta-timed animation this is
-	// what keeps the scroll smooth.
 	using namespace std::chrono;
 	static long long intervalNs = 0;
 	if(intervalNs == 0) {
@@ -366,8 +409,6 @@ void Window::flip() {
 	next += nanoseconds(intervalNs);
 	auto now = steady_clock::now();
 	if(next <= now) {
-		// Fell behind (a long stall / first frame): resync rather than burst a
-		// run of catch-up frames.
 		next = now;
 	} else {
 		auto coarse = next - milliseconds(1);
@@ -375,10 +416,6 @@ void Window::flip() {
 			std::this_thread::sleep_until(coarse);
 		while(steady_clock::now() < next) { /* short spin for precision */ }
 	}
-
-	//auto ms = chrono::duration_cast<chrono::microseconds>(t - startTime).count();
-	//tween::Tween::updateTweens(ms / 1000000.0f);
-	//Resources::getInstance().update();
 
 #ifdef EMSCRIPTEN
 	int fs;
@@ -434,17 +471,17 @@ tuple<int, int> Window::mouse_position() {
 }
 
 bool Window::key_pressed(uint32_t k) {
-    int glfwKey = 0;
-    if(k >= 'a' && k <= 'z')
-        glfwKey = k - 0x20;
-    else if(k <= 0x7f && k >= 0x20)
-        glfwKey = k;
-    else
-	    glfwKey = translate[k];
-    if(!glfwKey)
-        return false;
-    //if(glfwGetKey(gwindow, glfwKey))
-    //LOGD("GLFW KEY %x", glfwKey);
+	int glfwKey = 0;
+	if(k >= 'a' && k <= 'z')
+		glfwKey = k - 0x20;
+	else if(k <= 0x7f && k >= 0x20)
+		glfwKey = k;
+	else
+		glfwKey = translate[k];
+	if(!glfwKey)
+		return false;
+	//if(glfwGetKey(gwindow, glfwKey))
+	//LOGD("GLFW KEY %x", glfwKey);
 	return glfwGetKey(gwindow, glfwKey) != 0;
 }
 

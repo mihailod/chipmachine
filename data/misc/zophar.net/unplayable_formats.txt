@@ -1,22 +1,9 @@
-# Zophar streamed-tier formats we do NOT decode (HELD -- not
-# imported). Revisit each: almost all route to vgmstream; ogg/wav
-# are already playable via ffmpegplugin but the zips are recorded
-# soundtracks. ext<TAB>platforms
-adx	sega-dreamcast-dsf
-asf	playstation2-psf2,xbox
-at3	playstation3-psf3,playstation-portable-psp
-aus	playstation2-psf2
-bcwav	nintendo-3ds-3sf
-dsp	nintendo-wii
-dvi	sega-saturn-ssf
-eam	playstation2-psf2,nintendo-gamecube-gcn
-genh	playstation2-psf2,sega-dreamcast-dsf
-lwav	xbox,xbox-360
-musx	playstation2-psf2
-ogg	nintendo-3ds-3sf
-oma	playstation-portable-psp
-spsd	sega-dreamcast-dsf
-ss2	playstation2-psf2
-str	playstation-psf
-wav	xbox-360
-xa	playstation-psf
+# RESOLVED (2026-07-13, db.lua v95). These streamed-tier formats are now ONBOARDED
+# and playable. The go/no-go completed: the vgmstream plugin (with VGM_USE_FFMPEG
+# enabled for ATRAC .at3/.oma) decodes adx/asf/at3/aus/bcwav/dsp/dvi/eam/genh/lwav/
+# oma/spsd/ss2/str/xa; ssf/dsf play via HTPlugin/AOPlugin; ogg/wav via ffmpegplugin.
+# All 11 held platforms (PS1/PS2/Saturn/Dreamcast/Xbox/Xbox360/Wii/GameCube/3DS/
+# PS3/PSP) are emitted by build_zophar.py --build into data/zophar.txt.
+#
+# .musx note: overloaded extension -- Archimedes Tracker .musx (magic "MUSX") plays
+# via MusxPlugin; PS2 streamed .musx via vgmstream. Content-routed, both work.

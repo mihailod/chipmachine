@@ -190,6 +190,11 @@ public:
     void toast(const std::string& txt, ToastType type = NORMAL);
     void removeToast();
 
+    // Draws a spectrum-coloured progress bar (fraction in [0,1]) centred just
+    // below the current toast. Shared by the startup DB-indexing screen and the
+    // LOADING/BUFFERING download bar.
+    void drawProgressBar(float frac);
+
     void setScrolltext(const std::string& txt);
     void shuffleSongs(int what, int limit);
 
@@ -509,6 +514,9 @@ private:
     LineEdit searchField;
     TextField filterField;
     TextField topStatus;
+    // Smaller-font source-collection tag shown right after topStatus's format
+    // line (e.g. "hvsc", "mirsoft") so the user sees which DB a result is from.
+    TextField sourceStatus;
     grappix::VerticalList songList;
 
     TextField resultFieldTemplate;
@@ -604,6 +612,10 @@ private:
     bool loadingToastIsLocal = false;
     bool loadingToastStreamed = false;
     std::string loadingToastPath;
+    // Timestamp (ms) when the LOADING/BUFFERING toast was shown. The download
+    // progress bar only appears once the wait exceeds 5s, so a quick fetch never
+    // flashes a bar.
+    uint32_t loadingToastStartMs = 0;
     std::string scrollText;
 
     struct Command
@@ -642,14 +654,6 @@ private:
     // starfield). Configured in the constructor with callbacks into `screenshots`
     // and updateScreenshotArea().
     ScreenshotTransitions transitions;
-    // Screenshot download callbacks can fire on the web worker thread (async
-    // download) OR synchronously on the render thread (cache hit, via
-    // getFile->call_handler). transitions.restart()/next() touch OpenGL, which
-    // is only valid on the render thread. So the web-callback path just raises
-    // this flag; update() (always the render thread) consumes it and does the
-    // GL-touching restart. Must not block here -- run_safely would deadlock when
-    // the callback already runs on the render thread.
-    std::atomic<bool> pendingShotRestart{false};
     struct NamedBitmap
     {
         NamedBitmap() {}
@@ -669,6 +673,22 @@ private:
     };
     std::vector<NamedBitmap> screenshots;
     std::string currentScreenshot;
+    // Screenshot download callbacks can fire on the web worker thread (async
+    // download) OR synchronously on the render thread (cache hit, via
+    // getFile->call_handler). Mutating `screenshots` from the worker thread while
+    // the render thread reads it (the transition source callbacks) / clears it
+    // (loadScreenshot) is an unsynchronized data race that corrupts the heap
+    // (observed as libmalloc "free block" / autorelease-pool page stomps that
+    // later crash in unrelated code such as the font glyph loader). So the
+    // callback only DECODES into pendingShotBms under pendingShotLock and raises
+    // pendingShotReady; update() (always the render thread) installs the bitmaps
+    // into `screenshots`, appends the logo fallback and restarts the transitions.
+    // pendingShotKey is the request URL the staged bitmaps belong to, so a result
+    // that arrives after the song changed can be dropped.
+    std::mutex pendingShotLock;
+    std::vector<NamedBitmap> pendingShotBms;
+    std::string pendingShotKey;
+    std::atomic<bool> pendingShotReady{ false };
     // Splash animation shown while the app is idle on the main screen (nothing
     // playing, "only the scroller visible"). Rotates the platform + extension
     // pictures, centred and large, reusing the same transition effects as the
