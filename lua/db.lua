@@ -508,7 +508,32 @@
 --       -80  podcasts (all nine).
 --      -100  radio streams.
 --     Bump forces a reindex.
-VERSION = 97;
+-- 98: Collection `source` URLs moved off ftp:// and http:// onto https:// where
+--     the host actually serves it. Two motivations:
+--       * Native: Modland was the last big ftp:// consumer. Mixing FTP and
+--         HTTPS in one libcurl session is what triggers the HTTP/2 connection-
+--         prune heap corruption (worked around by pinning CURLOPT_HTTP_VERSION),
+--         and IGNORE_CONTENT_LENGTH is an FTP-only flag that stalls HTTP
+--         downloads. Retiring FTP here removes the mix at its source.
+--       * Web (WASM target): browsers dropped ftp:// entirely and hard-block
+--         http:// from an https page, so only https sources are reachable at
+--         all. Of these, modland/asma/amigaremix also send
+--         `Access-Control-Allow-Origin: *`, so they are CORS-clean.
+--     Switched (each verified against a real path from the song list -- 200/206
+--     + Range): modland (ftp -> https://modland.com/pub/modules/), asma,
+--     amigaremix, amp, sndh, rko, rsn, hvtc.
+--     Deliberately NOT switched:
+--       * unexotica -- stays ftp://. files.exotica.org.uk answers https on the
+--         root but 404s the UnExoticA tree (the same path FTP serves fine), so
+--         the https mirror is not path-compatible. Switching would break it.
+--       * mirsoft, syntax -- hosts speak no TLS at all (connect fails), so
+--         there is no https to move to. Both are therefore unreachable from a
+--         browser regardless; native keeps working over http://.
+--     The url lives in collection.url, and initDatabase() early-returns for a
+--     collection that already exists -- so editing `source` does nothing until
+--     the collection table is rebuilt. Hence the bump: it forces the reindex
+--     that repopulates the urls. Data-only change; no engine change.
+VERSION = 98;
 
 DB = {
 {
@@ -738,7 +763,7 @@ DB = {
 	name = "Modland",
 	id =  "modland",
 	priority = 100,  -- the definitive Amiga/tracker archive
-	source = "ftp://ftp.modland.com/pub/modules/",
+	source = "https://modland.com/pub/modules/",
 	song_list = "data/allmods.txt",
 	local_dir = "/opt/Music/MODLAND",
 	exclude_formats = "RealSID;PlaySID;Nintendo SPC;SNDH;Slight Atari Player;Super Nintendo Sound Format",
@@ -753,7 +778,7 @@ DB = {
 	name = "Amp",
 	id =  "amp",
 	priority = 90,  -- broad tracker mirror: overlaps modland, let modland win folds
-	source = "http://amp.dascene.net/downmod.php?index=",
+	source = "https://amp.dascene.net/downmod.php?index=",
 	song_list = "data/amp.txt",
 	song_template = "title composer format path ext",
 	color = 0xfffff
@@ -770,7 +795,7 @@ DB = {
 	name = "HVTC",
 	id =  "hvtc",
 	priority = 95,  -- native Plus/4 chip archive
-	source = "http://plus4world.powweb.com/feat/tedsound/hvtc/",
+	source = "https://plus4world.powweb.com/feat/tedsound/hvtc/",
 	song_list = "data/hvtc.txt",
 	-- this one has local files! (like nsfe -> music/Console)
 	local_dir = "music/hvtc",
@@ -797,7 +822,7 @@ DB = {
 	name = "snesmusic.org",
 	id =  "rsn",
 	priority = 40,  -- video game music
-	source = "http://snesmusic.org/v2/download.php?spcNow=",
+	source = "https://snesmusic.org/v2/download.php?spcNow=",
 	make_source = snes,
 	song_list = "data/rsn.txt",
 	remote_list = "http://raw.githubusercontent.com/sasq64/cmds/master/rsn.txt",
@@ -808,7 +833,7 @@ DB = {
 	name = "sndh",
 	id =  "sndh",
 	priority = 95,  -- native Atari ST chip archive
-	source = "http://sndh.atari.org/sndh/sndh_lf/",
+	source = "https://sndh.atari.org/sndh/sndh_lf/",
 	song_list = "data/sndh.txt",
 	remote_list = "http://raw.githubusercontent.com/sasq64/cmds/master/sndh.txt",
 	local_dir = "/opt/Music/sndh_lf",
@@ -818,7 +843,7 @@ DB = {
 	name = "asma",
 	id =  "asma",
 	priority = 95,  -- native Atari 8-bit POKEY archive
-	source = "http://asma.atari.org/asma/",
+	source = "https://asma.atari.org/asma/",
 	song_list = "data/asma.txt",
 	remote_list = "http://raw.githubusercontent.com/sasq64/cmds/master/asma.txt",
 	local_dir = "/opt/Music/asma",
@@ -828,7 +853,7 @@ DB = {
 	name = "remix.kwed.org",
 	id =  "rko",
 	priority = -50,  -- Remix.Kwed.Org: C64 SID remixes -> sink below HVSC
-	source = "http://remix.kwed.org/download.php/",
+	source = "https://remix.kwed.org/download.php/",
 	song_list = "data/rko.txt",
 	utf8 = "no",
 	song_template = "path sidname sidsong title composer rating",
@@ -841,7 +866,7 @@ DB = {
 	name = "amigaremix",
 	id =  "amigaremix",
 	priority = -50,  -- Amiga remixes -> sink below originals
-	source = "http://amigaremix.com/listen/",
+	source = "https://www.amigaremix.com/listen/",
 	song_list = "data/amiremix.txt",
 	song_template = "no path title composer",
 	format = "MP3",

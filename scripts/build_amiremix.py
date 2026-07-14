@@ -4,7 +4,7 @@
 amiremix is Amiga game/demo music REMIXES (MP3s). data/amiremix.txt rows are
     <id>\t<mp3-url>\t<title>\t<arranger>
 (song_template "no path title composer" -> path = col2, and db.lua `source =
-http://amigaremix.com/listen/` is stripped at index time, so the stored song path
+https://www.amigaremix.com/listen/` is stripped at index time, so the stored song path
 is "<id>/<file>.mp3" -- that is the screenshot key). The data carries NO link to
 the original module/game (unlike rko's SID path), and amigaremix.com is a JS SPA
 with no scrapeable cover, so we match the GAME NAME (parsed from the title) to its
@@ -32,7 +32,11 @@ import build_vampi as bv  # reuse wp_search / _wp_get / WP_HTML
 DATA = os.path.normpath(os.path.join(HERE, "..", "data"))
 SRC = os.path.join(DATA, "amiremix.txt")
 OUT = os.path.join(DATA, "amigaremix_screenshots.txt")
-SOURCE = "http://amigaremix.com/listen/"   # db.lua strips this from the path
+SOURCE = "https://www.amigaremix.com/listen/"  # db.lua strips this from the path
+# NOTE: this MUST stay byte-identical to `source` in db.lua's amigaremix entry.
+# The strip in MusicDatabase::parseStandard is a plain prefix match, so a scheme
+# mismatch silently stops stripping and the absolute URL gets stored as the song
+# path (which then also bypasses the db.lua source entirely).
 
 # Trailing descriptor words that are the tune/version, not the game name.
 DESC = re.compile(

@@ -1,7 +1,3 @@
-- revisit db priority to see which search results should show 1st
-
-- Pesic PR
-
 - see if there are other formats in db we don't play
 
 - global dedupe everything against everything to see stats. I think battle of the bits added dupes. when removing if all equal remove the dupe without the screenshot.

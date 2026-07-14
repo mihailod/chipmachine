@@ -75,9 +75,12 @@ def scrape_amiremix(output_file):
                 remix_id = int(id_m.group(1))
                 rel_link = href_m.group(1)
                 
-                # Normalize relative links to match C++ provider expected source prefix stripping
+                # Normalize relative links to match C++ provider expected source prefix stripping.
+                # The scheme MUST match db.lua's amigaremix `source` exactly -- the strip in
+                # MusicDatabase::parseStandard is a plain prefix match, so http:// here against
+                # an https:// source would silently store the absolute URL as the song path.
                 if rel_link.startswith('/'):
-                    link = "http://amigaremix.com" + rel_link
+                    link = "https://www.amigaremix.com" + rel_link
                 else:
                     link = rel_link
                 
