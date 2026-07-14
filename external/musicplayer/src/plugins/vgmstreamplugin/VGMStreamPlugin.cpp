@@ -228,14 +228,18 @@ private:
     bool srcEnded_ = false;
 };
 
-// Declining extensions claimed by other plugins:
+// Declining extensions claimed by other plugins.
+// NOTE: .musx is deliberately NOT excluded -- it is an overloaded extension.
+// Archimedes Tracker .musx (MusxPlugin) is magic-gated on a leading "MUSX", while
+// PS2 streamed .musx routes here; canHandle's open-probe below content-gates ours
+// so the two never collide.
 static const std::set<std::string> excluded_extensions = {
     "vgm", "vgz", "kss", "ay", "gbs", "gym", "hes", "nsf", "nsfe", "sap", "sgc", "spc",
     "2sf", "mini2sf", "gsf", "minigsf", "usf", "miniusf",
     "mod", "xm", "it", "s3m", "stm", "med", "mtm", "669", "dsm", "far", "amf", "okt", "ptm", "umx",
     "mp3", "wav", "ogg", "opus", "flac", "aac", "m4a", "mp4", "aiff", "aif",
     "sid", "eup", "s98", "sunvox", "org", "dmf", "cop", "sks", "ned", "mon", "uni", "ftm", "sng",
-    "bbsong", "soundsmith", "ixs", "musx", "coco", "mgt", "pac", "mxtx", "mad", "jxs",
+    "bbsong", "soundsmith", "ixs", "coco", "mgt", "pac", "mxtx", "mad", "jxs",
     "pt3", "pt2", "stc", "stp", "sqt", "psc", "psm", "pt1", "ftc", "rsn"
 };
 
