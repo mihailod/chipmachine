@@ -46,8 +46,8 @@ Font::Font(bool stfont) : size(32) {
 
 
 
-const static wchar_t *fontLetters = L"@!ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö0123456789 ";
-const static wchar_t *fontLettersUpper = L"@!ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789 ";
+const static wchar_t *fontLetters = L"@!ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö0123456789 []/:<>,.-()'&?%#+";
+const static wchar_t *fontLettersUpper = L"@!ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789 []/:<>,.-()'&?%#+";
 
 
 Font::Font(const string &ttfName, int size, int flags) : size(size) {
@@ -90,7 +90,7 @@ Font::Font(const string &ttfName, int size, int flags) : size(size) {
 			fmtime = (unsigned long long)st.st_mtime;
 			fsize = (unsigned long long)st.st_size;
 		}
-		File f { format("%s/%s.%d.%d.%llu.%llu_v3.dfield", File::getCacheDir().getName(), fn, size, tsize, fmtime, fsize) };
+		File f { format("%s/%s.%d.%d.%llu.%llu_v4.dfield", File::getCacheDir().getName(), fn, size, tsize, fmtime, fsize) };
 		if(f.exists()) {
 			f.read(atlas->data, atlas->width*atlas->height);
 		} else {
