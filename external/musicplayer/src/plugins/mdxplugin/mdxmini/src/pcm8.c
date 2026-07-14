@@ -631,12 +631,32 @@ static inline void pcm8( short *buffer , int buffer_size, songdata *data )
   return;
 }
 
-void do_pcm8( short *buffer , int buffer_size, songdata *data ) 
+void do_pcm8( short *buffer , int buffer_size, songdata *data )
 {
-  if (buffer)
-    pcm8(buffer,buffer_size,data);
- 
-   return;
+  if (!buffer)
+    return;
+
+  /* pcm8() renders into fixed-size internal buffers (sample_buffer,
+     sample_buffer2, ym2151_voice[]) that hold exactly
+     self->sample_buffer_size frames. The host can request more than
+     that in a single call, so slice the request into chunks that fit
+     the internal buffers. Player/emulator state carries across chunks,
+     so the output is identical to one large call. */
+  {
+    __GETSELF(data);
+    int chan = (self->is_encoding_stereo == FLAG_TRUE) ? 2 : 1;
+    int max  = self->sample_buffer_size;
+    int done = 0;
+
+    while (done < buffer_size) {
+      int chunk = buffer_size - done;
+      if (chunk > max) chunk = max;
+      pcm8(buffer + done * chan, chunk, data);
+      done += chunk;
+    }
+  }
+
+  return;
 }
 
 int pcm8_get_buffer_size( songdata *data )

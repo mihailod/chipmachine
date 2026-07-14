@@ -81,6 +81,7 @@ MDX_DATA *mdx_open_mdx( const char *name ) {
   int ptr;
   unsigned char *buf;
   MDX_DATA *mdx;
+  int max_tracks;
 
   /* allocate work area */
 
@@ -166,10 +167,18 @@ MDX_DATA *mdx_open_mdx( const char *name ) {
     mdx->tracks = 9;
   }
 
-  for ( i=0 ; i<mdx->tracks ; i++ ) {
-    mdx->mml_data_offset[i] =
-      (unsigned int)buf[ptr+i*2+2+0] * 256 +
-      (unsigned int)buf[ptr+i*2+2+1] + mdx->base_pointer;
+  max_tracks = mdx->tracks;
+  for ( i=0 ; i<max_tracks ; i++ ) {
+    unsigned int calc_offset = (unsigned int)buf[ptr+i*2+2+0] * 256 +
+                              (unsigned int)buf[ptr+i*2+2+1];
+
+    /* If layout specifies 0 or overlaps voice definitions, the header is terminating early */
+    if (calc_offset == 0 || (calc_offset + mdx->base_pointer) >= mdx->voice_data_offset) {
+      mdx->tracks = i;
+      break;
+    }
+
+    mdx->mml_data_offset[i] = calc_offset + mdx->base_pointer;
     if ( mdx->mml_data_offset[i] > mdx->length ) goto error_end;
   }
 
@@ -357,4 +366,3 @@ int mdx_output_titles( MDX_DATA *mdx ) {
 
   return 0;
 }
-

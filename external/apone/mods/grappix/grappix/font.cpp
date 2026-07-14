@@ -40,8 +40,8 @@ Font::Font(bool stfont) : size(32) {
 	atlas->depth = 1;
 	atlas->id = 0;
 	atlas->data = static_font.tex_data;
-    texture_atlas_upload(atlas);
-    LOGD("Static font created");
+	texture_atlas_upload(atlas);
+	LOGD("Static font created");
 }
 
 
@@ -49,9 +49,10 @@ Font::Font(bool stfont) : size(32) {
 const static wchar_t *fontLetters = L"@!ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö0123456789 ";
 const static wchar_t *fontLettersUpper = L"@!ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789 ";
 
+
 Font::Font(const string &ttfName, int size, int flags) : size(size) {
 
-    //LOGD("TTF:%s", ttfName);
+	//LOGD("TTF:%s", ttfName);
 	// flags &= ~DISTANCE_MAP;
 	program = flags & DISTANCE_MAP ? get_program(FONT_PROGRAM_DF) : get_program(FONT_PROGRAM);
 
@@ -83,12 +84,6 @@ Font::Font(const string &ttfName, int size, int flags) : size(size) {
 	texture_atlas_t *atlas = (texture_atlas_t*)ref->atlas;
 	if(flags & DISTANCE_MAP) {
 		auto fn = path_filename(ttfName);
-		// Fold the source font's mtime+size into the cache key. The key used to be
-		// filename+size+atlas only, so REPLACING a font file with a different one of
-		// the SAME NAME reused the stale distance map: the new glyph layout sampled
-		// old-font pixels and the text rendered garbled. mtime changes on any rewrite
-		// and size disambiguates same-timestamp swaps, so a replaced file now misses
-		// the cache and regenerates. 0/0 (stat failed) still yields a stable key.
 		struct stat st{};
 		unsigned long long fmtime = 0, fsize = 0;
 		if(::stat(ttfName.c_str(), &st) == 0) {
@@ -98,17 +93,24 @@ Font::Font(const string &ttfName, int size, int flags) : size(size) {
 		File f { format("%s/%s.%d.%d.%llu.%llu_v3.dfield", File::getCacheDir().getName(), fn, size, tsize, fmtime, fsize) };
 		if(f.exists()) {
 			f.read(atlas->data, atlas->width*atlas->height);
-			//LOGD("%s: Found existing distance map", fn);
 		} else {
 			uint8_t *data = make_distance_map(atlas->data, atlas->width, atlas->height);
 			LOGD("%s: Distance map created", fn);
-			free(atlas->data);
-			atlas->data = data;
+			
+			// FIX: Overwrite the buffer contents directly. Do NOT swap the pointer
+			// or mix allocator zones (malloc vs new[]) which corrupts the macOS heap.
+			if (data) {
+				memcpy(atlas->data, data, atlas->width * atlas->height);
+				// Clean up the temporary buffer returned by the generator
+				// (Using free here is fine for the temporary copy, or replace with delete[] if needed)
+				free(data); 
+			}
+			
 			f.write(atlas->data, atlas->width*atlas->height);
 		}
 		f.close();
 	}
-    texture_atlas_upload(atlas);
+	texture_atlas_upload(atlas);
 }
 
 //static float scale = 1.0;
@@ -130,17 +132,17 @@ TextBuf Font::make_text2(const wstring &text) const {
 
 	for(auto c : text) {
 
-        texture_glyph2_t *glyph = 0;
-        for(unsigned int j=0; j<static_font.glyphs_count; ++j) {
-            if(static_font.glyphs[j].charcode == c) {
-                glyph = &static_font.glyphs[j];
-                break;
-            }
-        }
-        if(!glyph) {
-   			x += 8.0;
-            continue;
-        }
+		texture_glyph2_t *glyph = 0;
+		for(unsigned int j=0; j<static_font.glyphs_count; ++j) {
+			if(static_font.glyphs[j].charcode == c) {
+				glyph = &static_font.glyphs[j];
+				break;
+			}
+		}
+		if(!glyph) {
+			x += 8.0;
+			continue;
+		}
 
 		float x0  = x + glyph->offset_x;
 		float x1  = x0 + glyph->width;
@@ -200,8 +202,6 @@ TextBuf Font::make_text(const wstring &text) const {
 
 	float y = font->ascender;
 
-	//auto t2 = utf8_decode(text);
-
 	int tl = text.length();
 
 	vector<GLfloat> verts;
@@ -212,9 +212,32 @@ TextBuf Font::make_text(const wstring &text) const {
 
 	for(auto c : text) {
 
-		texture_glyph_t *glyph = texture_font_get_glyph(font, c);
+		// INTERCEPT: Scan freetype-gl's local glyph vector directly
+		texture_glyph_t *glyph = nullptr;
+		if (font->glyphs) {
+			for (size_t g_idx = 0; g_idx < font->glyphs->size; ++g_idx) {
+				texture_glyph_t *g = *(texture_glyph_t **)vector_get(font->glyphs, g_idx);
+				if (g && g->charcode == c) {
+					glyph = g;
+					break;
+				}
+			}
+		}
+		
+		// Fallback: Check if fallback space character exists in the baked vector
+		if(!glyph && font->glyphs) {
+			for (size_t g_idx = 0; g_idx < font->glyphs->size; ++g_idx) {
+				texture_glyph_t *g = *(texture_glyph_t **)vector_get(font->glyphs, g_idx);
+				if (g && g->charcode == L' ') {
+					glyph = g;
+					break;
+				}
+			}
+		}
+
 		if(!glyph)
 			continue;
+
 		if(lastChar)
 			x += texture_glyph_get_kerning(glyph, lastChar);
 		lastChar = c;
@@ -249,9 +272,9 @@ TextBuf Font::make_text(const wstring &text) const {
 	if(verts.size() >= 4) {
 
 		tbuf.rec[0] = verts[0];
-		tbuf.rec[1] = 0;//verts[1];
+		tbuf.rec[1] = 0;
 		tbuf.rec[2] = verts[verts.size()-4];
-		tbuf.rec[3] = font->height;//verts[verts.size()-3];
+		tbuf.rec[3] = font->height;
 	} else {
 		tbuf.rec[0] = tbuf.rec[1] = tbuf.rec[2] = tbuf.rec[3] = 0;
 	}
@@ -264,8 +287,10 @@ TextBuf Font::make_text(const wstring &text) const {
 	return tbuf;
 }
 
-
 void Font::render_text(const RenderTarget &target, const TextBuf &text, float x, float y, uint32_t color, float scale) const {
+
+	if (text.size == 0 || text.vbuf[0] == 0)
+		return;
 
 	scale = scale * 32.0 / (float)size;
 
@@ -297,20 +322,22 @@ void Font::render_text(const RenderTarget &target, const TextBuf &text, float x,
 
 	glDrawElements(GL_TRIANGLES, 6*text.size, GL_UNSIGNED_SHORT, 0);
 
-	//glDisableVertexAttribArray(uvHandle);
-	//glDisableVertexAttribArray(vertHandle);
-
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 void Font::render_text(const RenderTarget &target, const std::string &text, float x, float y, uint32_t col, float scale) const {
-	if(text == "")
+	if(text.empty())
 		return;
 
 	auto t = utf8_decode_wide(text);
 	auto buf = cache.get(t);
-	if(buf.text.empty()) {
+	
+	if(buf.text.empty() || buf.vbuf[0] == 0) {
+		// Clean up old VRAM handle if text was empty or invalid but somehow tracked
+		if (buf.vbuf[0] != 0) {
+			glDeleteBuffers(2, &buf.vbuf[0]);
+		}
 		buf = make_text(t);
 		cache.put(t, buf);
 	}
@@ -332,7 +359,10 @@ vec2i Font::get_size(const string &t, float scale) const {
 	if(text.empty())
 		return vec2i(0,0);
 	auto buf = cache.get(text);
-	if(buf.text.empty()) {
+	if(buf.text.empty() || buf.vbuf[0] == 0) {
+		if (buf.vbuf[0] != 0) {
+			glDeleteBuffers(2, &buf.vbuf[0]);
+		}
 		buf = make_text(text);
 		cache.put(text, buf);
 	}
@@ -361,7 +391,11 @@ Font::FontRef::~FontRef() {
 
 
 void TextBuf::destroy() {
-	glDeleteBuffers(2, &vbuf[0]);
+	if (vbuf[0] != 0) {
+		glDeleteBuffers(2, &vbuf[0]);
+		vbuf[0] = 0;
+		vbuf[1] = 0;
+	}
 }
 
 }
