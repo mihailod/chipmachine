@@ -49,6 +49,39 @@ void ChipMachine::setupCommands()
         showScreen(ADVANCED_SCREEN);
     });
 
+    // LEFT/RIGHT on the platform-filter screen hop between the two columns,
+    // landing on the entry displayed on the SAME visual row. The list is laid out
+    // column-major (left column = indices [0,rows), right = [rows,n)) with the
+    // right column shifted DOWN one row so "[no filter]" sits alone at the top
+    // (see the advancedList render lambda) -- hence the -1/+1 in the mapping:
+    // left index i renders on row i, right index j renders on row (j-rows)+1.
+    // A drilled-in submenu is a single column, so both are no-ops there.
+    cmd("filter_column_left", [=] {
+        if (activeFilterOptions != nullptr) return;
+        int n = (int)currentFilterOptions().size();
+        int rows = (n + 1) / 2;
+        int i = advancedList.selected();
+        if (i < rows) return; // already in the left column
+        int t = i - rows + 1;
+        // The right column runs one row lower, so its last entry has no left
+        // counterpart -- clamp to the bottom of the left column.
+        if (t > rows - 1) t = rows - 1;
+        advancedList.select(t);
+    });
+
+    cmd("filter_column_right", [=] {
+        if (activeFilterOptions != nullptr) return;
+        int n = (int)currentFilterOptions().size();
+        int rows = (n + 1) / 2;
+        int i = advancedList.selected();
+        if (i >= rows || rows >= n) return; // already right, or no right column
+        // "[no filter]" (row 0) has no right-column neighbour (that row is left
+        // deliberately empty), so step to the first right-column entry.
+        int t = (i == 0) ? rows : rows + i - 1;
+        if (t >= n) t = n - 1;
+        advancedList.select(t);
+    });
+
     cmd("select_filter", [=] {
         int idx = advancedList.selected();
         auto const& opts = currentFilterOptions();

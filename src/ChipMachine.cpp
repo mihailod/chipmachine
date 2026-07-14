@@ -502,9 +502,20 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     advancedTitle.color = 0xffffffaa;
     advancedTitle.scale = searchField.scale;
     advancedTitle.visible(true);
-    advancedTitle.setText(
-        "PLATFORM FILTER (UP/DOWN/ENTER NAVIGATE & APPLY)");
+    advancedTitle.setText("PLATFORM FILTER");
     advancedScreen.add(&advancedTitle);
+
+    // The key hint rides on the title's line in a smaller, dimmer font (same
+    // treatment as the source-DB tag next to the format line).
+    advancedHint.setFont(font);
+    advancedHint.color = 0xffffff66;
+    advancedHint.visible(true);
+    advancedHint.setText("      ARROWS navigate   ENTER apply/drill   ESC go back");
+    advancedScreen.add(&advancedHint);
+    // layoutScreen() already ran (it only had advancedTitle's pos/scale to go
+    // on); now that the title carries its font and text, its width is real, so
+    // park the hint against it.
+    positionAdvancedHint();
 
     // The filter screen lays its entries out in two columns (column-major: the
     // left column holds the first half, the right column the rest) so all
@@ -721,6 +732,7 @@ void ChipMachine::layoutScreen()
 
     advancedTitle.pos = { (float)topLeft.x, (float)topLeft.y };
     advancedTitle.scale = searchField.scale;
+    positionAdvancedHint();
 
     // y is reclaimed (moved up) in updateLists(); x/scale here.
     commandTitle.pos = { (float)topLeft.x, topLeft.y * 0.90f };

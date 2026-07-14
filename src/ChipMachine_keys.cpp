@@ -104,12 +104,22 @@ void ChipMachine::setupRules()
     addKey(keycodes::F8, "clear_songs");
     addKey(keycodes::LEFT,
            if_not_equals(currentScreen, COMMAND_SCREEN) &&
+               if_not_equals(currentScreen, ADVANCED_SCREEN) &&
                if_null(currentDialog),
            "prev_subtune");
     addKey(keycodes::RIGHT,
            if_not_equals(currentScreen, COMMAND_SCREEN) &&
+               if_not_equals(currentScreen, ADVANCED_SCREEN) &&
                if_null(currentDialog),
            "next_subtune");
+    // The platform filter is a two-column list; LEFT/RIGHT hop between the
+    // columns on the same row (UP/DOWN walk within one).
+    addKey(keycodes::LEFT,
+           if_equals(currentScreen, ADVANCED_SCREEN) && if_null(currentDialog),
+           "filter_column_left");
+    addKey(keycodes::RIGHT,
+           if_equals(currentScreen, ADVANCED_SCREEN) && if_null(currentDialog),
+           "filter_column_right");
     addKey(keycodes::F4, "layout_screen");
 
     addKey('d' | CTRL, "download_current");
@@ -139,10 +149,12 @@ void ChipMachine::setupRules()
     // '-' key) is folded into the "VOLUME UP / DOWN   + / -" row. select_filter
     // (ENTER on the platform-filter screen) is self-evident once you're there.
     // this_help_menu (CTRL+H) is advertised in the help title itself, so it
-    // doesn't need its own row.
+    // doesn't need its own row. filter_column_left/right (LEFT/RIGHT on the
+    // platform-filter screen) are covered by that screen's own title hint.
     for (auto const& name : { "show_search", "close_dialog", "clear_command",
                               "clear_search", "volume_down", "select_filter",
-                              "this_help_menu" }) {
+                              "this_help_menu", "filter_column_left",
+                              "filter_column_right" }) {
         auto it = std::find(commands.begin(), commands.end(), name);
         if (it != commands.end()) it->shortcut.clear();
     }

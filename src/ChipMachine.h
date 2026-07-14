@@ -248,8 +248,19 @@ private:
     void computeFilterCounts();
     static std::string withCommas(int n); // 345000 -> "345,000"
     void updateScreenshotArea();
+    // Park the smaller-font key hint just after the platform-filter title on the
+    // same baseline. Depends on advancedTitle's font/scale, so it must re-run
+    // whenever those change (layoutScreen / updateLists).
+    void positionAdvancedHint()
+    {
+        advancedHint.scale = advancedTitle.scale * 0.65f;
+        advancedHint.pos = { advancedTitle.pos.x + advancedTitle.getWidth() +
+                                 15 * advancedHint.scale,
+                             advancedTitle.pos.y };
+    }
     void updateLists()
     {
+        positionAdvancedHint();
         int y = resultFieldTemplate.pos.y + (15 * resultFieldTemplate.scale);
         int w = grappix::screen.width() - topLeft.x;
         int h = downRight.y - topLeft.y - y;
@@ -533,6 +544,10 @@ private:
     grappix::VerticalList advancedList;
     grappix::Rectangle advancedArea; // area of the TAB list (for 2-column layout)
     TextField advancedTitle;
+    // Key hint drawn right after advancedTitle on the same line, in a smaller,
+    // dimmer font (like sourceStatus next to topStatus). Positioned at runtime
+    // from advancedTitle's width -- see positionAdvancedHint().
+    TextField advancedHint;
     // Header on the command/help screen (e.g. "ChipMachineAS 1.9 HELP MENU"),
     // drawn above the first entry; hidden while a command filter is being typed.
     TextField commandTitle;
