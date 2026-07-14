@@ -3160,7 +3160,7 @@ TEST_CASE("FFMPEG", "[music]") { testPlugin<musix::FFMPEGPlugin>("testmus/ffmpeg
 // The corpus test above already sweeps the directory, but pin each format by
 // name so a routing/gate regression fails loudly instead of just shifting the
 // coverage tally. Fixtures are 3s cuts of sample.ogg (see testmus/ffmpeg).
-TEST_CASE("FFMPEG plays wav/flac/aiff/mp2/opus/mpeg/ac3", "[music]")
+TEST_CASE("FFMPEG plays wav/flac/aiff/mp2/opus/mpeg/ac3/wma", "[music]")
 {
     logging::setLevel(logging::Level::Warning);
     musix::FFMPEGPlugin plugin;
@@ -3171,7 +3171,8 @@ TEST_CASE("FFMPEG plays wav/flac/aiff/mp2/opus/mpeg/ac3", "[music]")
                              "testmus/ffmpeg/sample.mp2",
                              "testmus/ffmpeg/sample.opus",
                              "testmus/ffmpeg/sample.mpeg",
-                             "testmus/ffmpeg/sample.ac3"}) {
+                             "testmus/ffmpeg/sample.ac3",
+                             "testmus/ffmpeg/sample.wma"}) {  // Xbox streamed rips
         REQUIRE(utils::exists(file));
         REQUIRE(plugin.canHandle(file));
         auto* player = plugin.fromFile(file);

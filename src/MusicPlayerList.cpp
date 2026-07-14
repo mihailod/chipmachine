@@ -883,9 +883,11 @@ void MusicPlayerList::playCurrent()
                     // Xbox360/Wii/GameCube/3DS/PS3/PSP. .musx is content-routed
                     // (Archimedes "MUSX" magic vs PS2) by the plugins themselves.
                     "adx", "asf", "at3", "aus", "bcwav", "dsp", "dvi", "eam",
-                    "genh", "lwav", "oma", "spsd", "ss2", "str", "xa", "musx" };
+                    "genh", "lwav", "oma", "spsd", "ss2", "str", "xa", "musx",
+                    "adp" };   // adp = NGC DTK (GameCube streamed rips)
                 static const std::set<std::string> audioExt = {
-                    "mp3", "ogg", "flac", "wav", "mp2", "m4a", "aac", "opus" };
+                    "mp3", "ogg", "flac", "wav", "mp2", "m4a", "aac", "opus",
+                    "wma" };   // wma = Xbox streamed rips (ffmpeg wmav2)
                 std::string dir = f0.getName() + "_x";
                 utils::makedirs(dir);
                 std::vector<std::string> songs, audio;

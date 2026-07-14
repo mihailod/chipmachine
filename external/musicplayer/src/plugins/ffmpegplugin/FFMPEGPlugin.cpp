@@ -212,7 +212,7 @@ static const std::set<std::string>& ffmpegExtensions()
 {
     static const std::set<std::string> exts = {
         "m4a", "aac", "mp3", "mp4", "ogg", "opus", "mp2", "mpeg", "ac3",
-        "wav", "flac", "aiff", "aif", "8svx"};
+        "wav", "flac", "aiff", "aif", "8svx", "wma"};
     return exts;
 }
 
