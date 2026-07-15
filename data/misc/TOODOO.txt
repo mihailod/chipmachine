@@ -1,5 +1,5 @@
-- classify OGG files into platforms
-- make an attempt to reclassify the rest of the yt
+- resolve other youtube as much as possible into respective platforms
+
 - combine yt and ogg not classified into one?
 
 - songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
@@ -20,12 +20,6 @@ gym	5 dm	5 0cc	5
 
 - packaging: the app should offer to os handling of all extensions it can play, package_app.sh should be augmented with plist writer for it. then the application needs to handle the file passed in (standard mac way exists)
 
-cosmetic/low priority:
-- rainbow copper effect in scrolling like amiga demos
-
 - (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
 
 - Separate db from code and auto-update db independently from code
-
-- investigate: refactor ui code from engine code
-- (started and parked for now) investigate: refactor to only invoke cm instead calling code so that there is truly one playback pipeline

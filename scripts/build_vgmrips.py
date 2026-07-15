@@ -92,6 +92,17 @@ TAG_PLATFORM = [
     ("Atari ST", "Atari ST"), ("Commodore 64", "Commodore 64"),
     ("BBC Micro", "BBC Micro"), ("ZX Spectrum", "ZX Spectrum"),
     ("MSX", "MSX"),
+    # Consoles that VGMRips files under "Other" (it buckets by chip family, not
+    # vendor). Without these they keep the bare "Other" label and pile up in the
+    # "Other Platforms" -> "Other" catch-all instead of their real platform.
+    ("Nintendo Virtual Boy", "Nintendo Virtual Boy"), # VSU
+    ("Vectrex", "Vectrex"),                           # AY8910
+    ("Amstrad CPC", "Amstrad CPC"),                   # also matches "CPC+"
+    ("Sega Game 1000", "Sega SG-1000"),               # VGMRips' name for SG-1000
+    ("Atari 5200", "Atari 8bit"),                     # POKEY, same as 400/800
+    ("Atari 400", "Atari 8bit"),                      # tag is "(Atari 400, 800)"
+    ("Atari 7800", "Atari 7800"),
+    ("Intellivision", "Intellivision"),
 ]
 
 

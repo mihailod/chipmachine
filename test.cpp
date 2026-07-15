@@ -257,7 +257,11 @@ TEST_CASE("OPL Archive routes to libvgm and plays", "[music]")
     musix::ChipPlugin::createPlugins("data");
     chipmachine::MusicPlayer mp{ ap };
     for (auto const& vgz : {"testmus/libvgm/2a03fox - Snowgoons vs Acid (OPL2).vgz",
-                            "testmus/libvgm/Zero - Shinespark (OPL3).vgz"}) {
+                            "testmus/libvgm/Zero - Shinespark (OPL3).vgz",
+                            // Virtual Boy VSU: libvgm has the only VSU core, so
+                            // this is the whole Nintendo Virtual Boy platform's
+                            // playback path.
+                            "testmus/libvgm/virtualboy-vsu.vgz"}) {
         REQUIRE(mp.playFile(vgz));
         int64_t sum = 0;
         for (int i = 0; i < 30 && sum == 0; ++i) {
@@ -287,6 +291,10 @@ TEST_CASE("VGMRips non-Sega VGM routes to libvgm", "[music]")
                              "testmus/libvgm/pc98-opn.vgz",
                              "testmus/libvgm/capcom-qsound.vgz",
                              "testmus/libvgm/namco-c140.vgz",
+                             // Virtual Boy VSU (@0xC4). The VB rips are the only
+                             // VSU logs we carry and they are what puts the
+                             // "Nintendo Virtual Boy" platform on the TAB screen.
+                             "testmus/libvgm/virtualboy-vsu.vgz",
                              // Dual AY8910 (Capcom 1942): GME instantiates one
                              // AY, so the 2nd chip's writes overflow Ay_Apu and
                              // abort ("addr < reg_count"). The dual-chip bit must
@@ -308,6 +316,72 @@ TEST_CASE("VGMRips non-Sega VGM routes to libvgm", "[music]")
 // its `format` label. Guard that each distinct label resolves to the right
 // platform byte -- never UNKNOWN (which would make the game invisible to every
 // TAB platform filter).
+// pouet YouTube captures classify by their "Youtube (<platform>)" tag. Tags that
+// name hardware resolve to it; tags that name none resolve to OTHER (the Other
+// Platforms drill), NOT to a YouTube-only bucket -- there is no such filter now.
+TEST_CASE("YouTube captures classify by their pouet platform tag", "[music]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    const std::string yt = "https://www.youtube.com/watch?v=abc";
+    struct { const char* fmt; uint8_t plat; } cases[] = {
+        { "Youtube (Amiga AGA)", AMIGA },
+        { "Youtube (Commodore 64)", SID },
+        { "Youtube (Windows)", PC },
+        { "Youtube (Virtual Boy)", VIRTUALBOY },
+        // Name no hardware -> Other Platforms (they become "Youtube (<tag>)"
+        // groups in the drill). These three were the whole 1103-video bucket.
+        { "Youtube (Animation/Video)", OTHER },
+        { "Youtube (mIRC)", OTHER },
+        { "Youtube (Alambik)", OTHER },
+        { "Youtube (Wild)", OTHER },
+        // A combo naming real hardware still wins over the generic tag.
+        { "Youtube (Amiga AGA,Animation/Video)", AMIGA },
+        { "Youtube (Windows,Animation/Video)", PC },
+        // Unrecognised tag: falls back to OTHER so the drill can surface it,
+        // rather than a byte no filter matches.
+        { "Youtube (Some Future Pouet Tag)", OTHER },
+    };
+    for (auto const& c : cases) {
+        INFO("format " << c.fmt);
+        REQUIRE(mdb.classifyFormat(c.fmt, yt) == c.plat);
+    }
+    // Nothing should classify to the now-unused YOUTUBE byte.
+    for (auto const& c : cases)
+        REQUIRE(mdb.classifyFormat(c.fmt, yt) != YOUTUBE);
+}
+
+// demozoo/scene.org MP3+OGG rips carry the source platform as their format
+// string rather than a codec. Those that name real hardware must resolve to it
+// instead of the "Other Platforms" / "Rendered Audio" buckets -- in particular
+// demozoo's "<Vendor> <Console> (<abbr>)" tags, where PSP used to land in Other
+// while the identically-shaped NDS/GBA tags next to it resolved correctly.
+// Gated on the extension classifying as MP3/OGG first, so the path matters.
+TEST_CASE("demozoo MP3 platform tags classify to their console", "[music]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    const std::string mp3 =
+        "https://archive.scene.org/pub/parties/2021/silvester21/music/x.mp3";
+    struct { const char* fmt; uint8_t plat; } cases[] = {
+        { "Sony Playstation Portable (PSP)", PSP },
+        { "Nintendo DS (NDS)", NDS },
+        { "Nintendo Game Boy Advance (GBA)", GBA },
+        { "Amiga", AMIGA },      { "ZX Spectrum", SPECTRUM },
+        { "Windows", PC },       { "MSX", MSX },
+        // No hardware identity of their own -> Other Platforms, by design.
+        { "Mobile", OTHER },     { "Custom Hardware", OTHER },
+    };
+    for (auto const& c : cases) {
+        INFO("format " << c.fmt);
+        REQUIRE(mdb.classifyFormat(c.fmt, mp3) == c.plat);
+    }
+    // A tag naming no hardware at all keeps the rendered-audio fallback.
+    REQUIRE(mdb.classifyFormat("Demoscene", mp3) == MP3);
+}
+
 TEST_CASE("VGMRips format labels classify to a platform", "[music]")
 {
     using namespace chipmachine;
@@ -328,6 +402,17 @@ TEST_CASE("VGMRips format labels classify to a platform", "[music]")
         { "Arcade", ARCADE },             { "Arcade (Capcom)", ARCADE },
         { "Arcade (Konami)", ARCADE },    { "Pinball", OTHER },
         { "Atari Jaguar", ATARI },
+        // modland's CPS-1/CPS-2 .miniqsf rips: QSound is Capcom arcade hardware,
+        // so these are ARCADE, not OTHER (buildSubPlatforms then folds the group
+        // into "Arcade (Capcom)").
+        { "Capcom Q-Sound Format", ARCADE },
+        // Consoles VGMRips files under "Other"; build_vgmrips.py now recovers
+        // them from the filename's hardware tag (TAG_PLATFORM). Before that they
+        // all carried the bare "Other" label and piled into the catch-all.
+        { "Nintendo Virtual Boy", VIRTUALBOY },
+        { "Vectrex", OTHER },             { "Amstrad CPC", AMSTRAD },
+        { "Sega SG-1000", SEGAMS },       { "Atari 8bit", POKEY },
+        { "Atari 7800", OTHER },          { "Intellivision", OTHER },
     };
     for (auto const& c : cases) {
         INFO("format " << c.fmt);
@@ -3831,41 +3916,82 @@ TEST_CASE("Vice Stereo Sidplayer", "[music][vice]")
 // row per distinct format string) sorted by song count, so we can eyeball which
 // deserve promotion to a top-level TAB filter. Reads the live app music.db and
 // applies the real classifyFormat, so it matches the GUI drill exactly.
-TEST_CASE("other_platforms", "[.]")
+// Dumps the OTHER-byte sub-platform groups exactly as the TAB drill builds them:
+// straight through MusicDatabase::getOtherPlatformCount() -> buildSubPlatforms()
+// against the live cache DB. It must go through the real API rather than
+// re-grouping the song table here -- an earlier copy did the latter and silently
+// drifted, still showing the ColecoVision/Colecovision split after
+// buildSubPlatforms had been fixed to fold case-only variants.
+// Songs that reach NO platform filter. classifyFormat() returning UNKNOWN_FORMAT
+// means no TAB filter matches the song, so it is findable only via "[no filter,
+// search all]". Usually the cause is a format string that names a platform we
+// know but format_map doesn't (platformNameToByte knows it, so the YouTube path
+// resolves it while native rows fall through), landing on an extension the
+// format_map can't key either (.zip/.rar/.7z/.gz archives resolve to nothing).
+// Run against the live cache DB; prints the format strings worst affected.
+TEST_CASE("unclassified_songs", "[.]")
 {
-    using chipmachine::MusicDatabase;
+    using namespace chipmachine;
     auto dbPath = (Environment::getCacheDir() / "music.db").string();
     sqlite3db::Database db(dbPath);
-
-    auto trim = [](std::string x) {
-        size_t a = x.find_first_not_of(" \t");
-        if (a == std::string::npos) return std::string();
-        return x.substr(a, x.find_last_not_of(" \t") - a + 1);
-    };
-
-    std::map<std::string, int> byName;
-    int total = 0;
+    std::map<std::string, int> byFormat;
+    std::map<std::string, int> extOf;
+    int total = 0, unknown = 0;
     auto q = db.query<std::string, std::string>("SELECT format, path FROM song");
     while (q.step()) {
         std::string fmt, path;
         std::tie(fmt, path) = q.get_tuple();
-        if (MusicDatabase::classifyFormat(fmt, path) != chipmachine::OTHER)
-            continue;
-        std::string name = trim(fmt);
-        if (name.empty()) name = "Unknown";
-        byName[name]++;
         total++;
+        if (MusicDatabase::classifyFormat(fmt, path) != UNKNOWN_FORMAT) continue;
+        unknown++;
+        byFormat[fmt.empty() ? "<empty>" : fmt]++;
+        auto e = utils::toLower(utils::path_extension(path));
+        extOf[e.empty() ? "<none>" : e]++;
     }
-
-    std::vector<std::pair<std::string, int>> rows(byName.begin(), byName.end());
+    std::vector<std::pair<std::string, int>> rows(byFormat.begin(), byFormat.end());
     std::sort(rows.begin(), rows.end(),
               [](auto const& a, auto const& b) { return a.second > b.second; });
-
-    printf("\n--- OTHER PLATFORMS (%d groups, %d songs) ---\n",
-           (int)rows.size(), total);
+    printf("\n--- SONGS REACHING NO PLATFORM FILTER: %d of %d ---\n", unknown, total);
     for (auto const& [name, n] : rows)
-        printf("%6d  %s\n", n, name.c_str());
+        if (n > 1) printf("%6d  format=\"%s\"\n", n, name.c_str());
+    std::vector<std::pair<std::string, int>> es(extOf.begin(), extOf.end());
+    std::sort(es.begin(), es.end(),
+              [](auto const& a, auto const& b) { return a.second > b.second; });
+    printf("  -- by extension --\n");
+    for (auto const& [e, n] : es)
+        if (n > 1) printf("%6d  .%s\n", n, e.c_str());
     printf("------------------------------\n");
+}
+
+TEST_CASE("other_platforms", "[.]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    // The app's own startup path: loads db.lua + the cached index, which is what
+    // populates the in-memory `formats` vector buildSubPlatforms reads. Only
+    // reindexes if db.lua's VERSION moved, exactly as the app does.
+    REQUIRE(mdb.initFromLua("."));
+
+    // Both drills share otherPlatformList -- getOtherPlatformCount() /
+    // getArcadePlatformCount() just flip subPlatformByte and rebuild it.
+    auto dump = [&](const char* title, int groups) {
+        int total = 0;
+        std::vector<std::pair<std::string, int>> rows;
+        for (auto const& [gid, name] : mdb.otherPlatforms()) {
+            int n = mdb.otherPlatformSongCount(gid);
+            rows.emplace_back(name, n);
+            total += n;
+        }
+        std::sort(rows.begin(), rows.end(),
+                  [](auto const& a, auto const& b) { return a.second > b.second; });
+        printf("\n--- %s (%d groups, %d songs) ---\n", title, groups, total);
+        for (auto const& [name, n] : rows)
+            printf("%6d  %s\n", n, name.c_str());
+        printf("------------------------------\n");
+    };
+    dump("OTHER PLATFORMS", mdb.getOtherPlatformCount());
+    dump("ARCADE PLATFORMS", mdb.getArcadePlatformCount());
 }
 
 TEST_CASE("priority_map", "[.]")

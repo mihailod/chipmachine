@@ -138,7 +138,13 @@ enum Formats
     // PRODUCT as the max byte, and getFormatByteCounts()/formatColor cover 0..255.
     APPLEMAC, // Original Apple Macintosh (classic Mac OS trackers, PlayerPRO .mad)
     MACOS,    // Mac OS / macOS (PPC + Intel)
-    IOS       // Apple iOS
+    IOS,      // Apple iOS
+
+    // Nintendo Virtual Boy (VSU). Placed here for the same reason as the Apple
+    // block: the console region above is full up to the fixed TRACKER=0x30
+    // anchor. Sources are the VGMRips VSU logs (which only libvgm decodes -- see
+    // vgm_opl_detect.h) plus pouet's "Youtube (Virtual Boy)" captures.
+    VIRTUALBOY
 
 };
 
@@ -540,6 +546,15 @@ public:
     std::vector<std::pair<int, std::string>> const& otherPlatforms() const
     {
         return otherPlatformList;
+    }
+    // Song count for one sub-platform group id (0 if unknown). Same lookup
+    // getTitle() uses for its "[N tunes]" suffix.
+    int otherPlatformSongCount(int gid) const
+    {
+        for (size_t i = 0; i < otherPlatformList.size(); i++)
+            if (otherPlatformList[i].first == gid)
+                return otherGroupCount[i];
+        return 0;
     }
     // Drill into one sub-platform (its groupId) so an empty query lists that
     // platform's songs; pass -1 to go back to the platform list.

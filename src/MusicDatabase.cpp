@@ -2417,8 +2417,8 @@ void initFormats()
     format_map["pxtone"] = PC;              // PxTone Collage (Studio Pixel)
     format_map["vgm"] = OTHER;              // generic multi-chip VGM log
     format_map["playstation 2"] = PLAYSTATION2; // OCReMix PS2 game remixes
-    // Misc small consoles/arcade -> generic OTHER ("Other Platforms" filter).
-    for (char const* f : { "vectrex", "colecovision", "capcom q-sound format" })
+    // Misc small consoles -> generic OTHER ("Other Platforms" filter).
+    for (char const* f : { "vectrex", "colecovision" })
         format_map[f] = OTHER;
 
     // --- VGMRips (vgmrips.net) game rips -------------------------------------
@@ -2440,12 +2440,49 @@ void initFormats()
     format_map["commodore 64"] = SID;
     format_map["apple ii"] = APPLE;   // Apple IIGS
     format_map["apple iigs"] = APPLE;
+    // demozoo/scene.org tag their native Mac tunes "macOS" (executable-music
+    // .zip compo entries). Without this the MACOS byte was reachable ONLY from
+    // the YouTube path (platformNameToByte), so the "Mac OS" filter held 72
+    // videos and none of the 9 real tunes -- which fell through to the extension
+    // fallback, where ".zip" resolves to nothing, i.e. no filter at all.
+    for (char const* f : { "macos", "macosx intel", "macosx ppc" })
+        format_map[f] = MACOS;
+    format_map["ios"] = IOS;
+    // --- demoscene release-platform tags (demozoo/pouet/scene.org) ------------
+    // Same asymmetry as "macos" above: platformNameToByte knows these names, so
+    // a YouTube capture tagged with one reaches its filter, but a NATIVE row
+    // carrying the identical string missed format_map and fell through to the
+    // extension fallback -- which rescues .xm/.it/.mod but keys NOTHING for the
+    // archive extensions (.zip/.rar/.7z/.gz) most of these releases use, leaving
+    // the song matched by no filter at all. The trailing .mod/.xm correction in
+    // formatToByte still overrides these for module files, so only the archive
+    // rows actually change.
+    for (char const* f : { "windows", "ms-dos", "ms-dos/gus", "linux" })
+        format_map[f] = PC;
+    format_map["commodore plus/4"] = PRG;
+    // Real hardware / non-hardware with no dedicated filter -> Other Platforms.
+    // "atari lynx" additionally corrects a MISFILE: without an entry here the
+    // startsWith(f, "atari") fallback below claimed it for the Atari ST filter.
+    for (char const* f : { "atari lynx", "commodore pet", "commodore vic-20",
+                           "pico-8", "tic-80", "microw8", "raspberry pi",
+                           "browser", "calculator", "custom hardware" })
+        format_map[f] = OTHER;
+    format_map["nintendo virtual boy"] = VIRTUALBOY; // VSU (libvgm-only chip)
+    // Real hardware with no dedicated TAB filter -> the "Other Platforms" drill,
+    // where each becomes its own named sub-group (see buildSubPlatforms).
+    // ("vectrex" is already mapped above, alongside colecovision.)
+    for (char const* f : { "atari 7800", "intellivision" })
+        format_map[f] = OTHER;
+    // The remaining VGMRips labels ("Amstrad CPC", "Sega SG-1000", "Atari 8bit")
+    // are already mapped by the collections above and need no entry here.
     // Arcade boards get their own top-level filter ("Arcade"), which drills into
     // these sub-platforms (recovered from the format string, see buildSubPlatforms).
-    // Neo Geo (arcade/AES) joins them, shown as "Arcade (Neo Geo)".
+    // Neo Geo (arcade/AES) joins them, shown as "Arcade (Neo Geo)"; modland's
+    // "Capcom Q-Sound Format" (.miniqsf rips of CPS-1/CPS-2 boards -- QSound is
+    // Capcom's arcade sound hardware) folds into "Arcade (Capcom)".
     for (char const* f : { "arcade", "arcade (capcom)", "arcade (konami)",
                            "arcade (namco)", "arcade (sega)", "arcade (taito)",
-                           "neo geo" })
+                           "neo geo", "capcom q-sound format" })
         format_map[f] = ARCADE;
     // Atari Jaguar folds into the Atari ST/E/Falcon/Jaguar filter.
     format_map["atari jaguar"] = ATARI;
@@ -2640,7 +2677,7 @@ static uint8_t platformNameToByte(std::string s)
         { "nes/famicom", NES },      { "snes/super famicom", SNES },
         { "nintendo 64", NINTENDO64 },{ "nintendo ds", NDS },
         { "gameboy", GAMEBOY },      { "gameboy color", GAMEBOY },
-        { "gameboy advance", GBA },
+        { "gameboy advance", GBA },  { "virtual boy", VIRTUALBOY },
         { "nec turbografx/pc engine", HES }, { "nec pc engine", HES },
         { "playstation", PLAYSTATION }, { "playstation 2", PLAYSTATION2 },
         { "playstation 3", PS3 },    { "playstation portable", PSP },
@@ -2659,12 +2696,20 @@ static uint8_t platformNameToByte(std::string s)
         { "sharp mz", OTHER },       { "kc-85", OTHER },
         { "trs-80/coco/dragon", OTHER }, { "spectravideo 3x8", OTHER },
         { "wonderswan", OTHER },     { "neogeo pocket", OTHER },
-        { "virtual boy", OTHER },    { "pokemon mini", OTHER },
+        { "pokemon mini", OTHER },
         { "nintendo wii", WII },     { "gamecube", GAMECUBE },
         { "nintendo gamecube", GAMECUBE },
         { "xbox", XBOX },            { "xbox 360", XBOX360 },
         // No hardware chip identity of their own (fantasy consoles, web/VM,
         // mobile, calculators, compo buckets) -> "Other Platforms".
+        // "animation/video" (a rendered video, not a hardware prod), "mirc"
+        // (mIRC script art) and "alambik" (a defunct multimedia player) are the
+        // same kind of thing. They were the ONLY tags left unmapped, which is
+        // what the old "Unclassified YouTube Audio" filter held; pouet names no
+        // hardware for them, so Other Platforms is where they belong. Note a
+        // combo like "Animation/Video,Amiga AGA" still resolves to Amiga below.
+        { "animation/video", OTHER }, { "mirc", OTHER },
+        { "alambik", OTHER },
         { "wild", OTHER },           { "javascript", OTHER },
         { "java", OTHER },           { "flash", OTHER },
         { "android", OTHER },        { "pocketpc", OTHER },
@@ -2724,11 +2769,17 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
             (path.find("youtu.be/") != std::string::npos)) {
             // The format string names the source platform (pouet's
             // "Youtube (<platform>)" or a hand-curated manualDatabasePatch name
-            // like "ZX Spectrum Beeper"). File the video under that platform;
-            // only genuinely non-hardware tags (Wild, Animation/Video, web...)
-            // fall through to the unclassified YouTube bucket.
+            // like "ZX Spectrum Beeper"). File the video under that platform.
+            // Tags naming no hardware (Wild, Animation/Video, JavaScript, ...)
+            // are mapped to OTHER by the table, and an unrecognised tag falls
+            // back to OTHER too: it then shows up in the "Other Platforms" drill
+            // as its own "Youtube (<tag>)" group, which is visible and names
+            // itself. (It used to fall back to the YOUTUBE byte and its own
+            // "Unclassified YouTube Audio" filter; that filter is gone, so
+            // YOUTUBE would now be a byte no filter matches -- i.e. a video no
+            // platform filter could reach.)
             uint8_t p = platformNameToByte(fmt);
-            return p ? p : YOUTUBE;
+            return p ? p : OTHER;
         }
 
         if (endsWith(f, "tracker")) l = TRACKER;
@@ -2814,23 +2865,27 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
     }
 
     // Demoscene MP3/OGG rips (mainly demozoo) whose format string is the source
-    // platform ("ZX Spectrum", "Amiga", "Windows", ...) rather than a codec:
-    // file them under that platform instead of the unclassified MP3/OGG bucket.
-    // Gated on the extension having classified them as MP3/OGG, so real chip
-    // tunes and the module entries (which carry the same category strings) are
-    // untouched. Generic tags with no hardware ("Demoscene", "Mobile"->Other)
-    // are handled per the table; unlisted ones stay MP3/OGG.
+    // platform rather than a codec: file them under that platform instead of the
+    // MP3/OGG "no platform" bucket. Gated on the extension having classified them
+    // as MP3/OGG, so real chip tunes and the module entries (which carry the same
+    // category strings) are untouched. Generic tags with no hardware
+    // ("Demoscene", "Mobile") stay per the table; unlisted ones stay MP3/OGG.
+    //
+    // Only names ABSENT from format_map can be reached here: format_map is
+    // consulted first. "Windows"/"MS-Dos"/"Linux"/"Custom Hardware" were moved
+    // there (they must resolve for archive rows too, not just MP3/OGG) and so
+    // are dropped from this table; "amiga"/"zx spectrum"/"msx"/"neo geo" were
+    // already unreachable for the same reason. The rest stay here deliberately:
+    // they are pouet/demozoo names format_map does NOT know, and gating them on
+    // MP3/OGG keeps them from claiming a module that merely carries the same
+    // release-platform tag.
     if (l == MP3 || l == OGG) {
         static const std::map<std::string, uint8_t> cat = {
-            { "zx spectrum", SPECTRUM },
-            { "amiga", AMIGA },      { "amiga ppc/rtg", AMIGA },
-            { "windows", PC },       { "msx", MSX },
+            { "amiga ppc/rtg", AMIGA },
             { "nintendo game boy advance (gba)", GBA },
             { "nintendo ds (nds)", NDS },
-            { "mobile", OTHER },     { "neo geo", OTHER },
-            { "sony playstation portable (psp)", OTHER },
-            { "ms-dos", OTHER },     { "linux", OTHER },
-            { "gamepark gp2x", OTHER }, { "custom hardware", OTHER },
+            { "sony playstation portable (psp)", PSP },
+            { "mobile", OTHER },     { "gamepark gp2x", OTHER },
         };
         auto it = cat.find(f);
         if (it != cat.end()) l = it->second;
@@ -2878,6 +2933,7 @@ static std::string platformName(uint8_t b)
     case N3DS: return "Nintendo 3DS";
     case GAMECUBE: return "Nintendo GameCube";
     case WII: return "Nintendo Wii";
+    case VIRTUALBOY: return "Nintendo Virtual Boy";
     case SEGA:
     case MEGADRIVE: return "Sega Mega Drive";
     case SEGAMS: return "Sega 8-bit";
@@ -3266,11 +3322,47 @@ void MusicDatabase::buildSubPlatforms()
         // The bare "Arcade" group sits alongside the vendor-specific ones
         // (Arcade (Capcom), ...), so disambiguate it as "Arcade (Other)"; and
         // fold Neo Geo in as another vendor-style "Arcade (Neo Geo)" group.
+        // modland's "Capcom Q-Sound Format" (.miniqsf CPS-1/CPS-2 rips) merges
+        // into the existing VGMRips-sourced "Arcade (Capcom)" group rather than
+        // forming a second Capcom row.
         if (subPlatformByte == ARCADE) {
             if (toLower(name) == "arcade") name = "Arcade (Other)";
             else if (toLower(name) == "neo geo") name = "Arcade (Neo Geo)";
+            else if (toLower(name) == "capcom q-sound format")
+                name = "Arcade (Capcom)";
         }
         byName[name].push_back(idx);
+    }
+
+    // NOTE: "Youtube (<platform>)" groups stay SEPARATE from the same platform's
+    // native group ("Youtube (Vectrex)" is its own row next to "Vectrex"). That
+    // is deliberate, not an oversight: a YouTube capture is a recording of a
+    // production, not a chiptune played on the hardware, so it is kept apart
+    // from the real rips. Do not fold them together.
+    //
+    // Fold case-only spelling variants into one group. Collections disagree on
+    // the capitalisation of the same platform (smspower's "ColecoVision" vs
+    // modland's "Colecovision"), and grouping on the raw string used to show
+    // them as two adjacent duplicate rows -- the case-insensitive sort below put
+    // them side by side. Everywhere else this is already invisible, because
+    // formatToByte() lowercases before the format_map lookup; only this drill
+    // keys on the raw string, so only it can split. Display the byte-order-first
+    // variant, which prefers the interior capital ("ColecoVision" over
+    // "Colecovision", "DefleMask" over "Deflemask") -- i.e. the proper-noun
+    // spelling for every such pair we carry.
+    {
+        std::map<std::string, std::string> canon; // lowercased -> display name
+        for (auto const& kv : byName) {
+            auto key = toLower(kv.first);
+            auto it = canon.find(key);
+            if (it == canon.end() || kv.first < it->second) canon[key] = kv.first;
+        }
+        std::map<std::string, std::vector<int>> folded;
+        for (auto& kv : byName) {
+            auto& dst = folded[canon[toLower(kv.first)]];
+            dst.insert(dst.end(), kv.second.begin(), kv.second.end());
+        }
+        byName.swap(folded);
     }
 
     // Assign group ids in alphabetical (case-insensitive) name order, so the

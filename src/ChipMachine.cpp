@@ -72,6 +72,7 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
         { "Nintendo 3DS", { N3DS } },
         { "Nintendo GameCube", { GAMECUBE } },
         { "Nintendo Wii", { WII } },
+        { "Nintendo Virtual Boy", { VIRTUALBOY } },
     } },
     { "Microsoft", {}, {
         { "Microsoft Xbox", { XBOX } },
@@ -87,8 +88,15 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "WonderSwan", { WONDERSWAN } },
     { "Arcade", { ARCADE } },
     { "Other Platforms", { OTHER } },
-    { "Unclassified MP3/OGG", { MP3, OGG } },
-    { "Unclassified YouTube Audio", { YOUTUBE } },
+    // Rendered audio with no hardware identity: BotB allgear/remix/wildchip/
+    // fakebit compos, standalone demoscene MP3s, untagged chipmusic.org tracks.
+    // Not "unclassified" -- the source itself declares no platform.
+    { "MP3/OGG (no platform)", { MP3, OGG } },
+    // No "YouTube (no platform)" row: a capture whose pouet tag names no
+    // hardware (Animation/Video, mIRC, Alambik, Wild, JavaScript, ...) resolves
+    // to OTHER, so it lands in the Other Platforms drill alongside the
+    // "Youtube (Wild)" / "Youtube (JavaScript)" groups that already live there.
+    // The YOUTUBE byte is consequently never produced (see formatToByte).
     { "Podcasts", { PODCAST } },
     { "Radio Stations", { RADIO } }
 };
@@ -122,6 +130,9 @@ static uint32_t formatColor(int f)
         { MP3, 0xff88ff88 },
         { APPLE, 0xff66cccc },
         { APPLEMAC, 0xffaaaaaa }, { MACOS, 0xff88bbcc }, { IOS, 0xffcccccc },
+        // The VB's red-LED display. Needs its own entry: formatColor does a
+        // range lookup, so without one it would inherit IOS's grey.
+        { VIRTUALBOY, 0xffee1122 },
         { M3U, 0xffaaddaa },     { RADIO, 0xffff7722 },
         { YOUTUBE, 0xffff0000 },
         { PODCAST, 0xff22bbff },
@@ -1098,8 +1109,8 @@ void ChipMachine::updateSplashWelcome(uint32_t delta)
 // duplicates so the splash shows each distinct thing only once. Two kinds of
 // duplicate are removed: pixel-identical images (platform aliases / the
 // case-insensitive Console sub-logos), and same-SUBJECT images that merely look
-// alike -- e.g. the arcade "vgz-capcom" board logo and the "Capcom" platform
-// logo are different files but both read as "Capcom", so only one is kept.
+// alike -- e.g. the arcade "vgz-arcade" board logo and the "Arcade" platform
+// logo are different files but both read as "arcade", so only one is kept.
 void ChipMachine::loadSplashScreenshots()
 {
     splashShots.clear();
@@ -1107,7 +1118,7 @@ void ChipMachine::loadSplashScreenshots()
     std::set<std::string> seenSubjects;
     // Normalised subject of a logo, used to drop near-duplicates of the same
     // thing: lowercased, with the arcade "vgz-" board prefix stripped. So
-    // "vgz-capcom" and "Capcom" both map to "capcom".
+    // "vgz-arcade" and "Arcade" both map to "arcade".
     auto subjectOf = [](const std::string& key) {
         std::string s = utils::toLower(key);
         if (s.rfind("vgz-", 0) == 0) s = s.substr(4);
@@ -1327,7 +1338,6 @@ static const std::map<std::string, std::string>& consoleSubLogos()
     static const std::map<std::string, std::string> m = {
         { "vectrex", "vectrex" },
         { "colecovision", "colecovision" },
-        { "capcom q-sound format", "capcom" },
     };
     return m;
 }
@@ -1349,6 +1359,11 @@ static const std::map<std::string, std::string>& arcadeSubLogos()
         { "arcade (sega)", "vgz-sega" },
         { "arcade (taito)", "vgz-taito" },
         { "neo geo", "vgz-neogeo" },
+        // modland's .miniqsf CPS rips share the "Arcade (Capcom)" filter group
+        // with the VGM Capcom rips above, so they take the same board logo.
+        // (They used to map to the separate Capcom.png via consoleSubLogos,
+        // which put two different Capcom logos inside one group.)
+        { "capcom q-sound format", "vgz-capcom" },
     };
     return m;
 }

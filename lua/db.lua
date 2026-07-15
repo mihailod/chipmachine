@@ -548,7 +548,94 @@
 --     e.g. "SoundSmith/A.Fass/Coconut Champagne") and unexotica (6, filenames
 --     ending in a dot) are genuinely extensionless and span too many formats for
 --     any one default. None of them currently blocks a real fold.
-VERSION = 99;
+-- 100: VGMRips "Other" bucket split into real platforms, and a new
+--     "Nintendo Virtual Boy" platform on the TAB screen (9th under Nintendo).
+--     VGMRips files by chip family, not vendor, so 44 game rips carried the bare
+--     "Other" platform label and piled into the "Other Platforms" -> "Other"
+--     catch-all, even though each names its hardware in the filename's trailing
+--     parenthetical ("Bound High! (Nintendo Virtual Boy)"). build_vgmrips.py
+--     already had TAG_PLATFORM for exactly this refinement -- it was just missing
+--     the entries. Added: Nintendo Virtual Boy (17), Vectrex (15 -- these now
+--     join the existing Vectrex sub-group rather than sitting in the catch-all),
+--     Amstrad CPC + CPC+ (5), Atari 5200/400/800 -> Atari 8bit (3), Sega Game
+--     1000 -> Sega SG-1000 (2), Atari 7800 (1), Intellivision (1). The bare
+--     "Other" label is now unused by VGMRips.
+--     Virtual Boy is a new format byte (VIRTUALBOY): its VSU logs decode only on
+--     libvgm (vgm_opl_detect.h already routes chip 0xC4 there; testmus/libvgm/
+--     virtualboy-vsu.vgz covers it), and pouet's 2 "Youtube (Virtual Boy)"
+--     captures move off OTHER onto it too. Logo:
+--     data/misc/platformscreenshots/Nintendo Virtual Boy.png.
+--     Data-only reindex + one new platform byte; bump repopulates song.format.
+--     NOTE: the rebuild also drops 17 Mega Drive rips that Zophar has since
+--     onboarded -- the existing modland/Zophar dedup working on fresher data,
+--     unrelated to the platform split.
+-- 101: modland's "Capcom Q-Sound Format" (8 .miniqsf rips) moves from "Other
+--     Platforms" to Arcade, folded into the existing "Arcade (Capcom)" group
+--     rather than forming a second Capcom row. QSound IS Capcom's CPS-1/CPS-2
+--     arcade sound hardware and all 8 are CPS board games (Street Fighter Alpha
+--     2, 19XX, Cadillacs & Dinosaurs, The Punisher, Warriors of Fate, both
+--     Mega Man arcade titles, Slam Masters), so "Other" was simply wrong.
+--     Two parts, because the drill names groups by the raw format string:
+--     format_map moves the label OTHER -> ARCADE, and buildSubPlatforms renames
+--     it to "Arcade (Capcom)" (the same hook that already makes "Arcade" ->
+--     "Arcade (Other)" and "Neo Geo" -> "Arcade (Neo Geo)").
+--     The Capcom logo is unaffected: consoleSubLogos keys on the format string,
+--     not the platform byte. Bump forces the reindex that rewrites the byte.
+-- 102: demozoo's "Sony Playstation Portable (PSP)" MP3 tag now resolves to the
+--     PSP platform (TAB: Sony -> Sony PSP) instead of "Other Platforms". The
+--     MP3/OGG rescue map already resolved the identically-shaped sibling tags
+--     ("Nintendo DS (NDS)" -> NDS, "Nintendo Game Boy Advance (GBA)" -> GBA),
+--     so PSP -> OTHER was simply an oversight -- the PSP byte and its filter
+--     already existed. One tune (Vowel-o, silvester21). Only MP3/OGG rows hit
+--     that map, which is why the ~130 other demozoo "MS-Dos"/"Linux" rows were
+--     never affected: they classify by extension (.xm/.s3m/.mod/.zip) instead.
+-- 103: the top-level "YouTube audio (no platform)" filter is gone; its 1103
+--     videos move into "Other Platforms". Consistency fix: 31512 of the 32615
+--     YouTube captures ALREADY classified to a real platform byte (pouet's
+--     "Youtube (<platform>)" tag -> platformNameToByte), so a separate top-level
+--     YouTube bucket for the leftovers was the odd one out. The leftovers were
+--     exactly three tags naming no hardware -- Animation/Video (1091, a rendered
+--     video), mIRC (10, script art), Alambik (2, a dead multimedia player) --
+--     which are the same kind of thing as Wild/JavaScript/PICO-8, already
+--     mapped to OTHER. They now appear in the Other drill as their own
+--     "Youtube (<tag>)" groups, next to the "Youtube (Wild)" (566) /
+--     "Youtube (JavaScript)" (415) groups that were always there.
+--     There is NO platform to recover for them: pouet names none. Combos still
+--     resolve to the hardware ("Youtube (Amiga AGA,Animation/Video)" -> Amiga).
+--     formatToByte's youtube fallback also changes YOUTUBE -> OTHER, so a future
+--     unrecognised pouet tag surfaces as a named group in the drill instead of
+--     carrying a byte that no filter matches (which would hide it entirely).
+--     The YOUTUBE byte is now never produced; kept in the enum (removing it
+--     would renumber every byte after it) but matched by no filter.
+-- 104: format_map now knows "macos"/"macosx intel"/"macosx ppc" -> MACOS and
+--     "ios" -> IOS. Those bytes were previously reachable ONLY via the YouTube
+--     path (platformNameToByte), so the TAB "Mac OS" filter held 72 YouTube
+--     videos and NONE of the 9 native macOS tunes (demozoo/scene.org
+--     executable-music .zip compo entries) -- those fell through to the
+--     extension fallback, where ".zip" keys nothing, so they reached no filter
+--     at all. Mac OS: 72 -> 81, and the 9 natives are findable.
+-- 105: the rest of the same asymmetry, found by auditing every
+--     platformNameToByte name against format_map (74 names known to the YouTube
+--     path were missing from format_map; these are the ones with real native
+--     rows). format_map now knows: windows/ms-dos/ms-dos/gus/linux -> PC,
+--     commodore plus/4 -> PRG, and atari lynx / commodore pet / commodore
+--     vic-20 / pico-8 / tic-80 / microw8 / raspberry pi / browser / calculator /
+--     custom hardware -> OTHER. "atari lynx" also corrects a MISFILE: the
+--     startsWith(f,"atari") fallback had been claiming it for the Atari ST
+--     filter. Songs reaching no platform filter: 18493 -> 18213 (the remainder
+--     is the separate "Demoscene" issue below).
+--     Dropped from the MP3/OGG rescue map the names format_map now resolves
+--     (windows/ms-dos/linux/custom hardware) -- format_map is consulted first,
+--     so they were unreachable there. Kept the names format_map does NOT know
+--     (amiga ppc/rtg, gba/nds/psp, mobile, gamepark gp2x): gating those on
+--     MP3/OGG stops them claiming a module that carries the same release tag.
+--     NOT fixed: 18209 rows tagged "Demoscene" (16884 .zip) still reach no
+--     filter -- demozoo records no platform for those productions and none is
+--     recoverable offline (checked: song.metadata empty, ext="zip",
+--     data/misc/demozoo-songs.md's platform column is blank for exactly these).
+--     Deciding them needs the archive's member list; see cmtest
+--     unclassified_songs for the live count.
+VERSION = 105;
 
 DB = {
 {

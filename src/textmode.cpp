@@ -66,6 +66,7 @@ void runConsole(std::shared_ptr<bbs::Console> console, ChipInterface& ci)
             { YOUTUBE, Console::RED },
             { PC, Console::CYAN },         { AMIGA, Console::LIGHT_BLUE },
             { JPFM, Console::PINK },       { PCTRACKER, Console::LIGHT_GREY },
+            { VIRTUALBOY, Console::RED },
             { 255, Console::ORANGE }
         };
 
