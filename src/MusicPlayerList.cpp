@@ -75,9 +75,17 @@ MusicPlayerList::archiveExtensions()
     // accepts exactly what the app plays as a loose file. Requires
     // ChipPlugin::createPlugins() to have run.
     static const std::pair<std::set<std::string>, std::set<std::string>> sets = [] {
+        // The RENDERED-AUDIO decoders. Their formats are the fallback bucket, so
+        // a compo zip shipping a module next to its .mp3 preview plays the
+        // module. Everything else is a chip/console/tracker plugin and preferred.
+        // Listed by name because a plugin exposes no "is this a rendering"
+        // property; keep this in step when adding a codec plugin -- ffmpeg alone
+        // was not enough, since mp3plugin/minimp3plugin both call themselves
+        // "libmpg123" and their .mp3 would otherwise outrank a real module.
+        static const std::set<std::string> renderers = { "ffmpeg", "libmpg123" };
         std::set<std::string> song, audio;
         for (auto const& pl : musix::ChipPlugin::getPlugins()) {
-            auto& dst = (pl->name() == "ffmpeg") ? audio : song;
+            auto& dst = renderers.count(pl->name()) ? audio : song;
             for (auto const& e : pl->getSupportedExtensions())
                 dst.insert(toLower(e));
         }
@@ -85,6 +93,18 @@ MusicPlayerList::archiveExtensions()
         // (ffmpeg claims .8svx, but that is an Amiga IFF sample).
         for (auto const& e : song)
             audio.erase(e);
+        // UADE's format tokens are modland PREFIXES ("js.songname"), and
+        // UADEPlugin::canHandle matches them as a SUFFIX too -- so inside an
+        // archive these claim ordinary JavaScript/data/Markdown files as music.
+        // A real scene.org zip ships "license_files/connection-min.js" next to
+        // the actual .mp3: claiming the .js makes it the preferred "song" member
+        // and the zip fails, where the old hand-list (which never listed these)
+        // played the mp3. No real module is lost -- a UADE module is named
+        // "<fmt>.<title>", whose SUFFIX is the title, so a suffix test never
+        // matched one through these tokens anyway. Each is UADE-only (P:-10).
+        for (char const* e : { "js", "dat", "md", "ml", "pm", "ps", "di", "db",
+                               "pat", "cp" })
+            song.erase(e);
         if (auto* db = MusicDatabase::instance())
             for (auto const& e : db->unsupportedExtensions()) {
                 song.erase(e);

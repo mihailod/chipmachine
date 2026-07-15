@@ -316,6 +316,28 @@ TEST_CASE("VGMRips non-Sega VGM routes to libvgm", "[music]")
 // its `format` label. Guard that each distinct label resolves to the right
 // platform byte -- never UNKNOWN (which would make the game invisible to every
 // TAB platform filter).
+// ChipPlugin::getSupportedExtensions() defaults to an EMPTY set in the base
+// class, so a plugin that identifies files only in canHandle() is invisible to
+// every caller that needs the set up front -- the archive track picker
+// (MusicPlayerList::archiveExtensions) and the priority_map / playability
+// audits. The symptom is silent and one-sided: a loose .ptk plays, but a .ptk
+// inside a zip is "No playable tracks in archive", and an audit reports those
+// rows as having no decoder at all.
+//
+// This guards the DEFAULT, which is the actual hole: a new plugin that forgets
+// to override it fails here instead of quietly dropping its format out of every
+// derived list. That is the same shape as the Zophar .adp and Organya .org gaps.
+TEST_CASE("every plugin declares its extensions", "[music]")
+{
+    musix::ChipPlugin::createPlugins("data");
+    std::vector<std::string> silent;
+    for (auto const& pl : musix::ChipPlugin::getPlugins())
+        if (pl->getSupportedExtensions().empty()) silent.push_back(pl->name());
+    INFO("plugins returning an empty getSupportedExtensions(): "
+         << [&] { std::string s; for (auto& n : silent) s += n + " "; return s; }());
+    REQUIRE(silent.empty());
+}
+
 // The ZIP track picker must accept exactly what the app plays as a loose file.
 // It used to carry two hand-maintained extension lists, which drifted: a zip
 // holding only an Organya .org reported "No playable tracks in archive" even

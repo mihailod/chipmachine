@@ -2437,6 +2437,29 @@ void initFormats()
     format_map["sap"] = POKEY;
     for (char const* f : { "mmd0", "mmd1", "mmd2", "mmd3" })
         format_map[f] = AMIGA; // OctaMED (MED itself already resolves)
+    // Same gap, found by peeking inside the demozoo archives: we ship a plugin
+    // for each of these, but format_map only knew the plugin's display name
+    // ("AdLib", "FamiTracker"), never the extension the archive member carries.
+    format_map["a2m"] = ADPLUG;      // AdLib Tracker 2 ("adlib" was keyed, a2m not)
+    format_map["mid"] = ADPLUG;      // AdPlug renders .mid on OPL
+    format_map["mdl"] = PCTRACKER;   // Digitrakker (OpenMPT)
+    format_map["mo3"] = PCTRACKER;   // MO3-compressed module (OpenMPT). The
+                                     // wrapper can hold a MOD, but demoscene MO3
+                                     // is overwhelmingly XM/IT, i.e. PC.
+    format_map["prg"] = PRG;         // Tedplay claims .prg -> C16/116/+4 (TED)
+    // NOT keyed on purpose:
+    //   "ftm"  -- two formats sharing one extension (FamiTracker NES vs the
+    //             OpenMPT "FTMN" one); the plugins magic-gate it, so an
+    //             extension-keyed guess here would misfile one of them.
+    //   "mix"  -- StSound claims it, but .mix spans Atari ST YM and Amstrad CPC
+    //             rips; no single platform is right.
+    // ("sunvox" already resolves to PC via its format-string entry below.)
+    format_map["ams"] = PCTRACKER;   // Velvet Studio / Extreme Tracker (OpenMPT)
+    format_map["v2m"] = PC;          // Farbrausch V2 synth (Windows)
+    format_map["bbsong"] = ZXBEEPER; // Beepola (ZX Spectrum 1-bit beeper)
+    format_map["hsc"] = ADPLUG;      // HSC AdLib Composer
+    format_map["rad"] = ADPLUG;      // Reality AdLib Tracker
+    format_map["ptcop"] = PC;        // PxTone Collage ("pxtone" is keyed, not the ext)
     format_map["hippel st coso"] = ATARI;   // Atari ST Hippel
     format_map["bbc micro"] = ACORN;        // Acorn 8-bit (close enough)
     // Battle of the Bits (build_botb.py) format labels not covered above.

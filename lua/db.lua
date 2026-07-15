@@ -704,7 +704,93 @@
 --     extension-only gate picked the info file as the track. OrgPlugin's
 --     canHandle() checks the "Org-0x" magic and declines. (The script can't read
 --     magic -- it only has member names -- so it names those info files.)
-VERSION = 109;
+-- 110: the last of the extension-vs-display-name gap, found by peeking inside
+--     the demozoo archives: we ship a plugin for each of these but format_map
+--     only knew the plugin's display name, never the extension a member carries.
+--     Keyed a2m/mid -> ADPLUG, mdl/mo3 -> PCTRACKER, prg -> PRG (Tedplay), and
+--     let filter_demozoo_archives.py write those codes (plus SUNVOX, whose
+--     format-string entry already resolved to PC) as labels.
+--     Left unkeyed ON PURPOSE: "ftm" (FamiTracker NES and OpenMPT's FTMN share
+--     the extension and are magic-gated -- an ext-keyed guess misfiles one) and
+--     "mix" (StSound: Atari ST YM vs Amstrad CPC rips).
+-- 111: archive picker: exclude UADE's PREFIX-ONLY tokens (js/dat/md/ml/pm/ps/di)
+--     from the derived song set. UADE's formats are modland prefixes
+--     ("js.songname") but UADEPlugin::canHandle also matches them as a suffix,
+--     so deriving the picker's list from the plugins (v108) made it claim
+--     ordinary JavaScript/data/Markdown files as music: ~270 scene.org zips ship
+--     "license_files/connection-min.js" beside the real module, and the .js won
+--     as the preferred "song" member -- a REGRESSION vs the old hand-list, which
+--     never listed those tokens. No real module is lost: a UADE module is
+--     "<fmt>.<title>", whose suffix is the title, so a suffix test never matched
+--     one through these. Each is UADE-only at priority -10.
+-- 112: 15 lines added to not_supported_extensions.txt for the formats left in
+--     demozoo archives that hold nothing playable (.adf/.bin/.com/.dll/.emd/
+--     .font/.iff/.j98/.mmd/.oss/.pp/.rbs/.sample/.t64/.wmv). Each verified to be
+--     claimed by NO plugin (cmtest priority_map), so nothing decodable is
+--     hidden; every affected row is in demozoo.txt, so no other collection is
+--     touched. With v109's real `ext` these finally gate, and the rows STAY in
+--     demozoo.txt -- a decoder later means deleting a line, not re-onboarding.
+--     NOT added: .js/.ml/.pm etc. Those are UADE prefix-only tokens (see v111);
+--     a ".js" line would hide any legitimate row carrying that ext, and the
+--     peek no longer writes them into `ext` anyway.
+-- 113: two fixes to the archive peek + readme-only archives gated.
+--     (a) zip_members scanned the whole tail slice for the PK\x01\x02 signature,
+--         so it also matched the central directory of any NESTED zip stored near
+--         the end -- inventing members that do not exist at this level (real
+--         case: b98mhs22.zip reported .xm/.exe/.pcb belonging to an inner
+--         Bbr-iltm.zip, which the app cannot reach anyway). It now parses ONLY
+--         the real central directory, whose bounds the EOCD gives exactly.
+--         Affected 116 of 16993 cached archives (0.68%); those were re-peeked.
+--     (b) ~130 scene.org compo entries are an archive containing nothing but a
+--         readme -- the tune was never uploaded -- so they were dead search hits
+--         ("No playable tracks in archive"). first_member_ext now reports the
+--         readme as the row's `ext` when there is nothing else, and .txt/.nfo/
+--         .diz are listed in not_supported_extensions.txt, which gates them.
+--         Safe: no plugin claims those, and no collection uses them as an ext,
+--         so the lines can only match an archive holding nothing else. The rows
+--         STAY in demozoo.txt -- if the file is ever re-uploaded upstream, a
+--         re-peek revives them; deleting would have needed a re-onboard.
+-- 114: label the archives that were ALIVE but unlabelled, and stop two more
+--     false-positive member picks.
+--     (a) The peek matched a member's format as a PREFIX as well as a suffix
+--         (for Amiga "mod.<title>" naming). Against a 1200-extension set that
+--         fires on ordinary filenames: "AD.EXE" -> ad, "SE.COM" -> se,
+--         "CP.CFG" -> cp, "sss.tap" -> sss. Worse, those picks were unreachable
+--         anyway -- the app's picker reads the SUFFIX (path_extension), so a
+--         prefix-named member inside a ZIP can never be played. Now suffix-only,
+--         which also un-shadowed 6 real .xm and 2 .it the junk had outranked.
+--     (b) "db"/"pat"/"cp" added to the picker's prefix-only exclusions (v111):
+--         UADE claims them, so "Thumbs.db" and "EPIANO1.PAT" were being picked
+--         as music.
+--     Keyed + labelled: mp4/aif/aiff/wma/ac3 (ffmpeg -> the MP3/OGG bucket),
+--     ams -> PCTRACKER, v2m -> PC, bbsong -> ZXBEEPER (Beepola), hsc/rad ->
+--     ADPLUG, ptcop -> PC. Still unlabelled by choice: mix/ftm (ambiguous, see
+--     v110) and snd (SC68 vs AdPlug vs vgmstream).
+-- 115: prefix matching is now per-CONTAINER (v114 made it suffix-only, which
+--     was right for ZIP but silently unlabelled ~90 .lha rows): LHA members
+--     carry Amiga/modland naming ("mod.<title>") that the app resolves via its
+--     ".lha/<member>" path, so prefixes are read there; ZIP members are read
+--     suffix-only, matching MusicPlayerList's picker.
+-- 116: no data change -- recorded here because it fixes a hole the whole session
+--     kept falling into. ChipPlugin::getSupportedExtensions() DEFAULTS TO EMPTY
+--     in the base class, and five plugins never overrode it: ptkplugin
+--     (.ptk/.ntk), tfmxplugin (mdat.), mp3plugin + minimp3plugin (.mp3) and
+--     GZPlugin (.gz). Anything deriving a list from it therefore could not see
+--     those formats: a loose .ptk played, but a .ptk inside a ZIP was "No
+--     playable tracks in archive", and the playability audit called those rows
+--     undecodable. Same shape as the Zophar .adp and Organya .org gaps.
+--     Each now declares its extensions, and a test ("every plugin declares its
+--     extensions") fails if a future plugin forgets -- guarding the default,
+--     which is the actual bug.
+--     tfmxplugin declares "mdat" for the audit's sake, but TFMX is named by
+--     PREFIX ("mdat.<title>"); the ZIP picker matches a suffix, so TFMX inside a
+--     zip stays unreachable. Documented in the header rather than papered over.
+--     Caught while doing it: mp3plugin calls itself "libmpg123", so its newly
+--     declared .mp3 landed in the picker's PREFERRED "song" bucket -- a compo zip
+--     could have played the .mp3 preview instead of the module. The archive-picker
+--     test caught it; the rendered-audio bucket now keys on a set of decoder
+--     names, not the single name "ffmpeg".
+VERSION = 116;
 
 DB = {
 {

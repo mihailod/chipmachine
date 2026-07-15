@@ -153,7 +153,20 @@ AUDIO_EXT = {"mp3","ogg","flac","wav","mp2","m4a","aac","opus"}
 APP_SONG, APP_AUDIO = _app_picker_sets()
 PLAYABLE = (APP_SONG | APP_AUDIO) if APP_SONG else (_app_playable() or
                                                     (SONG_EXT | AUDIO_EXT))
-LABELABLE = SONG_EXT | AUDIO_EXT
+# Formats we ship a plugin for AND whose bare code format_map keys, so the label
+# resolves to a real platform. Verified by the cmtest "peek_labels" dump, which
+# asserts every code actually written here classifies to something.
+# Deliberately NOT here: "ftm" (FamiTracker NES vs OpenMPT's FTMN share the
+# extension and are magic-gated) and "mix" (StSound: Atari ST YM vs Amstrad CPC)
+# -- an extension-keyed label would misfile one of the two.
+LABELABLE = SONG_EXT | AUDIO_EXT | {
+    "mdl", "mo3", "a2m", "mid", "prg", "sunvox",
+    # rendered-audio containers ffmpeg decodes (AUDIO_EXT above is the old,
+    # narrower hand list); format_map keys each of these to the MP3/OGG bucket
+    "mp4", "aif", "aiff", "wma", "ac3", "mpeg",
+    # chip/tracker formats whose bare code format_map now keys
+    "ams", "v2m", "bbsong", "hsc", "rad", "ptcop",
+}
 
 # Range-peekable archives. .7z and .gz/.tar.gz are NOT: 7z's header is LZMA-
 # encoded at an offset near EOF, and a .tar.gz must be inflated to reach the tar
@@ -164,14 +177,21 @@ UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120 Safari/537.36")
 
 
-def ext_of(name, allow=None):
-    """Format token of a member name, honouring BOTH naming conventions.
+def ext_of(name, allow=None, prefix_ok=False):
+    """Format token of an archive member, as the APP would read it.
 
-    Suffix ("propagan.xm" -> xm) is the usual one, but Amiga-style members put
-    the format FIRST ("mod.Kwern akk" -> mod), exactly as modland names its
-    files. A real .lha row in this collection is "mod.Kwern akk", which a
-    suffix-only read would call the extension "kwern akk". Suffix wins when both
-    look playable, since it's the far more common convention.
+    SUFFIX ONLY unless prefix_ok. Which is right depends on the CONTAINER, and
+    mirrors what the app does with each:
+
+    * ZIP  -> suffix only. MusicPlayerList's picker reads path_extension, so a
+      prefix-named member inside a zip is unreachable no matter what we label the
+      row. Allowing prefixes here also fires on ordinary filenames, because the
+      set has ~1200 entries: "AD.EXE" -> ad, "SE.COM" -> se, "CP.CFG" -> cp,
+      "sss.tap" -> sss -- all DOS junk, and they outranked real .xm/.it members.
+    * LHA  -> prefixes allowed. These carry Amiga/modland naming
+      ("mod.Kwern akk"), which the app resolves via the ".lha/<member>" path
+      (RemoteLoader + MusicDatabase::resolveExtension both special-case it).
+      Reading those suffix-only calls the format "akk" and loses the row.
     """
     allow = PLAYABLE if allow is None else allow
     b = name.rsplit("/", 1)[-1].lower()
@@ -180,9 +200,10 @@ def ext_of(name, allow=None):
     suffix = b.rsplit(".", 1)[-1]
     if suffix in allow:
         return suffix
-    prefix = b.split(".", 1)[0]
-    if prefix in allow:
-        return prefix
+    if prefix_ok:
+        prefix = b.split(".", 1)[0]
+        if prefix in allow:
+            return prefix
     return suffix
 
 
@@ -216,28 +237,32 @@ def zip_members(url):
     just before it -- so a tail read gets both for any archive whose directory
     fits. Retry wider when it doesn't (many-membered zips).
     """
-    for size in (4096, 65536, 262144):
-        try:
-            d = rng(url, f"-{size}")
-        except Exception:
-            raise
+    for size in (4096, 65536, 262144, 1048576):
+        d = rng(url, f"-{size}")
         eocd = d.rfind(b"PK\x05\x06")
         if eocd == -1:
-            continue  # directory bigger than our slice -> widen
+            continue                       # EOCD not in this slice -> widen
         cd_size = struct.unpack("<I", d[eocd + 12:eocd + 16])[0]
+        # Parse ONLY the real central directory. It ends exactly where the EOCD
+        # begins, so its bounds are known -- scanning the whole tail for the
+        # PK\x01\x02 signature instead would also match the central directory of
+        # any NESTED zip stored near the end of this one, inventing members that
+        # do not exist at this level (a real case: b98mhs22.zip holds
+        # "Bbr-iltm.zip", whose own directory leaked in as .xm/.exe/.pcb members
+        # -- and the app cannot reach inside a nested archive anyway).
+        start = eocd - cd_size
+        if start < 0:
+            continue                       # directory truncated -> widen
+        cd = d[start:eocd]
         names, j = [], 0
         while True:
-            k = d.find(b"PK\x01\x02", j)
+            k = cd.find(b"PK\x01\x02", j)
             if k == -1:
                 break
-            nlen = struct.unpack("<H", d[k + 28:k + 30])[0]
-            names.append(d[k + 46:k + 46 + nlen].decode("utf8", "replace"))
+            nlen = struct.unpack("<H", cd[k + 28:k + 30])[0]
+            names.append(cd[k + 46:k + 46 + nlen].decode("utf8", "replace"))
             j = k + 4
-        # Only trust the slice if it actually contained the whole directory.
-        if cd_size <= size - (len(d) - eocd) or names:
-            if cd_size > size and size != 262144 and not names:
-                continue
-            return names
+        return names
     return None
 
 
@@ -292,7 +317,7 @@ def peek_members(url):
     return m
 
 
-def playable_of(members, allow=None):
+def playable_of(members, allow=None, prefix_ok=False):
     """The member the app would play, or None. Junk/metadata files ignored."""
     allow = PLAYABLE if allow is None else allow
     if not members:
@@ -300,32 +325,32 @@ def playable_of(members, allow=None):
     for n in members:
         if _is_junk(n):
             continue
-        if ext_of(n, allow) in allow:
+        if ext_of(n, allow, prefix_ok) in allow:
             return n
     return None
 
 
-def labelable_of(members):
+def labelable_of(members, prefix_ok=False):
     """The member whose format we're willing to WRITE as the label (see
     LABELABLE). None means: leave the row's existing label alone."""
-    return playable_of(members, LABELABLE)
+    return playable_of(members, LABELABLE, prefix_ok)
 
 
-def app_pick(members):
+def app_pick(members, prefix_ok=False):
     """The member the APP would actually play -- mirrors MusicPlayerList's ZIP
     branch: collect "song" (chip/module) members and "audio" (ffmpeg rendering)
     members, prefer songs, sort, take the first. Getting this wrong would write
     an `ext` for a member the app never plays.
     """
     if not members or not APP_SONG:
-        return playable_of(members)      # fallback: file order, no song/audio split
+        return playable_of(members, None, prefix_ok)
     songs, audio = [], []
     for n in members:
         if _is_junk(n):
             continue
-        if ext_of(n, APP_SONG) in APP_SONG:
+        if ext_of(n, APP_SONG, prefix_ok) in APP_SONG:
             songs.append(n)
-        elif ext_of(n, APP_AUDIO) in APP_AUDIO:
+        elif ext_of(n, APP_AUDIO, prefix_ok) in APP_AUDIO:
             audio.append(n)
     tracks = songs or audio
     return sorted(tracks)[0] if tracks else None
@@ -345,6 +370,18 @@ def first_member_ext(members):
     # not_supported line that silently kills those instead. A container nested
     # inside a zip is simply not peeked -- leave the row alone.
     CONTAINER = {"zip", "lha", "lzh", "lzx", "rar", "7z", "gz", "tar", "z", "arj"}
+    # UADE's prefix-only tokens (see MusicPlayerList::archiveExtensions): as a
+    # SUFFIX these are JavaScript/data/Markdown files, not music. Writing one
+    # into `ext` would invite a not_supported line for ".js" that also hides any
+    # legitimate row carrying that ext -- and would name the wrong file anyway.
+    PREFIX_ONLY = {"js", "dat", "md", "ml", "pm", "ps", "di", "db", "pat", "cp"}
+    # A real (non-junk) extension always wins. But an archive whose ONLY content
+    # is a readme is itself the finding -- ~100 scene.org compo entries are a
+    # lone .txt, the tune never uploaded -- so fall back to reporting that, which
+    # lets the ".txt" line in not_supported_extensions.txt gate the row. Without
+    # this they keep ext="zip", the list can't match, and they stay indexed as
+    # dead search hits.
+    fallback = ""
     for n in members or []:
         if _is_junk(n):
             continue
@@ -354,10 +391,14 @@ def first_member_ext(members):
         # into the ext column verbatim. Only accept a plausible extension.
         if not e or not re.fullmatch(r"[a-z0-9]{1,8}", e):
             continue
-        if e in JUNK or e in CONTAINER:
+        if e in CONTAINER or e in PREFIX_ONLY:
+            continue
+        if e in JUNK:
+            if not fallback:
+                fallback = e     # remember, but keep looking for something real
             continue
         return e
-    return ""
+    return fallback
 
 
 def inspect(url):
@@ -439,7 +480,10 @@ def main():
                 continue
             # ONE member decides both columns, so `ext` can never name a
             # different file than `format` does.
-            member = app_pick(members)
+            # LHA members are Amiga/modland prefix-named; ZIP members are not
+            # (and the app's zip picker could not reach a prefix-named one).
+            prefix_ok = url.lower().endswith((".lha", ".lzh"))
+            member = app_pick(members, prefix_ok)
             if member is None:
                 stats["no playable member"] += 1
                 if args.dead_rows:
@@ -455,7 +499,7 @@ def main():
                 continue
             stats["playable"] += 1
             if args.classify:
-                e = ext_of(member, PLAYABLE)
+                e = ext_of(member, PLAYABLE, prefix_ok)
                 setext[i] = e            # the real inner format, not "zip"
                 if e in LABELABLE:
                     # Uppercase extension: the vocabulary keygenmusic/botb

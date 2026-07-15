@@ -394,3 +394,40 @@
 # whose ".bak" tail hides the .mp3 from FFMPEGPlugin's ext gate, so it dead-ends
 # instead of playing). The 3 SMUS groups keep their playable .smus members.
 .bak
+
+# --- demozoo archive contents, from the member peek (2026-07-15) ---
+# The 17k demozoo "Demoscene" archive rows now carry the REAL inner format in
+# their `ext` column (filter_demozoo_archives.py --classify reads each archive's
+# member list over HTTP Range), which is what finally makes this list reachable
+# for them: songIsUnsupported() matches `ext`, and every archive row used to say
+# "zip". These are the formats left in archives holding nothing playable -- each
+# verified to be claimed by NO plugin (cmtest priority_map), so nothing is being
+# hidden that we could decode. The rows stay in demozoo.txt on purpose: adding a
+# decoder later means deleting a line here + a reindex, not re-onboarding.
+.adf
+.bin
+.com
+.dll
+.emd
+.font
+.iff
+.j98
+.mmd
+.oss
+.pp
+.rbs
+.sample
+.t64
+.wmv
+
+# Archives whose only content is a readme -- ~100 scene.org compo entries are a
+# lone .txt (occasionally .nfo/.diz): the tune was never uploaded, so the row is
+# a dead search hit that errors with "No playable tracks in archive". The peek
+# reports the readme as the row's `ext` (filter_demozoo_archives.py
+# first_member_ext) precisely so these lines can gate them. Safe: no plugin
+# claims txt/nfo/diz, and no collection uses them as an ext -- these lines can
+# only ever match an archive that contains nothing else. Not deleted, so a
+# re-upload upstream just needs a re-peek.
+.txt
+.nfo
+.diz

@@ -1,32 +1,4 @@
-- .lha inside a zip — the app plays a top-level .lha, but the zip picker only sees foo.lha as a member and no plugin claims .lha (it's handled by Archive/magic, not a plugin), so nested archives aren't peeked. That's 3 rows; I'll leave them and flag it.
-download those 3 and classify them
-
-
-- can we peek inside all other lha rows? and classify like we did the zip ones?
-
-
-
-
-Let's now dig into these 2 statements you produced:
-
-- What's left : 29 undecidable, 39 .7z + 33 .tar.gz (not range-peekable), 21 .mid, and a handful of .prg/.flx/.mgt I won't guess at.
-
-- ~52 stragglers on a different gap: .mid (21), .nsf (4), .prg (3), .flx (3), .a2m (2), .mgt (2). These are extensions we support whose label is keyed but whose extension isn't — e.g. format_map knows "nintendo sound format" but not "nsf". Some are trivially right (.nsf → NES, .a2m → AdLib); others I won't guess at — those .MGT files sit under Fujiology DEMOS/FALCON/ paths, so calling them Sam Coupé Megatracker on extension alone could be wrong. Small enough to leave, worth a look if you want them.
-
-The goal is to enable trivial stuff and report on more difficult stuf.. In specific:
-
-- how feasible is to actually download those .7z and .tar.gz archives, open them and deduce by what's inside?
-- how feasible is to implement new plugins for those other formats
-- .prg i think is a game extension for some emulator (atari?) and that is probably not something we do (we play music)
-
-
-
-
-
-- now after all this work make sure every single song in the db belongs to something in the formats taxonomy and every one is playable
-
-
-
+- CSDB is an incremental database, it adds IDs as the time goes on. The original application claims to have all ids from 0 to 174978 and our downloaders: ( ls scripts/cs* scripts/csdb_merge.py scripts/csdb2plist.py) crawled the site from 174979 until the end (at the time of crawl). we never investigated the [0 - 174978] range, we trusted it on face value. can we verify that range, maybe just do HEAD to compare with what we already have and download only the missing ones (if any). so basically add option to run csdb script with HEAD request only from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)? now crawling would take 14 hours (estimate based on the script work) but HEAD to check and only crawl what is missing in the current file in the 0-174978 segment might be faster. still, even HEAD we need to throttle to make sure we are not blocked or kill the site. investigate all this end report before doing any work/crawl.
 
 - resolve other youtube as much as possible into respective platforms
 
@@ -34,7 +6,7 @@ The goal is to enable trivial stuff and report on more difficult stuf.. In speci
 
 - songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
 
-- have another screen similar to Platforms but Databases -- wanna be able to restrict results to just one database and i pick there. we list all there (45 now i think) and user can go up/down in the table like now with formats and select one and then we restrict search result to show only results from that db
+- have another screen similar to Platforms (TAB) but Databases (SHIFT+TAB or CTRL+TAB) -- wanna be able to restrict results to just one database like we can with platforms now and i pick there. we list all db sources there (45 now i think) and user can navigate like now with formats and select one and then we restrict search result to show only results from that db. we already show db names under the progress bar when indexing and we show in the title in search result selection where the item came from so i think this is feasible.
 
 --------------
 - extensions still missing format description:
@@ -50,6 +22,4 @@ gym	5 dm	5 0cc	5
 
 - packaging: the app should offer to os handling of all extensions it can play, package_app.sh should be augmented with plist writer for it. then the application needs to handle the file passed in (standard mac way exists)
 
-- (optional -- will take 14 hours and not sure if it will improve anything) run csdb script from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)?
-
-- Separate db from code and auto-update db independently from code
+- investigate: separate db from code and auto-update db independently from code
