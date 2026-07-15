@@ -36,6 +36,13 @@ class ChipMachine;
 class MusicPlayerList : public std::enable_shared_from_this<MusicPlayerList>
 {
 public:
+    // (song, audio) extension sets the ZIP track picker accepts, derived from
+    // the registered plugins so they can't drift from what the app can actually
+    // decode as a loose file. "song" (chip/console/tracker) is preferred; "audio"
+    // (ffmpeg renderings) is the fallback. Requires createPlugins() to have run.
+    static const std::pair<std::set<std::string>, std::set<std::string>>&
+    archiveExtensions();
+
     enum State
     {
         Stopped,

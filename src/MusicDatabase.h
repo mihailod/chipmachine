@@ -547,6 +547,17 @@ public:
     {
         return otherPlatformList;
     }
+    // Extensions we ship a plugin for but deliberately cannot play
+    // (data/misc/not_supported_extensions.txt). Exposed because the archive
+    // track picker (MusicPlayerList) derives its member allowlist from the
+    // registered plugins and must subtract these, exactly as the indexer does.
+    std::set<std::string> const& unsupportedExtensions() const
+    {
+        return unsupportedExts;
+    }
+    // The live instance (set in the ctor). Null before construction.
+    static MusicDatabase* instance() { return self; }
+
     // Song count for one sub-platform group id (0 if unknown). Same lookup
     // getTitle() uses for its "[N tunes]" suffix.
     int otherPlatformSongCount(int gid) const

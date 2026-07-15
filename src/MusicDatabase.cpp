@@ -2422,6 +2422,21 @@ void initFormats()
     for (char const* f : { "wav", "flac", "aiff", "aif", "mp2", "m4a", "aac",
                            "mp4", "opus", "mpeg", "ac3", "wma" })
         format_map[f] = MP3;
+    // Chip/module EXTENSIONS whose platform is fixed by the format but which
+    // format_map only keyed under their long display name ("Nintendo Sound
+    // Format", "Commodore 64"), never the extension. A song naming the bare code
+    // -- which ModArchive rows already do (see codeNames in describeFormat) and
+    // which filter_demozoo_archives.py --classify now writes for archive rows --
+    // therefore reached no platform filter at all. The rest of the codes that
+    // pass writes (XM/MOD/IT/AHX/MED/...) already resolve via uade_formats
+    // (formats.h) or the entries above.
+    for (char const* f : { "sid", "psid" })
+        format_map[f] = SID;
+    for (char const* f : { "nsf", "nsfe" })
+        format_map[f] = NES;
+    format_map["sap"] = POKEY;
+    for (char const* f : { "mmd0", "mmd1", "mmd2", "mmd3" })
+        format_map[f] = AMIGA; // OctaMED (MED itself already resolves)
     format_map["hippel st coso"] = ATARI;   // Atari ST Hippel
     format_map["bbc micro"] = ACORN;        // Acorn 8-bit (close enough)
     // Battle of the Bits (build_botb.py) format labels not covered above.

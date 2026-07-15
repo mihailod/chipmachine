@@ -649,7 +649,62 @@
 --     .rar, 39 .7z, 33 .gz) needing an inner-member peek, plus ~52 stragglers on
 --     extensions we support but never keyed in format_map (.nsf 4, .a2m 2,
 --     .mgt 2, .prg 3, .flx 3, .mid 21) -- a separate, smaller gap.
-VERSION = 106;
+-- 107: the 17k "Demoscene" ARCHIVE rows are classified from what is actually
+--     INSIDE them. demozoo records no platform for these productions and none
+--     was recoverable offline (song.metadata empty, ext="zip", and
+--     data/misc/demozoo-songs.md's platform column is blank for exactly these),
+--     so filter_demozoo_archives.py --classify now reads each archive's member
+--     list and writes the member's real format into the platform column as the
+--     bare uppercase extension ("XM"/"MOD"/"IT"/"MP3"/...) -- the vocabulary
+--     ModArchive rows already use, which format_map keys and describeFormat
+--     expands for display ("Amiga - ProTracker"; see codeNames).
+--     Member lists come from HTTP RANGE reads, not downloads: a zip's central
+--     directory is at the END (one ~4KB tail read regardless of archive size),
+--     lha/rar headers are at the FRONT. ~100x lighter than the full-download
+--     pass it replaces. Verdicts cached, so re-applying after a
+--     build_demozoo.py --build (which regenerates demozoo.txt and wipes the
+--     labels) costs no network.
+--     16425 of 17022 relabelled; 568 have no playable member (left alone --
+--     use --dead-rows to drop those), 29 undecidable. .7z (39) and .tar.gz (33)
+--     are not range-peekable and pass through.
+--     Also keyed the module EXTENSIONS format_map only knew by long display
+--     name: sid/psid -> SID, nsf/nsfe -> NES, sap -> POKEY, mmd0-3 -> AMIGA.
+--     Without those, 44 of the peeked rows (and the pre-existing standalone
+--     .nsf/.sap rows) resolved to nothing despite being formats we play.
+-- 108: the ZIP track picker now derives its member allowlist FROM THE
+--     REGISTERED PLUGINS (MusicPlayerList::archiveExtensions) instead of two
+--     hand-maintained sets, so it accepts exactly what the app plays as a loose
+--     file. The lists had drifted badly: a zip holding only an Organya .org (or
+--     .mdl/.mo3/.a2m/.ftm/.ams/.prg) reported "No playable tracks in archive"
+--     though we ship a plugin that decodes it -- 129 demozoo archives were dead
+--     for this reason alone, and the same gap had already hidden Zophar's
+--     GameCube .adp / Xbox .wma rips until the list was patched by hand. ~70
+--     entries -> 200+. Subtracts not_supported_extensions.txt (else the picker
+--     would choose a member it is guaranteed to fail on) and keeps the
+--     song-preferred/audio-fallback split so a compo zip shipping a module plus
+--     its .mp3 preview still plays the module.
+-- 109: demozoo archive rows now carry the REAL inner format in their `ext`
+--     column instead of the "zip" wrapper (filter_demozoo_archives.py
+--     --classify, from the same cached member list as the label).
+--     The point is not cosmetic: songIsUnsupported() matches
+--     not_supported_extensions.txt against `ext`, so with ext="zip" that list
+--     was UNREACHABLE for every archive row -- an archive holding nothing but a
+--     Renoise .rns stayed indexed and surfaced in search as a dead entry that
+--     errors with "No playable tracks". With the real ext written, the lines
+--     ALREADY in that list (.exe 101, .rns 58, .xrns 55, .m8s 15, .d64, .bmx)
+--     finally gate ~240 of them -- and the rows STAY in demozoo.txt, so
+--     shipping a Renoise plugin later means deleting one not_supported line and
+--     reindexing, not re-onboarding. Deleting the rows would have thrown that
+--     away. Never writes a nested container (.lha/.lzx/...) into ext: we support
+--     those as top-level rows, and a not_supported line for one would silently
+--     kill the 263 real .lha rows.
+--     The picker additionally VERIFIES a member with the plugins' canHandle()
+--     rather than trusting its extension: archive.scene.org ships a plain text
+--     file named "scene.org" in ~1800 zips and OrgPlugin claims .org, so an
+--     extension-only gate picked the info file as the track. OrgPlugin's
+--     canHandle() checks the "Org-0x" magic and declines. (The script can't read
+--     magic -- it only has member names -- so it names those info files.)
+VERSION = 109;
 
 DB = {
 {

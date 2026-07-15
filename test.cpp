@@ -316,6 +316,54 @@ TEST_CASE("VGMRips non-Sega VGM routes to libvgm", "[music]")
 // its `format` label. Guard that each distinct label resolves to the right
 // platform byte -- never UNKNOWN (which would make the game invisible to every
 // TAB platform filter).
+// The ZIP track picker must accept exactly what the app plays as a loose file.
+// It used to carry two hand-maintained extension lists, which drifted: a zip
+// holding only an Organya .org reported "No playable tracks in archive" even
+// though OrgPlugin decodes it (129 demozoo archive rows were dead for exactly
+// this reason), and the same gap had already hidden Zophar's GameCube .adp /
+// Xbox .wma rips until someone patched the list by hand. The sets are now
+// derived from the registered plugins, so a new plugin can't reintroduce it.
+TEST_CASE("archive picker accepts every format the app can play", "[music]")
+{
+    musix::ChipPlugin::createPlugins("data");
+    auto const& [songExt, audioExt] = chipmachine::MusicPlayerList::archiveExtensions();
+    REQUIRE(songExt.size() > 200);   // was a 70-entry hand list
+
+    // The formats that were unfindable inside an archive.
+    for (auto* e : { "org", "mdl", "mo3", "a2m", "ftm", "ams", "prg" }) {
+        INFO("song ext " << e);
+        REQUIRE(songExt.count(e) == 1);
+    }
+    // Still classified as chip/module, i.e. preferred over a rendered preview.
+    for (auto* e : { "mod", "xm", "it", "sid", "nsf", "adp", "musx" }) {
+        INFO("song ext " << e);
+        REQUIRE(songExt.count(e) == 1);
+    }
+    // ffmpeg renderings stay the FALLBACK bucket, never the preferred one --
+    // otherwise a compo zip with a module + its .mp3 preview could play the mp3.
+    for (auto* e : { "mp3", "ogg", "flac", "wav", "opus", "wma" }) {
+        INFO("audio ext " << e);
+        REQUIRE(audioExt.count(e) == 1);
+        REQUIRE(songExt.count(e) == 0);
+    }
+    // .8svx stays in the AUDIO bucket, and that is correct here even though
+    // format_map deliberately files it under Amiga rather than the rendered
+    // "no platform" bucket: ffmpeg is the only plugin that decodes it, and this
+    // bucket only means "fallback if no chip/module member exists". A zip with a
+    // .mod next to a .8svx still plays the .mod. Two different questions -- what
+    // PLATFORM a format belongs to, vs which member the picker prefers.
+    REQUIRE(audioExt.count("8svx") == 1);
+    // Extensions we ship a plugin for but can't really play must NOT be picked:
+    // the picker would choose a member it is then guaranteed to fail on.
+    // (Only meaningful once the not-supported list is loaded; guard on that.)
+    if (auto* db = chipmachine::MusicDatabase::instance())
+        for (auto const& e : db->unsupportedExtensions()) {
+            INFO("not-supported ext " << e);
+            REQUIRE(songExt.count(e) == 0);
+            REQUIRE(audioExt.count(e) == 0);
+        }
+}
+
 // pouet YouTube captures classify by their "Youtube (<platform>)" tag. Tags that
 // name hardware resolve to it; tags that name none resolve to OTHER (the Other
 // Platforms drill), NOT to a YouTube-only bucket -- there is no such filter now.
@@ -350,6 +398,39 @@ TEST_CASE("YouTube captures classify by their pouet platform tag", "[music]")
     // Nothing should classify to the now-unused YOUTUBE byte.
     for (auto const& c : cases)
         REQUIRE(mdb.classifyFormat(c.fmt, yt) != YOUTUBE);
+}
+
+// filter_demozoo_archives.py --classify replaces the generic "Demoscene" label
+// on an archive row with the real format of the member inside it (peeked via an
+// HTTP range read of the archive's directory), written as the bare uppercase
+// extension -- the same vocabulary keygenmusic/botb use in that column. Every
+// label it can emit must resolve to a real platform: one that format_map can't
+// key would leave the row exactly as unclassified as before the pass ran.
+// The path stays the ARCHIVE (.zip), so the trailing .mod/.xm extension
+// correction must not fire -- the label alone has to carry it.
+TEST_CASE("demozoo archive labels from the member peek classify", "[music]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    const std::string zip =
+        "https://archive.scene.org/pub/parties/2010/breakpoint10/mmul/x.zip";
+    struct { const char* fmt; uint8_t plat; } cases[] = {
+        { "MOD", PROTRACKER },   // Amiga
+        { "XM", FASTTRACKER },   // IBM PC
+        { "IT", IMPULSETRACKER },
+        { "S3M", SCREAMTRACKER },
+        { "DBM", AMIGA },        // DigiBooster
+        // Rendered audio -> the MP3/OGG "no platform" filter.
+        { "MP3", MP3 },          { "OGG", OGG },
+        { "WAV", MP3 },          { "FLAC", MP3 },
+    };
+    for (auto const& c : cases) {
+        INFO("label " << c.fmt);
+        uint8_t b = mdb.classifyFormat(c.fmt, zip);
+        REQUIRE(b != UNKNOWN_FORMAT);
+        REQUIRE(b == c.plat);
+    }
 }
 
 // demozoo/scene.org ARCHIVE rows (.zip/.rar compo releases) carry the release
@@ -3970,6 +4051,67 @@ TEST_CASE("Vice Stereo Sidplayer", "[music][vice]")
 // resolves it while native rows fall through), landing on an extension the
 // format_map can't key either (.zip/.rar/.7z/.gz archives resolve to nothing).
 // Run against the live cache DB; prints the format strings worst affected.
+// Every label filter_demozoo_archives.py --classify can write, resolved through
+// the real classifier. Pass the labels as argv-free constants: the pass writes
+// the member's bare uppercase extension into the format column, and the path
+// stays the .zip, so this is exactly what the indexer will see. Any label
+// printing UNKNOWN_FORMAT leaves its rows reaching no filter, i.e. the pass
+// silently did nothing for them.
+// The archive picker's two extension sets, for tooling that must agree with the
+// app (filter_demozoo_archives.py reads this rather than hand-copying them --
+// hand-copies are exactly what drifted and made 129 live archives look dead).
+TEST_CASE("archive_picker_exts", "[.]")
+{
+    musix::ChipPlugin::createPlugins("data");
+    auto const& [song, audio] = chipmachine::MusicPlayerList::archiveExtensions();
+    for (auto const& e : song)
+        printf("song:%s\n", e.c_str());
+    for (auto const& e : audio)
+        printf("audio:%s\n", e.c_str());
+}
+
+TEST_CASE("peek_labels", "[.]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    const std::string zip = "https://archive.scene.org/pub/x/y.zip";
+    // Read the labels the pass ACTUALLY wrote, straight from demozoo.txt, rather
+    // than a hardcoded list that would drift from what the peek emits.
+    std::set<std::string> labels;
+    {
+        std::ifstream in("data/demozoo.txt");
+        std::string line;
+        while (std::getline(in, line)) {
+            auto c = utils::split(line, "\t");
+            if (c.size() < 5) continue;
+            // The pass writes a bare uppercase code; demozoo's own platform
+            // names ("Amiga", "ZX Spectrum") contain lowercase or spaces.
+            std::string f = c[2];
+            if (f.empty() || f.size() > 6) continue;
+            if (f.find(' ') != std::string::npos) continue;
+            if (std::any_of(f.begin(), f.end(),
+                            [](unsigned char ch) { return std::islower(ch); }))
+                continue;
+            labels.insert(f);
+        }
+    }
+    REQUIRE(labels.size() > 10); // sanity: we actually read the file
+    printf("\n--- peek label -> platform (%d distinct) ---\n", (int)labels.size());
+    for (auto const& lbl : labels) {
+        auto* l = lbl.c_str();
+        uint8_t b = mdb.classifyFormat(l, zip);
+        // platformScreenshotSlug() is the public byte->name view; it returns ""
+        // for the deliberately platform-less buckets (MP3/OGG/...), which is a
+        // valid answer here -- only UNKNOWN_FORMAT means "no filter at all".
+        std::string slug = MusicDatabase::platformScreenshotSlug(b);
+        printf("  %-6s -> byte %3d  %-24s %s\n", l, (int)b,
+               slug.empty() ? "(no-platform bucket)" : slug.c_str(),
+               b == UNKNOWN_FORMAT ? "*** NO FILTER ***" : "");
+    }
+    printf("------------------------------\n");
+}
+
 TEST_CASE("unclassified_songs", "[.]")
 {
     using namespace chipmachine;

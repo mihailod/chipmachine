@@ -1,6 +1,30 @@
-- 17,096 archive rows (16,649 .zip, 263 .lha, 108 .rar, 39 .7z, 33 .gz) — these need the Step 2 peek, waiting on your okay for the traffic.
+- .lha inside a zip — the app plays a top-level .lha, but the zip picker only sees foo.lha as a member and no plugin claims .lha (it's handled by Archive/magic, not a plugin), so nested archives aren't peeked. That's 3 rows; I'll leave them and flag it.
+download those 3 and classify them
+
+
+- can we peek inside all other lha rows? and classify like we did the zip ones?
+
+
+
+
+Let's now dig into these 2 statements you produced:
+
+- What's left : 29 undecidable, 39 .7z + 33 .tar.gz (not range-peekable), 21 .mid, and a handful of .prg/.flx/.mgt I won't guess at.
 
 - ~52 stragglers on a different gap: .mid (21), .nsf (4), .prg (3), .flx (3), .a2m (2), .mgt (2). These are extensions we support whose label is keyed but whose extension isn't — e.g. format_map knows "nintendo sound format" but not "nsf". Some are trivially right (.nsf → NES, .a2m → AdLib); others I won't guess at — those .MGT files sit under Fujiology DEMOS/FALCON/ paths, so calling them Sam Coupé Megatracker on extension alone could be wrong. Small enough to leave, worth a look if you want them.
+
+The goal is to enable trivial stuff and report on more difficult stuf.. In specific:
+
+- how feasible is to actually download those .7z and .tar.gz archives, open them and deduce by what's inside?
+- how feasible is to implement new plugins for those other formats
+- .prg i think is a game extension for some emulator (atari?) and that is probably not something we do (we play music)
+
+
+
+
+
+- now after all this work make sure every single song in the db belongs to something in the formats taxonomy and every one is playable
+
 
 
 

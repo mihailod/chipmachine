@@ -12,6 +12,7 @@
 
 #include <coreutils/environment.h>
 #include <musicplayer/src/chipplayer.h>
+#include <musicplayer/src/chipplugin.h>
 
 #include <zlib.h>
 
@@ -55,6 +56,45 @@ static bool gunzipToFile(const std::string& infile, const std::string& outfile)
     inflateEnd(&strm);
     if (ret != Z_STREAM_END) { remove(outfile.c_str()); return false; }
     return true;
+}
+
+// Would ANY plugin take this file? The same question MusicPlayer asks when
+// opening a loose file, so an archive member is judged exactly as it would be on
+// disk -- extension AND, for the plugins that check it, content.
+static bool anyPluginAccepts(const std::string& path)
+{
+    for (auto const& pl : musix::ChipPlugin::getPlugins())
+        if (pl->canHandle(path)) return true;
+    return false;
+}
+
+const std::pair<std::set<std::string>, std::set<std::string>>&
+MusicPlayerList::archiveExtensions()
+{
+    // Built ONCE from the registered plugins, so the archive track picker
+    // accepts exactly what the app plays as a loose file. Requires
+    // ChipPlugin::createPlugins() to have run.
+    static const std::pair<std::set<std::string>, std::set<std::string>> sets = [] {
+        std::set<std::string> song, audio;
+        for (auto const& pl : musix::ChipPlugin::getPlugins()) {
+            auto& dst = (pl->name() == "ffmpeg") ? audio : song;
+            for (auto const& e : pl->getSupportedExtensions())
+                dst.insert(toLower(e));
+        }
+        // A format a chip plugin also claims is a chip format, not a rendering
+        // (ffmpeg claims .8svx, but that is an Amiga IFF sample).
+        for (auto const& e : song)
+            audio.erase(e);
+        if (auto* db = MusicDatabase::instance())
+            for (auto const& e : db->unsupportedExtensions()) {
+                song.erase(e);
+                audio.erase(e);
+            }
+        LOGD("archive picker: %d song + %d audio extensions", (int)song.size(),
+             (int)audio.size());
+        return std::make_pair(song, audio);
+    }();
+    return sets;
 }
 
 MusicPlayerList::~MusicPlayerList()
@@ -866,28 +906,25 @@ void MusicPlayerList::playCurrent()
                 // we prefer; "audio" members (streamed renderings) are the
                 // fallback so a compo zip shipping a module + its .mp3 preview
                 // plays the module, while a pure-.mp3/.ogg zip still plays.
-                // Anything else (nfo/diz/txt/exe/sample.wav) is ignored.
-                static const std::set<std::string> songExt = {
-                    "vgm", "vgz", "nsf", "nsfe", "spc", "gbs", "hes", "kss",
-                    "sgc", "ay", "gym", "usf", "miniusf", "gsf", "minigsf",
-                    "psf", "minipsf", "2sf", "mini2sf", "ssf", "dsf", "sid",
-                    "psid", "sndh", "sap", "ym", "sc68", "pt3", "pt2", "pt1",
-                    "stc", "stp", "sqt", "asc", "vtx", "psc", "mod", "xm", "it",
-                    "s3m", "mtm", "669", "far", "okt", "med", "mmd0", "mmd1",
-                    "mmd2", "mmd3", "dbm", "digi", "ahx", "hvl", "thx", "dmf",
-                    "ptm", "stm", "ult", "amf", "psm", "mt2", "gt2", "dtm", "fc",
-                    "fc13", "fc14", "aon", "smod", "dw", "cust", "mptm", "dmu",
-                    "dmu2",   // dmu/dmu2 = Digital Mugician (UADE), in mirsoft zips
-                    // Zophar streamed-tier console rips played via vgmstream (see
-                    // db.lua "Zophar streamed"): PS1/PS2/Saturn/Dreamcast/Xbox/
-                    // Xbox360/Wii/GameCube/3DS/PS3/PSP. .musx is content-routed
-                    // (Archimedes "MUSX" magic vs PS2) by the plugins themselves.
-                    "adx", "asf", "at3", "aus", "bcwav", "dsp", "dvi", "eam",
-                    "genh", "lwav", "oma", "spsd", "ss2", "str", "xa", "musx",
-                    "adp" };   // adp = NGC DTK (GameCube streamed rips)
-                static const std::set<std::string> audioExt = {
-                    "mp3", "ogg", "flac", "wav", "mp2", "m4a", "aac", "opus",
-                    "wma" };   // wma = Xbox streamed rips (ffmpeg wmav2)
+                // Anything else (nfo/diz/txt/exe) is ignored.
+                //
+                // Both sets are DERIVED FROM THE REGISTERED PLUGINS, so the
+                // picker accepts exactly what the app plays as a loose file.
+                // These were hand-maintained lists and had silently drifted:
+                // a zip holding only an Organya .org (or .mdl/.mo3/.a2m/.ftm)
+                // reported "No playable tracks in archive" even though we ship a
+                // plugin that decodes it -- the same allowlist gap that hid the
+                // Zophar GameCube .adp / Xbox .wma rips, patched by hand back
+                // then. Deriving it means the next new plugin can't reintroduce
+                // the bug.
+                //   audio = ffmpeg's extensions (renderings -> fallback)
+                //   song  = every other plugin's (chip/console/tracker)
+                // minus not_supported_extensions.txt, which is where "a plugin
+                // claims it but we can't really play it" is recorded (.rns,
+                // .xrns, .bmx, .exe, ...) -- without subtracting it the picker
+                // would pick a member it is then guaranteed to fail on.
+                auto const& songExt = archiveExtensions().first;
+                auto const& audioExt = archiveExtensions().second;
                 std::string dir = f0.getName() + "_x";
                 utils::makedirs(dir);
                 std::vector<std::string> songs, audio;
@@ -904,7 +941,17 @@ void MusicPlayerList::playCurrent()
                         if (path_filename(m).rfind(".", 0) == 0) continue;
                         auto ef = a->extract(m);
                         auto ext = toLower(path_extension(m));
-                        if (songExt.count(ext) > 0)
+                        // The extension alone is too weak a test. archive.scene.org
+                        // ships a plain TEXT file literally named "scene.org" in
+                        // ~1800 of its zips, and OrgPlugin claims the .org
+                        // extension -- so an extension-only gate picks the info
+                        // file as the track and the zip fails to play. Ask the
+                        // plugins the same question they get for a loose file:
+                        // OrgPlugin::canHandle() checks the "Org-0x" magic and
+                        // correctly declines. The ext set stays as the cheap
+                        // pre-filter so we only pay for plausible members.
+                        if (songExt.count(ext) > 0 &&
+                            anyPluginAccepts(ef.getName()))
                             songs.push_back(ef.getName());
                         else if (audioExt.count(ext) > 0)
                             audio.push_back(ef.getName());
