@@ -533,7 +533,22 @@
 --     collection that already exists -- so editing `source` does nothing until
 --     the collection table is rebuilt. Hence the bump: it forces the reindex
 --     that repopulates the urls. Data-only change; no engine change.
-VERSION = 98;
+-- 99: rko (remix.kwed.org) and amigaremix now declare `ext = "mp3"`. Their paths
+--     carry no extension (rko: a bare remix id, all 5217 rows; amigaremix: 3 rows
+--     whose upstream url lost its ".mp3"), and neither list has an ext column, so
+--     internExt had nothing to intern: formatKey came out 0 and add_unique's
+--     "unknown format -> keep both" guard meant those rows could never fold
+--     against the same title+composer elsewhere -- the duplicate stayed visible in
+--     search. Engine change: parseStandard now honours a collection-level `ext` as
+--     the fallback when the template has no ext column, exactly as it already does
+--     for `format`/`composer`. Bump forces the reindex that repopulates song.ext.
+--     A survey of the other 40 collections found the remaining formatKey==0 rows
+--     are correct-as-is and deliberately left alone: pouet/manualpatch/radio
+--     (32538) are youtube + stream urls with no file to extension; modland (310,
+--     e.g. "SoundSmith/A.Fass/Coconut Champagne") and unexotica (6, filenames
+--     ending in a dot) are genuinely extensionless and span too many formats for
+--     any one default. None of them currently blocks a real fold.
+VERSION = 99;
 
 DB = {
 {
@@ -858,6 +873,16 @@ DB = {
 	utf8 = "no",
 	song_template = "path sidname sidsong title composer rating",
 	format = "MP3",
+	-- Every rko path is a bare remix id ("5136") with no extension, and rko.txt
+	-- carries no ext column, so internExt() had nothing to intern: formatKey came
+	-- out 0 and add_unique's "unknown format -> keep both" guard meant no rko song
+	-- could EVER fold against its twin elsewhere (all 5217 rows). Declared as a
+	-- collection-level default rather than a 7th rko.txt column on purpose: the
+	-- list is re-pulled from `remote_list` upstream, which has 6 columns, and
+	-- parseStandard drops any row with fewer fields than the template -- a 7-token
+	-- template would silently delete the whole collection on the next refresh.
+	-- Verified by fetch: all sampled ids return ID3/MPEG-frame magic.
+	ext = "mp3",
 	remote_list = "http://raw.githubusercontent.com/sasq64/cmds/master/rko.txt",
 	local_dir = "/opt/Music/rko",
 	color = 0xfffff
@@ -870,6 +895,14 @@ DB = {
 	song_list = "data/amiremix.txt",
 	song_template = "no path title composer",
 	format = "MP3",
+	-- Same formatKey==0 gap as rko, but from bad data rather than by design: 3 of
+	-- the 1711 upstream rows lost the ".mp3" off their url (amiremix.txt:1451
+	-- ".../soundspawner_-_-_amigaremix_03442"), so path_extension found nothing to
+	-- intern and those 3 could never fold. They still PLAY -- the host routes on
+	-- the slug and answers 206 audio/mpeg with or without the suffix -- so this is
+	-- a dedup fix, not a playback one. No-op for the other 1708, which already
+	-- derive "mp3" from the path; every row in the set is an mp3.
+	ext = "mp3",
 	remote_list = "http://raw.githubusercontent.com/sasq64/cmds/master/amiremix.txt",
 	local_dir = "/opt/Music/amiremix",
 	color = 0xfffff

@@ -769,6 +769,11 @@ bool MusicDatabase::parseStandard(
     //  templ = "title game composer format path meta";
     auto format = vars["format"];
     auto composer = vars["composer"];
+    // Collection-level `ext` default, mirroring `format`/`composer` above: used
+    // when the song list has no per-row ext column. Needed by sets whose path is
+    // an opaque id (rko: "5136"), where neither the ext column nor the path can
+    // yield a routing/dedup extension -- see the `ext` note on rko in db.lua.
+    auto defaultExt = vars["ext"];
     int columns = 2;
     if (templ != "") {
         formatIndex = gameIndex = composerIndex = extIndex = -1;
@@ -915,7 +920,7 @@ bool MusicDatabase::parseStandard(
             if (!unexotica) {
                 song = SongInfo(parts[pathIndex], gameField, titleField,
                                 composerField, formatField, metadata,
-                                extIndex >= 0 ? parts[extIndex] : "");
+                                extIndex >= 0 ? parts[extIndex] : defaultExt);
                 // `screenshot` template column -> per-song artwork stored verbatim
                 // (a full URL, e.g. an img.youtube.com thumbnail). Flows through
                 // the song.artwork DB column and is used directly by
@@ -958,7 +963,7 @@ bool MusicDatabase::parseStandard(
                 flush();
                 cur = SongInfo(parts[pathIndex], "", singleTitle, composerField,
                                formatField, metadata,
-                               extIndex >= 0 ? parts[extIndex] : "");
+                               extIndex >= 0 ? parts[extIndex] : defaultExt);
                 curValid = true;
                 groupGame = gameField;
                 groupComposer = composerField;
