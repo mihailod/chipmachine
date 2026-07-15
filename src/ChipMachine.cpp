@@ -2180,7 +2180,7 @@ void ChipMachine::removeToast()
     toastField.color = 0;
 }
 
-void ChipMachine::drawProgressBar(float frac)
+void ChipMachine::drawProgressBar(float frac, std::string const& label)
 {
     if (frac < 0.0f) frac = 0.0f;
     if (frac > 1.0f) frac = 1.0f;
@@ -2238,6 +2238,16 @@ void ChipMachine::drawProgressBar(float frac)
     screen.text(font, pct, cx - tsz.x * 0.5f,
                 barY + (barH - tsz.y) * 0.5f + progressPctYNudge * gscale,
                 textColor, tScale);
+
+    // Source tag of whatever is being worked on (the collection id during
+    // indexing), centred under the bar in the same smaller/dimmer style the
+    // search results use next to the format line.
+    if (!label.empty()) {
+        float lScale = 1.5f * gscale;
+        auto lsz = font.get_size(label, lScale);
+        screen.text(font, label, cx - lsz.x * 0.5f,
+                    barY + barH + 40.0f * gscale, 0xff30ff60, lScale);
+    }
 }
 
 void ChipMachine::render(uint32_t delta)
@@ -2366,7 +2376,7 @@ void ChipMachine::render(uint32_t delta)
         if (rowFrac > 1.0f) rowFrac = 1.0f;
         float frac = progressDbPhase * dbFrac +
                      (1.0f - progressDbPhase) * rowFrac;
-        drawProgressBar(frac);
+        drawProgressBar(frac, musicDatabase.getIndexingName());
     } else if (loadingToastShown && toastField.getText() != "" &&
                utils::getms() - loadingToastStartMs > 5000) {
         // Slow remote fetch/prebuffer (e.g. a large Zophar zip): once the wait

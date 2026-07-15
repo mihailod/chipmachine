@@ -360,6 +360,15 @@ public:
         return reindexingNow.load(std::memory_order_relaxed);
     }
 
+    // Collection id ("hvsc", "mirsoft", ...) the indexer is currently working
+    // on, published for the startup progress screen. Same tag the search results
+    // show next to the format line. Empty when nothing is in flight.
+    std::string getIndexingName() const
+    {
+        std::lock_guard lock{ indexNameMutex };
+        return indexName;
+    }
+
     SongInfo& lookup(SongInfo& song);
 
     std::vector<SongInfo> getProductSongs(uint32_t id);
@@ -660,6 +669,15 @@ private:
     // "Indexing database" toast/bar entirely instead of briefly flashing it on
     // slow machines where the cached-load window outlasts the toast delay.
     std::atomic<bool> reindexingNow{ false };
+    // Collection id currently being created/indexed (see getIndexingName).
+    // Written from the async index thread, read from the render thread.
+    mutable std::mutex indexNameMutex;
+    std::string indexName;
+    void setIndexingName(std::string const& n)
+    {
+        std::lock_guard lock{ indexNameMutex };
+        indexName = n;
+    }
 
     std::vector<Playlist> playLists;
     std::unordered_map<uint64_t, uint32_t> pathMap;

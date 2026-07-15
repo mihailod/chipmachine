@@ -1091,6 +1091,7 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
 
     reindexNeeded = true;
     reindexingNow.store(true, std::memory_order_relaxed);
+    setIndexingName(id);
 
     if (!local_dir.empty()) {
         if (!local_dir.is_absolute()) local_dir = workDir / local_dir;
@@ -3747,6 +3748,18 @@ void MusicDatabase::generateIndex()
     int unexoticaColl = collId("unexotica"); // Amiga games music (mp3 rips)
     int zxartColl = collId("zxart");         // ZX tunes rendered to ogg
 
+    // ROWID -> collection id, so the loop below can name the collection each row
+    // belongs to on the startup progress screen.
+    std::unordered_map<int, std::string> collNames;
+    try {
+        auto cq = db.query<int, std::string>("SELECT ROWID, id FROM collection");
+        while (cq.step()) {
+            auto [rowid, cid] = cq.get_tuple();
+            collNames[rowid] = cid;
+        }
+    } catch (...) {}
+    int lastNamedColl = -1;
+
     int count = 0;
     // int maxTotal = 3;
     int cindex = 0;
@@ -3798,6 +3811,13 @@ void MusicDatabase::generateIndex()
 
         tie(title, game, fmt, composer, path, collection, ext) =
             query.get_tuple();
+
+        // Name the collection under the progress bar as the rows roll past.
+        if (collection != lastNamedColl) {
+            lastNamedColl = collection;
+            auto cn = collNames.find(collection);
+            setIndexingName(cn != collNames.end() ? cn->second : std::string());
+        }
 
         // Real-format token for the search dedup key (see add_unique).
         formatKey.push_back(internExt(ext, path));
@@ -3936,6 +3956,7 @@ void MusicDatabase::generateIndex()
 
     writeIndex(apone::File{ indexPath, apone::File::Write });
 
+    setIndexingName("");
     reindexNeeded = false;
 }
 
@@ -3946,6 +3967,7 @@ void MusicDatabase::initFromLuaAsync(utils::path const& workDir)
     reindexingNow.store(false, std::memory_order_relaxed);
     indexedCount.store(0, std::memory_order_relaxed);
     dbCreatedCount.store(0, std::memory_order_relaxed);
+    setIndexingName("");
     initFuture = std::async(std::launch::async, [=]() {
         std::lock_guard lock{ dbMutex };
         if (!initFromLua(workDir)) {

@@ -196,8 +196,9 @@ public:
 
     // Draws a spectrum-coloured progress bar (fraction in [0,1]) centred just
     // below the current toast. Shared by the startup DB-indexing screen and the
-    // LOADING/BUFFERING download bar.
-    void drawProgressBar(float frac);
+    // LOADING/BUFFERING download bar. A non-empty `label` is drawn centred in a
+    // smaller, dimmer font just below the bar.
+    void drawProgressBar(float frac, std::string const& label = "");
 
     void setScrolltext(const std::string& txt);
     void shuffleSongs(int what, int limit);
