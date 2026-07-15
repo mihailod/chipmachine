@@ -2409,6 +2409,19 @@ void initFormats()
     format_map["ogg"] = OGG; // zxart ogg-fallback tunes (format string "OGG")
     format_map["iso-mpeg audio layer-2"] = MP3;
     format_map["iso-mpeg audio layer-3"] = MP3;
+    // Rendered-audio containers, keyed as EXTENSIONS for the fallback at the end
+    // of formatToByte. Mirrors ffmpegExtensions() in FFMPEGPlugin.cpp (the set we
+    // can actually decode) so anything we play as plain audio and that carries no
+    // usable format string lands in the MP3/OGG "no platform" filter rather than
+    // reaching no filter at all. Mostly demozoo rows tagged "Demoscene" whose
+    // file IS the audio: ~661 wav, ~312 flac, ~60 mp2, ~18 m4a, ~4 aif, ~4 opus.
+    // mp3/ogg are already keyed above.
+    // NOT "8svx": it is in ffmpegExtensions() but IFF 8SVX is an Amiga sample
+    // format, so it belongs to Amiga, not the rendered-audio bucket. Don't
+    // "complete" this list from ffmpegExtensions() without that exception.
+    for (char const* f : { "wav", "flac", "aiff", "aif", "mp2", "m4a", "aac",
+                           "mp4", "opus", "mpeg", "ac3", "wma" })
+        format_map[f] = MP3;
     format_map["hippel st coso"] = ATARI;   // Atari ST Hippel
     format_map["bbc micro"] = ACORN;        // Acorn 8-bit (close enough)
     // Battle of the Bits (build_botb.py) format labels not covered above.

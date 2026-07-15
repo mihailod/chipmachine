@@ -352,6 +352,47 @@ TEST_CASE("YouTube captures classify by their pouet platform tag", "[music]")
         REQUIRE(mdb.classifyFormat(c.fmt, yt) != YOUTUBE);
 }
 
+// demozoo/scene.org ARCHIVE rows (.zip/.rar compo releases) carry the release
+// platform as their format string and an extension format_map can't key. They
+// used to reach NO platform filter at all: format_map didn't know the platform
+// NAME either (only platformNameToByte did, which is the YouTube path), so they
+// fell through to the extension fallback, where ".zip" resolves to nothing.
+// The module rows next to them (.mod/.xm) must still be pulled to the platform
+// their FORMAT fixes, not the release tag -- guard both halves.
+TEST_CASE("demozoo archive rows classify by their release-platform tag", "[music]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    const std::string zip =
+        "https://archive.scene.org/pub/parties/2023/revision23/exe-music/x.zip";
+    struct { const char* fmt; const char* path; uint8_t plat; } cases[] = {
+        // The archive rows this fixes.
+        { "Windows", zip.c_str(), PC },
+        { "MS-Dos", zip.c_str(), PC },
+        { "Linux", zip.c_str(), PC },
+        { "macOS", zip.c_str(), MACOS },
+        { "Commodore Plus/4", zip.c_str(), PRG },
+        // Real hardware with no filter of its own -> Other Platforms. "Atari
+        // Lynx" also guards a MISFILE: the startsWith(f,"atari") fallback used
+        // to claim it for the Atari ST filter.
+        { "Atari Lynx", zip.c_str(), OTHER },
+        { "PICO-8", zip.c_str(), OTHER },
+        { "Browser", zip.c_str(), OTHER },
+        // The extension stays authoritative for module formats whose platform is
+        // fixed by the format itself, even when the release tag says otherwise.
+        { "MS-Dos", "https://media.demozoo.org/music/x.mod", PROTRACKER },
+        { "MS-Dos", "https://media.demozoo.org/music/x.xm", FASTTRACKER },
+        { "Windows", "https://media.demozoo.org/music/x.xm", FASTTRACKER },
+    };
+    for (auto const& c : cases) {
+        INFO("format " << c.fmt << " path " << c.path);
+        uint8_t b = mdb.classifyFormat(c.fmt, c.path);
+        REQUIRE(b != UNKNOWN_FORMAT); // the bug: matched by no filter at all
+        REQUIRE(b == c.plat);
+    }
+}
+
 // demozoo/scene.org MP3+OGG rips carry the source platform as their format
 // string rather than a codec. Those that name real hardware must resolve to it
 // instead of the "Other Platforms" / "Rendered Audio" buckets -- in particular

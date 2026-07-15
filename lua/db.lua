@@ -635,7 +635,21 @@
 --     data/misc/demozoo-songs.md's platform column is blank for exactly these).
 --     Deciding them needs the archive's member list; see cmtest
 --     unclassified_songs for the live count.
-VERSION = 105;
+-- 106: rendered-audio containers keyed as EXTENSIONS in format_map (wav, flac,
+--     aiff, aif, mp2, m4a, aac, mp4, opus, mpeg, ac3, wma -> MP3), mirroring
+--     ffmpegExtensions() in FFMPEGPlugin.cpp. These are demozoo rows tagged
+--     "Demoscene" whose file IS the audio (~661 wav, ~312 flac, ~60 mp2, ~18
+--     m4a, ~4 aif, ~4 opus): we could already DECODE them, but no format_map
+--     entry keyed the extension, so they reached no platform filter. They now
+--     land in the MP3/OGG "no platform" filter, which is the right answer --
+--     rendered audio with no hardware. Songs reaching no filter: 18213 -> 17148.
+--     Deliberately NOT "8svx", which ffmpegExtensions() lists but is an Amiga
+--     IFF sample format (belongs to Amiga, not the rendered bucket).
+--     The remaining 17148 are 17096 ARCHIVE rows (16649 .zip, 263 .lha, 108
+--     .rar, 39 .7z, 33 .gz) needing an inner-member peek, plus ~52 stragglers on
+--     extensions we support but never keyed in format_map (.nsf 4, .a2m 2,
+--     .mgt 2, .prg 3, .flx 3, .mid 21) -- a separate, smaller gap.
+VERSION = 106;
 
 DB = {
 {
