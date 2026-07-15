@@ -359,6 +359,18 @@ bool OpenMPTPlugin::canHandle(const std::string& n)
     // (and is registered later, so first-match routing keeps them there); MMD3
     // is unclaimed by any plugin, so route it here where it actually decodes.
     if (ext == "mmd3") { return true; }
+    // modland's "Digital Symphony/" dir is almost all ".dsym" (which libopenmpt
+    // advertises and plays), but 8 files from one composer dir carry the
+    // extension MISSPELLED -- 7 ".dsyn" and 1 ".dysn" -- so they routed nowhere
+    // and dead-ended in the GUI. The bytes are ordinary Digital Symphony: they
+    // hit Load_dsym's exact magic and all 8 decode to audible audio, so claim
+    // them here. Gate on the magic (Load_dsym's own Validate()) rather than the
+    // extension alone, so a misnamed non-DSym file Skips instead of hard-failing.
+    if (ext == "dsyn" || ext == "dysn") {
+        auto data = readFileBytes(n);
+        return data.size() >= 8 &&
+               std::memcmp(data.data(), "\x02\x01\x13\x13\x14\x12\x01\x0B", 8) == 0;
+    }
     // ".670" (modland "Composer 670 (CDFM)") is the demo/stripped layout of the
     // C67 format. libopenmpt's Load_c67 only reads the unpacked editor format, so
     // we convert .670 -> C67 in memory (see convert670ToC67 / fromFile) and let
@@ -450,6 +462,10 @@ std::set<std::string> OpenMPTPlugin::getSupportedExtensions() const
     // by converting .670 -> C67 (see convert670ToC67). Advertise so the host's
     // coverage/priority maps match what canHandle actually claims.
     res.insert("670");
+    // Digital Symphony under modland's misspelled extensions (see canHandle):
+    // libopenmpt advertises only "dsym", but the same loader decodes these.
+    res.insert("dsyn");
+    res.insert("dysn");
     return res;
 }
 

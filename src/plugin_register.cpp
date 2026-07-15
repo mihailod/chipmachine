@@ -41,6 +41,7 @@ extern "C" {
     void soundsmithplugin_register(); // Apple IIgs SoundSmith (bare song + .W wavebank) via Ensoniq 5503
     void ixsplugin_register();     // Ixalance (.ixs) via webixs (RE'd Shortcut Software synth tracker)
     void musxplugin_register();    // Acorn Archimedes Tracker (.musx) via libxmp arch_loader
+    void fnkplugin_register();     // Funktracker (.fnk, MS-DOS, magic "Funk") via libxmp fnk_loader
     void cocoplugin_register();    // Coconizer / Acorn Archimedes (.coco) via libxmp coco_loader
     void mgtplugin_register();     // Megatracker / Atari ST (.mgt) via libxmp mgt_loader
     void medplugin_register();     // Old MED / Amiga "Music Editor" (.med, magic MED\x02..\x04) via libxmp med2/3/4_loader
@@ -101,6 +102,7 @@ void register_plugins() {
     soundsmithplugin_register();
     ixsplugin_register();
     musxplugin_register();
+    fnkplugin_register();
     cocoplugin_register();
     mgtplugin_register();
     medplugin_register();

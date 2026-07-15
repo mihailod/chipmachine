@@ -314,6 +314,29 @@
 # trade than a routing regression. A companion-aware indexer rule (cf. test.cpp
 # shouldIgnoreFile's ".ip." pattern) is the right fix if it is ever worth doing.
 
+# liquid tracker (.liq, modland "Liquid Tracker/", 13 tunes; Nir Oren's mid-90s
+# DOS tracker, magic "Liquid Module:"). TESTED AND REJECTED -- do NOT wire up
+# libxmp's liq_loader. The loader exists and is already vendored under
+# zxtune/3rdparty/xmp, and a slice plugin (the musxplugin/fnkplugin pattern)
+# builds and plays: 10 of 13 tunes render audio. But its parse DESYNCS on 5 of
+# the 13, tripping libxmp's own asserts:
+#   liq_load.c:489  assert(b[] == "LDSS")            background/name/part of the sky
+#   liq_load.c:209  assert(event->note <= 107 ...)   free mind
+#   liq_load.c:443  assert(event->fxt <= 26)         free space
+# Those asserts are LIVE in our build -- the tree overrides CMAKE_C_FLAGS and
+# never defines NDEBUG (check: build.ninja FLAGS for any xmp slice has no
+# -DNDEBUG despite CONFIG=Release) -- so each of those 5 files abort()s the whole
+# app, not just the tune. Compiling the slice with -DNDEBUG "fixes" the abort but
+# is worse: assert(event->note <= 107) and assert(event->fxt <= 26) guard ARRAY
+# INDICES, so silencing them turns a clean abort into out-of-bounds reads with a
+# desynced parse (and background.liq renders pure silence either way). Same call
+# as .0cc above: partial playback is not worth a ~38% process-crash rate. Real
+# support = fixing libxmp's liq loader upstream (the 1.xx instrument/pattern
+# layout it mis-seeks), not wiring it in as-is. Re-open if libxmp fixes it.
+# NOTE: Funktracker (.fnk) from the same triage was the opposite result -- 7/7
+# tunes clean with asserts live -- and SHIPPED as fnkplugin.
+.liq
+
 # --- companion files indexed as standalone songs (2026-07-14) ---
 # These are support files, never tunes: they carry no sequence data and render
 # nothing on their own, but modland/AMP ship them next to the songs and the

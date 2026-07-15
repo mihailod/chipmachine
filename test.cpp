@@ -1399,6 +1399,7 @@ TEST_CASE("SunVox", "[music]") { testPlugin<musix::SunVoxPlugin>("testmus/sunvox
 TEST_CASE("SoundSmith", "[music]") { testPlugin<musix::SoundSmithPlugin>("testmus/soundsmith", ""); }
 TEST_CASE("Musx", "[music]") { testPlugin<musix::MusxPlugin>("testmus/musx", ""); }
 TEST_CASE("Coconizer", "[music]") { testPlugin<musix::CocoPlugin>("testmus/coco", ""); }
+TEST_CASE("Funktracker", "[music]") { testPlugin<musix::FnkPlugin>("testmus/fnk", ""); }
 TEST_CASE("MaxTrax", "[music]") { testPlugin<musix::MaxTraxPlugin>("testmus/maxtrax", ""); }
 TEST_CASE("STarKos", "[music]") { testPlugin<musix::SksPlugin>("testmus/sks", ""); }
 TEST_CASE("NerdTracker2", "[music]") { testPlugin<musix::NEDPlugin>("testmus/ned", ""); }
@@ -4004,7 +4005,8 @@ TEST_CASE("coverage", "[music]")
         {"NerdTracker2", "testmus/ned"},
         {"SCC-Musixx", "testmus/sccmusixx"},
         {"Sam Coupe (COP)", "testmus/cop"},
-        {"JayTrax", "testmus/jxs"}
+        {"JayTrax", "testmus/jxs"},
+        {"Funktracker", "testmus/fnk"}
     };
 
     // Plugins whose extensions are split across several testmus folders (one

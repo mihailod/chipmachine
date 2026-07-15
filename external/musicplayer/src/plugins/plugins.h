@@ -37,6 +37,7 @@
 #include "soundsmithplugin/SoundSmithPlugin.h"
 #include "ixsplugin/IXSPlugin.h"
 #include "musxplugin/MusxPlugin.h"
+#include "fnkplugin/FnkPlugin.h"
 #include "cocoplugin/CocoPlugin.h"
 #include "mgtplugin/MgtPlugin.h"
 #include "medplugin/MedPlugin.h"
