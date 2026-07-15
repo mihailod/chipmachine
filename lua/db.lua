@@ -790,7 +790,30 @@
 --     could have played the .mp3 preview instead of the module. The archive-picker
 --     test caught it; the rendered-audio bucket now keys on a set of decoder
 --     names, not the single name "ffmpeg".
-VERSION = 116;
+-- 117 parseCsdb only accepted release types ending in "Music Collection",
+--     "Diskmag" or "Demo", so all 22112 plain "C64 Music" releases -- the most
+--     music-relevant type CSDb has -- were parsed and thrown away ("C64 Music"
+--     does not end with "Music Collection"; it reads like an endsWith slip,
+--     since csdb2plist.py treats type=='C64 Music' as compo-worthy). Accepting
+--     them links 8093 more HVSC SIDs to a product: 31197 -> 39290 of 61123
+--     (51.1% -> 64.4% of HVSC grouped). MODEST in practice, though: the product
+--     search index skips single-song products (HAVING count(*) > 1), and 20650
+--     of the 20910 linked "C64 Music" releases are a single SID -- so the
+--     user-visible gain is 260 new searchable product rows and 331 SIDs that
+--     newly join a searchable product. The other ~20.6k products sit in the
+--     table unseen. GROUPING/METADATA ONLY -- the csdb
+--     prod_list adds no songs; every HVSCPath is matched against HVSC's
+--     pathMap and dropped if absent, so CSDb cannot introduce a playable SID.
+--     NOT a screenshot change: every product link targets hvsc (csdb, gb64) or
+--     modland (bitworld) songs, and both collections return from the offline
+--     <collection>_screenshots.txt branch of getSongScreenshots before the
+--     product/levenshtein branch below it. That branch -- and its "+7 if gb64"
+--     bias against a music release stealing a real game shot -- is therefore
+--     unreachable for every song that has a product, so a "C64 Music" release
+--     named after its tune CANNOT displace the gb64 game shot (verified: e.g.
+--     GAMES/M-R/Meta_Galactic_Llamas.sid takes its gb64 shot from
+--     data/hvsc_screenshots.txt). Bump forces a reindex.
+VERSION = 117;
 
 DB = {
 {

@@ -1,5 +1,3 @@
-- CSDB is an incremental database, it adds IDs as the time goes on. The original application claims to have all ids from 0 to 174978 and our downloaders: ( ls scripts/cs* scripts/csdb_merge.py scripts/csdb2plist.py) crawled the site from 174979 until the end (at the time of crawl). we never investigated the [0 - 174978] range, we trusted it on face value. can we verify that range, maybe just do HEAD to compare with what we already have and download only the missing ones (if any). so basically add option to run csdb script with HEAD request only from 1 to 174978 and join that file with the 174978+ one (compare for fun with the old one)? now crawling would take 14 hours (estimate based on the script work) but HEAD to check and only crawl what is missing in the current file in the 0-174978 segment might be faster. still, even HEAD we need to throttle to make sure we are not blocked or kill the site. investigate all this end report before doing any work/crawl.
-
 - resolve other youtube as much as possible into respective platforms
 
 - combine yt and ogg not classified into one?

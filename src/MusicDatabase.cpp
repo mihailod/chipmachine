@@ -168,8 +168,12 @@ bool MusicDatabase::parseCsdb(
             // LOGD("Screenshot %s", prod.screenshots);
         }
         prod.creator = group;
+        // "C64 Music" is the plain music-release type and the most music-
+        // relevant type CSDb has; only "C64 Music Collection" was matching
+        // here, so 22k releases were parsed and dropped.
         if ((endsWith(prod.type, "Music Collection") ||
-             endsWith(prod.type, "Diskmag") || endsWith(prod.type, "Demo")) &&
+             endsWith(prod.type, "Music") || endsWith(prod.type, "Diskmag") ||
+             endsWith(prod.type, "Demo")) &&
             rt >= 0) {
 
             /*for (auto const& s : i["Sids"].all("HVSCPath")) {
