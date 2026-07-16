@@ -1,11 +1,4 @@
 - add missing platform images
-GamePark GP2X
-GamePark GP32
-Pokemon Mini
-Spectravideo 3x8
-Thomson
-TI-8x (68k)
-TI-8x (Z80)
 
 PICO-8
 KC-85
@@ -14,7 +7,7 @@ TIC-80
 BK-0010-11M
 Vector-06c
 
-- alfa needed: Enterprise, Sharp MZ, raspberry pi, pinball
+
 
 
 ------------------------------
