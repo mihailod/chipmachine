@@ -1821,16 +1821,49 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
     titleIndex.search(title_query, tresult, searchLimit);
     // Order title matches by collection priority (higher first) so preferred
     // sources -- e.g. HVSC over remix collections -- surface first AND win the
-    // dedup (add_unique keeps the first-seen of any fold). Stable, so rows of
-    // equal priority keep their existing (index) order. Priority defaults to 0.
-    if (!collPriority.empty()) {
-        std::stable_sort(tresult.begin(), tresult.end(), [&](int a, int b) {
-            auto prio = [&](int idx) {
-                int coll = formats[idx] >> 8;
-                return coll < (int)collPriority.size() ? collPriority[coll] : 0;
-            };
-            return prio(a) > prio(b);
+    // dedup (add_unique keeps the first-seen of any fold). Priority is the PRIMARY
+    // key (defaults to 0). Since every collection now carries a distinct priority
+    // (db.lua), the SECONDARY key -- match quality -- only breaks ties WITHIN one
+    // collection, surfacing the closest title matches first (exact > prefix >
+    // word-start > substring). The `seq` field keeps it stable for full ties.
+    // Both keys are computed once per row (simplify() is not free) rather than in
+    // the comparator.
+    if (!tresult.empty()) {
+        std::string q = title_query;
+        SearchIndex::simplify(q);
+        struct Row { int index, prio, score, seq; };
+        std::vector<Row> rows;
+        rows.reserve(tresult.size());
+        int seq = 0;
+        for (int idx : tresult) {
+            int coll = formats[idx] >> 8;
+            int prio = coll < (int)collPriority.size() ? collPriority[coll] : 0;
+            int score = 0;
+            if (!q.empty()) {
+                std::string s = titleIndex.getString(idx);
+                SearchIndex::simplify(s);
+                if (s == q) {
+                    score = 4;                       // exact title
+                } else {
+                    auto pos = s.find(q);
+                    if (pos == std::string::npos)
+                        score = 0;                   // loose <=3-char bucket hit
+                    else if (pos == 0)
+                        score = 3;                   // prefix
+                    else if (s[pos - 1] == ' ')
+                        score = 2;                   // start of an inner word
+                    else
+                        score = 1;                   // substring
+                }
+            }
+            rows.push_back({ idx, prio, score, seq++ });
+        }
+        std::sort(rows.begin(), rows.end(), [](Row const& a, Row const& b) {
+            if (a.prio != b.prio) return a.prio > b.prio;
+            if (a.score != b.score) return a.score > b.score;
+            return a.seq < b.seq;
         });
+        for (size_t i = 0; i < rows.size(); i++) tresult[i] = rows[i].index;
     }
     for (int index : tresult) {
         if (!passesOtherDrill(index)) continue;
