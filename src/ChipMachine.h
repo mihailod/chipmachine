@@ -267,6 +267,7 @@ private:
         COMMAND_SCREEN = 2,
         ADVANCED_SCREEN = 3,
         FORMAT_SCREEN = 4,
+        DATABASE_SCREEN = 5,
     };
 
     static const uint32_t SHIFT = 0x10000;
@@ -304,7 +305,7 @@ private:
                                  15 * advancedHint.scale,
                              advancedTitle.pos.y };
     }
-    // Same treatment for the Formats (CTRL+TAB) screen's key hint.
+    // Same treatment for the Formats screen's key hint.
     void positionFormatHint()
     {
         formatHint.scale = formatTitle.scale * 0.65f;
@@ -312,10 +313,19 @@ private:
                                15 * formatHint.scale,
                            formatTitle.pos.y };
     }
+    // ...and the Databases screen's.
+    void positionDatabaseHint()
+    {
+        databaseHint.scale = databaseTitle.scale * 0.65f;
+        databaseHint.pos = { databaseTitle.pos.x + databaseTitle.getWidth() +
+                                 15 * databaseHint.scale,
+                             databaseTitle.pos.y };
+    }
     void updateLists()
     {
         positionAdvancedHint();
         positionFormatHint();
+        positionDatabaseHint();
         int y = resultFieldTemplate.pos.y + (15 * resultFieldTemplate.scale);
         int w = grappix::screen.width() - topLeft.x;
         int h = downRight.y - topLeft.y - y;
@@ -323,9 +333,12 @@ private:
         songList.setArea(grappix::Rectangle(topLeft.x, y, w, h));
         advancedArea = grappix::Rectangle(topLeft.x, y, w, h);
         advancedList.setArea(advancedArea);
-        // The Formats screen is a single scrolling column over the same area.
+        // The Formats and Databases screens are single scrolling columns over the
+        // same area.
         formatArea = grappix::Rectangle(topLeft.x, y, w, h);
         formatList.setArea(formatArea);
+        databaseArea = grappix::Rectangle(topLeft.x, y, w, h);
+        databaseList.setArea(databaseArea);
 
         // The help/command screen is one non-scrolling screen, so give it a
         // dedicated, taller area: title nudged up and the list running all the
@@ -380,7 +393,7 @@ private:
         // half-row gap is drawn before each (see renderCommand / matchingGap).
         // Add the first command of a group here to visually separate the sets.
         static const std::set<std::string> groupBreaks = { 
-            "show_platform_/_format_filters",
+            "cycle_platform/format/db_filters",
             "local_file_playback",
             "play_song",
             "Spectrum_Analyzer_Mode",
@@ -492,9 +505,22 @@ private:
     // entry has no hardware platform.
     void updateFilterLogo();
 
-    // Same idea for the Formats (CTRL+TAB) screen: the highlighted extension's
-    // per-extension screenshot (else its platform logo), centred behind the list.
+    // Same idea for the Formats screen: the highlighted extension's per-extension
+    // screenshot (else its platform logo), centred behind the list.
     void updateFormatLogo();
+
+    // ...and the Databases screen: the highlighted collection's modal-platform
+    // logo (or, for a platformless collection like a podcast, its remote artwork
+    // loaded via loadDatabaseArtwork), centred behind the list.
+    void updateDatabaseLogo();
+    // Load a remote collection-artwork URL into databaseLogoIcon asynchronously
+    // (same worker->render-thread handoff as loadSearchArtwork). databaseLogoUrl
+    // tracks the desired image so a late download for a scrolled-past row is
+    // discarded.
+    void loadDatabaseArtwork(const std::string& url);
+    // Set a bitmap on `icon` and size it to a centred box (half the screen,
+    // aspect-preserving) -- the shared fit used by the filter-screen logos.
+    void centerLogoIcon(Icon& icon, const image::bitmap& bm);
 
     utils::path workDir;
     // Resolved folder the scroller fonts were last loaded from; used to skip a
@@ -567,6 +593,13 @@ private:
     std::atomic<bool> pendingSearchLogo{ false };
     image::bitmap pendingSearchLogoBm;
     std::string pendingSearchLogoUrl;
+    // Same async pipeline for the Databases screen: a podcast (or other
+    // platformless) collection has no hardware logo, so its own artwork is
+    // fetched remotely and uploaded on the render thread.
+    std::string databaseLogoUrl;
+    std::atomic<bool> pendingDatabaseLogo{ false };
+    image::bitmap pendingDatabaseLogoBm;
+    std::string pendingDatabaseLogoUrl;
     // Logo of the highlighted platform/category on the TAB filter screen, drawn
     // dimmed and centred behind the two-column list. Textureless when the
     // highlighted entry has no hardware platform (e.g. "[No Filter]", MP3).
@@ -616,15 +649,25 @@ private:
     // from advancedTitle's width -- see positionAdvancedHint().
     TextField advancedHint;
 
-    // The Formats (CTRL+TAB) screen: a single scrolling column, one row per file
-    // extension ("EXT   count   name"), highest count first. Selecting one
-    // restricts search to that extension (MusicDatabase::setExtensionFilter).
+    // The Formats screen: a single scrolling column, one row per file extension
+    // ("EXT   count   name"), highest count first. Selecting one restricts search
+    // to that extension (MusicDatabase::setExtensionFilter).
     RenderSet formatScreen;
     grappix::VerticalList formatList;
     grappix::Rectangle formatArea;
     TextField formatTitle;
     TextField formatHint;
     Icon formatLogoIcon; // per-extension logo, centred behind the list
+
+    // The Databases screen: same single-column layout, one row per source
+    // collection ("id   count   name"), highest count first. Selecting one
+    // restricts search to that database (MusicDatabase::setDatabaseFilter).
+    RenderSet databaseScreen;
+    grappix::VerticalList databaseList;
+    grappix::Rectangle databaseArea;
+    TextField databaseTitle;
+    TextField databaseHint;
+    Icon databaseLogoIcon; // collection's modal-platform logo, behind the list
     // Header on the command/help screen (e.g. "ChipMachineAS 1.9 HELP MENU"),
     // drawn above the first entry; hidden while a command filter is being typed.
     TextField commandTitle;

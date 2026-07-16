@@ -46,36 +46,52 @@ void ChipMachine::setupCommands()
         searchUpdated = true;
     });
 
-    // TAB opens the platform screen; the sibling SHIFT+TAB "Formats" command is
-    // registered just below. Both are advertised on this one help row -- the name
-    // renders "SHOW PLATFORM / FORMAT FILTERS" and the seeded shortcut carries
-    // both keys -- while show_format_filters is hidden from the list (its shortcut
-    // is cleared in setupRules), so the pair reads as a single entry.
-    cmd("show_platform_/_format_filters", [=] {
-        // Remember only a real (non-filter) screen to return to, so switching
-        // between the two filter screens (TAB / SHIFT+TAB) doesn't nest.
-        if (currentScreen != ADVANCED_SCREEN && currentScreen != FORMAT_SCREEN)
+    // TAB cycles the three filter screens: (from anywhere else) Platforms ->
+    // Formats -> Databases -> back to Platforms. ESC exits to the screen you were
+    // on before entering the cycle. One help row / one key -- the name renders
+    // "CYCLE PLATFORM/FORMAT/DB FILTERS", the shortcut is seeded to "tab".
+    cmd("cycle_platform/format/db_filters", [=] {
+        Screen next;
+        if (currentScreen == ADVANCED_SCREEN)
+            next = FORMAT_SCREEN;
+        else if (currentScreen == FORMAT_SCREEN)
+            next = DATABASE_SCREEN;
+        else if (currentScreen == DATABASE_SCREEN)
+            next = ADVANCED_SCREEN;
+        else {
+            // Entering the cycle from a real screen: remember it for ESC.
             lastScreen = currentScreen;
-        // Ensure the per-format tune counts are ready (e.g. when the index was
-        // loaded from cache and the indexing-finished path never ran).
-        if (filterCounts.empty()) computeFilterCounts();
-        // Always open at the top level (reset any prior drill state).
-        if (activeFilterOptions != nullptr) setFilterLevel(nullptr, drillReturnIndex);
-        showScreen(ADVANCED_SCREEN);
+            next = ADVANCED_SCREEN;
+        }
+        // Per-screen setup, then show.
+        if (next == ADVANCED_SCREEN) {
+            // Ensure the per-format tune counts are ready (e.g. when the index was
+            // loaded from cache and the indexing-finished path never ran).
+            if (filterCounts.empty()) computeFilterCounts();
+            // Always open at the top level (reset any prior drill state).
+            if (activeFilterOptions != nullptr)
+                setFilterLevel(nullptr, drillReturnIndex);
+        } else if (next == FORMAT_SCREEN) {
+            // Size the list: row 0 is [no filter], then one row per group.
+            auto const& groups = musicDatabase.extensionGroups();
+            formatList.setTotal((int)groups.size() + 1);
+            if (formatList.selected() >= (int)groups.size() + 1)
+                formatList.select(0);
+        } else { // DATABASE_SCREEN
+            auto const& groups = musicDatabase.databaseGroups();
+            databaseList.setTotal((int)groups.size() + 1);
+            if (databaseList.selected() >= (int)groups.size() + 1)
+                databaseList.select(0);
+        }
+        showScreen(next);
     });
-    shortcut("tab / shift+tab");
+    shortcut("tab");
 
-    cmd("show_format_filters", [=] {
-        if (currentScreen != FORMAT_SCREEN && currentScreen != ADVANCED_SCREEN)
-            lastScreen = currentScreen;
-        // Build (lazily) and size the list: row 0 is [no filter], then one row
-        // per extension group (highest song-count first).
-        auto const& groups = musicDatabase.extensionGroups();
-        formatList.setTotal((int)groups.size() + 1);
-        if (formatList.selected() >= (int)groups.size() + 1)
-            formatList.select(0);
-        showScreen(FORMAT_SCREEN);
-    });
+    // No-op for LEFT/RIGHT on the single-column filter screens (Formats /
+    // Databases). Without a binding those keys fall through updateKeys' generic
+    // handler and get treated as "start a search", jumping to the search screen
+    // -- unexpected on a browse list. Bound (and hidden) in setupRules.
+    cmd("filter_list_noop", [=] {});
 
     // LEFT/RIGHT on the platform-filter screen hop between the two columns,
     // landing on the entry displayed on the SAME visual row. The list is laid out
@@ -154,9 +170,9 @@ void ChipMachine::setupCommands()
         showScreen(hasFilter ? SEARCH_SCREEN : MAIN_SCREEN);
     });
 
-    // ENTER on the Formats (CTRL+TAB) screen: apply the highlighted extension as
-    // a filter. Mirrors select_filter, but for the per-extension filter. Row 0 is
-    // the [no filter] entry, so group g sits at list index g+1.
+    // ENTER on the Formats screen: apply the highlighted extension as a filter.
+    // Mirrors select_filter, but for the per-extension filter. Row 0 is the
+    // [no filter] entry, so group g sits at list index g+1.
     cmd("select_format", [=] {
         int idx = formatList.selected();
         auto const& groups = musicDatabase.extensionGroups();
@@ -170,7 +186,7 @@ void ChipMachine::setupCommands()
             for (auto& ch : token) ch = (char)toupper((unsigned char)ch);
             selectedFilterName = token;
             activeFilterCount = grp.count;
-            mainFilterField.setText(token + "  (SHIFT+TAB to change)");
+            mainFilterField.setText(token + "  (TAB to change)");
         } else {
             // Row 0 ([no filter]) or an out-of-range index: clear the filter.
             musicDatabase.setExtensionFilter(-1);
@@ -181,6 +197,31 @@ void ChipMachine::setupCommands()
         iquery->invalidate();
         // Empty query so the search re-runs cleanly with the new filter (a small
         // filter pre-populates all its songs; see MusicDatabase::search).
+        searchField.setText("");
+        songList.select(0);
+        searchUpdated = true;
+        showScreen(hasFilter ? SEARCH_SCREEN : MAIN_SCREEN);
+    });
+
+    // ENTER on the Databases screen: restrict search to the highlighted source
+    // collection. Same shape as select_format; row 0 is [no filter].
+    cmd("select_database", [=] {
+        int idx = databaseList.selected();
+        auto const& groups = musicDatabase.databaseGroups();
+        bool hasFilter = (idx > 0 && (idx - 1) < (int)groups.size());
+        if (hasFilter) {
+            auto const& grp = groups[idx - 1];
+            musicDatabase.setDatabaseFilter(grp.rowid);
+            selectedFilterName = grp.name; // e.g. "HVSC"
+            activeFilterCount = grp.count;
+            mainFilterField.setText(grp.name + "  (TAB to change)");
+        } else {
+            musicDatabase.setDatabaseFilter(-1);
+            selectedFilterName = "";
+            activeFilterCount = 0;
+            mainFilterField.setText("");
+        }
+        iquery->invalidate();
         searchField.setText("");
         songList.select(0);
         searchUpdated = true;
@@ -465,12 +506,16 @@ void ChipMachine::setupCommands()
             searchUpdated = true;
             return;
         }
-        // A filter is active (reached via TAB or CTRL+TAB): ESC steps back up to
-        // whichever filter screen set it rather than jumping all the way out to
+        // A filter is active (reached via a TAB-cycle screen): ESC steps back up
+        // to whichever filter screen set it rather than jumping all the way out to
         // the main screen. Only an unfiltered search returns to MAIN.
         if (searchField.getText() == "" && musicDatabase.hasFormatFilter()) {
-            showScreen(musicDatabase.extensionFilter() >= 0 ? FORMAT_SCREEN
-                                                            : ADVANCED_SCREEN);
+            Screen back = ADVANCED_SCREEN;
+            if (musicDatabase.databaseFilter() >= 0)
+                back = DATABASE_SCREEN;
+            else if (musicDatabase.extensionFilter() >= 0)
+                back = FORMAT_SCREEN;
+            showScreen(back);
             return;
         }
         if (searchField.getText() == "")

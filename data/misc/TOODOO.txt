@@ -6,8 +6,6 @@
 
 - songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
 
-- and then we need another screen for databases (SHIFT+TAB). sorted by # of items in the database. also announced in scroll and help menu
-
 - .vt Vic-Tracker tunes are VIC-20 and unplayable today (no plugin claims .vt). need the Vic-Tracker replayer vendoring and plugin 
 
 - vic / pet emulators not implemented and are hidden but we have vice with emulators (only 3 songs -- revisit later note left). the format is .prg (shared with TED)

@@ -1419,9 +1419,10 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
                           allowedFormats[0] == ARCADE));
     if (otherFilterActive) subPlatformByte = allowedFormats[0];
     otherPlatformFilter = -1;
-    // A platform filter and the CTRL+TAB extension filter share the single
-    // title-index predicate slot, so activating one clears the other's state.
+    // The platform, extension, and database filters share the single title-index
+    // predicate slot, so activating one clears the others' state.
     extensionFilterGid = -1;
+    databaseFilterRowid = -1;
     if (allowedFormats.empty()) {
         titleIndex.setFilter();
         formatFilterActive = false;
@@ -1620,6 +1621,7 @@ void MusicDatabase::setExtensionFilter(int gid)
     filterHueRank.clear();
     filterHueCount = 0;
     extensionFilterGid = gid;
+    databaseFilterRowid = -1;
 
     if (gid < 0) {
         titleIndex.setFilter();
@@ -1653,6 +1655,116 @@ void MusicDatabase::setExtensionFilter(int gid)
     filterHueCount = (int)hues.size();
 
     // Pre-sort so the empty-query "list all" path just slices (see setFormatFilter).
+    sortCandidatesByTitle(filteredCandidates);
+}
+
+void MusicDatabase::buildDatabaseGroups()
+{
+    if (databaseGroupsBuilt) return;
+
+    // Songs occupy [0, productStartIndex); formats[i] >> 8 packs the collection
+    // ROWID, & 0xff the format byte.
+    uint32_t n = (productStartIndex > 0 &&
+                  productStartIndex <= (uint32_t)formats.size())
+                     ? productStartIndex
+                     : (uint32_t)formats.size();
+    if (n == 0) return; // not indexed yet -- retry on the next call
+
+    databaseGroupsBuilt = true;
+    databaseGroupList.clear();
+
+    // Count songs per collection and tally format bytes (for the modal colour),
+    // straight from the in-memory formats[] -- no table scan.
+    std::unordered_map<int, int> count;
+    std::unordered_map<int, std::unordered_map<uint8_t, int>> byteTally;
+    for (uint32_t i = 0; i < n; i++) {
+        int rowid = formats[i] >> 8;
+        count[rowid]++;
+        byteTally[rowid][formats[i] & 0xff]++;
+    }
+
+    // Collection id/name by ROWID.
+    std::unordered_map<int, std::pair<std::string, std::string>> meta;
+    try {
+        auto q = db.query<int, std::string, std::string>(
+            "SELECT ROWID, id, name FROM collection");
+        while (q.step()) {
+            auto [rowid, cid, cname] = q.get_tuple();
+            meta[rowid] = { cid, cname };
+        }
+    } catch (...) {}
+
+    for (auto const& kv : count) {
+        int rowid = kv.first;
+        uint8_t modal = 0;
+        int best = -1;
+        for (auto const& b : byteTally[rowid])
+            if (b.second > best) {
+                best = b.second;
+                modal = b.first;
+            }
+        std::string id, name;
+        auto it = meta.find(rowid);
+        if (it != meta.end()) {
+            id = it->second.first;
+            name = it->second.second;
+        }
+        if (name.empty()) name = id;
+        databaseGroupList.push_back({ rowid, id, name, kv.second, modal });
+    }
+    std::sort(databaseGroupList.begin(), databaseGroupList.end(),
+              [](DatabaseGroup const& a, DatabaseGroup const& b) {
+                  if (a.count != b.count) return a.count > b.count;
+                  return toLower(a.name) < toLower(b.name);
+              });
+}
+
+std::vector<MusicDatabase::DatabaseGroup> const& MusicDatabase::databaseGroups()
+{
+    if (!databaseGroupsBuilt) buildDatabaseGroups();
+    return databaseGroupList;
+}
+
+void MusicDatabase::setDatabaseFilter(int rowid)
+{
+    // Reset the sibling browse/filter states -- one filter drives the index.
+    podcastFilterActive = false;
+    podcastShowFilter = -1;
+    podcastShowList.clear();
+    otherFilterActive = false;
+    otherPlatformFilter = -1;
+    filterHueRank.clear();
+    filterHueCount = 0;
+    extensionFilterGid = -1;
+    databaseFilterRowid = rowid;
+
+    if (rowid < 0) {
+        titleIndex.setFilter();
+        formatFilterActive = false;
+        filteredCandidates.clear();
+        filteredCandidates.shrink_to_fit();
+        return;
+    }
+
+    titleIndex.setFilter([=](int index) {
+        // Songs only (products excluded); keep those in this collection.
+        if (index < 0 || index >= (int)productStartIndex) return true; // exclude
+        return (formats[index] >> 8) != rowid;                         // keep == rowid
+    });
+
+    // Same filtered-candidate + hue precompute + pre-sort as the other filters.
+    formatFilterActive = true;
+    filteredCandidates.clear();
+    uint32_t sz = titleIndex.size();
+    std::set<uint16_t> hues;
+    for (uint32_t i = 0; i < sz; i++) {
+        if (titleIndex.isFiltered(i)) continue;
+        filteredCandidates.push_back(i);
+        if (i < productStartIndex) hues.insert(formatHue[i]);
+    }
+    int rank = 0;
+    for (uint16_t h : hues) filterHueRank[h] = rank++;
+    filterHueCount = (int)hues.size();
     sortCandidatesByTitle(filteredCandidates);
 }
 

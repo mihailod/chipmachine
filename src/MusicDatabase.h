@@ -466,7 +466,7 @@ public:
     void setFilter(std::string const& filter, int type = 0);
     void setFormatFilter(std::vector<uint8_t> const& allowedFormats);
 
-    // --- CTRL+TAB "Formats" screen (per-extension filter) --------------------
+    // --- "Formats" screen (per-extension filter) -----------------------------
     // One browsable row per resolved file extension, sorted by song count. A row
     // is admitted if the extension is described in formats_descriptions.txt, or
     // has >= kExtGroupMinSongs songs and a clean token (so song-name fragments
@@ -488,6 +488,26 @@ public:
     // path works unchanged.
     void setExtensionFilter(int gid);
     int extensionFilter() const { return extensionFilterGid; }
+
+    // --- "Databases" screen (per-collection filter) --------------------------
+    // One browsable row per source collection (HVSC, Modland, ...), sorted by
+    // song count. Same stack as the extension filter -- setDatabaseFilter reuses
+    // the formatFilterActive machinery, so browse/prompt/ESC all work unchanged.
+    struct DatabaseGroup
+    {
+        int rowid;         // collection.ROWID (packed in formats[i] >> 8)
+        std::string id;    // short id ("hvsc")
+        std::string name;  // display name ("HVSC"); falls back to id when empty
+        int count;         // songs in this collection
+        uint8_t platform;  // modal format byte of its songs (for row colour)
+    };
+    // The database list (built lazily, then cached), highest count first. The
+    // vector index is the row's position; setDatabaseFilter takes the ROWID.
+    std::vector<DatabaseGroup> const& databaseGroups();
+    // Restrict search to one collection ROWID; pass -1 to clear. Mutually
+    // exclusive with the platform and extension filters (shares the slot).
+    void setDatabaseFilter(int rowid);
+    int databaseFilter() const { return databaseFilterRowid; }
 
 private:
     void initDatabase(utils::path const& workDir, Variables& vars);
@@ -734,6 +754,14 @@ private:
     // One scan of the song table: resolveExtension() per song, group, count, sort
     // by count, admit per the rule above. Fills extensionGroupList / extGroupOf.
     void buildExtensionGroups();
+
+    // Database-filter browse state (see databaseGroups() / setDatabaseFilter).
+    std::vector<DatabaseGroup> databaseGroupList; // by count desc; index == row
+    bool databaseGroupsBuilt = false;
+    int databaseFilterRowid = -1;                 // active collection ROWID, -1 = none
+    // Count songs per collection (from formats[] >> 8), fetch id/name and the
+    // modal platform byte, sort by count. Fills databaseGroupList.
+    void buildDatabaseGroups();
 
     // Order a candidate-index list alphabetically by title. Uses the precomputed
     // titleRank (an int compare per element, no strings) when it's ready, so even

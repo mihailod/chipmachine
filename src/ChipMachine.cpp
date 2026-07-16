@@ -658,7 +658,7 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     advancedList.setArea(advancedArea); // match the layout area (scissor clip)
     advancedScreen.add(&advancedList);
 
-    // --- Formats (CTRL+TAB) screen -------------------------------------------
+    // --- Formats screen ------------------------------------------------------
     // Highlighted-extension logo, dimmed and centred behind the list (added
     // first so it renders beneath the title and rows), same as the TAB screen.
     formatLogoIcon.color = 0x50ffffff;
@@ -674,7 +674,9 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     formatHint.setFont(font);
     formatHint.color = 0xffffff66;
     formatHint.visible(true);
-    formatHint.setText("      ARROWS navigate   ENTER apply   ESC go back");
+    // Single column -> UP/DOWN only (LEFT/RIGHT are ignored here; see the noop
+    // binding in setupRules). The 2-column Platforms screen keeps "ARROWS".
+    formatHint.setText("      UP/DOWN navigate   ENTER apply   ESC go back");
     formatScreen.add(&formatHint);
     positionFormatHint();
 
@@ -738,10 +740,82 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     formatList.setArea(listrec);
     formatScreen.add(&formatList);
 
+    // --- Databases screen ----------------------------------------------------
+    // Same single-column layout as Formats, one row per source collection.
+    databaseLogoIcon.color = 0x50ffffff;
+    databaseScreen.add(&databaseLogoIcon);
+
+    databaseTitle.setFont(font);
+    databaseTitle.color = 0xffffffaa;
+    databaseTitle.scale = searchField.scale;
+    databaseTitle.visible(true);
+    databaseTitle.setText("DATABASE FILTER");
+    databaseScreen.add(&databaseTitle);
+
+    databaseHint.setFont(font);
+    databaseHint.color = 0xffffff66;
+    databaseHint.visible(true);
+    databaseHint.setText("      UP/DOWN navigate   ENTER apply   ESC go back");
+    databaseScreen.add(&databaseHint);
+    positionDatabaseHint();
+
+    databaseList = VerticalList(
+        listrec, numLines,
+        [=](grappix::Rectangle& rec, int y, uint32_t index, bool hilight) {
+            auto const& groups = musicDatabase.databaseGroups();
+            // Row 0 is the clear-filter entry; collection g renders on row g+1.
+            bool noFilter = (index == 0);
+            if (!noFilter && (index - 1) >= groups.size()) return;
+            uint32_t c;
+            std::string id, cnt, name;
+            if (noFilter) {
+                c = 0xffffffff;
+                name = "[no filter, search all]";
+            } else {
+                auto const& g = groups[index - 1];
+                c = formatColor(g.platform);
+                id = g.id;
+                cnt = withCommas(g.count);
+                name = g.name;
+            }
+            if (hilight) {
+                Color target =
+                    (c == 0xffffffff) ? Color(0xff707070) : hilightColor;
+                static uint32_t markStartcolor = 0;
+                if (markStartcolor != c) {
+                    markStartcolor = c;
+                    markColor = c;
+                    markTween = Tween::make()
+                                    .sine()
+                                    .repeating()
+                                    .from(markColor, target)
+                                    .seconds(1.0);
+                    markTween.start();
+                }
+                c = markColor;
+            }
+            float scale = resultFieldTemplate.scale * 0.9f;
+            if (noFilter) {
+                grappix::screen.text(listFont, name, rec.x, rec.y, c, scale);
+                return;
+            }
+            // Three columns: id / count / display name (ids run a touch longer
+            // than extensions, so the columns sit slightly wider than Formats').
+            grappix::screen.text(listFont, id, rec.x, rec.y, c, scale);
+            grappix::screen.text(listFont, cnt, rec.x + rec.w * 0.18f, rec.y, c,
+                                 scale);
+            grappix::screen.text(listFont, name, rec.x + rec.w * 0.36f, rec.y, c,
+                                 scale);
+        });
+    databaseList.setTotal(0); // populated when the screen is opened
+    databaseList.setVisible(numLines);
+    databaseList.setArea(listrec);
+    databaseScreen.add(&databaseList);
+
     scrollText = "INITIAL_TEXT";
     scrollEffect.set("scrolltext",
         "Type to search . . UP+DOWN/ENTER navigate/play"
-        " . . TAB=platforms . . SHIFT+TAB=formats"
+        " . . TAB=cycle platform/format/db filters"
         " . . CTRL+H=help . . . "
     );
     starEffect.fadeIn();
@@ -849,6 +923,10 @@ void ChipMachine::layoutScreen()
     formatTitle.pos = { (float)topLeft.x, (float)topLeft.y };
     formatTitle.scale = searchField.scale;
     positionFormatHint();
+
+    databaseTitle.pos = { (float)topLeft.x, (float)topLeft.y };
+    databaseTitle.scale = searchField.scale;
+    positionDatabaseHint();
 
     // y is reclaimed (moved up) in updateLists(); x/scale here.
     commandTitle.pos = { (float)topLeft.x, topLeft.y * 0.90f };
@@ -1164,6 +1242,84 @@ void ChipMachine::updateFormatLogo()
     float x = (screen.width() - final_w) * 0.5f;
     float y = (screen.height() - final_h) * 0.5f;
     formatLogoIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
+}
+
+void ChipMachine::centerLogoIcon(Icon& icon, const image::bitmap& bm)
+{
+    icon.setBitmap(bm);
+    int bm_w = bm.width();
+    int bm_h = bm.height();
+    if (bm_w <= 0 || bm_h <= 0) return;
+    float w = screen.width() * 0.5f;
+    float h = screen.height() * 0.5f;
+    float d = h / bm_h;
+    float d2 = w / bm_w;
+    if (d2 < d) d = d2;
+    float final_w = bm_w * d;
+    float final_h = bm_h * d;
+    icon.setArea(grappix::Rectangle((screen.width() - final_w) * 0.5f,
+                                    (screen.height() - final_h) * 0.5f, final_w,
+                                    final_h));
+}
+
+void ChipMachine::updateDatabaseLogo()
+{
+    // Preview the highlighted collection's logo behind the list.
+    if (currentScreen != DATABASE_SCREEN) {
+        databaseLogoIcon.clear();
+        databaseLogoUrl = "";
+        return;
+    }
+    auto const& groups = musicDatabase.databaseGroups();
+    // Row 0 is [no filter] (no logo); collection g is at list index g+1.
+    int i = databaseList.selected() - 1;
+    if (i < 0 || i >= (int)groups.size()) {
+        databaseLogoIcon.clear();
+        databaseLogoUrl = "";
+        return;
+    }
+    auto const& g = groups[i];
+    // Podcasts (and other platformless collections) have no hardware logo -- show
+    // the collection's own artwork instead, loaded remotely, exactly as the
+    // search screen previews a podcast show.
+    if (g.platform == PODCAST) {
+        loadDatabaseArtwork(musicDatabase.getPodcastShowArtwork(g.rowid));
+        return;
+    }
+    databaseLogoUrl = ""; // cancel any pending remote load from a prior row
+    std::string slug = MusicDatabase::platformScreenshotSlug(g.platform);
+    const image::bitmap* bm = pickPlatformOrExtLogo("", slug, "");
+    if (!bm) {
+        databaseLogoIcon.clear();
+        return;
+    }
+    centerLogoIcon(databaseLogoIcon, *bm);
+}
+
+void ChipMachine::loadDatabaseArtwork(const std::string& url)
+{
+    if (url.empty() || noImages) {
+        databaseLogoIcon.clear();
+        databaseLogoUrl = "";
+        return;
+    }
+    if (url == databaseLogoUrl) return; // already showing / fetching this one
+    databaseLogoUrl = url;
+    webutils::Web::getInstance().getFile(url, [this, url](utils::File f) {
+        if (databaseLogoUrl != url) return; // cursor moved to another row
+        if (!f) return;
+        try {
+            auto bm = image::load_image(f.getName());
+            for (auto& px : bm)
+                if ((px & 0xffffff) == 0) px &= 0xffffff; // key out pure black
+            pendingDatabaseLogoBm = bm;
+            pendingDatabaseLogoUrl = url;
+            // Hand to the render thread (GL upload happens there; see update()).
+            pendingDatabaseLogo.store(true, std::memory_order_release);
+        } catch (image::image_exception& e) {
+            LOGD("Failed to load database artwork %s", url.c_str());
+        }
+    });
 }
 
 // Positions the idle-splash picture centred on the screen, scaled to fill
@@ -2225,6 +2381,15 @@ void ChipMachine::update()
         }
     }
 
+    // Same for a Databases-screen collection artwork download.
+    if (pendingDatabaseLogo.exchange(false, std::memory_order_acquire)) {
+        if (currentScreen == DATABASE_SCREEN &&
+            pendingDatabaseLogoUrl == databaseLogoUrl &&
+            pendingDatabaseLogoBm.width() > 0) {
+            centerLogoIcon(databaseLogoIcon, pendingDatabaseLogoBm);
+        }
+    }
+
     if (playerState == MusicPlayerList::Error) {
         player.stop();
         currentTween.finish();
@@ -2589,6 +2754,8 @@ void ChipMachine::render(uint32_t delta)
         advancedScreen.render(screenptr, delta);
     } else if (currentScreen == FORMAT_SCREEN) {
         formatScreen.render(screenptr, delta);
+    } else if (currentScreen == DATABASE_SCREEN) {
+        databaseScreen.render(screenptr, delta);
     } else {
         // Help/command screen: the same animated platform-logo transitions as the
         // splash, but dimmed (same alpha as the platform-filter screen's logo) and
