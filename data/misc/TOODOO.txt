@@ -1,3 +1,17 @@
+key	line	what's there
+.hipc	136 / 920	Same format, two different write-ups. 920 wins; 136 is dead.
+.mkii	208 / 932	Same format, two different write-ups. 932 wins; 208 is dead.
+.m	723 / 816	Two different formats. 816 (Ultima VI) wins, so 67 PMD songs get the wrong description.
+
+
+
+-----------------
+
+
+- add missing platform images
+
+- finish taxonomy : pet? ql?
+
 - announce CTRL+TAB format filtering in scroll and Help Menu
 
 - CHECK THIS: One small consequence worth knowing now: the top-level Atari row has no logo of its own — updateFilterLogo makes a group borrow its first child's logo, so Atari would display Atari XL-XE.png. That's how Nintendo already behaves (it borrows the NES logo), so it's consistent rather than broken. If you'd rather it show a proper Atari house logo, drop in an Atari.png and I'll add a small group-logo override in step 3 — say the word and I'll note it.
