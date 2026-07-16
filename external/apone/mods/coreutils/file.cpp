@@ -3,6 +3,9 @@
 
 #include <sys/stat.h>
 
+#include <cerrno>
+#include <cstring>
+
 //#include "log.h"
 #define LOGD(x, ...)
 #ifdef _WIN32
@@ -159,8 +162,12 @@ void File::open(const Mode mode)
             // makedirs(fileName);
             writeFP = fopen(fileName.c_str(), "wb");
             if (!writeFP)
-                throw io_exception{"Could not open file'"s + fileName +
-                                   "' for writing"s};
+                // Include the errno reason: the caller (e.g. the curl download
+                // callback) can only report what the message carries, and
+                // "could not open" alone does not distinguish a missing
+                // directory from a too-long name or an fd exhaustion.
+                throw io_exception{"Could not open file '"s + fileName +
+                                   "' for writing: "s + strerror(errno)};
         }
     } else
         throw io_exception{"Can't open file with no mode"};

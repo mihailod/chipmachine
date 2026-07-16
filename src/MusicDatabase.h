@@ -417,6 +417,8 @@ public:
 
     void addToPlaylist(std::string const& plist, SongInfo const& song);
     void removeFromPlaylist(std::string const& plist, SongInfo const& toRemove);
+    // Drop every song from `plist` and persist the (now empty) list to disk.
+    void clearPlaylist(std::string const& plist);
     std::vector<SongInfo>& getPlaylist(std::string const& plist);
 
     void setFilter(std::string const& filter, int type = 0);

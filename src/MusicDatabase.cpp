@@ -4378,6 +4378,19 @@ void MusicDatabase::addToPlaylist(std::string const& plist,
     }
 }
 
+void MusicDatabase::clearPlaylist(std::string const& plist)
+{
+    for (auto& pl : playLists) {
+        if (pl.name == plist) {
+            pl.songs.clear();
+            // save() rewrites the file from `songs`, so an empty list truncates
+            // it -- the clear survives a restart.
+            pl.save();
+            break;
+        }
+    }
+}
+
 void MusicDatabase::removeFromPlaylist(std::string const& plist,
                                        SongInfo const& toRemove)
 {

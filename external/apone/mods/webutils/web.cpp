@@ -256,15 +256,35 @@ size_t WebJob::writeFunc(void *ptr, size_t size, size_t x, void *userdata) {
 		return -1;
 	}
 
-	if(job->targetFile) {
-		job->targetFile.write(static_cast<uint8_t*>(ptr), size);
-	} else if(job->streamCb) {
-		if(!job->streamCb(*job, static_cast<uint8_t*>(ptr), size))
-			return -1;
-	} else {
-		unsigned pos = job->data.size();
-		job->data.resize(pos + size);
-		memcpy(&job->data[pos], ptr, size);
+	// libcurl calls this from its own C stack, so nothing here may throw: an
+	// escaping exception unwinds through C frames straight into std::terminate
+	// and aborts the whole app. File::write() DOES throw (io_exception) when the
+	// cache file cannot be opened, which killed ChipMachine mid-shuffle. Contain
+	// it and report a short write instead -- curl turns that into
+	// CURLE_WRITE_ERROR, failing just this transfer, so the song reports an error
+	// and playback carries on.
+	try {
+		if(job->targetFile) {
+			job->targetFile.write(static_cast<uint8_t*>(ptr), size);
+		} else if(job->streamCb) {
+			if(!job->streamCb(*job, static_cast<uint8_t*>(ptr), size))
+				return -1;
+		} else {
+			unsigned pos = job->data.size();
+			job->data.resize(pos + size);
+			memcpy(&job->data[pos], ptr, size);
+		}
+	} catch(const std::exception &e) {
+		// The message carries the offending path and the errno reason (see
+		// File::open) -- the only record of WHY, since the throw used to abort
+		// before anything could report it.
+		LOGE("Download write failed, aborting transfer of '%s': %s", job->url,
+		     e.what());
+		return 0;
+	} catch(...) {
+		LOGE("Download write failed, aborting transfer of '%s': unknown error",
+		     job->url);
+		return 0;
 	}
 	return size;
 }

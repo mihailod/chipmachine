@@ -23,6 +23,7 @@
 #include <tween/tween.h>
 
 #include <cstdint>
+#include <random>
 #include <cstdio>
 #include <functional>
 #include <map>
@@ -175,12 +176,17 @@ public:
     void update();
     void render(uint32_t delta);
 
+    // Order matters: toast() indexes its colour table with these, and the STICKY
+    // kinds (which stay up until replaced instead of fading) must come last.
     enum ToastType
     {
         WHITE,
         ERROR,
         NORMAL,
-        STICKY
+        STICKY,
+        // Sticky AND saturated red: for a prompt that is asking before doing
+        // something destructive, so it must neither fade nor look routine.
+        STICKY_ALERT
     };
 
     enum Shuffle
@@ -204,9 +210,37 @@ public:
     void shuffleSongs(int what, int limit);
 
     void shuffleFavorites();
+    // Wipes the favorites list and syncs the heart icon. Only ever called once a
+    // pendingFavoritesClear confirmation has been answered with Y.
+    void clearFavorites();
+    // Set while CLEAR FAVORITES LIST waits for its confirmation. The next key
+    // press resolves it -- Y wipes the list, anything else cancels -- and is
+    // swallowed either way, so it cannot also fire its own binding.
+    bool pendingFavoritesClear = false;
+    // The song a shuffle seeds itself from: the highlighted row while browsing
+    // search results, otherwise whatever is playing.
+    SongInfo shuffleSeed();
+    // True when `composer` is one of the database's markers for "nobody knows who
+    // wrote this" rather than an actual name.
+    static bool isUnknownComposer(std::string const& composer);
     MusicPlayerList& musicPlayer() { return player; }
     void playSongs(std::vector<SongInfo> const& songs);
     void playNamed(const std::string& what) { namedToPlay = what; }
+
+    // The songs of the current shuffle in play order, or empty when the user is
+    // not shuffling. Retained because the play queue is destructive -- a song is
+    // popped off it as it starts -- so this list is the only record of what has
+    // already played, and hence the only way CTRL+LEFT can step back into it.
+    std::vector<SongInfo> shuffleList;
+    // Index into shuffleList of the song playing now. Derived from what is left
+    // in the queue rather than counted, so songs the player advances to on its
+    // own (when a tune ends) need no bookkeeping. -1 when not shuffling.
+    int currentShuffleIndex() const;
+    // (Re)start the shuffle at `index`, queueing everything after it.
+    void playShuffleFrom(int index);
+    // The generator behind every shuffle (defined alongside them in
+    // ChipMachine_keys.cpp), shared so each one is drawn from the same stream.
+    static std::mt19937& shuffleRng();
 
 private:
     // Append the now-playing format info ("Platform - Name (EXT) ... <trackers>
@@ -327,9 +361,10 @@ private:
             "local_file_playback",
             "play_song",
             "Spectrum_Analyzer_Mode",
-            "add_current_favorite",
-            "next_composer",
-            "random_shuffle",
+            "favor/unfavor_playing_song",
+            "shuffle_all_songs_randomly",
+            // Splits the next/prev steppers off from the shuffle set itself.
+            "next_/_prev_shuffle_song",
         };
         // Only surface commands that have a key binding -- one with an empty
         // shortcut has no way to be triggered, so there is no point listing it.

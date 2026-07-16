@@ -1554,10 +1554,26 @@ void ChipMachine::loadExtensionScreenshots()
     // also has NO platform logo -- i.e. the ones the platform fallback can't
     // cover, so they would land on the app icon. Extensions covered by a
     // platform logo are intentionally omitted.
+    //
+    // Only extensions we can actually DECODE are worth reporting. A handful of
+    // collections store a junk ext: scene.org rows are keyed on an archive
+    // member that is a README/cover image, or on a bare-named module whose
+    // "extension" is really the song title ("olut", "braxen", "1992"). Those are
+    // an indexer bug, not a missing logo -- no <title>.png could ever cover them
+    // -- and they buried the real misses under ~76 lines of noise. Judge the ext
+    // with the plugin-derived set the archive picker uses (song + audio), i.e.
+    // exactly what the app plays as a loose file, so a new plugin's format shows
+    // up here automatically instead of needing a second hand-kept list.
+    auto const& [songExt, audioExt] = MusicPlayerList::archiveExtensions();
     std::vector<std::string> uncovered;
+    size_t undecodable = 0;
     for (auto& [ext, plats] : musicDatabase.extensionPlatforms()) {
         if (extensionShots.count(ext))
             continue; // already has its own screenshot
+        if (!songExt.count(ext) && !audioExt.count(ext)) {
+            undecodable++;
+            continue; // no decoder -> a bogus/undecodable ext, not a logo gap
+        }
         bool coveredByPlatform = false;
         for (auto& p : plats)
             if (!p.empty() && platformShots.count(p)) {
@@ -1567,6 +1583,9 @@ void ChipMachine::loadExtensionScreenshots()
         if (!coveredByPlatform)
             uncovered.push_back(ext);
     }
+    if (undecodable > 0)
+        LOGD("%d uncovered extension(s) have no decoder; not reported as logo "
+             "gaps (bogus ext in the index)", (int)undecodable);
     if (!uncovered.empty()) {
         std::string list;
         for (auto& e : uncovered)
@@ -2168,20 +2187,27 @@ void ChipMachine::update()
 
 void ChipMachine::toast(std::string const& txt, ToastType type)
 {
+    // One entry per ToastType, in enum order.
     static std::vector<Color> colors = {
-        0xffffff, 0xff8888, 0x55aa55
+        0xffffff, // WHITE
+        0xff8888, // ERROR        -- soft red
+        0x55aa55, // NORMAL
+        0xffffff, // STICKY
+        0xff0000, // STICKY_ALERT -- saturated red
     };
 
     toastField.setText(txt);
     int tlen = toastField.getWidth();
     toastField.pos.x = topLeft.x + ((downRight.x - topLeft.x) - tlen) / 2;
-    toastField.color = colors[(int)type % 3];
+    toastField.color = colors[static_cast<size_t>(type) % colors.size()];
 
     Tween::make()
         .to(toastField.color.alpha, 1.0)
         .seconds(0.25)
         .onComplete([=]() {
-            if ((int)type < 3)
+            // The STICKY kinds stay up until something replaces them; everything
+            // else fades out on its own.
+            if (type != STICKY && type != STICKY_ALERT)
                 Tween::make()
                     .to(toastField.color.alpha, 0.0)
                     .delay(1.0)
