@@ -470,6 +470,36 @@ TEST_CASE("Falcon sample trackers split from the Atari ST byte", "[database]")
     REQUIRE(mdb.classifyFormat("Atari ST", "http://x/a.gt2") == PCTRACKER);
 }
 
+// The three Japanese FM computers were one JPFM byte behind a combined
+// "PC-98/X68000/FM Towns" row; they now split into a "Japanese Computers" drill.
+// Both classification paths (driver format string AND platform tag) must route
+// each machine to its own byte, and the .mdx/.s98/pmd EXTENSION fallback too.
+TEST_CASE("Japanese FM computers split into three bytes", "[database]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    const std::string p = "http://x/a.zip"; // neutral path (no telltale ext)
+    // Driver format strings.
+    REQUIRE(mdb.classifyFormat("FM sound driver (FMP)", p) == JPFM);   // PC-98
+    REQUIRE(mdb.classifyFormat("PMD", p) == JPFM);                     // PC-98
+    REQUIRE(mdb.classifyFormat("S98", p) == JPFM);                     // PC-98
+    REQUIRE(mdb.classifyFormat("MDX", p) == JPX68000);                 // X68000
+    REQUIRE(mdb.classifyFormat("Euphony", p) == JPFMTOWNS);            // FM Towns
+    // Platform tags group by vendor: NEC -> PC-98, Sharp -> X68000,
+    // Fujitsu -> FM Towns.
+    REQUIRE(mdb.classifyFormat("NEC PC-98", p) == JPFM);
+    REQUIRE(mdb.classifyFormat("NEC PC-88", p) == JPFM);
+    REQUIRE(mdb.classifyFormat("Sharp X68000", p) == JPX68000);
+    REQUIRE(mdb.classifyFormat("Sharp X1", p) == JPX68000);
+    REQUIRE(mdb.classifyFormat("FM Towns", p) == JPFMTOWNS);
+    REQUIRE(mdb.classifyFormat("Fujitsu FM-7", p) == JPFMTOWNS);
+    // Extension fallback: a bare .mdx with no useful format string is X68000
+    // (the mdx/s98/pmd format_map keys double as extension keys).
+    REQUIRE(mdb.classifyFormat("", "http://x/song.mdx") == JPX68000);
+    REQUIRE(mdb.classifyFormat("", "http://x/song.s98") == JPFM);
+}
+
 // The Other/Arcade drill groups on the canonical sub-platform name, so this is
 // what decides that "Youtube (Oric)" and "Oric" are ONE row rather than two.
 // No "Youtube (<platform>)" row may survive it (rule reversed 2026-07-15: a
@@ -500,6 +530,7 @@ TEST_CASE("sub-platform names fold captures onto their hardware", "[database]")
         { "Youtube (Mobile Phone)", "Mobile" },
         { "Youtube (Android)", "Mobile" },
         { "Mobile", "Mobile" },
+        { "Youtube (VIC 20)", "Commodore VIC-20" },
         // Arcade strings carry no wrapper and no comma: untouched, so the
         // vendor rules in buildSubPlatforms still see them verbatim.
         { "Arcade (Capcom)", "Arcade (Capcom)" },
@@ -637,8 +668,8 @@ TEST_CASE("VGMRips format labels classify to a platform", "[music]")
         { "PC Engine", HES },             { "Neo Geo", ARCADE },
         { "Neo Geo Pocket", OTHER },      { "WonderSwan", WONDERSWAN },
         { "MSX", MSX },                   { "NEC PC-98", JPFM },
-        { "NEC PC-88", JPFM },            { "Sharp X68000", JPFM },
-        { "FM Towns", JPFM },             { "IBM PC", PC },
+        { "NEC PC-88", JPFM },            { "Sharp X68000", JPX68000 },
+        { "FM Towns", JPFMTOWNS },        { "IBM PC", PC },
         { "Atari ST", ATARI },            { "ZX Spectrum", SPECTRUM },
         { "Commodore 64", SID },          { "Apple IIgs", APPLE },
         { "Arcade", ARCADE },             { "Arcade (Capcom)", ARCADE },

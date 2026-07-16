@@ -92,7 +92,11 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
         { "Sega 16bit/32X/Saturn", { SEGA, MEGADRIVE, SATURN } },
         { "Sega Dreamcast", { DREAMCAST } },
     }, "Sega" },
-    { "PC-98/X68000/FM Towns", { JPFM } },
+    { "Japanese Computers", {}, {
+        { "PC-98", { JPFM } },
+        { "X68000", { JPX68000 } },
+        { "FM Towns", { JPFMTOWNS } },
+    }, "Japanese Computers" },
     { "PC Engine/TurboGrafx-16", { HES } },
     { "WonderSwan", { WONDERSWAN } },
     { "Arcade", { ARCADE } },
@@ -153,6 +157,7 @@ static uint32_t formatColor(int f)
         { YOUTUBE, 0xffff0000 },
         { PODCAST, 0xff22bbff },
         { PC, 0xffcccccc },      { JPFM, 0xffff66cc },
+        { JPX68000, 0xffff8844 }, { JPFMTOWNS, 0xffcc66ff },
         { ADPLUG, 0xffe8c040 },
         { AMIGA, 0xff6666cc },
         { SCREAMTRACKER, 0xffaaccee }, { PCTRACKER, 0xffaaccee },
@@ -1283,12 +1288,8 @@ void ChipMachine::loadSplashScreenshots()
         if (seen.insert(fingerprint(bm)).second)
             splashShots.emplace_back(kind + key, bm);
     };
-    // Platform logos that are deliberately excluded from the splash. The
-    // "PC-98 - X68000" logo is a composite of three systems in one image (used
-    // elsewhere on purpose); those platforms are already shown individually, so
-    // it would just look like a redundant collage here.
+    // Platform logos that are deliberately excluded from the splash.
     static const std::set<std::string> splashExcludePlatforms = {
-        "PC-98 - X68000",
         // Generic catch-all bucket, not a specific "venerable retro platform".
         "Other",
     };
@@ -1708,7 +1709,15 @@ void ChipMachine::loadPlatformScreenshots()
     // (and so no slug) -- the file is named after the drill row itself.
     std::vector<std::string> missingSub;
     for (auto& name : MusicDatabase::subPlatformNames())
-        if (!findPlatformShot(name)) missingSub.push_back(name);
+        if (!findPlatformShot(name)) {
+            // Report the FILENAME to create, not the drill name: a '/' in the
+            // row ("TRS-80/CoCo/Dragon") can't be a filename, so the logo is
+            // named with '-' ("TRS-80-CoCo-Dragon.png"), which findPlatformShot
+            // resolves back. Show that safe form so the name is copy-pasteable.
+            std::string safe = name;
+            std::replace(safe.begin(), safe.end(), '/', '-');
+            missingSub.push_back(safe);
+        }
     if (!missingSub.empty()) {
         std::string list;
         for (auto& m : missingSub)
@@ -1719,20 +1728,29 @@ void ChipMachine::loadPlatformScreenshots()
     }
 }
 
-// Platform logo by name, case-insensitively. Collections disagree on the
-// capitalisation of the same platform ("ColecoVision" vs "Colecovision") and the
-// drill folds those into one row, so the logo has to resolve for either spelling
-// no matter which one the file is named after. The exact match is the fast path;
-// the scan is over ~50 entries and only runs on a song/selection change.
+// Platform logo by name, case- and slash-insensitively. Two spellings must
+// resolve to the same file: collections disagree on capitalisation ("ColecoVision"
+// vs "Colecovision"), and a drill row can carry a '/' that no filename can
+// ("TRS-80/CoCo/Dragon"), so its logo is named with '-' instead -- the same
+// '/'->'-' rule platformSlugForByte uses for byte slugs ("Atari ST/STE" ->
+// "Atari ST-STE.png"). Normalise both sides to compare. The exact match is the
+// fast path; the scan is over ~50 entries and only runs on a song/selection change.
 const image::bitmap* ChipMachine::findPlatformShot(const std::string& name)
 {
     if (name.empty()) return nullptr;
     auto it = platformShots.find(name);
     if (it != platformShots.end())
         return it->second.width() > 0 ? &it->second : nullptr;
-    auto lower = utils::toLower(name);
+    auto norm = [](std::string s) {
+        for (auto& c : s) {
+            c = (char)std::tolower((unsigned char)c);
+            if (c == '/') c = '-';
+        }
+        return s;
+    };
+    auto want = norm(name);
     for (auto& [k, bm] : platformShots)
-        if (utils::toLower(k) == lower)
+        if (norm(k) == want)
             return bm.width() > 0 ? &bm : nullptr;
     return nullptr;
 }

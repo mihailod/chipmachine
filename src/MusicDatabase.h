@@ -96,7 +96,8 @@ enum Formats
     PODCAST, // Podcast episodes (RSS feeds / archive.org rips; "podcast" type)
 
     PC,
-    JPFM, // Japanese FM computers: NEC PC-98, Sharp X68000, Fujitsu FM Towns
+    JPFM, // NEC PC-98 (FMP/PMD/S98 drivers). Was "Japanese FM computers"; the
+          // X68000 and FM Towns members split into JPX68000/JPFMTOWNS below.
 
     ADPLUG,
 
@@ -159,7 +160,15 @@ enum Formats
     ATARI7800,   // Atari 7800 (TIA + POKEY cart)
     ATARIFALCON, // Atari Falcon 030 (DSP sample trackers: .gtk/.dtm/.mix)
     ATARILYNX,   // Atari Lynx (handheld)
-    ATARIJAGUAR  // Atari Jaguar (mostly rips, no native chip format)
+    ATARIJAGUAR, // Atari Jaguar (mostly rips, no native chip format)
+
+    // The Japanese FM computers, split so the TAB "Japanese Computers" group can
+    // drill into all three (was one JPFM byte behind the "PC-98/X68000/FM Towns"
+    // hack row). JPFM is repurposed to mean NEC PC-98 specifically (the archetypal
+    // Japanese FM machine: FMP/PMD/S98 drivers), the same way APPLE narrowed to
+    // Apple IIGS when the Apple group was split. These two are the other members.
+    JPX68000,  // Sharp X68000 (MDX; Sharp X1 folds in)
+    JPFMTOWNS  // Fujitsu FM Towns (Euphony .eup; Fujitsu FM-7 folds in)
 
 };
 
@@ -725,6 +734,23 @@ private:
     // One scan of the song table: resolveExtension() per song, group, count, sort
     // by count, admit per the rule above. Fills extensionGroupList / extGroupOf.
     void buildExtensionGroups();
+
+    // Order a candidate-index list alphabetically by title. Uses the precomputed
+    // titleRank (an int compare per element, no strings) when it's ready, so even
+    // a 250k-song filter sorts in a few ms; falls back to decorate-sort-undecorate
+    // only if a filter is somehow activated before the rank is built. Called once
+    // when a filter is activated so the per-keystroke search paths never re-sort.
+    void sortCandidatesByTitle(std::vector<int>& cands);
+
+    // Alphabetical rank (0..N-1) of each titleIndex entry, by lowercased title.
+    // Built once at startup on the indexing thread (buildTitleRank) so every
+    // subsequent filter activation is a plain integer sort. In-memory only (not
+    // persisted -- no index-format change); rebuilt each launch and after a
+    // reindex. Empty / shorter than titleIndex until built or after a live append.
+    std::vector<uint32_t> titleRank;
+    // Populate titleRank from the (loaded or freshly built) titleIndex. Runs on
+    // the background indexing thread, before the indexing flag clears.
+    void buildTitleRank();
     // Rank (0..N-1) of each distinct sub-format hue present in the active
     // filter, and the count N. Built in setFormatFilter() so renderSong can
     // spread hues evenly across however many formats the platform actually has.

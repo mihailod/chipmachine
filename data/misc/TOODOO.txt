@@ -1,13 +1,34 @@
+- add missing platform images
+GamePark GP2X
+GamePark GP32
+Pokemon Mini
+Spectravideo 3x8
+Thomson
+TI-8x (68k)
+TI-8x (Z80)
+
+PICO-8
+KC-85
+MicroW8
+TIC-80
+BK-0010-11M
+Vector-06c
+
+- alfa needed: Enterprise, Sharp MZ, raspberry pi, pinball
+
+Missing 6 group logo(s) in /Users/mihailod/Documents/chipmachine-as/chipmachine/data/misc/platformscreenshots (optional -- the row falls back to its first sub-platform's logo; add <name>.png or .jpg): Atari, Apple, Sony, Nintendo, Microsoft, Sega
+
+check also extensions but make sure they are excluded from splash
+[ChipMachine.cpp:1827] 16 extension(s) have no screenshot and no platform logo (add data/misc/extensionscreenshots/<ext>.png): ad, asd, caf, cd, his, mp4, oga, res, rps, se, svg, wad, wave, wma, x, xpk
+
+
+------------------------------
+
 - revisit db priority, some have the same so the results are still mixed, not sorted?
 
-- add missing platform images
+- look into other -- might be some junk / misclassified there
 
-- finish taxonomy : pet? ql?
-
-- announce CTRL+TAB format filtering in scroll and Help Menu
-
-- CHECK THIS: One small consequence worth knowing now: the top-level Atari row has no logo of its own — updateFilterLogo makes a group borrow its first child's logo, so Atari would display Atari XL-XE.png. That's how Nintendo already behaves (it borrows the NES logo), so it's consistent rather than broken. If you'd rather it show a proper Atari house logo, drop in an Atari.png and I'll add a small group-logo override in step 3 — say the word and I'll note it.
----- would like to drop high-level parent logos Atari.png, Nintendo.png and they will be also used in the rotation... program should print warning if they are missing like it prints now for any missing logo
+- finish taxonomy : pet? vic? ql? others?
 
 - combine yt and ogg not classified into one?
 

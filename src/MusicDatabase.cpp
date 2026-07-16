@@ -1364,6 +1364,44 @@ static uint8_t productTypeToPlatform(std::string const& type)
     return 0;
 }
 
+void MusicDatabase::buildTitleRank()
+{
+    uint32_t n = titleIndex.size();
+    if (n == 0) {
+        titleRank.clear();
+        return;
+    }
+    std::vector<std::pair<std::string, int>> keyed;
+    keyed.reserve(n);
+    for (uint32_t i = 0; i < n; i++)
+        keyed.emplace_back(toLower(titleIndex.getString(i)), (int)i);
+    std::sort(keyed.begin(), keyed.end(),
+              [](auto const& a, auto const& b) { return a.first < b.first; });
+    titleRank.assign(n, 0);
+    for (uint32_t r = 0; r < n; r++) titleRank[keyed[r].second] = r;
+}
+
+void MusicDatabase::sortCandidatesByTitle(std::vector<int>& cands)
+{
+    // Fast path: sort by the precomputed alphabetical rank (plain int compares).
+    // Valid only when the rank covers every candidate -- a live podcast append
+    // can grow titleIndex past a rank built at startup, in which case we fall
+    // back rather than index out of bounds.
+    if (titleRank.size() >= titleIndex.size() && !titleRank.empty()) {
+        std::sort(cands.begin(), cands.end(),
+                  [this](int a, int b) { return titleRank[a] < titleRank[b]; });
+        return;
+    }
+    // Fallback: build each key once (decorate-sort-undecorate).
+    std::vector<std::pair<std::string, int>> keyed;
+    keyed.reserve(cands.size());
+    for (int i : cands)
+        keyed.emplace_back(toLower(titleIndex.getString(i)), i);
+    std::sort(keyed.begin(), keyed.end(),
+              [](auto const& a, auto const& b) { return a.first < b.first; });
+    for (size_t k = 0; k < cands.size(); k++) cands[k] = keyed[k].second;
+}
+
 void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
 {
     filterHueRank.clear();
@@ -1428,6 +1466,13 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
         int rank = 0;
         for (uint16_t h : hues) filterHueRank[h] = rank++;
         filterHueCount = (int)hues.size();
+
+        // Pre-sort the candidates alphabetically by title so the empty-query
+        // "list all" path (and short queries) just slice them -- no per-keystroke
+        // sort, no size cap. Skip the podcast/other browses: they have their own
+        // ordering (feed order / their own re-sort) and don't use this order.
+        if (!podcastFilterActive && !otherFilterActive)
+            sortCandidatesByTitle(filteredCandidates);
 
         // Build the podcast show list (distinct collections among the podcast
         // episodes), names from the collection table, sorted alphabetically.
@@ -1606,6 +1651,9 @@ void MusicDatabase::setExtensionFilter(int gid)
     int rank = 0;
     for (uint16_t h : hues) filterHueRank[h] = rank++;
     filterHueCount = (int)hues.size();
+
+    // Pre-sort so the empty-query "list all" path just slices (see setFormatFilter).
+    sortCandidatesByTitle(filteredCandidates);
 }
 
 int MusicDatabase::search(std::string const& query, std::vector<int>& result,
@@ -1673,11 +1721,11 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
         composer_query = p[1];
     }
 
-    // Empty query: normally blank (the user types to search). But when a *small*
-    // platform filter is active (fewer than kFilterShowAllLimit songs), a tiny
-    // format isn't worth typing for -- so list ALL of its songs up front, sorted
-    // alphabetically by title. Large filters / no filter stay blank.
-    static constexpr size_t kFilterShowAllLimit = 1000;
+    // Empty query: normally blank (the user types to search). But when a platform
+    // or extension filter is active, list ALL of its songs up front, alphabetical
+    // by title, so the whole category is browsable. filteredCandidates was sorted
+    // once at filter-activation (see sortCandidatesByTitle), so this just slices
+    // it -- no per-keystroke sort, and no size cap. No filter -> stays blank.
     if (query == "") {
         // Podcasts browse: with the Podcasts filter active and no drilled-in
         // show, list the shows themselves (one synthetic row each). Drilled into
@@ -1722,15 +1770,10 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
                 if (!add_unique(idx) && result.size() >= searchLimit) break;
             return result.size();
         }
-        if (formatFilterActive && !filteredCandidates.empty() &&
-            filteredCandidates.size() < kFilterShowAllLimit) {
-            std::vector<int> sorted(filteredCandidates.begin(),
-                                    filteredCandidates.end());
-            std::sort(sorted.begin(), sorted.end(), [&](int a, int b) {
-                return toLower(titleIndex.getString(a)) <
-                       toLower(titleIndex.getString(b));
-            });
-            for (int idx : sorted) {
+        if (formatFilterActive && !filteredCandidates.empty()) {
+            // Already alphabetical (sorted at filter-activation): just list it,
+            // capped only by searchLimit.
+            for (int idx : filteredCandidates) {
                 if (!add_unique(idx) && result.size() >= searchLimit) break;
             }
         }
@@ -2586,10 +2629,13 @@ void initFormats()
                            "a.m.composer 1.2",
                            "opl archive" }) // OPL2/OPL3 VGM logs (opl.wafflenet.com)
         format_map[f] = ADPLUG;
-    // Japanese FM home computers (NEC PC-98, Sharp X68000, Fujitsu FM Towns).
-    for (char const* f :
-         { "fm sound driver (fmp)", "pmd", "s98", "mdx", "euphony" })
-        format_map[f] = JPFM;
+    // Japanese FM home computers, split by machine (TAB "Japanese Computers"
+    // group). Keys that double as extensions (pmd/s98/mdx) also drive the ext
+    // fallback in formatToByte, so a bare .mdx still lands on X68000.
+    for (char const* f : { "fm sound driver (fmp)", "pmd", "s98" })
+        format_map[f] = JPFM;      // NEC PC-98 (FMP/PMD drivers, S98 OPN logs)
+    format_map["mdx"] = JPX68000;  // Sharp X68000
+    format_map["euphony"] = JPFMTOWNS; // Fujitsu FM Towns (.eup)
     // PC / DAW / synth.
     for (char const* f : { "deflemask", "v2", "piston collage",
                            "piston collage protected", "renoise", "renoise old",
@@ -2681,10 +2727,15 @@ void initFormats()
     format_map["game boy"] = GAMEBOY;          // DMG
     format_map["pc engine"] = HES;             // TurboGrafx (HuC6280)
     format_map["msx"] = MSX;
-    // Japanese FM home computers (OPN/OPNA family) -> JPFM, like .mdx/.s98/pmd.
-    for (char const* f : { "nec pc-98", "nec pc-88", "nec pc-80", "nec pc-88/98",
-                           "sharp x68000", "sharp x1", "fm towns", "fujitsu fm-7" })
+    // Japanese FM home computers by platform tag (OPN/OPNA family), split to the
+    // same three bytes as the driver formats above. NEC (PC-98/88/80) -> PC-98;
+    // Sharp (X68000/X1) -> X68000; Fujitsu (FM Towns/FM-7) -> FM Towns.
+    for (char const* f : { "nec pc-98", "nec pc-88", "nec pc-80", "nec pc-88/98" })
         format_map[f] = JPFM;
+    for (char const* f : { "sharp x68000", "sharp x1" })
+        format_map[f] = JPX68000;
+    for (char const* f : { "fm towns", "fujitsu fm-7" })
+        format_map[f] = JPFMTOWNS;
     format_map["ibm pc"] = PC;
     format_map["zx spectrum"] = SPECTRUM;
     format_map["commodore 64"] = SID;
@@ -3066,9 +3117,9 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
         // Last resort: classify by the file extension. format_map keys many
         // extensions directly (mdx, s98, sgc, hes, ...), so a song whose stored
         // format string is missing or non-canonical still lands on the right
-        // platform. This guarantees e.g. every .mdx is JPFM (PC-98/X68000/FM
-        // Towns) regardless of how its source spelled the format. Not cached
-        // under f (see above).
+        // platform. This guarantees e.g. every .mdx is JPX68000 (Sharp X68000)
+        // regardless of how its source spelled the format. Not cached under f
+        // (see above).
         if (l == UNKNOWN_FORMAT && !path.empty()) {
             std::string ext = toLower(utils::path_extension(path));
             if (!ext.empty() && ext[0] == '.') ext = ext.substr(1);
@@ -3184,7 +3235,9 @@ static std::string platformName(uint8_t b)
     case IMPULSETRACKER:
     case FASTTRACKER:
     case PCTRACKER: return "PC";
-    case JPFM: return "PC-98 / X68000";
+    case JPFM: return "PC-98";
+    case JPX68000: return "X68000";
+    case JPFMTOWNS: return "FM Towns";
     case SID:
     case STR: return "Commodore 64";
     case PRG: return "Commodore 16/+4";
@@ -3326,7 +3379,7 @@ std::string MusicDatabase::platformForExtension(std::string const& rawExt)
         { "HEPlugin", "PlayStation" },
         { "libvice", "Commodore 64" },
         { "SC68", "Atari ST/STE/TT" },
-        { "FMPPlugin", "PC-98 / X68000" },
+        { "FMPPlugin", "PC-98" },
         { "V2Plugin", "PC" },
         { "USFPlugin", "Nintendo 64" },
         { "StSound", "Atari ST/STE/TT" },
@@ -3341,7 +3394,7 @@ std::string MusicDatabase::platformForExtension(std::string const& rawExt)
         { "SunVox Player", "PC" },
         { "SoundSmith", "Apple IIGS" },
         { "SBStudio", "PC" },
-        { "S98", "PC-98 / X68000" },
+        { "S98", "PC-98" },
         { "PokeyNoise", "Atari XL/XE" },
         { "Organya Player", "PC" },
         { "NerdTracker2", "Nintendo NES" },
@@ -3350,10 +3403,10 @@ std::string MusicDatabase::platformForExtension(std::string const& rawExt)
         { "Megatracker", "Atari ST/STE/TT" },
         { "MED", "Amiga" },
         { "MaxTrax", "Amiga" },
-        { "MDX", "PC-98 / X68000" },
+        { "MDX", "X68000" },
         { "JayTrax", "PC" },
         { "IXS", "PC" },
-        { "Euphony", "PC-98 / X68000" },
+        { "Euphony", "FM Towns" },
         { "Coconizer", "Acorn Archimedes" },
         { "BBSong", "ZX Spectrum 16/48" },
         { "Archimedes Tracker", "Acorn Archimedes" },
@@ -3475,6 +3528,9 @@ std::string MusicDatabase::subPlatformName(std::string const& fmt)
         { "neogeo pocket", "Neo Geo Pocket" },
         { "mobile phone", "Mobile" },
         { "android", "Mobile" },
+        // pouet tags the machine "VIC 20"; show its full name. (The hidden
+        // Demozoo .prg tunes already carry "Commodore VIC-20" verbatim.)
+        { "vic 20", "Commodore VIC-20" },
     };
     auto it = alias.find(toLower(s));
     return it != alias.end() ? it->second : s;
@@ -4664,6 +4720,11 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
     }
 
     generateIndex();
+    // Precompute the alphabetical title rank now, on this (background) indexing
+    // thread, so the first filter selection is instant instead of paying a
+    // one-off sort. titleIndex is fully populated by generateIndex() whether it
+    // built fresh or loaded the cached index.
+    buildTitleRank();
     return true;
 }
 

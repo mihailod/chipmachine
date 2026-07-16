@@ -555,11 +555,25 @@ void ChipMachine::updateKeys()
         // Prompt hint for an empty query under a platform filter: a small filter
         // auto-lists everything ("showing all N"), a large one waits for input
         // ("type to search N"). Otherwise just a bare "#".
-        if (s.empty() && iquery->numHits() > 0)
-            searchField.setPrompt(
-                utils::format("# [showing all %s %s tunes]",
-                              withCommas(iquery->numHits()), selectedFilterName));
-        else if (s.empty() && activeFilterCount > 0)
+        if (s.empty() && iquery->numHits() > 0) {
+            // Every filter now pre-populates its whole (alphabetical) category.
+            // Both cases invite narrowing -- typing sub-filters the set at any
+            // size, so "type to narrow" always applies. The result list is capped
+            // at the query's searchLimit (20,000), so when the true category is
+            // bigger, say "first N of TOTAL" rather than falsely claiming "all";
+            // the >= cap guard keeps small filters (where dedup trims a few)
+            // reading "showing all".
+            int shown = iquery->numHits();
+            if (shown >= 20000 && activeFilterCount > shown)
+                searchField.setPrompt(utils::format(
+                    "# [showing first %s of %s %s tunes -- type to narrow]",
+                    withCommas(shown), withCommas(activeFilterCount),
+                    selectedFilterName));
+            else
+                searchField.setPrompt(utils::format(
+                    "# [showing all %s %s tunes -- type to narrow]",
+                    withCommas(shown), selectedFilterName));
+        } else if (s.empty() && activeFilterCount > 0)
             searchField.setPrompt(utils::format("# [type to search %s %s tunes]",
                                                 withCommas(activeFilterCount),
                                                 selectedFilterName));

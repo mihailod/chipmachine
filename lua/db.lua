@@ -858,7 +858,14 @@
 --     (reversing the 2026-07-14 rule that kept them apart): "Youtube (Oric)"
 --     and "Oric" are one row. 71 drill groups -> 44, same 4618 songs.
 --     Bump forces a reindex: format bytes live in the cached index.dat.
-VERSION = 119;
+-- 120: split the JPFM byte (the old "PC-98/X68000/FM Towns" hack row) into a
+--     "Japanese Computers" drill of three machines. JPFM now means NEC PC-98
+--     specifically (FMP/PMD/S98 drivers, NEC PC-98/88/80 tags); new JPX68000
+--     (MDX, Sharp X68000/X1) and JPFMTOWNS (Euphony .eup, FM Towns, Fujitsu
+--     FM-7). ~6.9k MDX tunes move to X68000, ~0.9k Euphony to FM Towns; the
+--     ~6.1k FMP/PMD/S98/NEC rows stay on JPFM=PC-98. Combined logo retired;
+--     per-machine logos added. Bump forces a reindex (bytes live in index.dat).
+VERSION = 120;
 
 DB = {
 {
