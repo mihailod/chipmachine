@@ -16,11 +16,6 @@ Vector-06c
 
 - alfa needed: Enterprise, Sharp MZ, raspberry pi, pinball
 
-Missing 6 group logo(s) in /Users/mihailod/Documents/chipmachine-as/chipmachine/data/misc/platformscreenshots (optional -- the row falls back to its first sub-platform's logo; add <name>.png or .jpg): Atari, Apple, Sony, Nintendo, Microsoft, Sega
-
-check also extensions but make sure they are excluded from splash
-[ChipMachine.cpp:1827] 16 extension(s) have no screenshot and no platform logo (add data/misc/extensionscreenshots/<ext>.png): ad, asd, caf, cd, his, mp4, oga, res, rps, se, svg, wad, wave, wma, x, xpk
-
 
 ------------------------------
 
