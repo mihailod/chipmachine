@@ -144,7 +144,22 @@ enum Formats
     // block: the console region above is full up to the fixed TRACKER=0x30
     // anchor. Sources are the VGMRips VSU logs (which only libvgm decodes -- see
     // vgm_opl_detect.h) plus pouet's "Youtube (Virtual Boy)" captures.
-    VIRTUALBOY
+    VIRTUALBOY,
+
+    // The Atari machines that used to be folded into ATARI (Falcon, Jaguar) or
+    // POKEY (VCS/TIA) or OTHER (7800, Lynx), split out so the TAB "Atari" group
+    // can drill into all seven. Placed here for the same reason as the Apple and
+    // Virtual Boy blocks above -- the console region is full up to the fixed
+    // TRACKER=0x30 anchor -- and nothing caps at PRODUCT=0x40.
+    //
+    // NOTE for any future "Atari <machine>" format string: formatToByte has a
+    // startsWith(f, "atari") -> ATARI fallback, so a new machine MUST get an
+    // explicit format_map entry or it silently lands in the ST/STE/TT filter.
+    ATARIVCS,    // Atari 2600 / VCS (TIA)
+    ATARI7800,   // Atari 7800 (TIA + POKEY cart)
+    ATARIFALCON, // Atari Falcon 030 (DSP sample trackers: .gtk/.dtm/.mix)
+    ATARILYNX,   // Atari Lynx (handheld)
+    ATARIJAGUAR  // Atari Jaguar (mostly rips, no native chip format)
 
 };
 
@@ -265,6 +280,18 @@ public:
     // non-hardware bytes (MP3, OGG, Radio, YouTube, Podcast, Playlist, unknown).
     // Lets the TAB filter map a highlighted platform/category to its logo.
     static std::string platformScreenshotSlug(uint8_t formatByte);
+
+    // Canonical sub-platform group name for a raw DB format string -- the row a
+    // song lands on in the Other/Arcade drill, and the base name of its logo.
+    // Shared by buildSubPlatforms() and the logo lookup so the two can never
+    // disagree about what a group is called. See the definition for the rules.
+    static std::string subPlatformName(std::string const& fmt);
+
+    // The "Other Platforms" drill rows that name real hardware, and so should
+    // carry a <name>.png logo. Read straight from the song DB so it works at
+    // startup before the search index exists. Used to report missing logos.
+    // Returns empty when the DB doesn't exist yet.
+    static std::vector<std::string> subPlatformNames();
 
     // Distinct file extension (lowercased) -> the set of platform slugs its
     // songs classify to, read from the song DB. Used at startup to report which

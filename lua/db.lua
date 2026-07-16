@@ -842,7 +842,23 @@
 --     VIC-20 and also unplayable, but are tracker DATA needing the Vic-Tracker
 --     replayer, so an emulator alone would not unlock them).
 --     Bump forces a reindex.
-VERSION = 118;
+-- 119: TAB taxonomy: new top-level "Atari" group drilling into seven machines,
+--     and the Other Platforms drill loses every "Youtube (<platform>)" row.
+--     Five new format bytes split the Atari machines that were folded into a
+--     neighbour: ATARIVCS (was POKEY/"Atari 8bit" -- 161 tunes, the TIA is not
+--     a POKEY), ATARI7800 + ATARILYNX (were OTHER), ATARIFALCON + ATARIJAGUAR
+--     (were ATARI). Falcon is recovered from the EXTENSION (.gtk/.dtm/.mix
+--     under the ST byte) since its format strings say "Atari ST"; that replaces
+--     a display-only relabel, so those ~300 tunes are now filterable as Falcon.
+--     Two table disagreements fixed on the way: "atari jaguar" was mapped twice
+--     in format_map (OTHER then ATARI -- the second silently won), and
+--     "wonderswan" resolved to WONDERSWAN in format_map but OTHER in
+--     platformNameToByte, which split 11 captures from 177 native rips.
+--     A YouTube capture now groups with the hardware it was captured from
+--     (reversing the 2026-07-14 rule that kept them apart): "Youtube (Oric)"
+--     and "Oric" are one row. 71 drill groups -> 44, same 4618 songs.
+--     Bump forces a reindex: format bytes live in the cached index.dat.
+VERSION = 119;
 
 DB = {
 {

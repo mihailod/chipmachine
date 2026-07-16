@@ -400,8 +400,9 @@ TEST_CASE("YouTube captures classify by their pouet platform tag", "[music]")
         { "Youtube (Commodore 64)", SID },
         { "Youtube (Windows)", PC },
         { "Youtube (Virtual Boy)", VIRTUALBOY },
-        // Name no hardware -> Other Platforms (they become "Youtube (<tag>)"
-        // groups in the drill). These three were the whole 1103-video bucket.
+        // Name no hardware -> Other Platforms, where the drill surfaces them
+        // under the bare tag ("Wild", "Animation/Video"). These three were the
+        // whole 1103-video bucket.
         { "Youtube (Animation/Video)", OTHER },
         { "Youtube (mIRC)", OTHER },
         { "Youtube (Alambik)", OTHER },
@@ -409,6 +410,21 @@ TEST_CASE("YouTube captures classify by their pouet platform tag", "[music]")
         // A combo naming real hardware still wins over the generic tag.
         { "Youtube (Amiga AGA,Animation/Video)", AMIGA },
         { "Youtube (Windows,Animation/Video)", PC },
+        // Every Atari machine reaches its own filter under the TAB "Atari"
+        // group -- a capture must land on the same byte as the native rips, or
+        // the platform is split in two (which is exactly what "atari jaguar"
+        // and "wonderswan" used to do: format_map and platformNameToByte
+        // disagreed, so natives and captures went to different filters).
+        { "Youtube (Atari VCS)", ATARIVCS },
+        { "Youtube (Atari 7800)", ATARI7800 },
+        { "Youtube (Atari Lynx)", ATARILYNX },
+        { "Youtube (Atari Jaguar)", ATARIJAGUAR },
+        { "Youtube (Atari Falcon 030)", ATARIFALCON },
+        { "Youtube (Atari XL/XE)", POKEY },
+        { "Youtube (Atari ST)", ATARI },
+        { "Youtube (Atari STe)", ATARI },
+        { "Youtube (Atari TT 030)", ATARI }, // TT folds in with ST/STE
+        { "Youtube (Wonderswan)", WONDERSWAN },
         // Unrecognised tag: falls back to OTHER so the drill can surface it,
         // rather than a byte no filter matches.
         { "Youtube (Some Future Pouet Tag)", OTHER },
@@ -420,6 +436,83 @@ TEST_CASE("YouTube captures classify by their pouet platform tag", "[music]")
     // Nothing should classify to the now-unused YOUTUBE byte.
     for (auto const& c : cases)
         REQUIRE(mdb.classifyFormat(c.fmt, yt) != YOUTUBE);
+}
+
+// The Falcon-native sample trackers are recovered from the EXTENSION: their
+// format strings say "Atari ST" / name the tracker, so only .gtk/.dtm/.mix tells
+// the Falcon apart from the YM2149 ST line. Replaced a display-only relabel, so
+// the risk it guards against is real: .dtm is THREE different formats.
+TEST_CASE("Falcon sample trackers split from the Atari ST byte", "[database]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    // Falcon: the extension decides, whatever the format string claims.
+    REQUIRE(mdb.classifyFormat("Atari ST", "http://x/a.gtk") == ATARIFALCON);
+    REQUIRE(mdb.classifyFormat("Graoumf Tracker", "http://x/a.gtk") ==
+            ATARIFALCON);
+    REQUIRE(mdb.classifyFormat("Digital Tracker DTM", "http://x/a.dtm") ==
+            ATARIFALCON);
+    REQUIRE(mdb.classifyFormat("Atari Digi-Mix", "http://x/a.mix") ==
+            ATARIFALCON);
+    // The YM2149 ST chiptune formats are untouched -- same machine name, but a
+    // different extension means a different machine.
+    REQUIRE(mdb.classifyFormat("Atari ST", "http://x/a.snd") == ATARI);
+    REQUIRE(mdb.classifyFormat("Hippel ST", "http://x/a.hip") == ATARI);
+    // THE GUARD: .dtm is also DeFy AdLib Tracker (PC/AdLib) and DigiTrekker.
+    // Those never classify to ATARI, so the Falcon rule must not claim them --
+    // it would file a PC AdLib tune under an Atari Falcon.
+    REQUIRE(mdb.classifyFormat("DeFy AdLib Tracker", "http://x/a.dtm") !=
+            ATARIFALCON);
+    REQUIRE(mdb.classifyFormat("Digitrekker", "http://x/a.dtm") != ATARIFALCON);
+    // Graoumf Tracker 2 is the WINDOWS successor; the .gt2 override outranks
+    // both the "Atari ST" tag and the Falcon rule.
+    REQUIRE(mdb.classifyFormat("Atari ST", "http://x/a.gt2") == PCTRACKER);
+}
+
+// The Other/Arcade drill groups on the canonical sub-platform name, so this is
+// what decides that "Youtube (Oric)" and "Oric" are ONE row rather than two.
+// No "Youtube (<platform>)" row may survive it (rule reversed 2026-07-15: a
+// capture now groups with the hardware it was captured from).
+TEST_CASE("sub-platform names fold captures onto their hardware", "[database]")
+{
+    using namespace chipmachine;
+    struct { const char* fmt; const char* want; } cases[] = {
+        // The wrapper comes off, so capture and native rips share a row.
+        { "Youtube (Oric)", "Oric" },
+        { "Oric", "Oric" },
+        { "Youtube (Vectrex)", "Vectrex" },
+        { "Vectrex", "Vectrex" },
+        // Non-hardware tags unwrap literally rather than being renamed.
+        { "Youtube (Wild)", "Wild" },
+        { "Youtube (Animation/Video)", "Animation/Video" },
+        // Combos: the first tag naming real hardware wins over the compo tag.
+        { "Youtube (Wild,Raspberry Pi)", "Raspberry Pi" },
+        { "Youtube (Java,Mobile Phone)", "Mobile" },
+        // ...falling back to the first tag when none names hardware.
+        { "Youtube (Wild,JavaScript)", "Wild" },
+        { "Youtube (Java,Wild)", "Java" },
+        // Fantasy consoles are platforms, not compo buckets: they keep a row.
+        { "Youtube (MicroW8,PICO-8,TIC-80)", "MicroW8" },
+        // Aliases for variants the case-only fold in buildSubPlatforms misses.
+        { "Youtube (NeoGeo Pocket)", "Neo Geo Pocket" },
+        { "Neo Geo Pocket", "Neo Geo Pocket" },
+        { "Youtube (Mobile Phone)", "Mobile" },
+        { "Youtube (Android)", "Mobile" },
+        { "Mobile", "Mobile" },
+        // Arcade strings carry no wrapper and no comma: untouched, so the
+        // vendor rules in buildSubPlatforms still see them verbatim.
+        { "Arcade (Capcom)", "Arcade (Capcom)" },
+        { "", "Unknown" },
+    };
+    for (auto const& c : cases) {
+        INFO("format '" << c.fmt << "'");
+        REQUIRE(MusicDatabase::subPlatformName(c.fmt) == std::string(c.want));
+    }
+    // The point of the exercise: no row may be named after YouTube.
+    for (auto const& c : cases)
+        REQUIRE(MusicDatabase::subPlatformName(c.fmt).find("Youtube") ==
+                std::string::npos);
 }
 
 // filter_demozoo_archives.py --classify replaces the generic "Demoscene" label
@@ -476,10 +569,15 @@ TEST_CASE("demozoo archive rows classify by their release-platform tag", "[music
         { "Linux", zip.c_str(), PC },
         { "macOS", zip.c_str(), MACOS },
         { "Commodore Plus/4", zip.c_str(), PRG },
-        // Real hardware with no filter of its own -> Other Platforms. "Atari
-        // Lynx" also guards a MISFILE: the startsWith(f,"atari") fallback used
-        // to claim it for the Atari ST filter.
-        { "Atari Lynx", zip.c_str(), OTHER },
+        // Atari machines have their own filters under the TAB "Atari" group.
+        // These also guard a MISFILE: the startsWith(f,"atari") fallback claims
+        // any unlisted "Atari <machine>" for the ST/STE/TT filter.
+        { "Atari Lynx", zip.c_str(), ATARILYNX },
+        { "Atari 7800", zip.c_str(), ATARI7800 },
+        { "Atari Jaguar", zip.c_str(), ATARIJAGUAR },
+        { "Atari Falcon", zip.c_str(), ATARIFALCON },
+        { "Atari 2600 Video Computer System (VCS)", zip.c_str(), ATARIVCS },
+        // Real hardware with no filter of its own -> Other Platforms.
         { "PICO-8", zip.c_str(), OTHER },
         { "Browser", zip.c_str(), OTHER },
         // The extension stays authoritative for module formats whose platform is
@@ -545,7 +643,7 @@ TEST_CASE("VGMRips format labels classify to a platform", "[music]")
         { "Commodore 64", SID },          { "Apple IIgs", APPLE },
         { "Arcade", ARCADE },             { "Arcade (Capcom)", ARCADE },
         { "Arcade (Konami)", ARCADE },    { "Pinball", OTHER },
-        { "Atari Jaguar", ATARI },
+        { "Atari Jaguar", ATARIJAGUAR },
         // modland's CPS-1/CPS-2 .miniqsf rips: QSound is Capcom arcade hardware,
         // so these are ARCADE, not OTHER (buildSubPlatforms then folds the group
         // into "Arcade (Capcom)").
@@ -556,7 +654,7 @@ TEST_CASE("VGMRips format labels classify to a platform", "[music]")
         { "Nintendo Virtual Boy", VIRTUALBOY },
         { "Vectrex", OTHER },             { "Amstrad CPC", AMSTRAD },
         { "Sega SG-1000", SEGAMS },       { "Atari 8bit", POKEY },
-        { "Atari 7800", OTHER },          { "Intellivision", OTHER },
+        { "Atari 7800", ATARI7800 },      { "Intellivision", OTHER },
     };
     for (auto const& c : cases) {
         INFO("format " << c.fmt);
@@ -680,7 +778,7 @@ TEST_CASE("mirsoft platform labels classify to a platform", "[music]")
         { "Nintendo 64", NINTENDO64 },   { "Sega Mega Drive", MEGADRIVE },
         { "Sega Master System", SEGAMS },{ "Sega Saturn", SATURN },
         { "Dreamcast", DREAMCAST },      { "Atari ST", ATARI },
-        { "Atari Falcon", ATARI },       { "Atari Jaguar", ATARI },
+        { "Atari Falcon", ATARIFALCON }, { "Atari Jaguar", ATARIJAGUAR },
         { "ZX Spectrum", SPECTRUM },     { "Amstrad CPC", AMSTRAD },
         { "PC Engine", HES },            { "Arcade", ARCADE },
     };

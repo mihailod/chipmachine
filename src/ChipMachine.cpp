@@ -40,8 +40,17 @@ namespace chipmachine {
 const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "[no filter, search all]", {} },
     { "Amiga", { AMIGA, PROTRACKER, SOUNDTRACKER, UADE, TRACKER } },
-    { "Atari ST/STE/Falcon", { ATARI } },
-    { "Atari 8bit (TIA/POKEY)", { POKEY } },
+    // Children in chronological order (VCS 1977 first), not by corpus size.
+    // "Atari" is the house logo (Atari.png) for the group row itself.
+    { "Atari", {}, {
+        { "Atari VCS Console", { ATARIVCS } },
+        { "Atari 8bit Computers (XL/XE)", { POKEY } },
+        { "Atari 7800 Console", { ATARI7800 } },
+        { "Atari ST/STE/TT", { ATARI } },
+        { "Atari Falcon", { ATARIFALCON } },
+        { "Atari Lynx", { ATARILYNX } },
+        { "Atari Jaguar", { ATARIJAGUAR } },
+    }, "Atari" },
     { "Commodore 64 (SID)", { SID, STR } },
     { "Commodore 16/116/+4 (TED)", { PRG } },
     { "ZX Spectrum 16K/48K (Beeper)", { ZXBEEPER } },
@@ -57,12 +66,12 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
         { "Apple IIGS", { APPLE } },
         { "Mac OS", { MACOS } },
         { "iOS", { IOS } },
-    } },
+    }, "Apple" },
     { "Sony", {}, {
         { "Sony PlayStation 1/2", { PLAYSTATION, PLAYSTATION2 } },
         { "Sony PlayStation 3", { PS3 } },
         { "Sony PSP", { PSP } },
-    } },
+    }, "Sony" },
     { "Nintendo", {}, {
         { "Nintendo NES", { NES } },
         { "Nintendo SNES", { SNES } },
@@ -73,16 +82,16 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
         { "Nintendo GameCube", { GAMECUBE } },
         { "Nintendo Wii", { WII } },
         { "Nintendo Virtual Boy", { VIRTUALBOY } },
-    } },
+    }, "Nintendo" },
     { "Microsoft", {}, {
         { "Microsoft Xbox", { XBOX } },
         { "Microsoft Xbox 360", { XBOX360 } },
-    } },
+    }, "Microsoft" },
     { "Sega", {}, {
         { "Sega 8bit", { SEGAMS } },
         { "Sega 16bit/32X/Saturn", { SEGA, MEGADRIVE, SATURN } },
         { "Sega Dreamcast", { DREAMCAST } },
-    } },
+    }, "Sega" },
     { "PC-98/X68000/FM Towns", { JPFM } },
     { "PC Engine/TurboGrafx-16", { HES } },
     { "WonderSwan", { WONDERSWAN } },
@@ -127,6 +136,13 @@ static uint32_t formatColor(int f)
         { MSX, 0xff66ddaa },     { AMSTRAD, 0xff44aadd },
         { ACORN, 0xff88dd55 },   { SAMCOUPE, 0xffdd66aa },
         { ATARI, 0xffcccc33 },   { POKEY, 0xffee7711 },
+        // The Atari family. Each needs its own entry: formatColor does a range
+        // lookup, so without one they would inherit VIRTUALBOY's red.
+        { ATARIVCS, 0xffcc7733 },   // the VCS woodgrain
+        { ATARI7800, 0xffdd9955 },
+        { ATARIFALCON, 0xffaacc66 },
+        { ATARILYNX, 0xffdddd55 },
+        { ATARIJAGUAR, 0xffbb8833 },
         { MP3, 0xff88ff88 },
         { APPLE, 0xff66cccc },
         { APPLEMAC, 0xffaaaaaa }, { MACOS, 0xff88bbcc }, { IOS, 0xffcccccc },
@@ -953,9 +969,9 @@ void ChipMachine::updateSearchLogo()
     // sub-platform only in their TITLE ("Vectrex", "ColecoVision",
     // "Arcade (Capcom)"); their format is the flat "Other"/"Arcade", which would
     // resolve to the generic icon (or generic cabinet). Feed the title in as the
-    // format so pickPlatformOrExtLogo resolves the per-system (consoleSubLogos)
-    // or per-board (arcadeSubLogos) logo. Normalise the two arcade names that
-    // don't match the arcadeSubLogos keys 1:1 (see getOtherPlatforms).
+    // format so pickPlatformOrExtLogo resolves the per-platform ("<row>.png",
+    // matched case-insensitively) or per-board (arcadeSubLogos) logo. Normalise
+    // the two arcade names that don't match arcadeSubLogos 1:1 (getOtherPlatforms).
     if (utils::startsWith(song.path, "otherplatform::")) {
         std::string name = utils::toLower(song.title);
         if (name == "arcade (other)") name = "arcade";
@@ -986,18 +1002,19 @@ void ChipMachine::updateFilterLogo()
         // matches nothing -> no logo). A group borrows its first child's
         // platform. Map it to the per-platform logo slug.
         auto const& opt = opts[i];
+        // A group with a house logo ("Atari") shows the family mark rather than
+        // borrowing its first child's ("Atari VCS"). Falls through to the borrow
+        // when the image isn't installed, so naming one costs nothing until the
+        // artwork lands.
+        if (!opt.logo.empty()) bm = findPlatformShot(opt.logo);
         std::vector<uint8_t> const& fmts =
             !opt.matchedFormats.empty()
                 ? opt.matchedFormats
                 : (!opt.children.empty() ? opt.children[0].matchedFormats
                                          : opt.matchedFormats);
-        if (!fmts.empty()) {
+        if (bm == nullptr && !fmts.empty()) {
             std::string slug = MusicDatabase::platformScreenshotSlug(fmts[0]);
-            if (!slug.empty()) {
-                auto it = platformShots.find(slug);
-                if (it != platformShots.end() && it->second.width() > 0)
-                    bm = &it->second;
-            }
+            bm = findPlatformShot(slug);
         }
     }
     if (!bm) {
@@ -1329,19 +1346,6 @@ static std::string songExtension(const SongInfo& s)
     return MusicDatabase::resolveExtension(s);
 }
 
-// Songs that classify to the generic "Console" platform can optionally use a
-// per-system logo (e.g. vectrex.png) instead of the generic Console.png. Maps
-// the raw (lowercased) format string to the image base name in
-// data/misc/platformscreenshots/.
-static const std::map<std::string, std::string>& consoleSubLogos()
-{
-    static const std::map<std::string, std::string> m = {
-        { "vectrex", "vectrex" },
-        { "colecovision", "colecovision" },
-    };
-    return m;
-}
-
 // Appends the per-extension screenshot, or failing that the per-platform logo,
 // for the current song. Returns true if one was appended. Does NOT append the
 // generic ChipMachine icon -- that is a last resort reserved for the logo-only
@@ -1368,6 +1372,22 @@ static const std::map<std::string, std::string>& arcadeSubLogos()
     return m;
 }
 
+// Extensions that name a codec or container rather than a format with a hardware
+// identity. A tune is never "an OGG" the way it is "a SID" -- the Fujiology Atari
+// Lynx tunes are .ZIPs of OGG, so ogg.png used to win over the Lynx logo and the
+// platform read as its storage format. These lose to a *specific* platform logo
+// in pickPlatformOrExtLogo; every other ext shot (mod/dtm/mdx/gtk/...) names a
+// real format and still wins. Kept wider than the shots currently on disk so a
+// later wav.png/flac.png can't silently reintroduce the bug.
+static bool isGenericCodecExt(const std::string& ext)
+{
+    static const std::set<std::string> m = {
+        "mp3", "mp2",  "ogg", "opus", "wav",  "aac", "ac3",
+        "m4a", "mp4",  "aif", "aiff", "flac", "mpeg", "mpg",
+    };
+    return m.count(ext) > 0;
+}
+
 const image::bitmap* ChipMachine::pickPlatformOrExtLogo(
     const std::string& ext, const std::string& platformSlug,
     const std::string& format, std::string* label)
@@ -1384,34 +1404,37 @@ const image::bitmap* ChipMachine::pickPlatformOrExtLogo(
             }
         }
     }
-    // 1) Per-extension screenshot (e.g. mod.png, sid.png) takes priority over
-    //    the platform logo.
-    if (!ext.empty()) {
+    // 1) Resolve the per-platform logo up front (it used to be step 2) so the
+    //    extension step below can tell whether there is a specific platform logo
+    //    for a generic codec ext to lose to.
+    const image::bitmap* platformBm = nullptr;
+    std::string logoSlug = platformSlug;
+    {
+        // An "Other Platforms" drill row is its own logo name, so "Oric.png"
+        // gives the Oric row its logo with no table to edit. Wins over the byte
+        // slug, which for these songs is only the generic "Other".
+        auto sub = MusicDatabase::subPlatformName(format);
+        if (findPlatformShot(sub) != nullptr) logoSlug = sub;
+    }
+    platformBm = findPlatformShot(logoSlug);
+    // "Other" is a real logo but names no hardware, so it is not specific enough
+    // to outrank the ext shot: an OTHER-byte .mp3 keeps mp3.png rather than
+    // trading it for the generic Other.png.
+    bool specificPlatform = platformBm != nullptr && logoSlug != "Other";
+
+    // 2) Per-extension screenshot (e.g. mod.png, sid.png) otherwise still takes
+    //    priority over the platform logo -- it is the more specific of the two.
+    if (!ext.empty() && !(specificPlatform && isGenericCodecExt(ext))) {
         auto it = extensionShots.find(ext);
         if (it != extensionShots.end() && it->second.width() > 0) {
             if (label) *label = "ext:" + ext;
             return &it->second;
         }
     }
-    // 2) Per-platform logo for the current song, when one is installed.
-    //    Prefer a per-system logo keyed by the format string (vectrex.png,
-    //    colecovision.png, capcom.png) when one is present. This is NOT gated on
-    //    the "Console" platform: Vectrex/ColecoVision now classify under the
-    //    generic "Other" platform, so gating on "Console" left them showing the
-    //    generic ChipMachine icon. The consoleSubLogos keys are specific format
-    //    strings, so this only fires for those exact formats.
-    std::string logoSlug = platformSlug;
-    {
-        auto sub = consoleSubLogos().find(format);
-        if (sub != consoleSubLogos().end() && platformShots.count(sub->second))
-            logoSlug = sub->second;
-    }
-    if (!logoSlug.empty()) {
-        auto it = platformShots.find(logoSlug);
-        if (it != platformShots.end() && it->second.width() > 0) {
-            if (label) *label = "platform:" + logoSlug;
-            return &it->second;
-        }
+    // 3) Fall back to the platform logo resolved in step 1.
+    if (platformBm != nullptr) {
+        if (label) *label = "platform:" + logoSlug;
+        return platformBm;
     }
     return nullptr;
 }
@@ -1490,10 +1513,30 @@ void ChipMachine::loadPlatformScreenshots()
     for (auto& name : MusicDatabase::platformScreenshotNames())
         if (!load(name, name))
             missing.push_back(name);
-    // Optional per-system logos for the generic "Console" platform (not part of
-    // the platform list, so absence is never reported as missing).
-    for (auto& [fmt, base] : consoleSubLogos())
-        load(base, base);
+
+    // Then load every other image in the directory under its own basename. The
+    // "Other Platforms" drill rows (Oric, Vectrex, VIC 20, ...) share the single
+    // OTHER byte, so they have no slug of their own -- their logo is keyed by
+    // the drill's group name instead (see pickPlatformOrExtLogo). Scanning means
+    // dropping in "<group>.png" is all it takes to give one a logo: no table to
+    // edit, and no dependency on the search index being built yet.
+    if (utils::File::exists(dir.string())) {
+        for (auto& f : utils::File(dir.string()).listFiles()) {
+            auto fn = f.getFileName();
+            auto e = utils::toLower(utils::path_extension(fn));
+            if (e != "png" && e != "jpg" && e != "jpeg") continue;
+            auto key = fn.substr(0, fn.size() - e.size() - 1);
+            if (platformShots.count(key)) continue; // already loaded by slug
+            try {
+                auto bm = image::load_image(f.getName());
+                for (auto& px : bm)
+                    if ((px & 0xffffff) == 0) px &= 0xffffff;
+                platformShots[key] = bm;
+            } catch (image::image_exception& ex) {
+                LOGW("Could not decode platform logo %s", f.getName());
+            }
+        }
+    }
 
     // Generic platform slugs that have no dedicated artwork reuse a specific
     // variant's logo. E.g. VGM/VGZ rips of Spectrum games carry the bare
@@ -1520,6 +1563,55 @@ void ChipMachine::loadPlatformScreenshots()
         LOGW("Missing %d platform logo(s) in %s (add <name>.png or .jpg): %s",
              (int)missing.size(), dir.string(), list);
     }
+
+    // Group house logos (Atari.png, Nintendo.png, ...). Optional -- the row
+    // falls back to borrowing its first child's logo -- but still reported, or a
+    // group nobody drew art for would silently keep wearing one machine's face.
+    std::vector<std::string> missingGroup;
+    for (auto const& opt : filterOptions)
+        if (!opt.logo.empty() && !findPlatformShot(opt.logo))
+            missingGroup.push_back(opt.logo);
+    if (!missingGroup.empty()) {
+        std::string list;
+        for (auto& m : missingGroup)
+            list += (list.empty() ? "" : ", ") + m;
+        LOGW("Missing %d group logo(s) in %s (optional -- the row falls back to "
+             "its first sub-platform's logo; add <name>.png or .jpg): %s",
+             (int)missingGroup.size(), dir.string(), list);
+    }
+
+    // Same report for the "Other Platforms" drill rows that name real hardware
+    // but have no logo yet. Reported separately because they have no format byte
+    // (and so no slug) -- the file is named after the drill row itself.
+    std::vector<std::string> missingSub;
+    for (auto& name : MusicDatabase::subPlatformNames())
+        if (!findPlatformShot(name)) missingSub.push_back(name);
+    if (!missingSub.empty()) {
+        std::string list;
+        for (auto& m : missingSub)
+            list += (list.empty() ? "" : ", ") + m;
+        LOGW("Missing %d Other-platform logo(s) in %s (add <name>.png or .jpg): "
+             "%s",
+             (int)missingSub.size(), dir.string(), list);
+    }
+}
+
+// Platform logo by name, case-insensitively. Collections disagree on the
+// capitalisation of the same platform ("ColecoVision" vs "Colecovision") and the
+// drill folds those into one row, so the logo has to resolve for either spelling
+// no matter which one the file is named after. The exact match is the fast path;
+// the scan is over ~50 entries and only runs on a song/selection change.
+const image::bitmap* ChipMachine::findPlatformShot(const std::string& name)
+{
+    if (name.empty()) return nullptr;
+    auto it = platformShots.find(name);
+    if (it != platformShots.end())
+        return it->second.width() > 0 ? &it->second : nullptr;
+    auto lower = utils::toLower(name);
+    for (auto& [k, bm] : platformShots)
+        if (utils::toLower(k) == lower)
+            return bm.width() > 0 ? &bm : nullptr;
+    return nullptr;
 }
 
 void ChipMachine::loadExtensionScreenshots()

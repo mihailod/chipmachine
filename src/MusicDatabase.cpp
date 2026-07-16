@@ -2285,19 +2285,17 @@ void initFormats()
     // Atari 2600/VCS (TIA chip) demoscene tunes from demozoo/Fujiology carry the
     // platform string "Atari 2600 Video Computer System (VCS)". That starts with
     // "atari", so the generic startsWith("atari") fallback below would lump them
-    // in with the Atari ST/STE line -- wrong machine. The TIA is its own chip
-    // (not POKEY either), but there's no dedicated 2600 filter yet, so bucket
-    // them under Atari 8Bit for now via this explicit override (checked before
-    // the fallback). Revisit if a proper VCS/TIA category is added.
-    format_map["atari 2600 video computer system (vcs)"] = POKEY;
+    // in with the Atari ST/STE line -- wrong machine. The TIA is its own chip,
+    // not POKEY, and it now has its own filter under the TAB "Atari" group (it
+    // was bucketed under Atari 8Bit/POKEY until 2026-07-15).
+    format_map["atari 2600 video computer system (vcs)"] = ATARIVCS;
     // Atari Jaguar demozoo/Fujiology entries: game-soundtrack rips (mostly MP3
     // recordings, a few .xm/.mod modules), NOT ST chiptunes -- but "atari jaguar"
     // would hit the startsWith("atari") fallback and pollute the Atari ST/STE
-    // filter. The Jaguar has no native chip music format and there's no
-    // dedicated filter, so bucket it under OTHER ("Other Platforms"). (The few
+    // filter. It now has its own filter under the TAB "Atari" group. (The few
     // .mod among these are genuine Amiga ProTracker modules and get pulled to
     // Amiga by the .mod correction near the end of formatToByte.)
-    format_map["atari jaguar"] = OTHER;
+    format_map["atari jaguar"] = ATARIJAGUAR;
     format_map["soundsmith"] = APPLE;    // Apple IIgs SoundSmith
     format_map["playerpro"] = APPLEMAC;  // Macintosh PlayerPRO tracker (.mad), overrides uade_formats default
     format_map["jaytrax"] = TRACKER;  // JayTrax (.jxs), cross-platform synth tracker -- not UADE/Amiga
@@ -2554,18 +2552,20 @@ void initFormats()
         format_map[f] = PC;
     format_map["commodore plus/4"] = PRG;
     // Real hardware / non-hardware with no dedicated filter -> Other Platforms.
-    // "atari lynx" additionally corrects a MISFILE: without an entry here the
-    // startsWith(f, "atari") fallback below claimed it for the Atari ST filter.
-    for (char const* f : { "atari lynx", "commodore pet", "commodore vic-20",
+    for (char const* f : { "commodore pet", "commodore vic-20",
                            "pico-8", "tic-80", "microw8", "raspberry pi",
                            "browser", "calculator", "custom hardware" })
         format_map[f] = OTHER;
+    // The Atari machines with their own filter under the TAB "Atari" group. Each
+    // MUST be listed explicitly: the startsWith(f, "atari") fallback in
+    // formatToByte would otherwise claim it for the ST/STE/TT filter.
+    format_map["atari lynx"] = ATARILYNX;
+    format_map["atari 7800"] = ATARI7800;
     format_map["nintendo virtual boy"] = VIRTUALBOY; // VSU (libvgm-only chip)
     // Real hardware with no dedicated TAB filter -> the "Other Platforms" drill,
     // where each becomes its own named sub-group (see buildSubPlatforms).
     // ("vectrex" is already mapped above, alongside colecovision.)
-    for (char const* f : { "atari 7800", "intellivision" })
-        format_map[f] = OTHER;
+    format_map["intellivision"] = OTHER;
     // The remaining VGMRips labels ("Amstrad CPC", "Sega SG-1000", "Atari 8bit")
     // are already mapped by the collections above and need no entry here.
     // Arcade boards get their own top-level filter ("Arcade"), which drills into
@@ -2577,8 +2577,8 @@ void initFormats()
                            "arcade (namco)", "arcade (sega)", "arcade (taito)",
                            "neo geo", "capcom q-sound format" })
         format_map[f] = ARCADE;
-    // Atari Jaguar folds into the Atari ST/E/Falcon/Jaguar filter.
-    format_map["atari jaguar"] = ATARI;
+    // ("atari jaguar" is mapped to its own ATARIJAGUAR byte further up; it used
+    // to be re-pointed at ATARI here, which silently won over that entry.)
     // Neo Geo Pocket / pinball have no dedicated TAB filter yet -> "Other Platforms".
     for (char const* f : { "neo geo pocket", "pinball", "other" })
         format_map[f] = OTHER;
@@ -2593,7 +2593,7 @@ void initFormats()
     format_map["pc"] = PC;                   // PC DOS/Windows game tracker mods
     format_map["macintosh"] = APPLEMAC;
     format_map["playstation"] = PLAYSTATION;
-    format_map["atari falcon"] = ATARI;
+    format_map["atari falcon"] = ATARIFALCON;
     format_map["nintendo 64"] = NINTENDO64;
     format_map["sega saturn"] = SATURN;
     format_map["dreamcast"] = DREAMCAST;
@@ -2748,9 +2748,12 @@ static uint8_t platformNameToByte(std::string s)
         { "c16/116/plus4", PRG },    { "commodore plus/4", PRG },
         { "commodore 16", PRG },
         { "atari st", ATARI },       { "atari ste", ATARI },
-        { "atari falcon 030", ATARI },{ "atari falcon", ATARI },
-        { "atari tt 030", ATARI },
-        { "atari xl/xe", POKEY },    { "atari vcs", POKEY },
+        { "atari tt 030", ATARI }, // TT folds in with ST/STE (same YM2149)
+        { "atari falcon 030", ATARIFALCON },
+        { "atari falcon", ATARIFALCON },
+        { "atari xl/xe", POKEY },    { "atari vcs", ATARIVCS },
+        { "atari 7800", ATARI7800 }, { "atari lynx", ATARILYNX },
+        { "atari jaguar", ATARIJAGUAR },
         { "zx spectrum", SPECTRUM }, { "zx enhanced", SPECTRUM },
         { "zx-81", SPECTRUM },       { "spectrum", SPECTRUM },
         { "zx spectrum beeper", ZXBEEPER },
@@ -2779,8 +2782,7 @@ static uint8_t platformNameToByte(std::string s)
         { "ms-dos/gus", PC },        { "linux", PC },
         { "audiosurf", PC },
         // Real hardware, but no dedicated TAB filter -> "Other Platforms".
-        { "other", OTHER },          { "atari jaguar", OTHER },
-        { "atari lynx", OTHER },     { "atari 7800", OTHER },
+        { "other", OTHER },
         { "vectrex", OTHER },        { "intellivision", OTHER },
         { "vic 20", OTHER },         { "commodore pet", OTHER },
         { "oric", OTHER },           { "thomson", OTHER },
@@ -2788,7 +2790,10 @@ static uint8_t platformNameToByte(std::string s)
         { "vector-06c", OTHER },     { "bk-0010/11m", OTHER },
         { "sharp mz", OTHER },       { "kc-85", OTHER },
         { "trs-80/coco/dragon", OTHER }, { "spectravideo 3x8", OTHER },
-        { "wonderswan", OTHER },     { "neogeo pocket", OTHER },
+        // "wonderswan" mapped to OTHER until 2026-07-15, which split the 11
+        // captures off from the 177 native WonderSwan rips that format_map
+        // already sent to the WONDERSWAN filter. The two tables must agree.
+        { "wonderswan", WONDERSWAN }, { "neogeo pocket", OTHER },
         { "pokemon mini", OTHER },
         { "nintendo wii", WII },     { "gamecube", GAMECUBE },
         { "nintendo gamecube", GAMECUBE },
@@ -2983,6 +2988,26 @@ static uint8_t formatToByte(std::string const& fmt, std::string const& path,
         auto it = cat.find(f);
         if (it != cat.end()) l = it->second;
     }
+
+    // Falcon-native sample trackers: Graoumf Tracker (.gtk), Digital Tracker
+    // (.dtm), Digi-Mix (.mix). Their format strings ("Atari ST", "Digital
+    // Tracker DTM", "Graoumf Tracker", "Atari Digi-Mix") all resolve to the
+    // YM2149 ST byte, but the machine is a Falcon and only the extension tells
+    // them apart. Gated on l == ATARI so the unrelated .dtm formats (DeFy AdLib
+    // Tracker / DigiTrekker), which classify as PC/AdLib, are never claimed --
+    // the same guard the old display-only relabel in describeFormat used, which
+    // this replaces (the tunes now carry the Falcon byte, so they are also
+    // FILTERABLE as Falcon rather than merely labelled).
+    // Reads the extension off the PATH, where the relabel used resolveExtension()
+    // (the real inner format). Equivalent for the whole corpus -- every .gtk/.dtm/
+    // .mix tune is stored uncompressed, and the 2 rows tagged "Atari Falcon"
+    // outright are keyed by format_map -- but a future .gtk.gz/.zip would land on
+    // ATARI, since formatToByte has the path only and cannot peek inside.
+    if (l == ATARI && !path.empty()) {
+        std::string ext = toLower(utils::path_extension(path));
+        if (!ext.empty() && ext[0] == '.') ext = ext.substr(1);
+        if (ext == "gtk" || ext == "dtm" || ext == "mix") l = ATARIFALCON;
+    }
     return l;
 }
 
@@ -3004,8 +3029,13 @@ static std::string platformName(uint8_t b)
     case SID:
     case STR: return "Commodore 64";
     case PRG: return "Commodore 16/+4";
-    case ATARI: return "Atari ST/STE";
+    case ATARI: return "Atari ST/STE/TT";
     case POKEY: return "Atari XL/XE";
+    case ATARIVCS: return "Atari VCS";
+    case ATARI7800: return "Atari 7800";
+    case ATARIFALCON: return "Atari Falcon";
+    case ATARILYNX: return "Atari Lynx";
+    case ATARIJAGUAR: return "Atari Jaguar";
     case SPECTRUM: return "ZX Spectrum";
     case ZXBEEPER: return "ZX Spectrum 16/48";
     case ZXAY: return "ZX Spectrum 128";
@@ -3136,13 +3166,13 @@ std::string MusicDatabase::platformForExtension(std::string const& rawExt)
         { "MSX (libkss)", "MSX" },
         { "HEPlugin", "PlayStation" },
         { "libvice", "Commodore 64" },
-        { "SC68", "Atari ST/STE" },
+        { "SC68", "Atari ST/STE/TT" },
         { "FMPPlugin", "PC-98 / X68000" },
         { "V2Plugin", "PC" },
         { "USFPlugin", "Nintendo 64" },
-        { "StSound", "Atari ST/STE" },
+        { "StSound", "Atari ST/STE/TT" },
         { "STarKos", "Amstrad CPC" },
-        { "Quartet", "Atari ST/STE" },
+        { "Quartet", "Atari ST/STE/TT" },
         { "PxTone Collage Player", "PC" },
         { "NDSPlugin", "Nintendo DS" },
         { "HivelyPlugin", "Amiga" },
@@ -3158,7 +3188,7 @@ std::string MusicDatabase::platformForExtension(std::string const& rawExt)
         { "NerdTracker2", "Nintendo NES" },
         { "Monotone", "PC" },
         { "MikMod", "Amiga" },
-        { "Megatracker", "Atari ST/STE" },
+        { "Megatracker", "Atari ST/STE/TT" },
         { "MED", "Amiga" },
         { "MaxTrax", "Amiga" },
         { "MDX", "PC-98 / X68000" },
@@ -3216,6 +3246,124 @@ std::string MusicDatabase::platformScreenshotName(SongInfo const& s)
 std::string MusicDatabase::platformScreenshotSlug(uint8_t formatByte)
 {
     return platformSlugForByte(formatByte);
+}
+
+// pouet tags that name no machine. In a combo these lose to any tag that does,
+// so "Wild,Raspberry Pi" is a Raspberry Pi prod that happened to enter the wild
+// compo. This mirrors the specific-beats-generic rule in platformNameToByte, but
+// at name granularity: that function only needs to know a tag maps to OTHER,
+// while this one has to pick WHICH tag names the group. Fantasy consoles
+// (PICO-8/TIC-80/MicroW8) are deliberately NOT here -- they are the prod's
+// platform, virtual or not, and they own drill rows of their own.
+static bool isNonHardwareTag(std::string const& lower)
+{
+    static const std::set<std::string> m = {
+        "wild",  "javascript", "java", "flash", "animation/video",
+        "mirc",  "alambik",
+    };
+    return m.count(lower) > 0;
+}
+
+std::string MusicDatabase::subPlatformName(std::string const& fmt)
+{
+    auto trim = [](std::string x) {
+        size_t a = x.find_first_not_of(" \t");
+        if (a == std::string::npos) return std::string();
+        return x.substr(a, x.find_last_not_of(" \t") - a + 1);
+    };
+
+    std::string s = trim(fmt);
+    if (s.empty()) return "Unknown";
+
+    // Unwrap pouet's "Youtube (<tag>)" capture wrapper, so a capture groups with
+    // the hardware it was captured from: "Youtube (Oric)" and "Oric" are one
+    // "Oric" row. (Reversed 2026-07-15 -- captures used to be kept separate on
+    // the grounds that a recording is not a chiptune. The TAB screen is a
+    // taxonomy of hardware, and a platform must appear exactly once in it.)
+    // Every youtube format in the corpus carries the parens; a bare "Youtube"
+    // would fall through unchanged and group under its own name.
+    if (startsWith(toLower(s), "youtube")) {
+        auto op = s.find('(');
+        auto cp = s.rfind(')');
+        if (op != std::string::npos && cp != std::string::npos && cp > op)
+            s = trim(s.substr(op + 1, cp - op - 1));
+        if (s.empty()) return "Unknown";
+    }
+
+    // Combo ("Wild,Raspberry Pi"): the first tag naming real hardware wins,
+    // falling back to the first tag when every tag is non-hardware. Only combos
+    // whose tags are ALL non-filtered reach this drill -- platformNameToByte
+    // routes a combo naming any filtered platform to that platform's own byte,
+    // so e.g. "Youtube (Windows,Atari Lynx)" never gets here.
+    if (s.find(',') != std::string::npos) {
+        std::string pick;
+        for (auto const& tok : split(s, ",")) {
+            auto t = trim(tok);
+            if (t.empty()) continue;
+            if (pick.empty()) pick = t;
+            if (!isNonHardwareTag(toLower(t))) {
+                pick = t;
+                break;
+            }
+        }
+        if (!pick.empty()) s = pick;
+    }
+
+    // Spelling variants that differ by more than case, so the case-only fold in
+    // buildSubPlatforms can't catch them. The mobile family is one row by user
+    // decision (2026-07-15): a phone is a phone.
+    static const std::map<std::string, std::string> alias = {
+        { "neogeo pocket", "Neo Geo Pocket" },
+        { "mobile phone", "Mobile" },
+        { "android", "Mobile" },
+    };
+    auto it = alias.find(toLower(s));
+    return it != alias.end() ? it->second : s;
+}
+
+std::vector<std::string> MusicDatabase::subPlatformNames()
+{
+    // Lowercased name -> the spelling the drill will display. Case-only variants
+    // ("GamePark GP2X"/"Gamepark GP2X") are ONE row, so they must be ONE line in
+    // the report, naming the row: same byte-order-first rule as buildSubPlatforms
+    // (prefers the interior capital, i.e. the proper-noun spelling).
+    std::map<std::string, std::string> canon;
+    // Drill rows that name no machine: a logo could never be right for them, so
+    // they are not reported as gaps. (The non-hardware pouet tags -- Wild,
+    // JavaScript, ... -- are excluded via isNonHardwareTag below.)
+    static const std::set<std::string> notAPlatform = {
+        "vgm", "other", "unknown", "browser", "calculator", "custom hardware",
+    };
+    try {
+        sqlite3db::Database db{
+            (Environment::getCacheDir() / "music.db").string()
+        };
+        // One representative path per distinct format string -- formatToByte
+        // needs it to recognise a youtube URL, and every row sharing a format
+        // string shares its kind. Cheap next to scanning all ~380k rows. (coll
+        // is unused by formatToByte; 0 matches every other caller.)
+        auto q = db.query<std::string, std::string>(
+            "SELECT format, MIN(path) FROM song GROUP BY format");
+        std::string fmt, path;
+        while (q.step()) {
+            std::tie(fmt, path) = q.get_tuple();
+            // ARCADE is deliberately excluded: its boards already have per-board
+            // logos keyed by format string (arcadeSubLogos / vgz-*.png).
+            if (formatToByte(fmt, path, 0) != OTHER) continue;
+            auto name = subPlatformName(fmt);
+            if (name.empty()) continue;
+            auto lower = toLower(name);
+            if (isNonHardwareTag(lower) || notAPlatform.count(lower)) continue;
+            auto it = canon.find(lower);
+            if (it == canon.end() || name < it->second) canon[lower] = name;
+        }
+    } catch (...) {
+        // No cached DB yet (first run) or it is mid-reindex -- skip the report.
+    }
+    std::vector<std::string> out;
+    out.reserve(canon.size());
+    for (auto const& kv : canon) out.push_back(kv.second); // already lower-sorted
+    return out;
 }
 
 std::vector<std::string> MusicDatabase::platformScreenshotNames()
@@ -3410,8 +3558,11 @@ void MusicDatabase::buildSubPlatforms()
         int idx = rowid - 1;
         if (idx < 0 || idx >= (int)n) continue;
         if ((formats[idx] & 0xff) != subPlatformByte) continue;
-        std::string name = trim(fmt);
-        if (name.empty()) name = "Unknown";
+        // Canonical group name: unwraps "Youtube (<tag>)" and resolves combos,
+        // so a capture lands on the same row as the native rips of its hardware.
+        // Arcade strings ("Arcade (Capcom)") carry no wrapper and no comma, so
+        // they pass through untouched into the vendor rules below.
+        std::string name = subPlatformName(fmt);
         // The bare "Arcade" group sits alongside the vendor-specific ones
         // (Arcade (Capcom), ...), so disambiguate it as "Arcade (Other)"; and
         // fold Neo Geo in as another vendor-style "Arcade (Neo Geo)" group.
@@ -3427,12 +3578,6 @@ void MusicDatabase::buildSubPlatforms()
         byName[name].push_back(idx);
     }
 
-    // NOTE: "Youtube (<platform>)" groups stay SEPARATE from the same platform's
-    // native group ("Youtube (Vectrex)" is its own row next to "Vectrex"). That
-    // is deliberate, not an oversight: a YouTube capture is a recording of a
-    // production, not a chiptune played on the hardware, so it is kept apart
-    // from the real rips. Do not fold them together.
-    //
     // Fold case-only spelling variants into one group. Collections disagree on
     // the capitalisation of the same platform (smspower's "ColecoVision" vs
     // modland's "Colecovision"), and grouping on the raw string used to show
@@ -3621,15 +3766,12 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
     // skip the "(EXT)" suffix entirely and just label them "Podcast".
     if (b == PODCAST) return "Podcast";
 
-    // Atari 2600 (VCS / TIA) demoscene rips carry the verbose platform string
-    // "Atari 2600 Video Computer System (VCS)" and are bucketed under POKEY
-    // (Atari 8Bit) for the TAB filter -- but that string is a machine descriptor,
-    // not a tracker name, and the files are zip/gz/mp3 rips with no meaningful
-    // inner format. Surface the concise machine name (like YouTube/Podcast
-    // above), so it reads "Atari 2600" instead of the misleading
-    // "Atari XL/XE - Atari 2600 Video Computer System (VCS)".
-    if (toLower(s.format) == "atari 2600 video computer system (vcs)")
-        return "Atari 2600";
+    // Atari VCS rips carry the verbose machine descriptor "Atari 2600 Video
+    // Computer System (VCS)" as their format string, and are zip/gz/mp3 rips
+    // with no meaningful inner format. Show the bare platform name (like
+    // YouTube/Podcast above) rather than the redundant "Atari VCS - Atari 2600
+    // Video Computer System (VCS) (ZIP)".
+    if (b == ATARIVCS) return platformName(b);
 
     // Extension (uppercase, no dot). resolveExtension() gives the REAL inner
     // format, so a compressed song shows "(MOD)" not "(ZIP)" -- and never the
@@ -3684,18 +3826,11 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
         plat = platformName(b);
         name = s.format;
     }
-    // Atari Falcon sub-label. The YM2149 ST chiptune formats (sndh/ym/sc68/TCB/
-    // Hippel ST/Quartet/Special FX...) keep "Atari ST/STE", but the Falcon-native
-    // sample trackers -- Graoumf Tracker (.gtk), Digital Tracker (.dtm), Digi-Mix
-    // (.mix) -- show "Atari Falcon" instead. They stay the ATARI platform byte
-    // (same TAB "Atari ST/STE/Falcon" filter and classification); only the
-    // displayed platform word changes. Keyed on ext under b==ATARI, so the
-    // unrelated .dtm variants (DeFy AdLib / DigiTrekker) -- which classify as
-    // PC/AdLib, not ATARI -- are never relabelled. The Falcon logo is already
-    // handled separately by the per-extension screenshots (gtk/dtm/mix.png).
-    if (b == ATARI && (ext == "GTK" || ext == "DTM" || ext == "MIX")) {
-        plat = "Atari Falcon";
-    }
+    // (The Atari Falcon sub-label that used to sit here -- relabelling .gtk/.dtm/
+    // .mix under b==ATARI to "Atari Falcon" -- is gone: those tunes now carry the
+    // ATARIFALCON byte, so platformName(b) above already says "Atari Falcon" and
+    // they are filterable as Falcon rather than merely labelled. See the ext rule
+    // at the end of formatToByte.)
 
     if (b == APPLEMAC && ext == "MAD") {
         plat = "Macintosh";

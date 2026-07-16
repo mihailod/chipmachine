@@ -1,10 +1,13 @@
+- announce CTRL+TAB format filtering in scroll and Help Menu
+
+- CHECK THIS: One small consequence worth knowing now: the top-level Atari row has no logo of its own — updateFilterLogo makes a group borrow its first child's logo, so Atari would display Atari XL-XE.png. That's how Nintendo already behaves (it borrows the NES logo), so it's consistent rather than broken. If you'd rather it show a proper Atari house logo, drop in an Atari.png and I'll add a small group-logo override in step 3 — say the word and I'll note it.
+---- would like to drop high-level parent logos Atari.png, Nintendo.png and they will be also used in the rotation... program should print warning if they are missing like it prints now for any missing logo
+
 - combine yt and ogg not classified into one?
 
 - songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
 
-- have another screen similar to Platforms (TAB) but Databases (SHIFT+TAB or CTRL+TAB) -- wanna be able to restrict results to just one database like we can with platforms now and i pick there. we list all db sources there (45 now i think) and user can navigate like now with formats and select one and then we restrict search result to show only results from that db. we already show db names under the progress bar when indexing and we show in the title in search result selection where the item came from so i think this is feasible.
-
-- another screen for extensions? sorted by # of items in the database
+- and then we need another screen for databases (SHIFT+TAB). sorted by # of items in the database. also announced in scroll and help menu
 
 - .vt Vic-Tracker tunes are VIC-20 and unplayable today (no plugin claims .vt). need the Vic-Tracker replayer vendoring and plugin 
 

@@ -141,6 +141,16 @@ struct FilterOption {
     // filter but drills into a 2nd-level list of these child options, which
     // themselves apply the filter. Empty for ordinary (leaf) entries.
     std::vector<FilterOption> children;
+    // House logo for a GROUP row, as the basename of an image in
+    // data/misc/platformscreenshots (e.g. "Atari" -> Atari.png). A group has no
+    // format byte of its own, so by default it borrows its first child's logo --
+    // which makes the row look like that one machine. Set this to show the family
+    // mark instead: on the platform screen when the group row is highlighted, and
+    // on the splash. Ignored for leaf entries (they use their byte's slug).
+    // The image is OPTIONAL -- a missing one falls back to the borrowed child
+    // logo rather than failing -- but it IS reported at startup like the other
+    // logo gaps, so it doesn't stay un-drawn just because nothing breaks.
+    std::string logo;
 };
 
 class ChipMachine
@@ -445,6 +455,10 @@ private:
                                                const std::string& platformSlug,
                                                const std::string& format,
                                                std::string* label = nullptr);
+
+    // Platform logo by name, case-insensitively (collections disagree on the
+    // capitalisation of the same platform). nullptr when none is installed.
+    const image::bitmap* findPlatformShot(const std::string& name);
 
     // Refreshes searchLogoIcon with the highlighted song's platform/ext logo,
     // positioned in the screenshot slot. Clears it when no song is selected or
