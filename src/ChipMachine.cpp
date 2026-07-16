@@ -653,10 +653,90 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     advancedList.setArea(advancedArea); // match the layout area (scissor clip)
     advancedScreen.add(&advancedList);
 
+    // --- Formats (CTRL+TAB) screen -------------------------------------------
+    // Highlighted-extension logo, dimmed and centred behind the list (added
+    // first so it renders beneath the title and rows), same as the TAB screen.
+    formatLogoIcon.color = 0x50ffffff;
+    formatScreen.add(&formatLogoIcon);
+
+    formatTitle.setFont(font);
+    formatTitle.color = 0xffffffaa;
+    formatTitle.scale = searchField.scale;
+    formatTitle.visible(true);
+    formatTitle.setText("FORMAT FILTER");
+    formatScreen.add(&formatTitle);
+
+    formatHint.setFont(font);
+    formatHint.color = 0xffffff66;
+    formatHint.visible(true);
+    formatHint.setText("      ARROWS navigate   ENTER apply   ESC go back");
+    formatScreen.add(&formatHint);
+    positionFormatHint();
+
+    // A single scrolling column: "EXT   count   name" per row. Unlike the TAB
+    // list (which sets visibleItems == size and never scrolls), there are
+    // hundreds of extensions, so it scrolls like the search results (numLines).
+    formatList = VerticalList(
+        listrec, numLines,
+        [=](grappix::Rectangle& rec, int y, uint32_t index, bool hilight) {
+            auto const& groups = musicDatabase.extensionGroups();
+            // Row 0 is the clear-filter entry (like the TAB screen's [no filter]);
+            // extension group g renders on row g+1.
+            bool noFilter = (index == 0);
+            if (!noFilter && (index - 1) >= groups.size()) return;
+            uint32_t c;
+            std::string ext, cnt, name;
+            if (noFilter) {
+                c = 0xffffffff; // white; no single platform
+                name = "[no filter, search all]";
+            } else {
+                auto const& g = groups[index - 1];
+                // Same platform colouring as the TAB filter and results list.
+                c = formatColor(g.platform);
+                ext = "." + g.ext;
+                for (auto& ch : ext) ch = (char)toupper((unsigned char)ch);
+                cnt = withCommas(g.count);
+                name = g.name;
+            }
+            if (hilight) {
+                // A white base ("[no filter]") pulses toward grey so its
+                // selection reads; coloured rows pulse toward white.
+                Color target =
+                    (c == 0xffffffff) ? Color(0xff707070) : hilightColor;
+                static uint32_t markStartcolor = 0;
+                if (markStartcolor != c) {
+                    markStartcolor = c;
+                    markColor = c;
+                    markTween = Tween::make()
+                                    .sine()
+                                    .repeating()
+                                    .from(markColor, target)
+                                    .seconds(1.0);
+                    markTween.start();
+                }
+                c = markColor;
+            }
+            float scale = resultFieldTemplate.scale * 0.9f;
+            if (noFilter) {
+                grappix::screen.text(listFont, name, rec.x, rec.y, c, scale);
+                return;
+            }
+            // Three columns at fixed fractions of the row width.
+            grappix::screen.text(listFont, ext, rec.x, rec.y, c, scale);
+            grappix::screen.text(listFont, cnt, rec.x + rec.w * 0.16f, rec.y, c,
+                                 scale);
+            grappix::screen.text(listFont, name, rec.x + rec.w * 0.34f, rec.y, c,
+                                 scale);
+        });
+    formatList.setTotal(0); // populated when the screen is opened (see commands)
+    formatList.setVisible(numLines);
+    formatList.setArea(listrec);
+    formatScreen.add(&formatList);
+
     scrollText = "INITIAL_TEXT";
     scrollEffect.set("scrolltext",
         "Type to search . . UP+DOWN/ENTER navigate/play"
-        " . . TAB=platforms"
+        " . . TAB=platforms . . SHIFT+TAB=formats"
         " . . CTRL+H=help . . . "
     );
     starEffect.fadeIn();
@@ -760,6 +840,10 @@ void ChipMachine::layoutScreen()
     advancedTitle.pos = { (float)topLeft.x, (float)topLeft.y };
     advancedTitle.scale = searchField.scale;
     positionAdvancedHint();
+
+    formatTitle.pos = { (float)topLeft.x, (float)topLeft.y };
+    formatTitle.scale = searchField.scale;
+    positionFormatHint();
 
     // y is reclaimed (moved up) in updateLists(); x/scale here.
     commandTitle.pos = { (float)topLeft.x, topLeft.y * 0.90f };
@@ -1036,6 +1120,45 @@ void ChipMachine::updateFilterLogo()
     float x = (screen.width() - final_w) * 0.5f;
     float y = (screen.height() - final_h) * 0.5f;
     filterLogoIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
+}
+
+void ChipMachine::updateFormatLogo()
+{
+    // Preview the highlighted extension's logo behind the Formats list.
+    if (currentScreen != FORMAT_SCREEN) {
+        formatLogoIcon.clear();
+        return;
+    }
+    auto const& groups = musicDatabase.extensionGroups();
+    // Row 0 is [no filter] (no logo); group g is at list index g+1.
+    int i = formatList.selected() - 1;
+    const image::bitmap* bm = nullptr;
+    if (i >= 0 && i < (int)groups.size()) {
+        auto const& g = groups[i];
+        // The per-extension screenshot (mod.png, sid.png, ...) if present, else
+        // the row's platform logo. Same resolver the now-playing screen uses.
+        std::string slug = MusicDatabase::platformScreenshotSlug(g.platform);
+        bm = pickPlatformOrExtLogo(g.ext, slug, "");
+    }
+    if (!bm) {
+        formatLogoIcon.clear();
+        return;
+    }
+    formatLogoIcon.setBitmap(*bm);
+
+    // Fit inside a centred box (same fraction as the TAB filter logo).
+    int bm_w = bm->width();
+    int bm_h = bm->height();
+    float w = screen.width() * 0.5f;
+    float h = screen.height() * 0.5f;
+    float d = h / bm_h;
+    float d2 = w / bm_w;
+    if (d2 < d) d = d2;
+    float final_w = bm_w * d;
+    float final_h = bm_h * d;
+    float x = (screen.width() - final_w) * 0.5f;
+    float y = (screen.height() - final_h) * 0.5f;
+    formatLogoIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
 }
 
 // Positions the idle-splash picture centred on the screen, scaled to fill
@@ -2446,6 +2569,8 @@ void ChipMachine::render(uint32_t delta)
         searchScreen.render(screenptr, delta);
     } else if (currentScreen == ADVANCED_SCREEN) {
         advancedScreen.render(screenptr, delta);
+    } else if (currentScreen == FORMAT_SCREEN) {
+        formatScreen.render(screenptr, delta);
     } else {
         // Help/command screen: the same animated platform-logo transitions as the
         // splash, but dimmed (same alpha as the platform-filter screen's logo) and

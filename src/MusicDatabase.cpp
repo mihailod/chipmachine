@@ -14,6 +14,7 @@
 #include <xml/xml.h>
 
 #include <algorithm>
+#include <cctype>
 #include <chrono>
 #include <filesystem>
 #include <map>
@@ -1380,6 +1381,9 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
                           allowedFormats[0] == ARCADE));
     if (otherFilterActive) subPlatformByte = allowedFormats[0];
     otherPlatformFilter = -1;
+    // A platform filter and the CTRL+TAB extension filter share the single
+    // title-index predicate slot, so activating one clears the other's state.
+    extensionFilterGid = -1;
     if (allowedFormats.empty()) {
         titleIndex.setFilter();
         formatFilterActive = false;
@@ -1447,6 +1451,161 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
         // Build the sub-platform grouping for the active byte (OTHER / ARCADE).
         if (otherFilterActive) buildSubPlatforms();
     }
+}
+
+void MusicDatabase::buildExtensionGroups()
+{
+    if (extensionGroupsBuilt) return;
+
+    // Songs occupy [0, productStartIndex); products carry no real extension.
+    uint32_t n = (productStartIndex > 0 &&
+                  productStartIndex <= (uint32_t)formats.size())
+                     ? productStartIndex
+                     : (uint32_t)formats.size();
+    if (n == 0) return; // not indexed yet -- retry on the next call
+
+    extensionGroupsBuilt = true;
+    extensionGroupList.clear();
+    extGroupOf.assign(n, -1);
+
+    // One scan: resolve each song's real extension (container-stripped, etc.),
+    // tallying count, the songs' indices, and the most common DB format string
+    // (a name fallback for undescribed extensions). Search index i maps to
+    // song.ROWID i+1 (contiguous; see getSongInfo / buildSubPlatforms).
+    struct Acc
+    {
+        int count = 0;
+        std::vector<int> idxs;
+        std::unordered_map<std::string, int> fmts; // DB format string -> count
+    };
+    std::unordered_map<std::string, Acc> byExt;
+
+    auto q = db.query<int, std::string, std::string, std::string>(
+        "SELECT ROWID, ext, path, format FROM song");
+    while (q.step()) {
+        int rowid;
+        std::string ext, path, fmt;
+        tie(rowid, ext, path, fmt) = q.get_tuple();
+        int i = rowid - 1;
+        if (i < 0 || i >= (int)n) continue;
+        SongInfo si;
+        si.path = path;
+        si.ext = ext;
+        si.format = fmt;
+        std::string e = resolveExtension(si);
+        if (e.empty()) continue;
+        auto& a = byExt[e];
+        a.count++;
+        a.idxs.push_back(i);
+        if (!fmt.empty()) a.fmts[fmt]++;
+    }
+
+    // A token that could be a real extension: short, and only [a-z0-9_-]. Keeps
+    // song-name fragments resolveExtension() mistakes for extensions ("song
+    // (stripped)", "dinosaurdetective jingle2") out of the list unless they are
+    // actually described. The length cap is 8, not 6, so real PSF-family formats
+    // (mini2sf/miniusf/minidsf/minissf/psf2lib/minipsf2) are admitted; the junk
+    // is excluded by the character test (it always carries spaces/parens), not
+    // the length.
+    auto cleanToken = [](std::string const& e) {
+        if (e.empty() || e.size() > 8) return false;
+        for (char c : e)
+            if (!(std::isalnum((unsigned char)c) || c == '-' || c == '_'))
+                return false;
+        return true;
+    };
+
+    // Admit described extensions always; undescribed ones only when they clear
+    // the size bar and look like a real token.
+    std::vector<std::pair<std::string, Acc*>> admitted;
+    for (auto& kv : byExt) {
+        bool described = !describeExtension(kv.first).empty();
+        if (described ||
+            (kv.second.count >= kExtGroupMinSongs && cleanToken(kv.first)))
+            admitted.emplace_back(kv.first, &kv.second);
+    }
+    // Highest count first; ties alphabetical so the order is stable.
+    std::sort(admitted.begin(), admitted.end(), [](auto const& a, auto const& b) {
+        if (a.second->count != b.second->count)
+            return a.second->count > b.second->count;
+        return a.first < b.first;
+    });
+
+    for (int gid = 0; gid < (int)admitted.size(); gid++) {
+        std::string const& e = admitted[gid].first;
+        Acc& a = *admitted[gid].second;
+        // Most common DB format string: the name fallback for undescribed
+        // extensions AND the signal for the row's platform colour.
+        std::string modal;
+        int best = -1;
+        for (auto const& f : a.fmts)
+            if (f.second > best) {
+                best = f.second;
+                modal = f.first;
+            }
+        std::string name = extensionName(e);
+        // .mod's description name lists six trackers (87 chars) -- too long for
+        // the screen's name column. Use a compact one-off stand-in here only; the
+        // now-playing scroller still shows the full list via describeExtension().
+        if (e == "mod") name = "Sound-/Noise-/Pro-Tracker, etc.";
+        if (name.empty()) name = modal;
+        // Colour the row like the platform screens do: classify the modal format
+        // string (the richer signal), falling back to the bare extension.
+        uint8_t plat = classifyFormat(!modal.empty() ? modal : e, "");
+        extensionGroupList.push_back({ e, name, a.count, plat });
+        for (int i : a.idxs) extGroupOf[i] = (int16_t)gid;
+    }
+}
+
+std::vector<MusicDatabase::ExtGroup> const& MusicDatabase::extensionGroups()
+{
+    if (!extensionGroupsBuilt) buildExtensionGroups();
+    return extensionGroupList;
+}
+
+void MusicDatabase::setExtensionFilter(int gid)
+{
+    // Reset the sibling browse states, exactly as setFormatFilter does -- only
+    // one filter drives the title index at a time.
+    podcastFilterActive = false;
+    podcastShowFilter = -1;
+    podcastShowList.clear();
+    otherFilterActive = false;
+    otherPlatformFilter = -1;
+    filterHueRank.clear();
+    filterHueCount = 0;
+    extensionFilterGid = gid;
+
+    if (gid < 0) {
+        titleIndex.setFilter();
+        formatFilterActive = false;
+        filteredCandidates.clear();
+        filteredCandidates.shrink_to_fit();
+        return;
+    }
+
+    if (!extensionGroupsBuilt) buildExtensionGroups();
+
+    titleIndex.setFilter([=](int index) {
+        // Products (and anything past the song range) carry no extension group.
+        if (index < 0 || index >= (int)extGroupOf.size()) return true; // exclude
+        return extGroupOf[index] != (int16_t)gid;                      // keep == gid
+    });
+
+    // Same filtered-candidate + hue precompute as setFormatFilter, so short
+    // queries and the even-hue colouring work identically under an ext filter.
+    formatFilterActive = true;
+    filteredCandidates.clear();
+    uint32_t n = titleIndex.size();
+    std::set<uint16_t> hues;
+    for (uint32_t i = 0; i < n; i++) {
+        if (titleIndex.isFiltered(i)) continue;
+        filteredCandidates.push_back(i);
+        if (i < productStartIndex) hues.insert(formatHue[i]);
+    }
+    int rank = 0;
+    for (uint16_t h : hues) filterHueRank[h] = rank++;
+    filterHueCount = (int)hues.size();
 }
 
 int MusicDatabase::search(std::string const& query, std::vector<int>& result,
@@ -3883,10 +4042,14 @@ std::string MusicDatabase::describeExtension(std::string const& ext)
                 auto tab = lines[i].find('\t');
                 if (tab == std::string::npos) continue; // desc / blank line
                 std::string key = toLower(lines[i].substr(0, tab));
-                std::string combined = lines[i].substr(tab + 1);
+                std::string name = lines[i].substr(tab + 1);
+                std::string combined = name;
                 if (i + 1 < lines.size() && !lines[i + 1].empty())
                     combined += " - " + lines[i + 1];
                 formatDescriptions[key] = combined;
+                // The bare line-1 name field (no prose), for the Formats screen's
+                // per-extension label. Keyed identically (lowercased).
+                formatNames[key] = name;
             }
             LOGD("Loaded %d format descriptions",
                  (int)formatDescriptions.size());
@@ -3894,6 +4057,15 @@ std::string MusicDatabase::describeExtension(std::string const& ext)
     }
     auto it = formatDescriptions.find(toLower(ext));
     return it == formatDescriptions.end() ? "" : it->second;
+}
+
+std::string MusicDatabase::extensionName(std::string const& ext)
+{
+    // Share describeExtension()'s lazy load (which also fills formatNames); the
+    // return value is ignored, we only need the side effect.
+    if (!formatDescriptionsLoaded) describeExtension(ext);
+    auto it = formatNames.find(toLower(ext));
+    return it == formatNames.end() ? "" : it->second;
 }
 
 template <typename T> static void readVector(std::vector<T>& v, apone::File& f)

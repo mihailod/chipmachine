@@ -75,7 +75,12 @@ void ChipMachine::setupRules()
            if_equals(currentScreen, SEARCH_SCREEN) && if_null(currentDialog) &&
                if_false(haveSearchChars),
            "pause_/_resume_playback");
-    addKey(keycodes::TAB, "show_platform_filters");
+    addKey(keycodes::TAB, "show_platform_/_format_filters");
+    // SHIFT+TAB opens the sibling per-extension "Formats" screen. The SHIFT
+    // modifier is folded into the event (see updateKeys), so TAB|SHIFT is a
+    // distinct binding from plain TAB. (NOT Ctrl+Tab: macOS's key-view loop
+    // consumes Ctrl+Tab before a GLFW window ever sees the keyDown.)
+    addKey(keycodes::TAB | SHIFT, "show_format_filters");
 
     addKey(keycodes::BACKSPACE,
            if_equals(currentScreen, SEARCH_SCREEN) && if_null(currentDialog) &&
@@ -107,6 +112,11 @@ void ChipMachine::setupRules()
            "select_filter");
     addKey(keycodes::ESCAPE, if_equals(currentScreen, ADVANCED_SCREEN),
            "clear_/_close_/_go_back");
+    // ENTER applies the highlighted extension; ESCAPE pops back to lastScreen.
+    addKey(keycodes::ENTER, if_equals(currentScreen, FORMAT_SCREEN),
+           "select_format");
+    addKey(keycodes::ESCAPE, if_equals(currentScreen, FORMAT_SCREEN),
+           "clear_/_close_/_go_back");
     // CTRL+F ("favor") on both screens -- one key, and which song it favors
     // follows from where you are. Deliberately not an F key: macOS hijacks those
     // for its own system functions. (The favorites SHUFFLE is CTRL+P.)
@@ -120,11 +130,13 @@ void ChipMachine::setupRules()
     addKey(keycodes::LEFT,
            if_not_equals(currentScreen, COMMAND_SCREEN) &&
                if_not_equals(currentScreen, ADVANCED_SCREEN) &&
+               if_not_equals(currentScreen, FORMAT_SCREEN) &&
                if_null(currentDialog),
            "prev_subtune");
     addKey(keycodes::RIGHT,
            if_not_equals(currentScreen, COMMAND_SCREEN) &&
                if_not_equals(currentScreen, ADVANCED_SCREEN) &&
+               if_not_equals(currentScreen, FORMAT_SCREEN) &&
                if_null(currentDialog),
            "next_/_prev_subtune");
     // The platform filter is a two-column list; LEFT/RIGHT hop between the
@@ -168,8 +180,12 @@ void ChipMachine::setupRules()
     // advertised in the startup scroller. close_dialog / clear_command /
     // clear_search are the other ESC actions -- ESC is represented once by the
     // "CLEAR / CLOSE / GO BACK" entry, so hide these duplicates. volume_down (the
-    // '-' key) is folded into the "VOLUME UP / DOWN   + / -" row. select_filter
-    // (ENTER on the platform-filter screen) is self-evident once you're there.
+    // '-' key) is folded into the "VOLUME UP / DOWN   + / -" row. select_filter /
+    // select_format (ENTER on the platform / format filter screens) are
+    // self-evident once you're there. show_format_filters (SHIFT+TAB) is folded
+    // into the single "SHOW PLATFORM / FORMAT FILTERS   tab / shift+tab" row (the
+    // show_platform_/_format_filters command carries both keys in its seeded
+    // shortcut).
     // this_help_menu (CTRL+H) is advertised in the help title itself, so it
     // doesn't need its own row. filter_column_left/right (LEFT/RIGHT on the
     // platform-filter screen) are covered by that screen's own title hint.
@@ -178,6 +194,7 @@ void ChipMachine::setupRules()
     // volume_down is folded into the volume row.
     for (auto const& name : { "show_search", "close_dialog", "clear_command",
                               "clear_search", "volume_down", "select_filter",
+                              "select_format", "show_format_filters",
                               "this_help_menu", "filter_column_left",
                               "filter_column_right", "prev_subtune",
                               "prev_shuffle_song" }) {
@@ -206,9 +223,11 @@ void ChipMachine::showScreen(Screen screen)
             Tween::make().to(scrollEffect.alpha, 0.0).seconds(0.5);
         }
         // Sync the platform-logo previews to the (new) screen: show them for the
-        // current selection on the search / TAB filter screen, clear elsewhere.
+        // current selection on the search / TAB filter / Formats screen, clear
+        // elsewhere.
         updateSearchLogo();
         updateFilterLogo();
+        updateFormatLogo();
         // The help menu is display-only (typing starts a search instead), so
         // always show the title and keep the unused input field (and its cursor)
         // hidden.
@@ -331,6 +350,7 @@ void ChipMachine::updateKeys()
     searchUpdated = false;
     auto last_selection = songList.selected();
     auto last_adv_selection = advancedList.selected();
+    auto last_format_selection = formatList.selected();
 
     auto key = screen.get_key();
 
@@ -370,6 +390,8 @@ void ChipMachine::updateKeys()
         currentList = &commandList;
     else if (currentScreen == ADVANCED_SCREEN)
         currentList = &advancedList;
+    else if (currentScreen == FORMAT_SCREEN)
+        currentList = &formatList;
 
     bool ascii = (event >= 'A' && event <= 'Z');
     if (ascii) event = tolower(event);
@@ -502,6 +524,11 @@ void ChipMachine::updateKeys()
     if (currentScreen == ADVANCED_SCREEN &&
         advancedList.selected() != last_adv_selection)
         updateFilterLogo();
+
+    // Refresh the Formats screen's extension-logo backdrop on cursor moves.
+    if (currentScreen == FORMAT_SCREEN &&
+        formatList.selected() != last_format_selection)
+        updateFormatLogo();
 
     if (searchUpdated) {
         auto s = searchField.getText();

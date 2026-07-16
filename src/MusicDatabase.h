@@ -255,6 +255,12 @@ public:
     // Used by the scroller fallback when a tune carries no embedded text.
     std::string describeExtension(std::string const& ext);
 
+    // Just the short NAME field (line 1 of a formats_descriptions.txt entry, no
+    // prose), e.g. "FastTracker 2.0" for "xm". Shares describeExtension()'s lazy
+    // load. Returns "" when the extension isn't listed. Used to label rows on the
+    // CTRL+TAB Formats screen.
+    std::string extensionName(std::string const& ext);
+
     // Map a modland/format string (+ path) to its format byte (platform/type).
     static uint8_t classifyFormat(std::string const& fmt,
                                   std::string const& path);
@@ -451,6 +457,29 @@ public:
     void setFilter(std::string const& filter, int type = 0);
     void setFormatFilter(std::vector<uint8_t> const& allowedFormats);
 
+    // --- CTRL+TAB "Formats" screen (per-extension filter) --------------------
+    // One browsable row per resolved file extension, sorted by song count. A row
+    // is admitted if the extension is described in formats_descriptions.txt, or
+    // has >= kExtGroupMinSongs songs and a clean token (so song-name fragments
+    // that resolveExtension() mistakes for extensions never become rows).
+    struct ExtGroup
+    {
+        std::string ext;    // resolved extension, lowercased, no dot (e.g. "mod")
+        std::string name;   // description name, else modal DB format string, else ""
+        int count;          // songs in this group
+        uint8_t platform;   // format byte of the modal DB format (for row colour)
+    };
+    // The extension list (built lazily on first call, then cached), highest count
+    // first. The vector index equals the group id used by setExtensionFilter().
+    std::vector<ExtGroup> const& extensionGroups();
+    // Restrict search to one extension group (its index in extensionGroups());
+    // pass -1 to clear. Reuses the same title-index predicate slot and the
+    // formatFilterActive machinery the platform (TAB) filter uses -- so only one
+    // of the two can be active at a time, and every downstream search/prompt/ESC
+    // path works unchanged.
+    void setExtensionFilter(int gid);
+    int extensionFilter() const { return extensionFilterGid; }
+
 private:
     void initDatabase(utils::path const& workDir, Variables& vars);
     void generateIndex();
@@ -616,6 +645,8 @@ private:
     // ext -> "<trackers> - <description>", lazily loaded from
     // data/misc/formats_descriptions.txt by describeExtension().
     std::map<std::string, std::string> formatDescriptions;
+    // ext -> just the line-1 name field (no prose), loaded alongside the above.
+    std::map<std::string, std::string> formatNames;
     bool formatDescriptionsLoaded = false;
 
     // The (singleton) instance, so the static resolveExtension()/describeFormat()
@@ -684,6 +715,16 @@ private:
     // format byte == subPlatformByte by their format string, and populate the
     // browse state above. Rebuilds when subPlatformByte changes.
     void buildSubPlatforms();
+
+    // Extension-filter browse state (see extensionGroups() / setExtensionFilter).
+    static constexpr int kExtGroupMinSongs = 10; // admit undescribed exts at/above
+    std::vector<ExtGroup> extensionGroupList;    // by count desc; index == gid
+    std::vector<int16_t> extGroupOf;             // song index -> gid, or -1
+    bool extensionGroupsBuilt = false;
+    int extensionFilterGid = -1;                 // active gid, -1 = none
+    // One scan of the song table: resolveExtension() per song, group, count, sort
+    // by count, admit per the rule above. Fills extensionGroupList / extGroupOf.
+    void buildExtensionGroups();
     // Rank (0..N-1) of each distinct sub-format hue present in the active
     // filter, and the count N. Built in setFormatFilter() so renderSong can
     // spread hues evenly across however many formats the platform actually has.

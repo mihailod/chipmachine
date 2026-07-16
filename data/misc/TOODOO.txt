@@ -1,12 +1,4 @@
-key	line	what's there
-.hipc	136 / 920	Same format, two different write-ups. 920 wins; 136 is dead.
-.mkii	208 / 932	Same format, two different write-ups. 932 wins; 208 is dead.
-.m	723 / 816	Two different formats. 816 (Ultima VI) wins, so 67 PMD songs get the wrong description.
-
-
-
------------------
-
+- revisit db priority, some have the same so the results are still mixed, not sorted?
 
 - add missing platform images
 

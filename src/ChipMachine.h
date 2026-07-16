@@ -266,6 +266,7 @@ private:
         SEARCH_SCREEN = 1,
         COMMAND_SCREEN = 2,
         ADVANCED_SCREEN = 3,
+        FORMAT_SCREEN = 4,
     };
 
     static const uint32_t SHIFT = 0x10000;
@@ -303,9 +304,18 @@ private:
                                  15 * advancedHint.scale,
                              advancedTitle.pos.y };
     }
+    // Same treatment for the Formats (CTRL+TAB) screen's key hint.
+    void positionFormatHint()
+    {
+        formatHint.scale = formatTitle.scale * 0.65f;
+        formatHint.pos = { formatTitle.pos.x + formatTitle.getWidth() +
+                               15 * formatHint.scale,
+                           formatTitle.pos.y };
+    }
     void updateLists()
     {
         positionAdvancedHint();
+        positionFormatHint();
         int y = resultFieldTemplate.pos.y + (15 * resultFieldTemplate.scale);
         int w = grappix::screen.width() - topLeft.x;
         int h = downRight.y - topLeft.y - y;
@@ -313,6 +323,9 @@ private:
         songList.setArea(grappix::Rectangle(topLeft.x, y, w, h));
         advancedArea = grappix::Rectangle(topLeft.x, y, w, h);
         advancedList.setArea(advancedArea);
+        // The Formats screen is a single scrolling column over the same area.
+        formatArea = grappix::Rectangle(topLeft.x, y, w, h);
+        formatList.setArea(formatArea);
 
         // The help/command screen is one non-scrolling screen, so give it a
         // dedicated, taller area: title nudged up and the list running all the
@@ -367,7 +380,7 @@ private:
         // half-row gap is drawn before each (see renderCommand / matchingGap).
         // Add the first command of a group here to visually separate the sets.
         static const std::set<std::string> groupBreaks = { 
-            "show_platform_filters",
+            "show_platform_/_format_filters",
             "local_file_playback",
             "play_song",
             "Spectrum_Analyzer_Mode",
@@ -478,6 +491,10 @@ private:
     // logo, centred behind the list. Clears it off the filter screen or when the
     // entry has no hardware platform.
     void updateFilterLogo();
+
+    // Same idea for the Formats (CTRL+TAB) screen: the highlighted extension's
+    // per-extension screenshot (else its platform logo), centred behind the list.
+    void updateFormatLogo();
 
     utils::path workDir;
     // Resolved folder the scroller fonts were last loaded from; used to skip a
@@ -598,6 +615,16 @@ private:
     // dimmer font (like sourceStatus next to topStatus). Positioned at runtime
     // from advancedTitle's width -- see positionAdvancedHint().
     TextField advancedHint;
+
+    // The Formats (CTRL+TAB) screen: a single scrolling column, one row per file
+    // extension ("EXT   count   name"), highest count first. Selecting one
+    // restricts search to that extension (MusicDatabase::setExtensionFilter).
+    RenderSet formatScreen;
+    grappix::VerticalList formatList;
+    grappix::Rectangle formatArea;
+    TextField formatTitle;
+    TextField formatHint;
+    Icon formatLogoIcon; // per-extension logo, centred behind the list
     // Header on the command/help screen (e.g. "ChipMachineAS 1.9 HELP MENU"),
     // drawn above the first entry; hidden while a command filter is being typed.
     TextField commandTitle;

@@ -46,14 +46,35 @@ void ChipMachine::setupCommands()
         searchUpdated = true;
     });
 
-    cmd("show_platform_filters", [=] {
-        if (currentScreen != ADVANCED_SCREEN) lastScreen = currentScreen;
+    // TAB opens the platform screen; the sibling SHIFT+TAB "Formats" command is
+    // registered just below. Both are advertised on this one help row -- the name
+    // renders "SHOW PLATFORM / FORMAT FILTERS" and the seeded shortcut carries
+    // both keys -- while show_format_filters is hidden from the list (its shortcut
+    // is cleared in setupRules), so the pair reads as a single entry.
+    cmd("show_platform_/_format_filters", [=] {
+        // Remember only a real (non-filter) screen to return to, so switching
+        // between the two filter screens (TAB / SHIFT+TAB) doesn't nest.
+        if (currentScreen != ADVANCED_SCREEN && currentScreen != FORMAT_SCREEN)
+            lastScreen = currentScreen;
         // Ensure the per-format tune counts are ready (e.g. when the index was
         // loaded from cache and the indexing-finished path never ran).
         if (filterCounts.empty()) computeFilterCounts();
         // Always open at the top level (reset any prior drill state).
         if (activeFilterOptions != nullptr) setFilterLevel(nullptr, drillReturnIndex);
         showScreen(ADVANCED_SCREEN);
+    });
+    shortcut("tab / shift+tab");
+
+    cmd("show_format_filters", [=] {
+        if (currentScreen != FORMAT_SCREEN && currentScreen != ADVANCED_SCREEN)
+            lastScreen = currentScreen;
+        // Build (lazily) and size the list: row 0 is [no filter], then one row
+        // per extension group (highest song-count first).
+        auto const& groups = musicDatabase.extensionGroups();
+        formatList.setTotal((int)groups.size() + 1);
+        if (formatList.selected() >= (int)groups.size() + 1)
+            formatList.select(0);
+        showScreen(FORMAT_SCREEN);
     });
 
     // LEFT/RIGHT on the platform-filter screen hop between the two columns,
@@ -130,6 +151,39 @@ void ChipMachine::setupCommands()
         }
         // Land on the search screen so the (pre-populated) results are visible
         // immediately; selecting "no filter" just returns to the main screen.
+        showScreen(hasFilter ? SEARCH_SCREEN : MAIN_SCREEN);
+    });
+
+    // ENTER on the Formats (CTRL+TAB) screen: apply the highlighted extension as
+    // a filter. Mirrors select_filter, but for the per-extension filter. Row 0 is
+    // the [no filter] entry, so group g sits at list index g+1.
+    cmd("select_format", [=] {
+        int idx = formatList.selected();
+        auto const& groups = musicDatabase.extensionGroups();
+        bool hasFilter = (idx > 0 && (idx - 1) < (int)groups.size());
+        if (hasFilter) {
+            auto const& grp = groups[idx - 1];
+            musicDatabase.setExtensionFilter(idx - 1);
+            // Prompt / persistent-label token: the uppercased extension (concise
+            // and unambiguous), e.g. ".XM".
+            std::string token = "." + grp.ext;
+            for (auto& ch : token) ch = (char)toupper((unsigned char)ch);
+            selectedFilterName = token;
+            activeFilterCount = grp.count;
+            mainFilterField.setText(token + "  (SHIFT+TAB to change)");
+        } else {
+            // Row 0 ([no filter]) or an out-of-range index: clear the filter.
+            musicDatabase.setExtensionFilter(-1);
+            selectedFilterName = "";
+            activeFilterCount = 0;
+            mainFilterField.setText("");
+        }
+        iquery->invalidate();
+        // Empty query so the search re-runs cleanly with the new filter (a small
+        // filter pre-populates all its songs; see MusicDatabase::search).
+        searchField.setText("");
+        songList.select(0);
+        searchUpdated = true;
         showScreen(hasFilter ? SEARCH_SCREEN : MAIN_SCREEN);
     });
 
@@ -411,11 +465,12 @@ void ChipMachine::setupCommands()
             searchUpdated = true;
             return;
         }
-        // Any platform filter is active (reached via the TAB screen): ESC steps
-        // back up to that platform filter rather than jumping all the way out to
+        // A filter is active (reached via TAB or CTRL+TAB): ESC steps back up to
+        // whichever filter screen set it rather than jumping all the way out to
         // the main screen. Only an unfiltered search returns to MAIN.
         if (searchField.getText() == "" && musicDatabase.hasFormatFilter()) {
-            showScreen(ADVANCED_SCREEN);
+            showScreen(musicDatabase.extensionFilter() >= 0 ? FORMAT_SCREEN
+                                                            : ADVANCED_SCREEN);
             return;
         }
         if (searchField.getText() == "")
