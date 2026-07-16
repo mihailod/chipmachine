@@ -1026,6 +1026,41 @@ static std::string routingExtension(SongInfo const& song)
     return ext.empty() ? routingExtension(song.path) : ext;
 }
 
+// A .prg whose target machine we cannot emulate.
+//
+// .prg is a bare Commodore executable: the first two bytes are its load address
+// and nothing else says which machine it is for. We decode .prg with ONE engine,
+// tedplay (TEDPlugin), which emulates the TED chip -- Commodore 16/116/plus4 --
+// and its canHandle takes any ".prg" on extension alone. Demozoo carries three
+// tunes built for machines we have no emulator for at all: two Commodore VIC-20
+// (sound on the VIC chip) and one Commodore PET (no sound chip; a PIA-driven
+// beeper).
+//
+// They do not fail, they play SILENCE, which is worse. Plus/4 BASIC starts at
+// $1001 -- the SAME address as an unexpanded VIC-20 -- so tedplay accepts the
+// VIC-20 files as plausible TED programs, runs them, and their writes to the
+// VIC chip at $900x land on hardware a TED machine does not have. The PET file
+// ($0401) is run as garbage. Nothing reaches the sound chip either way.
+//
+// That $1001 collision is also why this CANNOT be a content check on the load
+// address, and why .prg cannot go in not_supported_extensions.txt: 1364 indexed
+// rows route on .prg (1238 TED, 126 C64) and play fine. The DB format string is
+// the only thing that separates them, so match on it -- EXACTLY, never as a
+// substring: "Youtube (VIC 20)" and "Youtube (Commodore PET)" are 96 rows of
+// perfectly playable video captures that must stay.
+//
+// To lift this you would build VICE's vendored-but-unbuilt xvic/xpet cores, not
+// extend tedplay. See db.lua v118 for why that was judged not worth it.
+static bool prgForUnemulatedMachine(SongInfo const& song)
+{
+    static const std::set<std::string> unemulated = {
+        "commodore vic-20",
+        "commodore pet",
+    };
+    return unemulated.count(toLower(song.format)) > 0 &&
+           routingExtension(song) == "prg";
+}
+
 // Should this song be dropped from the index because we have no decoder for it?
 //
 // A MULTI: group is one GUI entry backed by several files, and its members are
@@ -1043,6 +1078,9 @@ static std::string routingExtension(SongInfo const& song)
 static bool songIsUnsupported(SongInfo const& song,
                               std::set<std::string> const& unsupported)
 {
+    // Format-scoped, so it stands apart from the extension list below and is not
+    // gated on that list being loaded.
+    if (prgForUnemulatedMachine(song)) return true;
     if (unsupported.empty()) return false;
     // An `ext` template column names the format outright; it wins over the path
     // for both plain rows and groups.

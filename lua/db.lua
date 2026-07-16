@@ -813,7 +813,36 @@
 --     named after its tune CANNOT displace the gb64 game shot (verified: e.g.
 --     GAMES/M-R/Meta_Galactic_Llamas.sid takes its gb64 shot from
 --     data/hvsc_screenshots.txt). Bump forces a reindex.
-VERSION = 117;
+-- 118: hide the 3 Demozoo .prg tunes built for machines we cannot emulate --
+--     two "Commodore VIC-20" and one "Commodore PET" -- which are the entire
+--     VIC-20/PET corpus in the index and made up both of those rows in the TAB
+--     platform drill's Other Platforms list.
+--     They were NOT misclassified: Demozoo's platform tag is right, and the
+--     files confirm it (load address $1001/$1001 = unexpanded VIC-20, $0401 =
+--     PET; a C64 prg would be $0801). The compo directory disagrees for one of
+--     them -- fabod.prg sits in the party's "c64_music/" folder -- but that is
+--     the folder name, not the hardware.
+--     They played SILENCE rather than failing. Our only .prg engine is tedplay
+--     (TED = C16/116/plus4) and it claims .prg on extension alone; plus/4 BASIC
+--     also starts at $1001, so the VIC-20 files pass as TED programs, run, and
+--     write to a VIC chip the emulated machine does not have. The PET file runs
+--     as garbage.
+--     Skipped by FORMAT (prgForUnemulatedMachine in MusicDatabase.cpp), not by
+--     extension: .prg carries 1364 playable rows (1238 TED, 126 C64), and the
+--     $1001 collision rules out a load-address content gate too. The match is
+--     exact-equality on the format string so the 96 playable "Youtube (VIC 20)"
+--     / "Youtube (Commodore PET)" capture rows are untouched.
+--     Playing them for real means building VICE's vic20/ + pet/ cores, which
+--     are vendored under vicepluginbridge but not compiled -- and our bridge is
+--     vsid (psid_load_file/psid_play, .sid only), which never runs executables,
+--     so it is a new machine-emulation harness (sound capture, PRG autostart,
+--     silence-based song end, per-machine symbol renaming since VICE is one
+--     machine per binary), not a plugin tweak. Not worth it for 3 songs; revisit
+--     if a real VIC-20 corpus lands (modland's 11 .vt Vic-Tracker tunes are also
+--     VIC-20 and also unplayable, but are tracker DATA needing the Vic-Tracker
+--     replayer, so an emulator alone would not unlock them).
+--     Bump forces a reindex.
+VERSION = 118;
 
 DB = {
 {

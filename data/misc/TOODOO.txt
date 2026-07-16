@@ -1,10 +1,14 @@
-- resolve other youtube as much as possible into respective platforms
-
 - combine yt and ogg not classified into one?
 
 - songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
 
 - have another screen similar to Platforms (TAB) but Databases (SHIFT+TAB or CTRL+TAB) -- wanna be able to restrict results to just one database like we can with platforms now and i pick there. we list all db sources there (45 now i think) and user can navigate like now with formats and select one and then we restrict search result to show only results from that db. we already show db names under the progress bar when indexing and we show in the title in search result selection where the item came from so i think this is feasible.
+
+- another screen for extensions? sorted by # of items in the database
+
+- .vt Vic-Tracker tunes are VIC-20 and unplayable today (no plugin claims .vt). need the Vic-Tracker replayer vendoring and plugin 
+
+- vic / pet emulators not implemented and are hidden but we have vice with emulators (only 3 songs -- revisit later note left). the format is .prg (shared with TED)
 
 --------------
 - extensions still missing format description:
