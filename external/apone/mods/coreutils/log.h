@@ -60,6 +60,10 @@ inline void LogVL(int line, const char* fileName, const char* text, va_list vl)
     log2(fileName, line, Debug, temp);
 }
 
+// Logs at Debug level. Declared here so headers that must NOT pull in the fmt
+// tree (e.g. exec.h) can forward-declare and call it without including log.h.
+void logDebug(const std::string& text);
+
 void setLevel(Level level);
 void setOutputFile(const std::string& fileName);
 // void setLogSpace(const std::string &sourceFile, const std::string &function,

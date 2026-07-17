@@ -122,6 +122,11 @@ void log2(const char* fn, int line, Level level, const std::string& text)
     }
 }
 
+void logDebug(const std::string& text)
+{
+    log(Debug, text);
+}
+
 void setLevel(Level level)
 {
     defaultLevel = level;

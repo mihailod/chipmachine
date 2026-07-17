@@ -15,6 +15,13 @@
 #include <unistd.h>
 #endif
 
+// Forward declaration only — do NOT include log.h here (see note above); it
+// would drag the fmt tree into every <coreutils/utils.h> consumer. logDebug
+// logs at Debug level, so these messages appear only when run with -d.
+namespace logging {
+void logDebug(const std::string& text);
+}
+
 namespace utils {
 
 #ifdef _WIN32
@@ -85,7 +92,7 @@ __attribute__((noinline)) inline pid_t popen2_simple(const char* command, int* i
     int p_stdin[2], p_stdout[2];
     pid_t pid;
 
-    write(STDERR_FILENO, "[DEBUG] Forking shell command execution...\n", 43);
+    logging::logDebug("Forking shell command execution...");
 
     if (pipe(p_stdin) != 0 || pipe(p_stdout) != 0) return -1;
 
@@ -128,8 +135,7 @@ __attribute__((noinline)) inline pid_t popen2_simple(const char* command, int* i
 
 __attribute__((noinline)) inline ExecPipe::ExecPipe(const std::string& cmd)
 {
-    std::fprintf(stderr, "[DEBUG] ExecPipe Constructor Command Line: '%s'\n", cmd.c_str());
-    std::fflush(stderr);
+    logging::logDebug("ExecPipe Constructor Command Line: '" + cmd + "'");
 
     pid = popen2_simple(cmd.c_str(), &infd, &outfd);
 
