@@ -1495,15 +1495,41 @@ void ChipMachine::loadSplashScreenshots()
         if (seen.insert(fingerprint(bm)).second)
             splashShots.emplace_back(kind + key, bm);
     };
-    // Platform logos that are deliberately excluded from the splash.
+    // Platform logos deliberately kept out of the splash. The splash rotation is
+    // a showcase of REAL hardware -- actual computer/console companies and their
+    // machines -- so anything that is a software platform, a media/format bucket,
+    // a fantasy console, or a generic catch-all is excluded here. The keys are
+    // the logo file basenames (see loadPlatformScreenshots' directory scan).
     static const std::set<std::string> splashExcludePlatforms = {
-        // Generic catch-all bucket, not a specific "venerable retro platform".
-        "Other",
+        // Generic / catch-all buckets, not a specific machine.
+        "Other", "Wild", "Custom Hardware", "Japanese Computers",
+        // Software platforms / language runtimes / players (mirror the code's own
+        // isNonHardwareTag classification in MusicDatabase.cpp).
+        "Java", "JavaScript", "Flash", "MIRC", "Alambik", "Animation-Video",
+        // Operating systems, not hardware (Apple/PC hardware is shown separately
+        // via "Original Apple Mac", "Apple IIGS", "PC", "PocketPC", ...).
+        "Mac OS", "iOS",
+        // Non-machine meta rows (mirror isMetaSubPlatform).
+        "Browser", "Calculator", "EasterEgg",
+        // Fantasy / virtual consoles -- emulated abstractions, not real silicon.
+        "Pico-8", "Tic-80", "Microw8",
+        "Virtual - Fantasy Platforms - Consoles",
+        // Company / house logos: the individual machines already appear, so the
+        // bare corporate mark adds nothing to a hardware showcase.
+        "Microsoft", "Apple", "Sony", "SEGA", "Nintendo", "Atari",
+        // Generic device-category buckets rather than a named product.
+        "Mobile", "Pinball", "PC AdLib", "PC", "PocketPC", "PocketPCBLUE",
+        // Obscure / niche machines the user chose to drop from the showcase.
+        "KC-85", "BK-0010-11M", "Vector-06c", "Thomson", "Pokemon Mini",
+        "Arcade", "Raspberry Pi", "TI-8x Calculator",
     };
     // Extension logos excluded from the splash: streamable/plain-audio formats
     // that aren't a "venerable retro platform" worth showcasing here.
     static const std::set<std::string> splashExcludeExtensions = {
-        "aac", "aif", "aiff", "m4a", "opus", "mp2", "ac3", "mpeg", "mp3", "ogg",  
+        "aac", "aif", "aiff", "m4a", "opus", "mp2", "ac3", "mpeg", "mp3", "ogg",
+        // Generic arcade board mark (the named makers below stay); the "Arcade"
+        // platform logo is likewise excluded above.
+        "vgz-arcade",
     };
     // Extensions first (more specific artwork), then platforms.
     for (auto& [key, bm] : extensionShots) {

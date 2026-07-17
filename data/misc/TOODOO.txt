@@ -1,5 +1,3 @@
-- refine logos at the splash appearance i want only the real platforms to appear: real computer / console companies, not music formats or non-hardware platforms (Java, Javascript...). there is already a mechanism for excluding logos from the splash screen, use it and investigate which ones would you keep and which ones would you add to the exclusion list and let me see so i can verify and tweak if needed before doing changes
-
 - finish taxonomy : pet? vic? ql? others?
 
 - songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
