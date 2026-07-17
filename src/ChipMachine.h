@@ -666,6 +666,18 @@ private:
     TextField formatHint;
     Icon formatLogoIcon; // per-extension logo, centred behind the list
 
+    // Type-to-narrow state for the Formats screen. formatFilterText is the
+    // (lowercased) query the user is typing; a match keeps any group whose
+    // extension OR description name contains it. formatVisibleGroups maps each
+    // shown list row (row 0 is [no filter]; group rows follow) to an index into
+    // MusicDatabase::extensionGroups() -- everything that resolves a row back to
+    // a group (render, logo, ENTER-to-apply) goes through this indirection.
+    std::string formatFilterText;
+    std::vector<int> formatVisibleGroups;
+    // Rebuild formatVisibleGroups from formatFilterText, resize/clamp the list
+    // and refresh the title. Call after any edit to the query or on entry.
+    void rebuildFormatVisible();
+
     // The Databases screen: same single-column layout, one row per source
     // collection ("id   count   name"), highest count first. Selecting one
     // restricts search to that database (MusicDatabase::setDatabaseFilter).

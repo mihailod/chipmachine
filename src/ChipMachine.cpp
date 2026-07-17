@@ -741,7 +741,7 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     formatTitle.color = 0xffffffaa;
     formatTitle.scale = searchField.scale;
     formatTitle.visible(true);
-    formatTitle.setText("FORMAT FILTER");
+    formatTitle.setText("FORMAT FILTER [TYPE TO NARROW]");
     formatScreen.add(&formatTitle);
 
     formatHint.setFont(font);
@@ -761,16 +761,16 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
         [=](grappix::Rectangle& rec, int y, uint32_t index, bool hilight) {
             auto const& groups = musicDatabase.extensionGroups();
             // Row 0 is the clear-filter entry (like the TAB screen's [no filter]);
-            // extension group g renders on row g+1.
+            // the narrowed group at visible position g renders on row g+1.
             bool noFilter = (index == 0);
-            if (!noFilter && (index - 1) >= groups.size()) return;
+            if (!noFilter && (index - 1) >= formatVisibleGroups.size()) return;
             uint32_t c;
             std::string ext, cnt, name;
             if (noFilter) {
                 c = 0xffffffff; // white; no single platform
                 name = "[no filter, search all]";
             } else {
-                auto const& g = groups[index - 1];
+                auto const& g = groups[formatVisibleGroups[index - 1]];
                 // Same platform colouring as the TAB filter and results list.
                 c = formatColor(g.platform);
                 ext = "." + g.ext;
@@ -1279,6 +1279,36 @@ void ChipMachine::updateFilterLogo()
     filterLogoIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
 }
 
+void ChipMachine::rebuildFormatVisible()
+{
+    auto const& groups = musicDatabase.extensionGroups();
+    formatVisibleGroups.clear();
+    // No query -> every group, in the database's own (count-sorted) order.
+    // Otherwise keep a group if the (lowercased) query is a substring of either
+    // its extension or its description name -- matching what the row displays.
+    for (int i = 0; i < (int)groups.size(); i++) {
+        if (formatFilterText.empty()) {
+            formatVisibleGroups.push_back(i);
+            continue;
+        }
+        std::string ext = utils::toLower(groups[i].ext);
+        std::string name = utils::toLower(groups[i].name);
+        if (ext.find(formatFilterText) != std::string::npos ||
+            name.find(formatFilterText) != std::string::npos)
+            formatVisibleGroups.push_back(i);
+    }
+    // Row 0 is the [no filter] entry, then one row per surviving group.
+    formatList.setTotal((int)formatVisibleGroups.size() + 1);
+    if (formatList.selected() >= (int)formatVisibleGroups.size() + 1)
+        formatList.select(0);
+    // Echo the query in the title so the user can see what they've typed.
+    formatTitle.setText(formatFilterText.empty()
+                            ? "FORMAT FILTER [TYPE TO NARROW]"
+                            : "FORMAT FILTER [TYPE TO NARROW]  " +
+                                  formatFilterText);
+    updateFormatLogo();
+}
+
 void ChipMachine::updateFormatLogo()
 {
     // Preview the highlighted extension's logo behind the Formats list.
@@ -1287,11 +1317,12 @@ void ChipMachine::updateFormatLogo()
         return;
     }
     auto const& groups = musicDatabase.extensionGroups();
-    // Row 0 is [no filter] (no logo); group g is at list index g+1.
+    // Row 0 is [no filter] (no logo); the narrowed group at visible position g
+    // is at list index g+1 -- map through formatVisibleGroups to the real group.
     int i = formatList.selected() - 1;
     const image::bitmap* bm = nullptr;
-    if (i >= 0 && i < (int)groups.size()) {
-        auto const& g = groups[i];
+    if (i >= 0 && i < (int)formatVisibleGroups.size()) {
+        auto const& g = groups[formatVisibleGroups[i]];
         // The per-extension screenshot (mod.png, sid.png, ...) if present, else
         // the row's platform logo. Same resolver the now-playing screen uses.
         std::string slug = MusicDatabase::platformScreenshotSlug(g.platform);

@@ -459,6 +459,24 @@ void ChipMachine::updateKeys()
 
     lastKey = key;
 
+    // FORMAT_SCREEN type-to-narrow: printable characters and BACKSPACE edit the
+    // narrowing query in place instead of falling through to the generic handler
+    // below (which would jump to the search screen). ENTER/ESC/arrows are left to
+    // their bindings above; modified keys (CTRL/ALT) are not narrowing input.
+    if (currentScreen == FORMAT_SCREEN && currentDialog == nullptr &&
+        (event & (CTRL | ALT)) == 0) {
+        bool printable = (event >= ' ' && event < 0x7f);
+        if (printable || key == keycodes::BACKSPACE) {
+            if (key == keycodes::BACKSPACE) {
+                if (!formatFilterText.empty()) formatFilterText.pop_back();
+            } else {
+                formatFilterText += (char)tolower((unsigned char)event);
+            }
+            rebuildFormatVisible();
+            return;
+        }
+    }
+
     if (!smac.put_event(event)) {
         if ((key >= ' ' && key <= 'z') || key == keycodes::LEFT ||
             key == keycodes::RIGHT || key == keycodes::BACKSPACE ||

@@ -72,11 +72,10 @@ void ChipMachine::setupCommands()
             if (activeFilterOptions != nullptr)
                 setFilterLevel(nullptr, drillReturnIndex);
         } else if (next == FORMAT_SCREEN) {
-            // Size the list: row 0 is [no filter], then one row per group.
-            auto const& groups = musicDatabase.extensionGroups();
-            formatList.setTotal((int)groups.size() + 1);
-            if (formatList.selected() >= (int)groups.size() + 1)
-                formatList.select(0);
+            // Fresh entry: clear any prior narrowing query, then size the list
+            // (row 0 is [no filter], then one row per surviving group).
+            formatFilterText.clear();
+            rebuildFormatVisible();
         } else { // DATABASE_SCREEN
             auto const& groups = musicDatabase.databaseGroups();
             databaseList.setTotal((int)groups.size() + 1);
@@ -176,10 +175,13 @@ void ChipMachine::setupCommands()
     cmd("select_format", [=] {
         int idx = formatList.selected();
         auto const& groups = musicDatabase.extensionGroups();
-        bool hasFilter = (idx > 0 && (idx - 1) < (int)groups.size());
+        // idx-1 is a position in the (possibly narrowed) visible list; map it
+        // back to the real extensionGroups() index before applying the filter.
+        bool hasFilter = (idx > 0 && (idx - 1) < (int)formatVisibleGroups.size());
         if (hasFilter) {
-            auto const& grp = groups[idx - 1];
-            musicDatabase.setExtensionFilter(idx - 1);
+            int gid = formatVisibleGroups[idx - 1];
+            auto const& grp = groups[gid];
+            musicDatabase.setExtensionFilter(gid);
             // Prompt / persistent-label token: the uppercased extension (concise
             // and unambiguous), e.g. ".XM".
             std::string token = "." + grp.ext;
