@@ -39,6 +39,13 @@ static const char* adlib_formats[] = {
     "mus",
     "palladix",
     "pixel painters",
+    "pixel painters fmf", // .fmf -- DOS OPL2/PC-speaker (Pixel Painters), NOT Amiga
+    "pixel painters ftf", // .ftf -- DOS FM/PSG (Pixel Painters, Xatax), NOT Amiga
+    "fmf",                // ext fallback for the two Pixel Painters formats above
+    "ftf",
+    "kdm",                // Ken Silverman's AdLib/OPL2 music (Ken's Labyrinth)
+    "fmk",                // FM-KingTracker (DOS OPL/AdLib) -- ext fallback
+    "dtl",                // Drum Traker drum patterns (modland "Ad Lib/Drum Traker")
     "rdosplay raw",
     "reality adlib tracker",
     "shadowlands",
@@ -322,7 +329,6 @@ static const char* uade_formats[] = { "actionamics",
                                       "unique development",
                                       "unis 669",
                                       "velvet studio",
-                                      "vgm music maker",
                                       "vic-tracker",
                                       "voodoo supreme synthesizer",
                                       "wally beben",

@@ -1,21 +1,5 @@
-- inside other add more 3rd level groups: consoles, computers, calculators, web...
+- we need a way to create a playlist. the easiest is to introduce "promote favorites to playlist". need infra for naming. also for deleting.
 
-- finish taxonomy : pet? ql? others?
-
-- songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
-
---------------
-- extensions still missing format description:
-under 200 chars but >100 songs: mtm okta org psc rol sa sfx sqt stm sunvox vtx vt2
-these are also confirmed missing but tiny corpus:
-sm3	18 sc	18 mm4	17 hot	17 emod	17 synmod	16
-sog	16 glue	16 aero	16 plx	15 dtl	15 kt	14 kdm	13 ims	13
-tss	12 liq	12 buz2	12 bsf	12 vt	11 mvm	11 fmf	11 lion	10
-smpro	9 plist	9 ma	9 trk	8 t0ast	8 ftf	8 arp	8 vss	7
-vge	7 fnk	7 fmk	7 dsyn	7 cff	6 syn	5 msm	5 hst	5
-gym	5 dm	5 0cc	5 
-------------------------
-
-- packaging: the app should offer to os handling of all extensions it can play, package_app.sh should be augmented with plist writer for it. then the application needs to handle the file passed in (standard mac way exists)
+- packaging: the app should offer to Mac OS handling of all extensions it can play, package_app.sh should be augmented with plist writer for it. then the application needs to handle the file passed in (standard mac way exists). so that when user installs the app on the mac it will offer to open the formats it can play from the os level (right click on a file). There is a standard MAC OS way of doing this by offering which formats you can handle in the .app plist spec). It should not take them by default -- that is rude, user might have other players they prefer but it should advertise it knows how to open them.
 
 - investigate: separate db from code and auto-update db independently from code

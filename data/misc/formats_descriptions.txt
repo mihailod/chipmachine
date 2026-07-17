@@ -957,3 +957,114 @@ AC3 (Audio Codec 3) is a proprietary lossy audio format developed by Dolby Labor
 
 vt	Vic-Tracker
 VIC-TRACKER is a full-featured music tracker for the Commodore VIC-20, written by Daniel Kahlin (first version 1994, VIC-TRACKER 2.0 in 2004). A .vt file is a raw VIC-20 program: a $3300 load address followed by the tracker's "T1" (or legacy "T0") tune struct holding the sounds, arpeggio and portamento tables, pattern lists and pattern data. There is no digitized audio and no separate replayer file - the music is generated in real time by the VIC-20's 6560/6561 "VIC-I" chip (three square-wave tone oscillators, one noise channel and a shared 4-bit volume, at $900A-$900E), driven by the tracker's own 6502 interrupt routine that is embedded in the corpus and re-run here on an emulated CPU. Tunes may contain several subsongs and play at PAL or NTSC interrupt rates (1x-4x). Composers of the modland corpus include Daniel Kahlin, Anders Carlsson and others from the VIC-20 chip scene.
+
+sm3	Sound Master v3
+A later revision of Michiel Soede's Sound Master synthetic music routine for the Amiga (see also .sm and .smpro). Sound Master was a synth-sound editor used mostly by Jeroen Soede; the .sm3 files carry the version 3 replayer's tune data rather than sampled modules.
+
+sc	Sound Control
+A music editor created by Holger Gehrmann for the Amiga, and the source of the .sc/.sct extensions. Sound Control is driven by Gehrmann's own replay routine and is a sibling of his other tools (see also .sct, Soundcontrol).
+
+hot	Anders Oland
+An obscure Amiga custom music format played by the "Anders Oland" EaglePlayer/DeliTracker routine. Like most custom Amiga formats it bakes the tune data into a dedicated Motorola 68000 replay routine rather than using a shared module structure, so a player must run the original replay code to produce sound.
+
+emod	Quadra Composer
+The native module format of Quadra Composer, an Amiga music editor for four sampled voices that supports up to 256 patterns. The editor introduced the EMOD file format, an IFF-style "FORM....EMOD" container that stores the samples, pattern data and the 68000 replay code together in one file.
+
+synmod	SynTracker
+The native format of SynTracker, an Amiga synthetic-sound tracker. Rather than relying purely on sampled instruments it builds its voices from drawn or synthesised waveforms, in the tradition of SidMon and Future Composer.
+
+sog	Hippel
+A modern replay prefix for Jochen Hippel's music (see also .hip and .hipc). On modland the .sog files are actually the Hippel-ST variant: TFMX-derived data (magic "TFMX") written for Hippel's Atari ST driver, which is decrunched and played back by the Jochen Hippel ST replayer rather than the Amiga Hippel player.
+
+glue	GlueMon
+An Amiga music format played by the GlueMon EaglePlayer routine (also seen with the .gm prefix). It is one of the many small custom Amiga players catalogued by DeliTracker/EaglePlayer for tunes that do not fit a mainstream tracker format.
+
+aero	Aero Studio
+The native song format of Aero Studio, an Amiga music editor/tracker. Aero Studio tunes are played back through the program's own dedicated replay routine.
+
+plx	Palladix Sound System
+The PALLADIX Sound System format, a PC AdLib/OPL2 music format used in a handful of early-1990s MS-DOS games, most notably Rainbow Arts' Logical. It is one of the many OPL2 music formats handled by the AdPlug library.
+
+kt	klystrack
+The native format of klystrack, a modern open-source chiptune tracker by Kometbomb. klystrack emulates SID/NES/Atari/OPL2-style synthesis (additive synthesis with filters, hard sync, ring modulation, FM, wavetables) and ships a tiny playback library so .kt tunes can be embedded directly in games and demos.
+
+kdm	Ken's ADLib Music
+The AdLib/OPL2 FM music format created by Ken Silverman for his own MS-DOS games, most famously Ken's Labyrinth (1993). A .kdm file stores FM-synthesis instrument definitions and pattern/sequence data for the OPL2 chip, driven by Silverman's own player routine (hence the modland format name "Ken's ADLib Music"). It is a PC AdLib format, not a sampled or Amiga one.
+
+ims	Images Music System
+The Images Music System format, a custom Amiga music routine associated with Images Design (the studio behind the .is "Images" packer), used in their late-1980s and early-1990s Atari-ST-to-Amiga game conversions.
+
+tss	TSS
+An obscure Amiga custom music format, recognised by ChipMachine's internal Amiga format table. As with other exotic Amiga formats, the file couples the tune data with a dedicated replay routine that a player must execute to generate the sound.
+
+liq	Liquid Tracker
+Liquid Tracker, an MS-DOS tracker written by Nir Oren (magic "Liquid Module:"). It offered features ahead of many of its DOS contemporaries, such as flexible panning, note-off handling and variable pattern lengths, but never reached the popularity of ScreamTracker or FastTracker.
+
+buz2	Buzzic 2
+The native format of Buzzic 2, an Amiga synth tracker and the successor to Buzzic. Like its predecessor it generates its voices from synthetic waveforms rather than sampled instruments.
+
+fmf	Pixel Painters FMF
+The "FM Format" created by the Pixel Painters Corporation for their MS-DOS games. An .fmf file holds either OPL2 (AdLib) FM-synthesis data or PC-speaker data; Pixel Painters later moved to their LDS (Loudness Sound System) format.
+
+lion	Sonic Arranger (Lionheart)
+A variant of the Sonic Arranger music format (see also .sa), named after Thalion's game Lionheart, whose acclaimed soundtrack by Martin Iveson (Nuke) was composed in Sonic Arranger. The tune data is driven by the Sonic Arranger replay routine.
+
+smpro	Sound Master Pro
+The "Pro" revision of Michiel Soede's Sound Master synthetic music routine for the Amiga (see also .sm and .sm3), used mostly by Jeroen Soede.
+
+ma	Music Assembler
+The native format of Music Assembler, an Amiga synthetic music editor. Tunes are arranged as a synthetic multi-voice piece and driven by the Music Assembler replay routine.
+
+t0ast	The 0ok Amazing Synth Tracker
+The native format of "The 0ok Amazing Synth Tracker" (T0AST), an Amiga synthetic-sound tracker that builds its instruments from generated waveforms rather than samples.
+
+ftf	Pixel Painters FTF
+The "FT Format", a little-used music format created by the Pixel Painters Corporation for their 1994 MS-DOS game Xatax. It is a close relative of the same company's FMF/FM format.
+
+fmk	FM-KingTracker
+The native module format of FM-KingTracker, an MS-DOS AdLib/OPL tracker. Like the other AdLib formats it targets the Yamaha OPL2 FM chip (Sound Blaster / AdLib cards) rather than sampled audio, so it is grouped under PC AdLib, not Amiga.
+
+arp	Arpeggiator
+The Arpeggiator music format for the Amiga, played by the "Major Tom" EaglePlayer replay routine (the same player that also handles Thomas Hermann and MajorTom tunes).
+
+vss	Voodoo Supreme Synthesizer
+The Voodoo Supreme Synthesizer format, an obscure synthetic music format for the Amiga driven by its own dedicated replay routine.
+
+vge	VGM Music Maker
+A VGM Music Maker module. VGM Music Maker is a homebrew tracker for the Sega Mega Drive/Genesis that composes FM (YM2612) and PSG (SN76489) music directly for the console's sound hardware.
+
+fnk	Funktracker
+Funktracker, an MS-DOS tracker by Elias Ehlin (magic "Funk"), released in the mid-1990s as FunktrackerGOLD and a DOS32 build. It is a sample-based tracker with its own set of effect commands.
+
+dsyn	Digital Symphony
+Digital Symphony, a sample-based tracker for the Acorn Archimedes / RISC OS. The .dsyn (and .dysn) spellings are a modland misspelling of the usual .dsym extension; the format supports the machine's stereo sound hardware.
+
+cff	BoomTracker
+The BoomTracker format, a PC AdLib/OPL2 tracker format. It is one of the many OPL2 music formats supported by the AdPlug library.
+
+syn	Synthesis
+A synthetic Amiga music format played by the "Synth" (Synthesis) EaglePlayer replay routine, which generates its voices from synthesised waveforms.
+
+hst	Jochen Hippel ST
+Jochen Hippel's Atari ST music format. The data is TFMX-derived (magic "TFMX") and is decrunched and driven by the Jochen Hippel ST replayer; on the Amiga side the same music appears via the .sog and .soc prefixes.
+
+gym	Sega Genesis GYM
+A Sega Mega Drive / Genesis sound log; the name stands for Genesis YM2612. A .gym file is a raw dump of every register write sent to the console's Yamaha YM2612 FM chip (and SN76489 PSG), sampled 60 times a second, as popularised by the Genecyst emulator. It stores no samples of its own, so complete songs can be large; GYM is the YM2612 precursor to the VGM format, which later superseded it.
+
+dm	DeltaMusic 1.x
+DeltaMusic 1.x, the first version of Bent Nielsen's synthetic Delta Music editor for the Amiga (see also .dm2, DeltaMusic 2.0).
+
+dtl	Drum Traker
+Drum-pattern data for Drum Traker, an AdLib/OPL2 (AdLib / Sound Blaster) drum tool for MS-DOS; on modland these files live under "Ad Lib/Drum Traker". Each .dtl typically holds a single percussion pattern (snare, bass, cymbal, ...) for the OPL rhythm channels rather than a whole song, so it is grouped under PC AdLib, not Amiga.
+
+bsf	BoyScout
+An Amiga music format played through UADE / EaglePlayer; on modland the tunes live under the "BoyScout" format folder. Like other custom Amiga formats it couples the tune data with a dedicated Motorola 68000 replay routine that the player must execute to produce sound.
+
+mvm	MVX Module
+The MVX Module format, an Amiga music format played through UADE / EaglePlayer (modland format folder "MVX Module"). It is one of the many small custom Amiga replayers catalogued by DeliTracker/EaglePlayer.
+
+msm	MegaStation MIDI
+MegaStation MIDI, an Amiga music format played through UADE / EaglePlayer (modland format folder "MegaStation MIDI"). As the name suggests it is a MIDI-style sequenced format rendered on the Amiga's Paula sound chip via its own replay routine.
+
+trk	RamTracker
+The native format of RamTracker, an Amiga tracker whose tunes are played through UADE / EaglePlayer (modland format folder "RamTracker"). Note that a .trk suffix is also seen inside some ZX Spectrum filenames that are really .pt3 (Vortex/AY) files; those are unrelated to RamTracker.

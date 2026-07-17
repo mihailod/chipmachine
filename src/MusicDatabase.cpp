@@ -2713,6 +2713,11 @@ void initFormats()
     format_map["sega genesis"] = MEGADRIVE; // Zophar Genesis VGM gamerips
     format_map["megadrive gym"] = MEGADRIVE;
     format_map["megadrive cym"] = MEGADRIVE;
+    // VGM Music Maker (Shiru): a Windows cross-tracker for the Sega Mega Drive/
+    // Genesis (YM2612 + SN76489), NOT an Amiga format -- it was previously listed
+    // in uade_formats. .vge is its module extension.
+    format_map["vgm music maker"] = MEGADRIVE;
+    format_map["vge"] = MEGADRIVE;
     format_map["sega 32x"] = MEGADRIVE;
     format_map["sega mega cd"] = MEGADRIVE;
     format_map["playstation sound format"] = PLAYSTATION;
@@ -2766,7 +2771,7 @@ void initFormats()
            "mikmod unitrk", "tfmx pro", "tfmx 7v", "okt", "martin walker",
            "hvl", "prorunner 2.0", "prorunner 1.0", "buzzic 2", "buzzic",
            "noisepacker 3.x", "noisepacker 2.x", "amos music bank",
-           "pixel painters fmf", "pixel painters ftf", "arpeggiator",
+           "arpeggiator",
            "astroidea xmf", "easytrax", "m.o.n new", "m.o.n old",
            "trackerpacker 3", "musicmaker v8 old", "ac1d-dc1a packer",
            "ashley hogg", "mugician", "mugician ii", "pha packer",
