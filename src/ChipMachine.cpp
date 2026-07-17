@@ -692,6 +692,19 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
                 }
             }
 
+            // Drill cue: a leading "> " marks rows that open ANOTHER browse level
+            // rather than applying a filter to land on the tune list. Mirrors the
+            // "> " renderSong already puts on the Other/Arcade/Podcast folder rows
+            // (isShow branch). It shows on the level-1 aggregator/browse entries --
+            // the groups with children (Nintendo/Sony/Atari/Apple/Microsoft/Sega/
+            // Japanese Computers) and the System-B drill rows (Arcade/Other/
+            // Podcasts) -- and on every row inside a drilled-in submenu, since each
+            // sub-platform drills on to its filtered tunes (the next level). Plain
+            // top-level platforms, [No Filter], MP3/OGG and Radio stay bare.
+            bool drillCue = !opt.children.empty() || drilled ||
+                            fmt0 == ARCADE || fmt0 == OTHER || fmt0 == PODCAST;
+            if (drillCue) label = "> " + label;
+
             float lineH = advancedArea.h / (float)numLines;
             float px, py;
             if (drilled) {
