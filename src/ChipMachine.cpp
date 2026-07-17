@@ -1509,8 +1509,11 @@ void ChipMachine::loadSplashScreenshots()
         // Operating systems, not hardware (Apple/PC hardware is shown separately
         // via "Original Apple Mac", "Apple IIGS", "PC", "PocketPC", ...).
         "Mac OS", "iOS",
-        // Non-machine meta rows (mirror isMetaSubPlatform).
-        "Browser", "Calculator", "EasterEgg",
+        // Non-machine meta rows (mirror isMetaSubPlatform). The Easter Egg logo
+        // has two platformShots keys -- the file basename ("EasterEgg") and the
+        // aliased display name ("Easter Egg!", created in loadPlatformScreenshots)
+        // -- and the alias sorts first, so BOTH must be excluded.
+        "Browser", "Calculator", "EasterEgg", "Easter Egg!",
         // Fantasy / virtual consoles -- emulated abstractions, not real silicon.
         "Pico-8", "Tic-80", "Microw8",
         "Virtual - Fantasy Platforms - Consoles",
