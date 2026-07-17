@@ -150,18 +150,25 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "PC Engine/TurboGrafx-16", { HES } },
     { "WonderSwan", { WONDERSWAN } },
     { "Arcade", { ARCADE } },
-    { "Other Platforms", { OTHER } },
+    // "Other" is too generic a byte-slug to outrank a specific ext logo
+    // elsewhere (see platformSlugForByte's specificPlatform check), so this
+    // group-less leaf row still needs its own explicit logo, same as the
+    // three rows below.
+    { "Other Platforms", { OTHER }, {}, "Other" },
     // Rendered audio with no hardware identity: BotB allgear/remix/wildchip/
     // fakebit compos, standalone demoscene MP3s, untagged chipmusic.org tracks.
     // Not "unclassified" -- the source itself declares no platform.
-    { "MP3/OGG (no platform)", { MP3, OGG } },
+    // MP3/OGG/Radio/Podcast are "nonHardware" in platformSlugForByte, so their
+    // byte resolves to no slug at all -- these rows need an explicit `logo` or
+    // the TAB filter screen shows nothing when they're highlighted.
+    { "MP3/OGG (no platform)", { MP3, OGG }, {}, "MP3-OGG" },
     // No "YouTube (no platform)" row: a capture whose pouet tag names no
     // hardware (Animation/Video, mIRC, Alambik, Wild, JavaScript, ...) resolves
     // to OTHER, so it lands in the Other Platforms drill alongside the
     // "Youtube (Wild)" / "Youtube (JavaScript)" groups that already live there.
     // The YOUTUBE byte is consequently never produced (see formatToByte).
-    { "Podcasts", { PODCAST } },
-    { "Radio Stations", { RADIO } }
+    { "Podcasts", { PODCAST }, {}, "Podcasts" },
+    { "Radio Stations", { RADIO }, {}, "Radio" }
 };
 
 // Base color for a format byte. Shared by the now-playing list (renderSong)
@@ -1520,6 +1527,11 @@ void ChipMachine::loadSplashScreenshots()
         // Company / house logos: the individual machines already appear, so the
         // bare corporate mark adds nothing to a hardware showcase.
         "Microsoft", "Apple", "Sony", "SEGA", "Nintendo", "Atari",
+        // Media/category buckets, not hardware (TAB filter house logos --
+        // see filterOptions). "MP3-OGG"/"Radio"/"Podcasts" don't overlap
+        // splashExcludeExtensions ("mp3"/"ogg" there are ext-shot keys, these
+        // are platform-shot keys).
+        "MP3-OGG", "Radio", "Podcasts",
         // Generic device-category buckets rather than a named product.
         "Mobile", "Pinball", "PC AdLib", "PC", "PocketPC", "PocketPCBLUE",
         // Obscure / niche machines the user chose to drop from the showcase.
@@ -1934,9 +1946,13 @@ void ChipMachine::loadPlatformScreenshots()
              (int)missing.size(), dir.string(), list);
     }
 
-    // Group house logos (Atari.png, Nintendo.png, ...). Optional -- the row
-    // falls back to borrowing its first child's logo -- but still reported, or a
-    // group nobody drew art for would silently keep wearing one machine's face.
+    // Explicit house logos on top-level filterOptions rows (Atari.png,
+    // Nintendo.png, ..., plus the platformless MP3-OGG/Radio/Podcasts/Other
+    // rows -- see FilterOption::logo). Groups fall back to borrowing their
+    // first child's logo when missing; the platformless leaf rows have no
+    // such fallback and simply show nothing on the TAB filter screen. Both
+    // are still reported, or a row nobody drew art for would silently stay
+    // blank (or keep wearing one machine's face).
     std::vector<std::string> missingGroup;
     for (auto const& opt : filterOptions)
         if (!opt.logo.empty() && !findPlatformShot(opt.logo))
@@ -1945,8 +1961,9 @@ void ChipMachine::loadPlatformScreenshots()
         std::string list;
         for (auto& m : missingGroup)
             list += (list.empty() ? "" : ", ") + m;
-        LOGW("Missing %d group logo(s) in %s (optional -- the row falls back to "
-             "its first sub-platform's logo; add <name>.png or .jpg): %s",
+        LOGW("Missing %d filter-row logo(s) in %s (group rows fall back to "
+             "their first sub-platform's logo; the platformless rows do not; "
+             "add <name>.png or .jpg): %s",
              (int)missingGroup.size(), dir.string(), list);
     }
 

@@ -1,5 +1,3 @@
-- radio stations, podcasts, mp3/ogg, other -- all need nice logos (excluded from splash)
-
 - inside other add more 3rd level groups: consoles, computers, calculators, web...
 
 - finish taxonomy : pet? vic? ql? others?
