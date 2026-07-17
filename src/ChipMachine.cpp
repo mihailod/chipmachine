@@ -7,11 +7,13 @@
 #include <grappix/window.h>
 
 #include <algorithm>
+#include <atomic>
 #include <cctype>
 #include <cmath>
 #include <map>
 #include <random>
 #include <set>
+#include <thread>
 #ifdef _WIN32
 #    include <ShellApi.h>
 #endif
@@ -36,6 +38,54 @@ std::string compressWhitespace(std::string const& text)
 }
 
 namespace chipmachine {
+
+// Decode a list of image files in parallel into CPU-side bitmaps, applying the
+// pure-black -> transparent keying every logo/screenshot uses (so images
+// exported on a black background show the starfield through; real RGBA alpha is
+// preserved either way). Result index i corresponds to paths[i]; a failed
+// decode leaves an empty bitmap (width 0) there.
+//
+// Startup used to decode all ~117 logos serially (~2.6s of the ~3.1s to splash).
+// stb_image decodes are independent and stateless, and the keying is a local
+// pixel loop with no shared state or GL calls, so this fans the work across all
+// cores. GL texture upload still happens later, on the render thread.
+static std::vector<image::bitmap> decodeLogosParallel(
+    const std::vector<std::string>& paths)
+{
+    std::vector<image::bitmap> out(paths.size());
+    if (paths.empty())
+        return out;
+
+    unsigned hw = std::thread::hardware_concurrency();
+    unsigned nthreads =
+        std::min<unsigned>(paths.size(), hw ? hw : 4u);
+
+    std::atomic<size_t> next{ 0 };
+    auto worker = [&]() {
+        for (;;) {
+            size_t i = next.fetch_add(1, std::memory_order_relaxed);
+            if (i >= paths.size())
+                break;
+            try {
+                auto bm = image::load_image(paths[i]);
+                for (auto& px : bm)
+                    if ((px & 0xffffff) == 0)
+                        px &= 0xffffff;
+                out[i] = std::move(bm);
+            } catch (image::image_exception& e) {
+                LOGW("Could not decode logo %s", paths[i]);
+            }
+        }
+    };
+
+    std::vector<std::thread> pool;
+    pool.reserve(nthreads);
+    for (unsigned t = 0; t < nthreads; t++)
+        pool.emplace_back(worker);
+    for (auto& th : pool)
+        th.join();
+    return out;
+}
 
 const std::vector<FilterOption> ChipMachine::filterOptions = {
     { "[no filter, search all]", {} },
@@ -1760,42 +1810,49 @@ void ChipMachine::loadPlatformScreenshots()
     // data/misc/platformscreenshots/<platform>.png (or .jpg). Missing files are
     // not fatal: collect them and emit a single warning so they can be added.
     auto dir = workDir / "data" / "misc" / "platformscreenshots";
-    // Probe <name>.png|jpg|jpeg, black-key it, store under `key`; return found.
-    // A slug may contain '/' (e.g. "ZX Spectrum 16/48"), which can't be a
-    // filename, so also try a filesystem-safe variant with '/' replaced by '-'.
-    auto load = [&](const std::string& key, const std::string& name) {
+
+    // Build the full decode work-list first (cheap filesystem probes only), then
+    // decode every image in parallel (see decodeLogosParallel) and insert the
+    // results. This keeps the exact keying and precedence of the old serial code
+    // while moving the ~1.6s of PNG decoding off the critical path onto all cores.
+    //
+    // Precedence must match the original: a slug ("ZX Spectrum 128") wins over a
+    // same-named directory file, so slugs are gathered first and their keys are
+    // reserved before the directory scan fills in the rest.
+    std::vector<std::string> keys;  // map key for result i
+    std::vector<std::string> paths; // file to decode for result i
+    std::set<std::string> reserved; // keys already claimed
+
+    // Resolve a slug to an existing file, honouring the '/'->'-' safe variant
+    // (a slug may contain '/', e.g. "ZX Spectrum 16/48", which no filename can).
+    auto resolveSlug = [&](const std::string& name) -> std::string {
         std::vector<std::string> bases{ name };
         std::string safe = name;
         std::replace(safe.begin(), safe.end(), '/', '-');
         if (safe != name)
             bases.push_back(safe);
         for (auto& base : bases)
-        for (auto ext : { ".png", ".jpg", ".jpeg" }) {
-            auto p = dir / (base + ext);
-            if (!utils::File::exists(p.string()))
-                continue;
-            try {
-                auto bm = image::load_image(p.string());
-                // Match the downloaded-screenshot behaviour: key out pure black
-                // so logos exported on a black background show the starfield
-                // through. (Real RGBA alpha is preserved either way.)
-                for (auto& px : bm)
-                    if ((px & 0xffffff) == 0) px &= 0xffffff;
-                platformShots[key] = bm;
-                return true;
-            } catch (image::image_exception& e) {
-                LOGW("Could not decode platform logo %s", p.string());
+            for (auto ext : { ".png", ".jpg", ".jpeg" }) {
+                auto p = dir / (base + ext);
+                if (utils::File::exists(p.string()))
+                    return p.string();
             }
-        }
-        return false;
+        return "";
     };
 
     std::vector<std::string> missing;
-    for (auto& name : MusicDatabase::platformScreenshotNames())
-        if (!load(name, name))
+    for (auto& name : MusicDatabase::platformScreenshotNames()) {
+        auto p = resolveSlug(name);
+        if (p.empty()) {
             missing.push_back(name);
+        } else {
+            keys.push_back(name);
+            paths.push_back(p);
+            reserved.insert(name);
+        }
+    }
 
-    // Then load every other image in the directory under its own basename. The
+    // Then every other image in the directory under its own basename. The
     // "Other Platforms" drill rows (Oric, Vectrex, VIC 20, ...) share the single
     // OTHER byte, so they have no slug of their own -- their logo is keyed by
     // the drill's group name instead (see pickPlatformOrExtLogo). Scanning means
@@ -1807,17 +1864,16 @@ void ChipMachine::loadPlatformScreenshots()
             auto e = utils::toLower(utils::path_extension(fn));
             if (e != "png" && e != "jpg" && e != "jpeg") continue;
             auto key = fn.substr(0, fn.size() - e.size() - 1);
-            if (platformShots.count(key)) continue; // already loaded by slug
-            try {
-                auto bm = image::load_image(f.getName());
-                for (auto& px : bm)
-                    if ((px & 0xffffff) == 0) px &= 0xffffff;
-                platformShots[key] = bm;
-            } catch (image::image_exception& ex) {
-                LOGW("Could not decode platform logo %s", f.getName());
-            }
+            if (!reserved.insert(key).second) continue; // already claimed by slug
+            keys.push_back(key);
+            paths.push_back(f.getName());
         }
     }
+
+    auto bitmaps = decodeLogosParallel(paths);
+    for (size_t i = 0; i < keys.size(); i++)
+        if (bitmaps[i].width() > 0)
+            platformShots[keys[i]] = std::move(bitmaps[i]);
 
     // Generic platform slugs that have no dedicated artwork reuse a specific
     // variant's logo. E.g. VGM/VGZ rips of Spectrum games carry the bare
@@ -1865,50 +1921,59 @@ void ChipMachine::loadPlatformScreenshots()
              (int)missingGroup.size(), dir.string(), list);
     }
 
-    // Same report for the "Other Platforms" drill rows that name real hardware
-    // but have no logo yet. Reported separately because they have no format byte
-    // (and so no slug) -- the file is named after the drill row itself.
-    std::vector<std::string> missingSub;
-    auto reportRows = MusicDatabase::subPlatformNames();
-    // Family parent rows (Virtual Platforms, ...) want a logo too; report them
-    // alongside the real hardware rows.
-    for (auto& fam : MusicDatabase::subPlatformFamilyNames())
-        reportRows.push_back(fam);
-    for (auto& name : reportRows)
-        if (!findPlatformShot(name)) {
-            // Report the FILENAME to create, not the drill name: a '/' in the
-            // row ("TRS-80/CoCo/Dragon") can't be a filename, so the logo is
-            // named with '-' ("TRS-80-CoCo-Dragon.png"), which findPlatformShot
-            // resolves back. Show that safe form so the name is copy-pasteable.
-            std::string safe = name;
-            std::replace(safe.begin(), safe.end(), '/', '-');
-            missingSub.push_back(safe);
+    // The remaining "Other Platforms" drill reports each drive a full-table SQL
+    // GROUP BY over the ~380k-row song table (subPlatformNames /
+    // subPlatformNamesNonHardware -> otherDrillNames), which cost ~1.2s at every
+    // launch purely to warn a developer about missing art. They are pure
+    // diagnostics, so run them only under -d (debugMode). Normal launches skip
+    // the queries entirely and reach the splash ~1.2s sooner.
+    if (debugMode) {
+        // "Other Platforms" drill rows that name real hardware but have no logo
+        // yet. Separate because they have no format byte (and so no slug) -- the
+        // file is named after the drill row itself.
+        std::vector<std::string> missingSub;
+        auto reportRows = MusicDatabase::subPlatformNames();
+        // Family parent rows (Virtual Platforms, ...) want a logo too; report
+        // them alongside the real hardware rows.
+        for (auto& fam : MusicDatabase::subPlatformFamilyNames())
+            reportRows.push_back(fam);
+        for (auto& name : reportRows)
+            if (!findPlatformShot(name)) {
+                // Report the FILENAME to create, not the drill name: a '/' in
+                // the row ("TRS-80/CoCo/Dragon") can't be a filename, so the
+                // logo is named with '-' ("TRS-80-CoCo-Dragon.png"), which
+                // findPlatformShot resolves back. Show that safe form so the
+                // name is copy-pasteable.
+                std::string safe = name;
+                std::replace(safe.begin(), safe.end(), '/', '-');
+                missingSub.push_back(safe);
+            }
+        if (!missingSub.empty()) {
+            std::string list;
+            for (auto& m : missingSub)
+                list += (list.empty() ? "" : ", ") + m;
+            LOGW("Missing %d Other-platform logo(s) in %s (add <name>.png or "
+                 ".jpg): %s",
+                 (int)missingSub.size(), dir.string(), list);
         }
-    if (!missingSub.empty()) {
-        std::string list;
-        for (auto& m : missingSub)
-            list += (list.empty() ? "" : ", ") + m;
-        LOGW("Missing %d Other-platform logo(s) in %s (add <name>.png or .jpg): "
-             "%s",
-             (int)missingSub.size(), dir.string(), list);
-    }
 
-    // Non-hardware / meta Other rows (Java, JavaScript, Flash, VGM, Browser, ...)
-    // name no machine, so a logo could never be "correct" and they are not gaps.
-    // But they still render logo-less, which is easy to mistake for a missing
-    // file -- so list the art-less ones as info (visible with -d), keeping them
-    // clearly distinct from the real missing-logo warning above.
-    std::vector<std::string> artlessMeta;
-    for (auto& name : MusicDatabase::subPlatformNamesNonHardware())
-        if (!findPlatformShot(name))
-            artlessMeta.push_back(name);
-    if (!artlessMeta.empty()) {
-        std::string list;
-        for (auto& m : artlessMeta)
-            list += (list.empty() ? "" : ", ") + m;
-        LOGD("%d Other row(s) render without a logo by design (non-hardware/meta "
-             "tags -- drop a <name>.png in %s only if you want art): %s",
-             (int)artlessMeta.size(), dir.string(), list);
+        // Non-hardware / meta Other rows (Java, JavaScript, Flash, VGM, ...) name
+        // no machine, so a logo could never be "correct" and they are not gaps.
+        // But they still render logo-less, easy to mistake for a missing file --
+        // list the art-less ones as info, distinct from the warning above.
+        std::vector<std::string> artlessMeta;
+        for (auto& name : MusicDatabase::subPlatformNamesNonHardware())
+            if (!findPlatformShot(name))
+                artlessMeta.push_back(name);
+        if (!artlessMeta.empty()) {
+            std::string list;
+            for (auto& m : artlessMeta)
+                list += (list.empty() ? "" : ", ") + m;
+            LOGD("%d Other row(s) render without a logo by design "
+                 "(non-hardware/meta tags -- drop a <name>.png in %s only if you "
+                 "want art): %s",
+                 (int)artlessMeta.size(), dir.string(), list);
+        }
     }
 }
 
@@ -1945,6 +2010,10 @@ void ChipMachine::loadExtensionScreenshots()
     // basename, e.g. "mod.png" -> "mod"). The black-key matches the platform
     // logos so black-background images go transparent too.
     auto dir = workDir / "data" / "misc" / "extensionscreenshots";
+    // Gather the work-list, then decode in parallel (see decodeLogosParallel) --
+    // same black-keying as before, just off the critical path onto all cores.
+    std::vector<std::string> keys;
+    std::vector<std::string> paths;
     if (utils::File::exists(dir.string())) {
         for (auto& f : utils::File(dir.string()).listFiles()) {
             auto fn = f.getFileName();
@@ -1953,17 +2022,14 @@ void ChipMachine::loadExtensionScreenshots()
             if (e != "png" && e != "jpg" && e != "jpeg")
                 continue;
             // Strip ".<ext>" (extension length + the dot) to get the key.
-            auto key = utils::toLower(fn.substr(0, fn.size() - e.size() - 1));
-            try {
-                auto bm = image::load_image(f.getName());
-                for (auto& px : bm)
-                    if ((px & 0xffffff) == 0) px &= 0xffffff;
-                extensionShots[key] = bm;
-            } catch (image::image_exception& ex) {
-                LOGW("Could not decode extension screenshot %s", f.getName());
-            }
+            keys.push_back(utils::toLower(fn.substr(0, fn.size() - e.size() - 1)));
+            paths.push_back(f.getName());
         }
     }
+    auto bitmaps = decodeLogosParallel(paths);
+    for (size_t i = 0; i < keys.size(); i++)
+        if (bitmaps[i].width() > 0)
+            extensionShots[keys[i]] = std::move(bitmaps[i]);
     LOGD("Loaded %d extension screenshots from %s",
          (int)extensionShots.size(), dir.string());
 
@@ -1981,35 +2047,42 @@ void ChipMachine::loadExtensionScreenshots()
     // with the plugin-derived set the archive picker uses (song + audio), i.e.
     // exactly what the app plays as a loose file, so a new plugin's format shows
     // up here automatically instead of needing a second hand-kept list.
-    auto const& [songExt, audioExt] = MusicPlayerList::archiveExtensions();
-    std::vector<std::string> uncovered;
-    size_t undecodable = 0;
-    for (auto& [ext, plats] : musicDatabase.extensionPlatforms()) {
-        if (extensionShots.count(ext))
-            continue; // already has its own screenshot
-        if (!songExt.count(ext) && !audioExt.count(ext)) {
-            undecodable++;
-            continue; // no decoder -> a bogus/undecodable ext, not a logo gap
-        }
-        bool coveredByPlatform = false;
-        for (auto& p : plats)
-            if (!p.empty() && platformShots.count(p)) {
-                coveredByPlatform = true;
-                break;
+    // This uncovered-extension report drives a full-table SQL query
+    // (extensionPlatforms(), a GROUP BY over the ~380k-row song table), ~0.9s at
+    // every launch purely to warn a developer about a missing <ext>.png. It is a
+    // pure diagnostic, so run it only under -d (debugMode); normal launches skip
+    // the query and reach the splash sooner.
+    if (debugMode) {
+        auto const& [songExt, audioExt] = MusicPlayerList::archiveExtensions();
+        std::vector<std::string> uncovered;
+        size_t undecodable = 0;
+        for (auto& [ext, plats] : musicDatabase.extensionPlatforms()) {
+            if (extensionShots.count(ext))
+                continue; // already has its own screenshot
+            if (!songExt.count(ext) && !audioExt.count(ext)) {
+                undecodable++;
+                continue; // no decoder -> a bogus/undecodable ext, not a logo gap
             }
-        if (!coveredByPlatform)
-            uncovered.push_back(ext);
-    }
-    if (undecodable > 0)
-        LOGD("%d uncovered extension(s) have no decoder; not reported as logo "
-             "gaps (bogus ext in the index)", (int)undecodable);
-    if (!uncovered.empty()) {
-        std::string list;
-        for (auto& e : uncovered)
-            list += (list.empty() ? "" : ", ") + e;
-        LOGW("%d extension(s) have no screenshot and no platform logo "
-             "(add data/misc/extensionscreenshots/<ext>.png): %s",
-             (int)uncovered.size(), list);
+            bool coveredByPlatform = false;
+            for (auto& p : plats)
+                if (!p.empty() && platformShots.count(p)) {
+                    coveredByPlatform = true;
+                    break;
+                }
+            if (!coveredByPlatform)
+                uncovered.push_back(ext);
+        }
+        if (undecodable > 0)
+            LOGD("%d uncovered extension(s) have no decoder; not reported as logo "
+                 "gaps (bogus ext in the index)", (int)undecodable);
+        if (!uncovered.empty()) {
+            std::string list;
+            for (auto& e : uncovered)
+                list += (list.empty() ? "" : ", ") + e;
+            LOGW("%d extension(s) have no screenshot and no platform logo "
+                 "(add data/misc/extensionscreenshots/<ext>.png): %s",
+                 (int)uncovered.size(), list);
+        }
     }
 }
 
