@@ -6,7 +6,6 @@ https://www.smspower.org/uploads/Music/AlexKiddHighTechWorld-SMS.zip	https://www
 https://www.smspower.org/uploads/Music/AlienSyndrome-SMS-PSG.zip	https://www.smspower.org/uploads/Music/AlienSyndrome-SMS-PSG.png
 https://www.smspower.org/uploads/Music/AmericanBaseball-SMS.zip	https://www.smspower.org/uploads/Music/AmericanBaseball-SMS.png
 https://www.smspower.org/uploads/Music/AmericanProFootball-SMS.zip	https://www.smspower.org/uploads/Music/AmericanProFootball-SMS.png
-https://www.smspower.org/uploads/Music/AntarcticAdventure-ColecoVision.zip	https://www.smspower.org/uploads/Music/AntarcticAdventure-ColecoVision.png
 https://www.smspower.org/uploads/Music/ArchRivals-GG.zip	https://www.smspower.org/uploads/Music/ArchRivals-GG.png
 https://www.smspower.org/uploads/Music/ArgosNoJuujiken-SMS.zip	https://www.smspower.org/uploads/Music/ArgosNoJuujiken-SMS.png
 https://www.smspower.org/uploads/Music/Ashura-SMS.zip	https://www.smspower.org/uploads/Music/Ashura-SMS.png
@@ -87,7 +86,6 @@ https://www.smspower.org/uploads/Music/LethalWeapon3-SMS.zip	https://www.smspowe
 https://www.smspower.org/uploads/Music/LionKing-SMS.zip	https://www.smspower.org/uploads/Music/LionKing-SMS.png
 https://www.smspower.org/uploads/Music/LostWorld-GG.zip	https://www.smspower.org/uploads/Music/LostWorld-GG.png
 https://www.smspower.org/uploads/Music/Lunar-GG.zip	https://www.smspower.org/uploads/Music/Lunar-GG.png
-https://www.smspower.org/uploads/Music/MASH-ColecoVision.zip	https://www.smspower.org/uploads/Music/MASH-ColecoVision.png
 https://www.smspower.org/uploads/Music/MajorsProBaseball-GG.zip	https://www.smspower.org/uploads/Music/MajorsProBaseball-GG.png
 https://www.smspower.org/uploads/Music/Moonwalker-SMS.zip	https://www.smspower.org/uploads/Music/Moonwalker-SMS.png
 https://www.smspower.org/uploads/Music/MortalKombatII-SMS.zip	https://www.smspower.org/uploads/Music/MortalKombatII-SMS.png

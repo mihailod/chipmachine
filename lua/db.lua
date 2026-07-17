@@ -925,7 +925,26 @@
 --     replayer" -- that replayer is now vendored. The unemulated VIC-20/PET .prg
 --     tunes stay hidden (prgForUnemulatedMachine), so the platform holds only
 --     playable tunes. Bump forces a reindex: the format byte lives in index.dat.
-VERSION = 125;
+-- 126: Neo Geo Pocket promoted from an "Other Platforms" sub-platform to its own
+--     top-level TAB filter row. New NEOGEOPOCKET format byte; format_map
+--     "neo geo pocket" now maps there instead of OTHER (the 18 vgmrips rows), and
+--     platformNameToByte follows so any future capture merges in. The Other drill
+--     loses that sub-platform. Logo "Neo Geo Pocket.png" already shipped. Bump
+--     forces a reindex: the format byte lives in index.dat.
+-- 127: ColecoVision dedup fix. Antarctic Adventure & M.A.S.H rode into
+--     data/smspower.txt as duplicates of modland's already-playable
+--     "Video Game Music/Colecovision/" .vgz rips (build_smspower.py deduped
+--     modland only for Sega Master System / Game Gear, not Colecovision). Their
+--     live smspower.org /uploads/Music/*-ColecoVision.zip packs 500 on the
+--     server, so the ColecoVision drill showed 4 games, 2 dead. Removed both
+--     dead smspower rows (+ their screenshot rows) and added the Colecovision
+--     prefix to MODLAND_DUP_PREFIXES so a rebuild won't re-add them. Also dropped
+--     the same two games from data/zophar.txt, where Zophar's "sega-master-system
+--     -vgm" grab-bag had them mislabeled as "Sega Master System" (a coleco->sega
+--     miscategorization) -- modland is now the single ColecoVision source for
+--     both. (SG-1000/FM rows in that category stay: SG-1000 correctly folds into
+--     SEGAMS, FM is a chip variant.) Pure data; bump forces a reindex.
+VERSION = 127;
 
 DB = {
 {

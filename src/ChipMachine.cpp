@@ -150,6 +150,7 @@ const std::vector<FilterOption> ChipMachine::filterOptions = {
     }, "Japanese Computers" },
     { "PC Engine/TurboGrafx-16", { HES } },
     { "WonderSwan", { WONDERSWAN } },
+    { "Neo Geo Pocket", { NEOGEOPOCKET } },
     { "Arcade", { ARCADE } },
     // "Other" is too generic a byte-slug to outrank a specific ext logo
     // elsewhere (see platformSlugForByte's specificPlatform check), so this
@@ -194,7 +195,7 @@ static uint32_t formatColor(int f)
         { PSP, 0xff6677aa },      { XBOX, 0xff33bb44 },
         { XBOX360, 0xff55cc66 },
         { SID, 0xffcc8844 },     { PRG, 0xffbb66cc },
-        { VIC20, 0xff55bbdd },
+        { VIC20, 0xff55bbdd },    { NEOGEOPOCKET, 0xffdd4444 },
         { ZXBEEPER, 0xffff88dd }, { ZXAY, 0xffbb88ff }, { SPECTRUM, 0xffbb88ff },
         { MSX, 0xff66ddaa },     { AMSTRAD, 0xff44aadd },
         { ACORN, 0xff88dd55 },   { SAMCOUPE, 0xffdd66aa },

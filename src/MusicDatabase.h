@@ -174,7 +174,12 @@ enum Formats
     // played by victrackerplugin. Placed after the PRODUCT anchor for the same
     // reason as the Apple/Virtual Boy/Atari blocks above -- the console region is
     // full up to the fixed TRACKER=0x30 anchor -- and nothing caps at PRODUCT.
-    VIC20
+    VIC20,
+
+    // SNK Neo Geo Pocket / Color (T6W28 sound, a SN76489 sibling). Promoted from
+    // an "Other Platforms" sub-platform (OTHER byte) to its own top-level TAB
+    // filter row. Placed after the PRODUCT anchor for the same reason as above.
+    NEOGEOPOCKET
 
 };
 

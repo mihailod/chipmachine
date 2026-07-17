@@ -525,8 +525,8 @@ TEST_CASE("sub-platform names fold captures onto their hardware", "[database]")
         // Fantasy consoles are platforms, not compo buckets: they keep a row.
         { "Youtube (MicroW8,PICO-8,TIC-80)", "MicroW8" },
         // Aliases for variants the case-only fold in buildSubPlatforms misses.
-        { "Youtube (NeoGeo Pocket)", "Neo Geo Pocket" },
-        { "Neo Geo Pocket", "Neo Geo Pocket" },
+        // (Neo Geo Pocket is no longer here -- it was promoted to its own
+        // top-level NEOGEOPOCKET filter row, so it never reaches the Other drill.)
         { "Youtube (Mobile Phone)", "Mobile" },
         { "Youtube (Android)", "Mobile" },
         { "Mobile", "Mobile" },
@@ -676,7 +676,7 @@ TEST_CASE("VGMRips format labels classify to a platform", "[music]")
         { "Sega Mega Drive", MEGADRIVE }, { "Sega Pico", MEGADRIVE },
         { "NES", NES },                   { "Game Boy", GAMEBOY },
         { "PC Engine", HES },             { "Neo Geo", ARCADE },
-        { "Neo Geo Pocket", OTHER },      { "WonderSwan", WONDERSWAN },
+        { "Neo Geo Pocket", NEOGEOPOCKET }, { "WonderSwan", WONDERSWAN },
         { "MSX", MSX },                   { "NEC PC-98", JPFM },
         { "NEC PC-88", JPFM },            { "Sharp X68000", JPX68000 },
         { "FM Towns", JPFMTOWNS },        { "IBM PC", PC },

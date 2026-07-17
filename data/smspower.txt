@@ -6,7 +6,6 @@ Alex Kidd High Tech World		Sega Master System	https://www.smspower.org/uploads/M
 Alien Syndrome (PSG)		Sega Master System	https://www.smspower.org/uploads/Music/AlienSyndrome-SMS-PSG.zip	vgm
 American Baseball		Sega Master System	https://www.smspower.org/uploads/Music/AmericanBaseball-SMS.zip	vgm
 American Pro Football		Sega Master System	https://www.smspower.org/uploads/Music/AmericanProFootball-SMS.zip	vgm
-Antarctic Adventure		ColecoVision	https://www.smspower.org/uploads/Music/AntarcticAdventure-ColecoVision.zip	vgm
 Arch Rivals		Sega Game Gear	https://www.smspower.org/uploads/Music/ArchRivals-GG.zip	vgm
 Argos No Juujiken		Sega Master System	https://www.smspower.org/uploads/Music/ArgosNoJuujiken-SMS.zip	vgm
 Ashura		Sega Master System	https://www.smspower.org/uploads/Music/Ashura-SMS.zip	vgm
@@ -89,7 +88,6 @@ Lethal Weapon 3		Sega Master System	https://www.smspower.org/uploads/Music/Letha
 Lion King		Sega Master System	https://www.smspower.org/uploads/Music/LionKing-SMS.zip	vgm
 Lost World		Sega Game Gear	https://www.smspower.org/uploads/Music/LostWorld-GG.zip	vgm
 Lunar		Sega Game Gear	https://www.smspower.org/uploads/Music/Lunar-GG.zip	vgm
-MASH		ColecoVision	https://www.smspower.org/uploads/Music/MASH-ColecoVision.zip	vgm
 Majors Pro Baseball		Sega Game Gear	https://www.smspower.org/uploads/Music/MajorsProBaseball-GG.zip	vgm
 March Of The Spiders		Sega Master System	https://www.smspower.org/uploads/Music/MarchOfTheSpiders-Homebrew.zip	vgm
 Metro Cross		Sega Master System	https://www.smspower.org/uploads/Music/MetroCross-Homebrew.zip	vgm

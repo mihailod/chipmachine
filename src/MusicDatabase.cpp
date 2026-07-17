@@ -1053,6 +1053,23 @@ static std::string routingExtension(SongInfo const& song)
 //
 // To lift this you would build VICE's vendored-but-unbuilt xvic/xpet cores, not
 // extend tedplay. See db.lua v118 for why that was judged not worth it.
+//
+// REVISITED 2026-07-17 after victrackerplugin shipped (fake6502 + the VIC-I
+// sound core). It does NOT make these trivial -- .vt worked because we had the
+// replayer SOURCE and could call pl_Play per frame, skipping ROMs/VIA/CPU timing.
+// A .prg is a whole machine. Disassembling the three (all BASIC-SYS + ML):
+//   - fabod.prg (VIC-20, Zapac): clean VIA-timer IRQ player, writes $900A/$900E
+//     directly -> the ONLY one a per-frame-IRQ shortcut could play.
+//   - intercooler.prg (VIC-20, Aleksi Eeben): the marquee tune, and it has ZERO
+//     static references to $900x -- its entry relocates the playroutine into
+//     zeropage/RAM (LDA $1042,x / STA $00F6,x) and drives sound from there. That
+//     is the signature of a cycle-exact digi/PWM player; a per-frame model can't
+//     reproduce it -- it needs a cycle-accurate CPU+VIC, i.e. xvic.
+//   - dalezy PET tune: a different machine -- 1-bit beeper toggling the 6522 VIA
+//     CB2 line at $E84x (28 refs), needs cycle-accurate CB2 capture + PET ROM.
+// So 2 of 3 need full machine emulation the .vt path deliberately avoids, across
+// two machines, for one reliably-playable song (fabod). Still parked; the gate
+// stays. See memory [[unemulated-vic20-pet-prg-parked]].
 static bool prgForUnemulatedMachine(SongInfo const& song)
 {
     static const std::set<std::string> unemulated = {
@@ -2953,8 +2970,11 @@ void initFormats()
         format_map[f] = ARCADE;
     // ("atari jaguar" is mapped to its own ATARIJAGUAR byte further up; it used
     // to be re-pointed at ATARI here, which silently won over that entry.)
-    // Neo Geo Pocket / pinball have no dedicated TAB filter yet -> "Other Platforms".
-    for (char const* f : { "neo geo pocket", "pinball", "other" })
+    // SNK Neo Geo Pocket / Color (T6W28) -- its own top-level TAB filter row.
+    format_map["neo geo pocket"] = NEOGEOPOCKET;
+    format_map["neogeo pocket"] = NEOGEOPOCKET; // spelling variant (no space)
+    // pinball has no dedicated TAB filter yet -> "Other Platforms".
+    for (char const* f : { "pinball", "other" })
         format_map[f] = OTHER;
 
     // mirsoft.info "World of Game MODs": as of db.lua v94 its `format` column is
@@ -3169,7 +3189,8 @@ static uint8_t platformNameToByte(std::string s)
         // "wonderswan" mapped to OTHER until 2026-07-15, which split the 11
         // captures off from the 177 native WonderSwan rips that format_map
         // already sent to the WONDERSWAN filter. The two tables must agree.
-        { "wonderswan", WONDERSWAN }, { "neogeo pocket", OTHER },
+        { "wonderswan", WONDERSWAN }, { "neogeo pocket", NEOGEOPOCKET },
+        { "neo geo pocket", NEOGEOPOCKET },
         { "pokemon mini", OTHER },
         { "nintendo wii", WII },     { "gamecube", GAMECUBE },
         { "nintendo gamecube", GAMECUBE },
@@ -3408,6 +3429,7 @@ static std::string platformName(uint8_t b)
     case STR: return "Commodore 64";
     case PRG: return "Commodore 16/+4";
     case VIC20: return "Commodore VIC-20";
+    case NEOGEOPOCKET: return "Neo Geo Pocket";
     case ATARI: return "Atari ST/STE/TT";
     case POKEY: return "Atari XL/XE";
     case ATARIVCS: return "Atari VCS";
@@ -3693,7 +3715,6 @@ std::string MusicDatabase::subPlatformName(std::string const& fmt)
     // buildSubPlatforms can't catch them. The mobile family is one row by user
     // decision (2026-07-15): a phone is a phone.
     static const std::map<std::string, std::string> alias = {
-        { "neogeo pocket", "Neo Geo Pocket" },
         { "mobile phone", "Mobile" },
         { "android", "Mobile" },
         // pouet tags the machine "VIC 20"; show its full name. (The hidden

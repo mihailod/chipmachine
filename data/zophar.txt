@@ -9145,7 +9145,6 @@ Yuu Yuu Hakusho II - Gekitou! Nanakyou no Tatakai		Sega Game Gear	https://fi.zop
 Zool - Ninja of the ''Nth'' Dimension		Sega Game Gear	https://fi.zophar.net/soundfiles/sega-game-gear-sgc/zool-ninja-of-the-nth-dimension/Zool%20-%20Ninja%20of%20the%20%27%27Nth%27%27%20Dimension%20%28EMU%29.zophar.zip	sgc
 Addams Family, The		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/addams-family-the/Addams%20Family%2C%20The%20%28EMU%29.zophar.zip	vgm
 ALF		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/alf/ALF%20%28EMU%29.zophar.zip	vgm
-Antarctic Adventure (ColecoVision)		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/antarctic-adventure-colecovision/Antarctic%20Adventure%20%28ColecoVision%29%20%28EMU%29.zophar.zip	vgm
 Ashura, Rambo, Secret Commando		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/ashura-rambo-secret-commando/Ashura%2C%20Rambo%2C%20Secret%20Commando%20%28EMU%29.zophar.zip	vgm
 Astro Flash, Transbot		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/astro-flash-transbot/Astro%20Flash%2C%20Transbot%20%28EMU%29.zophar.zip	vgm
 Black Onyx, The (SG-1000)		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/black-onyx-the-sg-1000/Black%20Onyx%2C%20The%20%28SG-1000%29%20%28EMU%29.zophar.zip	vgm
@@ -9171,7 +9170,6 @@ Global Defense (FM)		Sega Master System	https://fi.zophar.net/soundfiles/sega-ma
 Gokuaku Doumei Dump Matsumoto, Pro Wrestling		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/gokuaku-doumei-dump-matsumoto-pro-wrestling/Gokuaku%20Doumei%20Dump%20Matsumoto%2C%20Pro%20Wrestling%20%28EMU%29.zophar.zip	vgm
 Golvellius - Valley of Doom (FM)		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/golvellius-valley-of-doom-fm/Golvellius%20-%20Valley%20of%20Doom%20%28FM%29%20%28EMU%29.zophar.zip	vgm
 Jungle Book, The		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/jungle-book-the/Jungle%20Book%2C%20The%20%28EMU%29.zophar.zip	vgm
-M.A.S.H (ColecoVision)		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/mash-colecovision/M.A.S.H%20%28ColecoVision%29%20%28EMU%29.zophar.zip	vgm
 Maze Hunter 3-D (FM)		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/maze-hunter-3-d-fm/Maze%20Hunter%203-D%20%28FM%29%20%28EMU%29.zophar.zip	vgm
 Megumi Rescue (FM)		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/megumi-rescue-fm/Megumi%20Rescue%20%28FM%29%20%28EMU%29.zophar.zip	vgm
 Miracle Warriors - Seal of the Dark Lord (FM)		Sega Master System	https://fi.zophar.net/soundfiles/sega-master-system-vgm/miracle-warriors-seal-of-the-dark-lord-fm/Miracle%20Warriors%20-%20Seal%20of%20the%20Dark%20Lord%20%28FM%29%20%28EMU%29.zophar.zip	vgm

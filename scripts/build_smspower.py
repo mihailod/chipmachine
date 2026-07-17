@@ -89,6 +89,12 @@ def parse_pack(stem):
 MODLAND_DUP_PREFIXES = (
     "Video Game Music/Sega Master System/",
     "Video Game Music/Sega Game Gear/",
+    # ColecoVision too: modland already carries the (playable) .vgz rips under
+    # "Video Game Music/Colecovision/<composer>/<game>/". Without this prefix,
+    # Antarctic Adventure & M.A.S.H re-entered smspower.txt as duplicates whose
+    # live /uploads/Music/*-ColecoVision.zip packs 500 on smspower's server --
+    # dead rows shadowing the working modland entries in the ColecoVision drill.
+    "Video Game Music/Colecovision/",
 )
 
 
