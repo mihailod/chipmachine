@@ -335,12 +335,18 @@ size_t WebJob::headerFunc(char *text, size_t size, size_t n, void *userdata) {
 		try { job->cLength = std::stol(val); } catch(...) {}
 	} else
 	if(name== "Location") {
-		std::string newUrl = val;
-		LOGD("Redirecting to %s", newUrl);
-		std::string newTarget = utils::urlencode(newUrl, ":/\\?;");
-#ifndef _WIN32
-		symlink(newTarget.c_str(), job->targetFile.getName().c_str());
-#endif
+		// Log only. curl follows redirects itself (CURLOPT_FOLLOWLOCATION) and
+		// writes the final body to the original targetFile, so we do NOT act on
+		// Location here.
+		//
+		// Previously this planted a symlink at the .download write target pointing
+		// to the urlencoded redirect URL as a single path component. Nothing ever
+		// read those symlinks (no readlink() anywhere), and when the redirect URL
+		// encoded past NAME_MAX (255 bytes) -- e.g. archive.org's
+		// view_archive.php?archive=...&file=... links -- the next body write would
+		// open() the dangling symlink, follow it to the over-long target name, and
+		// fail with ENAMETOOLONG ("File name too long"), aborting the download.
+		LOGD("Redirecting to %s", val);
 	}
 
 	return total;

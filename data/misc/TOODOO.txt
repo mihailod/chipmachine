@@ -1,3 +1,7 @@
+- radio stations, podcasts, mp3/ogg, other -- all need nice logos (excluded from splash)
+
+- inside other add more 3rd level groups: consoles, computers, calculators, web...
+
 - finish taxonomy : pet? vic? ql? others?
 
 - songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.

@@ -6,6 +6,7 @@
 #include <coreutils/environment.h>
 #include <string>
 #include <cstdio>
+#include <cstdint>
 #include <algorithm>
 #define NOGDI
 #include <curl/curl.h>
@@ -371,13 +372,54 @@ public:
 		}
 	}
 
+	// Clamp a single already-encoded filesystem path component so it can never
+	// exceed the platform's per-component name limit (NAME_MAX is 255 bytes on
+	// macOS/Linux). getFile() collapses the whole URL path into one directory
+	// component and appends ".download" to the file component, so deep archive
+	// URLs (e.g. archive.org zip-in-zip paths) would otherwise blow NAME_MAX and
+	// fail to open for writing ("File name too long"). Any component within the
+	// limit is returned byte-for-byte unchanged, so existing cache entries stay
+	// valid; only over-long components are rewritten to "<head>~<hash><ext>",
+	// where the FNV-1a hash of the full component keeps distinct URLs distinct.
+	static std::string clampComponent(const std::string &comp) {
+		// 200 leaves headroom under 255 for the ".download" temp suffix and any
+		// future decorations, on both the directory and the file component.
+		constexpr size_t kMax = 200;
+		if (comp.size() <= kMax)
+			return comp;
+		// FNV-1a 64-bit — deterministic across runs so the cache path a file was
+		// stored under is the same one inCache()/getFile() recompute to read it.
+		uint64_t h = 1469598103934665603ULL;
+		for (unsigned char c : comp) { h ^= c; h *= 1099511628211ULL; }
+		char hex[17];
+		snprintf(hex, sizeof(hex), "%016llx", (unsigned long long)h);
+		// Preserve a short trailing extension (".xm", ".mod", …) for readability
+		// and so ext-sniffing consumers still see the right suffix.
+		std::string ext;
+		auto dot = comp.find_last_of('.');
+		if (dot != std::string::npos && comp.size() - dot <= 12)
+			ext = comp.substr(dot);
+		size_t keep = kMax - 1 /*'~'*/ - 16 /*hash*/ - ext.size();
+		// Don't truncate in the middle of a "%XX" escape or a UTF-8 multibyte
+		// sequence; back off to a clean boundary.
+		while (keep > 0) {
+			unsigned char c = (unsigned char)comp[keep - 1];
+			bool inEscape = (keep >= 2 && comp[keep - 2] == '%') ||
+			                (keep >= 1 && comp[keep - 1] == '%');
+			bool utf8Cont = (c & 0xC0) == 0x80;
+			if (inEscape || utf8Cont) { keep--; continue; }
+			break;
+		}
+		return comp.substr(0, keep) + "~" + hex + ext;
+	}
+
 	template <typename FX> std::shared_ptr<WebJob> getFile(const std::string &url, FX cb) {
 		auto job = std::make_shared<WebJobImpl<FX, decltype(&FX::operator())>>(cb);
 		auto slash = url.find_last_of('/');
 		auto fileName = url.substr(slash+1);
 		auto pathName = url.substr(0, slash);
-		auto urlPart = utils::urlencode(baseUrl + pathName, ":/\\?;!");
-		auto fileNameEncoded = utils::urlencode(fileName, ":/\\?;!");
+		auto urlPart = clampComponent(utils::urlencode(baseUrl + pathName, ":/\\?;!"));
+		auto fileNameEncoded = clampComponent(utils::urlencode(fileName, ":/\\?;!"));
 		utils::makedirs(cacheDir / urlPart);
 		auto target = cacheDir / urlPart / fileNameEncoded;
 		job->setTarget(target);
@@ -432,9 +474,9 @@ public:
 		// Must match the exact encode set used by getFile() when the file was
 		// stored (note the trailing '!'); otherwise URLs containing '!' resolve
 		// to a different cache name here and a cached file is reported missing.
-		fileName = utils::urlencode(fileName, ":/\\?;!");
+		fileName = clampComponent(utils::urlencode(fileName, ":/\\?;!"));
 		auto pathName = url.substr(0, slash);
-		auto urlPart = utils::urlencode(baseUrl + pathName, ":/\\?;!");
+		auto urlPart = clampComponent(utils::urlencode(baseUrl + pathName, ":/\\?;!"));
 		auto target = cacheDir / urlPart / fileName;
 		return utils::File::exists(target);
 	}
