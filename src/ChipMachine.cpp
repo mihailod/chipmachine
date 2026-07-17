@@ -1139,7 +1139,8 @@ void ChipMachine::updateSearchLogo()
     // format so pickPlatformOrExtLogo resolves the per-platform ("<row>.png",
     // matched case-insensitively) or per-board (arcadeSubLogos) logo. Normalise
     // the two arcade names that don't match arcadeSubLogos 1:1 (getOtherPlatforms).
-    if (utils::startsWith(song.path, "otherplatform::")) {
+    if (utils::startsWith(song.path, "otherplatform::") ||
+        utils::startsWith(song.path, "othergroup::")) {
         std::string name = utils::toLower(song.title);
         if (name == "arcade (other)") name = "arcade";
         else if (name == "arcade (neo geo)") name = "neo geo";
@@ -1823,6 +1824,10 @@ void ChipMachine::loadPlatformScreenshots()
     // "ZX Spectrum" platform, which has no logo of its own -> use the 128K one.
     static const std::pair<std::string, std::string> aliases[] = {
         { "ZX Spectrum", "ZX Spectrum 128" },
+        // The "Easter Egg!" Other-drill row (see subPlatformName) can't name its
+        // logo file "Easter Egg!.png"; the user ships it as EasterEgg.png, so
+        // point the row's display name at that basename.
+        { "Easter Egg!", "EasterEgg" },
     };
     for (auto& [alias, src] : aliases)
         if (!platformShots.count(alias) && platformShots.count(src))
@@ -1864,7 +1869,12 @@ void ChipMachine::loadPlatformScreenshots()
     // but have no logo yet. Reported separately because they have no format byte
     // (and so no slug) -- the file is named after the drill row itself.
     std::vector<std::string> missingSub;
-    for (auto& name : MusicDatabase::subPlatformNames())
+    auto reportRows = MusicDatabase::subPlatformNames();
+    // Family parent rows (Virtual Platforms, ...) want a logo too; report them
+    // alongside the real hardware rows.
+    for (auto& fam : MusicDatabase::subPlatformFamilyNames())
+        reportRows.push_back(fam);
+    for (auto& name : reportRows)
         if (!findPlatformShot(name)) {
             // Report the FILENAME to create, not the drill name: a '/' in the
             // row ("TRS-80/CoCo/Dragon") can't be a filename, so the logo is
@@ -1881,6 +1891,24 @@ void ChipMachine::loadPlatformScreenshots()
         LOGW("Missing %d Other-platform logo(s) in %s (add <name>.png or .jpg): "
              "%s",
              (int)missingSub.size(), dir.string(), list);
+    }
+
+    // Non-hardware / meta Other rows (Java, JavaScript, Flash, VGM, Browser, ...)
+    // name no machine, so a logo could never be "correct" and they are not gaps.
+    // But they still render logo-less, which is easy to mistake for a missing
+    // file -- so list the art-less ones as info (visible with -d), keeping them
+    // clearly distinct from the real missing-logo warning above.
+    std::vector<std::string> artlessMeta;
+    for (auto& name : MusicDatabase::subPlatformNamesNonHardware())
+        if (!findPlatformShot(name))
+            artlessMeta.push_back(name);
+    if (!artlessMeta.empty()) {
+        std::string list;
+        for (auto& m : artlessMeta)
+            list += (list.empty() ? "" : ", ") + m;
+        LOGD("%d Other row(s) render without a logo by design (non-hardware/meta "
+             "tags -- drop a <name>.png in %s only if you want art): %s",
+             (int)artlessMeta.size(), dir.string(), list);
     }
 }
 

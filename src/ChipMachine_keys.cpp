@@ -526,7 +526,7 @@ void ChipMachine::updateKeys()
         std::string src;
         auto dp = song.path.find("::");
         if (dp != std::string::npos) src = song.path.substr(0, dp);
-        if (src == "playlist" || src == "otherplatform" ||
+        if (src == "playlist" || src == "otherplatform" || src == "othergroup" ||
             src == "podcastshow" || src == "product")
             src = "";
         sourceStatus.setText(src);

@@ -238,9 +238,17 @@ void ChipMachine::setupCommands()
                 searchUpdated = true;
                 return;
             }
+            // An Other-platforms FAMILY row (e.g. "Virtual Platforms"): drill into
+            // its children (a submenu of sub-platforms), not into songs.
+            if (utils::startsWith(song.path, "othergroup::")) {
+                musicDatabase.setOtherParent(std::stoi(song.path.substr(12)));
+                songList.select(0);
+                searchUpdated = true;
+                return;
+            }
             // An Other-platforms GROUP row: drill into its songs instead.
             if (utils::startsWith(song.path, "otherplatform::")) {
-                musicDatabase.setOtherPlatform(std::stoi(song.path.substr(15)));  
+                musicDatabase.setOtherPlatform(std::stoi(song.path.substr(15)));
                 songList.select(0);
                 searchUpdated = true;
                 return;
@@ -499,9 +507,18 @@ void ChipMachine::setupCommands()
             searchUpdated = true;
             return;
         }
-        // Inside a drilled-in Other-platform: ESC pops back to the platform list.
+        // Inside a drilled-in Other-platform: ESC pops back to the platform list
+        // (which is the family submenu if we drilled in via one).
         if (musicDatabase.otherPlatform() >= 0 && searchField.getText() == "") {
             musicDatabase.setOtherPlatform(-1);
+            songList.select(0);
+            searchUpdated = true;
+            return;
+        }
+        // Inside a family submenu (e.g. Virtual Platforms): ESC pops to the top
+        // Other list. Steps back one level, mirroring the platform pop above.
+        if (musicDatabase.otherParent() >= 0 && searchField.getText() == "") {
+            musicDatabase.setOtherParent(-1);
             songList.select(0);
             searchUpdated = true;
             return;

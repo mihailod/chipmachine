@@ -308,6 +308,18 @@ public:
     // Returns empty when the DB doesn't exist yet.
     static std::vector<std::string> subPlatformNames();
 
+    // The complementary set: Other drill rows that name no machine (non-hardware
+    // pouet tags like Java/JavaScript/Flash and meta buckets like VGM/Browser).
+    // A logo could never be "correct" for these, so they are NOT flagged as gaps
+    // by subPlatformNames() -- this lists them separately so the startup report
+    // can still show which rows are art-less, distinct from a real missing logo.
+    static std::vector<std::string> subPlatformNamesNonHardware();
+
+    // Distinct byte-less "family" parent rows in the Other drill (e.g. "Virtual
+    // Platforms", which nests TIC-80/PICO-8/MicroW8). Each wants a <name>.png of
+    // its own, so the startup missing-logo report checks them like a real row.
+    static std::vector<std::string> subPlatformFamilyNames();
+
     // Distinct file extension (lowercased) -> the set of platform slugs its
     // songs classify to, read from the song DB. Used at startup to report which
     // extensions need a dedicated screenshot because no platform logo covers
@@ -654,11 +666,23 @@ public:
                 return otherGroupCount[i];
         return 0;
     }
+    // True if a groupId is a family PARENT row (a byte-less 2nd-level grouping
+    // like "Virtual Platforms") rather than a real sub-platform. Its song count
+    // is the sum of its children's, so callers tallying totals must skip it.
+    bool isOtherFamilyRow(int gid) const { return otherFamilyGids.count(gid) > 0; }
     // Drill into one sub-platform (its groupId) so an empty query lists that
     // platform's songs; pass -1 to go back to the platform list.
     void setOtherPlatform(int gid) { otherPlatformFilter = gid; }
     int otherPlatform() const { return otherPlatformFilter; }
     bool otherFilterActive_() const { return otherFilterActive; }
+    // A second drill level WITHIN the Other list: a handful of sub-platforms are
+    // grouped under a byte-less "family" parent row (e.g. TIC-80/PICO-8/MicroW8
+    // under "Virtual Platforms"). Entering a family (its parent gid) makes the
+    // empty-query menu list that family's children instead of the top rows; -1
+    // returns to the top. Orthogonal to setOtherPlatform, which drills a single
+    // group down to its songs (ESC pops songs -> family -> top, one step each).
+    void setOtherParent(int familyGid) { otherParentFilter = familyGid; }
+    int otherParent() const { return otherParentFilter; }
 
 private:
     RemoteLoader& remoteLoader;
@@ -736,10 +760,18 @@ private:
     bool otherFilterActive = false;                     // OTHER/ARCADE filter on
     uint8_t subPlatformByte = OTHER;                    // active drill byte
     int otherPlatformFilter = -1;                       // drilled-in groupId
+    int otherParentFilter = -1;                         // drilled-in family gid (-1=top)
     int builtSubPlatformByte = -1;                      // byte the set was built for
     std::vector<std::pair<int, std::string>> otherPlatformList; // (groupId,name)
     std::vector<int> otherGroupCount;                   // songs per group (by pos)
     std::unordered_map<int, int> otherIndexToGroup;     // song index -> groupId
+    // Family (2nd-level) grouping over otherPlatformList. A family parent is a
+    // synthetic group appended after the real ones: it holds no songs of its own,
+    // its otherGroupCount is the sum of its children's, and getSongInfo gives it
+    // an "othergroup::" path so a click enters its submenu instead of playing.
+    std::set<int> otherFamilyGids;                      // gids that are family parents
+    std::vector<int> otherTopRows;                      // top-menu synthetic indices (sorted)
+    std::map<int, std::vector<int>> otherFamilyChildRows; // parent gid -> child synthetic indices
     // Scan the song table (ROWID == search index + 1) once, classify songs whose
     // format byte == subPlatformByte by their format string, and populate the
     // browse state above. Rebuilds when subPlatformByte changes.

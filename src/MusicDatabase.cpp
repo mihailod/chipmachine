@@ -17,6 +17,7 @@
 #include <cctype>
 #include <chrono>
 #include <filesystem>
+#include <functional>
 #include <map>
 #include <set>
 #include <thread>
@@ -1419,6 +1420,7 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
                           allowedFormats[0] == ARCADE));
     if (otherFilterActive) subPlatformByte = allowedFormats[0];
     otherPlatformFilter = -1;
+    otherParentFilter = -1;
     // The platform, extension, and database filters share the single title-index
     // predicate slot, so activating one clears the others' state.
     extensionFilterGid = -1;
@@ -1860,9 +1862,15 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
         // sub-platform GROUP rows; drilled in, list that platform's songs
         // sorted alphabetically by title.
         if (otherFilterActive && otherPlatformFilter < 0) {
-            for (auto const& g : otherPlatformList)
-                if (!add_unique(OTHER_PLATFORM_INDEX + g.first) &&
-                    result.size() >= searchLimit)
+            // Top level lists otherTopRows (real groups + family parents); drilled
+            // into a family, list that family's children instead.
+            const std::vector<int>* rows = &otherTopRows;
+            if (otherParentFilter >= 0) {
+                auto it = otherFamilyChildRows.find(otherParentFilter);
+                if (it != otherFamilyChildRows.end()) rows = &it->second;
+            }
+            for (int synthIdx : *rows)
+                if (!add_unique(synthIdx) && result.size() >= searchLimit)
                     break;
             return result.size();
         }
@@ -2108,12 +2116,19 @@ SongInfo MusicDatabase::getSongInfo(int index) const
         // the groupId so the UI can drill in (it is not playable).
         int gid = index - OTHER_PLATFORM_INDEX;
         std::string name;
+        bool isFamily;
         {
             std::lock_guard lock{ dbMutex };
             for (auto const& g : otherPlatformList)
                 if (g.first == gid) name = g.second;
+            isFamily = otherFamilyGids.count(gid) > 0;
         }
-        return SongInfo("otherplatform::" + std::to_string(gid), "", name, "",
+        // A family PARENT row (e.g. "Virtual Platforms") drills into its children,
+        // so it gets an "othergroup::" path the UI routes to setOtherParent; a
+        // real group keeps "otherplatform::" (drills to its songs).
+        return SongInfo((isFamily ? "othergroup::" : "otherplatform::") +
+                            std::to_string(gid),
+                        "", name, "",
                         subPlatformByte == ARCADE ? "Arcade" : "Other");
     }
 
@@ -3676,24 +3691,72 @@ std::string MusicDatabase::subPlatformName(std::string const& fmt)
         // pouet tags the machine "VIC 20"; show its full name. (The hidden
         // Demozoo .prg tunes already carry "Commodore VIC-20" verbatim.)
         { "vic 20", "Commodore VIC-20" },
+        // The two TI-8x rows differ only by CPU (Z80 = TI-83/84, 68k = TI-89/92),
+        // a nuance nobody filters on; merge them into one calculator row.
+        { "ti-8x (z80)", "TI-8x Calculator" },
+        { "ti-8x (68k)", "TI-8x Calculator" },
+        // One vendor's handheld line (GP32 then GP2X); one row.
+        { "gamepark gp32", "GamePark" },
+        { "gamepark gp2x", "GamePark" },
+        // The genuinely-other catch-all row inside the Other drill: a handful of
+        // tunes tagged with the bare "Other" platform. Renamed to a playful
+        // "Easter Egg!" row (user, 2026-07-16) with its own EasterEgg.png logo.
+        { "other", "Easter Egg!" },
     };
     auto it = alias.find(toLower(s));
     return it != alias.end() ? it->second : s;
 }
 
-std::vector<std::string> MusicDatabase::subPlatformNames()
+// Drill rows that name no machine: a logo could never be right for them, so
+// subPlatformNames() does not report them as gaps. (The non-hardware pouet tags
+// -- Wild, JavaScript, ... -- are caught separately by isNonHardwareTag.)
+static bool isMetaSubPlatform(std::string const& lower)
+{
+    static const std::set<std::string> m = {
+        // "other" is aliased to "Easter Egg!" by subPlatformName, so the catch-all
+        // row reaches here under its display name, not the bare tag.
+        "vgm", "easter egg!", "unknown", "browser", "calculator",
+        "custom hardware",
+    };
+    return m.count(lower) > 0;
+}
+
+// Lowercased Other-drill sub-platform name -> the byte-less "family" parent it
+// nests under in the drill (a 2nd level within Other). Children keep the OTHER
+// byte and their own logos; the parent is a pure menu node with a "<family>.png"
+// of its own. Shared by buildSubPlatforms (the grouping) and the family-name list
+// (the missing-logo report), so both agree on what families exist.
+static std::map<std::string, std::string> const& subPlatformFamilyOf()
+{
+    static const std::map<std::string, std::string> m = {
+        { "tic-80", "Virtual / Fantasy Platforms / Consoles" },
+        { "pico-8", "Virtual / Fantasy Platforms / Consoles" },
+        { "microw8", "Virtual / Fantasy Platforms / Consoles" },
+    };
+    return m;
+}
+
+// Distinct family display names (deduped, sorted). Their logos live at
+// platformscreenshots/<name>.png, reported missing like any Other-drill row.
+std::vector<std::string> MusicDatabase::subPlatformFamilyNames()
+{
+    std::set<std::string> uniq;
+    for (auto const& [child, fam] : subPlatformFamilyOf()) uniq.insert(fam);
+    return { uniq.begin(), uniq.end() };
+}
+
+// Distinct canonical Other-drill row names, keeping only those for which
+// `keep(loweredName)` is true. Shared by subPlatformNames() (hardware rows) and
+// subPlatformNamesNonHardware() (everything else) so the two can never disagree
+// about how a row is named. Returns lower-sorted, deduped display spellings.
+static std::vector<std::string>
+otherDrillNames(std::function<bool(std::string const&)> keep)
 {
     // Lowercased name -> the spelling the drill will display. Case-only variants
     // ("GamePark GP2X"/"Gamepark GP2X") are ONE row, so they must be ONE line in
     // the report, naming the row: same byte-order-first rule as buildSubPlatforms
     // (prefers the interior capital, i.e. the proper-noun spelling).
     std::map<std::string, std::string> canon;
-    // Drill rows that name no machine: a logo could never be right for them, so
-    // they are not reported as gaps. (The non-hardware pouet tags -- Wild,
-    // JavaScript, ... -- are excluded via isNonHardwareTag below.)
-    static const std::set<std::string> notAPlatform = {
-        "vgm", "other", "unknown", "browser", "calculator", "custom hardware",
-    };
     try {
         sqlite3db::Database db{
             (Environment::getCacheDir() / "music.db").string()
@@ -3710,10 +3773,10 @@ std::vector<std::string> MusicDatabase::subPlatformNames()
             // ARCADE is deliberately excluded: its boards already have per-board
             // logos keyed by format string (arcadeSubLogos / vgz-*.png).
             if (formatToByte(fmt, path, 0) != OTHER) continue;
-            auto name = subPlatformName(fmt);
+            auto name = MusicDatabase::subPlatformName(fmt);
             if (name.empty()) continue;
             auto lower = toLower(name);
-            if (isNonHardwareTag(lower) || notAPlatform.count(lower)) continue;
+            if (!keep(lower)) continue;
             auto it = canon.find(lower);
             if (it == canon.end() || name < it->second) canon[lower] = name;
         }
@@ -3724,6 +3787,20 @@ std::vector<std::string> MusicDatabase::subPlatformNames()
     out.reserve(canon.size());
     for (auto const& kv : canon) out.push_back(kv.second); // already lower-sorted
     return out;
+}
+
+std::vector<std::string> MusicDatabase::subPlatformNames()
+{
+    return otherDrillNames([](std::string const& lower) {
+        return !isNonHardwareTag(lower) && !isMetaSubPlatform(lower);
+    });
+}
+
+std::vector<std::string> MusicDatabase::subPlatformNamesNonHardware()
+{
+    return otherDrillNames([](std::string const& lower) {
+        return isNonHardwareTag(lower) || isMetaSubPlatform(lower);
+    });
 }
 
 std::vector<std::string> MusicDatabase::platformScreenshotNames()
@@ -3981,6 +4058,55 @@ void MusicDatabase::buildSubPlatforms()
         otherGroupCount.push_back((int)idxs.size());
         for (int i : idxs) otherIndexToGroup[i] = gid;
     }
+
+    // --- Family (2nd-level) grouping ------------------------------------------
+    // A few sub-platforms nest one level deeper under a byte-less "family" parent
+    // row, so the top menu shows e.g. one "Virtual Platforms" row that drills into
+    // TIC-80/PICO-8/MicroW8. The children keep the OTHER byte and their own logos;
+    // the parent is a pure menu node (no songs of its own) with a "<family>.png".
+    otherFamilyGids.clear();
+    otherTopRows.clear();
+    otherFamilyChildRows.clear();
+
+    // Split the real groups (emplaced above, gid == position) into top-level rows
+    // and per-family child buckets.
+    auto const& familyOf = subPlatformFamilyOf();
+    std::map<std::string, std::vector<int>> familyKids; // family name -> child gids
+    std::vector<std::pair<std::string, int>> topRows;   // (sort name, synth index)
+    for (int gid = 0; gid < (int)names.size(); gid++) {
+        auto fit = familyOf.find(toLower(names[gid]));
+        if (fit != familyOf.end())
+            familyKids[fit->second].push_back(gid);
+        else
+            topRows.emplace_back(names[gid], OTHER_PLATFORM_INDEX + gid);
+    }
+
+    // One synthetic parent per family that actually has children in this drill.
+    // Appended with a fresh gid; its count is the sum of its children's.
+    for (auto& [fam, kids] : familyKids) {
+        int pgid = (int)otherPlatformList.size();
+        int total = 0;
+        for (int k : kids) total += otherGroupCount[k];
+        otherPlatformList.emplace_back(pgid, fam);
+        otherGroupCount.push_back(total);
+        otherFamilyGids.insert(pgid);
+        std::sort(kids.begin(), kids.end(), [&](int a, int b) {
+            return toLower(names[a]) < toLower(names[b]);
+        });
+        std::vector<int> childRows;
+        for (int k : kids) childRows.push_back(OTHER_PLATFORM_INDEX + k);
+        otherFamilyChildRows[pgid] = std::move(childRows);
+        topRows.emplace_back(fam, OTHER_PLATFORM_INDEX + pgid);
+    }
+
+    // Top menu order: real rows + family parents interleaved alphabetically, with
+    // the same "Arcade (Other)" forced-last rule the group sort above uses.
+    std::sort(topRows.begin(), topRows.end(), [](auto const& a, auto const& b) {
+        bool ao = (a.first == "Arcade (Other)"), bo = (b.first == "Arcade (Other)");
+        if (ao != bo) return bo;
+        return toLower(a.first) < toLower(b.first);
+    });
+    for (auto& [nm, idx] : topRows) otherTopRows.push_back(idx);
 }
 
 int MusicDatabase::getOtherPlatformCount()
@@ -3988,7 +4114,7 @@ int MusicDatabase::getOtherPlatformCount()
     std::lock_guard lock{ dbMutex };
     subPlatformByte = OTHER;
     buildSubPlatforms();
-    return (int)otherPlatformList.size();
+    return (int)otherTopRows.size(); // top-menu rows (families count once)
 }
 
 int MusicDatabase::getArcadePlatformCount()
@@ -3996,7 +4122,7 @@ int MusicDatabase::getArcadePlatformCount()
     std::lock_guard lock{ dbMutex };
     subPlatformByte = ARCADE;
     buildSubPlatforms();
-    return (int)otherPlatformList.size();
+    return (int)otherTopRows.size(); // Arcade has no families: same as group count
 }
 
 // Compression/archive extensions that wrap a real module. They must never be
@@ -4102,10 +4228,10 @@ std::string MusicDatabase::describeFormat(SongInfo const& s)
             { "pico-8", "PICO-8 Fantasy Console" },
             { "microw8", "MicroW8 Fantasy Console" },
             { "mobile phone", "Misc Mobile Phone" },
-            { "ti-8x (z80)", "TI Calculator" },
-            { "ti-8x (68k)", "TI Calculator" },
-            { "gamepark gp32", "GamePark GP32" },
-            { "gamepark gp2x", "GamePark GP32" },
+            { "ti-8x (z80)", "TI-8x Calculator" },
+            { "ti-8x (68k)", "TI-8x Calculator" },
+            { "gamepark gp32", "GamePark" },
+            { "gamepark gp2x", "GamePark" },
         };
         std::string inner;
         auto open = s.format.find('(');

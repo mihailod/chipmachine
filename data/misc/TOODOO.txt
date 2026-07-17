@@ -1,8 +1,4 @@
-- look into other -- might be some junk / misclassified there
-
 - finish taxonomy : pet? vic? ql? others?
-
-- combine yt and ogg not classified into one?
 
 - songs with the same name as a same song and the variants like "view options". so if you search for "Delta" you will get only one "Delta" "master" record but below indented a bit you can see all "Delta" tunes from various composers and in various formats.
 

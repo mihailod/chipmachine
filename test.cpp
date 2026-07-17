@@ -531,6 +531,16 @@ TEST_CASE("sub-platform names fold captures onto their hardware", "[database]")
         { "Youtube (Android)", "Mobile" },
         { "Mobile", "Mobile" },
         { "Youtube (VIC 20)", "Commodore VIC-20" },
+        // The two CPU-split TI-8x rows collapse to one calculator row; the two
+        // GamePark handhelds collapse to one vendor row (nested parens and all).
+        { "Youtube (TI-8x (Z80))", "TI-8x Calculator" },
+        { "Youtube (TI-8x (68k))", "TI-8x Calculator" },
+        { "Youtube (GamePark GP32)", "GamePark" },
+        { "Youtube (GamePark GP2X)", "GamePark" },
+        // The bare "Other" catch-all is relabelled to the playful "Easter Egg!"
+        // row (its logo is EasterEgg.png).
+        { "Other", "Easter Egg!" },
+        { "Youtube (Other)", "Easter Egg!" },
         // Arcade strings carry no wrapper and no comma: untouched, so the
         // vendor rules in buildSubPlatforms still see them verbatim.
         { "Arcade (Capcom)", "Arcade (Capcom)" },
@@ -4297,6 +4307,55 @@ TEST_CASE("unclassified_songs", "[.]")
     printf("------------------------------\n");
 }
 
+// The Virtual Platforms family: a byte-less 2nd level inside the Other drill.
+// Drives the real browse path (setFormatFilter -> search("") -> getSongInfo) to
+// prove: the top menu shows one "Virtual Platforms" PARENT row (othergroup:: path,
+// aggregate count) and no bare TIC-80/PICO-8/MicroW8; entering it lists exactly
+// those children (otherplatform:: paths); the counts add up and nothing is lost.
+TEST_CASE("virtual platforms family nests inside Other", "[database]")
+{
+    using namespace chipmachine;
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    REQUIRE(mdb.initFromLua("."));
+
+    // The three fantasy consoles are children of the family, never top rows.
+    static const std::set<std::string> kids = { "TIC-80", "PICO-8", "MicroW8" };
+
+    mdb.setFormatFilter({ (uint8_t)OTHER });
+    std::vector<int> res;
+    mdb.search("", res, 100000);
+
+    // Top level: exactly one family parent, and none of its children bare.
+    int parentIdx = -1, parentCount = 0;
+    for (int idx : res) {
+        auto s = mdb.getSongInfo(idx);
+        REQUIRE(kids.count(s.title) == 0); // children are hidden under the parent
+        if (utils::startsWith(s.path, "othergroup::")) {
+            REQUIRE(s.title == "Virtual / Fantasy Platforms / Consoles");
+            parentIdx = idx;
+            parentCount = mdb.otherPlatformSongCount(idx - MusicDatabase::OTHER_PLATFORM_INDEX);
+        }
+    }
+    REQUIRE(parentIdx >= 0); // the family parent is present at the top level
+
+    // Enter the family: the menu now lists exactly the three children as their
+    // own drillable (otherplatform::) rows, and their counts sum to the parent's.
+    mdb.setOtherParent(parentIdx - MusicDatabase::OTHER_PLATFORM_INDEX);
+    std::vector<int> children;
+    mdb.search("", children, 100000);
+    std::set<std::string> got;
+    int childSum = 0;
+    for (int idx : children) {
+        auto s = mdb.getSongInfo(idx);
+        REQUIRE(utils::startsWith(s.path, "otherplatform::"));
+        got.insert(s.title);
+        childSum += mdb.otherPlatformSongCount(idx - MusicDatabase::OTHER_PLATFORM_INDEX);
+    }
+    REQUIRE(got == kids);
+    REQUIRE(childSum == parentCount);
+}
+
 TEST_CASE("other_platforms", "[.]")
 {
     using namespace chipmachine;
@@ -4314,12 +4373,16 @@ TEST_CASE("other_platforms", "[.]")
         std::vector<std::pair<std::string, int>> rows;
         for (auto const& [gid, name] : mdb.otherPlatforms()) {
             int n = mdb.otherPlatformSongCount(gid);
-            rows.emplace_back(name, n);
-            total += n;
+            // A family PARENT (e.g. "Virtual Platforms") aggregates its children,
+            // so mark it and skip its count -- the children are listed separately
+            // and already contribute to the total.
+            bool fam = mdb.isOtherFamilyRow(gid);
+            rows.emplace_back(fam ? ("[" + name + "]") : name, n);
+            if (!fam) total += n;
         }
         std::sort(rows.begin(), rows.end(),
                   [](auto const& a, auto const& b) { return a.second > b.second; });
-        printf("\n--- %s (%d groups, %d songs) ---\n", title, groups, total);
+        printf("\n--- %s (%d top rows, %d songs) ---\n", title, groups, total);
         for (auto const& [name, n] : rows)
             printf("%6d  %s\n", n, name.c_str());
         printf("------------------------------\n");
