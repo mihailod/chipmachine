@@ -170,6 +170,29 @@ VGM_PLATFORM = {
     "ym2151": "Sharp X68000", "x68k": "Sharp X68000", "pc-x801": "Sharp X68000",
 }
 
+# Per-URL VGM platform override, keyed by the reconstructed disk URL. Built by
+# reading each file's chip-clock header (scripts/vgm_peek analysis, 2026-07-16):
+# the BotB compo token classifies only ~5 tokens, leaving ~1039 as generic "VGM".
+# The header names the actual sound chip(s), which map to a real platform far more
+# reliably than the token. This side-file (data/botb_vgm_platforms.txt) is the
+# committed result; it wins over VGM_PLATFORM's token guess for any .vgm/.vgz.
+def load_vgm_overrides():
+    path = os.path.join(DATA, "botb_vgm_platforms.txt")
+    m = {}
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            for ln in f:
+                ln = ln.rstrip("\n")
+                if not ln:
+                    continue
+                u, _, fmt = ln.partition("\t")
+                if u and fmt:
+                    m[u] = fmt
+    return m
+
+
+VGM_BY_URL = load_vgm_overrides()
+
 
 def classify(token, ext):
     """(format_string, keep) for an audio entry, or (None, False) to skip."""
@@ -208,6 +231,16 @@ def build():
         if url in seen_url:
             continue
         seen_url.add(url)
+        # Header-derived platform wins over the compo-token guess for VGM logs.
+        # An unclassified VGM (not in the side-file, token unknown) is DROPPED
+        # rather than shipped as a generic "VGM" row: the one such file (an
+        # extra-header-only log, "Visible Confusion") was silent, and the "VGM"
+        # Other sub-platform was removed entirely (2026-07-16).
+        if ext in ("vgm", "vgz"):
+            fmt = VGM_BY_URL.get(url, fmt)
+            if fmt == "VGM":
+                skipped["vgm-unclassified"] += 1
+                continue
         title = (e.get("title") or "").strip().replace("\t", " ")
         if not title:                       # some entries have a blank title
             title = os.path.splitext(fname)[0].strip() or ("BotB " + str(e.get("id")))

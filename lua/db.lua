@@ -902,7 +902,20 @@
 --     only reorders rows WITHIN one collection, so the closest title matches from
 --     a given source come first. The comparator half is an engine change (needs a
 --     rebuild); the priority-value moves are the data change this bump reindexes.
-VERSION = 122;
+-- 123: BotB VGM register-logs reclassified by CHIP, not compo token. 1038 of the
+--     1039 generic "VGM" (OTHER) rows now carry their real platform, read from
+--     each file's VGM chip-clock header (HuC6280->PC Engine, YM2612->Genesis,
+--     GB DMG->Game Boy, AY8910 by clock->Spectrum/CPC/Atari ST, K051649 SCC->MSX,
+--     YM2610->Neo Geo, QSound/C140/...->Arcade, etc.). build_botb.py now consults
+--     data/botb_vgm_platforms.txt (url->platform, the committed header analysis)
+--     which overrides the 5-token VGM_PLATFORM guess. One extra-header-only file
+--     stays "VGM". Pure metadata: playback is .vgm extension-driven, unchanged.
+-- 124: the last "VGM" row removed. Its one member ("Visible Confusion", an
+--     extra-header-only log our chip peek couldn't read) was silent, so the song
+--     is dropped from data/botb.txt and the "VGM" Other sub-platform ceases to
+--     exist. format_map["vgm"] deleted; build_botb.py now SKIPS any unclassified
+--     VGM instead of emitting a generic "VGM" bucket.
+VERSION = 124;
 
 DB = {
 {

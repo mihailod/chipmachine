@@ -2871,7 +2871,6 @@ void initFormats()
     format_map["mptm"] = PCTRACKER;         // OpenMPT native module
     format_map["adlib"] = ADPLUG;           // AdPlug OPL (rad/amd/a2m/dfm/snd)
     format_map["pxtone"] = PC;              // PxTone Collage (Studio Pixel)
-    format_map["vgm"] = OTHER;              // generic multi-chip VGM log
     format_map["playstation 2"] = PLAYSTATION2; // OCReMix PS2 game remixes
     // Misc small consoles -> generic OTHER ("Other Platforms" filter).
     for (char const* f : { "vectrex", "colecovision" })
