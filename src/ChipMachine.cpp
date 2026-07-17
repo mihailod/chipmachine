@@ -2194,6 +2194,15 @@ void ChipMachine::update()
             indexingDatabase = false;
             removeToast();
             computeFilterCounts();
+            // Precompute the Format-filter browse list now -- right after the
+            // index is ready, while the splash idles -- so the first TAB to the
+            // Format screen is instant, like the Platform and Database screens
+            // (whose data computeFilterCounts / databaseGroups already prepared).
+            // buildExtensionGroups() scans the whole song table once (~360ms);
+            // done here it costs one idle splash frame instead of freezing the
+            // UI the first time the user opens the Format filter.
+            musicDatabase.extensionGroups();
+            musicDatabase.databaseGroups();
         } else {
             // Only show the "Indexing database" toast/bar for a real reindex.
             // A cached load is also briefly busy(); on slower machines that
