@@ -54,5 +54,6 @@
 #include "famitrackerplugin/FamiTrackerPlugin.h"
 #include "goattrackerplugin/GoatTrackerPlugin.h"
 #include "vgmstreamplugin/VGMStreamPlugin.h"
+#include "victrackerplugin/VTPlugin.h"
 
 

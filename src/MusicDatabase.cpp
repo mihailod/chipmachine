@@ -2510,6 +2510,11 @@ void initFormats()
     format_map["stereo sidplayer"] = STR;
     // Commodore TED (16/116/+4) .prg tunes -- identify_song() tags these "TED".
     format_map["ted"] = PRG;
+    // Commodore VIC-20 (VIC-I sound). The modland "Vic-Tracker" corpus (.vt),
+    // played by victrackerplugin. The unemulated VIC-20/PET .prg tunes stay
+    // skipped (prgForUnemulatedMachine), so this platform holds only playable
+    // VIC-TRACKER tunes (plus any "Youtube (VIC 20)" captures via platformName).
+    format_map["vic-tracker"] = VIC20;
 
     // --- ZX Spectrum 16/48 beeper (1-bit) ---
     // beepola/picatune2 are listed in uade_formats (default UADE/Amiga); these
@@ -3116,6 +3121,8 @@ static uint8_t platformNameToByte(std::string s)
         { "c64dx/c65/mega65", SID },
         { "c16/116/plus4", PRG },    { "commodore plus/4", PRG },
         { "commodore 16", PRG },
+        { "vic 20", VIC20 },         { "commodore vic-20", VIC20 },
+        { "vic-20", VIC20 },         { "commodore vic 20", VIC20 },
         { "atari st", ATARI },       { "atari ste", ATARI },
         { "atari tt 030", ATARI }, // TT folds in with ST/STE (same YM2149)
         { "atari falcon 030", ATARIFALCON },
@@ -3400,6 +3407,7 @@ static std::string platformName(uint8_t b)
     case SID:
     case STR: return "Commodore 64";
     case PRG: return "Commodore 16/+4";
+    case VIC20: return "Commodore VIC-20";
     case ATARI: return "Atari ST/STE/TT";
     case POKEY: return "Atari XL/XE";
     case ATARIVCS: return "Atari VCS";
@@ -3572,6 +3580,7 @@ std::string MusicDatabase::platformForExtension(std::string const& rawExt)
         { "SCC-Musixx", "MSX" },
         { "GoatTracker", "Commodore 64" },
         { "DMF", "PC" },
+        { "Vic-Tracker", "Commodore VIC-20" },
     };
     if (auto it = pluginPlatform.find(primary); it != pluginPlatform.end())
         return it->second;

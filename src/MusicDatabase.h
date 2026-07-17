@@ -168,7 +168,13 @@ enum Formats
     // Japanese FM machine: FMP/PMD/S98 drivers), the same way APPLE narrowed to
     // Apple IIGS when the Apple group was split. These two are the other members.
     JPX68000,  // Sharp X68000 (MDX; Sharp X1 folds in)
-    JPFMTOWNS  // Fujitsu FM Towns (Euphony .eup; Fujitsu FM-7 folds in)
+    JPFMTOWNS, // Fujitsu FM Towns (Euphony .eup; Fujitsu FM-7 folds in)
+
+    // Commodore VIC-20 (MOS 6560/6561 VIC-I sound). VIC-TRACKER (.vt) tunes,
+    // played by victrackerplugin. Placed after the PRODUCT anchor for the same
+    // reason as the Apple/Virtual Boy/Atari blocks above -- the console region is
+    // full up to the fixed TRACKER=0x30 anchor -- and nothing caps at PRODUCT.
+    VIC20
 
 };
 

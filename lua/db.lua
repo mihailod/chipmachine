@@ -915,7 +915,17 @@
 --     is dropped from data/botb.txt and the "VGM" Other sub-platform ceases to
 --     exist. format_map["vgm"] deleted; build_botb.py now SKIPS any unclassified
 --     VGM instead of emitting a generic "VGM" bucket.
-VERSION = 124;
+-- 125: Commodore VIC-20 becomes a real platform (new VIC20 format byte + TAB
+--     filter row "Commodore VIC-20"). format_map["vic-tracker"] routes the 11
+--     modland "Vic-Tracker" .vt tunes there; they are now PLAYABLE via the new
+--     victrackerplugin (Kahlin's 6502 VIC-TRACKER replayer on fake6502 + the
+--     VIC-I sound core from VICE). platformNameToByte also folds any
+--     "Youtube (VIC 20)" captures onto the same platform. This overturns the
+--     VERSION 118 note that parked .vt as "tracker DATA needing the Vic-Tracker
+--     replayer" -- that replayer is now vendored. The unemulated VIC-20/PET .prg
+--     tunes stay hidden (prgForUnemulatedMachine), so the platform holds only
+--     playable tunes. Bump forces a reindex: the format byte lives in index.dat.
+VERSION = 125;
 
 DB = {
 {

@@ -419,3 +419,20 @@ Notice: Vendored sources are unmodified. The plugin compiles them at hidden
         visibility and partial-links (ld -r) so libmikmod's generic internal
         symbols (getfrequency, getlinearperiod, ...) are localized and do not
         collide with other vendored trackers.
+
+Component: Vic-Tracker (Commodore VIC-20 VIC-TRACKER, .vt)
+Author: VIC-TRACKER and its .vt format are by Daniel Kahlin (1994/2004,
+        http://www.kahlin.net/daniel/victracker/). The tunes are played by
+        Kahlin's own 6502 replay routine (player.asm), vendored pre-assembled as
+        vtplayer_bin.h at musicplayer/src/plugins/victrackerplugin/. The 6502 CPU
+        core is fake6502 by Mike Chambers (omarandlorraine fork). The VIC-I (MOS
+        6560/6561) sound core is extracted from VICE's vic20/vic20sound.c by Rami
+        Räsänen and Ville-Matias Heikkilä.
+License: VIC-TRACKER player (player.asm et al.): BSD 2-Clause License (Daniel
+        Kahlin; see victrackerplugin/victracker/LICENSE.txt).
+        fake6502: GNU General Public License v2.0.
+        VIC-I sound core (from VICE): GNU General Public License v2.0 or later.
+Notice: The VIC-I sound source is lifted verbatim from VICE (already vendored for
+        the SID bridge but not compiled there); only its internal vic_sound_clock
+        is made static to avoid a symbol collision. The player blob is Kahlin's
+        BSD sources assembled unchanged with dasm (see victracker/build_player.sh).
