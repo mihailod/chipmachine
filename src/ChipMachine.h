@@ -234,6 +234,11 @@ public:
     // press resolves it -- Y wipes the list, anything else cancels -- and is
     // swallowed either way, so it cannot also fire its own binding.
     bool pendingFavoritesClear = false;
+    // Name of the playlist a DEL press (on the Database-filter Playlists screen)
+    // is waiting to delete; empty when nothing is armed. The next key press
+    // resolves it -- Y deletes the file, anything else cancels -- and is
+    // swallowed either way, mirroring pendingFavoritesClear above.
+    std::string pendingPlaylistDelete;
     // The song a shuffle seeds itself from: the highlighted row while browsing
     // search results, otherwise whatever is playing.
     SongInfo shuffleSeed();

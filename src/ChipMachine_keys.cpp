@@ -139,6 +139,9 @@ void ChipMachine::setupRules()
            "favor/unfavor_highlighted_search_result");
     addKey('f' | CTRL, if_equals(currentScreen, MAIN_SCREEN),
            "favor/unfavor_playing_song");
+    // CTRL+L ("list"): move favorites into a new named playlist. Sits just before
+    // CLEAR FAVORITES LIST in the help menu (registration order in setupCommands).
+    addKey('l' | CTRL, "move_favorites_to_a_new_playlist");
     // CTRL+SHIFT+C, not CTRL+C (that is the composer shuffle): SHIFT and CTRL are
     // both folded into the event, so this is a distinct binding, not a variant.
     addKey('c' | CTRL | SHIFT, "clear_favorites_list");
@@ -399,6 +402,37 @@ void ChipMachine::updateKeys()
         return;
     }
 
+    // Same one-key confirm dance as CLEAR FAVORITES above, for a DEL-armed
+    // playlist deletion: Y deletes the file, anything else cancels. Re-run the
+    // search afterwards -- deleting a playlist shifts every later PLAYLIST_INDEX
+    // offset, so the result list must be rebuilt, not just redrawn.
+    if (!pendingPlaylistDelete.empty()) {
+        bool isModifier =
+            (key >= keycodes::SHIFT_LEFT && key <= keycodes::WINDOW_RIGHT) ||
+            key == keycodes::CAPS_LOCK;
+        if (!isModifier) {
+            std::string name = pendingPlaylistDelete;
+            pendingPlaylistDelete.clear();
+            if (key == 'y') {
+                musicDatabase.deletePlaylist(name);
+                // Rebuild the result list NOW. The deferred searchUpdated path
+                // only runs at the end of updateKeys, which the NO_KEY guard
+                // skips on idle frames -- so until the next keypress songList and
+                // iquery->finalResult would still hold the deleted row, and
+                // playing it would look up a file that no longer exists (the
+                // vector has also shifted under the stale PLAYLIST_INDEX offsets).
+                // Re-run the query synchronously to drop the row immediately.
+                iquery->invalidate();
+                iquery->setString(searchField.getText());
+                songList.setTotal(iquery->numHits());
+                songList.select(0);
+                toast(utils::format("DELETED PLAYLIST %s", name));
+            } else
+                toast("DELETE CANCELLED");
+        }
+        return;
+    }
+
     uint32_t event = key;
 
     VerticalList* currentList = nullptr;
@@ -438,6 +472,21 @@ void ChipMachine::updateKeys()
         screen.key_pressed(keycodes::ALT_RIGHT))
         event |= ALT;
 
+    // A modal text dialog (e.g. naming a new playlist) owns all input while it is
+    // open: route keys straight to it, ahead of the state machine and the
+    // background list so neither acts on them (SEARCH_SCREEN's ENTER would
+    // otherwise play a song instead of committing the name). ENTER commits, ESC
+    // cancels; both close it. Modifier presses and CTRL/ALT combos are swallowed
+    // (so CTRL+L cannot reopen a second dialog) but do nothing.
+    if (currentDialog != nullptr) {
+        bool isModifier =
+            (key >= keycodes::SHIFT_LEFT && key <= keycodes::WINDOW_RIGHT) ||
+            key == keycodes::CAPS_LOCK;
+        if (!isModifier && (event & (CTRL | ALT)) == 0)
+            currentDialog->on_key(event);
+        return;
+    }
+
     if ((event & (CTRL | SHIFT)) == 0 && currentList) {
         // The TAB platform list wraps around: Up from the first entry goes to the
         // last, Down from the last goes back to the first.
@@ -475,6 +524,25 @@ void ChipMachine::updateKeys()
             rebuildFormatVisible();
             return;
         }
+    }
+
+    // DEL on the Database-filter Playlists screen (a search-results list where
+    // every row is a playlist) arms deletion of the highlighted list. Only here:
+    // the same key elsewhere must keep falling through to a normal search. The
+    // Favorites list is the built-in heart list and is not deletable.
+    if (currentScreen == SEARCH_SCREEN && selectedFilterName == "Playlists" &&
+        key == keycodes::DELETE) {
+        auto song = getSelectedSong();
+        if (utils::startsWith(song.path, "playlist::")) {
+            if (song.title == "Favorites") {
+                toast("CAN'T DELETE FAVORITES", ERROR);
+            } else {
+                pendingPlaylistDelete = song.title;
+                toast(utils::format("Y TO DELETE PLAYLIST %s!", song.title),
+                      STICKY_ALERT);
+            }
+        }
+        return;
     }
 
     if (!smac.put_event(event)) {
@@ -612,10 +680,17 @@ void ChipMachine::updateKeys()
                     "# [showing first %s of %s %s tunes -- type to narrow]",
                     withCommas(shown), withCommas(activeFilterCount),
                     selectedFilterName));
-            else
-                searchField.setPrompt(utils::format(
+            else {
+                std::string prompt = utils::format(
                     "# [showing all %s %s tunes -- type to narrow]",
-                    withCommas(shown), selectedFilterName));
+                    withCommas(shown), selectedFilterName);
+                // On the Playlists listing every row is a deletable list, so
+                // advertise the DEL shortcut right in the title (see the DEL
+                // handler in updateKeys).
+                if (selectedFilterName == "Playlists")
+                    prompt += "  [DEL to delete selected]";
+                searchField.setPrompt(prompt);
+            }
         } else if (s.empty() && activeFilterCount > 0)
             searchField.setPrompt(utils::format("# [type to search %s %s tunes]",
                                                 withCommas(activeFilterCount),

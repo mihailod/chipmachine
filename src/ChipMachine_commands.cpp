@@ -437,6 +437,47 @@ void ChipMachine::setupCommands()
     });
     shortcut("ctrl+f(avor) [search]");
 
+    // Snapshot the current favorites into a freshly named playlist, then empty
+    // the favorites -- a "move", so the heart list clears as the new list fills.
+    // CTRL+L opens a naming dialog (ENTER commits, ESC cancels). The name is
+    // validated -- trimmed, '/' and '\' folded to '-', non-empty, no
+    // case-insensitive collision with an existing list -- before the playlist is
+    // created; a rejected name keeps the dialog open with an error toast.
+    cmd("move_favorites_to_a_new_playlist", [=] {
+        auto favorites = musicDatabase.getPlaylist(currentPlaylistName);
+        if (favorites.empty()) {
+            toast("NO FAVORITES TO MOVE!", ERROR);
+            return;
+        }
+        auto dialog = std::make_shared<Dialog>(grappix::screenptr, font,
+                                               "NAME NEW PLAYLIST:");
+        dialog->on_ok([=](std::string const& raw) -> bool {
+            std::string name = utils::lrstrip(raw);
+            std::replace(name.begin(), name.end(), '/', '-');
+            std::replace(name.begin(), name.end(), '\\', '-');
+            if (name.empty()) {
+                toast("NAME CAN'T BE EMPTY!", ERROR);
+                return false;
+            }
+            for (auto const& existing : musicDatabase.playlistNames()) {
+                if (utils::toLower(existing) == utils::toLower(name)) {
+                    toast("PLAYLIST ALREADY EXISTS!", ERROR);
+                    return false;
+                }
+            }
+            int n = (int)favorites.size();
+            musicDatabase.createPlaylist(name, favorites);
+            // Empties favorites + drops the heart icon; its "CLEARED N" toast is
+            // immediately superseded by the "MOVED" one below.
+            clearFavorites();
+            toast(utils::format("MOVED %d FAVORITES TO %s", n, name));
+            return true;
+        });
+        overlay.add(dialog);
+        currentDialog = dialog;
+    });
+    shortcut("ctrl+l(ist)");
+
     // Destructive and irreversible (the list is rewritten to disk immediately),
     // hence the deliberately awkward CTRL+SHIFT+C -- it must not sit next to
     // CTRL+C. The shortcut is pre-seeded below because addKey() would render the

@@ -29,7 +29,10 @@ public:
         lineEdit.pos  = { bounds.x + 20.0f, bounds.y + 95.0f };
     }
 
-    void on_ok(std::function<void(const std::string&)> cb)
+    // onOk returns true to accept the input and close the dialog, false to
+    // reject it (bad/duplicate name) and keep the dialog open so the user can
+    // correct it. A dialog with no callback always closes on ENTER.
+    void on_ok(std::function<bool(const std::string&)> cb)
     {
         onOk = cb;
     }
@@ -38,8 +41,8 @@ public:
     {
         LOGD("DIALOG: %d", key);
         if (key == keycodes::ENTER) {
-            if (onOk) onOk(lineEdit.getText());
-            Renderable::remove();
+            if (!onOk || onOk(lineEdit.getText()))
+                Renderable::remove();
         } else if (key == keycodes::ESCAPE) {
             Renderable::remove();
         } else {
@@ -55,7 +58,7 @@ public:
         lineEdit.render(target, delta);
     }
 
-    std::function<void(const std::string&)> onOk;
+    std::function<bool(const std::string&)> onOk;
     grappix::Font font;
     std::string text;
     grappix::Rectangle bounds;

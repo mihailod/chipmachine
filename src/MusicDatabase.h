@@ -486,6 +486,17 @@ public:
     void clearPlaylist(std::string const& plist);
     std::vector<SongInfo>& getPlaylist(std::string const& plist);
 
+    // Create a new on-disk playlist named `name` seeded with `songs`, and add it
+    // to the in-memory list so it shows up immediately. The caller is expected to
+    // have validated `name` (non-empty, no collision) via playlistNames() first.
+    void createPlaylist(std::string const& name,
+                        std::vector<SongInfo> const& songs);
+    // Delete the playlist named `name`: remove its file and drop it from the
+    // in-memory list. No-op if it does not exist.
+    void deletePlaylist(std::string const& name);
+    // Names of all known playlists, for collision checks before createPlaylist().
+    std::vector<std::string> playlistNames() const;
+
     void setFilter(std::string const& filter, int type = 0);
     void setFormatFilter(std::vector<uint8_t> const& allowedFormats);
 
@@ -802,6 +813,12 @@ private:
     std::vector<DatabaseGroup> databaseGroupList; // by count desc; index == row
     bool databaseGroupsBuilt = false;
     int databaseFilterRowid = -1;                 // active collection ROWID, -1 = none
+    // ROWID of the "Playlists" collection (db.lua id "pl"), resolved lazily and
+    // cached. -2 = not looked up yet, -1 = no such collection. When this is the
+    // active database filter, search() also lists the user's config-dir playlists
+    // (playLists) so runtime-created lists show alongside the indexed ones.
+    int playlistsCollRowid = -2;
+    int playlistsCollectionRowid();
     // Count songs per collection (from formats[] >> 8), fetch id/name and the
     // modal platform byte, sort by count. Fills databaseGroupList.
     void buildDatabaseGroups();

@@ -1,5 +1,3 @@
-- we need a way to create a playlist. the easiest is to introduce "promote favorites to playlist". need infra for naming. also for deleting.
-
 - packaging: the app should offer to Mac OS handling of all extensions it can play, package_app.sh should be augmented with plist section for it. then the application needs to handle the file passed in (standard mac way exists). so that when user installs the app on the mac it will offer to open the formats it can play from the os level (right click on a file). There is a standard MAC OS way of doing this by offering which formats you can handle in the .app plist spec). It should not take them by default -- that is rude, user might have other players they prefer but it should advertise it knows how to open them.
 
 - investigate: separate db from code and auto-update db independently from code

@@ -1677,6 +1677,24 @@ void MusicDatabase::setExtensionFilter(int gid)
     sortCandidatesByTitle(filteredCandidates);
 }
 
+int MusicDatabase::playlistsCollectionRowid()
+{
+    if (playlistsCollRowid != -2) return playlistsCollRowid;
+    playlistsCollRowid = -1;
+    try {
+        auto q = db.query<int, std::string, std::string>(
+            "SELECT ROWID, id, name FROM collection");
+        while (q.step()) {
+            auto [rowid, cid, cname] = q.get_tuple();
+            if (cname == "Playlists" || cid == "pl") {
+                playlistsCollRowid = rowid;
+                break;
+            }
+        }
+    } catch (...) {}
+    return playlistsCollRowid;
+}
+
 void MusicDatabase::buildDatabaseGroups()
 {
     if (databaseGroupsBuilt) return;
@@ -1914,11 +1932,24 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
                 if (!add_unique(idx) && result.size() >= searchLimit) break;
             }
         }
+        // On the Playlists collection screen, also list the user's config-dir
+        // playlists (Favorites + any created at runtime). These are not part of
+        // the indexed "Playlists" collection -- that only holds the shipped
+        // data/playlists lists -- so without this the DB filter (which suppresses
+        // the normal playLists injection below) would never show a user list.
+        if (databaseFilterRowid == playlistsCollectionRowid()) {
+            for (int i = 0; i < (int)playLists.size(); i++)
+                add_unique(PLAYLIST_INDEX + i);
+        }
         return result.size();
     }
 
-    // Push back all matching playlists (unless a platform filter is active)
-    if (!formatFilterActive) {
+    // Push back all matching playlists. Normally suppressed while any format/DB
+    // filter is active, but the Playlists collection is the one filter that
+    // *should* still list them (its indexed rows are the shipped lists; these are
+    // the user's).
+    if (!formatFilterActive ||
+        databaseFilterRowid == playlistsCollectionRowid()) {
         for (int i = 0; i < (int)playLists.size(); i++) {
             if (toLower(playLists[i].name).find(query) != std::string::npos)
                 add_unique(PLAYLIST_INDEX + i);
@@ -5129,6 +5160,36 @@ std::vector<SongInfo>& MusicDatabase::getPlaylist(std::string const& plist)
         if (pl.name == plist) return pl.songs;
     }
     return empty;
+}
+
+void MusicDatabase::createPlaylist(std::string const& name,
+                                   std::vector<SongInfo> const& songs)
+{
+    auto path = Environment::getConfigDir() / "playlists" / name;
+    playLists.emplace_back(path); // Playlist(path): no file yet, songs empty
+    playLists.back().songs = songs;
+    playLists.back().save();      // writes the file so it survives a restart
+}
+
+void MusicDatabase::deletePlaylist(std::string const& name)
+{
+    for (auto it = playLists.begin(); it != playLists.end(); ++it) {
+        if (it->name == name) {
+            std::error_code ec;
+            std::filesystem::remove(it->fileName, ec);
+            playLists.erase(it);
+            return;
+        }
+    }
+}
+
+std::vector<std::string> MusicDatabase::playlistNames() const
+{
+    std::vector<std::string> names;
+    names.reserve(playLists.size());
+    for (auto const& pl : playLists)
+        names.push_back(pl.name);
+    return names;
 }
 } // namespace chipmachine
 
