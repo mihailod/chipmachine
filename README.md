@@ -10,7 +10,7 @@ But this is far more than a simple port!
 
 While ensuring the player runs on modern Apple hardware, my passion for it has expanded its compatibility and scale:
 
-* [60+ plugins](https://github.com/mihailod/musicplayer/tree/master/src/plugins) supporting [350+ music formats](data/misc/formats_descriptions.txt)
+* [60+ plugins](https://github.com/mihailod/chipmachine/tree/master/external/musicplayer/src/plugins) supporting [350+ music formats](data/misc/formats_descriptions.txt)
 * [~770,000](data) indexed songs (~100,000 annotaded with screenshots) and counting
 
 **The mission statement: support every single format and index all retro/chip music databases.**
