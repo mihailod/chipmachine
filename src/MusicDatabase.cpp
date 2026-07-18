@@ -1889,7 +1889,14 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
                 result.push_back(index);
                 return true;
             }
-            identity = title + "\t" + composer + "\t" + std::to_string(fk);
+            // Case-fold title + composer: zxart stores titles UPPERCASE while
+            // modland uses lowercase, so the same tune (same real ext + author)
+            // would slip the fold on case alone (e.g. Ironman's "AMIGA.stc"
+            // [zxart "Spectrum AY"] vs "amiga.stc" [modland "ST Song Compiler"],
+            // one ZX Spectrum Sound Tracker tune under two source-supplied
+            // format names). Fold them; priority still picks the winner.
+            identity =
+                toLower(title) + "\t" + toLower(composer) + "\t" + std::to_string(fk);
         }
 
         if (seen.find(identity) == seen.end()) {
