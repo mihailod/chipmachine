@@ -450,7 +450,7 @@ void ChipMachine::setupCommands()
             return;
         }
         auto dialog = std::make_shared<Dialog>(grappix::screenptr, font,
-                                               "NAME NEW PLAYLIST:");
+                                               "NAME NEW PLAYLIST:", 1.5F);
         dialog->on_ok([=](std::string const& raw) -> bool {
             std::string name = utils::lrstrip(raw);
             std::replace(name.begin(), name.end(), '/', '-');
