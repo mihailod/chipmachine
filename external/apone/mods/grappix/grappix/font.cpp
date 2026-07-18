@@ -202,7 +202,9 @@ TextBuf Font::make_text2(const wstring &text) const {
 
 TextBuf Font::make_text(const wstring &text) const {
 
-	if(!ref->font)
+	// A default-constructed Font (no ref) or a font with no glyph face falls back
+	// to the built-in static font rather than dereferencing a null ref.
+	if(!ref || !ref->font)
 		return make_text2(text);
 
 	int lastChar = 0;

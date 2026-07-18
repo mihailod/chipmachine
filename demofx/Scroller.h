@@ -230,6 +230,7 @@ public:
 			// (that's only for CTRL+N swaps in the middle of a pass).
 			if(fonts.size() > 1 && !rawScrollText.empty()) {
 				fontIndex = (fontIndex + 1) % (int)fonts.size();
+				ensureBuilt(fontIndex);   // may not be built yet (lazy pool)
 				font = fonts[fontIndex];
 				rebuildDisplay();
 			}
