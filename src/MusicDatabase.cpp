@@ -923,6 +923,38 @@ bool MusicDatabase::parseStandard(
             // playback/scroll paths -- without the RSS `type = "podcast"` parser.
             if (vars["podcast"] == "yes") formatField = "Podcast";
 
+            // ZX Spectrum AY label normalization. zxart tags every AY tune with
+            // the coarse platform string "Spectrum AY", while modland carries the
+            // specific tracker name for the same files (e.g. .stc -> "ST Song
+            // Compiler", .pt3 -> "Pro Tracker 3"). That split made one tune surface
+            // under two Format buckets / two "Format:" headers. Re-specialize the
+            // coarse label by REAL EXT so both sources collapse onto one canonical
+            // name. ALLOWLIST only: exts NOT listed (ogg render fallbacks, the .ay
+            // container, .psg register dumps, .tfe, ambiguous .psm) stay
+            // "Spectrum AY". Every canonical name already maps to ZXAY in
+            // formatToByte's format_map, so the platform byte / F9 filter is
+            // unchanged. Guarded on the exact "Spectrum AY" string, so modland's
+            // own specific labels are never touched.
+            if (formatField == "Spectrum AY") {
+                static const std::map<std::string, std::string> zxAyByExt = {
+                    {"pt1", "Pro Tracker 1"},   {"pt2", "Pro Tracker 2"},
+                    {"pt3", "Pro Tracker 3"},   {"asc", "ASC Sound Master"},
+                    {"stc", "ST Song Compiler"},{"stp", "Sound Tracker Pro"},
+                    {"stp2", "Sound Tracker Pro 2"},
+                    {"st11", "Sound Tracker 1.1"}, {"st13", "Sound Tracker 1.3"},
+                    {"sqt", "SQ Tracker"},      {"psc", "Pro Sound Creator"},
+                    {"vtx", "Vortex"},          {"vt2", "Vortex Tracker II"},
+                    {"ftc", "Fast Tracker"},    {"fxm", "Fuxoft AY Language"},
+                    {"chi", "Chip Tracker"},    {"gtr", "Global Tracker"},
+                };
+                std::string zxExt =
+                    toLower(extIndex >= 0 && (int)parts.size() > extIndex
+                                ? parts[extIndex]
+                                : defaultExt);
+                auto it = zxAyByExt.find(zxExt);
+                if (it != zxAyByExt.end()) formatField = it->second;
+            }
+
             if (!unexotica) {
                 song = SongInfo(parts[pathIndex], gameField, titleField,
                                 composerField, formatField, metadata,

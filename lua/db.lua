@@ -944,7 +944,18 @@
 --     miscategorization) -- modland is now the single ColecoVision source for
 --     both. (SG-1000/FM rows in that category stay: SG-1000 correctly folds into
 --     SEGAMS, FM is a chip variant.) Pure data; bump forces a reindex.
-VERSION = 127;
+-- 128: ZX Spectrum AY format-label normalization. zxart onboarded every AY tune
+--     under the coarse platform string "Spectrum AY"; modland carries the specific
+--     tracker name for the SAME files (.stc -> "ST Song Compiler", .pt3 -> "Pro
+--     Tracker 3", ...), so one tune appeared under two Format buckets. generateIndex
+--     now re-specializes a "Spectrum AY" row by its REAL EXT via an allowlist
+--     (pt1/pt2/pt3/asc/stc/stp/stp2/st11/st13/sqt/psc/vtx/vt2/ftc/fxm/chi/gtr), so
+--     zxart and modland collapse onto one canonical label. Exts left coarse on
+--     purpose: ogg (render fallbacks), ay (container), psg (register dumps), tfe,
+--     psm (ambiguous). All canonical names already map to ZXAY in format_map, so
+--     the platform byte / F9 "ZX Spectrum" filter is unchanged. Engine-side (no
+--     data rebuild); the format string lives in the index, so bump forces a reindex.
+VERSION = 128;
 
 DB = {
 {
