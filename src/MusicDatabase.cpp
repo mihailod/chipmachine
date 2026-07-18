@@ -15,7 +15,6 @@
 
 #include <algorithm>
 #include <cctype>
-#include <chrono>
 #include <filesystem>
 #include <functional>
 #include <map>
@@ -4139,32 +4138,55 @@ void MusicDatabase::buildSubPlatforms()
     // song.ROWID i+1 (contiguous; see getSongInfo / syncPodcastSongs) -- and
     // group by name.
     std::map<std::string, std::vector<int>> byName;
-    auto q = db.query<int, std::string>("SELECT ROWID, format FROM song");
-    while (q.step()) {
-        int rowid;
-        std::string fmt;
-        tie(rowid, fmt) = q.get_tuple();
-        int idx = rowid - 1;
-        if (idx < 0 || idx >= (int)n) continue;
-        if ((formats[idx] & 0xff) != subPlatformByte) continue;
-        // Canonical group name: unwraps "Youtube (<tag>)" and resolves combos,
-        // so a capture lands on the same row as the native rips of its hardware.
-        // Arcade strings ("Arcade (Capcom)") carry no wrapper and no comma, so
-        // they pass through untouched into the vendor rules below.
-        std::string name = subPlatformName(fmt);
-        // The bare "Arcade" group sits alongside the vendor-specific ones
-        // (Arcade (Capcom), ...), so disambiguate it as "Arcade (Other)"; and
-        // fold Neo Geo in as another vendor-style "Arcade (Neo Geo)" group.
-        // modland's "Capcom Q-Sound Format" (.miniqsf CPS-1/CPS-2 rips) merges
-        // into the existing VGMRips-sourced "Arcade (Capcom)" group rather than
-        // forming a second Capcom row.
-        if (subPlatformByte == ARCADE) {
-            if (toLower(name) == "arcade") name = "Arcade (Other)";
-            else if (toLower(name) == "neo geo") name = "Arcade (Neo Geo)";
-            else if (toLower(name) == "capcom q-sound format")
-                name = "Arcade (Capcom)";
+
+    // The active byte matches only a tiny fraction of songs (OTHER ~3k, ARCADE
+    // ~1.4k of ~776k), and the byte is already in memory (formats[]). Collect the
+    // matching ROWIDs first, then fetch ONLY those format strings -- instead of
+    // materialising the `format` TEXT column for all 776k rows and discarding
+    // 99.6% of it. Cuts each build from ~72ms to a few ms (the whole computeFilter
+    // Counts hiccup at startup, and every live Other/Arcade drill).
+    std::vector<int> matchIdx;
+    for (uint32_t idx = 0; idx < n; idx++)
+        if ((formats[idx] & 0xff) == subPlatformByte)
+            matchIdx.push_back((int)idx);
+
+    // Fetch in ROWID chunks (ROWID == idx + 1). Literal id lists, so no bind-var
+    // limit applies; 500 keeps each statement small.
+    constexpr size_t kChunk = 500;
+    for (size_t base = 0; base < matchIdx.size(); base += kChunk) {
+        size_t stop = std::min(base + kChunk, matchIdx.size());
+        std::string inList;
+        for (size_t k = base; k < stop; k++) {
+            if (!inList.empty()) inList += ',';
+            inList += std::to_string(matchIdx[k] + 1);
         }
-        byName[name].push_back(idx);
+        auto q = db.query<int, std::string>(
+            "SELECT ROWID, format FROM song WHERE ROWID IN (" + inList + ")");
+        while (q.step()) {
+            int rowid;
+            std::string fmt;
+            tie(rowid, fmt) = q.get_tuple();
+            int idx = rowid - 1;
+            if (idx < 0 || idx >= (int)n) continue;
+            // Canonical group name: unwraps "Youtube (<tag>)" and resolves combos,
+            // so a capture lands on the same row as the native rips of its
+            // hardware. Arcade strings ("Arcade (Capcom)") carry no wrapper and no
+            // comma, so they pass through untouched into the vendor rules below.
+            std::string name = subPlatformName(fmt);
+            // The bare "Arcade" group sits alongside the vendor-specific ones
+            // (Arcade (Capcom), ...), so disambiguate it as "Arcade (Other)"; and
+            // fold Neo Geo in as another vendor-style "Arcade (Neo Geo)" group.
+            // modland's "Capcom Q-Sound Format" (.miniqsf CPS-1/CPS-2 rips) merges
+            // into the existing VGMRips-sourced "Arcade (Capcom)" group rather than
+            // forming a second Capcom row.
+            if (subPlatformByte == ARCADE) {
+                if (toLower(name) == "arcade") name = "Arcade (Other)";
+                else if (toLower(name) == "neo geo") name = "Arcade (Neo Geo)";
+                else if (toLower(name) == "capcom q-sound format")
+                    name = "Arcade (Capcom)";
+            }
+            byName[name].push_back(idx);
+        }
     }
 
     // Fold case-only spelling variants into one group. Collections disagree on
