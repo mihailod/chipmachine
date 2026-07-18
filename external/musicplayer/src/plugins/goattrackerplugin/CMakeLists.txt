@@ -33,6 +33,12 @@ add_library(goattrackerplugin_objs OBJECT
     gsong.h
     gsound.h)
 
+# Vendored GoatTracker/reSID sources use sprintf(), which the macOS SDK marks
+# deprecated. Silence it on the third-party sources only (not our own
+# GoatTrackerPlugin.cpp) rather than patch them -- keeps revendoring clean.
+set_source_files_properties(gplay.c gsid.cpp gt2_load.c ${RESID_SOURCES} PROPERTIES
+    COMPILE_OPTIONS "-Wno-deprecated-declarations")
+
 target_include_directories(goattrackerplugin_objs PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(goattrackerplugin_objs PRIVATE coreutils)
 target_compile_options(goattrackerplugin_objs PRIVATE

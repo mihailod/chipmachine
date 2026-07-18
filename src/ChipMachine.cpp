@@ -1306,6 +1306,9 @@ void ChipMachine::rebuildFormatVisible()
                             ? "FORMAT FILTER [TYPE TO NARROW]"
                             : "FORMAT FILTER [TYPE TO NARROW]  " +
                                   formatFilterText);
+    // The query is echoed into the title, so it grows as the user types -- push
+    // the key hint back out past the new title width so they never overlap.
+    positionFormatHint();
     updateFormatLogo();
 }
 

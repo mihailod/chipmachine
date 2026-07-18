@@ -436,3 +436,19 @@ Notice: The VIC-I sound source is lifted verbatim from VICE (already vendored fo
         the SID bridge but not compiled there); only its internal vic_sound_clock
         is made static to avoid a symbol collision. The player blob is Kahlin's
         BSD sources assembled unchanged with dasm (see victracker/build_player.sh).
+
+Component: klystron / libksnd (klystrack tracker music, .kt)
+Author: Tero Lindeman ("kometbomb"), klystrack and its klystron engine
+        (https://github.com/kometbomb/klystron). The libksnd playback wrapper
+        (src/lib/ksnd.c) and the "cyd" software sound engine (src/snd/) are
+        vendored at musicplayer/src/plugins/klystrackplugin/klystron/.
+License: MIT License (see the notice in klystron/macros.h).
+Notice: The cyd sound core was written against SDL for its integer typedefs,
+        little-endian byte-swap macros and its mutex/audio-callback plumbing. The
+        plugin drives libksnd synchronously via KSND_CreatePlayerUnregistered()/
+        KSND_FillBuffer() and builds with NOSDL_MIXER and without USESDLMUTEXES/
+        USESDL_RWOPS, which compiles out the audio-thread, mutex and RWops paths.
+        The remaining SDL surface (integer types and endian macros, plus inert
+        stubs for the never-called SDL audio-device path) is supplied by a small
+        local shim at klystron/shim/, so the plugin has no real SDL dependency.
+        The vendored snd/ and lib/ sources are otherwise unmodified.

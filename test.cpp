@@ -1299,6 +1299,34 @@ TEST_CASE("VicTracker host path plays sound", "[music]")
     REQUIRE(sum != 0);
 }
 
+TEST_CASE("Klystrack", "[music]") { testPlugin<musix::KlystrackPlugin>("testmus/klystrack", "nowork"); }
+
+// Host routing path for klystrack (.kt) -- only works if klystrackplugin is
+// registered in plugin_register.cpp; testPlugin<> above bypasses registration.
+TEST_CASE("Klystrack host path plays sound", "[music]")
+{
+    auto ap = std::make_shared<AudioPlayerNull>();
+    const auto injector = di::make_injector(di::bind<utils::path>.to("."),
+                                            di::bind<AudioPlayer>.to(ap));
+    musix::ChipPlugin::createPlugins("data");
+    chipmachine::MusicPlayer mp{ ap };
+    bool ok = mp.playFile("testmus/klystrack/obspatial.kt");
+    REQUIRE(ok);
+    int64_t sum = 0;
+    for (int i = 0; i < 20 && sum == 0; ++i) {
+        mp.update();
+        std::vector<int16_t> data(8192);
+        ap->get(data);
+        for (auto val : data) {
+            if (val != 0) {
+                sum = 1;
+                break;
+            }
+        }
+    }
+    REQUIRE(sum != 0);
+}
+
 TEST_CASE("VGMStream host path plays sound", "[music]")
 {
     auto ap = std::make_shared<AudioPlayerNull>();
@@ -4564,7 +4592,8 @@ TEST_CASE("coverage", "[music]")
         {"Sam Coupe (COP)", "testmus/cop"},
         {"JayTrax", "testmus/jxs"},
         {"Funktracker", "testmus/fnk"},
-        {"Vic-Tracker", "testmus/victracker"}
+        {"Vic-Tracker", "testmus/victracker"},
+        {"Klystrack Player", "testmus/klystrack"}
     };
 
     // Plugins whose extensions are split across several testmus folders (one

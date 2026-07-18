@@ -41,7 +41,12 @@ set(MIKMOD_SOURCES
 add_library(mikmodplugin_objs OBJECT MikModPlugin.cpp MikModPlugin.h ${MIKMOD_SOURCES})
 
 set_source_files_properties(${MIKMOD_SOURCES} PROPERTIES
-    COMPILE_DEFINITIONS "HAVE_CONFIG_H;MIKMOD_STATIC")
+    COMPILE_DEFINITIONS "HAVE_CONFIG_H;MIKMOD_STATIC"
+    # Vendored libmikmod uses sprintf(), which the macOS SDK marks deprecated.
+    # Don't police third-party sources -- silence it here rather than patch them
+    # (which would need re-applying on every revendor). Our own MikModPlugin.cpp
+    # is not in this list, so it stays strict.
+    COMPILE_OPTIONS "-Wno-deprecated-declarations")
 
 target_include_directories(mikmodplugin_objs PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}

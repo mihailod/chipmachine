@@ -60,6 +60,7 @@ extern "C" {
     void dmfplugin_register();         // DefleMask (.dmf) multi-system chiptune via vendored Furnace engine
     void vgmstreamplugin_register();   // vgmstream (.adx/.hca/.fsb/... hundreds of game-audio containers) via vendored vgmstream
     void victrackerplugin_register();  // VIC-TRACKER (.vt) Commodore VIC-20 via fake6502 + VICE VIC-I sound
+    void klystrackplugin_register();   // Klystrack (.kt) via vendored libksnd / klystron cyd synth
 }
 
 void register_plugins() {
@@ -122,4 +123,5 @@ void register_plugins() {
     dmfplugin_register();
     vgmstreamplugin_register();
     victrackerplugin_register();
+    klystrackplugin_register();
 }

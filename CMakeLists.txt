@@ -106,10 +106,6 @@ if(NOT WINDOWS)
     set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS} -fno-omit-frame-pointer -DCM_DEBUG")
 endif()
 
-if(SAN)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=${SAN}")
-endif()
-
 # ---------------------------------------------------------------------------
 # Subdirectories & Dependency Layout (Processed early)
 # ---------------------------------------------------------------------------
@@ -132,7 +128,7 @@ set(MUSICPLAYER_PLUGINS
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin fnkplugin
     famitrackerplugin goattrackerplugin dmfplugin libvgmplugin vgmstreamplugin
-    victrackerplugin
+    victrackerplugin klystrackplugin
 )
 add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
 add_subdirectory(${MUSICPLAYER}/src/psf psf)
@@ -147,10 +143,6 @@ include_directories(${ZXTUNE_ROOT}/3rdparty/lhasa/lib/public)
 
 if(WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
-endif()
-
-if(SAN)
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=${SAN}")
 endif()
 
 add_library(musicplayer INTERFACE)
