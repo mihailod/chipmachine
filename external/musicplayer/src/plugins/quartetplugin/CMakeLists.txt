@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 project(cpp-mods.musicplayer.quartetplugin)
 
-set(ZZ_SRC ../../../../zingzong/src)
+set(ZZ_SRC ${CMAKE_CURRENT_SOURCE_DIR}/zingzong/src)
 
 set(ZZ_LIB_SOURCES
     ${ZZ_SRC}/zz_init.c

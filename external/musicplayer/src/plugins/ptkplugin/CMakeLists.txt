@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 project(cpp-mods.musicplayer.ptkplugin)
 
-# Vendored ProTrekkr tracker/replayer (chipmachine-as root /protrekkr).
-set(PTK_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../../../protrekkr)
+# Vendored ProTrekkr tracker/replayer (in-plugin at ./protrekkr).
+set(PTK_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/protrekkr)
 set(PTK_REPLAY ${PTK_ROOT}/release/ptk/replay/lib)
 
 # The .ptk/.ntk on-disk format is a zlib-compressed container; only Load_Ptk in

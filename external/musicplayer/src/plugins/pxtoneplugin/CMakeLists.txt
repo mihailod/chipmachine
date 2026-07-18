@@ -5,7 +5,7 @@ include(FetchContent)
 
 FetchContent_Declare(
     libpxtone
-    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../libpxtone
+    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libpxtone
 )
 
 FetchContent_MakeAvailable(libpxtone)

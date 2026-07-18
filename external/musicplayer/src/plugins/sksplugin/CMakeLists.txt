@@ -6,7 +6,7 @@ project(cpp-mods.musicplayer.sksplugin)
 # import for every AY/YM format incl. STarKos .sks, the SongPlayer engine and
 # the PsgStreamGenerator software AY/YM renderer), and drive it from
 # SksPlugin.cpp exactly like AT3's SongToWav tool -- minus the WAV writer.
-set(AT3_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../../../arkostracker3)
+set(AT3_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/arkostracker3)
 
 # ---------------------------------------------------------------------------
 # JUCE 7.0.1.2 (Julien Névo's fork, patched for Xcode 16 / macOS Tahoe), the

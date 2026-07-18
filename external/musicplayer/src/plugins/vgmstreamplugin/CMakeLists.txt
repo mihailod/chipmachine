@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(cpp-mods.musicplayer.vgmstreamplugin)
 
-set(VGMSTREAM_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../vgmstream)
+set(VGMSTREAM_DIR ${CMAKE_CURRENT_SOURCE_DIR}/vgmstream)
 
 file(GLOB VGMSTREAM_SOURCES
     ${VGMSTREAM_DIR}/*.c

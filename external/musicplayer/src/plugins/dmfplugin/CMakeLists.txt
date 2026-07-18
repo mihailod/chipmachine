@@ -14,7 +14,7 @@ project(cpp-mods.musicplayer.dmfplugin)
 # externs to true locals. Only DMFPlugin.cpp stays at default visibility so
 # musix::DMFPlugin and dmfplugin_register remain the exported surface.
 
-set(FURNACE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../furnace)
+set(FURNACE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/furnace)
 
 find_package(ZLIB REQUIRED)   # DivEngine::load inflates the zlib-wrapped .dmf
 

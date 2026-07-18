@@ -6,8 +6,8 @@ project(cpp-mods.musicplayer.ixsplugin)
 # with Ghidra), vendored at chipmachine-as root /webixs. The format synthesizes
 # and zlib-compresses its own wavetable data, hence the zlib dependency.
 #
-# webixs is CC BY-NC-SA 4.0 (NonCommercial) -- see /webixs/LICENSE.
-set(IXS_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/../../../../webixs)
+# webixs is CC BY-NC-SA 4.0 (NonCommercial) -- see webixs/LICENSE.
+set(IXS_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/webixs)
 
 add_library(ixsplugin STATIC
     IXSPlugin.cpp
