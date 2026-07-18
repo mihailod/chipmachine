@@ -50,6 +50,9 @@ void ChipMachine::loadScrollFonts(const std::string& folder)
     scrollEffect.clearFonts();
     for (auto const& p : fontPaths)
         scrollEffect.addFont(p);
+    // Start each launch on a random font from the chain (rotation continues
+    // from there on wrap/text-change).
+    scrollEffect.randomizeFont();
     LOGD("Loaded %d scroll font(s) from %s (first: %s)",
          (int)scrollEffect.fontCount(), dir.getName(),
          scrollEffect.currentFontName());

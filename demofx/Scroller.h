@@ -2,8 +2,10 @@
 #define SCOLLER_H
 
 #include "Effect.h"
+#include <chrono>
 #include <cmath>
 #include <cstdlib>
+#include <random>
 #include <string>
 #include <vector>
 
@@ -96,6 +98,20 @@ public:
 	}
 	size_t fontCount() const { return fonts.size(); }
 
+	// Pick a random starting font from the pool. Called once after the pool is
+	// loaded so each app launch begins on a different font (the rotation then
+	// continues from there). No anchoring needed -- nothing is on screen yet.
+	// Self-seeds from a high-res clock: the app never calls srand(), so plain
+	// std::rand() would deterministically pick the SAME font every launch.
+	void randomizeFont() {
+		if(fonts.size() < 2)
+			return;
+		std::mt19937 rng((unsigned)std::chrono::high_resolution_clock::now()
+		                     .time_since_epoch().count());
+		fontIndex = std::uniform_int_distribution<int>(0, (int)fonts.size() - 1)(rng);
+		font = fonts[fontIndex];
+	}
+
 	void set(const std::string &what, const std::string &val, float seconds = 0.0) override {
 		if(what == "font") {
 			font = grappix::Font(val, 120, 1024 | grappix::Font::DISTANCE_MAP);
@@ -128,6 +144,14 @@ public:
 		} else if(what == "vbob_transition") {
 			vbob_transition = std::stof(val);
 		} else {
+			// A completely new scroll text also cycles to the next font (same
+			// intent as the wrap-around swap -- the font only changes at a
+			// natural boundary, never mid-pass). Guard on the previous text
+			// being non-empty so the very first assignment keeps font 0.
+			if(fonts.size() > 1 && !scrollText.empty() && val != scrollText) {
+				fontIndex = (fontIndex + 1) % (int)fonts.size();
+				font = fonts[fontIndex];
+			}
 			scrollText = val;
 			LOGD("SCROLL: %s", scrollText);
 			xpos = target.width() + 100;
@@ -159,8 +183,20 @@ public:
 		// Keep the reset boundary in sync with the scale actually rendered
 		// (also covers window resizes after the text was set).
 		scrollLen = font.get_width(scrollText, dynScale);
-		if(xpos < -scrollLen)
+		if(xpos < -scrollLen) {
 			xpos = target.width() + 100;
+			// Font rotation is tied to the scroll CYCLE, not a wall-clock
+			// timer: keep the same font for a whole pass and only advance
+			// here, the instant the text has fully scrolled off and is about
+			// to repeat. Swapping mid-scroll surprised users; this way the
+			// font only ever changes on the "blank" between repeats. The text
+			// is off-screen at this moment, so no glyph-anchoring is needed
+			// (that's only for CTRL+N swaps in the middle of a pass).
+			if(fonts.size() > 1 && !scrollText.empty()) {
+				fontIndex = (fontIndex + 1) % (int)fonts.size();
+				font = fonts[fontIndex];
+			}
+		}
 
 		scr.clear(0x00000000);
 		// Advance by a constant on-screen velocity (pixels per second) rather
@@ -182,14 +218,9 @@ public:
 
 		time_counter += dt / 1000.0f;
 
-		// Automatic font rotation: after font_swap_interval seconds of real time,
-		// swap to the next font in the pool. Disabled when interval <= 0 or when
-		// there is nothing to rotate to (0 or 1 fonts loaded).
-		if(font_swap_interval > 0.0f && fonts.size() > 1) {
-			font_swap_timer += dt / 1000.0f;
-			if(font_swap_timer >= font_swap_interval)
-				nextFont(); // also resets font_swap_timer
-		}
+		// (Automatic font rotation is handled at the scroll wrap-around above,
+		// not on a timer -- see the xpos reset. CTRL+N still swaps instantly
+		// via nextFont().)
 
 		float cycle_time = 0.0f;
 		if (sine_interval > 0.0f) {
@@ -278,7 +309,9 @@ public:
 	float current_amplitude_factor = 0.0f;
 	float vbob_factor = 0.0f;      // current eased bob on/off amount (internal)
 
-	// Seconds between automatic font swaps (Settings.scroll[16] in lua). 0 = off.
+	// Retained for config compatibility (Settings.scroll[16] in lua). Font
+	// rotation is now driven by the scroll wrap-around, not this timer, so
+	// this value no longer affects swap timing.
 	float font_swap_interval = 60.0f;
 
 private:
