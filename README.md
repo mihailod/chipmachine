@@ -19,9 +19,9 @@ Despite the massive expansion under the hood, the core experience remains untouc
 
 **(Screenshots might show features from dev in progress (not released) code.)**
 [![Screenshot](data/misc/amegas.png)](https://youtu.be/WsNhwxY1c08)
-**(Screenshots might show features from dev in progress (not released) code.)**
 [![Screenshot](data/misc/formats.png)](https://youtu.be/WsNhwxY1c08)
-**(Screenshots might show features from dev in progress (not released) code.)**
+[![Screenshot](data/misc/extensions.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data/misc/dbs.png)](https://youtu.be/WsNhwxY1c08)
 [![Screenshot](data/misc/search.png)](https://youtu.be/WsNhwxY1c08)
 
 ## Intro
