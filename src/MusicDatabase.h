@@ -543,6 +543,14 @@ public:
     void setDatabaseFilter(int rowid);
     int databaseFilter() const { return databaseFilterRowid; }
 
+    // Precompute the Format and Database browse lists so the first TAB to those
+    // screens is instant. Call once, after indexing has finished. The Database
+    // list is cheap (in-memory) and built inline; the Extension list needs a
+    // full song-table scan (~360ms), so it runs on a worker thread with its own
+    // DB connection -- keeping the render loop (star scroll) smooth. Safe to call
+    // more than once; later calls are no-ops once built.
+    void precomputeBrowseListsAsync();
+
 private:
     void initDatabase(utils::path const& workDir, Variables& vars);
     void generateIndex();
@@ -803,10 +811,17 @@ private:
     static constexpr int kExtGroupMinSongs = 10; // admit undescribed exts at/above
     std::vector<ExtGroup> extensionGroupList;    // by count desc; index == gid
     std::vector<int16_t> extGroupOf;             // song index -> gid, or -1
-    bool extensionGroupsBuilt = false;
+    // Atomic so extensionGroups()'s fast path can read it while the worker
+    // (precomputeBrowseListsAsync) sets it. The build critical section itself is
+    // serialized by extGroupsMutex so the worker and a racing lazy GUI call can
+    // never build (or publish) at the same time.
+    std::atomic<bool> extensionGroupsBuilt{ false };
+    std::mutex extGroupsMutex;                    // guards buildExtensionGroups()
+    std::future<void> extGroupsFuture;            // worker handle (joins on destroy)
     int extensionFilterGid = -1;                 // active gid, -1 = none
-    // One scan of the song table: resolveExtension() per song, group, count, sort
-    // by count, admit per the rule above. Fills extensionGroupList / extGroupOf.
+    // One scan of the song table (on its OWN db connection, so it is worker-safe):
+    // resolveExtension() per song, group, count, sort by count, admit per the rule
+    // above. Fills extensionGroupList / extGroupOf, then publishes under the mutex.
     void buildExtensionGroups();
 
     // Database-filter browse state (see databaseGroups() / setDatabaseFilter).

@@ -1520,7 +1520,12 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
 
 void MusicDatabase::buildExtensionGroups()
 {
-    if (extensionGroupsBuilt) return;
+    // Serialize the whole build: the async precompute worker and a racing lazy
+    // GUI call (extensionGroups()/setExtensionFilter) both funnel through here,
+    // and only one may scan + publish. Whoever loses the race sees the flag set
+    // and returns immediately.
+    std::lock_guard<std::mutex> lk{ extGroupsMutex };
+    if (extensionGroupsBuilt.load(std::memory_order_acquire)) return;
 
     // Songs occupy [0, productStartIndex); products carry no real extension.
     uint32_t n = (productStartIndex > 0 &&
@@ -1529,9 +1534,18 @@ void MusicDatabase::buildExtensionGroups()
                      : (uint32_t)formats.size();
     if (n == 0) return; // not indexed yet -- retry on the next call
 
-    extensionGroupsBuilt = true;
-    extensionGroupList.clear();
-    extGroupOf.assign(n, -1);
+    // Build into LOCAL containers and publish at the end, so the GUI thread never
+    // observes a half-filled extGroupOf / extensionGroupList.
+    std::vector<ExtGroup> groupList;
+    std::vector<int16_t> groupOf(n, -1);
+
+    // This runs on a worker thread (see precomputeBrowseListsAsync), so it must
+    // NOT touch the shared member `db` -- getSongInfo() queries that connection
+    // from the GUI thread without a lock. Use a private connection to the same
+    // file, the pattern otherDrillNames()/screenshotDb already use.
+    sqlite3db::Database scanDb{
+        (Environment::getCacheDir() / "music.db").string()
+    };
 
     // One scan: resolve each song's real extension (container-stripped, etc.),
     // tallying count, the songs' indices, and the most common DB format string
@@ -1545,7 +1559,7 @@ void MusicDatabase::buildExtensionGroups()
     };
     std::unordered_map<std::string, Acc> byExt;
 
-    auto q = db.query<int, std::string, std::string, std::string>(
+    auto q = scanDb.query<int, std::string, std::string, std::string>(
         "SELECT ROWID, ext, path, format FROM song");
     while (q.step()) {
         int rowid;
@@ -1617,15 +1631,48 @@ void MusicDatabase::buildExtensionGroups()
         // Colour the row like the platform screens do: classify the modal format
         // string (the richer signal), falling back to the bare extension.
         uint8_t plat = classifyFormat(!modal.empty() ? modal : e, "");
-        extensionGroupList.push_back({ e, name, a.count, plat });
-        for (int i : a.idxs) extGroupOf[i] = (int16_t)gid;
+        groupList.push_back({ e, name, a.count, plat });
+        for (int i : a.idxs) groupOf[i] = (int16_t)gid;
     }
+
+    // Publish. The store (release) pairs with the acquire-load in
+    // extensionGroups()/buildExtensionGroups(), and both reads of the vectors on
+    // the GUI side happen only after that flag reads true, so they see the fully
+    // built lists. (extGroupsMutex acquire/release provides the same barrier for
+    // the lazy path that funnels back through buildExtensionGroups().)
+    extensionGroupList = std::move(groupList);
+    extGroupOf = std::move(groupOf);
+    extensionGroupsBuilt.store(true, std::memory_order_release);
 }
 
 std::vector<MusicDatabase::ExtGroup> const& MusicDatabase::extensionGroups()
 {
-    if (!extensionGroupsBuilt) buildExtensionGroups();
+    if (!extensionGroupsBuilt.load(std::memory_order_acquire))
+        buildExtensionGroups();
     return extensionGroupList;
+}
+
+void MusicDatabase::precomputeBrowseListsAsync()
+{
+    // The Database list is cheap (~5ms: in-memory formats[] + a tiny collection
+    // query on the shared `db`); build it inline on the caller (GUI) thread.
+    databaseGroups();
+
+    if (extensionGroupsBuilt.load(std::memory_order_acquire)) return;
+    if (extGroupsFuture.valid()) return; // worker already running
+
+    // Pre-warm the lazily-loaded description tables HERE, on the GUI thread, so
+    // the worker only ever reads them. describeExtension() fills the shared
+    // formatDescriptions/formatNames maps on first call; extensionName() shares
+    // that load. Doing it now avoids a data race with GUI callers (the
+    // now-playing scroller also calls describeExtension()).
+    describeExtension("");
+
+    // Scan the song table on a worker thread (own DB connection) so the ~360ms
+    // build never stalls the render loop -- the starfield keeps scrolling.
+    extGroupsFuture = std::async(std::launch::async, [this] {
+        buildExtensionGroups();
+    });
 }
 
 void MusicDatabase::setExtensionFilter(int gid)
@@ -1650,7 +1697,8 @@ void MusicDatabase::setExtensionFilter(int gid)
         return;
     }
 
-    if (!extensionGroupsBuilt) buildExtensionGroups();
+    if (!extensionGroupsBuilt.load(std::memory_order_acquire))
+        buildExtensionGroups();
 
     titleIndex.setFilter([=](int index) {
         // Products (and anything past the song range) carry no extension group.
