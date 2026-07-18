@@ -293,24 +293,10 @@ SongInfo ChipMachine::shuffleSeed()
 
 bool ChipMachine::isUnknownComposer(std::string const& composer)
 {
-    // Matched EXACTLY (trimmed, case-insensitive), never by substring:
-    // "Hyperunknown" is a real composer with ~146 tunes, and a '%unknown%' test
-    // would swallow them -- as it would "UnknownPotato", "The Unknown" and
-    // "Wish to be Unknown". Every value below was verified against music.db by
-    // counting it; the big ones are "" (173k songs), "?" (19.4k) and "<?>" (3k),
-    // so this is a quarter of the database, not an edge case. Short real handles
-    // ("EA", "nq", "Tex", "DC") sit right alongside them, hence no heuristics.
-    static const std::set<std::string> unknowns = {
-        "",         "?",
-        "??",       "???",
-        "<?>",      "-",
-        "--",       "unknown",
-        "unknown composer", "unknown composers",
-        "unknown artist",   "unknown artists",
-        "_unknown", "anonymous",
-        "none",
-    };
-    return unknowns.count(utils::toLower(utils::lrstrip(composer))) > 0;
+    // Single source of truth now lives in SongInfo.h (::isUnknownComposer), shared
+    // with the search dedup guard and the displayComposer() UI fold. Kept as a
+    // thin static member so existing callers (shuffle seed) don't change.
+    return ::isUnknownComposer(composer);
 }
 
 void ChipMachine::shuffleSongs(int what, int limit)

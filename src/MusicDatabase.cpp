@@ -1916,7 +1916,16 @@ int MusicDatabase::search(std::string const& query, std::vector<int>& result,
             // ".sid" of the same title+composer.
             uint32_t fk =
                 (index < (int)formatKey.size()) ? formatKey[index] : 0;
-            if (composer.empty() || fk == 0) {
+            // Weak-identity guard: never fold when we can't actually tell two rows
+            // apart. Beyond an unknown format (fk==0), this covers any PLACEHOLDER
+            // composer (isUnknownComposer: ""/"?"/"<?>"/"unknown"/"anonymous"/...,
+            // the same canonical list the UI folds to "Uncredited Composer") and an
+            // EMPTY title. Those dodge a plain empty-string check but are not
+            // identity: e.g. 59 distinct Dreamcast games all indexed as
+            // {title:"", composer:"?", ext:dsf} (MULTI: game containers) were
+            // collapsing into one search/browse row. A visible duplicate is always
+            // preferable to shadowing a distinct song, so keep both.
+            if (fk == 0 || title.empty() || isUnknownComposer(composer)) {
                 result.push_back(index);
                 return true;
             }

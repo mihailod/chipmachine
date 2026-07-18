@@ -304,7 +304,10 @@ void ChipMachine::renderSong(grappix::Rectangle const& rec, int y,
         if (parts[1] == nullptr || parts[1][0] == '\0')
             text = parts[0];
         else
-            text = utils::format("%s / %s", parts[0], parts[1]);
+            // Empty composer stays title-only (above); a non-empty but cryptic
+            // placeholder ("?"/"<?>"/...) folds to the readable "Uncredited
+            // Composer" for display, matching the info panel. DISPLAY ONLY.
+            text = utils::format("%s / %s", parts[0], displayComposer(parts[1]));
     }
     uint32_t base = formatColor(f);
     if (fullIndex >= MusicDatabase::OTHER_PLATFORM_INDEX) {

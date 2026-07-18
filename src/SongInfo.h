@@ -3,6 +3,7 @@
 
 #include <coreutils/log.h>
 #include <coreutils/utils.h>
+#include <set>
 #include <string>
 #include <unordered_map>
 
@@ -54,5 +55,34 @@ struct SongInfo
     int numtunes = 0;
     int starttune = -1;
 };
+
+// Canonical "no real composer name recorded" test. Matched EXACTLY (trimmed,
+// case-insensitive), NEVER by substring -- "Hyperunknown"/"The Unknown"/"UnknownPotato"
+// are real handles a '%unknown%' test would swallow. The big buckets are ""
+// (~173k songs), "?" (~19k) and "<?>" (~3k) -- ~a quarter of the DB, not an edge case.
+// Single source of truth for: the search dedup weak-identity guard
+// (MusicDatabase::search), the shuffle seed (ChipMachine::isUnknownComposer delegates
+// here), and displayComposer() below.
+inline bool isUnknownComposer(const std::string& composer)
+{
+    static const std::set<std::string> unknowns = {
+        "",         "?",                "??",               "???",
+        "<?>",      "-",                "--",               "unknown",
+        "unknown composer", "unknown composers",
+        "unknown artist",   "unknown artists",
+        "_unknown", "anonymous",        "none",
+    };
+    return unknowns.count(utils::toLower(utils::lrstrip(composer))) > 0;
+}
+
+// Display label when the composer's real name isn't recorded. The stored value
+// ("?"/"<?>"/"unknown"/...) is cryptic and reads as an error in the UI; substitute
+// one self-describing string -- the word "Composer" keeps the standalone info-panel
+// line legible. DISPLAY ONLY: never write this back into SongInfo.composer, which the
+// search / dedup / matching paths still key on the raw value.
+inline std::string displayComposer(const std::string& composer)
+{
+    return isUnknownComposer(composer) ? "Uncredited Composer" : composer;
+}
 
 #endif // SONGINFO_H

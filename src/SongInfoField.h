@@ -39,7 +39,7 @@ struct SongInfoField : public Renderable
         if (t == "") t = utils::path_filename(utils::urldecode(info.path, ""));
 
         fields[0]->setText(t);
-        fields[1]->setText(info.composer);
+        fields[1]->setText(displayComposer(info.composer));
         fields[2]->setText(info.format);
     }
 
