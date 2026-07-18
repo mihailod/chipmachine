@@ -340,6 +340,18 @@ size_t texture_font_load_glyphs( texture_font_t * self, const wchar_t * charcode
         int ft_glyph_left = 0;
         glyph_index = FT_Get_Char_Index( face, charcodes[i] );
 
+        /* This font has no glyph for this character: do NOT bake the .notdef
+         * placeholder (a tofu box) into the atlas. Skipping it keeps the atlas
+         * free of missing-glyph boxes and, crucially, makes the set of baked
+         * glyphs an accurate record of what the font can actually render --
+         * callers (see grappix::Font::covers) test membership to decide whether
+         * to transliterate a character to an ASCII fallback. Space is never
+         * skipped so the render-time space fallback always has a glyph. */
+        if( glyph_index == 0 && charcodes[i] != L' ' )
+        {
+            continue;
+        }
+
         if( self->outline_type > 0 )
         {
             flags |= FT_LOAD_NO_BITMAP;

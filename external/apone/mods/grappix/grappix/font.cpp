@@ -46,8 +46,18 @@ Font::Font(bool stfont) : size(32) {
 
 
 
-const static wchar_t *fontLetters = L"@!ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö0123456789 []/:<>,.-()'&?%#+";
-const static wchar_t *fontLettersUpper = L"@!ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789 []/:<>,.-()'&?%#+";
+// The glyph set baked into every font's atlas. Characters outside this set can
+// never be drawn (make_text has no glyph for them). It must therefore cover
+// every character that can reach a Font -- notably the accented Latin, curly
+// quotes, dashes and symbols that appear in the song/format descriptions shown
+// by the scroller. A font that lacks a glyph for one of these simply won't have
+// it baked (see the .notdef skip in texture_font_load_glyphs); Font::covers()
+// reports that, and the scroller transliterates the character to an ASCII
+// fallback for that font only. NOTE: bump the ".NNN.dfield" cache version in the
+// DISTANCE_MAP branch below whenever this string changes, or stale distance-map
+// atlases baked from the old set will be reused.
+const static wchar_t *fontLetters = L"@!ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖabcdefghijklmnopqrstuvwxyzåäö0123456789 []/:<>,.-()'&?%#+\"$;=\\_µçéíøćŚΔ–—’“”′";
+const static wchar_t *fontLettersUpper = L"@!ABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789 []/:<>,.-()'&?%#+\"$;=\\_µÇÉÍØĆŚΔ–—’“”′";
 
 
 Font::Font(const string &ttfName, int size, int flags) : size(size) {
@@ -90,7 +100,7 @@ Font::Font(const string &ttfName, int size, int flags) : size(size) {
 			fmtime = (unsigned long long)st.st_mtime;
 			fsize = (unsigned long long)st.st_size;
 		}
-		File f { format("%s/%s.%d.%d.%llu.%llu_v4.dfield", File::getCacheDir().getName(), fn, size, tsize, fmtime, fsize) };
+		File f { format("%s/%s.%d.%d.%llu.%llu_v5.dfield", File::getCacheDir().getName(), fn, size, tsize, fmtime, fsize) };
 		if(f.exists()) {
 			f.read(atlas->data, atlas->width*atlas->height);
 		} else {
@@ -370,6 +380,30 @@ vec2i Font::get_size(const string &t, float scale) const {
 	return vec2i(buf.rec[2] - buf.rec[0], buf.rec[3] - buf.rec[1]) * scale;
 }
 
+
+bool Font::covers(wchar_t c) const {
+	// The static (built-in) font: check its fixed glyph table.
+	if(!ref || !ref->font) {
+		for(unsigned int j=0; j<static_font.glyphs_count; ++j)
+			if(static_font.glyphs[j].charcode == c)
+				return true;
+		return false;
+	}
+	// A TTF/OTF font: a glyph is present in the baked vector only if the font
+	// actually had it (texture_font_load_glyphs skips .notdef). So membership
+	// here is an accurate "can this font draw c?" -- provided c is part of the
+	// baked set (fontLetters); characters outside that set are never baked and
+	// correctly report false.
+	texture_font_t *font = (texture_font_t*)ref->font;
+	if(!font->glyphs)
+		return false;
+	for(size_t g=0; g<font->glyphs->size; ++g) {
+		texture_glyph_t *g0 = *(texture_glyph_t **)vector_get(font->glyphs, g);
+		if(g0 && g0->charcode == c)
+			return true;
+	}
+	return false;
+}
 
 Font::FontRef::FontRef(int w, int h, const std::string &ttfName, int fsize, int flags) : w(w), h(h), flags(flags), ttfName(ttfName), atlas(nullptr), font(nullptr) {
 	texture_atlas_t *a = nullptr;

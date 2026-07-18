@@ -85,6 +85,12 @@ public:
 	int get_width(const std::string &text, float scale) const;
 	utils::vec2i get_size(const std::string &text, float scale) const;
 
+	// True if this font has a real glyph for character c (i.e. c was baked into
+	// the atlas because the font file actually contains it -- see the .notdef
+	// skip in texture_font_load_glyphs). Only meaningful for characters in the
+	// baked glyph set (fontLetters); anything outside it reports false.
+	bool covers(wchar_t c) const;
+
 	void set_program(const Program &p) {
 		program = p;
 	}

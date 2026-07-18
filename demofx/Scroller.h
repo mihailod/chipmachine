@@ -52,27 +52,47 @@ public:
 	}
 	// --- Rotating font pool -------------------------------------------------
 	// The scroller cycles through a set of fonts (loaded from a folder at
-	// startup, see ChipMachine::loadScrollFonts). Every font is fully built up
-	// front so a swap -- automatic (font_swap_interval) or manual (CTRL+N) -- is
-	// instant, with no glyph-load or distance-map hitch mid-scroll.
+	// startup, see ChipMachine::loadScrollFonts). Building a font is not cheap --
+	// freetype rasterises the whole glyph set and (on the first ever run for a
+	// font) a distance-map is computed -- so building the entire pool up front
+	// added noticeable time to startup. Instead the pool is built LAZILY: only
+	// the active font is built at startup (randomizeFont), and each other font is
+	// built by ensureBuilt() the moment it is first swapped in. The automatic
+	// swap fires only when the scroll text has scrolled fully off-screen (see the
+	// xpos-reset in render()), so that one-off build cost lands on a frame where
+	// the scroll strip is empty -- no visible stutter -- and it is at most one
+	// build per scroll pass, never a burst.
 	void clearFonts() {
+		fontPaths.clear();
 		fonts.clear();
+		fontBuilt.clear();
 		fontNames.clear();
 		fontIndex = 0;
 		font_swap_timer = 0.0f;
 	}
 
-	// Build a font and add it to the pool. The first one added becomes active.
+	// Register a font path in the pool. Nothing is built here -- the heavy work
+	// is deferred to ensureBuilt(), called when the font is first shown, so it
+	// stays off the startup critical path.
 	void addFont(const std::string &path) {
-		grappix::Font f(path, 120, 1024 | grappix::Font::DISTANCE_MAP);
-		f.set_program(fprogram);
-		fonts.push_back(f);
+		fontPaths.push_back(path);
+		fonts.emplace_back();               // placeholder; built on demand
+		fontBuilt.push_back(0);
 		fontNames.push_back(baseName(path));
-		if(fonts.size() == 1) {
-			font = fonts[0];
-			fontIndex = 0;
-		}
 	}
+
+	// Build pool entry i if it isn't built yet (freetype glyph load + atlas
+	// upload; distance map is cached on disk after the first run). Safe to call
+	// from the render thread -- it only touches GL the same way startup did.
+	void ensureBuilt(size_t i) {
+		if(i >= fonts.size() || fontBuilt[i])
+			return;
+		grappix::Font f(fontPaths[i], 120, 1024 | grappix::Font::DISTANCE_MAP);
+		f.set_program(fprogram);
+		fonts[i] = f;
+		fontBuilt[i] = 1;
+	}
+
 
 	// Advance to the next font in the pool (wrapping). Returns the basename of
 	// the now-active font (for the on-screen toast); resets the auto-swap timer
@@ -82,6 +102,7 @@ public:
 			return "";
 		int oldIndex = fontIndex;
 		int newIndex = (fontIndex + 1) % (int)fonts.size();
+		ensureBuilt(newIndex);
 		// Reparametrize xpos so the glyph currently under screen-centre stays
 		// under screen-centre in the new font -- otherwise the differing glyph
 		// widths make the text visibly jump/skip/repeat at the swap moment.
@@ -89,6 +110,10 @@ public:
 			anchorSwap(fonts[oldIndex], fonts[newIndex]);
 		fontIndex = newIndex;
 		font = fonts[newIndex];
+		// The new font may transliterate a different subset of characters, so
+		// rebuild the drawn string for it (anchorSwap above already accounted for
+		// the per-font widths when repositioning xpos).
+		rebuildDisplay();
 		font_swap_timer = 0.0f;
 		return fontNames[fontIndex];
 	}
@@ -104,18 +129,27 @@ public:
 	// Self-seeds from a high-res clock: the app never calls srand(), so plain
 	// std::rand() would deterministically pick the SAME font every launch.
 	void randomizeFont() {
-		if(fonts.size() < 2)
+		if(fonts.empty())
 			return;
-		std::mt19937 rng((unsigned)std::chrono::high_resolution_clock::now()
-		                     .time_since_epoch().count());
-		fontIndex = std::uniform_int_distribution<int>(0, (int)fonts.size() - 1)(rng);
+		if(fonts.size() >= 2) {
+			std::mt19937 rng((unsigned)std::chrono::high_resolution_clock::now()
+			                     .time_since_epoch().count());
+			fontIndex = std::uniform_int_distribution<int>(0, (int)fonts.size() - 1)(rng);
+		} else {
+			fontIndex = 0;
+		}
+		// Build the chosen starting font now (the only one built synchronously at
+		// startup); every other font is built on the swap that first shows it.
+		ensureBuilt(fontIndex);
 		font = fonts[fontIndex];
+		rebuildDisplay();
 	}
 
 	void set(const std::string &what, const std::string &val, float seconds = 0.0) override {
 		if(what == "font") {
 			font = grappix::Font(val, 120, 1024 | grappix::Font::DISTANCE_MAP);
 			font.set_program(fprogram);
+			rebuildDisplay();
 		} else if(what == "sine_amplitude") {
 			sine_amplitude = std::stof(val);
 		} else if(what == "sine_frequency") {
@@ -148,11 +182,13 @@ public:
 			// intent as the wrap-around swap -- the font only changes at a
 			// natural boundary, never mid-pass). Guard on the previous text
 			// being non-empty so the very first assignment keeps font 0.
-			if(fonts.size() > 1 && !scrollText.empty() && val != scrollText) {
+			if(fonts.size() > 1 && !rawScrollText.empty() && val != rawScrollText) {
 				fontIndex = (fontIndex + 1) % (int)fonts.size();
+				ensureBuilt(fontIndex);
 				font = fonts[fontIndex];
 			}
-			scrollText = val;
+			rawScrollText = val;
+			rebuildDisplay();
 			LOGD("SCROLL: %s", scrollText);
 			xpos = target.width() + 100;
 		}
@@ -192,9 +228,10 @@ public:
 			// font only ever changes on the "blank" between repeats. The text
 			// is off-screen at this moment, so no glyph-anchoring is needed
 			// (that's only for CTRL+N swaps in the middle of a pass).
-			if(fonts.size() > 1 && !scrollText.empty()) {
+			if(fonts.size() > 1 && !rawScrollText.empty()) {
 				fontIndex = (fontIndex + 1) % (int)fonts.size();
 				font = fonts[fontIndex];
+				rebuildDisplay();
 			}
 		}
 
@@ -331,7 +368,12 @@ private:
 	// Without this, xpos is unchanged while the total width changes, so the
 	// centre offset suddenly lands on a different character -- the visible jump.
 	void anchorSwap(const grappix::Font &oldF, const grappix::Font &newF) {
-		if(scrollText.empty() || scr.width() <= 0)
+		// The string actually drawn differs per font (each transliterates the
+		// characters it lacks), so measure the old font against the text it is
+		// currently showing and the new font against the text it will show.
+		const std::string oldText = scrollText;                       // active display
+		const std::string newText = buildDisplay(newF, rawScrollText);
+		if(oldText.empty() || scr.width() <= 0)
 			return;
 
 		const float gscale = target.height() / 576.0f;
@@ -339,47 +381,65 @@ private:
 		const float centre = scr.width() / 2.0f;      // texture-space screen centre
 		const float offOld = centre - xpos;           // text offset under centre (old px)
 
-		const float lenOld = (float)oldF.get_width(scrollText, dynScale);
+		const float lenOld = (float)oldF.get_width(oldText, dynScale);
+		const float lenNew = (float)newF.get_width(newText, dynScale);
 		// Centre sits on the blank gap before/after the text: nothing to anchor,
 		// and leaving xpos alone keeps that gap continuous. (Avoids div-by-zero.)
 		if(offOld <= 0.0f || offOld >= lenOld || lenOld <= 0.0f)
 			return;
 
-		// Byte offsets of every UTF-8 character boundary (0 .. length()).
-		std::vector<int> bnd;
-		bnd.push_back(0);
-		for(int p = 0; p < (int)scrollText.size();) {
-			unsigned char c = (unsigned char)scrollText[p];
-			int adv = (c >= 0xF0) ? 4 : (c >= 0xE0) ? 3 : (c >= 0xC0) ? 2 : 1;
-			p += adv;
-			if(p > (int)scrollText.size()) p = (int)scrollText.size();
-			bnd.push_back(p);
+		// UTF-8 character boundaries (0 .. length()) for a string.
+		auto boundaries = [](const std::string &s) {
+			std::vector<int> bnd;
+			bnd.push_back(0);
+			for(int p = 0; p < (int)s.size();) {
+				unsigned char c = (unsigned char)s[p];
+				int adv = (c >= 0xF0) ? 4 : (c >= 0xE0) ? 3 : (c >= 0xC0) ? 2 : 1;
+				p += adv;
+				if(p > (int)s.size()) p = (int)s.size();
+				bnd.push_back(p);
+			}
+			return bnd;
+		};
+		const std::vector<int> bndOld = boundaries(oldText);
+		const std::vector<int> bndNew = boundaries(newText);
+		const int nOld = (int)bndOld.size() - 1;
+		const int nNew = (int)bndNew.size() - 1;
+
+		// Per-character anchoring maps a character index between the two strings,
+		// which is only well-defined when they contain the same characters (the
+		// usual case: identical transliteration, or none). If the two fonts fold a
+		// different set of characters the strings diverge, so fall back to keeping
+		// the same fractional position -- close enough for a manual swap.
+		if(nOld != nNew) {
+			xpos = centre - (offOld / lenOld) * lenNew;
+			return;
 		}
-		const int nchars = (int)bnd.size() - 1;
 
 		// Width (old font) of the first k characters. Monotonic in k.
 		auto prefixOld = [&](int k) -> float {
 			if(k <= 0) return 0.0f;
-			if(k >= nchars) return lenOld;
-			return (float)oldF.get_width(scrollText.substr(0, bnd[k]), dynScale);
+			if(k >= nOld) return lenOld;
+			return (float)oldF.get_width(oldText.substr(0, bndOld[k]), dynScale);
 		};
 
 		// Largest k with prefixOld(k) <= offOld  ->  the glyph under centre is k.
-		int lo = 0, hi = nchars;
+		int lo = 0, hi = nOld;
 		while(lo < hi) {
 			int mid = (lo + hi + 1) / 2;
 			if(prefixOld(mid) <= offOld) lo = mid; else hi = mid - 1;
 		}
-		const int k = lo;                          // 0 <= k <= nchars-1
+		const int k = lo;                          // 0 <= k <= nOld-1
 
 		const float wOldK  = prefixOld(k);
 		const float wOldK1 = prefixOld(k + 1);
 		const float frac = (wOldK1 > wOldK) ? (offOld - wOldK) / (wOldK1 - wOldK) : 0.0f;
 
-		// Same character boundary, measured in the NEW font.
+		// Same character boundary, measured in the NEW font's own string.
 		auto prefixNew = [&](int j) -> float {
 			if(j <= 0) return 0.0f;
-			return (float)newF.get_width(scrollText.substr(0, bnd[j]), dynScale);
+			if(j >= nNew) return lenNew;
+			return (float)newF.get_width(newText.substr(0, bndNew[j]), dynScale);
 		};
 		const float offNew = prefixNew(k) + frac * (prefixNew(k + 1) - prefixNew(k));
 
@@ -388,7 +448,9 @@ private:
 
 	grappix::RenderTarget& target;
 	grappix::Font font;
-	std::vector<grappix::Font> fonts;      // rotation pool (built at startup)
+	std::vector<std::string> fontPaths;    // .otf paths, parallel to `fonts`
+	std::vector<grappix::Font> fonts;      // rotation pool, built lazily on demand
+	std::vector<char> fontBuilt;           // 1 once fonts[i] has been built
 	std::vector<std::string> fontNames;    // basenames, parallel to `fonts`
 	int fontIndex = 0;                     // active index into `fonts`
 	float font_swap_timer = 0.0f;          // elapsed seconds since last swap
@@ -396,8 +458,92 @@ private:
 	grappix::Program fprogram;
 	float xpos = -9999;
 	grappix::Texture scr;
+	// rawScrollText is the text as handed to set("scrolltext",...) -- the source
+	// of truth. scrollText is the version actually drawn: identical to raw for the
+	// active font's supported characters, but with any character the active font
+	// lacks a glyph for folded to an ASCII look-alike (see rebuildDisplay). It is
+	// therefore recomputed every time the active font changes.
+	std::string rawScrollText;
 	std::string scrollText;
 	int scrollLen{};
+
+	// ASCII fallback for a character a font can't draw. Empty string => no known
+	// fallback (the character is then left as-is and renders as a blank space via
+	// the font's space-fallback). Accented Latin folds to its base letter; the
+	// typographic quotes/dashes fold to their ASCII equivalents.
+	static std::string transliterateChar(wchar_t c) {
+		switch(c) {
+			case 0x00B5: return "u";      // µ  MICRO SIGN
+			case 0x00C5: return "A";      // Å
+			case 0x00C4: return "A";      // Ä
+			case 0x00D6: return "O";      // Ö
+			case 0x00E5: return "a";      // å
+			case 0x00E4: return "a";      // ä
+			case 0x00F6: return "o";      // ö
+			case 0x00E7: return "c";      // ç
+			case 0x00C7: return "C";      // Ç
+			case 0x00E9: return "e";      // é
+			case 0x00C9: return "E";      // É
+			case 0x00ED: return "i";      // í
+			case 0x00CD: return "I";      // Í
+			case 0x00F8: return "o";      // ø
+			case 0x00D8: return "O";      // Ø
+			case 0x0107: return "c";      // ć
+			case 0x0106: return "C";      // Ć
+			case 0x015B: return "s";      // ś
+			case 0x015A: return "S";      // Ś
+			case 0x0394: return "Delta";  // Δ  GREEK CAPITAL LETTER DELTA
+			case 0x2013: return "-";      // –  EN DASH
+			case 0x2014: return "-";      // —  EM DASH
+			case 0x2018: return "'";      // ‘
+			case 0x2019: return "'";      // ’
+			case 0x201C: return "\"";     // “
+			case 0x201D: return "\"";     // ”
+			case 0x2032: return "'";      // ′  PRIME
+			default: return std::string();
+		}
+	}
+
+	// Produce the drawable string for `raw` under font `f`: every character the
+	// font can render is kept verbatim (accents intact); every character it can't
+	// is replaced by its ASCII fallback so it shows up instead of a blank gap.
+	static std::string buildDisplay(const grappix::Font &f, const std::string &raw) {
+		std::string out;
+		out.reserve(raw.size());
+		for(size_t p = 0; p < raw.size();) {
+			unsigned char b = (unsigned char)raw[p];
+			int adv = (b >= 0xF0) ? 4 : (b >= 0xE0) ? 3 : (b >= 0xC0) ? 2 : 1;
+			if(p + adv > raw.size()) adv = (int)(raw.size() - p);
+			if(adv == 1) {
+				// Plain ASCII: always in the baked set and in every font.
+				out += (char)b;
+				p += 1;
+				continue;
+			}
+			// Decode the UTF-8 codepoint.
+			wchar_t cp = 0;
+			if(adv == 2)
+				cp = ((b & 0x1F) << 6) | (raw[p+1] & 0x3F);
+			else if(adv == 3)
+				cp = ((b & 0x0F) << 12) | ((raw[p+1] & 0x3F) << 6) | (raw[p+2] & 0x3F);
+			else
+				cp = ((b & 0x07) << 18) | ((raw[p+1] & 0x3F) << 12)
+				   | ((raw[p+2] & 0x3F) << 6) | (raw[p+3] & 0x3F);
+			if(f.covers(cp)) {
+				out += raw.substr(p, adv);           // font has it: keep the accent
+			} else {
+				std::string sub = transliterateChar(cp);
+				out += sub.empty() ? raw.substr(p, adv) : sub;
+			}
+			p += adv;
+		}
+		return out;
+	}
+
+	// Recompute scrollText from rawScrollText for the currently active font.
+	void rebuildDisplay() {
+		scrollText = buildDisplay(font, rawScrollText);
+	}
 
 
 	const std::string sineShaderF = R"(
