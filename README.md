@@ -67,9 +67,15 @@ To authorize and run the application on your Mac, follow these steps:
 
 *Note: You only need to perform this authorization once per release. Subsequent launches will boot instantly.*
 
-### Opening music files from Finder
+### Opening local music files
 
-Once installed, ChipMachineAS registers with macOS as a player for the hundreds of formats it supports. Right-click any playable file (a `.sid`, `.mod`, `.nsf`, …) and choose **Open With → ChipMachineAS**, or double-click a file you've made it the default for, and the track plays immediately.
+Once installed, ChipMachineAS registers with macOS as a player for the hundreds of formats it supports, and you can open a local song three ways:
+
+* **Right-click a file → Open With → ChipMachineAS** (or double-click a file you've made it the default for)
+* **Drag and drop a file onto the ChipMachineAS icon** (Dock or Finder)
+* **Drag and drop a file straight into the running ChipMachineAS window**
+
+All three play the track immediately.
 
 This is deliberately polite — ChipMachineAS advertises itself as an *alternate* handler and never hijacks files from a player you already use:
 
@@ -100,10 +106,10 @@ ninja
 
 ### macOS file associations (developer notes)
 
-The `.app` advertises the formats it can play as macOS file associations (see the [user-facing note above](#opening-music-files-from-finder)). All the platform-native macOS glue lives under [src/macnative/](src/macnative/):
+The `.app` advertises the formats it can play as macOS file associations (see the [user-facing note above](#opening-local-music-files)). All the platform-native macOS glue lives under [src/macnative/](src/macnative/):
 
 * **`gen_info_plist.sh`** — the single source of the bundle's `Info.plist`. It builds the file-association document types from three inputs: `extensions.txt` (the full playable-extension union, dumped from the built binary via `chipmachine --dump-extensions`), `MacOSSystemTypeExtensions.txt` (formats with an existing system UTI — referenced politely at `LSHandlerRank=Alternate`, never redefined) and `MacOSHandlerDenyList.txt` (non-extension junk / dangerous tokens to drop). Everything else is exported under one umbrella UTI (`org.mihailod.chipmachineas.chiptune`) with the app's document icon. The last two `.txt` files are hand-editable.
-* **`FileOpenHandler.mm`** — the `kAEOpenDocuments` Apple Event handler that makes double-click / "Open With" actually play the file (Finder does **not** pass files on `argv`).
+* **`FileOpenHandler.mm`** — patches GLFW's app delegate (`GLFWApplicationDelegate`) at runtime to implement `application:openURLs:`, so double-click / "Open With" / icon drag-and-drop actually play the file (Finder does **not** pass files on `argv`, and this must win the race against GLFW's own `[NSApp run]` inside `glfwInit()`). Dropping a file into the running window instead goes through GLFW's native `glfwSetDropCallback` (wired in the vendored `external/apone/mods/grappix`) — cross-platform, no Apple Event involved. Both paths feed the same play queue.
 * **`dev_update_doctypes.sh`** — fast, no-recompile test loop: rewrites the `Info.plist` in an existing bundle, re-signs it and re-registers it with LaunchServices in a couple of seconds. Pass `--with-binary` to also swap in the freshly-built executable and test double-click playback end-to-end. Run with `--help` for full usage.
 
 `package_app.sh` invokes the generator automatically, so a normal release needs no extra steps.
