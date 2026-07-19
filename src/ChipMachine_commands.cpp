@@ -394,7 +394,7 @@ void ChipMachine::setupCommands()
             showScreen(MAIN_SCREEN);
         }
     });
-    shortcut("ctrl+o(pen)");
+    shortcut("ctrl+o(pen) or drag and drop");
 
 
     cmd("download_playing_song", [=] {
