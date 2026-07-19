@@ -543,6 +543,25 @@ public:
     void setDatabaseFilter(int rowid);
     int databaseFilter() const { return databaseFilterRowid; }
 
+    // --- "Plugins" screen (per-plugin filter) ---------------------------------
+    // One browsable row per registered ChipPlugin that claims at least one song,
+    // sorted by song count. A song's plugin is resolved by EXTENSION only (its
+    // resolveExtension()'d extension looked up against each plugin's
+    // getSupportedExtensions(), first -- i.e. highest-priority -- claimer wins,
+    // same order MusicPlayer::fromFile() tries plugins in) -- not canHandle(),
+    // since some plugins disambiguate by magic bytes and would need to open
+    // every (mostly remote/uncached) catalog file to answer.
+    struct PluginGroup
+    {
+        std::string name;  // plugin name()
+        int index;         // index of the plugin in getPlugins()
+        int count;         // songs whose extension this plugin claims
+        uint8_t platform;  // modal format byte of its songs (for row colour)
+    };
+    std::vector<PluginGroup> const& pluginGroups();
+    void setPluginFilter(int gid);
+    int pluginFilter() const { return pluginFilterGid; }
+
     // Precompute the Format and Database browse lists so the first TAB to those
     // screens is instant. Call once, after indexing has finished. The Database
     // list is cheap (in-memory) and built inline; the Extension list needs a
@@ -837,6 +856,15 @@ private:
     // Count songs per collection (from formats[] >> 8), fetch id/name and the
     // modal platform byte, sort by count. Fills databaseGroupList.
     void buildDatabaseGroups();
+
+    // Plugin-filter browse state
+    std::vector<PluginGroup> pluginGroupList;
+    std::vector<int16_t> pluginGroupOf;             // song index -> gid, or -1
+    std::atomic<bool> pluginGroupsBuilt{ false };
+    std::mutex pluginGroupsMutex;
+    std::future<void> pluginGroupsFuture;
+    int pluginFilterGid = -1;
+    void buildPluginGroups();
 
     // Order a candidate-index list alphabetically by title. Uses the precomputed
     // titleRank (an int compare per element, no strings) when it's ready, so even

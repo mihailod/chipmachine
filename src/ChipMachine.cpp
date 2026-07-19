@@ -891,11 +891,80 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     databaseList.setArea(listrec);
     databaseScreen.add(&databaseList);
 
+    // --- Plugins screen ------------------------------------------------------
+    // Same single-column layout as Databases, one row per registered ChipPlugin.
+    pluginLogoIcon.color = 0x50ffffff;
+    pluginScreen.add(&pluginLogoIcon);
+
+    pluginTitle.setFont(font);
+    pluginTitle.color = 0xffffffaa;
+    pluginTitle.scale = searchField.scale;
+    pluginTitle.visible(true);
+    pluginTitle.setText("PLUGIN FILTER");
+    pluginScreen.add(&pluginTitle);
+
+    pluginHint.setFont(font);
+    pluginHint.color = 0xffffff66;
+    pluginHint.visible(true);
+    pluginHint.setText("      UP/DOWN navigate   ENTER apply   ESC go back");
+    pluginScreen.add(&pluginHint);
+    positionPluginHint();
+
+    pluginList = VerticalList(
+        listrec, numLines,
+        [=](grappix::Rectangle& rec, int y, uint32_t index, bool hilight) {
+            auto const& groups = musicDatabase.pluginGroups();
+            // Row 0 is the clear-filter entry; plugin g renders on row g+1.
+            bool noFilter = (index == 0);
+            if (!noFilter && (index - 1) >= groups.size()) return;
+            uint32_t c;
+            std::string cnt, name;
+            if (noFilter) {
+                c = 0xffffffff;
+                name = "[no filter, search all]";
+            } else {
+                auto const& g = groups[index - 1];
+                c = formatColor(g.platform);
+                cnt = withCommas(g.count);
+                name = g.name;
+            }
+            if (hilight) {
+                Color target =
+                    (c == 0xffffffff) ? Color(0xff707070) : hilightColor;
+                static uint32_t markStartcolor = 0;
+                if (markStartcolor != c) {
+                    markStartcolor = c;
+                    markColor = c;
+                    markTween = Tween::make()
+                                    .sine()
+                                    .repeating()
+                                    .from(markColor, target)
+                                    .seconds(1.0);
+                    markTween.start();
+                }
+                c = markColor;
+            }
+            float scale = resultFieldTemplate.scale * 0.9f;
+            if (noFilter) {
+                grappix::screen.text(listFont, name, rec.x, rec.y, c, scale);
+                return;
+            }
+            // Two columns: song count, then the plugin's full name().
+            grappix::screen.text(listFont, cnt, rec.x, rec.y, c, scale);
+            grappix::screen.text(listFont, name, rec.x + rec.w * 0.18f, rec.y, c,
+                                 scale);
+        });
+    pluginList.setTotal(0); // populated when the screen is opened
+    pluginList.setVisible(numLines);
+    pluginList.setArea(listrec);
+    pluginScreen.add(&pluginList);
+
     scrollText = "INITIAL_TEXT";
-    scrollEffect.set("scrolltext",
-        "Type to search . . UP+DOWN/ENTER navigate/play"
-        " . . TAB=cycle platform/format/db filters"
-        " . . CTRL+H=help . . . "
+    scrollEffect.set("scortest",
+        "Just type to search"
+        " . . TAB to cycle filters"
+        " . . UP+DOWN/ENTER to navigate/play"
+        " . . CTRL+H for help . . . "
     );
     starEffect.fadeIn();
     }
@@ -1006,6 +1075,10 @@ void ChipMachine::layoutScreen()
     databaseTitle.pos = { (float)topLeft.x, (float)topLeft.y };
     databaseTitle.scale = searchField.scale;
     positionDatabaseHint();
+
+    pluginTitle.pos = { (float)topLeft.x, (float)topLeft.y };
+    pluginTitle.scale = searchField.scale;
+    positionPluginHint();
 
     // y is reclaimed (moved up) in updateLists(); x/scale here.
     commandTitle.pos = { (float)topLeft.x, topLeft.y * 0.90f };
@@ -1434,6 +1507,30 @@ void ChipMachine::loadDatabaseArtwork(const std::string& url)
             LOGD("Failed to load database artwork %s", url.c_str());
         }
     });
+}
+
+void ChipMachine::updatePluginLogo()
+{
+    // Preview the highlighted plugin's modal-platform logo behind the list.
+    if (currentScreen != PLUGIN_SCREEN) {
+        pluginLogoIcon.clear();
+        return;
+    }
+    auto const& groups = musicDatabase.pluginGroups();
+    // Row 0 is [no filter] (no logo); plugin g is at list index g+1.
+    int i = pluginList.selected() - 1;
+    if (i < 0 || i >= (int)groups.size()) {
+        pluginLogoIcon.clear();
+        return;
+    }
+    auto const& g = groups[i];
+    std::string slug = MusicDatabase::platformScreenshotSlug(g.platform);
+    const image::bitmap* bm = pickPlatformOrExtLogo("", slug, "");
+    if (!bm) {
+        pluginLogoIcon.clear();
+        return;
+    }
+    centerLogoIcon(pluginLogoIcon, *bm);
 }
 
 // Positions the idle-splash picture centred on the screen, scaled to fill
@@ -2992,6 +3089,8 @@ void ChipMachine::render(uint32_t delta)
         formatScreen.render(screenptr, delta);
     } else if (currentScreen == DATABASE_SCREEN) {
         databaseScreen.render(screenptr, delta);
+    } else if (currentScreen == PLUGIN_SCREEN) {
+        pluginScreen.render(screenptr, delta);
     } else {
         // Help/command screen: the same animated platform-logo transitions as the
         // splash, but dimmed (same alpha as the platform-filter screen's logo) and

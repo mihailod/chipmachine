@@ -46,17 +46,19 @@ void ChipMachine::setupCommands()
         searchUpdated = true;
     });
 
-    // TAB cycles the three filter screens: (from anywhere else) Platforms ->
-    // Formats -> Databases -> back to Platforms. ESC exits to the screen you were
-    // on before entering the cycle. One help row / one key -- the name renders
-    // "CYCLE PLATFORM/FORMAT/DB FILTERS", the shortcut is seeded to "tab".
-    cmd("cycle_platform/format/db_filters", [=] {
+    // TAB cycles the four filter screens: (from anywhere else) Platforms ->
+    // Formats -> Databases -> Plugins -> back to Platforms. ESC exits to the
+    // screen you were on before entering the cycle. One help row / one key -- the
+    // name renders "CYCLE PLATFORM/FORMAT/DB/PLUGIN FILTERS", shortcut is "tab".
+    cmd("cycle_platform/format/db/plugin_filters", [=] {
         Screen next;
         if (currentScreen == ADVANCED_SCREEN)
             next = FORMAT_SCREEN;
         else if (currentScreen == FORMAT_SCREEN)
             next = DATABASE_SCREEN;
         else if (currentScreen == DATABASE_SCREEN)
+            next = PLUGIN_SCREEN;
+        else if (currentScreen == PLUGIN_SCREEN)
             next = ADVANCED_SCREEN;
         else {
             // Entering the cycle from a real screen: remember it for ESC.
@@ -76,11 +78,16 @@ void ChipMachine::setupCommands()
             // (row 0 is [no filter], then one row per surviving group).
             formatFilterText.clear();
             rebuildFormatVisible();
-        } else { // DATABASE_SCREEN
+        } else if (next == DATABASE_SCREEN) {
             auto const& groups = musicDatabase.databaseGroups();
             databaseList.setTotal((int)groups.size() + 1);
             if (databaseList.selected() >= (int)groups.size() + 1)
                 databaseList.select(0);
+        } else { // PLUGIN_SCREEN
+            auto const& groups = musicDatabase.pluginGroups();
+            pluginList.setTotal((int)groups.size() + 1);
+            if (pluginList.selected() >= (int)groups.size() + 1)
+                pluginList.select(0);
         }
         showScreen(next);
     });
@@ -219,6 +226,33 @@ void ChipMachine::setupCommands()
             mainFilterField.setText(grp.name + "  (TAB to change)");
         } else {
             musicDatabase.setDatabaseFilter(-1);
+            selectedFilterName = "";
+            activeFilterCount = 0;
+            mainFilterField.setText("");
+        }
+        iquery->invalidate();
+        searchField.setText("");
+        songList.select(0);
+        searchUpdated = true;
+        showScreen(hasFilter ? SEARCH_SCREEN : MAIN_SCREEN);
+    });
+
+    // ENTER on the Plugins screen: restrict search to the songs the highlighted
+    // plugin would actually play (its canHandle()). Same shape as select_format;
+    // row 0 is [no filter], so plugin group g sits at list index g+1 -- and that
+    // list index IS the gid setPluginFilter expects (pluginGroups() order).
+    cmd("select_plugin", [=] {
+        int idx = pluginList.selected();
+        auto const& groups = musicDatabase.pluginGroups();
+        bool hasFilter = (idx > 0 && (idx - 1) < (int)groups.size());
+        if (hasFilter) {
+            auto const& grp = groups[idx - 1];
+            musicDatabase.setPluginFilter(idx - 1);
+            selectedFilterName = grp.name; // the plugin's full name()
+            activeFilterCount = grp.count;
+            mainFilterField.setText(grp.name + "  (TAB to change)");
+        } else {
+            musicDatabase.setPluginFilter(-1);
             selectedFilterName = "";
             activeFilterCount = 0;
             mainFilterField.setText("");
@@ -571,7 +605,9 @@ void ChipMachine::setupCommands()
         // the main screen. Only an unfiltered search returns to MAIN.
         if (searchField.getText() == "" && musicDatabase.hasFormatFilter()) {
             Screen back = ADVANCED_SCREEN;
-            if (musicDatabase.databaseFilter() >= 0)
+            if (musicDatabase.pluginFilter() >= 0)
+                back = PLUGIN_SCREEN;
+            else if (musicDatabase.databaseFilter() >= 0)
                 back = DATABASE_SCREEN;
             else if (musicDatabase.extensionFilter() >= 0)
                 back = FORMAT_SCREEN;

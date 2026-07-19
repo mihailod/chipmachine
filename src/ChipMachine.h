@@ -285,6 +285,7 @@ private:
         ADVANCED_SCREEN = 3,
         FORMAT_SCREEN = 4,
         DATABASE_SCREEN = 5,
+        PLUGIN_SCREEN = 6,
     };
 
     static const uint32_t SHIFT = 0x10000;
@@ -338,11 +339,20 @@ private:
                                  15 * databaseHint.scale,
                              databaseTitle.pos.y };
     }
+    // ...and the Plugins screen's.
+    void positionPluginHint()
+    {
+        pluginHint.scale = pluginTitle.scale * 0.65f;
+        pluginHint.pos = { pluginTitle.pos.x + pluginTitle.getWidth() +
+                               15 * pluginHint.scale,
+                           pluginTitle.pos.y };
+    }
     void updateLists()
     {
         positionAdvancedHint();
         positionFormatHint();
         positionDatabaseHint();
+        positionPluginHint();
         int y = resultFieldTemplate.pos.y + (15 * resultFieldTemplate.scale);
         int w = grappix::screen.width() - topLeft.x;
         int h = downRight.y - topLeft.y - y;
@@ -356,6 +366,8 @@ private:
         formatList.setArea(formatArea);
         databaseArea = grappix::Rectangle(topLeft.x, y, w, h);
         databaseList.setArea(databaseArea);
+        pluginArea = grappix::Rectangle(topLeft.x, y, w, h);
+        pluginList.setArea(pluginArea);
 
         // The help/command screen is one non-scrolling screen, so give it a
         // dedicated, taller area: title nudged up and the list running all the
@@ -409,8 +421,8 @@ private:
         // Command names that begin a new logical group in the help menu: a
         // half-row gap is drawn before each (see renderCommand / matchingGap).
         // Add the first command of a group here to visually separate the sets.
-        static const std::set<std::string> groupBreaks = { 
-            "cycle_platform/format/db_filters",
+        static const std::set<std::string> groupBreaks = {
+            "cycle_platform/format/db/plugin_filters",
             "local_file_playback",
             "play_song",
             "Spectrum_Analyzer_Mode",
@@ -535,6 +547,10 @@ private:
     // tracks the desired image so a late download for a scrolled-past row is
     // discarded.
     void loadDatabaseArtwork(const std::string& url);
+
+    // ...and the Plugins screen: the highlighted plugin's modal-platform logo,
+    // centred behind the list.
+    void updatePluginLogo();
     // Set a bitmap on `icon` and size it to a centred box (half the screen,
     // aspect-preserving) -- the shared fit used by the filter-screen logos.
     void centerLogoIcon(Icon& icon, const image::bitmap& bm);
@@ -697,6 +713,17 @@ private:
     TextField databaseTitle;
     TextField databaseHint;
     Icon databaseLogoIcon; // collection's modal-platform logo, behind the list
+
+    // The Plugins screen: same single-column layout, one row per registered
+    // ChipPlugin ("count   name"), highest count first. Selecting one restricts
+    // search to the songs that plugin would actually play (its canHandle();
+    // MusicDatabase::setPluginFilter).
+    RenderSet pluginScreen;
+    grappix::VerticalList pluginList;
+    grappix::Rectangle pluginArea;
+    TextField pluginTitle;
+    TextField pluginHint;
+    Icon pluginLogoIcon; // plugin's modal-platform logo, behind the list
     // Header on the command/help screen (e.g. "ChipMachineAS 1.9 HELP MENU"),
     // drawn above the first entry; hidden while a command filter is being typed.
     TextField commandTitle;

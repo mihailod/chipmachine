@@ -75,9 +75,9 @@ void ChipMachine::setupRules()
            if_equals(currentScreen, SEARCH_SCREEN) && if_null(currentDialog) &&
                if_false(haveSearchChars),
            "pause_/_resume_playback");
-    // TAB cycles the three filter screens: Platforms -> Formats -> Databases ->
-    // back to Platforms (see the command). One key for all three.
-    addKey(keycodes::TAB, "cycle_platform/format/db_filters");
+    // TAB cycles the four filter screens: Platforms -> Formats -> Databases ->
+    // Plugins -> back to Platforms (see the command). One key for all four.
+    addKey(keycodes::TAB, "cycle_platform/format/db/plugin_filters");
 
     addKey(keycodes::BACKSPACE,
            if_equals(currentScreen, SEARCH_SCREEN) && if_null(currentDialog) &&
@@ -119,17 +119,24 @@ void ChipMachine::setupRules()
            "select_database");
     addKey(keycodes::ESCAPE, if_equals(currentScreen, DATABASE_SCREEN),
            "clear_/_close_/_go_back");
-    // The single-column Formats / Databases screens don't use LEFT/RIGHT: bind
-    // them to a no-op so they're consumed rather than falling through to the
-    // "start a search" handler (which would jump to the search screen).
+    // Same for the Plugins screen.
+    addKey(keycodes::ENTER, if_equals(currentScreen, PLUGIN_SCREEN),
+           "select_plugin");
+    addKey(keycodes::ESCAPE, if_equals(currentScreen, PLUGIN_SCREEN),
+           "clear_/_close_/_go_back");
+    // The single-column Formats / Databases / Plugins screens don't use
+    // LEFT/RIGHT: bind them to a no-op so they're consumed rather than falling
+    // through to the "start a search" handler (which would jump to search).
     addKey(keycodes::LEFT,
            (if_equals(currentScreen, FORMAT_SCREEN) ||
-            if_equals(currentScreen, DATABASE_SCREEN)) &&
+            if_equals(currentScreen, DATABASE_SCREEN) ||
+            if_equals(currentScreen, PLUGIN_SCREEN)) &&
                if_null(currentDialog),
            "filter_list_noop");
     addKey(keycodes::RIGHT,
            (if_equals(currentScreen, FORMAT_SCREEN) ||
-            if_equals(currentScreen, DATABASE_SCREEN)) &&
+            if_equals(currentScreen, DATABASE_SCREEN) ||
+            if_equals(currentScreen, PLUGIN_SCREEN)) &&
                if_null(currentDialog),
            "filter_list_noop");
     // CTRL+F ("favor") on both screens -- one key, and which song it favors
@@ -150,6 +157,7 @@ void ChipMachine::setupRules()
                if_not_equals(currentScreen, ADVANCED_SCREEN) &&
                if_not_equals(currentScreen, FORMAT_SCREEN) &&
                if_not_equals(currentScreen, DATABASE_SCREEN) &&
+               if_not_equals(currentScreen, PLUGIN_SCREEN) &&
                if_null(currentDialog),
            "prev_subtune");
     addKey(keycodes::RIGHT,
@@ -157,6 +165,7 @@ void ChipMachine::setupRules()
                if_not_equals(currentScreen, ADVANCED_SCREEN) &&
                if_not_equals(currentScreen, FORMAT_SCREEN) &&
                if_not_equals(currentScreen, DATABASE_SCREEN) &&
+               if_not_equals(currentScreen, PLUGIN_SCREEN) &&
                if_null(currentDialog),
            "next_/_prev_subtune");
     // The platform filter is a two-column list; LEFT/RIGHT hop between the
@@ -242,12 +251,13 @@ void ChipMachine::showScreen(Screen screen)
             Tween::make().to(scrollEffect.alpha, 0.0).seconds(0.5);
         }
         // Sync the platform-logo previews to the (new) screen: show them for the
-        // current selection on the search / Platforms / Formats / Databases
-        // screen, clear elsewhere.
+        // current selection on the search / Platforms / Formats / Databases /
+        // Plugins screen, clear elsewhere.
         updateSearchLogo();
         updateFilterLogo();
         updateFormatLogo();
         updateDatabaseLogo();
+        updatePluginLogo();
         // The help menu is display-only (typing starts a search instead), so
         // always show the title and keep the unused input field (and its cursor)
         // hidden.
@@ -358,6 +368,7 @@ void ChipMachine::updateKeys()
     auto last_adv_selection = advancedList.selected();
     auto last_format_selection = formatList.selected();
     auto last_database_selection = databaseList.selected();
+    auto last_plugin_selection = pluginList.selected();
 
     auto key = screen.get_key();
 
@@ -432,6 +443,8 @@ void ChipMachine::updateKeys()
         currentList = &formatList;
     else if (currentScreen == DATABASE_SCREEN)
         currentList = &databaseList;
+    else if (currentScreen == PLUGIN_SCREEN)
+        currentList = &pluginList;
 
     bool ascii = (event >= 'A' && event <= 'Z');
     if (ascii) event = tolower(event);
@@ -626,6 +639,11 @@ void ChipMachine::updateKeys()
     if (currentScreen == DATABASE_SCREEN &&
         databaseList.selected() != last_database_selection)
         updateDatabaseLogo();
+
+    // Same for the Plugins screen's plugin-logo backdrop.
+    if (currentScreen == PLUGIN_SCREEN &&
+        pluginList.selected() != last_plugin_selection)
+        updatePluginLogo();
 
     if (searchUpdated) {
         auto s = searchField.getText();

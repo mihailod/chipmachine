@@ -1473,6 +1473,7 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
     // predicate slot, so activating one clears the others' state.
     extensionFilterGid = -1;
     databaseFilterRowid = -1;
+    pluginFilterGid = -1;
     if (allowedFormats.empty()) {
         titleIndex.setFilter();
         formatFilterActive = false;
@@ -1689,21 +1690,186 @@ void MusicDatabase::precomputeBrowseListsAsync()
     // query on the shared `db`); build it inline on the caller (GUI) thread.
     databaseGroups();
 
-    if (extensionGroupsBuilt.load(std::memory_order_acquire)) return;
-    if (extGroupsFuture.valid()) return; // worker already running
+    // Spawn extension group build
+    if (!extensionGroupsBuilt.load(std::memory_order_acquire) && !extGroupsFuture.valid()) {
+        // Pre-warm the lazily-loaded description tables HERE, on the GUI thread, so
+        // the worker only ever reads them. describeExtension() fills the shared
+        // formatDescriptions/formatNames maps on first call; extensionName() shares
+        // that load. Doing it now avoids a data race with GUI callers (the
+        // now-playing scroller also calls describeExtension()).
+        describeExtension("");
 
-    // Pre-warm the lazily-loaded description tables HERE, on the GUI thread, so
-    // the worker only ever reads them. describeExtension() fills the shared
-    // formatDescriptions/formatNames maps on first call; extensionName() shares
-    // that load. Doing it now avoids a data race with GUI callers (the
-    // now-playing scroller also calls describeExtension()).
-    describeExtension("");
+        // Scan the song table on a worker thread (own DB connection) so the ~360ms
+        // build never stalls the render loop -- the starfield keeps scrolling.
+        extGroupsFuture = std::async(std::launch::async, [this] {
+            buildExtensionGroups();
+        });
+    }
 
-    // Scan the song table on a worker thread (own DB connection) so the ~360ms
-    // build never stalls the render loop -- the starfield keeps scrolling.
-    extGroupsFuture = std::async(std::launch::async, [this] {
-        buildExtensionGroups();
+    // Spawn plugin group build
+    if (!pluginGroupsBuilt.load(std::memory_order_acquire) && !pluginGroupsFuture.valid()) {
+        pluginGroupsFuture = std::async(std::launch::async, [this] {
+            buildPluginGroups();
+        });
+    }
+}
+
+std::vector<MusicDatabase::PluginGroup> const& MusicDatabase::pluginGroups()
+{
+    if (!pluginGroupsBuilt.load(std::memory_order_acquire))
+        buildPluginGroups();
+    return pluginGroupList;
+}
+
+void MusicDatabase::setPluginFilter(int gid)
+{
+    podcastFilterActive = false;
+    podcastShowFilter = -1;
+    podcastShowList.clear();
+    otherFilterActive = false;
+    otherPlatformFilter = -1;
+    filterHueRank.clear();
+    filterHueCount = 0;
+    extensionFilterGid = -1;
+    databaseFilterRowid = -1;
+    pluginFilterGid = gid;
+
+    if (gid < 0) {
+        titleIndex.setFilter();
+        formatFilterActive = false;
+        filteredCandidates.clear();
+        filteredCandidates.shrink_to_fit();
+        return;
+    }
+
+    if (!pluginGroupsBuilt.load(std::memory_order_acquire))
+        buildPluginGroups();
+
+    titleIndex.setFilter([=](int index) {
+        if (index < 0 || index >= (int)pluginGroupOf.size()) return true; // exclude
+        return pluginGroupOf[index] != (int16_t)gid;                      // keep == gid
     });
+
+    formatFilterActive = true;
+    filteredCandidates.clear();
+    uint32_t n = titleIndex.size();
+    std::set<uint16_t> hues;
+    for (uint32_t i = 0; i < n; i++) {
+        if (titleIndex.isFiltered(i)) continue;
+        filteredCandidates.push_back(i);
+        if (i < productStartIndex) hues.insert(formatHue[i]);
+    }
+    int rank = 0;
+    for (uint16_t h : hues) filterHueRank[h] = rank++;
+    filterHueCount = (int)hues.size();
+
+    sortCandidatesByTitle(filteredCandidates);
+}
+
+void MusicDatabase::buildPluginGroups()
+{
+    std::lock_guard<std::mutex> lk{ pluginGroupsMutex };
+    if (pluginGroupsBuilt.load(std::memory_order_acquire)) return;
+
+    uint32_t n = (productStartIndex > 0 &&
+                  productStartIndex <= (uint32_t)formats.size())
+                     ? productStartIndex
+                     : (uint32_t)formats.size();
+    if (n == 0) return;
+
+    std::vector<PluginGroup> groupList;
+    std::vector<int16_t> groupOf(n, -1);
+
+    sqlite3db::Database scanDb{
+        (Environment::getCacheDir() / "music.db").string()
+    };
+
+    auto& plugins = musix::ChipPlugin::getPlugins();
+
+    // Extension -> plugin index, first (highest-priority) claimer wins -- the
+    // same resolution order MusicPlayer::fromFile() uses (getPlugins() is
+    // priority-sorted; see ChipPlugin::createPlugins). Deliberately extension-
+    // only, NOT canHandle(): some plugins (e.g. MikModPlugin for .uni)
+    // disambiguate by magic bytes, opening and reading the actual file --
+    // catalog paths here are mostly remote/uncached, so calling canHandle()
+    // against every song crashes on the first uncached magic-gated file.
+    std::unordered_map<std::string, int> extToPlugin;
+    for (int pIdx = 0; pIdx < (int)plugins.size(); pIdx++) {
+        for (auto const& rawExt : plugins[pIdx]->getSupportedExtensions()) {
+            extToPlugin.emplace(toLower(rawExt), pIdx); // first wins
+        }
+    }
+
+    std::vector<int> counts(plugins.size(), 0);
+    std::vector<std::vector<int>> idxs(plugins.size());
+    std::vector<std::unordered_map<uint8_t, int>> formatTallies(plugins.size());
+
+    auto q = scanDb.query<int, std::string, std::string, std::string>(
+        "SELECT ROWID, ext, path, format FROM song");
+    while (q.step()) {
+        int rowid;
+        std::string ext, path, fmt;
+        tie(rowid, ext, path, fmt) = q.get_tuple();
+        int i = rowid - 1;
+        if (i < 0 || i >= (int)n) continue;
+
+        // resolveExtension() strips containers/prefix-forms the same way
+        // extensionGroups() does, so a song lands under the same extension here
+        // as it does on the Formats screen.
+        SongInfo si;
+        si.path = path;
+        si.ext = ext;
+        si.format = fmt;
+        std::string e = resolveExtension(si);
+        if (e.empty()) continue;
+
+        auto it = extToPlugin.find(e);
+        if (it == extToPlugin.end()) continue;
+        int pIdx = it->second;
+        counts[pIdx]++;
+        idxs[pIdx].push_back(i);
+        uint8_t plat = classifyFormat(fmt, "");
+        formatTallies[pIdx][plat]++;
+    }
+
+    struct AdmittedPlugin {
+        std::string name;
+        int pluginIdx;
+        int count;
+        uint8_t platform;
+        std::vector<int> songIdxs;
+    };
+    std::vector<AdmittedPlugin> admitted;
+    for (int pIdx = 0; pIdx < (int)plugins.size(); pIdx++) {
+        if (counts[pIdx] > 0) {
+            uint8_t modal = 0;
+            int best = -1;
+            for (auto const& b : formatTallies[pIdx]) {
+                if (b.second > best) {
+                    best = b.second;
+                    modal = b.first;
+                }
+            }
+            admitted.push_back({ plugins[pIdx]->name(), pIdx, counts[pIdx], modal, std::move(idxs[pIdx]) });
+        }
+    }
+
+    std::sort(admitted.begin(), admitted.end(), [](auto const& a, auto const& b) {
+        if (a.count != b.count) return a.count > b.count;
+        return a.name < b.name;
+    });
+
+    for (int gId = 0; gId < (int)admitted.size(); gId++) {
+        auto& adm = admitted[gId];
+        groupList.push_back({ adm.name, adm.pluginIdx, adm.count, adm.platform });
+        for (int i : adm.songIdxs) {
+            groupOf[i] = (int16_t)gId;
+        }
+    }
+
+    pluginGroupList = std::move(groupList);
+    pluginGroupOf = std::move(groupOf);
+    pluginGroupsBuilt.store(true, std::memory_order_release);
 }
 
 void MusicDatabase::setExtensionFilter(int gid)
@@ -1719,6 +1885,7 @@ void MusicDatabase::setExtensionFilter(int gid)
     filterHueCount = 0;
     extensionFilterGid = gid;
     databaseFilterRowid = -1;
+    pluginFilterGid = -1;
 
     if (gid < 0) {
         titleIndex.setFilter();
@@ -1853,6 +2020,7 @@ void MusicDatabase::setDatabaseFilter(int rowid)
     filterHueCount = 0;
     extensionFilterGid = -1;
     databaseFilterRowid = rowid;
+    pluginFilterGid = -1;
 
     if (rowid < 0) {
         titleIndex.setFilter();

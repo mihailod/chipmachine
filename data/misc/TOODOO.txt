@@ -1,3 +1,7 @@
-- filter on plugins screen!
+- advertise DND in scroll and in Help
+
+- static mosaic splash
+
+- Shorten TABS text in scroll and help: TAB for filters
 
 - investigate: separate db from code and auto-update db independently from code. the current process stays but the app phones home to github and if there is a new database updates it. but we have to distinguish db changes that don't need code change from the ones that do -- more complex, would need 2 database versions...
