@@ -2274,6 +2274,11 @@ void ChipMachine::update()
         filesToOpen.push_back(p);
 #endif
 
+    // Files dragged and dropped onto the window (native OS drag & drop, all
+    // platforms via GLFW). Same downstream path as "Open With" above.
+    for (auto& p : grappix::screen.get_dropped_files())
+        filesToOpen.push_back(p);
+
     if (indexingDatabase) {
         if (!musicDatabase.busy()) {
             indexingDatabase = false;

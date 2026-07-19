@@ -1,8 +1,3 @@
-- also need to handle drag and drop into the app, same as right click open i guess
-
 - filter on plugins screen!
-
-
-
 
 - investigate: separate db from code and auto-update db independently from code. the current process stays but the app phones home to github and if there is a new database updates it. but we have to distinguish db changes that don't need code change from the ones that do -- more complex, would need 2 database versions...

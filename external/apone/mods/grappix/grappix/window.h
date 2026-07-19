@@ -11,7 +11,9 @@
 #include <deque>
 #include <functional>
 #include <set>
+#include <string>
 #include <tuple>
+#include <vector>
 #include <tween/tween.h>
 #include <unordered_map>
 //#include <coreutils/thread.h>
@@ -99,6 +101,13 @@ public:
 
     static std::deque<click> click_buffer;
     static std::deque<Scroll> scroll_buffer;
+
+    // Files dropped onto the window (native OS drag & drop, via GLFW's
+    // glfwSetDropCallback). Filled on the main thread during event polling;
+    // drain with get_dropped_files().
+    static std::deque<std::string> drop_buffer;
+    // Return and clear any files dropped onto the window since the last call.
+    std::vector<std::string> get_dropped_files();
 
     void setup(int w, int h);
     int call_repeatedly(std::function<void(void)> f, int msec);

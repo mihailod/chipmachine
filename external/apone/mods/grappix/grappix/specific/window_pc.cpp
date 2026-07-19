@@ -39,6 +39,7 @@ Window::Scroll Window::NO_SCROLL = { -9999, -9999};
 
 std::deque<Window::click> Window::click_buffer;
 std::deque<Window::Scroll> Window::scroll_buffer;
+std::deque<std::string> Window::drop_buffer;
 
 static int gotFocus = 0;
 
@@ -91,6 +92,16 @@ static void char_fn(GLFWwindow *gwin, unsigned int codepoint) {
 //	putEvent<KeyEvent>(codepoint | 0x80000000);
 }
 
+
+// Native OS drag & drop of files onto the window. GLFW delivers the dropped
+// paths here on the main thread during event polling; we buffer them for the
+// app to drain via Window::get_dropped_files().
+static void drop_fn(GLFWwindow* /*gwin*/, int count, const char** paths) {
+	for(int i = 0; i < count; i++) {
+		if(paths[i])
+			Window::drop_buffer.push_back(std::string(paths[i]));
+	}
+}
 
 static void mouse_fn(GLFWwindow *gwin, int button, int action, int mods) {
 	if(action == GLFW_PRESS) {
@@ -251,6 +262,7 @@ void Window::open(int w, int h, bool fs) {
 	glfwSetCharCallback(gwindow, char_fn);
 	glfwSetMouseButtonCallback(gwindow, mouse_fn);
 	glfwSetScrollCallback(gwindow, scroll_fn);
+	glfwSetDropCallback(gwindow, drop_fn);
 #ifndef EMSCRIPTEN
 	glfwSetWindowSizeCallback(gwindow, resize_fn);
 	glfwSwapInterval(1);
@@ -483,6 +495,12 @@ bool Window::key_pressed(uint32_t k) {
 	//if(glfwGetKey(gwindow, glfwKey))
 	//LOGD("GLFW KEY %x", glfwKey);
 	return glfwGetKey(gwindow, glfwKey) != 0;
+}
+
+std::vector<std::string> Window::get_dropped_files() {
+	std::vector<std::string> out(drop_buffer.begin(), drop_buffer.end());
+	drop_buffer.clear();
+	return out;
 }
 
 Window::click Window::get_click(bool peek) {
