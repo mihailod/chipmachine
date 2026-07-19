@@ -84,10 +84,10 @@ void ChipMachine::setupCommands()
             if (databaseList.selected() >= (int)groups.size() + 1)
                 databaseList.select(0);
         } else { // PLUGIN_SCREEN
-            auto const& groups = musicDatabase.pluginGroups();
-            pluginList.setTotal((int)groups.size() + 1);
-            if (pluginList.selected() >= (int)groups.size() + 1)
-                pluginList.select(0);
+            // Fresh entry: clear any prior narrowing query, then size the list
+            // (row 0 is [no filter], then one row per surviving plugin).
+            pluginFilterText.clear();
+            rebuildPluginVisible();
         }
         showScreen(next);
     });
@@ -238,16 +238,18 @@ void ChipMachine::setupCommands()
     });
 
     // ENTER on the Plugins screen: restrict search to the songs the highlighted
-    // plugin would actually play (its canHandle()). Same shape as select_format;
-    // row 0 is [no filter], so plugin group g sits at list index g+1 -- and that
-    // list index IS the gid setPluginFilter expects (pluginGroups() order).
+    // plugin claims by extension. Same shape as select_format; row 0 is [no
+    // filter], so the narrowed plugin at visible position idx-1 sits at list
+    // index idx -- map through pluginVisibleGroups to the real gid
+    // setPluginFilter expects (pluginGroups() order).
     cmd("select_plugin", [=] {
         int idx = pluginList.selected();
         auto const& groups = musicDatabase.pluginGroups();
-        bool hasFilter = (idx > 0 && (idx - 1) < (int)groups.size());
+        bool hasFilter = (idx > 0 && (idx - 1) < (int)pluginVisibleGroups.size());
         if (hasFilter) {
-            auto const& grp = groups[idx - 1];
-            musicDatabase.setPluginFilter(idx - 1);
+            int gid = pluginVisibleGroups[idx - 1];
+            auto const& grp = groups[gid];
+            musicDatabase.setPluginFilter(gid);
             selectedFilterName = grp.name; // the plugin's full name()
             activeFilterCount = grp.count;
             mainFilterField.setText(grp.name + "  (TAB to change)");

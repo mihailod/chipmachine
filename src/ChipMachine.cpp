@@ -915,7 +915,7 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     pluginTitle.color = 0xffffffaa;
     pluginTitle.scale = searchField.scale;
     pluginTitle.visible(true);
-    pluginTitle.setText("PLUGIN FILTER");
+    pluginTitle.setText("PLUGIN FILTER [TYPE TO NARROW]");
     pluginScreen.add(&pluginTitle);
 
     pluginHint.setFont(font);
@@ -929,16 +929,17 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
         listrec, numLines,
         [=](grappix::Rectangle& rec, int y, uint32_t index, bool hilight) {
             auto const& groups = musicDatabase.pluginGroups();
-            // Row 0 is the clear-filter entry; plugin g renders on row g+1.
+            // Row 0 is the clear-filter entry; the narrowed plugin at visible
+            // position g renders on row g+1.
             bool noFilter = (index == 0);
-            if (!noFilter && (index - 1) >= groups.size()) return;
+            if (!noFilter && (index - 1) >= pluginVisibleGroups.size()) return;
             uint32_t c;
             std::string cnt, name;
             if (noFilter) {
                 c = 0xffffffff;
                 name = "[no filter, search all]";
             } else {
-                auto const& g = groups[index - 1];
+                auto const& g = groups[pluginVisibleGroups[index - 1]];
                 c = formatColor(g.platform);
                 cnt = withCommas(g.count);
                 name = g.name;
@@ -1407,6 +1408,37 @@ void ChipMachine::rebuildFormatVisible()
     updateFormatLogo();
 }
 
+void ChipMachine::rebuildPluginVisible()
+{
+    auto const& groups = musicDatabase.pluginGroups();
+    pluginVisibleGroups.clear();
+    // No query -> every plugin, in the database's own (count-sorted) order.
+    // Otherwise keep a plugin if the (lowercased) query is a substring of its
+    // name -- the only thing the row displays besides the count.
+    for (int i = 0; i < (int)groups.size(); i++) {
+        if (pluginFilterText.empty()) {
+            pluginVisibleGroups.push_back(i);
+            continue;
+        }
+        std::string name = utils::toLower(groups[i].name);
+        if (name.find(pluginFilterText) != std::string::npos)
+            pluginVisibleGroups.push_back(i);
+    }
+    // Row 0 is the [no filter] entry, then one row per surviving plugin.
+    pluginList.setTotal((int)pluginVisibleGroups.size() + 1);
+    if (pluginList.selected() >= (int)pluginVisibleGroups.size() + 1)
+        pluginList.select(0);
+    // Echo the query in the title so the user can see what they've typed.
+    pluginTitle.setText(pluginFilterText.empty()
+                            ? "PLUGIN FILTER [TYPE TO NARROW]"
+                            : "PLUGIN FILTER [TYPE TO NARROW]  " +
+                                  pluginFilterText);
+    // The query is echoed into the title, so it grows as the user types -- push
+    // the key hint back out past the new title width so they never overlap.
+    positionPluginHint();
+    updatePluginLogo();
+}
+
 void ChipMachine::updateFormatLogo()
 {
     // Preview the highlighted extension's logo behind the Formats list.
@@ -1533,13 +1565,14 @@ void ChipMachine::updatePluginLogo()
         return;
     }
     auto const& groups = musicDatabase.pluginGroups();
-    // Row 0 is [no filter] (no logo); plugin g is at list index g+1.
+    // Row 0 is [no filter] (no logo); the narrowed plugin at visible position g
+    // is at list index g+1 -- map through pluginVisibleGroups to the real group.
     int i = pluginList.selected() - 1;
-    if (i < 0 || i >= (int)groups.size()) {
+    if (i < 0 || i >= (int)pluginVisibleGroups.size()) {
         pluginLogoIcon.clear();
         return;
     }
-    auto const& g = groups[i];
+    auto const& g = groups[pluginVisibleGroups[i]];
     std::string slug = MusicDatabase::platformScreenshotSlug(g.platform);
     const image::bitmap* bm = pickPlatformOrExtLogo("", slug, "");
     if (!bm) {

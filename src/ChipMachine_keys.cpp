@@ -222,7 +222,7 @@ void ChipMachine::setupRules()
     // volume_down is folded into the volume row.
     for (auto const& name : { "show_search", "close_dialog", "clear_command",
                               "clear_search", "volume_down", "select_filter",
-                              "select_format", "select_database",
+                              "select_format", "select_database", "select_plugin",
                               "filter_list_noop", "this_help_menu",
                               "filter_column_left", "filter_column_right",
                               "prev_subtune", "prev_shuffle_song" }) {
@@ -507,20 +507,27 @@ void ChipMachine::updateKeys()
 
     lastKey = key;
 
-    // FORMAT_SCREEN type-to-narrow: printable characters and BACKSPACE edit the
-    // narrowing query in place instead of falling through to the generic handler
-    // below (which would jump to the search screen). ENTER/ESC/arrows are left to
-    // their bindings above; modified keys (CTRL/ALT) are not narrowing input.
-    if (currentScreen == FORMAT_SCREEN && currentDialog == nullptr &&
-        (event & (CTRL | ALT)) == 0) {
+    // FORMAT_SCREEN / PLUGIN_SCREEN type-to-narrow: printable characters and
+    // BACKSPACE edit the narrowing query in place instead of falling through to
+    // the generic handler below (which would jump to the search screen).
+    // ENTER/ESC/arrows are left to their bindings above; modified keys
+    // (CTRL/ALT) are not narrowing input.
+    if ((currentScreen == FORMAT_SCREEN || currentScreen == PLUGIN_SCREEN) &&
+        currentDialog == nullptr && (event & (CTRL | ALT)) == 0) {
         bool printable = (event >= ' ' && event < 0x7f);
         if (printable || key == keycodes::BACKSPACE) {
+            std::string& text = (currentScreen == FORMAT_SCREEN)
+                                     ? formatFilterText
+                                     : pluginFilterText;
             if (key == keycodes::BACKSPACE) {
-                if (!formatFilterText.empty()) formatFilterText.pop_back();
+                if (!text.empty()) text.pop_back();
             } else {
-                formatFilterText += (char)tolower((unsigned char)event);
+                text += (char)tolower((unsigned char)event);
             }
-            rebuildFormatVisible();
+            if (currentScreen == FORMAT_SCREEN)
+                rebuildFormatVisible();
+            else
+                rebuildPluginVisible();
             return;
         }
     }

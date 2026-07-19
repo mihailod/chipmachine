@@ -718,14 +718,26 @@ private:
 
     // The Plugins screen: same single-column layout, one row per registered
     // ChipPlugin ("count   name"), highest count first. Selecting one restricts
-    // search to the songs that plugin would actually play (its canHandle();
-    // MusicDatabase::setPluginFilter).
+    // search to the songs that plugin claims by extension (MusicDatabase's
+    // setPluginFilter / pluginGroups; see buildPluginGroups for why this is
+    // extension-based rather than canHandle()-based).
     RenderSet pluginScreen;
     grappix::VerticalList pluginList;
     grappix::Rectangle pluginArea;
     TextField pluginTitle;
     TextField pluginHint;
     Icon pluginLogoIcon; // plugin's modal-platform logo, behind the list
+
+    // Type-to-narrow state for the Plugins screen, same shape as the Formats
+    // screen's (see formatFilterText/formatVisibleGroups above): pluginFilterText
+    // is the (lowercased) query; a match keeps any plugin whose name contains it.
+    // pluginVisibleGroups maps each shown list row (row 0 is [no filter]; plugin
+    // rows follow) to an index into MusicDatabase::pluginGroups().
+    std::string pluginFilterText;
+    std::vector<int> pluginVisibleGroups;
+    // Rebuild pluginVisibleGroups from pluginFilterText, resize/clamp the list
+    // and refresh the title. Call after any edit to the query or on entry.
+    void rebuildPluginVisible();
     // Header on the command/help screen (e.g. "ChipMachineAS 1.9 HELP MENU"),
     // drawn above the first entry; hidden while a command filter is being typed.
     TextField commandTitle;
