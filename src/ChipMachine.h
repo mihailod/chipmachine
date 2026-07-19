@@ -254,6 +254,11 @@ public:
     // popped off it as it starts -- so this list is the only record of what has
     // already played, and hence the only way CTRL+LEFT can step back into it.
     std::vector<SongInfo> shuffleList;
+    // Paths delivered by macOS "Open With" / double-click (Apple Event), drained
+    // from the platform handler at the top of update() and played once the
+    // database is ready. Held as a member so files that arrive during cold-start
+    // indexing survive the early-return frames instead of being dropped.
+    std::vector<std::string> filesToOpen;
     // Index into shuffleList of the song playing now. Derived from what is left
     // in the queue rather than counted, so songs the player advances to on its
     // own (when a tune ends) need no bookkeeping. -1 when not shuffling.

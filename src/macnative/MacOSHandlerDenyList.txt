@@ -1,0 +1,61 @@
+# MacOSHandlerDenyList.txt
+# ---------------------------------------------------------------------------
+# Extensions the macOS packaging step must NOT advertise as file associations.
+# One token per line; blank lines and lines starting with '#' are ignored;
+# a leading dot is tolerated (".mod" == "mod"). Matching is case-insensitive.
+#
+# gen_info_plist.sh subtracts this list from the full plugin extension union
+# (extensions.txt) before building the .app's Info.plist document types. Two
+# kinds of thing belong here:
+#
+#   1. Non-extensions. UADE advertises modland *prefix tokens* (a file is named
+#      "mod_ntk.songname", so the real macOS extension is "songname", never
+#      "mod_ntk"). These are not file extensions any user has, and several are
+#      not even valid filename-extension tags (they contain '_', '-', '.', '!').
+#      Advertising them would be junk at best.
+#
+#   2. Prefix tokens that collide with a real, common file type. UADE emits
+#      "js", "md" and "dat" as prefixes; those are NOT real chiptune extensions
+#      either, but advertising them would put ChipMachine in the "Open With"
+#      menu of every JavaScript / Markdown / data file. Dropped for that reason.
+#
+# This is a hand-editable judgement file. If you ever find a REAL tune whose
+# on-disk extension is one of these, move it to MacOSSystemTypeExtensions.txt
+# (to advertise politely against the existing system type without hijacking its
+# icon) rather than deleting it here.
+# ---------------------------------------------------------------------------
+
+# --- UADE modland prefix tokens that are not valid/real file extensions ---
+!pm!
+audio_data
+dl_deli
+fc-bsi
+fc-m
+hrt!
+mcmd_org
+mod15_mst
+mod15_st-iv
+mod15_ust
+mod_adsc4
+mod_comp
+mod_doc
+mod_flt4
+mod_ntk
+mod_ntk1
+mod_ntk2
+mod_ntkamp
+mon_old
+ogg_
+s-c
+sa-p
+sa_old
+snt!
+sts_cp3
+switch_audio
+tfhd1.5
+tfmx1.5
+
+# --- UADE prefix tokens that collide with common non-music file types ---
+js
+md
+dat

@@ -1,0 +1,38 @@
+# MacOSSystemTypeExtensions.txt
+# ---------------------------------------------------------------------------
+# Extensions that macOS ALREADY has a system Uniform Type Identifier for.
+# Format, one per line:   <extension>  <system-UTI>
+# (whitespace-separated; blank lines and '#' comments ignored; case-insensitive)
+#
+# These are advertised the polite way: gen_info_plist.sh emits a
+# CFBundleDocumentTypes entry that REFERENCES the existing UTI via
+# LSItemContentTypes at LSHandlerRank = Alternate. Effect:
+#
+#   * ChipMachine appears in the file's right-click "Open With" menu.
+#   * The file KEEPS its own system icon and "Kind" -- we never redefine it,
+#     so there is zero icon/type hijack (unlike our exported umbrella UTI).
+#   * We never become the default handler unless the user explicitly picks
+#     "Change All" in Get Info. A one-time "Open With" changes nothing.
+#
+# Everything in extensions.txt that is NOT in this file and NOT in the deny
+# list is instead folded into our exported umbrella UTI
+# (org.mihailod.chipmachineas.chiptune) and gets the ChipMachine document icon,
+# because nothing else on the system claims those obscure formats.
+#
+# If a UTI string here is wrong or unknown to a given macOS version, the entry
+# is simply inert (we just don't appear in that format's Open With menu) -- a
+# safe failure mode. Add/remove pairs by hand as needed.
+# ---------------------------------------------------------------------------
+
+mp3   public.mp3
+wav   com.microsoft.waveform-audio
+aif   public.aiff-audio
+aiff  public.aiff-audio
+m4a   com.apple.m4a-audio
+mp4   public.mpeg-4
+aac   public.aac-audio
+flac  org.xiph.flac
+ogg   org.xiph.ogg
+oga   org.xiph.ogg
+opus  org.xiph.opus
+wma   com.microsoft.windows-media-wma

@@ -66,6 +66,15 @@ To authorize and run the application on your Mac, follow these steps:
 
 *Note: You only need to perform this authorization once per release. Subsequent launches will boot instantly.*
 
+### Opening music files from Finder
+
+Once installed, ChipMachineAS registers with macOS as a player for the hundreds of formats it supports. Right-click any playable file (a `.sid`, `.mod`, `.nsf`, …) and choose **Open With → ChipMachineAS**, or double-click a file you've made it the default for, and the track plays immediately.
+
+This is deliberately polite — ChipMachineAS advertises itself as an *alternate* handler and never hijacks files from a player you already use:
+
+* For common audio types (`.mp3`, `.wav`, `.flac`, …) it appears as an option in **Open With** but never becomes the default unless you explicitly choose it via **Get Info → Open with → Change All**.
+* For obscure chip/tracker formats that nothing else on your Mac opens, it becomes the de-facto player and shows its own document icon in Finder.
+
 ## Prerequisites for development (Tested on macOS 26 / Tahoe only)
 
 * Make sure you have Homebrew installed (Apple Silicon homebrew in /opt/homebrew/ , make sure you are not using Intel legacy /usr/local tools)
@@ -85,8 +94,18 @@ ninja
 
 * Running the app (from the build folder): ./chipmachine (-h for all options)
 * Running the tests (from the build folder): ./cmtest
-* Packaging the app: [package_app.sh](package_app.sh)
+* Packaging the app: [package_app.sh](package_app.sh) — rebuilds the `chipmachine` target (incremental), bundles the runtime assets, generates the `Info.plist` with file associations, code-signs and zips the `.app`.
 * AI tools used to help with the porting: Claude, Gemini, Antigravity, Codex
+
+### macOS file associations (developer notes)
+
+The `.app` advertises the formats it can play as macOS file associations (see the [user-facing note above](#opening-music-files-from-finder)). All the platform-native macOS glue lives under [src/macnative/](src/macnative/):
+
+* **`gen_info_plist.sh`** — the single source of the bundle's `Info.plist`. It builds the file-association document types from three inputs: `extensions.txt` (the full playable-extension union, dumped from the built binary via `chipmachine --dump-extensions`), `MacOSSystemTypeExtensions.txt` (formats with an existing system UTI — referenced politely at `LSHandlerRank=Alternate`, never redefined) and `MacOSHandlerDenyList.txt` (non-extension junk / dangerous tokens to drop). Everything else is exported under one umbrella UTI (`org.mihailod.chipmachineas.chiptune`) with the app's document icon. The last two `.txt` files are hand-editable.
+* **`FileOpenHandler.mm`** — the `kAEOpenDocuments` Apple Event handler that makes double-click / "Open With" actually play the file (Finder does **not** pass files on `argv`).
+* **`dev_update_doctypes.sh`** — fast, no-recompile test loop: rewrites the `Info.plist` in an existing bundle, re-signs it and re-registers it with LaunchServices in a couple of seconds. Pass `--with-binary` to also swap in the freshly-built executable and test double-click playback end-to-end. Run with `--help` for full usage.
+
+`package_app.sh` invokes the generator automatically, so a normal release needs no extra steps.
 
 ## Using the application
 

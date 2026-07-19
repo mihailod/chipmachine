@@ -1,6 +1,11 @@
 #!/bin/zsh
 set -e
 
+# Wall-clock timer for the whole packaging run. zsh's $SECONDS auto-increments;
+# resetting it here means it reads the elapsed seconds at the end (see the
+# final "Total packaging time" line).
+SECONDS=0
+
 # Establish precise absolute paths independent of execution context
 # ${0:A:h} is zsh-native: :A resolves to absolute path, :h strips the filename.
 # BASH_SOURCE[0] is a bash-ism and is undefined (empty) in zsh — do not use it.
@@ -52,6 +57,29 @@ else
     echo "Release Mode: Disabled (Dry Run/Local Build Only)"
 fi
 
+# 0. Build the binary first (incremental).
+#
+# Packaging is a release-time action, so we always (re)build the chipmachine
+# target before packaging to guarantee the bundled binary matches the current
+# source -- no more "forgot to rebuild" stale-binary releases. This is an
+# INCREMENTAL ninja build: if nothing changed it is ~1s ("no work to do"); only
+# a first-ever/post-clean build is slow, which is unavoidable regardless.
+#
+# Done BEFORE step 1 wipes the previous .app, so a compile failure aborts (via
+# `set -e`) while the last good bundle is still intact. We only build when the
+# build dir is already CMake-configured -- we deliberately do NOT run `cmake`
+# configure here, because that chooses the build type (Release vs Debug) and the
+# generator, which is the developer's decision, not the packager's.
+if [ -f "${BUILD_DIR}/CMakeCache.txt" ]; then
+    echo "-> Building chipmachine target (incremental)..."
+    cmake --build "${BUILD_DIR}" --target chipmachine
+else
+    echo "WARNING: ${BUILD_DIR} is not CMake-configured; skipping build step."
+    echo "         Packaging whatever binary already exists. Configure the build"
+    echo "         dir (e.g. cmake -S chipmachine -B build -DCMAKE_BUILD_TYPE=Release)"
+    echo "         to have package_app.sh rebuild automatically."
+fi
+
 # 1. Clean previous packaging attempts and set up pristine directories
 rm -rf "${TARGET_DIR}"
 mkdir -p "${MAC_OS_DIR}"
@@ -66,9 +94,39 @@ echo "-> Copying executable binary..."
 cp "${BUILD_DIR}/chipmachine" "${MAC_OS_DIR}/chipmachine"
 chmod +x "${MAC_OS_DIR}/chipmachine"
 
-# 3. Create Info.plist (Dynamically uses the parsed $VERSION_STR)
-echo "-> Creating Info.plist..."
-printf '<?xml version="1.0" encoding="UTF-8"?>\n<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n<plist version="1.0">\n<dict>\n    <key>CFBundleExecutable</key>\n    <string>chipmachine</string>\n    <key>CFBundleIconFile</key>\n    <string>AppIcon.icns</string>\n    <key>CFBundleIdentifier</key>\n    <string>org.mihailod.chipmachineas</string>\n    <key>CFBundleName</key>\n    <string>ChipMachineAS</string>\n    <key>CFBundleDisplayName</key>\n    <string>ChipMachineAS</string>\n    <key>CFBundlePackageType</key>\n    <string>APPL</string>\n    <key>CFBundleShortVersionString</key>\n    <string>%s</string>\n    <key>LSMinimumSystemVersion</key>\n    <string>11.0</string>\n    <key>NSHighResolutionCapable</key>\n    <true/>\n</dict>\n</plist>\n' "${VERSION_STR}" > "${TARGET_DIR}/Contents/Info.plist"
+# 3. Create Info.plist (incl. macOS file associations)
+#
+# The whole plist -- base keys AND the file-association document types -- is
+# emitted by src/macnative/gen_info_plist.sh, the single source shared with the
+# fast no-recompile test loop (dev_update_doctypes.sh). It reads the playable
+# extension list (extensions.txt) and the two hand-editable list files
+# (MacOSHandlerDenyList.txt, MacOSSystemTypeExtensions.txt) next to it.
+#
+# extensions.txt is the union of every extension the plugins advertise; it is
+# the single source of truth, so we refresh it here from the freshly-built
+# binary (`--dump-extensions`) before generating the plist. If that fails for
+# any reason we fall back to the checked-in copy rather than shipping an empty
+# association list.
+MACNATIVE_DIR="${CHIPMACHINE_DIR}/src/macnative"
+GEN_PLIST="${MACNATIVE_DIR}/gen_info_plist.sh"
+EXTS_FILE="${MACNATIVE_DIR}/extensions.txt"
+
+echo "-> Refreshing playable-extension list from built binary..."
+if "${BUILD_DIR}/chipmachine" --dump-extensions > "${EXTS_FILE}.tmp" 2>/dev/null \
+        && [ -s "${EXTS_FILE}.tmp" ]; then
+    mv "${EXTS_FILE}.tmp" "${EXTS_FILE}"
+    echo "   extensions.txt: $(wc -l < "${EXTS_FILE}" | tr -d '[:space:]') extensions"
+else
+    rm -f "${EXTS_FILE}.tmp"
+    echo "   WARNING: --dump-extensions failed; using checked-in extensions.txt"
+fi
+
+echo "-> Creating Info.plist (with macOS file associations)..."
+"${GEN_PLIST}" --version "${VERSION_STR}" > "${TARGET_DIR}/Contents/Info.plist"
+if ! plutil -lint "${TARGET_DIR}/Contents/Info.plist" >/dev/null; then
+    echo "CRITICAL ERROR: generated Info.plist failed plutil -lint. Aborting."
+    exit 1
+fi
 
 # 4. Copy the asset and Lua payloads from the chipmachine source tree
 echo "-> Packaging runtime assets into bundle..."
@@ -351,6 +409,15 @@ if [ -f "${ICON_PATH}" ]; then
     sips -z 1024 1024 "${ICON_PATH}" --out "${CHIPMACHINE_DIR}/temp.iconset/icon_512x512@2x.png"
     iconutil -c icns "${CHIPMACHINE_DIR}/temp.iconset" -o "${RESOURCES_DIR}/AppIcon.icns"
     rm -rf "${CHIPMACHINE_DIR}/temp.iconset"
+
+    # Document icon shown in Finder for files typed as our exported umbrella UTI
+    # (org.mihailod.chipmachineas.chiptune). Info.plist references DocIcon.icns
+    # via CFBundleTypeIconFile. For now this reuses the app icon; drop a distinct
+    # "note on a document" DocIcon.icns here later for a dedicated file look.
+    if [ -f "${RESOURCES_DIR}/AppIcon.icns" ]; then
+        echo "-> Installing document icon (DocIcon.icns)..."
+        cp "${RESOURCES_DIR}/AppIcon.icns" "${RESOURCES_DIR}/DocIcon.icns"
+    fi
 fi
 
 # 7. Apply ad-hoc code signatures
@@ -428,6 +495,7 @@ echo "-> Packaged zip artifact verified (--deep --strict)."
 cd "${CHIPMACHINE_DIR}"
 
 echo "=== Done! ==="
+printf '=== Total packaging time: %dm %02ds ===\n' $((SECONDS / 60)) $((SECONDS % 60))
 echo "*** Planned template command details:"
 echo "------------------------------------------------------------"
 echo "gh release create v${VERSION_STR}-as ../ChipMachineAS.zip \\"

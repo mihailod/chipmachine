@@ -3,6 +3,9 @@
 #ifndef TEXTMODE_ONLY
 #    include "ChipMachine.h"
 #    include <grappix/grappix.h>
+#    ifdef __APPLE__
+#        include "macnative/FileOpenHandler.h"
+#    endif
 #endif
 #include <bbsutils/ansiconsole.h>
 #include <bbsutils/petsciiconsole.h>
@@ -31,9 +34,11 @@ void initYoutube(sol::state&);
 #include "di.hpp"
 namespace di = boost::di;
 
+#include <cctype>
 #include <csignal>
 #include <filesystem>
 #include <optional>
+#include <set>
 #include <vector>
 
 #include "version.h"
@@ -77,6 +82,7 @@ int main(int argc, char* argv[])
         bool delete_web_cache = false;
         bool no_images = false;
         bool debug = false;
+        bool dump_extensions = false;
         std::string play_what;
 #ifdef TEXTMODE_ONLY
         bool text_mode = true;
@@ -112,6 +118,11 @@ int main(int argc, char* argv[])
                   "Only play if no keyboard is connected");
     opts.add_option("--play", options.play_what,
                     "Shuffle a named collection (also 'all' or 'favorites')");
+    opts.add_flag("--dump-extensions", options.dump_extensions,
+                  "Print every file extension the loaded plugins can play "
+                  "(one per line) and exit. Feeds the macOS file-association "
+                  "document-type list in package_app.sh; the single source of "
+                  "truth is the plugins themselves, so this stays in sync.");
     opts.add_option("files", options.songs, "Songs to play");
 
     CLI11_PARSE(opts, argc, argv)
@@ -255,6 +266,26 @@ int main(int argc, char* argv[])
 
     musix::ChipPlugin::createPlugins(work_dir / "data");
 
+    // --dump-extensions: emit the union of every extension the loaded plugins
+    // advertise, deduped and sorted, one per line, then exit. This is the
+    // single source of truth for the macOS file-association list baked into the
+    // .app's Info.plist by package_app.sh (via extensions.txt). Kept here --
+    // after createPlugins() but before the heavy DB/Lua/audio init below -- so
+    // it runs fast and touches nothing else.
+    if (options.dump_extensions) {
+        std::set<std::string> exts;
+        for (auto const& pl : musix::ChipPlugin::getPlugins()) {
+            for (auto const& e : pl->getSupportedExtensions()) {
+                std::string low;
+                low.reserve(e.size());
+                for (char c : e) low += static_cast<char>(::tolower(c));
+                if (!low.empty()) exts.insert(low);
+            }
+        }
+        for (auto const& e : exts) utils::print_fmt("%s\n", e);
+        return 0;
+    }
+
     auto lua = std::make_shared<sol::state>();
     lua->open_libraries(sol::lib::base, sol::lib::package, sol::lib::string);
     lua->set_function("print", [](sol::variadic_args va) {
@@ -376,6 +407,17 @@ int main(int argc, char* argv[])
         return 0;
     }
 #ifndef TEXTMODE_ONLY
+#ifdef __APPLE__
+    // Install the Finder "Open With" / double-click handler BEFORE screen.open()
+    // -- and therefore before glfwInit(). GLFW runs [NSApp run] inside glfwInit()
+    // to finish launching, which is exactly where AppKit dispatches the
+    // cold-launch open-document event. installFileOpenHandler() teaches GLFW's
+    // app delegate class to answer -application:openURLs: so that dispatch is
+    // delivered to us instead of hitting AppKit's "cannot open this format"
+    // fallback. ChipMachine::update() drains the queued paths and plays them.
+    chipmachine::installFileOpenHandler();
+#endif
+
     grappix::screen.setTitle(PROGRAM_NAME " " VERSION_STR);
     if (options.full_screen)
         grappix::screen.open(true);

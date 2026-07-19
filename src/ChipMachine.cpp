@@ -1,6 +1,9 @@
 #include "ChipMachine.h"
 #include "Icons.h"
 #include "version.h"
+#ifdef __APPLE__
+#    include "macnative/FileOpenHandler.h"
+#endif
 #include <coreutils/environment.h>
 #include <coreutils/format.h>
 #include <coreutils/searchpath.h>
@@ -2262,6 +2265,15 @@ int ChipMachine::filterOptionCount(FilterOption const& opt) const
 
 void ChipMachine::update()
 {
+#ifdef __APPLE__
+    // Collect any Finder "Open With" / double-click paths delivered since the
+    // last frame. Done before the indexing gate below so live events are never
+    // missed; they accumulate in filesToOpen and are played once the DB is
+    // ready (see after the gate).
+    for (auto& p : drainPendingOpenFiles())
+        filesToOpen.push_back(p);
+#endif
+
     if (indexingDatabase) {
         if (!musicDatabase.busy()) {
             indexingDatabase = false;
@@ -2286,6 +2298,18 @@ void ChipMachine::update()
             }
             return;
         }
+    }
+
+    // Play files handed to us by Finder ("Open With" / double-click). The DB is
+    // ready by here (the indexing gate above has passed). playSongs() clears the
+    // queue, plays the first file, queues the rest, and shows the main screen.
+    if (!filesToOpen.empty()) {
+        std::vector<SongInfo> songs;
+        songs.reserve(filesToOpen.size());
+        for (auto const& p : filesToOpen)
+            songs.emplace_back(p);
+        filesToOpen.clear();
+        playSongs(songs);
     }
 
     if (namedToPlay != "") {

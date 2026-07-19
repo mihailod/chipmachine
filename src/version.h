@@ -13,4 +13,4 @@ rm build/DEBUG_UPDATE_VERSION
 
 #pragma once
 #define PROGRAM_NAME "ChipMachineAS"
-#define VERSION_STR "1.9"
+#define VERSION_STR "2.0"
