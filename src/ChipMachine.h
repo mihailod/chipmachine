@@ -481,6 +481,8 @@ private:
     void loadScreenshot(const std::string& shot);
     // Recomputes the centred, half-screen rectangle of the splash icon.
     void updateSplashArea();
+    // Recomputes the centred, half-screen rectangle of the startup icon.
+    void updateStartupIconArea();
     // Builds (once totalSongs is known) and ping-pong-scrolls the splash welcome
     // banner across the top each frame, mirroring the song-title marquee.
     void updateSplashWelcome(uint32_t delta);
@@ -817,6 +819,11 @@ private:
     bool hasMoved = false;
 
     bool indexingDatabase = false;
+    // Big centred app icon shown from app launch until indexing finishes and
+    // the scroller takes over (see setup()/updateStartupIconArea()/render()).
+    Icon startupIcon;
+    // Fraction of the screen the startup icon fills (per axis, aspect kept).
+    float startupIconSizeFraction = 1.0f;
 
     MusicBars musicBars;
     MusicPlayerList::State playerState;

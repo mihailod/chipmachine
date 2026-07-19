@@ -380,6 +380,21 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     nextInfoField.setAlign(1.0);
     nextField.align = 1.0;
 
+    // Load the big centred icon shown from launch until indexing finishes, as
+    // early in setup() as possible so it appears the instant the app opens.
+    try {
+        auto ip = workDir / "data" / "misc" / "icon.png";
+        auto bm = image::load_image(ip.string());
+        // Key out the pure-black background so the starfield shows through,
+        // same as paused.png/muted.png below and the platform logos.
+        for (auto& px : bm)
+            if ((px & 0xffffff) == 0) px &= 0xffffff;
+        startupIcon.setBitmap(bm, true);
+        updateStartupIconArea();
+    } catch (image::image_exception& e) {
+        LOGD("Failed to load icon.png startup splash");
+    }
+
     screenShotIcon = Icon(image::bitmap(8, 8), 100, 100);
     mainScreen.add(&screenShotIcon);
     // Give the transition driver access to the screenshot icon, the loaded
@@ -1054,6 +1069,7 @@ void ChipMachine::layoutScreen()
 
     starEffect.resize(screen.width(), screen.height());
     scrollEffect.resize(screen.width(), 300);
+    updateStartupIconArea();
     musicBarsWidth = stereoSpectrum ? spectrumWidth : spectrumWidth * 2;
     musicBars.setup(musicBarsWidth, spectrumHeight);
     updateScreenshotArea();
@@ -1558,6 +1574,30 @@ void ChipMachine::updateSplashArea()
     float y = (screen.height() - final_h) * 0.5f;
 
     splashIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
+}
+
+void ChipMachine::updateStartupIconArea()
+{
+    int bm_w = startupIcon.getTextureWidth();
+    int bm_h = startupIcon.getTextureHeight();
+    if (bm_w == 0 || bm_h == 0) return;
+
+    // Fit the icon inside a startupIconSizeFraction x startupIconSizeFraction
+    // box of the screen (as a fraction of each axis), keeping its aspect ratio.
+    float w = screen.width() * startupIconSizeFraction;
+    float h = screen.height() * startupIconSizeFraction;
+
+    float d = h / bm_h;
+    float d2 = w / bm_w;
+    if (d2 < d) d = d2;
+
+    float final_w = bm_w * d;
+    float final_h = bm_h * d;
+
+    float x = (screen.width() - final_w) * 0.5f;
+    float y = (screen.height() - final_h) * 0.5f;
+
+    startupIcon.setArea(grappix::Rectangle(x, y, final_w, final_h));
 }
 
 // Ping-pong-scrolls the welcome banner across the top of the splash. Uses the
@@ -3107,6 +3147,14 @@ void ChipMachine::render(uint32_t delta)
     // other screen elements) painted over it whenever the sine wobble pushed the
     // text up into their area. Kept below the modal overlay so dialogs/help still
     // sit on top of the scroll.
+    // Show a big centred app icon from launch until indexing finishes, so
+    // there's something on screen the instant the app opens, before the
+    // scroller/screenshots are ready. Drawn on top of everything else so far
+    // (including the "Indexing database" toast) since the app is otherwise
+    // effectively idle at this point.
+    if (indexingDatabase)
+        startupIcon.render(screenptr, delta);
+
     // Hold the scroller until indexing finishes, so it doesn't start scrolling
     // over the "Indexing database" progress screen.
     if (!indexingDatabase)
