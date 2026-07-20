@@ -18,12 +18,12 @@ While ensuring the player runs on modern Apple hardware, my passion for it has e
 Despite the massive expansion under the hood, the core experience remains untouched: instant, incremental autocomplete search across the entire global library, delivering instant zero-latency (for cached songs) playback from a single, simple, unified interface.
 
 **(Screenshots might show features from dev in progress (not released) code.)**
-[![Screenshot](data/misc/amegas.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/formats.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/extensions.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/dbs.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/plugins.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/search.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data/misc/screenshots/1playback.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data/misc/screenshots/2platforms.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data/misc/screenshots/3formats.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data/misc/screenshots/4databases.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data/misc/screenshots/5plugins.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data/misc/screenshots/6search.png)](https://youtu.be/WsNhwxY1c08)
 
 ## Intro
 
