@@ -69,12 +69,14 @@ bool acquireEngine()
             break;
         }
     }
+    // Disabled for Apple macOS hardened runtime/notarization:
+    // (no loading arbitrary sunvox.dylib from search paths!)
     // Last resort: default loader search path (cwd / DYLD / LD paths).
-    if (!loaded && sv_load_dll() == 0) {
-        loaded = true;
-    }
+    //if (!loaded && sv_load_dll() == 0) {
+    //    loaded = true;
+    //}
     if (!loaded) {
-        LOGW("Could not load SunVox library (%s)", libName());
+        LOGW("Could not load bundled SunVox library!");
         return false;
     }
 
