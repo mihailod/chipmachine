@@ -1,6 +1,5 @@
 Mac App Store compliance:
 
-- change my license to LGPL
 - remove telnet
 - move from vice to csid
 - move from uade to openmpt
