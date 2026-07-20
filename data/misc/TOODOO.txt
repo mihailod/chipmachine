@@ -1,9 +1,32 @@
-Run package_app.sh as usual, then:
-SIGN_ID="Developer ID Application: Your Name (TEAMID)" \
-NOTARY_PROFILE="chipmachine-notary" \
-./chipmachine/sign_and_notarize.sh
-
--- make it part od package, option, all in one?
-
 
 - investigate: separate db from code and auto-update db independently from code. the current process stays but the app phones home to github and if there is a new database updates it. but we have to distinguish db changes that don't need code change from the ones that do -- more complex, would need 2 database versions...
+
+
+
+
+
+
+----------------------------
+SIGNING HERE (for now):
+
+1. Pay the $99 — join the Apple Developer Program (enrollment can take anywhere from minutes to a couple days if they verify identity).
+
+2. Create + install a "Developer ID Application" certificate - from developer.apple.com (or Xcode → Settings → Accounts → Manage Certificates → +). This lands in your login keychain. That gives you the param --signid:
+security find-identity -v -p codesigning
+# - "Developer ID Application: Your Name (ABCDE12345)"
+
+3. Store a notarization profile (one-time) — gives you the param --notaryprofile:
+xorun notarytool store-credentials chipmachine-notary --apple-id you@example.com --team-id ABCDE12345
+
+You'll need an app-specific password from appleid.apple.com (not your main Apple ID password).
+
+4. Run it:
+•/package_app.sh --applesign --signid="Developer ID Application: Your Name (ABCDE12345)" --notaryprofile=chipmachine-notary
+
+Two caveats worth knowing before you pay
+
+• Notarization can reject on the first try for reasons only Apple's server sees (a stray unsigned Mach-O, a missing secure timestamp, etc.). The script fails loudly and points you to xcrun notarytool history. My dry-run proved the signing mechanics locally, but the actual Apple round-trip can't be simulated without the account - so budget for one iteration.
+
+• Team ID must match across the cert, the --signid string, and the store-credentials command
+- they all reference the same ABCDE12345.
+Everything on my side is in place: the flags, entitlements, hardened-runtime signing, and the notarize+staple step. Once you have the cert and profile, it's the single command above.
