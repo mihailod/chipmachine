@@ -31,20 +31,19 @@ THE SOFTWARE.
 -------------------------------------------------------------------------------
 
 Component: Apple Silicon Port, Additional Plugins, Database Enhancements
-Copyright: Copyright (c) 2026 Mihailo Despotović
-License: GNU General Public License v3.0 or later
+Copyright: Copyright (c) 2026 Mihailo Despotovic
+License: PolyForm Noncommercial License 1.0.0
 
-This program is free software: you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the Free
-Software Foundation, either version 3 of the License, or (at your option)
-any later version.
+This work is licensed under the PolyForm Noncommercial License 1.0.0. 
+You may use, copy, modify, and distribute this software for noncommercial 
+purposes only. 
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+Commercial use, including any use intended for or directed toward commercial 
+advantage or monetary compensation, is strictly prohibited without a separate 
+commercial license from the copyright holder.
 
-You should have received a copy of the GNU General Public License along with
-this program. If not, see <https://www.gnu.org/licenses/>.
+You should have received a copy of the PolyForm Noncommercial License 1.0.0 
+along with this program. If not, see <https://polyformproject.org/licenses/noncommercial/1.0.0/>.
 
 ===============================================================================
 2. COPYLEFT DEPENDENCIES (FORCING COMBINED WORK TO GPL-3.0-OR-LATER)
