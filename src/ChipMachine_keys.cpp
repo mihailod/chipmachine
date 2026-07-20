@@ -712,6 +712,15 @@ void ChipMachine::updateKeys()
                                                 withCommas(filterCounts[0])));
         else
             searchField.setPrompt("#");
+        // While typing an actual query, show the live hit count trailing the
+        // search text (e.g. "mario [5 search results]"). Cleared otherwise so
+        // the empty-query prompt hints above read alone.
+        if (!s.empty()) {
+            int hits = iquery->numHits();
+            searchField.setSuffix(utils::format(
+                "[%s search result%s]", withCommas(hits), hits == 1 ? "" : "s"));
+        } else
+            searchField.setSuffix("");
         searchField.visible(true);
         filterField.visible(true);
         searchField.pos.x = filterField.pos.x + filterField.getWidth() + 5;

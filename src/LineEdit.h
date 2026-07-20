@@ -11,7 +11,8 @@ public:
     LineEdit(const grappix::Font& font, const std::string& text = "",
              float x = 0.F, float y = 0.F, float sc = 1.0F,
              uint32_t col = 0xffffffff)
-        : TextField(font, text, x, y, sc, col), prompt(font, "", x, y, sc, col)
+        : TextField(font, text, x, y, sc, col), prompt(font, "", x, y, sc, col),
+          suffix(font, "", x, y, sc, col)
     {
         cursorColor = grappix::Color(0xffffffff); // grappix::Color(col)/2.0F;
         std::tie(cursorW, cursorH) = font.get_size("o", scale).to_tuple();
@@ -23,6 +24,7 @@ public:
     {
         TextField::setFont(f);
         prompt.setFont(f);
+        suffix.setFont(f);
         std::tie(cursorW, cursorH) = font.get_size("o", scale).to_tuple();
     }
 
@@ -64,6 +66,10 @@ public:
 
     void setPrompt(const std::string& p) { prompt.setText(p); }
 
+    // Text drawn after (to the right of) the edited text -- e.g. a live result
+    // count. Empty string draws nothing.
+    void setSuffix(const std::string& s) { suffix.setText(s); }
+
     virtual void render(std::shared_ptr<grappix::RenderTarget> target,
                         uint32_t delta) override
     {
@@ -79,12 +85,20 @@ public:
                           cursorColor);
         prompt.render(target, delta);
         TextField::render(target, delta);
+        // A space-separated suffix trailing the edited text (e.g. result count).
+        if (!suffix.getText().empty()) {
+            suffix.scale = scale;
+            suffix.pos = pos;
+            suffix.pos.x += getWidth() + cursorW;
+            suffix.render(target, delta);
+        }
         pos = saved;
     }
     grappix::Color cursorColor;
     std::function<void(const std::string&)> onOk;
 
     TextField prompt;
+    TextField suffix;
 
     int cursorH;
     int cursorW;

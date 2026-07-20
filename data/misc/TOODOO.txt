@@ -1,3 +1,1 @@
-- as you type to incrementally search, show the number of results on the top, append it (after a space) to the search string in the title like this: [n search results]
-
 - investigate: separate db from code and auto-update db independently from code. the current process stays but the app phones home to github and if there is a new database updates it. but we have to distinguish db changes that don't need code change from the ones that do -- more complex, would need 2 database versions...
