@@ -22,8 +22,8 @@ Despite the massive expansion under the hood, the core experience remains untouc
 [![Screenshot](data/misc/screenshots/2platforms.png)](https://youtu.be/WsNhwxY1c08)
 [![Screenshot](data/misc/screenshots/3formats.png)](https://youtu.be/WsNhwxY1c08)
 [![Screenshot](data/misc/screenshots/4databases.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/screenshots/5plugins.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/screenshots/6search.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data/misc/screenshots/5search.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data/misc/screenshots/6plugins.png)](https://youtu.be/WsNhwxY1c08)
 
 ## Intro
 
