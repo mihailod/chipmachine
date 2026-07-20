@@ -17,19 +17,142 @@ APP_NAME="ChipMachineAS.app"
 TARGET_DIR="${WORKSPACE_ROOT}/${APP_NAME}"
 ICON_PATH="${CHIPMACHINE_DIR}/data/misc/icon.png"
 
-# Target payload directories
+# Target payload directories. Defined unconditionally (not inside the build
+# block) because the signing step reads them too, including on the
+# --reusebuiltapp path where the build/assemble steps are skipped.
 MAC_OS_DIR="${TARGET_DIR}/Contents/MacOS"
 RESOURCES_DIR="${TARGET_DIR}/Contents/Resources"
+MACNATIVE_DIR="${CHIPMACHINE_DIR}/src/macnative"
+YTDLP_DEST="${RESOURCES_DIR}/bin/ytdlp"
 
 # -----------------------------------------------------------------
 # Parse Arguments
 # -----------------------------------------------------------------
-RELEASE_IT=false
+# The script does nothing without an explicit action flag: run with no args (or
+# --help) and it prints usage and exits. Building and signing are separable:
+#   --buildapponly            build the ad-hoc self-signed bundle and stop
+#                             (this is the previous default behavior).
+#   --applesign               build, THEN Developer ID sign (+ optional notarize).
+#   --applesign --reusebuiltapp
+#                             skip the build and (re)sign the .app already on disk
+#                             -- the fast re-sign / re-notarize loop.
+# Flags accept a single or double dash and are case-insensitive; value flags use
+# --key=value.
+print_usage() {
+    cat <<'USAGE'
+ChipMachineAS -- app bundle packaging & signing
+
+Usage:
+  package_app.sh --buildapponly [--releaseit]
+  package_app.sh --applesign --signid="Developer ID Application: Name (TEAMID)" \
+                 [--notaryprofile=NAME] [--reusebuiltapp] [--releaseit]
+
+Actions (at least one of --buildapponly / --applesign required):
+  --buildapponly         Build ChipMachineAS.app + zip, ad-hoc self-signed, and
+                         stop. This is the previous default behavior.
+  --applesign            Build, then sign with a Developer ID identity and enable
+                         Hardened Runtime. Requires --signid.
+
+Signing options (used with --applesign):
+  --signid="..."         Developer ID signing identity, e.g.
+                         "Developer ID Application: Your Name (ABCDE12345)".
+                         List yours: security find-identity -v -p codesigning
+  --notaryprofile=NAME   Also notarize with Apple and staple the ticket, so
+                         downloaded copies open with no Gatekeeper warning.
+                         NAME is a stored notarytool credential profile, created
+                         once (credentials live in the keychain, not on the CLI):
+                           xcrun notarytool store-credentials NAME \
+                               --apple-id you@example.com --team-id TEAMID
+  --reusebuiltapp        Do NOT rebuild -- sign the ChipMachineAS.app that already
+                         exists on disk (from a prior --buildapponly/--applesign
+                         run). Use this to re-sign or re-notarize without a slow
+                         rebuild. Cannot be combined with --buildapponly.
+
+Other options:
+  --releaseit            After packaging, interactively create a GitHub release.
+  -h, --help             Show this help.
+
+Examples:
+  package_app.sh --buildapponly
+  package_app.sh --applesign --signid="Developer ID Application: Jane (ABCDE12345)"
+  package_app.sh --applesign --signid="Developer ID Application: Jane (ABCDE12345)" \
+                 --notaryprofile=chipmachine-notary
+  # re-sign the existing bundle only (no rebuild):
+  package_app.sh --applesign --signid="Developer ID Application: Jane (ABCDE12345)" \
+                 --notaryprofile=chipmachine-notary --reusebuiltapp
+USAGE
+}
+
+DO_BUILD=false          # run the build/assemble steps (0-6)?
+APPLE_SIGN=false        # Developer ID sign at the end?
+REUSE_BUILT=false       # skip the build and sign the existing .app?
+RELEASE_IT=false        # create a GitHub release afterwards? (modifier)
+ACTION=false            # was any actionable flag (build/sign) supplied?
+SIGN_ID=""
+NOTARY_PROFILE=""
+
+if [ $# -eq 0 ]; then
+    print_usage
+    exit 1
+fi
+
 for arg in "$@"; do
-    if [[ "$arg" == "--releaseit" ]]; then
-        RELEASE_IT=true
-    fi
+    key="${arg%%=*}"                 # portion before '=' (the flag name)
+    val="${arg#*=}"                  # portion after  '=' (the value, if any)
+    [ "$val" = "$arg" ] && val=""    # no '=' present -> no inline value
+    case "${key:l}" in               # ${key:l} = zsh lowercase
+        -h|--h|-help|--help)                print_usage; exit 0 ;;
+        -buildapponly|--buildapponly)       DO_BUILD=true; ACTION=true ;;
+        -applesign|--applesign)             APPLE_SIGN=true; ACTION=true ;;
+        -reusebuiltapp|--reusebuiltapp)     REUSE_BUILT=true ;;
+        -signid|--signid)                   SIGN_ID="$val" ;;
+        -notaryprofile|--notaryprofile)     NOTARY_PROFILE="$val" ;;
+        -releaseit|--releaseit)             RELEASE_IT=true ;;
+        *) echo "ERROR: unknown argument '$arg'"; echo; print_usage; exit 1 ;;
+    esac
 done
+
+# Supplying a signing parameter implies the signing action.
+if [ -n "$SIGN_ID" ] || [ -n "$NOTARY_PROFILE" ]; then
+    APPLE_SIGN=true
+    ACTION=true
+fi
+
+if $APPLE_SIGN && [ -z "$SIGN_ID" ]; then
+    echo "ERROR: --applesign / --notaryprofile require --signid=\"Developer ID Application: ... (TEAMID)\""
+    echo
+    print_usage
+    exit 1
+fi
+
+if $REUSE_BUILT && ! $APPLE_SIGN; then
+    echo "ERROR: --reusebuiltapp only applies to the signing path; add --applesign --signid=\"...\"."
+    exit 1
+fi
+
+if $REUSE_BUILT && $DO_BUILD; then
+    echo "ERROR: --reusebuiltapp cannot be combined with --buildapponly (one reuses, the other rebuilds)."
+    exit 1
+fi
+
+if ! $ACTION; then
+    print_usage
+    exit 1
+fi
+
+# Decide whether to run the build/assemble steps:
+#   --buildapponly              -> build (DO_BUILD already true)
+#   --applesign (no reuse)      -> build, then sign
+#   --applesign --reusebuiltapp -> skip build, sign the existing bundle
+if $APPLE_SIGN && ! $REUSE_BUILT; then
+    DO_BUILD=true
+fi
+if $REUSE_BUILT; then
+    DO_BUILD=false
+fi
+
+# Ad-hoc identity when not doing a real Developer ID sign (step 7 reads SIGN_ID).
+$APPLE_SIGN || SIGN_ID="-"
 
 # -----------------------------------------------------------------
 # Dynamically parse the version string from src/version.h
@@ -56,6 +179,25 @@ if $RELEASE_IT; then
 else
     echo "Release Mode: Disabled (Dry Run/Local Build Only)"
 fi
+if $APPLE_SIGN; then
+    echo "Signing Mode: Developer ID (${SIGN_ID})"
+    if [ -n "$NOTARY_PROFILE" ]; then
+        echo "Notarization: Enabled (profile: ${NOTARY_PROFILE})"
+    else
+        echo "Notarization: Disabled (add --notaryprofile=NAME to notarize + staple)"
+    fi
+else
+    echo "Signing Mode: Ad-hoc self-signed (--buildapponly)"
+fi
+if $REUSE_BUILT; then
+    echo "Build Mode:   Skipped (--reusebuiltapp; re-signing the existing bundle)"
+fi
+
+# =================================================================
+# BUILD + ASSEMBLE (steps 0-6). Skipped entirely under --reusebuiltapp,
+# which jumps straight to signing (step 7) using the .app already on disk.
+# =================================================================
+if $DO_BUILD; then
 
 # 0. Build the binary first (incremental).
 #
@@ -107,7 +249,7 @@ chmod +x "${MAC_OS_DIR}/chipmachine"
 # binary (`--dump-extensions`) before generating the plist. If that fails for
 # any reason we fall back to the checked-in copy rather than shipping an empty
 # association list.
-MACNATIVE_DIR="${CHIPMACHINE_DIR}/src/macnative"
+# MACNATIVE_DIR is defined near the top (needed by the signing step too).
 GEN_PLIST="${MACNATIVE_DIR}/gen_info_plist.sh"
 EXTS_FILE="${MACNATIVE_DIR}/extensions.txt"
 
@@ -149,6 +291,26 @@ else
     echo "WARNING: Lua folder not found at ${CHIPMACHINE_DIR}/lua. Scripting features may fail."
 fi
 
+# 4a. Prune non-shippable cruft from the COPIED asset trees (never the source).
+#
+# `cp -R data`/`cp -R lua` copy everything, so a stray build/triage cache left
+# under data/ (e.g. a *_cache dir of thousands of JSON files) would silently
+# balloon the bundle by tens of MB and get sealed into the code signature. Strip
+# any *cache* / __pycache__ directory plus editor cruft. Scoped to data/ and
+# lua/ only — the yt-dlp helper payload is signed code and is left untouched.
+for PRUNE_ROOT in "${RESOURCES_DIR}/data" "${RESOURCES_DIR}/lua"; do
+    [ -d "$PRUNE_ROOT" ] || continue
+    CRUFT=$(find "$PRUNE_ROOT" -type d \( -iname '*cache*' -o -name '__pycache__' \) -prune 2>/dev/null)
+    if [ -n "$CRUFT" ]; then
+        echo "-> Pruning non-shippable caches from bundled assets:"
+        echo "$CRUFT" | while read -r d; do
+            echo "     $(du -sh "$d" 2>/dev/null | awk '{print $1}')  ${d#${RESOURCES_DIR}/}"
+        done
+        find "$PRUNE_ROOT" -type d \( -iname '*cache*' -o -name '__pycache__' \) -prune -exec rm -rf {} + 2>/dev/null
+    fi
+    find "$PRUNE_ROOT" \( -name '.DS_Store' -o -name '*.pyc' \) -delete 2>/dev/null || true
+done
+
 if [ -f "/opt/homebrew/etc/openssl@3/cert.pem" ]; then
     echo "-> Packaging OpenSSL certificates for standalone HTTPS..."
     cp -L "/opt/homebrew/etc/openssl@3/cert.pem" "${RESOURCES_DIR}/"
@@ -165,7 +327,7 @@ fi
 # bundle signs cleanly. The path Contents/Resources/bin/ytdlp is already on the
 # runtime PATH: main.cpp adds work_dir/bin/ytdlp (work_dir == Resources in
 # bundle mode), so no C++ change is required.
-YTDLP_DEST="${RESOURCES_DIR}/bin/ytdlp"
+# (YTDLP_DEST is defined near the top; the signing step references it too.)
 
 if [ -d "${CHIPMACHINE_DIR}/bin" ]; then
     echo "-> Packaging helper binaries into bundle (arm64 only)..."
@@ -420,10 +582,30 @@ if [ -f "${ICON_PATH}" ]; then
     fi
 fi
 
-# 7. Apply ad-hoc code signatures
+else
+    # --reusebuiltapp: the build/assemble steps above were skipped. Re-sign the
+    # bundle already on disk, so it must exist and be a complete .app.
+    echo "-> --reusebuiltapp: skipping build; re-signing existing ${TARGET_DIR}"
+    if [ ! -d "${TARGET_DIR}" ] || [ ! -x "${MAC_OS_DIR}/chipmachine" ]; then
+        echo "CRITICAL ERROR: no built bundle at ${TARGET_DIR} (missing app or main executable)."
+        echo "                Build it first, e.g.: ${0:t} --buildapponly"
+        exit 1
+    fi
+fi   # end: if $DO_BUILD (BUILD + ASSEMBLE)
+
+# 7. Apply code signatures (ad-hoc by default, Developer ID when requested)
 #
-# Strategy: sign each nested Mach-O individually (deepest content first), then
-# seal the outer bundle LAST — and WITHOUT --deep.
+# Identity selection:
+#   * Default (SIGN_ID unset): ad-hoc ("-"). Fine for local/dev builds; produces
+#     the same self-signed bundle as before.
+#   * SIGN_ID="Developer ID Application: Name (TEAMID)": a real, distributable
+#     signature. We additionally enable Hardened Runtime (--options runtime) and
+#     embed a secure Apple timestamp (--timestamp) — both REQUIRED for
+#     notarization — plus the per-target entitlements in src/macnative/.
+#     Optionally set NOTARY_PROFILE (see step 7c) to notarize + staple.
+#
+# Strategy (unchanged): sign each nested Mach-O individually (deepest content
+# first), then seal the outer bundle LAST — and WITHOUT --deep.
 #
 # Why not --deep: --deep recursively descends into the yt-dlp PyInstaller tree
 # and tries to interpret its package/*.dist-info directories as nested bundles,
@@ -433,24 +615,56 @@ fi
 # correctly. We only need to individually sign the actual Mach-O code: the main
 # executable, ffmpeg and bundled dylibs in MacOS/, plus yt-dlp and every
 # *.so/*.dylib under the Resources ytdlp tree.
-echo "-> Applying ad-hoc code signatures..."
+#
+# Under Hardened Runtime the yt-dlp launcher (a PyInstaller freeze that dlopen()s
+# an embedded Python framework + dozens of .so) fails library validation, so it
+# alone is signed with entitlements-helper.plist
+# (com.apple.security.cs.disable-library-validation). The outer seal signs the
+# main executable with entitlements-app.plist.
+#
+# SIGN_ID and NOTARY_PROFILE were resolved from the CLI flags at the top of this
+# script ("-" == ad-hoc when --applesign was not given).
+ENT_APP="${MACNATIVE_DIR}/entitlements-app.plist"
+ENT_HELPER="${MACNATIVE_DIR}/entitlements-helper.plist"
+
 if command -v codesign &> /dev/null; then
+    if [ "$SIGN_ID" = "-" ]; then
+        SIGN_FLAGS=(-f -s -)
+        echo "-> Applying ad-hoc code signatures (set SIGN_ID for a Developer ID signature)..."
+    else
+        SIGN_FLAGS=(-f -s "$SIGN_ID" --options runtime --timestamp)
+        echo "-> Applying Developer ID signatures: ${SIGN_ID}"
+        [ -f "$ENT_APP" ]    || { echo "CRITICAL: missing entitlements file ${ENT_APP}"; exit 1; }
+        [ -f "$ENT_HELPER" ] || { echo "CRITICAL: missing entitlements file ${ENT_HELPER}"; exit 1; }
+        # Stray extended attributes (quarantine/FinderInfo) would break the seal.
+        xattr -cr "${TARGET_DIR}"
+    fi
+
     if [ -d "${RESOURCES_DIR}/data/python_runtime" ]; then
         find "${RESOURCES_DIR}/data/python_runtime" -type f \( -name "*.so" -o -name "*.dylib" -o -name "*.bundle" \) | while read -r py_ext; do
-            codesign -f -s - "$py_ext"
+            codesign "${SIGN_FLAGS[@]}" "$py_ext"
         done
     fi
 
     # Sign every Mach-O under MacOS/ and the Resources ytdlp tree.
     # Filter to Mach-O only — codesign rejects .py, .pyc, and other data files.
+    # The yt-dlp launcher gets the helper entitlements (real signing only).
     find "${MAC_OS_DIR}" "${YTDLP_DEST}" -type f 2>/dev/null | while read -r mf; do
-        if file "$mf" | grep -q "Mach-O"; then
-            codesign -f -s - "$mf"
+        file "$mf" | grep -q "Mach-O" || continue
+        if [ "$SIGN_ID" != "-" ] && [ "$mf" = "${YTDLP_DEST}/yt-dlp" ]; then
+            codesign "${SIGN_FLAGS[@]}" --entitlements "$ENT_HELPER" "$mf"
+        else
+            codesign "${SIGN_FLAGS[@]}" "$mf"
         fi
     done
 
-    # Seal the bundle (no --deep — see header comment).
-    codesign -f -s - "${TARGET_DIR}"
+    # Seal the bundle (no --deep — see header comment). Real signing attaches the
+    # app entitlements to the main executable.
+    if [ "$SIGN_ID" = "-" ]; then
+        codesign "${SIGN_FLAGS[@]}" "${TARGET_DIR}"
+    else
+        codesign "${SIGN_FLAGS[@]}" --entitlements "$ENT_APP" "${TARGET_DIR}"
+    fi
     echo "-> Code signing complete."
 
     # Hard-verify the finished bundle so a signing regression fails the build.
@@ -491,6 +705,41 @@ if ! codesign --verify --deep --strict "${VERIFY_DIR}/${APP_NAME}" 2>/dev/null; 
 fi
 rm -rf "${VERIFY_DIR}"
 echo "-> Packaged zip artifact verified (--deep --strict)."
+
+# 7c. Notarize with Apple + staple the ticket (Developer ID distribution only).
+#
+# Signing alone is NOT enough for other Macs: since macOS 10.15 a downloaded
+# (quarantined) app must also be notarized by Apple and have the ticket stapled,
+# or Gatekeeper blocks it ("cannot be checked for malicious software"). This runs
+# only when a real SIGN_ID is used AND NOTARY_PROFILE names a stored credential
+# profile (create once via `xcrun notarytool store-credentials <profile>
+# --apple-id you@example.com --team-id TEAMID`).
+if [ "$SIGN_ID" != "-" ] && [ -n "$NOTARY_PROFILE" ]; then
+    echo "-> Notarizing with Apple (profile: ${NOTARY_PROFILE}); this can take a few minutes..."
+    if ! xcrun notarytool submit "${WORKSPACE_ROOT}/ChipMachineAS.zip" \
+            --keychain-profile "${NOTARY_PROFILE}" --wait; then
+        echo "CRITICAL: notarization was not accepted. Inspect the log with:"
+        echo "          xcrun notarytool history --keychain-profile ${NOTARY_PROFILE}"
+        exit 1
+    fi
+    echo "-> Stapling notarization ticket into the .app..."
+    xcrun stapler staple "${TARGET_DIR}"
+    xcrun stapler validate "${TARGET_DIR}"
+
+    # Stapling mutates the bundle on disk, so the earlier zip is now stale —
+    # re-zip the STAPLED app for distribution.
+    echo "-> Re-zipping the stapled app for distribution..."
+    cd "${WORKSPACE_ROOT}"
+    rm -f ./ChipMachineAS.zip
+    zip -r -y ./ChipMachineAS.zip ./${APP_NAME}
+    cd "${CHIPMACHINE_DIR}"
+
+    echo "-> Final Gatekeeper assessment (expect: accepted / Notarized Developer ID):"
+    spctl -a -t exec -vvv "${TARGET_DIR}" || true
+elif [ "$SIGN_ID" != "-" ]; then
+    echo "-> NOTE: signed with Developer ID but NOT notarized (NOTARY_PROFILE unset)."
+    echo "         Un-notarized downloads still trip Gatekeeper on other Macs."
+fi
 
 cd "${CHIPMACHINE_DIR}"
 

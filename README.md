@@ -101,7 +101,7 @@ ninja
 
 * Running the app (from the build folder): ./chipmachine (-h for all options)
 * Running the tests (from the build folder): ./cmtest
-* Packaging the app: [package_app.sh](package_app.sh) — rebuilds the `chipmachine` target (incremental), bundles the runtime assets, generates the `Info.plist` with file associations, code-signs and zips the `.app`.
+* Packaging the app: [package_app.sh](package_app.sh) `--buildapponly` — rebuilds the `chipmachine` target (incremental), bundles the runtime assets, generates the `Info.plist` with file associations, ad-hoc code-signs and zips the `.app`. Run with no args for full usage; add `--applesign` to produce a Developer ID / notarized build (see [Signing & distribution](#signing--distribution-developer-id) below).
 * AI tools used to help with the porting: Claude, Gemini, Antigravity, Codex
 
 ### macOS file associations (developer notes)
@@ -113,6 +113,62 @@ The `.app` advertises the formats it can play as macOS file associations (see th
 * **`dev_update_doctypes.sh`** — fast, no-recompile test loop: rewrites the `Info.plist` in an existing bundle, re-signs it and re-registers it with LaunchServices in a couple of seconds. Pass `--with-binary` to also swap in the freshly-built executable and test double-click playback end-to-end. Run with `--help` for full usage.
 
 `package_app.sh` invokes the generator automatically, so a normal release needs no extra steps.
+
+### Signing & distribution (Developer ID)
+
+[package_app.sh](package_app.sh) requires an explicit action flag (run it with no
+arguments to see full usage):
+
+| Command | Result |
+| --- | --- |
+| `./package_app.sh --buildapponly` | Build `.app` + zip, **ad-hoc self-signed** (local/dev; Gatekeeper blocks it on other Macs). |
+| `./package_app.sh --applesign --signid="Developer ID Application: Name (TEAMID)"` | Build, then **Developer ID sign** with Hardened Runtime + entitlements. |
+| `… --notaryprofile=NAME` | Additionally **notarize with Apple and staple** the ticket. |
+| `… --reusebuiltapp` | **Skip the build** and (re)sign the `.app` already on disk — the fast re-sign / re-notarize loop. Requires `--applesign`; can't combine with `--buildapponly`. |
+| `… --releaseit` | After packaging, interactively create a GitHub release (works with either mode). |
+
+Flags accept a single or double dash and are case-insensitive; value flags use
+`--key=value`.
+
+**Why notarization matters:** a Developer ID signature *alone* is not enough.
+Since macOS 10.15, a downloaded (quarantined) app must also be notarized by Apple
+and have the ticket stapled, or Gatekeeper blocks it with "cannot be checked for
+malicious software." Signing + notarizing + stapling are all covered by the same
+Apple Developer Program membership and use the free `notarytool` — this is **not**
+Mac App Store review. Only the full `--applesign … --notaryprofile=…` build opens
+with no warning on other people's Macs.
+
+**One-time setup** (after joining the Apple Developer Program and installing a
+*Developer ID Application* certificate in the login keychain):
+
+1. Find your identity string:
+   ```bash
+   security find-identity -v -p codesigning
+   # -> "Developer ID Application: Your Name (ABCDE12345)"
+   ```
+2. Store a notarization credential profile once (the app-specific password / API
+   key lives in the keychain, never on the command line):
+   ```bash
+   xcrun notarytool store-credentials chipmachine-notary \
+       --apple-id you@example.com --team-id ABCDE12345
+   ```
+
+**Full distributable build:**
+
+```bash
+./package_app.sh --applesign \
+  --signid="Developer ID Application: Your Name (ABCDE12345)" \
+  --notaryprofile=chipmachine-notary
+```
+
+**Entitlements** live in [src/macnative/](src/macnative/) and are documented in
+[entitlements-README.md](src/macnative/entitlements-README.md): the main
+executable and the bundled yt-dlp helper each get
+`com.apple.security.cs.disable-library-validation` (the helper is a PyInstaller
+Python freeze that fails library validation under Hardened Runtime otherwise).
+No JIT entitlements are needed — the app links vanilla Lua, not LuaJIT. The
+entitlements plists are intentionally comment-free: macOS's kernel entitlement
+parser (AMFI) rejects XML comments.
 
 ## Using the application
 

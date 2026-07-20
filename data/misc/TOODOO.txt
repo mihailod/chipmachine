@@ -1,1 +1,9 @@
+Run package_app.sh as usual, then:
+SIGN_ID="Developer ID Application: Your Name (TEAMID)" \
+NOTARY_PROFILE="chipmachine-notary" \
+./chipmachine/sign_and_notarize.sh
+
+-- make it part od package, option, all in one?
+
+
 - investigate: separate db from code and auto-update db independently from code. the current process stays but the app phones home to github and if there is a new database updates it. but we have to distinguish db changes that don't need code change from the ones that do -- more complex, would need 2 database versions...

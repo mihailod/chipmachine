@@ -34,3 +34,8 @@ __pycache__/
 *.pyo
 *.pyd
 data/python_runtime/
+
+# Regenerable build/triage caches (rebuilt on demand by scripts/, never shipped).
+# scripts/filter_demozoo_archives.py rebuilds .demozoo_archive_cache/ from the
+# demozoo API when absent.
+.demozoo_archive_cache/
