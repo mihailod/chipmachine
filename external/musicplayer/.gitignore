@@ -12,6 +12,9 @@ tidy.log
 .idea/
 cmake-build-*/
 build/
+# JUCE ships required CMake helpers under extras/Build/; the case-insensitive
+# build/ rule above would otherwise swallow them and break fresh clones.
+!src/plugins/sksplugin/arkostracker3/JUCE/extras/Build/
 /target
 Cargo.lock
 **/.DS_Store
