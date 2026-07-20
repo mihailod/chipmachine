@@ -1767,7 +1767,7 @@ void ChipMachine::loadSplashScreenshots()
     // Extension logos excluded from the splash: streamable/plain-audio formats
     // that aren't a "venerable retro platform" worth showcasing here.
     static const std::set<std::string> splashExcludeExtensions = {
-        "aac", "aif", "aiff", "m4a", "opus", "mp2", "ac3", "mpeg", "mp3", "ogg",
+        "aac", "aif", "aiff", "flac", "m4a", "opus", "mp2", "ac3", "mpeg", "mp3", "ogg",
         // Generic arcade board mark (the named makers below stay); the "Arcade"
         // platform logo is likewise excluded above.
         "vgz-arcade",
@@ -2063,6 +2063,13 @@ void ChipMachine::appendLogoScreenshots()
         try {
             auto ic = workDir / "data" / "misc" / "icon.png";
             defaultShot = image::load_image(ic.string());
+            // icon.png (the red note) has an OPAQUE black background. This is the
+            // generic "Other"/no-logo fallback composited over the starfield, so
+            // key pure black to transparent -- exactly as loadPlatform/Extension
+            // Screenshots do -- otherwise it paints a black box over the stars.
+            for (auto& px : defaultShot) {
+                if ((px & 0xffffff) == 0) px &= 0xffffff;
+            }
         } catch (image::image_exception& e) {
             LOGD("Failed to load ChipMachine logo (icon.png)");
         }

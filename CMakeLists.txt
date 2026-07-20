@@ -23,6 +23,29 @@ if(APPLE)
     include_directories(/opt/homebrew/include)
     link_directories(/opt/homebrew/lib)
 
+    # Vendored LGPLv2.1 FFmpeg (decode-only, App-Store compliant). Prepended so
+    # the libav* headers AND dylibs resolve here instead of Homebrew's GPL build
+    # -- fully decouples the ffmpeg dependency from /opt/homebrew. Sonames match
+    # (avcodec.62/avformat.62/avutil.60/swresample.6), so the bare avcodec/...
+    # link names below resolve to the vendored libs. The dylib ids are
+    # @executable_path/... so they resolve inside the .app bundle; for running
+    # from the build tree they are copied next to each binary (POST_BUILD below).
+    # See external/ffmpeg-lgpl/README.md for provenance + license.
+    set(FFMPEG_LGPL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-lgpl")
+    if(EXISTS "${FFMPEG_LGPL_DIR}/lib/libavcodec.62.dylib")
+        include_directories(BEFORE "${FFMPEG_LGPL_DIR}/include")
+        link_directories(BEFORE "${FFMPEG_LGPL_DIR}/lib")
+        set(FFMPEG_LGPL_LIBS
+            "${FFMPEG_LGPL_DIR}/lib/libavcodec.62.dylib"
+            "${FFMPEG_LGPL_DIR}/lib/libavformat.62.dylib"
+            "${FFMPEG_LGPL_DIR}/lib/libavutil.60.dylib"
+            "${FFMPEG_LGPL_DIR}/lib/libswresample.6.dylib")
+    else()
+        message(WARNING "Vendored LGPL FFmpeg not found at ${FFMPEG_LGPL_DIR}/lib "
+                        "-- falling back to Homebrew's (GPL) ffmpeg. Build the "
+                        "vendored libs via external/ffmpeg-lgpl/build_lgpl_ffmpeg.sh.")
+    endif()
+
     if(NOT CMAKE_OSX_ARCHITECTURES)
         set(CMAKE_OSX_ARCHITECTURES "arm64")
     endif()
@@ -293,6 +316,21 @@ if(SUNVOX_RUNTIME_LIB)
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different
                     ${SUNVOX_RUNTIME_LIB}
                     $<TARGET_FILE_DIR:${_sv_target}>)
+        endif()
+    endforeach()
+endif()
+
+# The vendored LGPL libav dylibs have @executable_path install ids, so a binary
+# run from the build tree needs them sitting next to it. Copy them beside each
+# playable target (the packaged .app gets them in Contents/MacOS/ via
+# package_app.sh). Same pattern as the SunVox runtime lib above.
+if(APPLE AND FFMPEG_LGPL_LIBS)
+    foreach(_ff_target chipmachine cm cmtest)
+        if(TARGET ${_ff_target})
+            add_custom_command(TARGET ${_ff_target} POST_BUILD
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    ${FFMPEG_LGPL_LIBS}
+                    $<TARGET_FILE_DIR:${_ff_target}>)
         endif()
     endforeach()
 endif()

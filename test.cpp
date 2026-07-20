@@ -35,6 +35,13 @@ namespace di = boost::di;
 #include <thread>
 #include <unordered_map>
 #include <set>
+#include <cstring>
+
+// libav logging is controlled directly in the "expected failure" URL test so its
+// deliberate connection error is labelled and not printed in libav's red.
+extern "C" {
+#include <libavutil/log.h>
+}
 namespace fs = std::filesystem;
 
 // Running tallies across all playback (testPlugin) runs, summarized in "coverage".
@@ -3808,6 +3815,133 @@ TEST_CASE("FFMPEG stream abort", "[music]")
     REQUIRE(ms < 3000);
     printf("  PASS: clean abort, no hang\n");
 }
+
+// Compressed-lossy pin. The lossless test above pins wav/flac/aiff/... by name;
+// mirror it for the compressed containers (mp3/aac/m4a/mp4) so a routing/decode
+// regression in the in-process libav path fails loudly here rather than only
+// nudging the corpus coverage tally. (The whole point of the CLI->libav rewrite
+// is that these still decode with no ffmpeg binary spawned.)
+TEST_CASE("FFMPEG plays mp3/aac/m4a/mp4", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::FFMPEGPlugin plugin;
+    std::array<int16_t, 8192> buffer{};
+    for (auto const* file : {"testmus/ffmpeg/Airball - Intro - Amiga (Moonchild).mp3",
+                             "testmus/ffmpeg/sample-3.aac",
+                             "testmus/ffmpeg/sample-1.m4a",
+                             "testmus/ffmpeg/Audio_ID_2ch_64kbps_aac.mp4"}) {
+        REQUIRE(utils::exists(file));
+        REQUIRE(plugin.canHandle(file));
+        auto* player = plugin.fromFile(file);
+        REQUIRE(player != nullptr);
+        // Decode runs on a worker thread; the first getSamples() calls return 0
+        // while it warms up. Poll within a budget for the first PCM.
+        int64_t sum = 0;
+        int count = 50;
+        while (sum == 0 && count-- != 0) {
+            int rc = player->getSamples(&buffer[0], buffer.size());
+            if (rc > 0) {
+                for (int i = 0; i < rc; ++i)
+                    if (buffer[i] != 0) { sum = 1; break; }
+            } else if (rc == 0) {
+                utils::sleepms(20);
+            } else {
+                break; // SONG_END before any audio
+            }
+        }
+        delete player;
+        INFO("no audio decoded from " << file);
+        REQUIRE(sum != 0);
+    }
+}
+
+// File-path teardown. The old design decoded in a subprocess; the in-process
+// rewrite runs a worker thread even for local files, so destroying a fromFile()
+// player must join that thread promptly (stop flag + pcm.quit() unblock it)
+// whether it is still decoding or already finished. Guards against a teardown
+// deadlock on the file path (the streaming path has its own abort test above).
+TEST_CASE("FFMPEG file player tears down cleanly mid-decode", "[music]")
+{
+    printf("---- ffmpeg file-path teardown ----\n");
+    musix::FFMPEGPlugin plugin;
+    int16_t buf[4096];
+    for (int iter = 0; iter < 3; iter++) {
+        std::unique_ptr<musix::ChipPlayer> player(
+            plugin.fromFile("testmus/ffmpeg/sample.ogg"));
+        REQUIRE(player != nullptr);
+        // Pull a couple of buffers so the worker is actively decoding, then drop
+        // the player without letting it run to SONG_END.
+        player->getSamples(buf, 4096);
+        player->getSamples(buf, 4096);
+        auto t0 = std::chrono::steady_clock::now();
+        player.reset();
+        auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                      std::chrono::steady_clock::now() - t0)
+                      .count();
+        printf("  iter %d: destructor returned in %lldms\n", iter,
+               static_cast<long long>(ms));
+        REQUIRE(ms < 3000);
+    }
+    printf("  PASS: file-path teardown never deadlocks\n");
+}
+
+// URL option path. A remote fromFile() sets the reconnect + User-Agent av_dict
+// options and relies on the libav interrupt callback to abort a stalled/failing
+// open on teardown. Point it at an unreachable local port (no network, no
+// flakiness) and confirm: the option branch does not crash, an unreachable
+// source ends as SONG_END rather than hanging, and destruction is prompt.
+// libav log callback used only during the URL test below: the connection failure
+// is the POINT of the test, so relabel it "[EXPECTED FAILURE]" in green instead of
+// letting libav print it as a red error line.
+static void expectedFailureAvLog(void* /*avcl*/, int level, const char* fmt,
+                                 va_list vl)
+{
+    if (level > AV_LOG_ERROR) { return; } // errors/fatals only
+    char msg[1024];
+    vsnprintf(msg, sizeof(msg), fmt, vl);
+    size_t n = std::strlen(msg);
+    while (n > 0 && (msg[n - 1] == '\n' || msg[n - 1] == '\r')) { msg[--n] = '\0'; }
+    if (n == 0) { return; }
+    printf("\033[32m  [EXPECTED FAILURE] %s\033[0m\n", msg); // green, not red
+}
+
+TEST_CASE("FFMPEG URL path handles unreachable host without hanging", "[music]")
+{
+    printf("---- ffmpeg URL option path ----\n");
+    musix::FFMPEGPlugin plugin;
+    // The worker thread's open of the unreachable URL will log a "Connection
+    // refused" at AV_LOG_ERROR (red by default) -- that failure is exactly what
+    // we are asserting, so route libav logging through our labelled callback for
+    // the duration and restore the default once the attempt has resolved.
+    av_log_set_callback(&expectedFailureAvLog);
+    std::unique_ptr<musix::ChipPlayer> player(
+        plugin.fromFile("http://127.0.0.1:1/nope.mp3"));
+    REQUIRE(player != nullptr);
+    int16_t buf[4096];
+    // Poll: the open fails (connection refused) -> worker finishes -> getSamples
+    // reports SONG_END (<0). Bounded so a regression that hangs fails the budget
+    // instead of stalling the suite.
+    int rc = 0;
+    int guard = 0;
+    do {
+        rc = player->getSamples(buf, 4096);
+        if (rc == 0) { utils::sleepms(10); }
+    } while (rc == 0 && ++guard < 600); // <= ~6s
+    // The open has resolved (worker finished); stop intercepting libav logs so
+    // later tests get normal logging even if an assertion below throws.
+    av_log_set_callback(&av_log_default_callback);
+    printf("  unreachable URL ended with rc=%d after %d polls\n", rc, guard);
+    REQUIRE(rc < 0);      // ended (SONG_END), did not hang
+    REQUIRE(guard < 600); // within budget
+    auto t0 = std::chrono::steady_clock::now();
+    player.reset();
+    auto ms = std::chrono::duration_cast<std::chrono::milliseconds>(
+                  std::chrono::steady_clock::now() - t0)
+                  .count();
+    REQUIRE(ms < 3000);
+    printf("  PASS: clean SONG_END + fast teardown on unreachable URL\n");
+}
+
 TEST_CASE("HT", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
 TEST_CASE("SC68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
 TEST_CASE("USF", "[music]") { testPlugin<musix::USFPlugin>("testmus/usf", ""); }

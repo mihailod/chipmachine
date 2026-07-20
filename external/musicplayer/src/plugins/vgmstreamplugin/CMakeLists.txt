@@ -19,6 +19,8 @@ add_library(vgmstreamplugin_objs OBJECT
 )
 
 target_include_directories(vgmstreamplugin_objs PRIVATE
+    # Vendored LGPL FFmpeg headers first (decouple from Homebrew's GPL ffmpeg).
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../../../ffmpeg-lgpl/include
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${VGMSTREAM_DIR}
     ${VGMSTREAM_DIR}/base

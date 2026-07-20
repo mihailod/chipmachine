@@ -331,10 +331,12 @@ fi
 
 if [ -d "${CHIPMACHINE_DIR}/bin" ]; then
     echo "-> Packaging helper binaries into bundle (arm64 only)..."
-    # ffmpeg: single arm64 Mach-O executable. A lone binary is legal in MacOS/
-    # and signs without issue; main.cpp finds it via exeDir on PATH.
-    cp -L "${CHIPMACHINE_DIR}/bin/ffmpeg" "${MAC_OS_DIR}/"
-    chmod +x "${MAC_OS_DIR}/ffmpeg"
+    # NOTE: the ffmpeg CLI is NO LONGER bundled. FFMPEGPlugin now decodes
+    # in-process via the linked libav* libraries (see the LGPL libav step in
+    # section 5), so there is no spawned `ffmpeg -i` executable. Removing the
+    # ~51MB Contents/MacOS/ffmpeg drops the App-Store 2.5.2 spawned-executable
+    # blocker (and the GPL CLI). yt-dlp resolves URLs with --get-url only and
+    # does not need the ffmpeg CLI.
 
     # yt-dlp: PyInstaller *onedir* bundle (fast ~0.1s cold start). Copy the
     # whole directory (yt-dlp exe + _internal/) into Contents/Resources/bin/ytdlp.
@@ -524,6 +526,28 @@ discover_and_patch() {
         install_name_tool -id "@executable_path/$(basename "$TARGET_FILE_PATH")" "$TARGET_FILE_PATH"
     fi
 }
+
+# --- Ship LGPL (not GPL) libav ---
+# The build links Homebrew's FFmpeg, which is a GPL build (--enable-gpl + libx264/
+# libx265) and incompatible with App Store terms. Overwrite the four libav dylibs
+# in MacOS/ with our vendored LGPLv3, decode-only build BEFORE discover_and_patch
+# runs. That function skips copying a dylib whose file already exists (so it keeps
+# these LGPL ones instead of pulling Homebrew's GPL copies via otool), then still
+# rewrites their openssl/sibling refs + id to @executable_path. Sonames match
+# (avcodec.62/avformat.62/avutil.60/swresample.6) so it is an ABI drop-in.
+# See external/ffmpeg-lgpl/README.md for provenance + license.
+FFMPEG_LGPL_DIR="${CHIPMACHINE_DIR}/external/ffmpeg-lgpl/lib"
+echo "-> Substituting LGPL libav dylibs (replacing the GPL Homebrew build)..."
+for L in libavcodec.62 libavformat.62 libavutil.60 libswresample.6; do
+    if [ -f "${FFMPEG_LGPL_DIR}/${L}.dylib" ]; then
+        cp -f "${FFMPEG_LGPL_DIR}/${L}.dylib" "${MAC_OS_DIR}/${L}.dylib"
+        chmod +w "${MAC_OS_DIR}/${L}.dylib"
+    else
+        echo "CRITICAL: vendored LGPL ${L}.dylib not found at ${FFMPEG_LGPL_DIR}."
+        echo "          Build it via external/ffmpeg-lgpl/build_lgpl_ffmpeg.sh."
+        $RELEASE_IT && exit 1
+    fi
+done
 
 for EXE in "${MAC_OS_DIR}/"*; do
     if [ -f "$EXE" ] && [ -x "$EXE" ] && [ ! -L "$EXE" ]; then

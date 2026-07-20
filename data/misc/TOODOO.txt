@@ -1,10 +1,14 @@
+Mac App Store compliance:
+
+- change my license to LGPL
+- remove telnet
+- move from vice to csid
+- move from uade to openmpt
+- produce 2 versions: mas and full, switch on the build and package level
+
+----------------------------
 
 - investigate: separate db from code and auto-update db independently from code. the current process stays but the app phones home to github and if there is a new database updates it. but we have to distinguish db changes that don't need code change from the ones that do -- more complex, would need 2 database versions...
-
-
-
-
-
 
 ----------------------------
 SIGNING HERE (for now):
@@ -30,3 +34,4 @@ Two caveats worth knowing before you pay
 • Team ID must match across the cert, the --signid string, and the store-credentials command
 - they all reference the same ABCDE12345.
 Everything on my side is in place: the flags, entitlements, hardened-runtime signing, and the notarize+staple step. Once you have the cert and profile, it's the single command above.
+

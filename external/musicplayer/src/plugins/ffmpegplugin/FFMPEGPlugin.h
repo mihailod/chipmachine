@@ -14,9 +14,6 @@ public:
     virtual ChipPlayer *
     fromStream(std::shared_ptr<utils::Fifo<uint8_t>> fifo) override;
     virtual bool checkSilence() const override { return false; }
-
-private:
-    std::string ffmpeg;
 };
 
 } // namespace musix
