@@ -252,6 +252,10 @@ Klystrack (chip tracker, .kt):
 \f5\b0  Chiptunes authored in Tero Lindeman's klystrack tracker, rendered by the tracker's own klystron "cyd" software synth through its bundled libksnd library (both MIT). The plugin drives libksnd synchronously and builds it free of any real SDL dependency via a small local shim.\
 \ls2\ilvl0
 \f6\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+FFmpeg (streaming & compressed audio):
+\f5\b0  MP3, AAC, M4A/MP4, Ogg/Vorbis, Opus, FLAC, WAV, AIFF, AC3, MP2, WMA and IFF-8SVX are decoded in-process by FFmpeg's libavcodec/libavformat/libavutil/libswresample (ffmpeg.org). To keep the app free of GPL, a decode-only, LGPL build (FFmpeg 8.1.1, --disable-gpl --disable-nonfree, no libx264/libx265, no ffmpeg command-line tool) is vendored at external/ffmpeg-lgpl/ and dynamically linked as replaceable dylibs (satisfying the LGPL relink requirement). Licensed under LGPL-2.1-or-later. HTTPS for radio / resolved stream URLs uses OpenSSL (The OpenSSL Project, Apache-2.0).\
+\ls2\ilvl0
+\f6\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
 Sol3 / Pybind11 / fmt (Core Infrastructure):
 \f5\b0  Developed by The Sol3/Pybind11/fmt Maintainers. Licensed under MIT.\
 \ls2\ilvl0

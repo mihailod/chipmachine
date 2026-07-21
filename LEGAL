@@ -128,9 +128,32 @@ Component: AdPlug (PC AdLib/OPL)
 Author: Developed by Simon Peter and the AdPlug Team
 License: GNU Lesser General Public License v2.1 or later
 
+Component: FFmpeg (libavcodec / libavformat / libavutil / libswresample)
+Author: The FFmpeg project (https://ffmpeg.org). A DECODE-ONLY, LGPL build is
+        vendored at external/ffmpeg-lgpl/ (FFmpeg 8.1.1 headers + arm64 dylibs)
+        and linked IN-PROCESS by musicplayer/src/plugins/ffmpegplugin -- there
+        is NO bundled ffmpeg/ffplay command-line tool. Configured with
+        --disable-gpl --disable-nonfree and no GPL external codecs (no
+        libx264/libx265/postproc, encoders/muxers disabled), so the libraries
+        are LGPL, not GPL.
+License: GNU Lesser General Public License v2.1 or later
+Notice: Decodes MP3/AAC/M4A/MP4/Ogg/Opus/FLAC/WAV/AIFF/AC3/MP2/WMA and IFF-8SVX
+        to PCM, and handles radio + resolved-stream HTTP(S). The libraries are
+        dynamically linked and shipped as replaceable dylibs in Contents/MacOS/,
+        satisfying the LGPL relink requirement (a user may substitute a
+        compatible build). HTTPS is provided by OpenSSL (Apache-2.0, see the
+        permissive section). Full build recipe + license texts:
+        external/ffmpeg-lgpl/ (README.md, COPYING.LGPLv2.1, build_lgpl_ffmpeg.sh).
+
 ===============================================================================
 4. PERMISSIVE THIRD-PARTY DEPENDENCIES
 ===============================================================================
+Component: OpenSSL (TLS/HTTPS backend for FFmpeg network streams)
+Author: The OpenSSL Project (https://www.openssl.org)
+License: Apache License 2.0
+Notice: Used only as FFmpeg's TLS backend for HTTPS radio / resolved stream
+        URLs; shipped as libssl / libcrypto dylibs in Contents/MacOS/.
+
 Component: OpenMPT (Tracker Formats)
 Author: Developed by the OpenMPT Project Team (originally Olivier Lapicque)
 License: BSD-3-Clause

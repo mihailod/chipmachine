@@ -618,9 +618,9 @@ Extensions: `.kt`
 
 ### FFMpeg
 
-Support for streaming audio (AAC and Ogg/Vorbis)
+Compressed and streaming audio — MP3, AAC, M4A/MP4, Ogg/Vorbis, Opus, FLAC, WAV, AIFF, AC3, MP2, WMA and IFF-8SVX — decoded **in-process** by FFmpeg's LGPL `libav*` libraries (no command-line `ffmpeg` is spawned or bundled). Local files, progressive downloads and HTTP(S) radio streams all route here. A decode-only, LGPL build of FFmpeg 8.1.1 is vendored at [`external/ffmpeg-lgpl/`](external/ffmpeg-lgpl/).
 
-Extensions: `.m4a` `.aac` `.mp3` `.mp4` `.ogg`
+Extensions: `.m4a` `.aac` `.mp3` `.mp4` `.ogg` `.opus` `.flac` `.wav` `.aiff` `.aif` `.mp2` `.mpeg` `.ac3` `.wma`
 
 ### V2
 
@@ -712,6 +712,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **vgmstream (streamed game audio):** the library that decodes hundreds of console/PC streamed game-audio containers (CRI ADX/HCA, FMOD FSB, Microsoft XWB/XMA, platform DSP/VAG/AT3/AT9, …) by **Adam Gashlin**, **bnnm**, **Christopher Snowhill**, NicknineTheEagle, bxaimc, Thealexbarney, EdnessP and the vgmstream contributors (<https://github.com/vgmstream/vgmstream>). The core decode library is vendored at `external/vgmstream/` and driven through its `libvgmstream` API, built without any of the optional `VGM_USE_*` codec libraries. `canHandle` content/extension-gates against the formats already owned by other plugins. Licensed under the **ISC License** (some bundled codec sources carry their own permissive/public-domain notices; see `external/vgmstream/COPYING`).
 * **Vic-Tracker (Commodore VIC-20):** VIC-TRACKER and its `.vt` format are by **Daniel Kahlin** (1994/2004; `http://www.kahlin.net/daniel/victracker/`). The tunes are played by Kahlin's own 6502 replay routine (`player.asm`), vendored pre-assembled and **licensed under BSD-2-Clause** (see `victrackerplugin/victracker/LICENSE.txt`). It runs on the **fake6502** CPU core by Mike Chambers (omarandlorraine fork, GPL-2.0), and its VIC-I (MOS 6560/6561) sound-register writes drive the VIC-20 sound core extracted from **VICE**'s `vic20/vic20sound.c` (by Rami Räsänen and Ville-Matias Heikkilä, GPL-2.0-or-later).
 * **Klystrack:** *klystrack* and its `.kt` format, together with the *klystron* engine and its **libksnd** playback library, are by **Tero Lindeman** ("kometbomb"; `https://github.com/kometbomb/klystron`). The `snd/` "cyd" synth core and `lib/ksnd.c` are vendored at `klystrackplugin/klystron/` and built SDL-free — driven via `KSND_CreatePlayerUnregistered`/`KSND_FillBuffer` with `NOSDL_MIXER` and without the SDL mutex/RWops paths, so a small local shim (`klystron/shim/`) supplies only SDL's integer/endian types. **Licensed under the MIT License** (see the notice in `klystrackplugin/klystron/macros.h`).
+* **FFmpeg (streaming & compressed audio):** MP3, AAC, M4A/MP4, Ogg/Vorbis, Opus, FLAC, WAV, AIFF, AC3, MP2, WMA and IFF-8SVX are decoded **in-process** by **FFmpeg**'s `libavcodec` / `libavformat` / `libavutil` / `libswresample` (<https://ffmpeg.org>). To keep the app free of GPL, a **decode-only, LGPL** build (FFmpeg 8.1.1, `--disable-gpl --disable-nonfree`, no libx264/libx265, and no `ffmpeg` command-line tool) is vendored at [`external/ffmpeg-lgpl/`](external/ffmpeg-lgpl/) and **dynamically linked as replaceable dylibs** (satisfying the LGPL relink requirement). Licensed under **LGPL-2.1-or-later**. HTTPS for radio / resolved stream URLs is provided by **OpenSSL** (The OpenSSL Project, Apache-2.0).
 
 ---
 
