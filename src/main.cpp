@@ -7,9 +7,6 @@
 #        include "macnative/FileOpenHandler.h"
 #    endif
 #endif
-#include <bbsutils/ansiconsole.h>
-#include <bbsutils/petsciiconsole.h>
-#include <bbsutils/telnetserver.h>
 #include <coreutils/environment.h>
 #include <coreutils/format.h>
 #include <coreutils/searchpath.h>
@@ -74,9 +71,7 @@ int main(int argc, char* argv[])
         std::vector<SongInfo> songs;
         int w = 960;
         int h = 540;
-        int port = 12345;
         bool full_screen = false;
-        bool telnet_server = false;
         bool only_headless = false;
         bool force_reindex = false;
         bool delete_web_cache = false;
@@ -111,9 +106,6 @@ int main(int argc, char* argv[])
     opts.add_flag("--deletewebcache", options.delete_web_cache, "Delete web cache");
     opts.add_flag("--donotloadimages", options.no_images,
                   "Never download screenshots (e.g. when the image host is down)");
-    opts.add_option("-T,--telnet", options.telnet_server,
-                    "Start telnet server");
-    opts.add_option("-p,--port", options.port, "Port for telnet server", true);
     opts.add_flag("-K", options.only_headless,
                   "Only play if no keyboard is connected");
     opts.add_option("--play", options.play_what,
@@ -362,48 +354,19 @@ int main(int argc, char* argv[])
         return 0;
     }
 
-    if (options.text_mode || options.telnet_server) {
+    if (options.text_mode) {
 
         static auto chip_interface =
             injector.create<std::unique_ptr<chipmachine::ChipInterface>>();
-        if (options.text_mode) {
 #ifndef _WIN32
-            logging::setLevel(logging::Error);
-            auto console = std::shared_ptr<bbs::Console>(
-                bbs::Console::createLocalConsole());
-            chipmachine::runConsole(console, *chip_interface);
-            if (options.telnet_server)
-                std::thread conThread(chipmachine::runConsole, console,
-                                      std::ref(*chip_interface));
-            else
-                chipmachine::runConsole(console, *chip_interface);
+        logging::setLevel(logging::Error);
+        auto console = std::shared_ptr<bbs::Console>(
+            bbs::Console::createLocalConsole());
+        chipmachine::runConsole(console, *chip_interface);
 #else
-            puts("Textmode not supported on Windows");
-            exit(0);
+        puts("Textmode not supported on Windows");
+        exit(0);
 #endif
-        }
-        if (options.telnet_server) {
-            auto telnet = std::make_shared<bbs::TelnetServer>(options.port);
-            telnet->setOnConnect([&](bbs::TelnetServer::Session& session) {
-                try {
-                    std::shared_ptr<bbs::Console> console;
-                    session.echo(false);
-                    auto term_type = session.getTermType();
-                    LOGD("New telnet connection, TERMTYPE '%s'", term_type);
-
-                    if (term_type.length() > 0) {
-                        console = std::make_shared<bbs::AnsiConsole>(session);
-                    } else {
-                        console =
-                            std::make_shared<bbs::PetsciiConsole>(session);
-                    }
-                    runConsole(console, *chip_interface);
-                } catch (bbs::TelnetServer::disconnect_excpetion& e) {
-                    LOGD("Got disconnect");
-                }
-            });
-            telnet->run();
-        }
         return 0;
     }
 #ifndef TEXTMODE_ONLY

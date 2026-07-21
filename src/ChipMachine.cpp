@@ -372,11 +372,6 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     // missing from lua; the config load overrides it moments later.
     loadScrollFonts("data/fontsmainscroll");
 
-#ifdef ENABLE_TELNET
-    telnet = std::make_unique<TelnetInterface>(player);
-    telnet->start();
-#endif
-
     nextInfoField.setAlign(1.0);
     nextField.align = 1.0;
 
@@ -992,10 +987,6 @@ ChipMachine::~ChipMachine()
 
     // 2. Erase the functional reference stored within the active player structure
     player.setAudioCallback(nullptr);
-
-#ifdef ENABLE_TELNET
-    if (telnet) telnet->stop();
-#endif
 }
 
 void ChipMachine::setScrolltext(std::string const& txt)

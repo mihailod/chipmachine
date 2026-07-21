@@ -6,7 +6,6 @@
 #include "MusicDatabase.h"
 #include "MusicPlayerList.h"
 #include "SongInfoField.h"
-#include "TelnetInterface.h"
 #include "TextField.h"
 #include "state_machine.h"
 
@@ -569,8 +568,6 @@ private:
 
     Screen lastScreen = MAIN_SCREEN;
     Screen currentScreen = MAIN_SCREEN;
-
-    std::unique_ptr<TelnetInterface> telnet;
 
     utils::vec2i topLeft = { 80, 54 };
     utils::vec2i downRight = { 636, 520 };

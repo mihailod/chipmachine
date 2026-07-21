@@ -1,9 +1,9 @@
 Mac App Store compliance:
 
-- remove telnet
-- move from vice to csid
-- move from uade to openmpt
+- implement real csid plugin, move from vice to csid for all possible format (make sure search by plugin reflects)
+- move from uade to openmpt for all possible formats (make sure search by plugin reflects)
 - produce 2 versions: mas and full, switch on the build and package level
+ideally, the MAS version will just exclude uade and vice
 
 ----------------------------
 

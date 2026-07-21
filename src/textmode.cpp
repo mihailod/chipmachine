@@ -6,7 +6,6 @@
 #include <bbsutils/ansiconsole.h>
 #include <bbsutils/editor.h>
 #include <bbsutils/petsciiconsole.h>
-#include <bbsutils/telnetserver.h>
 
 #include <sol.hpp>
 
