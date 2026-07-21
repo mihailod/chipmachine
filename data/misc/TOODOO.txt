@@ -1,9 +1,11 @@
 Mac App Store compliance:
 
 - implement real csid plugin, move from vice to csid for all possible format (make sure search by plugin reflects)
+- yt removed from mas and mas not to surface yt data from db
 - move from uade to openmpt for all possible formats (make sure search by plugin reflects)
 - produce 2 versions: mas and full, switch on the build and package level
 ideally, the MAS version will just exclude uade and vice
+- advertise full version from mas version
 
 ----------------------------
 
