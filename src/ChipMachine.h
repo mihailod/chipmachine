@@ -322,6 +322,18 @@ private:
                                  15 * advancedHint.scale,
                              advancedTitle.pos.y };
     }
+#ifdef CM_MAS
+    // MAS: park the open-source note right after the help title on the same line,
+    // smaller and in its own colour (a modest gap, no separator). Same width-based
+    // placement as positionAdvancedHint(); re-run whenever the title moves/scales.
+    void positionCommandMasNote()
+    {
+        commandMasNote.scale = commandTitle.scale * 0.6f;
+        commandMasNote.pos = { commandTitle.pos.x + commandTitle.getWidth() +
+                                   10 * commandMasNote.scale,
+                               commandTitle.pos.y };
+    }
+#endif
     // Same treatment for the Formats screen's key hint.
     void positionFormatHint()
     {
@@ -374,6 +386,9 @@ private:
         // and renderCommand scales the font up to match. The title baseline can
         // only move up a little -- its big-font glyphs sit above pos.y.
         commandTitle.pos.y = topLeft.y * 0.90f;
+#ifdef CM_MAS
+        positionCommandMasNote();
+#endif
         int cmdTop = (int)(topLeft.y * 1.30f);
         int cmdH = downRight.y - cmdTop;
         commandList.setArea(grappix::Rectangle(topLeft.x, cmdTop, w, cmdH));
@@ -738,6 +753,10 @@ private:
     // Header on the command/help screen (e.g. "ChipMachineAS 1.9 HELP MENU"),
     // drawn above the first entry; hidden while a command filter is being typed.
     TextField commandTitle;
+    // MAS-only: a low-key open-source note riding just after commandTitle, in its
+    // own colour and a smaller scale (see positionCommandMasNote). Unused in the
+    // plus build.
+    TextField commandMasNote;
     TextField mainFilterField;
     std::string selectedFilterName;
     // Per-filterOptions tune counts, shown as "[N tunes]" on the TAB screen.

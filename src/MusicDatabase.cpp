@@ -1173,10 +1173,24 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
     if (!checkingNames.empty()) checkingNames += ", ";
     checkingNames += name;
 
-    // Return if this collection has already been indexed in this version
+    // Return if this collection has already been indexed in this version.
+    //
+    // BUT populate dontIndex[] for it FIRST, even on this early-return path.
+    // generateIndex() indexes dontIndex[] by collection ROWID on every index
+    // (re)build -- including the podcast-append reindex, which re-runs create_db
+    // for every collection yet early-returns here because the collection already
+    // exists in this launch's DB. dontIndex is a fresh empty member each process
+    // launch, so skipping it here left it empty while generateIndex still ran the
+    // rebuild loop -> dontIndex[collection] read past end -> SIGSEGV. The flag
+    // comes from db.lua's transient vars (present on every call), not the DB,
+    // which does not persist an "index=no" column.
     auto cq =
         db.query<uint64_t>("SELECT ROWID FROM collection WHERE id = ?", id);
     if (cq.step()) {
+        auto existing_id = static_cast<int>(cq.get());
+        if (existing_id >= static_cast<int>(dontIndex.size()))
+            dontIndex.resize(existing_id + 1, 0);
+        dontIndex[existing_id] = (vars["index"] == "no") ? 1 : 0;
         return;
     }
     cq.finalize();
@@ -1310,6 +1324,18 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // them, so indexing them only yields broken GUI entries that
                 // download then can't play.
                 if (songIsUnsupported(song, unsupportedExts)) { return; }
+#ifdef CM_MAS
+                // Mac App Store build has no YouTube plugin (see main.cpp's
+                // initYoutube gate -- yt-dlp is a spawned executable barred by
+                // App Store guideline 2.5.2). A YouTube-URL row would be an
+                // unplayable dead entry, so drop it at index time. All ~32.6k
+                // such rows live in list-file collections (pouet, manualpatch)
+                // and flow through this single callback.
+                if (song.path.find("youtube.com/") != std::string::npos ||
+                    song.path.find("youtu.be/") != std::string::npos) {
+                    return;
+                }
+#endif
                 query
                     .bind(song.title, song.game, song.composer, song.format,
                           song.path, collection_id,
@@ -5034,7 +5060,11 @@ void MusicDatabase::generateIndex()
                 title = game;
         }
 
-        if (dontIndex[collection]) {
+        // Bounds-guarded: dontIndex is populated per collection ROWID in
+        // initDatabase; treat any unrecorded collection as indexable (the safe
+        // default) rather than reading past the vector.
+        if (collection >= 0 && collection < static_cast<int>(dontIndex.size()) &&
+            dontIndex[collection]) {
             title = "";
             composer = "";
         }
@@ -5088,7 +5118,11 @@ void MusicDatabase::generateIndex()
         // single-song products are skipped above (see getSongInfo).
         productRowid.push_back(prodRowid);
 
-        if (dontIndex[collection]) {
+        // Bounds-guarded: dontIndex is populated per collection ROWID in
+        // initDatabase; treat any unrecorded collection as indexable (the safe
+        // default) rather than reading past the vector.
+        if (collection >= 0 && collection < static_cast<int>(dontIndex.size()) &&
+            dontIndex[collection]) {
             title = "";
             composer = "";
         }

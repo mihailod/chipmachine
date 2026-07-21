@@ -592,7 +592,24 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
     commandTitle.color = 0xffffffaa;
     commandTitle.scale = searchField.scale;
     commandTitle.visible(true);
+#ifdef CM_MAS
+    // Mac App Store build: a low-key, neutral open-source note on the help/about
+    // screen. Deliberately NOT a "get the fuller version elsewhere" call to
+    // action -- that framing draws App Store anti-steering rejections; a plain
+    // "free & open source" + repo mention is what reviewers accept. It rides just
+    // after the help title as its own field: smaller, its own colour, no
+    // separator dot (see positionCommandMasNote()).
+    commandTitle.setText(PROGRAM_NAME " " VERSION_STR " HELP (CTRL+H)");
+    commandMasNote.setFont(font);
+    commandMasNote.color = 0xff7fd8c8; // soft teal -- distinct from the pale-yellow title, reads as a link
+    commandMasNote.scale = commandTitle.scale;
+    commandMasNote.visible(true);
+    commandMasNote.setText("FREE & OPEN SOURCE: github.com/mihailod/chipmachine");
+    positionCommandMasNote();
+    commandScreen.add(&commandMasNote);
+#else
     commandTitle.setText(PROGRAM_NAME " " VERSION_STR " HELP MENU (CTRL+H)");
+#endif
     commandScreen.add(&commandTitle);
 
     mainFilterField.setFont(font);

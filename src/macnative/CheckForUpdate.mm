@@ -3,6 +3,14 @@
 #include "version.h"
 #include <string>
 
+// The Mac App Store build (CM_MAS) ships NO self-update check: the App Store
+// delivers updates, and an app that phones api.github.com and offers a
+// "View on GitHub" button to a newer build is both wrong for MAS and an App
+// Store guideline violation (self-updating / steering users off-store). For
+// CM_MAS the entry point at the bottom is a no-op and none of the
+// GitHub-checking code below is compiled into the binary at all.
+#ifndef CM_MAS
+
 /**
  * Helper to extract a normalized version string (e.g. "1.4.3") from a tag or VERSION_STR.
  * It takes the first sequence of digits and dots it finds.
@@ -102,3 +110,12 @@ extern "C" void InitializeUpdateVerificationSubsystem() {
     // so we can call this directly without spawning a std::thread.
     PerformUpdateCheck();
 }
+
+#else  // CM_MAS
+
+// Mac App Store build: updates are delivered by the App Store. No network
+// request, no GitHub URL, no update prompt. Intentional no-op so main.cpp can
+// call it unconditionally.
+extern "C" void InitializeUpdateVerificationSubsystem() {}
+
+#endif // CM_MAS

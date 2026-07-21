@@ -1,11 +1,14 @@
-Mac App Store compliance:
+Mac App Store (MAS) compliance:
+
+- File-access sandbox entitlements (files.user-selected.read-only + security-scoped bookmarks) so the sandboxed app can open user-chosen files via "Open With".
 
 - implement real csid plugin, move from vice to csid for all possible format (make sure search by plugin reflects)
-- yt removed from mas and mas not to surface yt data from db
+->> once csid work is done, remove vice and content it plays from MAS version
+
 - move from uade to openmpt for all possible formats (make sure search by plugin reflects)
-- produce 2 versions: mas and full, switch on the build and package level
-ideally, the MAS version will just exclude uade and vice
-- advertise full version from mas version
+->> once uade to openmpt done, remove uade and its content from the MAS version
+
+- recheck everything and submit to apple!
 
 ----------------------------
 

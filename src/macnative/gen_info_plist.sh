@@ -36,21 +36,33 @@ EXTS_FILE="${SCRIPT_DIR}/extensions.txt"
 DENY_FILE="${SCRIPT_DIR}/MacOSHandlerDenyList.txt"
 SYS_FILE="${SCRIPT_DIR}/MacOSSystemTypeExtensions.txt"
 
-# Bundle constants -- kept in step with package_app.sh's identity.
+# Bundle identity. Defaults match the historical build; package_app.sh overrides
+# them per variant from variants.conf (--bundle-id / --display-name). UMBRELLA_UTI
+# defaults to "<bundle-id>.chiptune" unless given explicitly.
 BUNDLE_ID="org.mihailod.chipmachineas"
-UMBRELLA_UTI="org.mihailod.chipmachineas.chiptune"
+DISPLAY_NAME="ChipMachineAS"
+UMBRELLA_UTI=""
+APP_CATEGORY=""      # LSApplicationCategoryType; emitted only when non-empty (MAS)
 APP_ICON="AppIcon.icns"
 DOC_ICON="DocIcon.icns"
 
 while [ $# -gt 0 ]; do
     case "$1" in
-        --version)     VERSION="$2"; shift 2 ;;
-        --exts)        EXTS_FILE="$2"; shift 2 ;;
-        --denylist)    DENY_FILE="$2"; shift 2 ;;
-        --systemtypes) SYS_FILE="$2"; shift 2 ;;
+        --version)       VERSION="$2"; shift 2 ;;
+        --exts)          EXTS_FILE="$2"; shift 2 ;;
+        --denylist)      DENY_FILE="$2"; shift 2 ;;
+        --systemtypes)   SYS_FILE="$2"; shift 2 ;;
+        --bundle-id)     BUNDLE_ID="$2"; shift 2 ;;
+        --display-name)  DISPLAY_NAME="$2"; shift 2 ;;
+        --umbrella-uti)  UMBRELLA_UTI="$2"; shift 2 ;;
+        --app-category)  APP_CATEGORY="$2"; shift 2 ;;
         *) echo "gen_info_plist.sh: unknown arg '$1'" >&2; exit 2 ;;
     esac
 done
+
+# Derive the umbrella UTI from the bundle id if not given explicitly, so a
+# variant's exported type never collides with another variant's.
+[ -n "$UMBRELLA_UTI" ] || UMBRELLA_UTI="${BUNDLE_ID}.chiptune"
 
 if [ -z "$VERSION" ]; then
     echo "gen_info_plist.sh: --version is required" >&2
@@ -102,6 +114,14 @@ fi
 # --- emit the plist ---------------------------------------------------------
 emit_strings() { while read -r x; do [ -n "$x" ] && printf '                <string>%s</string>\n' "$x"; done; }
 
+# LSApplicationCategoryType is required for the Mac App Store; emit the key only
+# when a category was supplied (the plus/Developer ID build passes none, keeping
+# its plist unchanged). Built as a standalone block to avoid nested ${} parsing.
+CATEGORY_BLOCK=""
+if [ -n "$APP_CATEGORY" ]; then
+    CATEGORY_BLOCK=$(printf '\n    <key>LSApplicationCategoryType</key>\n    <string>%s</string>' "$APP_CATEGORY")
+fi
+
 cat <<PLIST_HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -114,11 +134,11 @@ cat <<PLIST_HEAD
     <key>CFBundleIdentifier</key>
     <string>${BUNDLE_ID}</string>
     <key>CFBundleName</key>
-    <string>ChipMachineAS</string>
+    <string>${DISPLAY_NAME}</string>
     <key>CFBundleDisplayName</key>
-    <string>ChipMachineAS</string>
+    <string>${DISPLAY_NAME}</string>
     <key>CFBundlePackageType</key>
-    <string>APPL</string>
+    <string>APPL</string>${CATEGORY_BLOCK}
     <key>CFBundleShortVersionString</key>
     <string>${VERSION}</string>
     <key>CFBundleVersion</key>

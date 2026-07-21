@@ -12,18 +12,14 @@ SECONDS=0
 SCRIPT_DIR="${0:A:h}"
 CHIPMACHINE_DIR="${SCRIPT_DIR}"
 WORKSPACE_ROOT="$(cd "${CHIPMACHINE_DIR}/.." && pwd)"
-BUILD_DIR="${WORKSPACE_ROOT}/build"
-APP_NAME="ChipMachineAS.app"
-TARGET_DIR="${WORKSPACE_ROOT}/${APP_NAME}"
 ICON_PATH="${CHIPMACHINE_DIR}/data/misc/icon.png"
-
-# Target payload directories. Defined unconditionally (not inside the build
-# block) because the signing step reads them too, including on the
-# --reusebuiltapp path where the build/assemble steps are skipped.
-MAC_OS_DIR="${TARGET_DIR}/Contents/MacOS"
-RESOURCES_DIR="${TARGET_DIR}/Contents/Resources"
 MACNATIVE_DIR="${CHIPMACHINE_DIR}/src/macnative"
-YTDLP_DEST="${RESOURCES_DIR}/bin/ytdlp"
+
+# NOTE: the variant-dependent paths (APP_NAME, TARGET_DIR, MAC_OS_DIR,
+# RESOURCES_DIR, YTDLP_DEST, BUILD_DIR) and identity (BUNDLE_ID, DISPLAY_NAME,
+# ...) are resolved AFTER argument parsing, once the --plus/--mas variant is
+# known -- see the "Resolve variant identity" block below. They are still
+# defined before any build/sign step (including the --reusebuiltapp path).
 
 # -----------------------------------------------------------------
 # Parse Arguments
@@ -40,20 +36,33 @@ YTDLP_DEST="${RESOURCES_DIR}/bin/ytdlp"
 # --key=value.
 print_usage() {
     cat <<'USAGE'
-ChipMachineAS -- app bundle packaging & signing
+ChipMachine -- app bundle packaging & signing
+
+Two product variants (default: --plus). Identity/names live in variants.conf:
+  --plus   ChipMachinePlus  -- full build (incl. YouTube), Developer ID / GitHub.
+                              Built from ./build (CM_VARIANT=plus).
+  --mas    ChipMachine       -- Mac App Store build (no YouTube, App-Sandboxed).
+                              Built from ./build-mas (must be configured with
+                              -DCM_VARIANT=mas). Distributed as a signed .pkg.
 
 Usage:
-  package_app.sh --buildapponly [--releaseit]
-  package_app.sh --applesign --signid="Developer ID Application: Name (TEAMID)" \
+  package_app.sh [--plus] --buildapponly [--releaseit]
+  package_app.sh [--plus] --applesign --signid="Developer ID Application: Name (TEAMID)" \
                  [--notaryprofile=NAME] [--reusebuiltapp] [--releaseit]
+  package_app.sh --mas --buildapponly            # ad-hoc sandboxed .app, LOCAL test
+  package_app.sh --mas --applesign --distribid="Apple Distribution: Name (TEAMID)" \
+                 --installerid="3rd Party Mac Developer Installer: Name (TEAMID)" \
+                 --provision=/path/to/ChipMachine.provisionprofile
 
 Actions (at least one of --buildapponly / --applesign required):
-  --buildapponly         Build ChipMachineAS.app + zip, ad-hoc self-signed, and
-                         stop. This is the previous default behavior.
-  --applesign            Build, then sign with a Developer ID identity and enable
-                         Hardened Runtime. Requires --signid.
+  --buildapponly         Build the .app, ad-hoc self-signed, and stop. For --mas
+                         this yields a sandboxed local-test app (no .pkg).
+  --applesign            Build, then sign for real. --plus: Developer ID +
+                         Hardened Runtime (requires --signid). --mas: Apple
+                         Distribution + App Sandbox + a .pkg (requires
+                         --distribid, --installerid, --provision).
 
-Signing options (used with --applesign):
+Signing options -- plus / Developer ID (used with --applesign):
   --signid="..."         Developer ID signing identity, e.g.
                          "Developer ID Application: Your Name (ABCDE12345)".
                          List yours: security find-identity -v -p codesigning
@@ -63,33 +72,45 @@ Signing options (used with --applesign):
                          once (credentials live in the keychain, not on the CLI):
                            xcrun notarytool store-credentials NAME \
                                --apple-id you@example.com --team-id TEAMID
-  --reusebuiltapp        Do NOT rebuild -- sign the ChipMachineAS.app that already
-                         exists on disk (from a prior --buildapponly/--applesign
-                         run). Use this to re-sign or re-notarize without a slow
-                         rebuild. Cannot be combined with --buildapponly.
+
+Signing options -- mas / Mac App Store (used with --mas --applesign):
+  --distribid="..."      "Apple Distribution: Name (TEAMID)" (app signature).
+  --installerid="..."    "3rd Party Mac Developer Installer: Name (TEAMID)" (.pkg).
+  --provision=PATH       Mac App Store provisioning profile embedded into the app.
+                         (All three require the $99 Apple Developer Program.)
 
 Other options:
-  --releaseit            After packaging, interactively create a GitHub release.
+  --reusebuiltapp        Do NOT rebuild -- sign the .app already on disk. Cannot
+                         be combined with --buildapponly.
+  --releaseit            After packaging, interactively create a GitHub release
+                         (plus variant only).
   -h, --help             Show this help.
 
 Examples:
-  package_app.sh --buildapponly
-  package_app.sh --applesign --signid="Developer ID Application: Jane (ABCDE12345)"
+  package_app.sh --buildapponly                               # plus, ad-hoc
+  package_app.sh --mas --buildapponly                         # mas, local test
   package_app.sh --applesign --signid="Developer ID Application: Jane (ABCDE12345)" \
                  --notaryprofile=chipmachine-notary
-  # re-sign the existing bundle only (no rebuild):
-  package_app.sh --applesign --signid="Developer ID Application: Jane (ABCDE12345)" \
-                 --notaryprofile=chipmachine-notary --reusebuiltapp
 USAGE
 }
 
 DO_BUILD=false          # run the build/assemble steps (0-6)?
-APPLE_SIGN=false        # Developer ID sign at the end?
+APPLE_SIGN=false        # real (non-ad-hoc) sign at the end?
 REUSE_BUILT=false       # skip the build and sign the existing .app?
 RELEASE_IT=false        # create a GitHub release afterwards? (modifier)
 ACTION=false            # was any actionable flag (build/sign) supplied?
-SIGN_ID=""
-NOTARY_PROFILE=""
+VARIANT="plus"          # product variant: plus (full/GitHub) | mas (App Store)
+SIGN_ID=""              # plus: Developer ID Application identity
+NOTARY_PROFILE=""       # plus: notarytool keychain profile
+
+# --- Mac App Store signing inputs (PLACEHOLDERS) ------------------------------
+# Fill these in once enrolled in the Apple Developer Program ($99/yr) and the
+# App Store Connect record + certs + provisioning profile exist. Until then,
+# `--mas --buildapponly` produces an ad-hoc-signed, sandboxed ChipMachine.app for
+# LOCAL testing, and `--mas --applesign` errors out asking for these.
+DISTRIB_ID=""           # "Apple Distribution: Name (TEAMID)"  (app signature)
+INSTALLER_ID=""         # "3rd Party Mac Developer Installer: Name (TEAMID)" (.pkg)
+PROVISION=""            # path to the Mac App Store .provisionprofile to embed
 
 if [ $# -eq 0 ]; then
     print_usage
@@ -102,27 +123,48 @@ for arg in "$@"; do
     [ "$val" = "$arg" ] && val=""    # no '=' present -> no inline value
     case "${key:l}" in               # ${key:l} = zsh lowercase
         -h|--h|-help|--help)                print_usage; exit 0 ;;
+        -plus|--plus)                       VARIANT="plus" ;;
+        -mas|--mas)                         VARIANT="mas" ;;
         -buildapponly|--buildapponly)       DO_BUILD=true; ACTION=true ;;
         -applesign|--applesign)             APPLE_SIGN=true; ACTION=true ;;
         -reusebuiltapp|--reusebuiltapp)     REUSE_BUILT=true ;;
         -signid|--signid)                   SIGN_ID="$val" ;;
         -notaryprofile|--notaryprofile)     NOTARY_PROFILE="$val" ;;
+        -distribid|--distribid)             DISTRIB_ID="$val" ;;
+        -installerid|--installerid)         INSTALLER_ID="$val" ;;
+        -provision|--provision)             PROVISION="$val" ;;
         -releaseit|--releaseit)             RELEASE_IT=true ;;
         *) echo "ERROR: unknown argument '$arg'"; echo; print_usage; exit 1 ;;
     esac
 done
 
-# Supplying a signing parameter implies the signing action.
-if [ -n "$SIGN_ID" ] || [ -n "$NOTARY_PROFILE" ]; then
+# Supplying any signing parameter (either variant's) implies the signing action.
+if [ -n "$SIGN_ID" ] || [ -n "$NOTARY_PROFILE" ] || \
+   [ -n "$DISTRIB_ID" ] || [ -n "$INSTALLER_ID" ] || [ -n "$PROVISION" ]; then
     APPLE_SIGN=true
     ACTION=true
 fi
 
-if $APPLE_SIGN && [ -z "$SIGN_ID" ]; then
-    echo "ERROR: --applesign / --notaryprofile require --signid=\"Developer ID Application: ... (TEAMID)\""
-    echo
-    print_usage
-    exit 1
+if $APPLE_SIGN; then
+    if [ "$VARIANT" = "mas" ]; then
+        # Mac App Store distribution signing needs all three inputs (placeholders).
+        if [ -z "$DISTRIB_ID" ] || [ -z "$INSTALLER_ID" ] || [ -z "$PROVISION" ]; then
+            echo "ERROR: --mas --applesign requires Apple App Store signing inputs:"
+            echo "         --distribid=\"Apple Distribution: Name (TEAMID)\""
+            echo "         --installerid=\"3rd Party Mac Developer Installer: Name (TEAMID)\""
+            echo "         --provision=/path/to/ChipMachine.provisionprofile"
+            echo "       These need the \$99 Apple Developer Program + App Store Connect setup."
+            echo "       For a local sandboxed test build, use:  package_app.sh --mas --buildapponly"
+            echo
+            print_usage
+            exit 1
+        fi
+    elif [ -z "$SIGN_ID" ]; then
+        echo "ERROR: --applesign / --notaryprofile require --signid=\"Developer ID Application: ... (TEAMID)\""
+        echo
+        print_usage
+        exit 1
+    fi
 fi
 
 if $REUSE_BUILT && ! $APPLE_SIGN; then
@@ -155,6 +197,46 @@ fi
 $APPLE_SIGN || SIGN_ID="-"
 
 # -----------------------------------------------------------------
+# Resolve variant identity (single source of truth: variants.conf)
+# -----------------------------------------------------------------
+# variants.conf defines <PLUS|MAS>_{PROGRAM_NAME,DISPLAY_NAME,BUNDLE_ID,ARTIFACT}
+# as plain shell KEY="VALUE". Source it and select the block for $VARIANT. This
+# is what drives the .app name, Info.plist identity, build dir, entitlements, and
+# (for mas) the App Store signing/packaging path further down.
+VARIANTS_CONF="${CHIPMACHINE_DIR}/variants.conf"
+if [ ! -f "$VARIANTS_CONF" ]; then
+    echo "CRITICAL ERROR: variants.conf not found at $VARIANTS_CONF"
+    exit 1
+fi
+source "$VARIANTS_CONF"
+
+case "$VARIANT" in
+    plus)
+        ARTIFACT="$PLUS_ARTIFACT"; BUNDLE_ID="$PLUS_BUNDLE_ID"; DISPLAY_NAME="$PLUS_DISPLAY_NAME"
+        BUILD_DIR="${WORKSPACE_ROOT}/build"
+        APP_CATEGORY=""                                   # no App Store category
+        ENT_APP="${MACNATIVE_DIR}/entitlements-app.plist" # Developer ID entitlements
+        ;;
+    mas)
+        ARTIFACT="$MAS_ARTIFACT"; BUNDLE_ID="$MAS_BUNDLE_ID"; DISPLAY_NAME="$MAS_DISPLAY_NAME"
+        BUILD_DIR="${WORKSPACE_ROOT}/build-mas"           # CM_VARIANT=mas build dir
+        APP_CATEGORY="public.app-category.music"
+        ENT_APP="${MACNATIVE_DIR}/entitlements-app-mas.plist"  # App Sandbox
+        # Real App Store signing uses the Apple Distribution identity; ad-hoc test
+        # builds keep the "-" set above.
+        $APPLE_SIGN && SIGN_ID="$DISTRIB_ID"
+        ;;
+    *)
+        echo "CRITICAL ERROR: unknown VARIANT '$VARIANT' (expected plus|mas)"; exit 1 ;;
+esac
+
+APP_NAME="${ARTIFACT}.app"
+TARGET_DIR="${WORKSPACE_ROOT}/${APP_NAME}"
+MAC_OS_DIR="${TARGET_DIR}/Contents/MacOS"
+RESOURCES_DIR="${TARGET_DIR}/Contents/Resources"
+YTDLP_DEST="${RESOURCES_DIR}/bin/ytdlp"
+
+# -----------------------------------------------------------------
 # Dynamically parse the version string from src/version.h
 # -----------------------------------------------------------------
 VERSION_H_PATH="${CHIPMACHINE_DIR}/src/version.h"
@@ -172,6 +254,8 @@ fi
 
 echo "=== Starting Apple Silicon App Bundle Packaging ==="
 echo "Workspace Root: ${WORKSPACE_ROOT}"
+echo "Variant:        ${VARIANT}  (${DISPLAY_NAME}, ${BUNDLE_ID})"
+echo "Build Dir:      ${BUILD_DIR}"
 echo "Target App Bundle: ${TARGET_DIR}"
 echo "Detected Version: ${VERSION_STR}"
 if $RELEASE_IT; then
@@ -180,11 +264,16 @@ else
     echo "Release Mode: Disabled (Dry Run/Local Build Only)"
 fi
 if $APPLE_SIGN; then
-    echo "Signing Mode: Developer ID (${SIGN_ID})"
-    if [ -n "$NOTARY_PROFILE" ]; then
-        echo "Notarization: Enabled (profile: ${NOTARY_PROFILE})"
+    if [ "$VARIANT" = "mas" ]; then
+        echo "Signing Mode: Mac App Store (${SIGN_ID}); installer ${INSTALLER_ID}"
+        echo "Provisioning: ${PROVISION}"
     else
-        echo "Notarization: Disabled (add --notaryprofile=NAME to notarize + staple)"
+        echo "Signing Mode: Developer ID (${SIGN_ID})"
+        if [ -n "$NOTARY_PROFILE" ]; then
+            echo "Notarization: Enabled (profile: ${NOTARY_PROFILE})"
+        else
+            echo "Notarization: Disabled (add --notaryprofile=NAME to notarize + staple)"
+        fi
     fi
 else
     echo "Signing Mode: Ad-hoc self-signed (--buildapponly)"
@@ -264,7 +353,11 @@ else
 fi
 
 echo "-> Creating Info.plist (with macOS file associations)..."
-"${GEN_PLIST}" --version "${VERSION_STR}" > "${TARGET_DIR}/Contents/Info.plist"
+# Build args as an array (zsh does not word-split unquoted ${:+...}); append the
+# App Store category only for the mas variant (APP_CATEGORY empty for plus).
+GEN_ARGS=(--version "${VERSION_STR}" --bundle-id "${BUNDLE_ID}" --display-name "${DISPLAY_NAME}")
+[ -n "${APP_CATEGORY}" ] && GEN_ARGS+=(--app-category "${APP_CATEGORY}")
+"${GEN_PLIST}" "${GEN_ARGS[@]}" > "${TARGET_DIR}/Contents/Info.plist"
 if ! plutil -lint "${TARGET_DIR}/Contents/Info.plist" >/dev/null; then
     echo "CRITICAL ERROR: generated Info.plist failed plutil -lint. Aborting."
     exit 1
@@ -329,7 +422,13 @@ fi
 # bundle mode), so no C++ change is required.
 # (YTDLP_DEST is defined near the top; the signing step references it too.)
 
-if [ -d "${CHIPMACHINE_DIR}/bin" ]; then
+if [ "$VARIANT" = "mas" ]; then
+    # Mac App Store build ships NO yt-dlp. It is a spawned executable (App Store
+    # guideline 2.5.2) with no in-process, MAS-legal form; the CM_MAS binary has
+    # no YouTube plugin and drops YouTube catalog rows at index time. Bundling
+    # yt-dlp here is exactly the thing that would get the app rejected, so skip it.
+    echo "-> MAS build: skipping yt-dlp helper (no YouTube; App Store 2.5.2)."
+elif [ -d "${CHIPMACHINE_DIR}/bin" ]; then
     echo "-> Packaging helper binaries into bundle (arm64 only)..."
     # NOTE: the ffmpeg CLI is NO LONGER bundled. FFMPEGPlugin now decodes
     # in-process via the linked libav* libraries (see the LGPL libav step in
@@ -648,20 +747,43 @@ fi   # end: if $DO_BUILD (BUILD + ASSEMBLE)
 #
 # SIGN_ID and NOTARY_PROFILE were resolved from the CLI flags at the top of this
 # script ("-" == ad-hoc when --applesign was not given).
-ENT_APP="${MACNATIVE_DIR}/entitlements-app.plist"
+# ENT_APP is resolved per-variant in the identity block above:
+#   plus -> entitlements-app.plist  (Developer ID; disable-library-validation)
+#   mas  -> entitlements-app-mas.plist  (App Sandbox + network.client)
+# ENT_HELPER (yt-dlp) is used only by the plus variant.
 ENT_HELPER="${MACNATIVE_DIR}/entitlements-helper.plist"
 
 if command -v codesign &> /dev/null; then
     if [ "$SIGN_ID" = "-" ]; then
         SIGN_FLAGS=(-f -s -)
-        echo "-> Applying ad-hoc code signatures (set SIGN_ID for a Developer ID signature)..."
+        echo "-> Applying ad-hoc code signatures (set an identity for a real signature)..."
     else
         SIGN_FLAGS=(-f -s "$SIGN_ID" --options runtime --timestamp)
-        echo "-> Applying Developer ID signatures: ${SIGN_ID}"
-        [ -f "$ENT_APP" ]    || { echo "CRITICAL: missing entitlements file ${ENT_APP}"; exit 1; }
-        [ -f "$ENT_HELPER" ] || { echo "CRITICAL: missing entitlements file ${ENT_HELPER}"; exit 1; }
+        if [ "$VARIANT" = "mas" ]; then
+            echo "-> Applying Mac App Store signatures: ${SIGN_ID}"
+        else
+            echo "-> Applying Developer ID signatures: ${SIGN_ID}"
+        fi
         # Stray extended attributes (quarantine/FinderInfo) would break the seal.
         xattr -cr "${TARGET_DIR}"
+    fi
+
+    # The app entitlements go on the outer seal for any real signature AND for
+    # every mas build -- the App Sandbox key must be present even in a local
+    # ad-hoc test build for the app to actually run sandboxed. Verify presence.
+    if [ "$SIGN_ID" != "-" ] || [ "$VARIANT" = "mas" ]; then
+        [ -f "$ENT_APP" ] || { echo "CRITICAL: missing entitlements file ${ENT_APP}"; exit 1; }
+    fi
+    # The yt-dlp helper (plus, real signing only) needs its own entitlements.
+    if [ "$SIGN_ID" != "-" ] && [ "$VARIANT" = "plus" ]; then
+        [ -f "$ENT_HELPER" ] || { echo "CRITICAL: missing entitlements file ${ENT_HELPER}"; exit 1; }
+    fi
+
+    # Mac App Store: embed the provisioning profile before signing (real sign
+    # only; PROVISION was validated non-empty for --mas --applesign up top).
+    if [ "$VARIANT" = "mas" ] && [ "$SIGN_ID" != "-" ]; then
+        echo "-> Embedding Mac App Store provisioning profile..."
+        cp "$PROVISION" "${TARGET_DIR}/Contents/embedded.provisionprofile"
     fi
 
     if [ -d "${RESOURCES_DIR}/data/python_runtime" ]; then
@@ -670,24 +792,25 @@ if command -v codesign &> /dev/null; then
         done
     fi
 
-    # Sign every Mach-O under MacOS/ and the Resources ytdlp tree.
+    # Sign every Mach-O under MacOS/ and (plus only) the Resources ytdlp tree.
     # Filter to Mach-O only — codesign rejects .py, .pyc, and other data files.
-    # The yt-dlp launcher gets the helper entitlements (real signing only).
+    # The yt-dlp launcher gets the helper entitlements (plus, real signing only);
+    # for the mas variant YTDLP_DEST does not exist and this branch never matches.
     find "${MAC_OS_DIR}" "${YTDLP_DEST}" -type f 2>/dev/null | while read -r mf; do
         file "$mf" | grep -q "Mach-O" || continue
-        if [ "$SIGN_ID" != "-" ] && [ "$mf" = "${YTDLP_DEST}/yt-dlp" ]; then
+        if [ "$SIGN_ID" != "-" ] && [ "$VARIANT" = "plus" ] && [ "$mf" = "${YTDLP_DEST}/yt-dlp" ]; then
             codesign "${SIGN_FLAGS[@]}" --entitlements "$ENT_HELPER" "$mf"
         else
             codesign "${SIGN_FLAGS[@]}" "$mf"
         fi
     done
 
-    # Seal the bundle (no --deep — see header comment). Real signing attaches the
-    # app entitlements to the main executable.
-    if [ "$SIGN_ID" = "-" ]; then
-        codesign "${SIGN_FLAGS[@]}" "${TARGET_DIR}"
-    else
+    # Seal the bundle (no --deep — see header comment). App entitlements are
+    # attached for real signatures and for every mas build (sandbox even ad-hoc).
+    if [ "$SIGN_ID" != "-" ] || [ "$VARIANT" = "mas" ]; then
         codesign "${SIGN_FLAGS[@]}" --entitlements "$ENT_APP" "${TARGET_DIR}"
+    else
+        codesign "${SIGN_FLAGS[@]}" "${TARGET_DIR}"
     fi
     echo "-> Code signing complete."
 
@@ -700,35 +823,59 @@ if command -v codesign &> /dev/null; then
 fi
 
 echo "=== Success: ${APP_NAME} generated cleanly in workspace root! ==="
-echo "=== Making the final distribution package... ==="
 
-cd "${WORKSPACE_ROOT}"
-rm -f ./ChipMachineAS.zip
-zip -r -y ./ChipMachineAS.zip ./${APP_NAME}
+ZIP_PATH="${WORKSPACE_ROOT}/${ARTIFACT}.zip"
+PKG_PATH="${WORKSPACE_ROOT}/${ARTIFACT}.pkg"
 
-# 7b. Verify the SHIPPED ARTIFACT, not just the on-disk bundle.
-#
-# The codesign check in step 7 validates ${TARGET_DIR} as it sits on disk. That
-# is NOT enough: it cannot catch a desync where the .zip ends up containing files
-# that were never part of the sealed manifest (e.g. extra UADE player files that
-# appear in the bundle after signing). Such a zip passes step 7 yet ships a
-# bundle whose contents do not match its signature — and on macOS 13+ a
-# quarantined download with a mismatched seal is reported to the user as
-# "<App> is damaged and can't be opened", a hard block with no right-click
-# bypass. We therefore extract the real zip to a scratch dir and run the same
-# strict verification against THAT, failing the build on any mismatch.
-echo "-> Verifying the packaged zip artifact (extract + strict codesign)..."
-VERIFY_DIR="$(mktemp -d)"
-( cd "${VERIFY_DIR}" && unzip -q "${WORKSPACE_ROOT}/ChipMachineAS.zip" )
-if ! codesign --verify --deep --strict "${VERIFY_DIR}/${APP_NAME}" 2>/dev/null; then
-    echo "CRITICAL: the packaged zip's signature does not match its contents."
-    echo "          The shipped bundle would be reported as 'damaged' on download."
-    codesign --verify --deep --strict --verbose=2 "${VERIFY_DIR}/${APP_NAME}" 2>&1 | grep -E "file added|missing|invalid" | head
+if [ "$VARIANT" = "mas" ]; then
+    # Mac App Store distribution is a signed .pkg uploaded via Transporter/altool,
+    # NOT a zip. Build it only when a real installer identity is available;
+    # otherwise the ad-hoc .app is a LOCAL-test artifact only.
+    if [ "$SIGN_ID" != "-" ]; then
+        echo "=== Building signed .pkg for App Store submission... ==="
+        rm -f "${PKG_PATH}"
+        productbuild --component "${TARGET_DIR}" /Applications \
+            --sign "${INSTALLER_ID}" "${PKG_PATH}"
+        echo "-> App Store package: ${PKG_PATH}"
+        echo "   Upload with Transporter.app, or:"
+        echo "     xcrun altool --upload-app -f \"${PKG_PATH}\" -t macos \\"
+        echo "                  --apple-id you@example.com --password <app-specific-pw>"
+    else
+        echo "=== MAS ad-hoc test build ready: ${TARGET_DIR} ==="
+        echo "-> Ad-hoc, sandboxed .app for LOCAL testing only (no .pkg). For an App"
+        echo "   Store submission, re-run with real identities:"
+        echo "     package_app.sh --mas --applesign --distribid=... --installerid=... --provision=..."
+    fi
+else
+    echo "=== Making the final distribution package... ==="
+    cd "${WORKSPACE_ROOT}"
+    rm -f "${ZIP_PATH}"
+    zip -r -y "${ZIP_PATH}" ./${APP_NAME}
+
+    # 7b. Verify the SHIPPED ARTIFACT, not just the on-disk bundle.
+    #
+    # The codesign check in step 7 validates ${TARGET_DIR} as it sits on disk.
+    # That is NOT enough: it cannot catch a desync where the .zip ends up
+    # containing files that were never part of the sealed manifest (e.g. extra
+    # UADE player files that appear in the bundle after signing). Such a zip
+    # passes step 7 yet ships a bundle whose contents do not match its signature
+    # — and on macOS 13+ a quarantined download with a mismatched seal is
+    # reported as "<App> is damaged and can't be opened", a hard block with no
+    # right-click bypass. We extract the real zip to a scratch dir and run the
+    # same strict verification against THAT, failing the build on any mismatch.
+    echo "-> Verifying the packaged zip artifact (extract + strict codesign)..."
+    VERIFY_DIR="$(mktemp -d)"
+    ( cd "${VERIFY_DIR}" && unzip -q "${ZIP_PATH}" )
+    if ! codesign --verify --deep --strict "${VERIFY_DIR}/${APP_NAME}" 2>/dev/null; then
+        echo "CRITICAL: the packaged zip's signature does not match its contents."
+        echo "          The shipped bundle would be reported as 'damaged' on download."
+        codesign --verify --deep --strict --verbose=2 "${VERIFY_DIR}/${APP_NAME}" 2>&1 | grep -E "file added|missing|invalid" | head
+        rm -rf "${VERIFY_DIR}"
+        exit 1
+    fi
     rm -rf "${VERIFY_DIR}"
-    exit 1
+    echo "-> Packaged zip artifact verified (--deep --strict)."
 fi
-rm -rf "${VERIFY_DIR}"
-echo "-> Packaged zip artifact verified (--deep --strict)."
 
 # 7c. Notarize with Apple + staple the ticket (Developer ID distribution only).
 #
@@ -738,9 +885,11 @@ echo "-> Packaged zip artifact verified (--deep --strict)."
 # only when a real SIGN_ID is used AND NOTARY_PROFILE names a stored credential
 # profile (create once via `xcrun notarytool store-credentials <profile>
 # --apple-id you@example.com --team-id TEAMID`).
-if [ "$SIGN_ID" != "-" ] && [ -n "$NOTARY_PROFILE" ]; then
+# (Notarization applies to the Developer ID / plus variant only. The mas variant
+# is reviewed and signed by Apple through App Store Connect, not notarytool.)
+if [ "$VARIANT" = "plus" ] && [ "$SIGN_ID" != "-" ] && [ -n "$NOTARY_PROFILE" ]; then
     echo "-> Notarizing with Apple (profile: ${NOTARY_PROFILE}); this can take a few minutes..."
-    if ! xcrun notarytool submit "${WORKSPACE_ROOT}/ChipMachineAS.zip" \
+    if ! xcrun notarytool submit "${ZIP_PATH}" \
             --keychain-profile "${NOTARY_PROFILE}" --wait; then
         echo "CRITICAL: notarization was not accepted. Inspect the log with:"
         echo "          xcrun notarytool history --keychain-profile ${NOTARY_PROFILE}"
@@ -754,13 +903,13 @@ if [ "$SIGN_ID" != "-" ] && [ -n "$NOTARY_PROFILE" ]; then
     # re-zip the STAPLED app for distribution.
     echo "-> Re-zipping the stapled app for distribution..."
     cd "${WORKSPACE_ROOT}"
-    rm -f ./ChipMachineAS.zip
-    zip -r -y ./ChipMachineAS.zip ./${APP_NAME}
+    rm -f "${ZIP_PATH}"
+    zip -r -y "${ZIP_PATH}" ./${APP_NAME}
     cd "${CHIPMACHINE_DIR}"
 
     echo "-> Final Gatekeeper assessment (expect: accepted / Notarized Developer ID):"
     spctl -a -t exec -vvv "${TARGET_DIR}" || true
-elif [ "$SIGN_ID" != "-" ]; then
+elif [ "$VARIANT" = "plus" ] && [ "$SIGN_ID" != "-" ]; then
     echo "-> NOTE: signed with Developer ID but NOT notarized (NOTARY_PROFILE unset)."
     echo "         Un-notarized downloads still trip Gatekeeper on other Macs."
 fi
@@ -769,39 +918,46 @@ cd "${CHIPMACHINE_DIR}"
 
 echo "=== Done! ==="
 printf '=== Total packaging time: %dm %02ds ===\n' $((SECONDS / 60)) $((SECONDS % 60))
-echo "*** Planned template command details:"
-echo "------------------------------------------------------------"
-echo "gh release create v${VERSION_STR}-as ../ChipMachineAS.zip \\"
-echo "  --title \"ChipMachineAS v${VERSION_STR}\" \\"
-echo "  --notes \"Apple Silicon maintenance release v${VERSION_STR}. <short note text to be provided>\" \\"
-echo "  --repo \"mihailod/chipmachine\""
-echo "------------------------------------------------------------"
 
-# -----------------------------------------------------------------
-# Conditional Interactive Release Verification Block
-# -----------------------------------------------------------------
-if $RELEASE_IT; then
-    if ! command -v gh &> /dev/null; then
-        echo "ERROR: 'gh' command line tool not found in PATH. Skipping automated execution."
-        exit 1
+# The GitHub release flow applies to the plus (Developer ID) variant only; the
+# mas variant is distributed through the Mac App Store, not GitHub.
+if [ "$VARIANT" = "plus" ]; then
+    echo "*** Planned template command details:"
+    echo "------------------------------------------------------------"
+    echo "gh release create v${VERSION_STR}-as ../${ARTIFACT}.zip \\"
+    echo "  --title \"${DISPLAY_NAME} v${VERSION_STR}\" \\"
+    echo "  --notes \"Apple Silicon maintenance release v${VERSION_STR}. <short note text to be provided>\" \\"
+    echo "  --repo \"mihailod/chipmachine\""
+    echo "------------------------------------------------------------"
+
+    # -----------------------------------------------------------------
+    # Conditional Interactive Release Verification Block
+    # -----------------------------------------------------------------
+    if $RELEASE_IT; then
+        if ! command -v gh &> /dev/null; then
+            echo "ERROR: 'gh' command line tool not found in PATH. Skipping automated execution."
+            exit 1
+        fi
+
+        printf "Provide release notes and confirm the official release upload to GitHub per command above [Y/N] ? " >&2
+        read -r RESPONSE
+
+        if [[ "$RESPONSE" == "y" || "$RESPONSE" == "Y" ]]; then
+            printf "Release short note (CTRL+C to abort): " >&2
+            read -r SHORT_NOTE
+
+            RELEASE_NOTES="Apple Silicon maintenance release v${VERSION_STR}. ${SHORT_NOTE}"
+
+            echo "-> Initiating deployment via GitHub CLI..."
+            gh release create "v${VERSION_STR}-as" "${ZIP_PATH}" \
+              --title "${DISPLAY_NAME} v${VERSION_STR}" \
+              --notes "${RELEASE_NOTES}" \
+              --repo "mihailod/chipmachine"
+            echo "=== Deployment Successfully Completed ==="
+        else
+            echo "-> Deployment aborted by user request."
+        fi
     fi
-
-    printf "Provide release notes and confirm the official release upload to GitHub per command above [Y/N] ? " >&2
-    read -r RESPONSE
-
-    if [[ "$RESPONSE" == "y" || "$RESPONSE" == "Y" ]]; then
-        printf "Release short note (CTRL+C to abort): " >&2
-        read -r SHORT_NOTE
-
-        RELEASE_NOTES="Apple Silicon maintenance release v${VERSION_STR}. ${SHORT_NOTE}"
-
-        echo "-> Initiating deployment via GitHub CLI..."
-        gh release create "v${VERSION_STR}-as" "${WORKSPACE_ROOT}/ChipMachineAS.zip" \
-          --title "ChipMachineAS v${VERSION_STR}" \
-          --notes "${RELEASE_NOTES}" \
-          --repo "mihailod/chipmachine"
-        echo "=== Deployment Successfully Completed ==="
-    else
-        echo "-> Deployment aborted by user request."
-    fi
+elif $RELEASE_IT; then
+    echo "-> NOTE: --releaseit has no effect for the mas variant (App Store distribution)."
 fi

@@ -14,6 +14,53 @@ endif()
 project(chipmachine)
 
 # ---------------------------------------------------------------------------
+# Build variant (App Store vs full/GitHub) -- see variants.conf
+# ---------------------------------------------------------------------------
+# CM_VARIANT selects the product identity and feature set:
+#   plus (default) -- full build, includes YouTube/yt-dlp, Developer ID / GitHub.
+#   mas            -- Mac App Store build: defines CM_MAS, which gates out the
+#                     YouTube plugin (see src/main.cpp) and the YouTube catalog
+#                     rows (see lua/db.lua via the cm_is_mas flag).
+# Names come from variants.conf so there is ONE source of truth shared with
+# package_app.sh. Configure a MAS build in its own dir, e.g.:
+#   cmake -S chipmachine -B build-mas -DCMAKE_BUILD_TYPE=Release -DCM_VARIANT=mas
+set(CM_VARIANT "plus" CACHE STRING "Build variant: plus (full/GitHub) | mas (Mac App Store)")
+set_property(CACHE CM_VARIANT PROPERTY STRINGS plus mas)
+
+if(NOT CM_VARIANT STREQUAL "plus" AND NOT CM_VARIANT STREQUAL "mas")
+    message(FATAL_ERROR "CM_VARIANT must be 'plus' or 'mas', got '${CM_VARIANT}'")
+endif()
+
+# Pull the compile-time PROGRAM_NAME for this variant out of variants.conf
+# (<VARIANT>_PROGRAM_NAME="..."), so renaming a product means editing only that
+# file. Fail loudly if the key is missing rather than silently mis-naming.
+string(TOUPPER "${CM_VARIANT}" _CM_VARIANT_UC)
+set(CM_VARIANTS_CONF "${CMAKE_CURRENT_SOURCE_DIR}/variants.conf")
+set(CM_PROGRAM_NAME "")
+if(EXISTS "${CM_VARIANTS_CONF}")
+    file(STRINGS "${CM_VARIANTS_CONF}" _CM_CONF_LINES
+         REGEX "^${_CM_VARIANT_UC}_PROGRAM_NAME=")
+    foreach(_line IN LISTS _CM_CONF_LINES)
+        if(_line MATCHES "^${_CM_VARIANT_UC}_PROGRAM_NAME=\"(.*)\"")
+            set(CM_PROGRAM_NAME "${CMAKE_MATCH_1}")
+        endif()
+    endforeach()
+endif()
+if(CM_PROGRAM_NAME STREQUAL "")
+    message(FATAL_ERROR
+        "Could not read ${_CM_VARIANT_UC}_PROGRAM_NAME from ${CM_VARIANTS_CONF}")
+endif()
+
+# Compile definitions applied to every target that shows the product name or
+# registers the YouTube plugin (chipmachine, cm). cmtest is intentionally
+# excluded so the test suite always exercises the full feature set.
+set(CM_VARIANT_DEFS "PROGRAM_NAME=\"${CM_PROGRAM_NAME}\"")
+if(CM_VARIANT STREQUAL "mas")
+    list(APPEND CM_VARIANT_DEFS CM_MAS)
+endif()
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\")")
+
+# ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
 # ---------------------------------------------------------------------------
 if(APPLE)
@@ -265,10 +312,12 @@ target_link_libraries(chipmachine PRIVATE
     swresample
 )
 target_compile_definitions(chipmachine PRIVATE -DAPP_NAME=chipmachine)
+target_compile_definitions(chipmachine PRIVATE ${CM_VARIANT_DEFS})
 
 if(NOT WIN32)
     add_executable(cm ${MAIN_FILES} src/textmode.cpp src/main.cpp)
     target_compile_definitions(cm PUBLIC TEXTMODE_ONLY)
+    target_compile_definitions(cm PRIVATE ${CM_VARIANT_DEFS})
     target_link_libraries(cm PRIVATE
         musicplayer
         ${CORE_MODULES}

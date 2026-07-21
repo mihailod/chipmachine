@@ -56,7 +56,16 @@ int main(int argc, char* argv[])
     // instead, which feedLoop() already handles by stopping.
     std::signal(SIGPIPE, SIG_IGN);
 
+    // Cache/config live under ~/Library/{Caches,Application Support}/<appName>.
+    // The MAS variant uses a distinct name so that, on a dev machine where both
+    // variants run un-sandboxed, the App Store build (which drops YouTube rows at
+    // index time) does not clobber the full build's music.db and vice-versa. In
+    // production the App Sandbox already isolates each by its container.
+#ifdef CM_MAS
+    Environment::setAppName("chipmachine-mas");
+#else
     Environment::setAppName("chipmachine");
+#endif
 
 #ifdef CM_DEBUG
     logging::setLevel(logging::Level::Debug);
@@ -296,7 +305,13 @@ int main(int argc, char* argv[])
 
 
     lua->script_file((work_dir / "lua" / "init.lua").string());
+#ifndef CM_MAS
+    // The Mac App Store build ships no YouTube plugin: yt-dlp is a spawned
+    // executable (App Store guideline 2.5.2) and has no in-process, MAS-legal
+    // form. Without this plugin, no youtube.com URL is claimed by any decoder,
+    // and MusicDatabase drops the YouTube-only catalog rows at index time.
     initYoutube(*lua);
+#endif
 
     auto audio_player = std::make_shared<AudioPlayer>(44100);
     auto injector =
