@@ -99,9 +99,26 @@ cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
 ```
 
+#### Build variants: Plus vs Mac App Store
+
+The default `build/` above produces the full **ChipMachinePlus** variant — everything included (YouTube, self-update), distributed via GitHub with a Developer ID signature. A second **Mac App Store** variant — **ChipMachine** — is built from its own directory by passing `-DCM_VARIANT=mas` (from the workspace root, i.e. the parent of `chipmachine/`):
+
+```bash
+cmake -S chipmachine -B build-mas -GNinja -DCMAKE_BUILD_TYPE=Release -DCM_VARIANT=mas
+ninja -C build-mas
+```
+
+The two are **independent build trees** (each has its own objects and binary) sharing one source — pass `-GNinja` for `build-mas` too, or `ninja` there will have no `build.ninja`. The `mas` variant compiles out everything the App Store disallows or that has no in-sandbox form:
+
+* the **YouTube** plugin and its ~32k catalog rows (yt-dlp is a spawned executable — App Store §2.5.2),
+* the bundled **yt-dlp** helper, and
+* the **GitHub self-update** check (updates come through the App Store).
+
+It runs **App-Sandboxed**, with a distinct bundle id (`org.mihailod.chipmachine`) and its own cache/database/index, so Plus and MAS never share state. Per-variant product identity (name, bundle id, artifact) is the single source of truth in [variants.conf](variants.conf); the compile-time switch is `CM_VARIANT` / the `CM_MAS` define.
+
 * Running the app (from the build folder): ./chipmachine (-h for all options)
 * Running the tests (from the build folder): ./cmtest
-* Packaging the app: [package_app.sh](package_app.sh) `--buildapponly` — rebuilds the `chipmachine` target (incremental), bundles the runtime assets, generates the `Info.plist` with file associations, ad-hoc code-signs and zips the `.app`. Run with no args for full usage; add `--applesign` to produce a Developer ID / notarized build (see [Signing & distribution](#signing--distribution-developer-id) below).
+* Packaging the app: [package_app.sh](package_app.sh) `--buildapponly` — rebuilds the `chipmachine` target (incremental), bundles the runtime assets, generates the `Info.plist` with file associations, ad-hoc code-signs and zips the `.app`. Run with no args for full usage; add `--applesign` to produce a Developer ID / notarized build (see [Signing & distribution](#signing--distribution-developer-id) below). Defaults to the **Plus** variant; add `--mas` to package the Mac App Store build (`ChipMachine.app` / `.pkg` from `build-mas/` — see [Mac App Store build](#mac-app-store-build-mas-variant)).
 * AI tools used to help with the porting: Claude, Gemini, Antigravity, Codex
 
 ### macOS file associations (developer notes)
@@ -169,6 +186,35 @@ Python freeze that fails library validation under Hardened Runtime otherwise).
 No JIT entitlements are needed — the app links vanilla Lua, not LuaJIT. The
 entitlements plists are intentionally comment-free: macOS's kernel entitlement
 parser (AMFI) rejects XML comments.
+
+### Mac App Store build (MAS variant)
+
+The Mac App Store variant is packaged with `--mas`, which builds from `build-mas/`
+(configure it once with `-DCM_VARIANT=mas`, see [Build variants](#build-variants-plus-vs-mac-app-store)),
+skips the yt-dlp helper, applies the App-Sandbox entitlements, and produces a
+signed `.pkg` instead of a zip.
+
+| Command | Result |
+| --- | --- |
+| `./package_app.sh --mas --buildapponly` | Build `ChipMachine.app`, **ad-hoc-signed but sandboxed** — a local test build. No certificates needed. |
+| `./package_app.sh --mas --applesign --distribid="Apple Distribution: Name (TEAMID)" --installerid="3rd Party Mac Developer Installer: Name (TEAMID)" --provision=/path/to/ChipMachine.provisionprofile` | Build, sign for the App Store, embed the provisioning profile, and emit a signed **`.pkg`** for upload. |
+
+The three signing inputs (`--distribid`, `--installerid`, `--provision`) require
+the paid **Apple Developer Program** plus an App Store Connect record for the
+bundle id `org.mihailod.chipmachine`. Upload the resulting `.pkg` with
+**Transporter.app** or `xcrun altool --upload-app`. There is **no zip and no
+notarization** for this variant — the App Store handles review and signing.
+
+MAS **entitlements** are in [entitlements-app-mas.plist](src/macnative/entitlements-app-mas.plist):
+`com.apple.security.app-sandbox` + `com.apple.security.network.client` (outbound
+only — the app runs no listening server; it deliberately does **not** declare
+`network.server`). No `disable-library-validation` and no yt-dlp helper, since the
+MAS build ships neither.
+
+> Not yet wired for a live submission: the app still needs **file-access sandbox
+> entitlements** (`com.apple.security.files.user-selected.read-only` plus
+> security-scoped bookmarks) for the double-click / "Open With" path to work under
+> the sandbox. `--mas --buildapponly` is fully usable for local testing today.
 
 ## Using the application
 
