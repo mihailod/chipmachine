@@ -394,6 +394,11 @@ int main(int argc, char* argv[])
     // delivered to us instead of hitting AppKit's "cannot open this format"
     // fallback. ChipMachine::update() drains the queued paths and plays them.
     chipmachine::installFileOpenHandler();
+
+    // Re-acquire sandbox access to any external files a previous session opened
+    // and the user saved to Favorites/a playlist. Self-gates at runtime: a no-op
+    // in the non-sandboxed plus build. Must run before those lists are played.
+    chipmachine::restoreSecurityScopedFiles();
 #endif
 
     grappix::screen.setTitle(PROGRAM_NAME " " VERSION_STR);

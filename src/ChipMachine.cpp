@@ -2455,14 +2455,20 @@ void ChipMachine::update()
     // last frame. Done before the indexing gate below so live events are never
     // missed; they accumulate in filesToOpen and are played once the DB is
     // ready (see after the gate).
-    for (auto& p : drainPendingOpenFiles())
+    for (auto& p : drainPendingOpenFiles()) {
+        rememberOpenedFile(p); // persist sandbox access; no-op unless sandboxed
         filesToOpen.push_back(p);
+    }
 #endif
 
     // Files dragged and dropped onto the window (native OS drag & drop, all
     // platforms via GLFW). Same downstream path as "Open With" above.
-    for (auto& p : grappix::screen.get_dropped_files())
+    for (auto& p : grappix::screen.get_dropped_files()) {
+#ifdef __APPLE__
+        rememberOpenedFile(p); // persist sandbox access; no-op unless sandboxed
+#endif
         filesToOpen.push_back(p);
+    }
 
     if (indexingDatabase) {
         if (!musicDatabase.busy()) {

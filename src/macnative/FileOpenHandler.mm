@@ -123,4 +123,141 @@ std::vector<std::string> drainPendingOpenFiles()
     return out;
 }
 
+// -------------------------------------------------------------------------
+// App Sandbox security-scoped bookmarks.
+//
+// This code is IDENTICAL in both variants -- there is no #ifdef CM_MAS here on
+// purpose, so the mas and plus sources do not diverge. The behaviour difference
+// is driven entirely by the entitlements .plist (which must differ anyway) plus
+// a cheap runtime sandbox check below:
+//   * Sandboxed (mas): creates/persists app-scoped bookmarks and re-acquires
+//     access, as required to reach user-opened files across launches.
+//   * Not sandboxed (plus/Developer ID): isSandboxed() is false, so both public
+//     functions return immediately. (Even if they didn't, security-scoped
+//     bookmark creation cleanly returns nil without the sandbox+entitlement, so
+//     the code is a safe no-op regardless -- the runtime guard just skips the
+//     pointless work and its benign OS error-log line.)
+// -------------------------------------------------------------------------
+namespace {
+
+// Are we running inside the App Sandbox? The OS sets APP_SANDBOX_CONTAINER_ID
+// in the environment of every sandboxed process; a Developer ID / dev build has
+// no container and never sees it. Cheap, no entitlement API needed.
+bool isSandboxed()
+{
+    return getenv("APP_SANDBOX_CONTAINER_ID") != nullptr;
+}
+
+// The bookmark store lives in the app's Application Support directory, which
+// under the sandbox resolves to the app container (always writable, no extra
+// entitlement). Keyed by absolute POSIX path -> app-scoped bookmark NSData.
+NSURL* bookmarkStoreURL()
+{
+    NSFileManager* fm = [NSFileManager defaultManager];
+    NSError* err = nil;
+    NSURL* dir = [fm URLForDirectory:NSApplicationSupportDirectory
+                            inDomain:NSUserDomainMask
+                   appropriateForURL:nil
+                              create:YES
+                               error:&err];
+    if (dir == nil) return nil;
+    return [dir URLByAppendingPathComponent:@"security-bookmarks.plist"];
+}
+
+NSMutableDictionary<NSString*, NSData*>* loadBookmarkStore()
+{
+    NSURL* url = bookmarkStoreURL();
+    if (url == nil) return [NSMutableDictionary dictionary];
+    NSDictionary* d = [NSDictionary dictionaryWithContentsOfURL:url];
+    return d ? [d mutableCopy] : [NSMutableDictionary dictionary];
+}
+
+void saveBookmarkStore(NSDictionary<NSString*, NSData*>* store)
+{
+    NSURL* url = bookmarkStoreURL();
+    if (url == nil) return;
+    [store writeToURL:url atomically:YES];
+}
+
+} // namespace
+
+void rememberOpenedFile(std::string const& path)
+{
+    if (path.empty() || !isSandboxed()) return;
+    @autoreleasepool {
+        NSString* p = [NSString stringWithUTF8String:path.c_str()];
+        if (p == nil) return;
+        NSURL* fileURL = [NSURL fileURLWithPath:p];
+
+        // Create an app-scoped security-scoped bookmark. The current process
+        // already has access to this URL (LaunchServices/Powerbox granted it
+        // when the user opened the file), which is what lets the bookmark be
+        // created. Persist it so a later launch can re-acquire access.
+        NSError* err = nil;
+        NSData* bm = [fileURL
+                bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+         includingResourceValuesForKeys:nil
+                          relativeToURL:nil
+                                  error:&err];
+        if (bm == nil) return; // no access / not user-selected -- nothing to save
+
+        NSMutableDictionary<NSString*, NSData*>* store = loadBookmarkStore();
+        store[p] = bm;
+        saveBookmarkStore(store);
+    }
+}
+
+void restoreSecurityScopedFiles()
+{
+    if (!isSandboxed()) return;
+    @autoreleasepool {
+        NSMutableDictionary<NSString*, NSData*>* store = loadBookmarkStore();
+        if (store.count == 0) return;
+
+        NSMutableArray<NSString*>* dead = [NSMutableArray array];
+        BOOL storeChanged = NO;
+
+        for (NSString* p in store) {
+            NSData* bm = store[p];
+            BOOL stale = NO;
+            NSError* err = nil;
+            NSURL* url = [NSURL
+                URLByResolvingBookmarkData:bm
+                                   options:NSURLBookmarkResolutionWithSecurityScope
+                             relativeToURL:nil
+                       bookmarkDataIsStale:&stale
+                                     error:&err];
+            if (url == nil) {
+                // Unresolvable (file deleted/moved beyond recovery): drop it so
+                // the store does not grow without bound.
+                [dead addObject:p];
+                continue;
+            }
+            // Start accessing and NEVER stop: this is a media player, so we want
+            // the granted paths readable for the whole session. The kernel drops
+            // the extension when the process exits.
+            [url startAccessingSecurityScopedResource];
+
+            if (stale) {
+                NSError* rerr = nil;
+                NSData* fresh = [url
+                        bookmarkDataWithOptions:NSURLBookmarkCreationWithSecurityScope
+                 includingResourceValuesForKeys:nil
+                                  relativeToURL:nil
+                                          error:&rerr];
+                if (fresh != nil) {
+                    store[p] = fresh;
+                    storeChanged = YES;
+                }
+            }
+        }
+
+        if (dead.count > 0) {
+            [store removeObjectsForKeys:dead];
+            storeChanged = YES;
+        }
+        if (storeChanged) saveBookmarkStore(store);
+    }
+}
+
 } // namespace chipmachine

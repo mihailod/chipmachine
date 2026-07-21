@@ -1,7 +1,5 @@
 Mac App Store (MAS) compliance:
 
-- File-access sandbox entitlements (files.user-selected.read-only + security-scoped bookmarks) so the sandboxed app can open user-chosen files via "Open With".
-
 - implement real csid plugin, move from vice to csid for all possible format (make sure search by plugin reflects)
 ->> once csid work is done, remove vice and content it plays from MAS version
 

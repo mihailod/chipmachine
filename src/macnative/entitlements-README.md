@@ -34,6 +34,20 @@ comment-free for the same AMFI reason.
   dead-stripped from the binary; a full `otool -Iv` audit confirms the only
   socket primitive actually called is `socketpair(AF_UNIX,...)` for UADE's local
   player IPC, which needs no server entitlement. Never add this key.
+- `com.apple.security.files.user-selected.read-only` — required so the sandboxed
+  app can read files the user opens via Finder "Open With" / double-click / drag
+  and drop. LaunchServices/Powerbox issues the per-file grant on open; this
+  entitlement is what lets the process accept it. Read-only (not read-write): the
+  app only ever plays user files, never writes them back.
+- `com.apple.security.files.bookmarks.app-scoped` — enables app-scoped
+  security-scoped bookmarks. The per-file open grant above dies with the process,
+  so a path the user saved to Favorites/a playlist that points at an external
+  file would be unreachable next launch. `FileOpenHandler.mm`
+  (`rememberOpenedFile` / `restoreSecurityScopedFiles`) persists a bookmark per
+  opened file and re-acquires access at startup. That code is **identical in both
+  variants** (no `#ifdef CM_MAS`); it self-gates at runtime on
+  `APP_SANDBOX_CONTAINER_ID`, so it is a no-op in the non-sandboxed plus build
+  and the only file-access divergence between plus and mas is this plist.
 - `com.apple.security.cs.disable-library-validation` — **deliberately absent.**
   It is only a droppable safety net for the main executable (see above): every
   nested Mach-O, including `sunvox.dylib`, is re-signed under one Team ID, so
@@ -41,13 +55,12 @@ comment-free for the same AMFI reason.
   wants.
 
 Still-open, NON-network MAS work (out of scope of the network pass, tracked
-separately): (1) file-access sandbox entitlements for user-opened files
-(`com.apple.security.files.user-selected.read-only` and security-scoped bookmarks
-for the double-click "Open With" path); (2) the bundled **yt-dlp** helper — a
-PyInstaller freeze that both *requires* `disable-library-validation` (see below)
-and spawns an executable, violating App Store §2.5.2. yt-dlp has no MAS-legal
-form as-is; it must be replaced or removed before submission. That blocker is
-unrelated to networking.
+separately): the bundled **yt-dlp** helper — a PyInstaller freeze that both
+*requires* `disable-library-validation` (see below) and spawns an executable,
+violating App Store §2.5.2. yt-dlp has no MAS-legal form as-is; it must be
+replaced or removed before submission. That blocker is unrelated to networking.
+(The file-access sandbox entitlements are now in place — see the two `files.*`
+keys above.)
 
 ## entitlements-helper.plist — the bundled yt-dlp helper (`Contents/Resources/bin/ytdlp/yt-dlp`)
 
