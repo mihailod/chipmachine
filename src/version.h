@@ -20,4 +20,4 @@ rm build/DEBUG_UPDATE_VERSION
 #ifndef PROGRAM_NAME
 #define PROGRAM_NAME "ChipMachinePlus"
 #endif
-#define VERSION_STR "2.0.1"
+#define VERSION_STR "2.1"
