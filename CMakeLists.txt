@@ -414,20 +414,11 @@ if(APPLE)
        file(MAKE_DIRECTORY Chipmachine.app/Contents/Resources/bin)
        file(COPY \"\${CMAKE_SOURCE_DIR}/Info.plist\" DESTINATION Chipmachine.app/Contents/)
 
-       # NEW: Copy .nsfe music tracks so the bundle produced by cmake --install
-       # matches what package_app.sh builds. resolve_resource_root() in the C++
-       # layer expects these at Contents/Resources/music/Console/.
-       if(EXISTS \"\${CMAKE_SOURCE_DIR}/music/Console\")
-           file(COPY \"\${CMAKE_SOURCE_DIR}/music/Console\"
-                DESTINATION Chipmachine.app/Contents/Resources/music/)
-           message(STATUS \"-> Bundled music/Console into Resources\")
-       else()
-           message(WARNING \"music/Console not found — bundle will have no built-in .nsfe tracks\")
-       endif()
-
-       # NB: no music/hvtc step here. db.lua VERSION 129 un-bundled HVTC (no music
-       # may ship inside the app for Mac App Store submission); its .prg tracks
-       # are fetched on demand from plus4world, like hvsc.
+       # NB: no music/Console or music/hvtc step here. db.lua VERSION 129 and 130
+       # un-bundled HVTC and NSFE -- no music may ship inside the app for Mac App
+       # Store submission. Their tracks are fetched on demand (hvtc from
+       # plus4world, nsfe from an archive.org ZIP), like hvsc. Only music/projectay
+       # is still bundled, by package_app.sh.
 
        include(BundleUtilities)
        fixup_bundle(\"\${APPS}\" \"\" \"\$\\\{DIRS\}\")

@@ -106,11 +106,11 @@ public:
         // disk, never the network. NB: only APP-SHIPPED collections belong here
         // -- collections with a /opt/Music local_dir (modland, asma, rko, ...)
         // are the user's own mirrors and are NOT present on most machines.
-        //   nsfe      -> music/Console     (nsfe::31_orange_painting.nsfe)
         //   projectay -> music/projectay   (projectay::ironfist/arkanoid.ay)
-        // hvtc was here until db.lua VERSION 129 un-bundled it; it is a plain
-        // remote collection now, so it must NOT claim the local "+" indicator.
-        return path.find("nsfe::") == 0 || path.find("projectay::") == 0;
+        // hvtc (VERSION 129) and nsfe (VERSION 130) were here until they were
+        // un-bundled; both are plain remote collections now, so neither may claim
+        // the local "+" indicator. projectay is the last app-shipped store.
+        return path.find("projectay::") == 0;
     }
 
 private:

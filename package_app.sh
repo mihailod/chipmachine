@@ -473,50 +473,15 @@ else
     echo "WARNING: sunvox.dylib not found at ${SUNVOX_DYLIB_SRC}. .sunvox playback will fail."
 fi
 
-# *** 4b. Bundle .nsfe music tracks into Contents/Resources/music/Console/ ***
+# *** 4b. (removed) .nsfe music tracks are no longer bundled ***
 #
-# Strategy:
-#   - Source: chipmachine/music/Console/*.nsfe  (and any sub-structure beneath it)
-#   - Destination: ChipMachineAS.app/Contents/Resources/music/Console/
-#
-# The destination path intentionally mirrors the relative layout the C++ runtime
-# expects so that CFBundleCopyResourcesDirectoryURL() + "/music/Console/" resolves
-# to exactly these files in production. In local dev the binary reads the live
-# source tree directly (see get_music_resource_path() in the C++ layer).
+# music/Console used to be copied into Contents/Resources/music/Console/ here.
+# db.lua VERSION 130 un-bundled it: no music may ship inside the app for Mac App
+# Store submission. The nsfe db.lua entry has no local_dir and a real `source`
+# now, so the 1224 Famicompo .nsfe are pulled per song out of an archive.org ZIP
+# (https://archive.org/details/famicompo-nsfe) the same way keygenmusic and
+# vgmrips already work. Do not re-add a copy step here.
 # -----------------------------------------------------------------
-MUSIC_SRC="${CHIPMACHINE_DIR}/music/Console"
-MUSIC_DEST="${RESOURCES_DIR}/music/Console"
-
-if [ -d "${MUSIC_SRC}" ]; then
-    # Count .nsfe files so we can emit a meaningful diagnostic
-    NSFE_COUNT=$(find "${MUSIC_SRC}" -maxdepth 1 -name "*.nsfe" | wc -l | tr -d '[:space:]')
-    if [ "${NSFE_COUNT}" -eq 0 ]; then
-        echo "WARNING: music/Console/ exists but contains no .nsfe files. Bundle music will be empty."
-    else
-        echo "-> Bundling ${NSFE_COUNT} .nsfe track(s) into ${MUSIC_DEST} ..."
-    fi
-
-    mkdir -p "${MUSIC_DEST}"
-
-    # Use cp -R to preserve any sub-directory hierarchy that may exist under Console/
-    # (e.g. Console/Famicom/, Console/GameBoy/) while still being safe for a flat layout.
-    cp -R "${MUSIC_SRC}/." "${MUSIC_DEST}/"
-
-    # Verify the copy succeeded and at least one .nsfe landed in the bundle
-    BUNDLED_COUNT=$(find "${MUSIC_DEST}" -name "*.nsfe" | wc -l | tr -d '[:space:]')
-    echo "   Verified ${BUNDLED_COUNT} .nsfe file(s) present inside bundle."
-else
-    # Treat a missing music directory as a hard error in release mode;
-    # warn-only for local/dry-run builds so CI without music assets doesn't break.
-    if $RELEASE_IT; then
-        echo "CRITICAL ERROR: music/Console source directory not found at ${MUSIC_SRC}!"
-        echo "               A release build MUST include bundled .nsfe tracks."
-        exit 1
-    else
-        echo "WARNING: music/Console not found at ${MUSIC_SRC}. Skipping music bundling (dry-run mode)."
-        echo "         End-users will have no bundled tracks. Set up the music/ directory before --releaseit."
-    fi
-fi
 
 # *** 4c. (removed) HVTC .prg tracks are no longer bundled ***
 #
@@ -530,8 +495,10 @@ fi
 
 # *** 4d. Bundle Project AY .ay tracks into Contents/Resources/music/projectay/ ***
 #
-# Project AY (Sergey Bulba / Ironfist raw Z80 .ay rips) is a locally-shipped
-# collection, exactly like music/Console (.nsfe). The
+# Project AY (Sergey Bulba / Ironfist raw Z80 .ay rips) is now the LAST
+# locally-shipped collection -- music/Console (.nsfe) and music/hvtc (.prg) were
+# un-bundled in db.lua VERSION 130 and 129 respectively, and this one still needs
+# the same treatment before a Mac App Store submission. The
 # runtime resolves these via local_dir = "music/projectay" (db.lua) with an
 # EMPTY source, so if the .ay files are not bundled there is no network fallback
 # and every tune fails to load. The ironfist/ bulba/ cpc/ sub-directory

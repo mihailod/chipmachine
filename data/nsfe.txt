@@ -68,7 +68,6 @@
 	A piece of your brain	mrb		46_brain.nsfe
 	A Traditional Children's Waltz	Heosphoros		10_Heosphoros_-_A_Traditional_Childrens_Waltz_MMC5.nsfe
 	A-Ha - Take On Me	M		061_TakeOnMe.nsfe
-	Abadox	Kyouhei Sada		Abadox.nsf
 	Acidjazzed Evening	ImATrackMan		090_Acidjazzed_Evening.nsfe
 	Action 53	Velathnos		05_Action_53.nsfe
 	ADAMANT	MISOKA		15_adamant.nsfe
@@ -228,7 +227,6 @@
 	CV-Vile Intent	Teuoxton		10_vile.nsfe
 	Cybernoid II (Jeroen Tel)	Ares64		34_cybernoid_ii.nsfe
 	DADDY MULK - THE NINJA WARRIORS	ZEX		16_TheNinjaWarriors_DaddyMulk.nsfe
-	Dance Girl, Dance ~  Love ~	Tsu Ryu		T_Original_DanceGirlDance¼Love.nsfe
 	Dandilion Ride	Fearofdark		45_fod_dandilion.nsfe
 	DARIUS Gaiden -TOUEI(Projection)	Wiz.		22_drg_toei.nsfe
 	Dark Road / The Road of the Apotropaic God ~ Dark Road	HertzDevil		114_HINA.nsfe
@@ -607,7 +605,6 @@
 	Mickey Mania - Captain Pete	Kuhneghetz		51_kuhneghetz_-_mickey_mania_captain_pete.nsfe
 	Microbeings	Fearofdark		056_fod_micro4.nsfe
 	Mighty Switch Force! - Yummy	icesoldier		43_mightyswitchforce-yummy.nsfe
-	Miko-Miko Nurse OP Title	Loser Kashiwagi, Chu(߄D;;)		Miko Miko Nurse.nsfe
 	Miko-Miko Nurse Opening Title THeme	chibi-tech		10_mikomiko.nsfe
 	MILLION DOLLAR BUDGETS	fuckyeahdrifloon		14_millionbudget.nsfe
 	minimal loops 20130618	ROP		031_ropm130618.nsfe

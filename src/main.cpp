@@ -206,27 +206,11 @@ int main(int argc, char* argv[])
     // .../build/../chipmachine/data). Purely lexical -- no behavior change.
     auto work_dir = data_dir->parent_path().lexically_normal();
 
-    // Emit a diagnostic early if music/Console is missing from the resolved
-    // root. This surfaces packaging regressions immediately at launch rather
-    // than as a silent "no songs found" state deep in the music database.
-    {
-        utils::path music_console = work_dir / "music" / "Console";
-        if (!utils::exists(music_console)) {
-            fprintf(stderr,
-                "[chipmachine] WARNING: music/Console not found at: %s\n"
-                "   Built-in .nsfe tracks will be unavailable.\n"
-#ifdef __APPLE__
-                "   Bundle build: re-run package_app.sh (Section 4b copies the tracks).\n"
-                "   Dev build:    run `cmake --build` to sync tracks via POST_BUILD,\n"
-                "                 or ensure chipmachine/music/Console/ exists in the source tree.\n"
-#endif
-                , music_console.string().c_str());
-        }
-    }
-
-    // (No equivalent check for HVTC: db.lua VERSION 129 un-bundled it -- no music
-    // may ship inside the app for Mac App Store submission -- so .prg tracks are
-    // fetched on demand from plus4world, like hvsc.)
+    // (No bundled-music checks here any more. db.lua VERSION 129 and 130 un-bundled
+    // HVTC and NSFE -- no music may ship inside the app for Mac App Store
+    // submission -- so their tracks are fetched on demand, like hvsc: .prg from
+    // plus4world, .nsfe per song out of an archive.org ZIP. music/projectay is the
+    // only local store left, and it is bundled by package_app.sh.)
 
     utils::path binDir = (work_dir / "bin");
     utils::path exeDir = Environment::getExeDir();

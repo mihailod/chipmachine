@@ -970,7 +970,24 @@
 --     fallback, the other 7 are gone from both and their rows are dropped from
 --     data/hvtc.txt (1038 -> 1031) -- accepted cost of the App Store constraint.
 --     Data change (rows removed) + local_dir removed, so bump forces a reindex.
-VERSION = 129;
+-- 130: NSFE un-bundled, the same Mac App Store driver as VERSION 129. music/Console
+--     (40MB, 1232 files) is DELETED along with its copy steps in CMakeLists.txt /
+--     package_app.sh. The 1224 Famicompo .nsfe now come from an archive.org ZIP,
+--     https://archive.org/details/famicompo-nsfe, which serves individual ZIP
+--     members over HTTP exactly like keygenmusic and vgmrips already do. The
+--     upstream source (a solid RAR 1.5 on Dropbox, from the nesdev thread) could
+--     NOT be range-fetched per song -- solid means member N needs every byte
+--     before it -- so it was repacked flat to a per-file-deflate ZIP. Verified:
+--     all 1224 members are byte-identical to the deleted bundle, and a full sweep
+--     of data/nsfe.txt against IA returned 1224x200 with matching sizes. Because
+--     nsfe.txt paths were already bare basenames (all unique), `source` is just
+--     the member-URL prefix and the song list itself needed no rewrite -- only 3
+--     rows were dropped (1227 -> 1224), the ones ALREADY broken before this change
+--     (absent from the old bundle too): Abadox.nsf, "Miko Miko Nurse.nsfe" (the
+--     tune survives as 10_mikomiko.nsfe) and T_Original_DanceGirlDance-Love.nsfe.
+--     nsfe also gains a real `source` for the first time (it was ""), so it is no
+--     longer a collection that simply fails when its files are absent.
+VERSION = 130;
 
 DB = {
 {
@@ -1501,13 +1518,18 @@ DB = {
 	color = 0xfffff
 },
 {
-        name = "NSFE",
+        -- Famicompo NES 2A03 rips (.nsfe). On-demand from an archive.org ZIP --
+        -- NO local_dir; music/Console was deleted in VERSION 130 because no
+        -- music may ship inside the app for Mac App Store submission. IA
+        -- extracts individual ZIP members over plain HTTP (same trick as
+        -- keygenmusic/vgmrips), and every path in data/nsfe.txt is already the
+        -- bare member basename, so source is just the member-URL prefix and the
+        -- song list needed no rewrite. NB a MISSING member answers 503, not 404.
+        name = "Famicompo",
         id = "nsfe",
         priority = 700,  -- native NES 2A03 rips (console)
-        source = "",
+        source = "https://archive.org/download/famicompo-nsfe/famicompo-nsfe.zip/",
         song_list = "data/nsfe.txt",
-        -- this one has local files!
-        local_dir = "music/Console",
         song_template = "no title composer no path",
         format = "NSFE",
         color = 0xfffff

@@ -904,15 +904,15 @@ TEST_CASE("mirsoft game modules play via the host path", "[music]")
 
 // The GUI marks app-shipped local collections with a "+" (vs "*" for cached
 // remote files) via isLocalAsset, keyed by the "<collection>::" path prefix.
-// Guard that both shipped collections -- nsfe and projectay -- report local, and
-// that a remote/URL song does not. hvtc was a third until db.lua VERSION 129
-// un-bundled it (no music ships inside the app for Mac App Store submission), so
-// it must now report REMOTE.
+// projectay is the only app-shipped collection left, so guard that it reports
+// local and that remote/URL songs do not. hvtc (VERSION 129) and nsfe (VERSION
+// 130) were shipped too until they were un-bundled -- no music ships inside the
+// app for Mac App Store submission -- so both must now report REMOTE.
 TEST_CASE("isLocalAsset marks shipped collections", "[music]")
 {
-    REQUIRE(RemoteLoader::isLocalAsset("nsfe::31_orange_painting.nsfe"));
     REQUIRE(RemoteLoader::isLocalAsset("projectay::ironfist/arkanoid.ay"));
     REQUIRE(RemoteLoader::isLocalAsset("projectay::cpc/TribalMag5/TribalMag5_00.ay"));
+    REQUIRE_FALSE(RemoteLoader::isLocalAsset("nsfe::31_orange_painting.nsfe"));
     REQUIRE_FALSE(RemoteLoader::isLocalAsset("hvtc::demos/crazy_scroll_89.prg"));
     REQUIRE_FALSE(RemoteLoader::isLocalAsset("zxart::https://zxart.ee/file/id:44417/x.ay"));
     REQUIRE_FALSE(RemoteLoader::isLocalAsset("modland::AY/Foo/bar.ay"));

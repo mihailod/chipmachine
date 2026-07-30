@@ -1,3 +1,14 @@
+# HISTORICAL -- this is how data/nsfe.txt was originally derived: it flattens the
+# Famicompo NSFE tree into chipmachine/music/Console and reads title/artist out of
+# each tune's APEv2 ".tag" sidecar.
+#
+# music/Console NO LONGER EXISTS. db.lua VERSION 130 un-bundled NSFE (no music may
+# ship inside the app for Mac App Store submission); the .nsfe are now pulled per
+# song from https://archive.org/details/famicompo-nsfe. The song list is unchanged
+# in shape -- paths are still bare member basenames -- so this script is still the
+# reference for REGENERATING nsfe.txt from a fresh Famicompo drop, but its file-copy
+# half writes to a directory that is no longer shipped or read. Re-point dst_dir at
+# a scratch directory before running it.
 import os
 import shutil
 import struct
