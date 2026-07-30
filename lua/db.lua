@@ -1028,7 +1028,26 @@
 --     https://archive.org/details/bulba-projectay was rebuilt with the same name and
 --     path-preserving layout, so `source` is unchanged. Verified all 887 members
 --     byte-identical to the live archives. Data change -> bump forces a reindex.
-VERSION = 132;
+-- 133: NEW COLLECTION "AY/YM Music Archives" (id ayymarchives) -- the rest of
+--     Bulba's ay.strangled.net page, 14,261 net-new tunes, on-demand from
+--     https://archive.org/details/bulba-projectay-plus. Sources: Tr_Songs v7.4
+--     (ZX tracker modules), YM Archive v5 + YM + faveym (Atari ST .ym) and
+--     VtxYmEtc + Nostalgic (.vtx). Built by scripts/build_ayymarchives.py.
+--     Dedup is by CONTENT HASH, not name: 18,350 of the page's 35,815 unique
+--     files are byte-identical to zxart, 2,920 more sit in modland by
+--     (basename,size) (98% precision, verified 59/60 by content) and 280 are
+--     already in projectay. Name matching cannot see this -- zxart renames
+--     everything to "Author_-_Title_(year).ext", so it detects 0 of 97 real
+--     duplicates in a 120-file sample, and a name-only estimate overcounts
+--     net-new by 75%.
+--     Metadata comes from the modules themselves via the new `cm
+--     --dump-metadata` (see main.cpp): 63.5% real titles, 93.5% real composers,
+--     the remainder falling back to .ayl Name=/Author=, the Authors/<name>/
+--     folder, then the filename. Hand-rolled header offsets were rejected --
+--     they yield the literal format id "SONG BY ST COMPILE" for all 2,763 .stc.
+--     4 files that no plugin could load are excluded, and 33 Cyrillic/accented
+--     member paths are ASCII-ified in the ZIP (the list matches).
+VERSION = 133;
 
 DB = {
 {
@@ -1318,6 +1337,41 @@ DB = {
 	priority = 850,  -- native ZX/CPC AY rips
 	source = "https://archive.org/download/bulba-projectay/bulba-projectay.zip/",
 	song_list = "data/projectay.txt",
+	song_template = "title composer format path ext",
+	color = 0xfffff
+ },
+ {
+	-- AY/YM Music Archives -- the REST of Sergey Bulba's ay.strangled.net page,
+	-- i.e. everything the Project AY entry above does not already cover:
+	-- Tr_Songs v7.4 (ZX Spectrum tracker modules: pt3/pt2/stc/asc/stp/sqt/psc/...),
+	-- YM Archive v5 + YM + faveym (Atari ST .ym register dumps) and
+	-- VtxYmEtc + Nostalgic (.vtx). Bulba publishes only whole archives, two of
+	-- them .7z which we cannot read, so these were repacked into ONE ZIP on
+	-- archive.org whose member paths are exactly this list's path column.
+	--
+	-- NET-NEW ONLY (the Vampi/Demozoo/AMP/VGMRips convention): of 35,815 unique
+	-- files on that page, 18,350 are byte-identical to zxart, 2,920 more are in
+	-- modland by (basename,size) and 280 are already in projectay -- so only
+	-- 14,261 ship here. Content hashes were mandatory for that: zxart renames
+	-- every file to "Author_-_Title_(year).ext", so basename matching detects
+	-- 0 of 97 real duplicates in a 120-file sample.
+	--
+	-- Titles/composers come from chipmachine/scripts/build_ayymarchives.py, which
+	-- reads them out of the modules via `cm --dump-metadata` -- the SAME decoders
+	-- that play them, so the list cannot disagree with the app. Falls back to the
+	-- .ayl playlists then the Authors/<name>/ folder: 63.5% real titles, 93.5%
+	-- real composers. (The .ayl files are mostly playback config; they supply
+	-- under 2% of the metadata. Do not mistake them for the metadata source.)
+	--
+	-- format is coarse on purpose: "Spectrum AY" is re-specialised per real ext
+	-- by generateIndex (the VERSION 128 allowlist), "Atari ST" -> ATARI.
+	-- 33 member paths were ASCII-ified in the ZIP (Cyrillic/accented names) --
+	-- see the builder; the song list carries the sanitised paths to match.
+	name = "AY/YM Music Archives",
+	id =  "ayymarchives",
+	priority = 730,  -- broad ZX/Atari archive: below projectay's definitive rips
+	source = "https://archive.org/download/bulba-projectay-plus/bulba-projectay-plus.zip/",
+	song_list = "data/ayymarchives.txt",
 	song_template = "title composer format path ext",
 	color = 0xfffff
  },

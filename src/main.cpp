@@ -34,6 +34,8 @@ namespace di = boost::di;
 #include <cctype>
 #include <csignal>
 #include <filesystem>
+#include <fstream>
+#include <iostream>
 #include <optional>
 #include <set>
 #include <vector>
@@ -87,6 +89,7 @@ int main(int argc, char* argv[])
         bool no_images = false;
         bool debug = false;
         bool dump_extensions = false;
+        std::string dump_metadata;
         std::string play_what;
 #ifdef TEXTMODE_ONLY
         bool text_mode = true;
@@ -124,6 +127,14 @@ int main(int argc, char* argv[])
                   "(one per line) and exit. Feeds the macOS file-association "
                   "document-type list in package_app.sh; the single source of "
                   "truth is the plugins themselves, so this stays in sync.");
+    opts.add_option("--dump-metadata", options.dump_metadata,
+                    "Read newline-separated song paths from FILE ('-' for stdin), "
+                    "load each through the normal plugin chain and print one TSV "
+                    "row per file (path, status, plugin, title, composer, subsongs, "
+                    "length) to stdout, then exit. Used to build song lists for "
+                    "archives that carry no usable metadata of their own: the "
+                    "titles come from the same decoders that will play the files, "
+                    "so a generated list cannot disagree with what the app shows.");
     opts.add_option("files", options.songs, "Songs to play");
 
     CLI11_PARSE(opts, argc, argv)
@@ -255,6 +266,97 @@ int main(int argc, char* argv[])
             }
         }
         for (auto const& e : exts) utils::print_fmt("%s\n", e);
+        return 0;
+    }
+
+    // --dump-metadata: batch metadata extraction. Reads song paths (one per line)
+    // and prints a TSV row per file. Sits here for the same reason as
+    // --dump-extensions: plugins are up, but no DB/Lua/audio/GL init is needed.
+    //
+    // Why this exists: archives like Bulba's Tr_Songs ship modules with cryptic
+    // filenames (sk_11.pt3) and no sidecar metadata, so a song list has to come
+    // from the modules themselves. Hand-rolled header offsets get this wrong --
+    // e.g. every .stc yields the literal format identifier "SONG BY ST COMPILE"
+    // rather than a title -- whereas the plugins already parse these formats
+    // properly to drive the GUI. Reusing them means the generated list and the
+    // playing app can never disagree.
+    if (!options.dump_metadata.empty()) {
+        std::vector<std::string> paths;
+        if (options.dump_metadata == "-") {
+            for (std::string l; std::getline(std::cin, l);)
+                if (!l.empty()) paths.push_back(l);
+        } else {
+            std::ifstream in{ options.dump_metadata };
+            if (!in) {
+                fprintf(stderr, "cannot open list file: %s\n",
+                        options.dump_metadata.c_str());
+                return 1;
+            }
+            for (std::string l; std::getline(in, l);) {
+                while (!l.empty() && (l.back() == '\r' || l.back() == '\n'))
+                    l.pop_back();
+                if (!l.empty()) paths.push_back(l);
+            }
+        }
+
+        // A tab or newline inside a title would corrupt the TSV; collapse both.
+        auto clean = [](std::string s) {
+            for (auto& c : s)
+                if (c == '\t' || c == '\n' || c == '\r') c = ' ';
+            while (!s.empty() && s.back() == ' ') s.pop_back();
+            size_t b = s.find_first_not_of(' ');
+            return b == std::string::npos ? std::string{} : s.substr(b);
+        };
+        auto str_meta = [&](std::shared_ptr<musix::ChipPlayer> const& p,
+                            char const* key) {
+            if (auto* s = std::get_if<std::string>(&p->meta(key))) return clean(*s);
+            return std::string{};
+        };
+        auto num_meta = [](std::shared_ptr<musix::ChipPlayer> const& p,
+                           char const* key) -> long {
+            auto const& v = p->meta(key);
+            if (auto* u = std::get_if<uint32_t>(&v)) return static_cast<long>(*u);
+            if (auto* d = std::get_if<double>(&v)) return static_cast<long>(*d);
+            return -1;
+        };
+
+        printf("path\tstatus\tplugin\ttitle\tcomposer\tsubsongs\tlength\n");
+        for (auto const& path : paths) {
+            std::string lower = path;
+            utils::makeLower(lower);
+            std::string status = "no_plugin";
+            std::string used;
+            std::shared_ptr<musix::ChipPlayer> player;
+            for (auto& plugin : musix::ChipPlugin::getPlugins()) {
+                if (!plugin->canHandle(lower)) continue;
+                used = plugin->name();
+                // A claimer that throws or returns null is not fatal -- the real
+                // player tries the next claimer too (see MusicPlayer::fromFile),
+                // so a format claimed by several plugins still resolves.
+                try {
+                    player = std::shared_ptr<musix::ChipPlayer>(
+                        plugin->fromFile(path));
+                } catch (const std::exception& e) {
+                    status = std::string("throw:") + e.what();
+                    player = nullptr;
+                } catch (...) {
+                    status = "throw:unknown";
+                    player = nullptr;
+                }
+                if (player) { status = "ok"; break; }
+                if (status == "no_plugin") status = "load_failed";
+            }
+            if (!player) {
+                printf("%s\t%s\t%s\t\t\t\t\n", clean(path).c_str(),
+                       clean(status).c_str(), clean(used).c_str());
+                continue;
+            }
+            printf("%s\tok\t%s\t%s\t%s\t%ld\t%ld\n", clean(path).c_str(),
+                   clean(used).c_str(), str_meta(player, "title").c_str(),
+                   str_meta(player, "composer").c_str(),
+                   num_meta(player, "songs"), num_meta(player, "length"));
+            fflush(stdout);
+        }
         return 0;
     }
 

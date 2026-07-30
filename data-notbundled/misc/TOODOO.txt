@@ -1,6 +1,6 @@
 Mac App Store (MAS) compliance:
 
-- expand projectay
+- check screenshots for all the unbundled files!
 
 - change cryptic db names -- cosmetic
 - code rename NSFE to FAMICOMPO in the id as well (maybe other cryptic ids too)
