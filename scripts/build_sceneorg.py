@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build chipmachine/data/sceneorg.txt from the scene.org file dumps.
 
-The four TSVs in chipmachine/data/misc/scene.org/ (mod/xm/it/s3m) list every
+The four TSVs in chipmachine/data-notbundled/misc/scene.org/ (mod/xm/it/s3m) list every
 tracker module on files.scene.org -- but .mod/.xm/.it/.s3m are the four most
 heavily-mirrored formats we ship (modland ~165k + modarchive ~155k of exactly
 these). So onboarding all of scene.org would be almost entirely duplicate.
@@ -36,7 +36,9 @@ import urllib.parse
 
 HERE = os.path.dirname(__file__)
 DATA = os.path.join(HERE, "..", "data")
-SRC = os.path.join(DATA, "misc", "scene.org")
+# Scrape input: build-time only -> data-notbundled/ (not copied into the .app).
+NOTBUNDLED = os.path.join(HERE, "..", "data-notbundled")
+SRC = os.path.join(NOTBUNDLED, "misc", "scene.org")
 ALLMODS = os.path.join(DATA, "allmods.txt")
 MODARCHIVE = os.path.join(DATA, "modarchive.txt")
 DEMOZOO = os.path.join(DATA, "demozoo.txt")

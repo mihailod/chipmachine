@@ -1,0 +1,2 @@
+./package_app.sh --plus --buildapponly
+./package_app.sh --mas  --buildapponly

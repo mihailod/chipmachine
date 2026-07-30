@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build chipmachine/data/zophar.txt -- Zophar's Domain console gamerips.
 
-Driven by data/misc/zophar.net/list.csv (17712 games / 21 platforms, scraped by
+Driven by data-notbundled/misc/zophar.net/list.csv (17712 games / 21 platforms, scraped by
 eliotbyte/zophar-downloader). We do NOT re-scrape Zophar -- the CSV already has
 name + platform + image_url + game_page_url per game. The EMU (original chip) zip
 URL is reconstructed from (slug,title) -- verified 200 across platforms (the CSV's
@@ -45,10 +45,13 @@ import csv, html, os, re, struct, sys, time, urllib.parse, urllib.request
 
 HERE = os.path.dirname(__file__)
 DATA = os.path.normpath(os.path.join(HERE, "..", "data"))
-CSV  = os.path.join(DATA, "misc", "zophar.net", "list.csv")
+# Scrape input + the unplayable-format log: build-time only -> data-notbundled/
+# (the .app bundle gets data/ only, see package_app.sh).
+NOTBUNDLED = os.path.normpath(os.path.join(HERE, "..", "data-notbundled"))
+CSV  = os.path.join(NOTBUNDLED, "misc", "zophar.net", "list.csv")
 OUT       = os.path.join(DATA, "zophar.txt")
 OUT_SHOTS = os.path.join(DATA, "zophar_screenshots.txt")
-OUT_UNPL  = os.path.join(DATA, "misc", "zophar.net", "unplayable_formats.txt")
+OUT_UNPL  = os.path.join(NOTBUNDLED, "misc", "zophar.net", "unplayable_formats.txt")
 CDN = "https://fi.zophar.net/soundfiles/"
 
 # slug -> (format label for db.lua classification (must resolve in the

@@ -364,6 +364,13 @@ if ! plutil -lint "${TARGET_DIR}/Contents/Info.plist" >/dev/null; then
 fi
 
 # 4. Copy the asset and Lua payloads from the chipmachine source tree
+#
+# data/ is the SHIPPING asset tree only -- everything under it is copied
+# verbatim into Contents/Resources and sealed into the code signature. Anything
+# that is merely build-time input (raw scrapes feeding scripts/build_*.py, side
+# tables, project docs, marketing screenshots) belongs in the sibling
+# chipmachine/data-notbundled/, which mirrors data/'s layout and is deliberately
+# NOT referenced here. See the header of scripts/DB_UPDATE_PROCESS.txt.
 echo "-> Packaging runtime assets into bundle..."
 if [ -d "${CHIPMACHINE_DIR}/data" ]; then
     cp -R "${CHIPMACHINE_DIR}/data" "${RESOURCES_DIR}/"

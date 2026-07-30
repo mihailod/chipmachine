@@ -820,7 +820,7 @@ bool MusicDatabase::parseStandard(
     bool unexotica = (vars["id"] == "unexotica");
 
     // modarchive's title column is the upstream marchive-open-db composite
-    // "<filename>//<realtitle>" (see data/misc/ModArchive.md). The filename half
+    // "<filename>//<realtitle>" (see data-notbundled/misc/ModArchive.md). The filename half
     // is dead weight -- playback routes on the `ext` column plus the server's
     // Content-Disposition name, nothing reads the embedded filename -- and it
     // both uglifies the GUI and poisons any {title,composer,format} dedup key.

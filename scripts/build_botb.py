@@ -40,6 +40,9 @@ CACHE = os.environ.get("BOTB_CACHE",
         "/private/tmp/claude-502/-Users-mihailod-Documents-chipmachine-as/"
         "5c8b19f4-f34f-4c96-9d33-7990b2de3fa0/scratchpad/botb_entries.jsonl")
 DATA = os.path.normpath(os.path.join(HERE, "..", "data"))
+# Build-time side tables live outside the bundled tree (package_app.sh copies
+# data/ only into the .app).
+NOTBUNDLED = os.path.normpath(os.path.join(HERE, "..", "data-notbundled"))
 
 
 def _get(url, tries=4):
@@ -174,10 +177,10 @@ VGM_PLATFORM = {
 # reading each file's chip-clock header (scripts/vgm_peek analysis, 2026-07-16):
 # the BotB compo token classifies only ~5 tokens, leaving ~1039 as generic "VGM".
 # The header names the actual sound chip(s), which map to a real platform far more
-# reliably than the token. This side-file (data/botb_vgm_platforms.txt) is the
+# reliably than the token. This side-file (data-notbundled/botb_vgm_platforms.txt) is the
 # committed result; it wins over VGM_PLATFORM's token guess for any .vgm/.vgz.
 def load_vgm_overrides():
-    path = os.path.join(DATA, "botb_vgm_platforms.txt")
+    path = os.path.join(NOTBUNDLED, "botb_vgm_platforms.txt")
     m = {}
     if os.path.exists(path):
         with open(path, encoding="utf-8") as f:

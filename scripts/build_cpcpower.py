@@ -29,7 +29,7 @@ an exact fiche=num lookup -- no fuzzy name search.
 
   --build        enumerate music fiches (Wayback CDX), read live tabs, write
                  data/cpcpower.txt
-                 (+ data/cpcpower_fiche.tsv mapping song URL -> game fiche id)
+                 (+ data-notbundled/cpcpower_fiche.tsv mapping song URL -> game fiche id)
   --screenshots  for each game fiche, probe its in-game screenshot and write
                  data/cpcpower_screenshots.txt (keyed by song URL)
 """
@@ -46,7 +46,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 HERE = os.path.dirname(__file__)
 DATA = os.path.normpath(os.path.join(HERE, "..", "data"))
 OUT = os.path.join(DATA, "cpcpower.txt")
-OUT_FICHE = os.path.join(DATA, "cpcpower_fiche.tsv")
+# Build-time side table (song URL -> fiche id); not shipped in the .app bundle,
+# so it lives in data-notbundled/ (package_app.sh copies data/ only).
+NOTBUNDLED = os.path.normpath(os.path.join(HERE, "..", "data-notbundled"))
+OUT_FICHE = os.path.join(NOTBUNDLED, "cpcpower_fiche.tsv")
 OUT_SHOTS = os.path.join(DATA, "cpcpower_screenshots.txt")
 
 LIVE = "https://www.cpc-power.com/YM/"

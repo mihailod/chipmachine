@@ -108,7 +108,7 @@
 --     (user choice) to the slice modland/modarchive cover WORST: the Spanish
 --     demoscene mirror (mirrors/scenesp.org/) + the party archive (parties/).
 --     Built by chipmachine/scripts/build_sceneorg.py from the shipped TSV dumps in
---     data/misc/scene.org/. No md5 exists anywhere (TSV / files.scene.org view
+--     data-notbundled/misc/scene.org/. No md5 exists anywhere (TSV / files.scene.org view
 --     page / API), so dedup is by lowercased basename vs allmods (modland),
 --     modarchive.txt and our own demozoo.txt -> 3278 net-new kept of 6838 in
 --     scope. composer = the party/artist dir the file sits in (provenance);
@@ -162,7 +162,7 @@
 --     song_template keyword maps it to metaIndex -> song.metadata[INFO], which
 --     ChipMachine's scroller already renders. Bump forces a reindex.
 -- 75: AMP (Amiga Music Preservation, amp.dascene.net) rebuilt from the full
---     178k catalogue scrape (data/misc/amp/MODULES.csv) into a real, indexed
+--     178k catalogue scrape (data-notbundled/misc/amp/MODULES.csv) into a real, indexed
 --     collection -- the old entry was `index = "no"` (unsearchable) and only
 --     half-played (MOD/STK routed via OpenMPT's prefix special-case; IT/XM/
 --     S3M/MED/... silently failed). chipmachine/scripts/build_amp.py dedups vs modland +
@@ -185,7 +185,7 @@
 --     them silent, aborts on some OPL2), so a new libvgmplugin (ValleyBell
 --     libvgm, vendored at zxtune/3rdparty/vgm) plays them and GME declines any
 --     OPL-carrying VGM -- the ~14k non-OPL console VGZ stay on GME. Built by
---     chipmachine/scripts/build_oplarchive.py from data/misc/opl/files.csv; path = a full
+--     chipmachine/scripts/build_oplarchive.py from data-notbundled/misc/opl/files.csv; path = a full
 --     URI-encoded wafflenet URL (source empty), kept as .vgz (libvgm reads gzip
 --     directly). format "OPL Archive" -> ADPLUG -> the "IBM PC (AdLib/OPL)"
 --     filter. Bump forces a reindex.
@@ -212,7 +212,7 @@
 --     vs modland Sega + Zophar (modland's "Video Game Music" is ~99% Sega, so
 --     the arcade / PC-98 / PC-88 / X68000 / FM Towns / TurboGrafx / Neo Geo /
 --     NES / GameBoy / WonderSwan / ... platforms are all net-new). Built by
---     chipmachine/scripts/build_vgmrips.py from data/misc/vgmrips/files.csv. ROUTING: VGM is a
+--     chipmachine/scripts/build_vgmrips.py from data-notbundled/misc/vgmrips/files.csv. ROUTING: VGM is a
 --     multi-chip container and GME's Vgm_Emu only decodes the Sega/AY logs
 --     (SN76489/YM2413/YM2612/AY8910); the chip gate in vgm_opl_detect.h
 --     (vgmNeedsLibVGM, superseding vgmHasOPL) now routes every other chip
@@ -411,7 +411,7 @@
 --     real logo banner (https://syntaxerror.nu/banner.gif). Bump forces a reindex
 --     so the collection.artwork column is rewritten.
 -- 93: Zophar's Domain FULL EXPANSION (Genesis pilot 335 -> 4463 games / 10
---     platforms). The other dev's data/misc/zophar.net/list.csv inventoried the
+--     platforms). The other dev's data-notbundled/misc/zophar.net/list.csv inventoried the
 --     whole catalog (17712 games / 21 platforms). Ground truth (opening the
 --     "(EMU).zophar.zip" of each) splits Zophar in two: SEQUENCED CHIP platforms
 --     (homogeneous, all decodable) = NES nsf, SNES spc, Game Boy gbs, GBA
@@ -419,7 +419,7 @@
 --     Game Gear sgc -- ONBOARDED; and a STREAMED-AUDIO tier (PS1/PS2/Saturn/
 --     Dreamcast + all HD consoles) whose "originals" are recorded rips
 --     (xa/asf/adx/at3/dsp/eam/genh/...), NOT chip -- HELD (only vgmstream could
---     play them; extensions logged to data/misc/zophar.net/unplayable_formats.txt
+--     play them; extensions logged to data-notbundled/misc/zophar.net/unplayable_formats.txt
 --     for a separate go/no-go). Deduped per platform vs the whole console corpus
 --     (modland by ext + vgmrips + smspower + rsn + nsfe): modland is deep-but-
 --     narrow per game while Zophar is game-complete, so most platforms are
@@ -632,7 +632,7 @@
 --     NOT fixed: 18209 rows tagged "Demoscene" (16884 .zip) still reach no
 --     filter -- demozoo records no platform for those productions and none is
 --     recoverable offline (checked: song.metadata empty, ext="zip",
---     data/misc/demozoo-songs.md's platform column is blank for exactly these).
+--     data-notbundled/misc/demozoo-songs.md's platform column is blank for exactly these).
 --     Deciding them needs the archive's member list; see cmtest
 --     unclassified_songs for the live count.
 -- 106: rendered-audio containers keyed as EXTENSIONS in format_map (wav, flac,
@@ -652,7 +652,7 @@
 -- 107: the 17k "Demoscene" ARCHIVE rows are classified from what is actually
 --     INSIDE them. demozoo records no platform for these productions and none
 --     was recoverable offline (song.metadata empty, ext="zip", and
---     data/misc/demozoo-songs.md's platform column is blank for exactly these),
+--     data-notbundled/misc/demozoo-songs.md's platform column is blank for exactly these),
 --     so filter_demozoo_archives.py --classify now reads each archive's member
 --     list and writes the member's real format into the platform column as the
 --     bare uppercase extension ("XM"/"MOD"/"IT"/"MP3"/...) -- the vocabulary
@@ -907,7 +907,7 @@
 --     each file's VGM chip-clock header (HuC6280->PC Engine, YM2612->Genesis,
 --     GB DMG->Game Boy, AY8910 by clock->Spectrum/CPC/Atari ST, K051649 SCC->MSX,
 --     YM2610->Neo Geo, QSound/C140/...->Arcade, etc.). build_botb.py now consults
---     data/botb_vgm_platforms.txt (url->platform, the committed header analysis)
+--     data-notbundled/botb_vgm_platforms.txt (url->platform, the committed header analysis)
 --     which overrides the 5-token VGM_PLATFORM guess. One extra-header-only file
 --     stays "VGM". Pure metadata: playback is .vgm extension-driven, unchanged.
 -- 124: the last "VGM" row removed. Its one member ("Visible Confusion", an
@@ -1091,7 +1091,7 @@ DB = {
 	-- the net-new-vs-modland/modarchive slice. Each path is a full
 	-- archive.scene.org/pub/ URL (source empty); .zip rows hold a lone module
 	-- extracted by magic. composer = party/artist provenance. Built by
-	-- chipmachine/scripts/build_sceneorg.py from data/misc/scene.org/*.tsv.
+	-- chipmachine/scripts/build_sceneorg.py from data-notbundled/misc/scene.org/*.tsv.
 	name = "scene.org",
 	id =  "sceneorg",
 	priority = 775,  -- demoscene tracker modules
@@ -1433,7 +1433,7 @@ DB = {
 --	id = "bitar",
 --	type = "podcast",
 --	source = "",
---	song_list = "data/bitar.xml",
+--	song_list = "data-notbundled/bitar.xml",
 --	remote_list = "http://www.bitartillkaffet.se/?feed=podcast",
 --	color = 0xfffff
 --},
@@ -1441,7 +1441,7 @@ DB = {
 --	name = "Bitar till Kaffet (Archive)",
 --	id =  "bitar2",
 --	source = "http://www.bitartillkaffet.se/media/",
---	song_list = "data/bitar.txt",
+--	song_list = "data-notbundled/bitar.txt",
 --	color = 0xfffff
 --},
 --{

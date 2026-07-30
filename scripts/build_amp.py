@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build data/amp.txt from the AMP (Amiga Music Preservation) catalogue.
 
-Input : chipmachine/data/misc/amp/MODULES.csv  (the full 178k-row scrape:
+Input : chipmachine/data-notbundled/misc/amp/MODULES.csv  (the full 178k-row scrape:
         MODULE_ID, MODULE_TITLE, COMPOSER, COMPOSER_DETAIL_URL, FORMAT, SIZE, DL)
 Output: chipmachine/data/amp.txt  (song_template "title composer format path ext")
 
@@ -30,7 +30,9 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 CHIP = os.path.join(HERE, "..")
 DATA = os.path.join(CHIP, "data")
-CSV_IN = os.path.join(DATA, "misc", "amp", "MODULES.csv")
+# Scrape input: build-time only -> data-notbundled/ (not copied into the .app).
+NOTBUNDLED = os.path.join(CHIP, "data-notbundled")
+CSV_IN = os.path.join(NOTBUNDLED, "misc", "amp", "MODULES.csv")
 OUT = os.path.join(DATA, "amp.txt")
 
 # AMP FORMAT code (uppercased) -> file extension the decoders route on.

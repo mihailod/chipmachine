@@ -1,6 +1,28 @@
 Dev notes on various databases and how they are updated
 =======================================================
 
+  WHERE THINGS LIVE (data/ vs data-notbundled/)
+  ---------------------------------------------
+  package_app.sh copies chipmachine/data/ recursively into
+  <App>/Contents/Resources/ for BOTH variants (ChipMachine / ChipMachinePlus).
+  So data/ holds ONLY what the shipping app reads at runtime:
+    - every collection list referenced by a song_list/prod_list/local_dir in
+      lua/db.lua, and every <collection>_screenshots.txt (MusicDatabase.cpp
+      loads these lazily by collection name);
+    - plugin payloads loaded from ChipPlugin::createPlugins(work_dir/"data"):
+      adplug.db, hebios.bin, c64/ (VICE ROMs), sc68/, uade/;
+    - UI assets: AlegreyaSansSC-Bold.ttf, FONT-LICENSES.txt, fontsmainscroll/,
+      playlists/, misc/{icon,paused,muted}.png, misc/platformscreenshots/,
+      misc/extensionscreenshots/, misc/formats_descriptions.txt,
+      misc/not_supported_extensions.txt, misc/Credits.rtf.
+      (misc/formats.png, misc/search.png and misc/amegas.png also stay put --
+       external sites hot-link them; they are not read by the app.)
+  Everything else -- raw scrape inputs for scripts/build_*.py, side tables,
+  project docs, marketing screenshots -- lives in the sister tree
+  chipmachine/data-notbundled/, which mirrors the same layout
+  (data/misc/opl -> data-notbundled/misc/opl) and is NEVER copied into the
+  bundle. Adding a new build-time-only input? Put it in data-notbundled/.
+
   873009 chipmachine/data/csdb.xml --- DONE -- 53985 -> 138694
 no music links here! just screenshots etc.
 THE C-64 SCENE DATABASE, see https://csdb.dk
@@ -41,11 +63,11 @@ Download and unzip https://ftp.modland.com/allmods.zip
 
 **********************************************
 
-  102721 chipmachine/data/Songlengths.txt -- DONE
+  102721 chipmachine/data-notbundled/Songlengths.txt -- DONE
 this is obsolete, used by VicePlugin and renamed to OLDVICESonglengths.txt
 the vicepluginbridge gets these lengths automatically from the sid files
 this MD5 file however is used by the code and was missing (harmless but no data was available):
- curl -L -o chipmachine/data/Songlengths.md5 https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/Songlengths.md5
+ curl -L -o chipmachine/data-notbundled/Songlengths.md5 https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/Songlengths.md5
 After your change: STIL.cpp can now successfully open and digest the database.
 however this was never used:
 ./musicplayer/src/stil/STIL.cpp says:
@@ -53,11 +75,11 @@ however this was never used:
 
 **********************************************
 
-   87075 chipmachine/data/STIL.txt -- DONE 87,075 -> 108,101
+   87075 chipmachine/data-notbundled/STIL.txt -- DONE 87,075 -> 108,101
 SID Tune Information List
 used by sid plugin
 curl -L -o STIL.txt https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/STIL.txt
-and put is in chipmachine/data
+and put is in chipmachine/data-notbundled
 
 **********************************************
 
@@ -124,8 +146,8 @@ scripts/update_rko.py (by agy)
 
 **********************************************
 
-    2974 chipmachine/data/bitar.xml -- podcasts... DEAD, REMOVED -- DONE
-      19 chipmachine/data/bitar.txt -- podcasts... DEAD, REMOVED -- DONE
+    2974 chipmachine/data-notbundled/bitar.xml -- podcasts... DEAD, REMOVED -- DONE
+      19 chipmachine/data-notbundled/bitar.txt -- podcasts... DEAD, REMOVED -- DONE
 
 **********************************************
 
@@ -318,24 +340,33 @@ N/A playlists  (Dir) | Playlists ( pl )                       | Directory
 
   #### Plugin & Engine-Specific Files (Used at Playback Time, not DB Build Time):
 
-X •  Songlengths.md5 : Utilized directly by the SID player engine to dynamically check HVSC song durations on demand during
-  playback (via MD5 hashing), completely bypassed by the database parser.
-X •  STIL.txt : The SID Tune Information List contains textual background information and comments for C64 tracks, queried by
-  the player interface when a SID file is loaded.
+X •  Songlengths.md5 / STIL.txt : NOT read from data/ at all -- SidPlugin::fromFile
+  walks up from the .sid file looking for a sibling HVSC "DOCUMENTS/STIL.txt"
+  (SidPlugin.cpp) and hands THAT directory to STIL.cpp, so the copies kept here
+  are reference/update material only. Both now live in data-notbundled/.
 - •  adplug.db : An internal binary database used solely by the AdPlug player plugin to handle OPL2/OPL3 (AdLib) metadata.
+  Loaded from data/ (createPlugins config dir) -- stays bundled.
 - •  hebios.bin : Emulation BIOS file utilized exclusively by the HEBIOS console sound emulator.
+  Loaded from data/ (createPlugins config dir) -- stays bundled.
 - •  sc68/sc68.cfg : The emulator engine configuration file and resources for SC68 (Atari ST) playback.
+  Loaded as data/sc68 -- stays bundled. (The stray duplicate that sat at data/sc68.cfg
+  had no reader and moved to data-notbundled/sc68.cfg.)
 
   #### Obsolete & System Files:
 
   •  OLDVICESonglengths.txt : Obsolete text file containing C64 track lengths for the old VICE emulators (scheduled for removal,
-  completely ignored by database indexing).
+  completely ignored by database indexing). Moved to data-notbundled/.
   •  AlegreyaSansSC-Bold.ttf : Typography font file used to render the graphical UI.
   •  fontsmainscroll/ : Font pool for the title scroller; every .otf inside is loaded at startup and ships with the app.
   •  FONT-LICENSES.txt : Author and license record for every bundled font (see it before adding a font to fontsmainscroll).
-  •  extractor.py : Python script used to fetch or process indexes, not loaded by C++ database builder.
-  •  __pycache__  /  python_runtime  /  misc  /  c64  /  uade : Utility directories that house scripts, compilers, emulators,
-  and assets.
+  •  extractor.py : Dead yt-dlp bridge (it imports a data/python_runtime that no longer exists); nothing invokes it.
+  Moved to data-notbundled/.
+  •  nsfecopy.txt, bitar.txt, bitar.xml, cpcpower_fiche.tsv, botb_vgm_platforms.txt : no runtime reader
+  (bitar's collection is commented out in db.lua; the last two are build_*.py side tables) -- all in data-notbundled/.
+  •  c64  /  uade  /  sc68  /  playlists  /  fontsmainscroll : runtime asset directories, stay in data/.
+  •  misc/ : SPLIT -- runtime images/text stay in data/misc/, while the raw scrape inputs (amp/, opl/, vgmrips/,
+  zophar.net/, scene.org/, chipmusic/, mirsoft/, demozoo-songs.md), the project docs (MANUAL.md, ARCHITECTURE.md,
+  TODO.md, TOODOO.txt, DONE*.txt, ...) and the marketing screenshots/ moved to data-notbundled/misc/.
 
 - - - - - - - - - -
 

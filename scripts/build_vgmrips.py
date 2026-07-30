@@ -5,7 +5,7 @@ Source: the Internet Archive item "vgmrips-all-of-them", a single outer zip
 (VGMRips_all_of_them_2024-05-18.zip). archive.org serves any member of that zip
 directly via ".../<outerzip>.zip/<url-encoded-member>". Each game is one inner
 ".zip" (per-track .vgz + a .png screenshot + .m3u/.txt); there is also a sibling
-top-level ".png" for the game. The manifest is data/misc/vgmrips/files.csv
+top-level ".png" for the game. The manifest is data-notbundled/misc/vgmrips/files.csv
 (path, date, size, top-platform, url-encoded-suffix), left by an earlier pass.
 
 The host downloads the inner game zip and the ZIP-by-magic handler in
@@ -35,8 +35,10 @@ import sys
 import urllib.parse
 
 HERE = os.path.dirname(__file__)
-CSV = os.path.join(HERE, "..", "data", "misc", "vgmrips",
-                   "files.csv")
+# Scrape input: build-time only, lives in the sister tree that is NOT copied
+# into the .app bundle (see package_app.sh -- it copies data/ only).
+NOTBUNDLED = os.path.join(HERE, "..", "data-notbundled")
+CSV = os.path.join(NOTBUNDLED, "misc", "vgmrips", "files.csv")
 ALLMODS = os.path.join(HERE, "..", "data", "allmods.txt")
 ZOPHAR = os.path.join(HERE, "..", "data", "zophar.txt")
 OUT = os.path.join(HERE, "..", "data", "vgmrips.txt")

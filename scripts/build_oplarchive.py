@@ -9,7 +9,7 @@ GME's Vgm_Emu cannot decode OPL (silent, or aborts on OPL2), so these route to
 libvgmplugin (ValleyBell libvgm), which reads the gzipped .vgz directly. The
 songs classify as "OPL Archive" -> ADPLUG -> the "IBM PC (AdLib/OPL)" filter.
 
-Input:  chipmachine/data/misc/opl/files.csv  (columns: Length,Path,Composer,Title)
+Input:  chipmachine/data-notbundled/misc/opl/files.csv  (columns: Length,Path,Composer,Title)
 Output: chipmachine/data/oplarchive.txt      (song_template: title composer format path ext)
 
 The path column is a full, URI-encoded wafflenet URL (db.lua `source` is empty);
@@ -25,7 +25,8 @@ import urllib.parse
 
 BASE = "https://opl.wafflenet.com/vgm/"
 HERE = os.path.dirname(__file__)
-CSV = os.path.join(HERE, "..", "data", "misc", "opl", "files.csv")
+# Scrape input: build-time only -> data-notbundled/ (not copied into the .app).
+CSV = os.path.join(HERE, "..", "data-notbundled", "misc", "opl", "files.csv")
 OUT = os.path.join(HERE, "..", "data", "oplarchive.txt")
 
 

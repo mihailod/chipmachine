@@ -20,8 +20,8 @@ Two data sources, split to keep the site load tiny:
     Cloudflare: the crawl is single-digit req/s, disk-cached (resume), and ABORTS
     on any 403/429 so we never hammer or get banned.
 
-  --rss     fetch the RSS spine -> data/misc/chipmusic/rss.tsv
-  --tags    crawl track pages for tags (cached) -> data/misc/chipmusic/tags.tsv
+  --rss     fetch the RSS spine -> data-notbundled/misc/chipmusic/rss.tsv
+  --tags    crawl track pages for tags (cached) -> data-notbundled/misc/chipmusic/tags.tsv
   --build   join spine+tags, classify, write data/chipmusic.txt
 """
 
@@ -37,7 +37,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 HERE = os.path.dirname(__file__)
 DATA = os.path.normpath(os.path.join(HERE, "..", "data"))
-MISC = os.path.join(DATA, "misc", "chipmusic")
+# Intermediate scrape artifacts: build-time only -> data-notbundled/ (the .app
+# bundle gets data/ only, see package_app.sh).
+NOTBUNDLED = os.path.normpath(os.path.join(HERE, "..", "data-notbundled"))
+MISC = os.path.join(NOTBUNDLED, "misc", "chipmusic")
 RSS_OUT = os.path.join(MISC, "rss.tsv")
 TAGS_OUT = os.path.join(MISC, "tags.tsv")
 CACHE = os.path.join(os.environ.get("TMPDIR", "/tmp"), "chipmusic_tag_cache")

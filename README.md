@@ -18,12 +18,12 @@ While ensuring the player runs on modern Apple hardware, my passion for it has e
 Despite the massive expansion under the hood, the core experience remains untouched: instant, incremental autocomplete search across the entire global library, delivering instant zero-latency (for cached songs) playback from a single, simple, unified interface.
 
 **(Screenshots might show features from dev in progress (not released) code.)**
-[![Screenshot](data/misc/screenshots/1playback.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/screenshots/2platforms.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/screenshots/3formats.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/screenshots/4databases.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/screenshots/5search.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data/misc/screenshots/6plugins.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data-notbundled/misc/screenshots/1playback.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data-notbundled/misc/screenshots/2platforms.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data-notbundled/misc/screenshots/3formats.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data-notbundled/misc/screenshots/4databases.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data-notbundled/misc/screenshots/5search.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data-notbundled/misc/screenshots/6plugins.png)](https://youtu.be/WsNhwxY1c08)
 
 ## Intro
 
@@ -34,7 +34,7 @@ Despite the massive expansion under the hood, the core experience remains untouc
 * **ENTER key = play**
 * **TAB key = help screen**
 * **(Read the scrolling text for more info)**
-* **[Things in progress / to come](data/misc/TOODOO.txt)**
+* **[Things in progress / to come](data-notbundled/misc/TOODOO.txt)**
 * **Ultimate goal: every chiptune ever made searchable and instantly playable!** 
 
 ## Binaries
@@ -228,7 +228,7 @@ MAS build ships neither.
 * *SHIFT-ESC* = Quit
 * *F7* = Toggle Favorite
 * Type _shoutcast_ to see the radio-stations
-* [Things in progress / to come](data/misc/TOODOO.txt)
+* [Things in progress / to come](data-notbundled/misc/TOODOO.txt)
 
 ## Data Sources
 
@@ -695,7 +695,7 @@ Every line is commented with what the format is, what was tried, and what would 
 
 ## **Credits**
 
-![Annoying Popup](data/misc/argh.jpg)
+![Annoying Popup](data-notbundled/misc/argh.jpg)
 
 > ChipMachine is my favorite Mac retro chiptune player and I have been using it forever. However, when opening it on my Mac after a recent macOS update, I saw this annoying popup above. It upset me and I channeled that anger into this project.
 
