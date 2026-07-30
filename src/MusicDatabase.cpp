@@ -1559,6 +1559,8 @@ void MusicDatabase::setFormatFilter(std::vector<uint8_t> const& allowedFormats)
             for (int idx : filteredCandidates)
                 shows.insert(formats[idx] >> 8);
             for (int rowid : shows) {
+                // DISPLAY ONLY -- the show label in the podcast browse list (and
+                // the key it is alphabetised by). Nothing branches on it.
                 std::string name;
                 auto q = db.query<std::string>(
                     "SELECT name FROM collection WHERE ROWID = ?", rowid);
@@ -1954,17 +1956,40 @@ int MusicDatabase::playlistsCollectionRowid()
     if (playlistsCollRowid != -2) return playlistsCollRowid;
     playlistsCollRowid = -1;
     try {
-        auto q = db.query<int, std::string, std::string>(
-            "SELECT ROWID, id, name FROM collection");
+        // Keyed on the id ONLY. This used to also accept name == "Playlists",
+        // but the display name is user-editable in db.lua, so matching on it
+        // would break the moment somebody retitled the collection.
+        auto q = db.query<int, std::string>("SELECT ROWID, id FROM collection");
         while (q.step()) {
-            auto [rowid, cid, cname] = q.get_tuple();
-            if (cname == "Playlists" || cid == "pl") {
+            auto [rowid, cid] = q.get_tuple();
+            if (cid == "pl") {
                 playlistsCollRowid = rowid;
                 break;
             }
         }
     } catch (...) {}
     return playlistsCollRowid;
+}
+
+std::string const&
+MusicDatabase::collectionDisplayName(std::string const& id)
+{
+    if (!collectionNamesLoaded) {
+        collectionNamesLoaded = true;
+        try {
+            auto q = db.query<std::string, std::string>(
+                "SELECT id, name FROM collection");
+            while (q.step()) {
+                auto [cid, cname] = q.get_tuple();
+                if (!cid.empty() && !cname.empty())
+                    collectionNameById[cid] = cname;
+            }
+        } catch (...) {}
+    }
+    auto it = collectionNameById.find(id);
+    // Fall back to the id so callers never have to special-case a miss: an
+    // unindexed DB, or one of the pseudo-prefixes that is not a collection.
+    return it == collectionNameById.end() ? id : it->second;
 }
 
 void MusicDatabase::buildDatabaseGroups()
@@ -1992,7 +2017,8 @@ void MusicDatabase::buildDatabaseGroups()
         byteTally[rowid][formats[i] & 0xff]++;
     }
 
-    // Collection id/name by ROWID.
+    // Collection id + display name by ROWID. The name is carried purely to label
+    // and alphabetise the TAB Database rows; `id` is what any logic keys on.
     std::unordered_map<int, std::pair<std::string, std::string>> meta;
     try {
         auto q = db.query<int, std::string, std::string>(
@@ -4863,7 +4889,6 @@ void MusicDatabase::generateIndex()
         // /Applications bundle).
         if (!c.local_dir.empty() && !c.local_dir.is_absolute())
             c.local_dir = workDir / c.local_dir;
-        // NOTE c.name is really c.id
         // hvtc songs live on plus4world.powweb.com. That host used to be a slow,
         // flaky shared box (~20s per .prg, intermittent connection failures),
         // which is why db.lua VERSION 65 bundled the files and this branch put
@@ -4874,11 +4899,11 @@ void MusicDatabase::generateIndex()
         // Wayback costs ~1.3s and has thinner coverage. So: LIVE primary, Wayback
         // fallback for the few .prg files that have vanished upstream since we
         // mirrored. Derived from c.url, so no DB/db.lua change.
-        if (c.name == "hvtc") {
+        if (c.id == "hvtc") {
             std::string live = c.url;
             std::string wayback = "https://web.archive.org/web/2id_/" + live;
-            loader.registerSource(c.name, live, c.local_dir.string(), wayback);
-        } else if (c.name == "mirsoft") {
+            loader.registerSource(c.id, live, c.local_dir.string(), wayback);
+        } else if (c.id == "mirsoft") {
             // mirsoft.info game-mod zips: serve from the Internet Archive
             // snapshot first (mirsoftJuly2021snapshot/gamemods/<Game>.zip), with
             // the live mirsoft host (c.url) as fallback for anything the 2021
@@ -4887,9 +4912,9 @@ void MusicDatabase::generateIndex()
             std::string live = c.url;
             std::string archive =
                 "https://archive.org/download/mirsoftJuly2021snapshot/gamemods/";
-            loader.registerSource(c.name, archive, c.local_dir.string(), live);
+            loader.registerSource(c.id, archive, c.local_dir.string(), live);
         } else {
-            loader.registerSource(c.name, c.url, c.local_dir.string());
+            loader.registerSource(c.id, c.url, c.local_dir.string());
         }
     }
     // Load per-collection search priority (ROWID-indexed). Done here -- before

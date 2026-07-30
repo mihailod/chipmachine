@@ -615,17 +615,25 @@ private:
     // rebuilds just the search index from the table.
     void syncPodcastSongs();
 
+    // A row of the `collection` table as generateIndex reads it. NB the fields
+    // are deliberately NOT called (id, name): this is populated from
+    // "SELECT ROWID,id,url,localdir", so the string is the db.lua *id* slug
+    // ("hvtc"), never the display name. It used to be called `name`, which read
+    // as though `c.name == "hvtc"` were comparing the displayed title -- and the
+    // display name is now user-editable in db.lua, so anything keying off it
+    // would silently break on a rename. The display name is not in here at all;
+    // it is display-only and is never used for logic anywhere.
     struct Collection
     {
-        int id;
-        std::string name;
+        int rowid;
+        std::string id;
         std::string url;
         utils::path local_dir;
 
-        explicit Collection(int id = -1, std::string const& name = "",
+        explicit Collection(int rowid = -1, std::string const& id = "",
                             std::string const& url = "",
                             utils::path const& local_dir = utils::path(""))
-            : id(id), name(name), url(url), local_dir(local_dir)
+            : rowid(rowid), id(id), url(url), local_dir(local_dir)
         {}
     };
 
@@ -733,7 +741,25 @@ public:
     void setOtherParent(int familyGid) { otherParentFilter = familyGid; }
     int otherParent() const { return otherParentFilter; }
 
+    // ROWID of the Playlists collection, resolved lazily from the db.lua id "pl"
+    // and cached (-1 = no such collection). Public so cmtest can assert it stays
+    // keyed on the ID: the display name is user-editable, and this lookup used to
+    // also accept name == "Playlists", which a retitle would have silently broken.
+    int playlistsCollectionRowid();
+
+    // db.lua id ("hvsc") -> display name ("High Voltage SID Collection"), for UI
+    // labels only. Falls back to the id itself when the collection is unknown or
+    // unnamed, so a caller can print the result unconditionally. This is the ONLY
+    // sanctioned direction: look a name up FROM an id for display -- never match
+    // on the name to decide anything.
+    std::string const& collectionDisplayName(std::string const& id);
+
 private:
+    // Lazily built by collectionDisplayName() on first use, then kept for the
+    // life of the instance -- same as playlistsCollRowid/databaseGroupsBuilt.
+    // Safe because a reindex happens during startup, before any UI lookup.
+    std::unordered_map<std::string, std::string> collectionNameById;
+    bool collectionNamesLoaded = false;
     RemoteLoader& remoteLoader;
     utils::path workDir;
 
@@ -852,7 +878,6 @@ private:
     // active database filter, search() also lists the user's config-dir playlists
     // (playLists) so runtime-created lists show alongside the indexed ones.
     int playlistsCollRowid = -2;
-    int playlistsCollectionRowid();
     // Count songs per collection (from formats[] >> 8), fetch id/name and the
     // modal platform byte, sort by count. Fills databaseGroupList.
     void buildDatabaseGroups();

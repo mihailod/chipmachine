@@ -621,6 +621,11 @@ void ChipMachine::updateKeys()
         if (src == "playlist" || src == "otherplatform" || src == "othergroup" ||
             src == "podcastshow" || src == "product")
             src = "";
+        // Show the collection's db.lua display name ("High Voltage SID
+        // Collection") rather than the raw id ("hvsc"). The id stays the key --
+        // the pseudo-prefixes above are still matched on it, and the lookup falls
+        // back to the id when a collection is unknown or unnamed.
+        if (!src.empty()) src = musicDatabase.collectionDisplayName(src);
         sourceStatus.setText(src);
         sourceStatus.pos.x = topStatus.pos.x + topStatus.getWidth() + 15;
         sourceStatus.visible(src != "");

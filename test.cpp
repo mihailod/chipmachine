@@ -934,6 +934,120 @@ TEST_CASE("local-dir files report local and are never cached", "[music]")
     REQUIRE_FALSE(rl.isLocalFile("bogus::whatever.ay"));
 }
 
+// A collection's db.lua `name` is DISPLAY ONLY -- it is user-editable and no
+// logic may key on it; `id` is the stable key. playlistsCollectionRowid() is the
+// one lookup that ever broke this rule (it used to accept name == "Playlists"
+// OR id == "pl"), so guard it specifically: rename the collection in the DB to
+// something that could never match by name, and require it still resolves.
+//
+// The rename is undone by a destructor rather than a trailing statement, because
+// a failing REQUIRE throws -- a plain restore at the end of the test would be
+// skipped and would leave the user's music.db holding a bogus name.
+// NB no comma in the test name -- Catch2 reads commas in a test spec as a
+// separator, so `cmtest "..."` would silently match nothing.
+TEST_CASE("playlists collection resolves by id not display name", "[music]")
+{
+    using namespace chipmachine;
+    auto dbPath = (Environment::getCacheDir() / "music.db").string();
+
+    int wantRowid = -1;
+    std::string original;
+    {
+        sqlite3db::Database db(dbPath);
+        auto q = db.query<int, std::string>(
+            "SELECT ROWID, name FROM collection WHERE id = 'pl'");
+        if (q.step()) std::tie(wantRowid, original) = q.get_tuple();
+    }
+    // No indexed DB on this machine (or no Playlists collection) -> nothing to
+    // assert. Don't fail; cmtest must stay runnable before a first index.
+    if (wantRowid < 0) return;
+
+    struct Restore
+    {
+        std::string path, name;
+        ~Restore()
+        {
+            sqlite3db::Database db(path);
+            db.exec("UPDATE collection SET name = ? WHERE id = 'pl'", name);
+        }
+    } restore{ dbPath, original };
+
+    {
+        sqlite3db::Database db(dbPath);
+        db.exec("UPDATE collection SET name = ? WHERE id = 'pl'",
+                std::string("ZZZ Not The Playlists Name"));
+    }
+
+    // Fresh instance: the rowid is cached per-object, so this re-runs the query.
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+    REQUIRE(mdb.playlistsCollectionRowid() == wantRowid);
+}
+
+// GZPlugin is a WRAPPER, not a format: it gunzips and re-dispatches to whichever
+// plugin handles the payload. testmus/gzplugin/amegas.mod.gz is the same module
+// as testmus/openmpt/amegas.mod, gzipped -- so this asserts the unwrap actually
+// reaches OpenMPT and produces audio, rather than just parking a file where the
+// coverage audit expects one.
+TEST_CASE("gzipped module unwraps and plays", "[music]")
+{
+    auto ap = std::make_shared<AudioPlayerNull>();
+    const auto injector = di::make_injector(di::bind<utils::path>.to("."),
+                                            di::bind<AudioPlayer>.to(ap));
+    musix::ChipPlugin::createPlugins("data");
+
+    // GZPlugin::fromFile writes the inflated payload next to the source (it
+    // strips ".gz" from the path). In the app that lands in the web cache; here
+    // it would drop an untracked amegas.mod into the fixture dir, so remove it
+    // on the way out -- via a destructor, since a failing REQUIRE throws.
+    struct Cleanup
+    {
+        ~Cleanup() { ::remove("testmus/gzplugin/amegas.mod"); }
+    } cleanup;
+
+    chipmachine::MusicPlayer mp{ ap };   // ctor installs GZPlugin
+    REQUIRE(mp.playFile("testmus/gzplugin/amegas.mod.gz"));
+    int64_t sum = 0;
+    for (int i = 0; i < 30 && sum == 0; ++i) {
+        mp.update();
+        std::vector<int16_t> data(8192);
+        ap->get(data);
+        sum = std::accumulate(data.begin(), data.end(), (int64_t)0);
+    }
+    REQUIRE(sum != 0);
+}
+
+// The search-result source tag shows the collection's DISPLAY NAME ("High
+// Voltage SID Collection"), looked up from the id embedded in the song path
+// ("hvsc::..."). Guards the one sanctioned id -> name direction, and the
+// fallback that lets the caller print the result without a null check.
+TEST_CASE("collection display name is looked up from the id", "[music]")
+{
+    using namespace chipmachine;
+    auto dbPath = (Environment::getCacheDir() / "music.db").string();
+
+    std::string wantId, wantName;
+    {
+        sqlite3db::Database db(dbPath);
+        auto q = db.query<std::string, std::string>(
+            "SELECT id, name FROM collection WHERE id <> name AND name <> '' "
+            "LIMIT 1");
+        if (q.step()) std::tie(wantId, wantName) = q.get_tuple();
+    }
+    RemoteLoader rl;
+    MusicDatabase mdb{ rl };
+
+    if (!wantId.empty()) {
+        // A collection whose name differs from its id -- the whole point.
+        REQUIRE(mdb.collectionDisplayName(wantId) == wantName);
+        REQUIRE(wantName != wantId);
+    }
+    // Unknown id -> echo it back rather than returning empty, so the caller can
+    // print unconditionally. Also covers the pseudo-prefixes and an unindexed DB.
+    REQUIRE(mdb.collectionDisplayName("no_such_collection_xyz") ==
+            "no_such_collection_xyz");
+}
+
 // Project AY (.ay ZXAYEMUL rips) routing: .ay is owned by GME, not Ayfly --
 // Ayfly renders Amstrad CPC .ay silent while GME's Ay_Emul-lineage core plays
 // both ZX and CPC. This drives the real app registration + MusicPlayer routing
@@ -4744,7 +4858,12 @@ TEST_CASE("coverage", "[music]")
         // handled by CopPlugin -- see pluginDirs above.)
         {"ZX Spectrum (ZXTune)", {"testmus/st11", "testmus/gtr",
                                   "testmus/chi", "testmus/tfe", "testmus/psm",
-                                  "testmus/ftc"}}
+                                  "testmus/ftc"}},
+        // ProTrekkr's two formats were filed under their own extension dirs
+        // before this map existed; the plugin's name() is "ProTrekkr", so the
+        // default derivation looked for a testmus/protrekkr that never existed
+        // and reported .ptk/.ntk as uncovered despite both having fixtures.
+        {"ProTrekkr", {"testmus/ptk", "testmus/ntk"}}
     };
 
     auto dirsFor = [&](std::string const& name) -> std::vector<std::string> {

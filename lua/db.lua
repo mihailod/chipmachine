@@ -1,4 +1,10 @@
 
+-- name : DISPLAY ONLY -- the label in the TAB Database list. Free to reword at
+--        any time; no code branches on it (the C++ side keys everything on `id`,
+--        and Collection deliberately has no display-name field at all).
+-- id : the collection's stable key. Used as the "<id>::" song-path prefix, the
+--      RemoteLoader source key, the data/<id>_screenshots.txt name and every
+--      `== "..."` comparison in the C++ layer. Renaming one is a breaking change.
 -- source : Base path or url from where to load files
 -- song_list : List of all songs to add. May not be needed if db is local and supports file scanning
 -- local_dir : If exists, will be checked first for files before downloading.
@@ -1047,7 +1053,21 @@
 --     they yield the literal format id "SONG BY ST COMPILE" for all 2,763 .stc.
 --     4 files that no plugin could load are excluded, and 33 Cyrillic/accented
 --     member paths are ASCII-ified in the ZIP (the list matches).
-VERSION = 133;
+-- 134: display-name cleanup. Several collections showed their bare id in the TAB
+--     Database list ("sndh", "asma", "unexotica", "amigaremix", "scenesat",
+--     "keygenmusic", "Radio"); those are now real names -- SNDH Atari ST Archive,
+--     Atari SAP Music Archive, UnExoticA, AmigaRemix, SceneSat Radio, KeygenMusic,
+--     Radio Stations -- plus Zophar -> Zophar's Domain, CSDb -> C64 Scene Database
+--     (CSDb), Chipmusic -> chipmusic.org, SMS Power -> SMS Power!. Names that
+--     already ARE the brand (Modland, Demozoo, VGMRips, Bitworld, OC ReMix,
+--     Project AY, Demovibes, Amigavibes, GameFuel, OPL Archive, Manual Patch) are
+--     left alone even though they equal their id.
+--     `name` is DISPLAY-ONLY: the only code that compares it is the Playlists
+--     lookup, which is OR'd with `cid == "pl"`, and generateIndex's `c.name` is
+--     really the id (its query selects `id` into that field). Cosmetic, but the
+--     collection table is only repopulated on a version change, so it needs the
+--     bump -- which also clears the web cache, the one real cost here.
+VERSION = 134;
 
 DB = {
 {
@@ -1070,7 +1090,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "unexotica",
+	name = "UnExoticA",
 	id =  "unexotica",
 	priority = 880,  -- native Amiga game chip rips
 	source = "ftp://files.exotica.org.uk/pub/exotica/media/audio/UnExoticA",
@@ -1097,7 +1117,7 @@ DB = {
 	-- gbs/gsf/2sf/usf/hes/vgm/sgc) as subsongs, shared *lib members alongside.
 	-- The format column carries the per-platform label (classified via
 	-- MusicDatabase format_map). source empty (full URLs in the path column).
-	name = "Zophar",
+	name = "Zophar's Domain",
 	id =  "zophar",
 	priority = 390,  -- recorded game chip rips (streamed tier)
 	source = "",
@@ -1130,7 +1150,7 @@ DB = {
 	-- vs modland Sega Master System / Game Gear. Screenshots in
 	-- data/smspower_screenshots.txt keyed by the pack URL. Built by
 	-- chipmachine/scripts/build_smspower.py.
-	name = "SMS Power",
+	name = "SMS Power!",
 	id =  "smspower",
 	priority = 690,  -- native Sega 8-bit VGM rips (console)
 	source = "",
@@ -1193,7 +1213,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "modarchive",
+	name = "The Mod Archive",
 	id =  "modarchive",
 	priority = 865,  -- broad tracker mirror (Amiga-heavy); modland wins the fold
 	source = "https://api.modarchive.org/downloads.php?moduleid=",
@@ -1239,7 +1259,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "HVSC",
+	name = "High Voltage SID Collection",
 	id =  "hvsc",
 	-- priority: search precedence & dedup winner (higher surfaces first, default
 	-- 0, may be negative to sink below the default mass). Every collection now
@@ -1266,7 +1286,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "CSDb",
+	name = "C64 Scene Database (CSDb)",
 	id =  "csdb",
 	priority = 895,  -- C64 demoscene chip rips
 	local_dir = "",
@@ -1289,7 +1309,7 @@ DB = {
 	-- is a bare module id; source appends it to the downmod.php endpoint, which
 	-- 302-redirects to the gzip module. MusicPlayerList inflates the gzip body
 	-- by magic, then the `ext` column routes it. Built by chipmachine/scripts/build_amp.py.
-	name = "Amp",
+	name = "Amiga Music Preservation",
 	id =  "amp",
 	priority = 870,  -- Amiga Music Preservation (broad tracker mirror)
 	source = "https://amp.dascene.net/downmod.php?index=",
@@ -1312,7 +1332,7 @@ DB = {
 	-- forced the pivot is fast and reliable again. generateIndex registers this
 	-- source live-primary with a Wayback fallback for the handful of .prg files
 	-- that have since disappeared upstream.
-	name = "HVTC",
+	name = "High Voltage TED Collection",
 	id =  "hvtc",
 	priority = 740,  -- Plus/4 TED -- deprioritised, below other-platform modules
 	source = "https://plus4world.powweb.com/feat/tedsound/hvtc/",
@@ -1387,7 +1407,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "sndh",
+	name = "SNDH Atari ST Archive",
 	id =  "sndh",
 	priority = 840,  -- native Atari ST chip archive
 	source = "https://sndh.atari.org/sndh/sndh_lf/",
@@ -1397,7 +1417,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "asma",
+	name = "Atari SAP Music Archive",
 	id =  "asma",
 	priority = 825,  -- native Atari 8-bit POKEY archive
 	source = "https://asma.atari.org/asma/",
@@ -1430,7 +1450,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "amigaremix",
+	name = "AmigaRemix",
 	id =  "amigaremix",
 	priority = 360,  -- Amiga remixes (MP3)
 	source = "https://www.amigaremix.com/listen/",
@@ -1450,7 +1470,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "scenesat",
+	name = "SceneSat Radio",
 	id =  "scenesat",
 	priority = 340,  -- rendered/streamed audio
 	source = "https://static.scenesat.com/",
@@ -1466,7 +1486,7 @@ DB = {
 	-- classified from each track's tags (Game Boy/Commodore 64/NES/Atari ST/Amiga/
 	-- ZX Spectrum/PC), routed to those TAB filters; untagged -> "Chipmusic" ->
 	-- Unclassified MP3/OGG. Built by chipmachine/scripts/build_chipmusic.py.
-	name = "Chipmusic",
+	name = "chipmusic.org",
 	id =  "chipmusic",
 	priority = 400,  -- community chiptune, rendered MP3 (not native module)
 	source = "",
@@ -1513,7 +1533,7 @@ DB = {
 	-- (source=""); the `ext` column routes the native module/chip decoder.
 	-- composer = artist, title = the cracked-software name. No screenshots.
 	-- Built by scripts/build_keygenmusic.py.
-	name = "keygenmusic",
+	name = "KeygenMusic",
 	id =  "keygenmusic",
 	priority = 770,  -- keygen-scene chip/tracker tunes
 	source = "",
@@ -1555,7 +1575,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "Radio",
+	name = "Radio Stations",
 	id =  "radio",
 	priority = -200,  -- live radio streams: the very last row
 	source = "",
@@ -1707,7 +1727,7 @@ DB = {
 	color = 0xfffff
 },
 {
-	name = "Pouet/Youtube",
+	name = "POUET.NET (YouTube audio)",
 	id =  "pouet",
 	priority = -120,  -- Pouet/YouTube-backed audio: above the bottom cluster below
 	source = "",

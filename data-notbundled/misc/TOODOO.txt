@@ -1,11 +1,6 @@
 Mac App Store (MAS) compliance:
 
-- change cryptic db names -- cosmetic
-- code rename NSFE to FAMICOMPO in the id as well (maybe other cryptic ids too)
-
 - MAS: replace ALL logos/brands with generic txt/pics. Brand Logos: Keep official hardware logos (Nintendo, Sega, Commodore, Sony) out of your UI and App Store screenshots. Use text tags (e.g., ⁠C64⁠, ⁠NES⁠, ⁠ZX⁠). Maybe append generics and just disable/unbundle the branded from mas -- have parallel screenshots folders: branded and generic, screenshots-b, screenshots-g
-
-- MAS: Zero bundled music files
 
 - Both: append flags of countries to the rotation
 
@@ -18,6 +13,8 @@ Mac App Store (MAS) compliance:
 
 - move from uade to openmpt for all possible formats (make sure search by plugin reflects)
 ->> once uade to openmpt done, remove uade and its content from the MAS version
+
+
 
 - recheck everything and submit to apple!
 
