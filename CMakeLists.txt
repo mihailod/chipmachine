@@ -425,15 +425,9 @@ if(APPLE)
            message(WARNING \"music/Console not found — bundle will have no built-in .nsfe tracks\")
        endif()
 
-       # HVTC (Commodore 16/116/+4 TED .prg) was pivoted from the online
-       # plus4world mirror to a shipped local store, same as music/Console.
-       if(EXISTS \"\${CMAKE_SOURCE_DIR}/music/hvtc\")
-           file(COPY \"\${CMAKE_SOURCE_DIR}/music/hvtc\"
-                DESTINATION Chipmachine.app/Contents/Resources/music/)
-           message(STATUS \"-> Bundled music/hvtc into Resources\")
-       else()
-           message(WARNING \"music/hvtc not found — bundle will have no built-in HVTC .prg tracks\")
-       endif()
+       # NB: no music/hvtc step here. db.lua VERSION 129 un-bundled HVTC (no music
+       # may ship inside the app for Mac App Store submission); its .prg tracks
+       # are fetched on demand from plus4world, like hvsc.
 
        include(BundleUtilities)
        fixup_bundle(\"\${APPS}\" \"\" \"\$\\\{DIRS\}\")

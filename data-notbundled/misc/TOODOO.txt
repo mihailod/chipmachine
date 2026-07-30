@@ -2,6 +2,13 @@ Mac App Store (MAS) compliance:
 
 - MAS: replace ALL logos/brands with generic txt/pics. Brand Logos: Keep official hardware logos (Nintendo, Sega, Commodore, Sony) out of your UI and App Store screenshots. Use text tags (e.g., ⁠C64⁠, ⁠NES⁠, ⁠ZX⁠). Maybe append generics and just disable/unbundle the branded from mas -- have parallel screenshots folders: branded and generic, screenshots-b, screenshots-g
 
+- unbundle music/console/nsfe stuff
+https://forums.nesdev.org/viewtopic.php?t=21128
+https://www.dropbox.com/s/8snytwvzqcnjn54/Famicompo%20NSFE.rar?dl=1
+can we index this rar and then pull individual songs from it on demand?
+
+The App Store argument isn't finished. music/Console (40 MB .nsfe) and music/projectay (3.8 MB .ay) are still bundled, plus Amiga/Atari/C64 Demo/C64 Games. projectay is the harder one — its db.lua entry has an empty source, so with no bundle there is no network fallback at all and every tune fails to load; it needs a real remote source before it can be un-bundled.
+
 - MAS: Zero bundled music files
 
 - Both: append flags of countries to the rotation

@@ -83,6 +83,7 @@
 -- 65: HVTC (Commodore 16/116/+4 TED .prg) pivoted from the flaky online
 --     plus4world/Wayback mirror to a shipped local store (music/hvtc), like
 --     nsfe -> music/Console. Forces a reindex so the new local_dir is stored.
+--     (REVERSED in VERSION 129 -- hvtc is on-demand again, see that note.)
 -- 66: Demozoo (demozoo.org). Built by chipmachine/scripts/build_demozoo.py from the daily
 --     Postgres dump (data.demozoo.org/demozoo-export.sql.gz). Onboards only
 --     net-new demoscene *music* (supertype=music): a production is dropped if
@@ -955,7 +956,21 @@
 --     psm (ambiguous). All canonical names already map to ZXAY in format_map, so
 --     the platform byte / F9 "ZX Spectrum" filter is unchanged. Engine-side (no
 --     data rebuild); the format string lives in the index, so bump forces a reindex.
-VERSION = 128;
+-- 129: HVTC un-bundled -- reverses VERSION 65. No music may ship inside the app
+--     for Mac App Store submission, so the 5.5MB music/hvtc local store is gone
+--     (folder deleted, plus the copy steps in CMakeLists.txt / package_app.sh).
+--     hvtc is now on-demand like hvsc. The v65 rationale no longer holds: a full
+--     re-sweep of the catalogue against plus4world.powweb.com returned 1025/1038
+--     at ~0.4s per .prg (1038 files at concurrency 6 in 69s, no throttling) --
+--     the host has been rehosted behind a cache (Cache-Control/Age headers), so
+--     the "~20s and flaky" behaviour that forced the pivot is gone. Accordingly
+--     generateIndex now registers hvtc LIVE-primary with Wayback as the fallback
+--     (v65-era order was the reverse; Wayback is now both slower at ~1.3s and
+--     less complete). 13 paths 404 upstream: 6 still resolve through the Wayback
+--     fallback, the other 7 are gone from both and their rows are dropped from
+--     data/hvtc.txt (1038 -> 1031) -- accepted cost of the App Store constraint.
+--     Data change (rows removed) + local_dir removed, so bump forces a reindex.
+VERSION = 129;
 
 DB = {
 {
@@ -1214,13 +1229,17 @@ DB = {
 	color = 0xfffff
 },
 {
+	-- On-demand from the live plus4world host, like hvsc -- NO local_dir. The
+	-- v65 local mirror (music/hvtc) was removed in VERSION 129: no music may
+	-- ship inside the app for Mac App Store submission, and the host that
+	-- forced the pivot is fast and reliable again. generateIndex registers this
+	-- source live-primary with a Wayback fallback for the handful of .prg files
+	-- that have since disappeared upstream.
 	name = "HVTC",
 	id =  "hvtc",
 	priority = 740,  -- Plus/4 TED -- deprioritised, below other-platform modules
 	source = "https://plus4world.powweb.com/feat/tedsound/hvtc/",
 	song_list = "data/hvtc.txt",
-	-- this one has local files! (like nsfe -> music/Console)
-	local_dir = "music/hvtc",
 	color = 0xfffff
  },
  {

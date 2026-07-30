@@ -275,9 +275,7 @@ Chipy		zill norbert	TED	musicians/zill_norbert/chipy.prg
 Choosing The Wrong Way		tripplep	TED	musicians/tripplep/choosing_the_wrong_way.prg
 Chopped Liver		tobikomi	TED	musicians/tobikomi/chopped_liver.prg
 Christmas Is Awesome 4		fuzzweed	TED	musicians/fuzzweed/christmas_is_awesome_4.prg
-Chromatic Admiration		hoffman	TED	musicians/hoffman/chromatic_admiration.prg
 Chromatic Destination		jammer	TED	musicians/jammer/chromatic_destination.prg
-Chromatic Distortion		hoffman	TED	musicians/hoffman/chromatic_distortion.prg
 Chromatic Distortion Final		hoffman	TED	musicians/hoffman/chromatic_distortion_final.prg
 Clone		csabo	TED	musicians/csabo/clone.prg
 Clone Ingame		csabo	TED	musicians/csabo/clone_ingame.prg
@@ -624,7 +622,6 @@ Mozaik Hrh		hrh	TED	musicians/hrh/mozaik_hrh.prg
 Mr Angry Dude		misfit	TED	musicians/misfit/mr_angry_dude.prg
 Mr Mind		csabo	TED	musicians/csabo/mr_mind.prg
 Mr Mind SFX		csabo	TED	musicians/csabo/mr_mind_sfx.prg
-Mr Mind Title		csabo	TED	musicians/csabo/mr_mind_title.prg
 Mr Puniverse		kelly tony	TED	musicians/kelly_tony/mr_puniverse.prg
 Multisp4		4-mat (worktunes)	TED	musicians/4-mat/worktunes/multisp4.prg
 Multispd		4-mat (worktunes)	TED	musicians/4-mat/worktunes/multispd.prg
@@ -665,7 +662,6 @@ Overcast		csabo	TED	musicians/csabo/overcast.prg
 Pac Man SFX		apos	TED	musicians/apos/pac_man_sfx.prg
 Pac Man Title		apos	TED	musicians/apos/pac_man_title.prg
 Pac-Pac		csabo	TED	musicians/csabo/pac-pac.prg
-Pac-Pac Ingame		csabo	TED	musicians/csabo/pac-pac_ingame.prg
 Pac-Pac Title		csabo	TED	musicians/csabo/pac-pac_title.prg
 Pacmania		southern shaun	TED	musicians/southern_shaun/pacmania.prg
 Pancho		barthelemy olivier	TED	musicians/barthelemy_olivier/pancho.prg
@@ -703,7 +699,6 @@ Pets Rescue Winter Night		5tarbuck	TED	musicians/5tarbuck/pets_rescue_winter_nig
 Phantom		waugh ian	TED	musicians/waugh_ian/phantom.prg
 Phoenix		braintron	TED	musicians/braintron/phoenix.prg
 Phoenix Recovered		sorbas2020	TED	musicians/sorbas2020/phoenix_recovered.prg
-Phosphorizer		hoffman	TED	musicians/hoffman/phosphorizer.prg
 Piccy Demo		kichy	TED	musicians/kichy/piccy_demo.prg
 Pilot X		engel jens	TED	musicians/engel_jens/pilot_x.prg
 Pimp My Part		csabo	TED	musicians/csabo/pimp_my_part.prg
@@ -760,7 +755,6 @@ Sabre Wulf		gc841	TED	musicians/gc841/sabre_wulf.prg
 Sailing Into A Mysterious Ocean Near The End Of The World		tripplep	TED	musicians/tripplep/sailing_into_a_mysterious_ocean_near_the_end_of_the_world.prg
 Sandgreen		aki	TED	musicians/aki/sandgreen.prg
 Santa 2020		5tarbuck	TED	musicians/5tarbuck/santa_2020.prg
-Santas Piano		hege	TED	musicians/hege/santas_piano.prg
 Sarabande		spektro	TED	musicians/spektro/sarabande.prg
 Save New York Start		mucsi	TED	musicians/mucsi/save_new_york_start.prg
 Save New York Title		mucsi	TED	musicians/mucsi/save_new_york_title.prg
@@ -857,7 +851,6 @@ T-Rex Run		csabo	TED	musicians/csabo/t-rex_run.prg
 T-Rex Run Title		csabo	TED	musicians/csabo/t-rex_run_title.prg
 T3D +4		th4 d34d	TED	musicians/th4_d34d/t3d_+4.prg
 Tapper		braintron	TED	musicians/braintron/tapper.prg
-Tayd		n1k-o	TED	musicians/n1k-o/tayd.prg
 Tazz		midcalf paul	TED	musicians/midcalf_paul/tazz.prg
 Technific		squarewave	TED	musicians/squarewave/technific.prg
 Ted Damnson Vs Surf Ninjas		warlord	TED	musicians/warlord/ted_damnson_vs_surf_ninjas.prg

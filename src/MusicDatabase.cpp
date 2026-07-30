@@ -4856,14 +4856,20 @@ void MusicDatabase::generateIndex()
         if (!c.local_dir.empty() && !c.local_dir.is_absolute())
             c.local_dir = workDir / c.local_dir;
         // NOTE c.name is really c.id
-        // hvtc songs live on plus4world.powweb.com, a flaky shared host (~20s
-        // per .prg, intermittent connection failures). Serve them from the fast
-        // Wayback mirror first, falling back to the live host for the ~34% of
-        // tunes Wayback never archived. Derived from c.url so no DB/db.lua change.
+        // hvtc songs live on plus4world.powweb.com. That host used to be a slow,
+        // flaky shared box (~20s per .prg, intermittent connection failures),
+        // which is why db.lua VERSION 65 bundled the files and this branch put
+        // the Wayback mirror FIRST. Both of those are undone as of VERSION 129:
+        // the mirror is gone (no music may ship inside the app for Mac App Store
+        // submission) and the host now sits behind a cache -- a full sweep of the
+        // catalogue returned 1025/1038 at ~0.4s each with no throttling, while
+        // Wayback costs ~1.3s and has thinner coverage. So: LIVE primary, Wayback
+        // fallback for the few .prg files that have vanished upstream since we
+        // mirrored. Derived from c.url, so no DB/db.lua change.
         if (c.name == "hvtc") {
             std::string live = c.url;
             std::string wayback = "https://web.archive.org/web/2id_/" + live;
-            loader.registerSource(c.name, wayback, c.local_dir.string(), live);
+            loader.registerSource(c.name, live, c.local_dir.string(), wayback);
         } else if (c.name == "mirsoft") {
             // mirsoft.info game-mod zips: serve from the Internet Archive
             // snapshot first (mirsoftJuly2021snapshot/gamemods/<Game>.zip), with

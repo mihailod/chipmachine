@@ -518,47 +518,20 @@ else
     fi
 fi
 
-# *** 4c. Bundle HVTC .prg tracks into Contents/Resources/music/hvtc/ ***
+# *** 4c. (removed) HVTC .prg tracks are no longer bundled ***
 #
-# HVTC (Commodore 16/116/+4 TED music) was pivoted from the flaky online
-# plus4world/Wayback mirror to a shipped local store, exactly like music/Console
-# for .nsfe. The runtime resolves these via local_dir = "music/hvtc" (db.lua),
-# so the destination layout (sub-dirs demos/ games/ musicians/ other/) is
-# preserved verbatim. Without this, .prg playback would fall back to the network.
+# HVTC (Commodore 16/116/+4 TED music) used to be copied into
+# Contents/Resources/music/hvtc/ here, mirroring music/Console for .nsfe. db.lua
+# VERSION 129 un-bundled it: no music may ship inside the app for Mac App Store
+# submission, and the plus4world host that forced the v65 pivot is fast and
+# reliable again. The db.lua entry has no local_dir, so .prg tracks are fetched
+# on demand (live primary, Wayback fallback). Do not re-add a copy step here.
 # -----------------------------------------------------------------
-HVTC_SRC="${CHIPMACHINE_DIR}/music/hvtc"
-HVTC_DEST="${RESOURCES_DIR}/music/hvtc"
-
-if [ -d "${HVTC_SRC}" ]; then
-    PRG_COUNT=$(find "${HVTC_SRC}" -name "*.prg" | wc -l | tr -d '[:space:]')
-    if [ "${PRG_COUNT}" -eq 0 ]; then
-        echo "WARNING: music/hvtc/ exists but contains no .prg files. HVTC bundle will be empty."
-    else
-        echo "-> Bundling ${PRG_COUNT} HVTC .prg track(s) into ${HVTC_DEST} ..."
-    fi
-
-    mkdir -p "${HVTC_DEST}"
-
-    # Preserve the demos/ games/ musicians/ other/ sub-directory hierarchy.
-    cp -R "${HVTC_SRC}/." "${HVTC_DEST}/"
-
-    BUNDLED_PRG_COUNT=$(find "${HVTC_DEST}" -name "*.prg" | wc -l | tr -d '[:space:]')
-    echo "   Verified ${BUNDLED_PRG_COUNT} .prg file(s) present inside bundle."
-else
-    if $RELEASE_IT; then
-        echo "CRITICAL ERROR: music/hvtc source directory not found at ${HVTC_SRC}!"
-        echo "               A release build MUST include bundled HVTC .prg tracks."
-        exit 1
-    else
-        echo "WARNING: music/hvtc not found at ${HVTC_SRC}. Skipping HVTC bundling (dry-run mode)."
-        echo "         End-users will have no bundled HVTC tracks. Set up music/hvtc before --releaseit."
-    fi
-fi
 
 # *** 4d. Bundle Project AY .ay tracks into Contents/Resources/music/projectay/ ***
 #
 # Project AY (Sergey Bulba / Ironfist raw Z80 .ay rips) is a locally-shipped
-# collection, exactly like music/Console (.nsfe) and music/hvtc (.prg). The
+# collection, exactly like music/Console (.nsfe). The
 # runtime resolves these via local_dir = "music/projectay" (db.lua) with an
 # EMPTY source, so if the .ay files are not bundled there is no network fallback
 # and every tune fails to load. The ironfist/ bulba/ cpc/ sub-directory

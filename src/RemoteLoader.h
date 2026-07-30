@@ -107,10 +107,10 @@ public:
         // -- collections with a /opt/Music local_dir (modland, asma, rko, ...)
         // are the user's own mirrors and are NOT present on most machines.
         //   nsfe      -> music/Console     (nsfe::31_orange_painting.nsfe)
-        //   hvtc      -> music/hvtc  (TED)  (hvtc::demos/crazy_scroll_89.prg)
         //   projectay -> music/projectay   (projectay::ironfist/arkanoid.ay)
-        return path.find("nsfe::") == 0 || path.find("hvtc::") == 0 ||
-               path.find("projectay::") == 0;
+        // hvtc was here until db.lua VERSION 129 un-bundled it; it is a plain
+        // remote collection now, so it must NOT claim the local "+" indicator.
+        return path.find("nsfe::") == 0 || path.find("projectay::") == 0;
     }
 
 private:

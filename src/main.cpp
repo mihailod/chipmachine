@@ -224,22 +224,9 @@ int main(int argc, char* argv[])
         }
     }
 
-    // Same check for the HVTC store (Commodore 16/116/+4 TED .prg tracks), which
-    // was pivoted from the online plus4world mirror to a shipped local folder.
-    {
-        utils::path music_hvtc = work_dir / "music" / "hvtc";
-        if (!utils::exists(music_hvtc)) {
-            fprintf(stderr,
-                "[chipmachine] WARNING: music/hvtc not found at: %s\n"
-                "   Built-in HVTC (.prg) tracks will be unavailable.\n"
-#ifdef __APPLE__
-                "   Bundle build: re-run package_app.sh (Section 4b copies the tracks).\n"
-                "   Dev build:    run `cmake --build` to sync tracks via POST_BUILD,\n"
-                "                 or ensure chipmachine/music/hvtc/ exists in the source tree.\n"
-#endif
-                , music_hvtc.string().c_str());
-        }
-    }
+    // (No equivalent check for HVTC: db.lua VERSION 129 un-bundled it -- no music
+    // may ship inside the app for Mac App Store submission -- so .prg tracks are
+    // fetched on demand from plus4world, like hvsc.)
 
     utils::path binDir = (work_dir / "bin");
     utils::path exeDir = Environment::getExeDir();
