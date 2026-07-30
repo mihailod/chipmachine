@@ -179,8 +179,8 @@ TEST_CASE("musicplayerlist", "")
                                             di::bind<AudioPlayer>.to(ap));
     musix::ChipPlugin::createPlugins("data");
     auto mpl = injector.create<std::unique_ptr<chipmachine::MusicPlayerList>>();
-    mpl->addSong("music/Amiga/Starbuck - Tennis.mod"s);
-    mpl->addSong("music/Amiga/Dr.Awesome - Intromusic3.mod"s);
+    mpl->addSong("testmus/openmpt/Starbuck - Tennis.mod"s);
+    mpl->addSong("testmus/openmpt/Dr.Awesome - Intromusic3.mod"s);
     mpl->nextSong();
     mpl->wait();
     auto state = mpl->getState();
@@ -199,7 +199,7 @@ TEST_CASE("musicplayer", "")
                                             di::bind<AudioPlayer>.to(ap));
     musix::ChipPlugin::createPlugins("data");
     chipmachine::MusicPlayer mp{ ap };
-    bool ok = mp.playFile("music/Amiga/Nuke - Loader.mod");
+    bool ok = mp.playFile("testmus/openmpt/Nuke - Loader.mod");
     REQUIRE(ok);
     mp.update();
     std::vector<int16_t> data(8192);
