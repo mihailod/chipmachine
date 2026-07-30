@@ -1,33 +1,307 @@
-Badlands	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/Badlands.ay	ay
+Forever 9 Wild Compo	Mr. Beep	Spectrum AY	bulba/Moved from Tr_Songs/Mr.Beep/1bit_mod.ay	ay
+Forever 9 Wild Compo	Mr. Beep	Spectrum AY	bulba/Moved from Tr_Songs/Mr.Beep/machines.ay	ay
+19 Part 1 - Boot Camp	Sean Conran	Spectrum AY	bulba/Rebuilt by Bulba/19Part1-BootCamp.ay	ay
+3D Snooker	Sonic Graffiti (converted by Andy Severn)	Spectrum AY	bulba/Rebuilt by Bulba/3DSnooker.ay	ay
+4x4 Off-Road Racing	Paul Jaquays	Spectrum AY	bulba/Rebuilt by Bulba/4x4OffRoad.ay	ay
+Action Fighter	Dave Pridmore	Spectrum AY	bulba/Rebuilt by Bulba/ActionFighter.ay	ay
+Afterburner 1988	Jon Paul Eldridge	Spectrum AY	bulba/Rebuilt by Bulba/Afterburner.ay	ay
+Alien Storm	Mike Davies	Spectrum AY	bulba/Rebuilt by Bulba/AlienStorm.ay	ay
+Altered Beast	Paul Hiley	Spectrum AY	bulba/Rebuilt by Bulba/AlteredBeast.ay	ay
+Back To The Future 3	Barry Leitch	Spectrum AY	bulba/Rebuilt by Bulba/BackToTheFuture3.ay	ay
+Badlands	Matt Furniss	Spectrum AY	bulba/Rebuilt by Bulba/Badlands.ay	ay
 Bionic Commando	Tim Follin	Spectrum AY	bulba/Rebuilt by Bulba/BionicCommando.ay	ay
+Blasteroids	Benn Daglish	Spectrum AY	bulba/Rebuilt by Bulba/Blasteroids.ay	ay
+Blood Valley	Benn Daglish	Spectrum AY	bulba/Rebuilt by Bulba/BloodValley.ay	ay
 Bosconian 87	Jaz. C. Brooke	Spectrum AY	bulba/Rebuilt by Bulba/Bosconian.ay	ay
+Brat Attack	Andy "DM" Severn, Mike Brown	Spectrum AY	bulba/Rebuilt by Bulba/BratAttack.ay	ay
+Captain Dynamo	Lyndon Sharp	Spectrum AY	bulba/Rebuilt by Bulba/CaptainDynamo.ay	ay
+ChaseHQ2	Chris Scudds	Spectrum AY	bulba/Rebuilt by Bulba/ChaseHQ2.ay	ay
+Chevy Chase	Pete Frith	Spectrum AY	bulba/Rebuilt by Bulba/ChevyChase.ay	ay
+Chip's Challenge	Dave Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/Chip'sChallenge.ay	ay
+CiscoHeat	Chris Scudds	Spectrum AY	bulba/Rebuilt by Bulba/CiscoHeat.ay	ay
 CombatSchool	Jas. C. Brooke	Spectrum AY	bulba/Rebuilt by Bulba/CombatSchool.ay	ay
+Count Duckula 2	Dave Lowe	Spectrum AY	bulba/Rebuilt by Bulba/CountDuckula2.ay	ay
+Crack Down	Mark Cooksey	Spectrum AY	bulba/Rebuilt by Bulba/CrackDown.ay	ay
+Dizzy 7 Crystal Kingdom Dizzy	Reflective Designs (Gerard Gourley)	Spectrum AY	bulba/Rebuilt by Bulba/CrystalKingdomDizzy.ay	ay
+Cyberball	Matt Furniss	Spectrum AY	bulba/Rebuilt by Bulba/Cyberball.ay	ay
+Cyberbig	Pablo Toledo	Spectrum AY	bulba/Rebuilt by Bulba/Cyberbig.ay	ay
+D.N.A. Warrior	Nigel Pritchard	Spectrum AY	bulba/Rebuilt by Bulba/D.N.A.Warrior.ay	ay
+Daley Thompson's Supertest	Martin Galway	Spectrum AY	bulba/Rebuilt by Bulba/DaleyThompson'sSuperTest.ay	ay
+Darkman	Jonathan Dunn	Spectrum AY	bulba/Rebuilt by Bulba/Darkman.ay	ay
+Death Stalker	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/DeathStalker.ay	ay
+Defenders of the Earth	Gluck	Spectrum AY	bulba/Rebuilt by Bulba/DefendersOfTheEarth.ay	ay
+Dizzy,PrinceOfTheYolkfolk	Allister Brimble	Spectrum AY	bulba/Rebuilt by Bulba/Dizzy,PrinceOfTheYolkfolk.ay	ay
+Dizzy Down the Rapids	Allister Brimble	Spectrum AY	bulba/Rebuilt by Bulba/DizzyDownTheRapids.ay	ay
+Double Dragon 3: Rosetta Stone	Andy Taylor	Spectrum AY	bulba/Rebuilt by Bulba/DoubleDragonIII-TheRosettaStone.ay	ay
+DragonsLair2-EscapeFromSingesCastle	Rob Hubbard	Spectrum AY	bulba/Rebuilt by Bulba/DragonsLair2-EscapeFromSingesCastle.ay	ay
+E-Motion	Mark Tait	Spectrum AY	bulba/Rebuilt by Bulba/E-Motion.ay	ay
+EscapeFromThePlanetOfTheRobotMonsters	Matt Furniss	Spectrum AY	bulba/Rebuilt by Bulba/EscapeFromThePlanetOfTheRobotMonsters.ay	ay
+Fast Food Dizzy	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/FastFoodDizzy.ay	ay
+Fighting Soccer	Paul Summers	Spectrum AY	bulba/Rebuilt by Bulba/FightingSoccer.ay	ay
+Final Fight	Dave Lowe	Spectrum AY	bulba/Rebuilt by Bulba/FinalFight.ay	ay
 The Flintstones	Benn Daglish	Spectrum AY	bulba/Rebuilt by Bulba/FlintstonesThe.ay	ay
+Footballer Of The Year 2	Benn Daglish	Spectrum AY	bulba/Rebuilt by Bulba/FootballerOfTheYear2.ay	ay
+Forgotten Worlds	Mark Cooksey	Spectrum AY	bulba/Rebuilt by Bulba/ForgottenWorlds.ay	ay
+Fruit Machine Simulator 2	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/FruitMachineSimulator2.ay	ay
 Ghostbusters II	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/Ghostbusters2.ay	ay
+Goody	Angel Zarazaga	Spectrum AY	bulba/Rebuilt by Bulba/Goody.ay	ay
+Grand Prix Simulator 2	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/GrandPrixSimulator2.ay	ay
+Guerrilla War	Jonathan Dunn	Spectrum AY	bulba/Rebuilt by Bulba/GuerrillaWar.ay	ay
+Hard Drivin'	Matt Furniss	Spectrum AY	bulba/Rebuilt by Bulba/HardDrivin'.ay	ay
+Head over Heels	Guy Stevens	Spectrum AY	bulba/Rebuilt by Bulba/HeadOverHeels.ay	ay
+Hercules: Slayer of the Damned	Andy Morton	Spectrum AY	bulba/Rebuilt by Bulba/Hercules-SlayerOfTheDamned.ay	ay
+Hero Quest	Barry Leitch	Spectrum AY	bulba/Rebuilt by Bulba/HeroQuest.ay	ay
+Hoppin' Mad	Mark Cooksey	Spectrum AY	bulba/Rebuilt by Bulba/Hoppin'Mad.ay	ay
+Hot Rod	Paul Hiley	Spectrum AY	bulba/Rebuilt by Bulba/HotRod.ay	ay
+The Hunt for Red October	J.V.M. Design & A. Brimble	Spectrum AY	bulba/Rebuilt by Bulba/HuntForRedOctoberThe.ay	ay
+Ikari Warriors	Nick Jones	Spectrum AY	bulba/Rebuilt by Bulba/IkariWarriors.ay	ay
+Impossamole	Barry Leitch	Spectrum AY	bulba/Rebuilt by Bulba/Impossamole.ay	ay
+International Karate+	Rob Hubbard	Spectrum AY	bulba/Rebuilt by Bulba/InternationalKarate+.ay	ay
+International Rugby Simulator	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/InternationalRugbySimulator.ay	ay
+JamesBond007-LiveAndLetDie	Mark Cooksey	Spectrum AY	bulba/Rebuilt by Bulba/JamesBond007-LiveAndLetDie.ay	ay
+Joe Blade	Gari Biasillo	Spectrum AY	bulba/Rebuilt by Bulba/JoeBlade.ay	ay
+Joe Blade 2	Andy 'DM' Severn, Mike Brown	Spectrum AY	bulba/Rebuilt by Bulba/JoeBlade2.ay	ay
 Kaboom	Frantisek Fuka	Spectrum AY	bulba/Rebuilt by Bulba/Kaboom.ay	ay
+Kamikaze	Lyndon Sharp	Spectrum AY	bulba/Rebuilt by Bulba/Kamikaze.ay	ay
+Kendo Warrior	Paul Tonge	Spectrum AY	bulba/Rebuilt by Bulba/KendoWarrior.ay	ay
 Klimax	M.F.Valente	Spectrum AY	bulba/Rebuilt by Bulba/Klimax.ay	ay
 KnightRider	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/KnightRider.ay	ay
-Lotus Esprit Turbo Challenge	Ali Davidson	Spectrum AY	bulba/Rebuilt by Bulba/LotusEspritTurboChallenge.ay	ay
+Knight Tyme	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/KnightTyme.ay	ay
+Lemmings	Sound Images, Tim Wright	Spectrum AY	bulba/Rebuilt by Bulba/Lemmings.ay	ay
+Line of Fire	Dave Lowe	Spectrum AY	bulba/Rebuilt by Bulba/LineOfFire.ay	ay
+Lode Runner	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/LodeRunner.ay	ay
+Lost Caves	Paul Hiley	Spectrum AY	bulba/Rebuilt by Bulba/LostCaves.ay	ay
+Lotus Esprit Turbo Challenge	Shaun Southern, Andrew Morris	Spectrum AY	bulba/Rebuilt by Bulba/LotusEspritTurboChallenge.ay	ay
+Dizzy 4 Magicland Dizzy	Lyndon Sharp	Spectrum AY	bulba/Rebuilt by Bulba/MagiclandDizzy.ay	ay
+Manchester United	Matt Furniss	Spectrum AY	bulba/Rebuilt by Bulba/ManchesterUnited.ay	ay
+MASK 1/2	Benn Daglish	Spectrum AY	bulba/Rebuilt by Bulba/Mask1-2.ay	ay
+Mega Apocalypse	J.C.Brookes	Spectrum AY	bulba/Rebuilt by Bulba/MegaApocalypse.ay	ay
+Miami Chase	Allister Brimble	Spectrum AY	bulba/Rebuilt by Bulba/MiamiChase.ay	ay
+Miami Cobra GT	Pete Frith, Nigel Speight	Spectrum AY	bulba/Rebuilt by Bulba/MiamiCobraGT.ay	ay
+Monte Carlo Casino	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/MonteCarloCasino.ay	ay
+Motor Massacre	Ben Daglish	Spectrum AY	bulba/Rebuilt by Bulba/MotorMassacre.ay	ay
+Mountain Bike Racer	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/MountainBikeRacer(Zeppelin).ay	ay
+Used in F16 Fighting Falcon	Paul Hiley	Spectrum AY	bulba/Rebuilt by Bulba/MusicKit.ay	ay
+MusicPack	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/MusicPack.ay	ay
+Mystical	Mc Alby	Spectrum AY	bulba/Rebuilt by Bulba/Mystical.ay	ay
+NARC	Sound Images	Spectrum AY	bulba/Rebuilt by Bulba/NARC.ay	ay
+Navy Seals	Matty	Spectrum AY	bulba/Rebuilt by Bulba/NavySeals.ay	ay
+The Neverending Story	Fred Gray	Spectrum AY	bulba/Rebuilt by Bulba/NeverEndingStoryThe.ay	ay
+Night Breed	Matthew Cannon	Spectrum AY	bulba/Rebuilt by Bulba/NightBreed.ay	ay
+NinjaSpirit	Paul Hiley	Spectrum AY	bulba/Rebuilt by Bulba/NinjaSpirit.ay	ay
 The Ninjawarriors	Tiny Williams	Spectrum AY	bulba/Rebuilt by Bulba/NinjaWarriorsThe.ay	ay
-Pang	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/Pang.ay	ay
+Nodes Of Yesod	Fred Gray	Spectrum AY	bulba/Rebuilt by Bulba/NodesOfYesod.ay	ay
+North And South	Joe Mc Alby	Spectrum AY	bulba/Rebuilt by Bulba/NorthAndSouth.ay	ay
+Operation Gunship	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/OperationGunship.ay	ay
+Operation Hanoi	Andrew Severn	Spectrum AY	bulba/Rebuilt by Bulba/OperationHanoi.ay	ay
+Out Run	Jason C. Brooke	Spectrum AY	bulba/Rebuilt by Bulba/OutRun.ay	ay
+Overlander	Mark Cooksey	Spectrum AY	bulba/Rebuilt by Bulba/Overlander.ay	ay
+P-47 Freedom Fighter	Paul Summers	Spectrum AY	bulba/Rebuilt by Bulba/P47FreedomFighter.ay	ay
+Pac-Land	Jason Brooke	Spectrum AY	bulba/Rebuilt by Bulba/PacLand.ay	ay
+Pac-Mania	Ben Daglish	Spectrum AY	bulba/Rebuilt by Bulba/PacMania.ay	ay
+Pang	Pierre-Eric Loriaux	Spectrum AY	bulba/Rebuilt by Bulba/Pang.ay	ay
+Panic Dizzy	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/PanicDizzy.ay	ay
 Paperboy2	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/Paperboy2.ay	ay
+Peter Pack Rat	Tim Follin	Spectrum AY	bulba/Rebuilt by Bulba/PeterPackRat.ay	ay
+Pit-Fighter	Matt Furniss	Spectrum AY	bulba/Rebuilt by Bulba/PitFighter.ay	ay
 Podraz3	Frantisek Fuka	Spectrum AY	bulba/Rebuilt by Bulba/Podraz3.ay	ay
-The Real Ghost Busters	Data East Usa Inc.	Spectrum AY	bulba/Rebuilt by Bulba/RealGhostBustersThe.ay	ay
+Potsworth	Mark Cooksey	Spectrum AY	bulba/Rebuilt by Bulba/Potsworth.ay	ay
+Predator	Paul Summers	Spectrum AY	bulba/Rebuilt by Bulba/Predator.ay	ay
+Prison Riot	The Lads at Sonic Grafitti & Andy Severn	Spectrum AY	bulba/Rebuilt by Bulba/PrisonRiot.ay	ay
+Pro Mountain Bike Simulator	Paul Tonge	Spectrum AY	bulba/Rebuilt by Bulba/ProMountainBikeSimulator.ay	ay
+Professional Skateboard Simulator	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/ProSkateboardSimulator.ay	ay
+Professional Tennis Simulator	Armando Garcia	Spectrum AY	bulba/Rebuilt by Bulba/ProfessionalTennisSimulator.ay	ay
+Prohibition	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/Prohibition.ay	ay
+Psycho Pigs UXB	Tim Follin	Spectrum AY	bulba/Rebuilt by Bulba/PsychoPigsUXB.ay	ay
+Pulse Warrior	Steve Barrett	Spectrum AY	bulba/Rebuilt by Bulba/PulseWarrior.ay	ay
+Puzznic	Jonathan Dunn	Spectrum AY	bulba/Rebuilt by Bulba/Puzznic.ay	ay
+A Question of Sport	Mark Cooksey	Spectrum AY	bulba/Rebuilt by Bulba/QuestionOfSportA.ay	ay
+Quick Draw McGraw	Sean Conran	Spectrum AY	bulba/Rebuilt by Bulba/QuickDrawMcGraw.ay	ay
+The Real Ghost Busters	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/RealGhostBustersThe.ay	ay
+Rick Dangerous	Ben Daglish or Dave Pridmore	Spectrum AY	bulba/Rebuilt by Bulba/RickDangerous.ay	ay
+Rick Dangerous II	Ben Daglish or Dave Pridmore	Spectrum AY	bulba/Rebuilt by Bulba/RickDangerous2.ay	ay
+RoboCop 2	Mathew Cannon	Spectrum AY	bulba/Rebuilt by Bulba/RoboCop2.ay	ay
+RoboCop 3	Tony Williams of Sound Images	Spectrum AY	bulba/Rebuilt by Bulba/RoboCop3.ay	ay
+Robozone	Sound Images	Spectrum AY	bulba/Rebuilt by Bulba/Robozone.ay	ay
+Rock'n Roll	Barry Leitch	Spectrum AY	bulba/Rebuilt by Bulba/Rock'NRoll.ay	ay
+The Rocky Horror Picture Show	Jay(P.M.)Derrett	Spectrum AY	bulba/Rebuilt by Bulba/RockyHorrorShowThe.ay	ay
+Rod-Land	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/RodLand.ay	ay
+Run the Gauntlet	Chris Kerry	Spectrum AY	bulba/Rebuilt by Bulba/RunTheGauntlet.ay	ay
+S.T.U.N. Runner	Matt Furniss	Spectrum AY	bulba/Rebuilt by Bulba/S.T.U.N.Runner.ay	ay
 Saboteur 2	Rob Hubbard	Spectrum AY	bulba/Rebuilt by Bulba/Saboteur2.ay	ay
+Saigon Combat Unit	Andy Severn, Sonic Graffiti	Spectrum AY	bulba/Rebuilt by Bulba/SaigonCombatUnit.ay	ay
+Saint Dragon	Sound Images	Spectrum AY	bulba/Rebuilt by Bulba/SaintDragon.ay	ay
+Samurai Trilogy	Alan Reining	Spectrum AY	bulba/Rebuilt by Bulba/SamuraiTrilogy.ay	ay
+Scramble Spirits	Matt Furniss	Spectrum AY	bulba/Rebuilt by Bulba/ScrambleSpirits.ay	ay
+Shadow Dancer	4Mat, Neil Crossley	Spectrum AY	bulba/Rebuilt by Bulba/ShadowDancer.ay	ay
+Shadow Warriors	Matt Furniss	Spectrum AY	bulba/Rebuilt by Bulba/ShadowWarriors.ay	ay
+Shanghai Karate	Andy Severn, Mike Brown	Spectrum AY	bulba/Rebuilt by Bulba/ShanghaiKarate.ay	ay
+Shinobi	Tiny Williams	Spectrum AY	bulba/Rebuilt by Bulba/Shinobi.ay	ay
+Silkworm	Barry Leitch	Spectrum AY	bulba/Rebuilt by Bulba/Silkworm.ay	ay
+Simpsons-BartVsTheSpaceMutantsThe	Jonathan Dunn	Spectrum AY	bulba/Rebuilt by Bulba/Simpsons-BartVsTheSpaceMutantsThe.ay	ay
+Skate Crazy Part 2	Ben Daglish	Spectrum AY	bulba/Rebuilt by Bulba/SkateCrazyPart2.ay	ay
+Smash TV	Sound Images	Spectrum AY	bulba/Rebuilt by Bulba/SmashTV.ay	ay
+Space Crusade	Imagitec	Spectrum AY	bulba/Rebuilt by Bulba/SpaceCrusade.ay	ay
+Space Gun	Sonic Projects	Spectrum AY	bulba/Rebuilt by Bulba/SpaceGun.ay	ay
+Space Harrier II	Matt Furniss	Spectrum AY	bulba/Rebuilt by Bulba/SpaceHarrierII.ay	ay
+Dizzy 5: Spellbound Dizzy	Allister Brimble	Spectrum AY	bulba/Rebuilt by Bulba/SpellboundDizzy.ay	ay
+StarWarsDroids	Tony Williams	Spectrum AY	bulba/Rebuilt by Bulba/StarWarsDroids.ay	ay
+Steel Eagle	Andy & Sonic Grafitti	Spectrum AY	bulba/Rebuilt by Bulba/SteelEagle.ay	ay
+Street Fighter II: The World Warrior	Dave Lowe	Spectrum AY	bulba/Rebuilt by Bulba/Street Fighter 2.ay	ay
+Street Cred' Football	Ian Sheridan & Andy Severn	Spectrum AY	bulba/Rebuilt by Bulba/StreetCredFootball.ay	ay
+Strike	Jason Brooke	Spectrum AY	bulba/Rebuilt by Bulba/Strike.ay	ay
+Super Space Invaders	Andy Taylor	Spectrum AY	bulba/Rebuilt by Bulba/SuperSpaceInvaders.ay	ay
 SuperTed-TheSearchForSpot	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/SuperTed-TheSearchForSpot.ay	ay
+Super Trux	Jas C. Brooke	Spectrum AY	bulba/Rebuilt by Bulba/SuperTrux.ay	ay
+Task Force	Ian Sheridan, Andy Severn	Spectrum AY	bulba/Rebuilt by Bulba/TaskForce.ay	ay
+Techno Cop	Ben Daglish	Spectrum AY	bulba/Rebuilt by Bulba/TechnoCop.ay	ay
 Techted	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/Techted.ay	ay
+Terramex: The Cartoon Animation Game	Benn Daglish	Spectrum AY	bulba/Rebuilt by Bulba/Terramex.ay	ay
+The Music Box 128K	Mark Alexander	Spectrum AY	bulba/Rebuilt by Bulba/TheMusicBox.ay	ay
+The Race	Andy Severn, Sonic Grafitti	Spectrum AY	bulba/Rebuilt by Bulba/TheRace.ay	ay
+Tiger Road	Jason C. Brooke	Spectrum AY	bulba/Rebuilt by Bulba/TigerRoad.ay	ay
+Tilt	Lyndon Sharp	Spectrum AY	bulba/Rebuilt by Bulba/Tilt.ay	ay
+Toobin'	Matt Furniss	Spectrum AY	bulba/Rebuilt by Bulba/Toobin.ay	ay
+Total Recall	Jonathan Dunn	Spectrum AY	bulba/Rebuilt by Bulba/TotalRecall.ay	ay
+Toyota Celica GT Rally	Ben Daglish, MC Slack	Spectrum AY	bulba/Rebuilt by Bulba/ToyotaCelicaGTRally.ay	ay
+Turbo Boat Simulator	Dave Rogers	Spectrum AY	bulba/Rebuilt by Bulba/TurboBoatSimulator.ay	ay
+Turbulence	Marlo Knight	Spectrum AY	bulba/Rebuilt by Bulba/Turbulence.ay	ay
 Turtle1	Sound Images	Spectrum AY	bulba/Rebuilt by Bulba/Turtle1.ay	ay
+Ultimate Combat Mission	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/UltimateCombatMission.ay	ay
+The Untouchables	Jonathan Dunn	Spectrum AY	bulba/Rebuilt by Bulba/UntouchablesThe.ay	ay
 Vampire	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/Vampire.ay	ay
 The Vindicator	Jonathan Dunn	Spectrum AY	bulba/Rebuilt by Bulba/Vindicator.ay	ay
-VIZ The Computer Game	Probe Software	Spectrum AY	bulba/Rebuilt by Bulba/Viz.ay	ay
+VIZ The Computer Game	Sound Images (converted by Jeroen Tel)	Spectrum AY	bulba/Rebuilt by Bulba/Viz.ay	ay
+Wacky Darts	Lyndon Sharp	Spectrum AY	bulba/Rebuilt by Bulba/WackyDarts.ay	ay
+War Machine	Sonic Graffiti	Spectrum AY	bulba/Rebuilt by Bulba/WarMachine.ay	ay
 Warlock	Pennsoft	Spectrum AY	bulba/Rebuilt by Bulba/Warlock.ay	ay
-Winter Games	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/WinterGames.ay	ay
-1943TM	Unknown	Spectrum AY	bulba/Ripped by Bulba/1943TM.ay	ay
-Deactivators	Tigress Marketing	Spectrum AY	bulba/Ripped by Bulba/Deactivators.ay	ay
+Where Time Stood Still	Fred Gray	Spectrum AY	bulba/Rebuilt by Bulba/WhereTimeStoodStill.ay	ay
+Wild West Seymour	Allister Brimble	Spectrum AY	bulba/Rebuilt by Bulba/WildWestSeymour.ay	ay
+Winter Games	Mark Alexander	Spectrum AY	bulba/Rebuilt by Bulba/WinterGames.ay	ay
+Wrestling Superstars	Gerard Gourley	Spectrum AY	bulba/Rebuilt by Bulba/WrestlingSuperstars.ay	ay
+Xenon	David Whittaker	Spectrum AY	bulba/Rebuilt by Bulba/Xenon.ay	ay
+X-Mas Ludo	Unknown	Spectrum AY	bulba/Rebuilt by Bulba/XmasLudo.ay	ay
+Xybots	Matt Furniss, Ben Daglish	Spectrum AY	bulba/Rebuilt by Bulba/Xybots.ay	ay
+007 - The Spy Who Loved Me	Matt Furniss	Spectrum AY	bulba/Ripped by Bulba/007 - The Spy Who Loved Me.ay	ay
+1943: The Battle Of Midway	Jason C. Brooke	Spectrum AY	bulba/Ripped by Bulba/1943TM.ay	ay
+1st Division Manager	Lyndon Sharp	Spectrum AY	bulba/Ripped by Bulba/1st Division Manager.ay	ay
+ACE2-TheUltimateHeadToHeadConflict	Rob Hubbard	Spectrum AY	bulba/Ripped by Bulba/ACE2-TheUltimateHeadToHeadConflict.ay	ay
+African Trail Simulator	Unknown	Spectrum AY	bulba/Ripped by Bulba/AfricanTrailSimulator.ay	ay
+Army Moves	Manuel Cubedo	Spectrum AY	bulba/Ripped by Bulba/ArmyMoves.ay	ay
+Assault Course	Sonic Graffiti	Spectrum AY	bulba/Ripped by Bulba/Assault Course.ay	ay
+Astro Marine Corps Part 1	Jose A. Martin	Spectrum AY	bulba/Ripped by Bulba/AstroMarineCorpsPart1.ay	ay
+Astro Marine Corps Patr 2	Jose A. Martin	Spectrum AY	bulba/Ripped by Bulba/AstroMarineCorpsPart2.ay	ay
+Astroball	Jade Lucas	Spectrum AY	bulba/Ripped by Bulba/Astroball.ay	ay
+Australian Games	Unknown	Spectrum AY	bulba/Ripped by Bulba/Australian Games.ay	ay
+Batman The Movie	Matthew Cannon	Spectrum AY	bulba/Ripped by Bulba/BatManTheMovie.ay	ay
+Black Tiger	Mark Tait	Spectrum AY	bulba/Ripped by Bulba/BlackTiger.ay	ay
+Bonanza Brothers	Kouichi Namiki	Spectrum AY	bulba/Ripped by Bulba/Bonanza Bros..ay	ay
+Bubble Dizzy	David Whittaker	Spectrum AY	bulba/Ripped by Bulba/BubbleDizzy.ay	ay
+Buffalo Bill's Wild West Show	David Whittaker	Spectrum AY	bulba/Ripped by Bulba/BuffaloBill'sWildWestShow.ay	ay
+CDDemo	Andy "DM" Severn, Mike Brown	Spectrum AY	bulba/Ripped by Bulba/CDDemo.ay	ay
+Chain Reaction	Rob Hubbard	Spectrum AY	bulba/Ripped by Bulba/Chain Reaction.ay	ay
+Chrobak Truhlik	Unknown	Spectrum AY	bulba/Ripped by Bulba/ChrobakTruhlik.ay	ay
+Continental Circus	Ben Daglish	Spectrum AY	bulba/Ripped by Bulba/ContinentalCircus.ay	ay
+Days of Thunder	Unknown	Spectrum AY	bulba/Ripped by Bulba/Days of Thunder.ay	ay
+Deactivators	Simon PC Frost	Spectrum AY	bulba/Ripped by Bulba/Deactivators.ay	ay
+Deadly Evil	Sonic Grafitti and Andy Severn	Spectrum AY	bulba/Ripped by Bulba/DeadlyEvil.ay	ay
+Doctor Who: Dalek Attack	Paul Tankard	Spectrum AY	bulba/Ripped by Bulba/DoctorWho-DalekAttack.ay	ay
+Double Dash	Tomas Partl	Spectrum AY	bulba/Ripped by Bulba/DoubleDash.ay	ay
+Double Dragon II: The Revenge	Steve Barrett	Spectrum AY	bulba/Ripped by Bulba/DoubleDragonII-TheRevenge.ay	ay
+Drazen Petrovic Basket	Gominolas	Spectrum AY	bulba/Ripped by Bulba/DrazenPetrovicBasket.ay	ay
+Earthlight	Unknown	Spectrum AY	bulba/Ripped by Bulba/Earthlight.ay	ay
+Emlyn Hughes Arcade Quiz	David Whittaker	Spectrum AY	bulba/Ripped by Bulba/EmlynHughesArcadeQuiz.ay	ay
+La Espada Sagrada	TPM	Spectrum AY	bulba/Ripped by Bulba/EspadaSagradaLa.ay	ay
+F-19 Stealth Fighter	Ken Lagace	Spectrum AY	bulba/Ripped by Bulba/F-19 Stealth Fighter.ay	ay
+Final Assault	Charles Callet	Spectrum AY	bulba/Ripped by Bulba/FinalAssault.ay	ay
+Frightmare	Sean Conran	Spectrum AY	bulba/Ripped by Bulba/Frightmare.ay	ay
+Gazza II	Unknown	Spectrum AY	bulba/Ripped by Bulba/Gazza II.ay	ay
+Great Gurianos	Mark Cooksey	Spectrum AY	bulba/Ripped by Bulba/GreatGurianos.ay	ay
 Grell&Falla	Alistair Brimble	Spectrum AY	bulba/Ripped by Bulba/Grell&Falla.ay	ay
+From AMS 2.3	ASC	Spectrum AY	bulba/Ripped by Bulba/HYPE.ay	ay
+Heavy Metal	Jas.C.Brooke	Spectrum AY	bulba/Ripped by Bulba/HeavyMetal.ay	ay
+Helter Skelter	D.W.	Spectrum AY	bulba/Ripped by Bulba/HelterSkelter.ay	ay
+Hyperlane+	Andy Brown	Spectrum AY	bulba/Ripped by Bulba/Hyperlane+.ay	ay
+Ice Breaker	TPM	Spectrum AY	bulba/Ripped by Bulba/IceBreaker.ay	ay
+Implosion	Fred Gray	Spectrum AY	bulba/Ripped by Bulba/Implosion.ay	ay
+Indiana Jones in The Fate Of Atlantis	Martin Walker	Spectrum AY	bulba/Ripped by Bulba/Indiana Jones in The Fate Of Atlantis.ay	ay
+Insector Hecti In The Interchange	Dave Spicer	Spectrum AY	bulba/Ripped by Bulba/Insector Hecti In The Interchange.ay	ay
+Italian Supercar	Lyndon Sharp	Spectrum AY	bulba/Ripped by Bulba/ItalianSupercar.ay	ay
+Italy 1990	Mike Davies	Spectrum AY	bulba/Ripped by Bulba/Italy1990.ay	ay
+Jahanghir Khan World Championship Squash	Matt Furniss	Spectrum AY	bulba/Ripped by Bulba/JahangirKhanWorldChampionshipSquash.ay	ay
+KGB Superspy	David Whittaker	Spectrum AY	bulba/Ripped by Bulba/KGBSuperspy.ay	ay
+Kenny Dalglish Soccer Match	Chris Denman	Spectrum AY	bulba/Ripped by Bulba/KennyDalglishSoccerMatch.ay	ay
 Kwik Snax	Lyndon Sharp	Spectrum AY	bulba/Ripped by Bulba/Kwik Snax.ay	ay
-Loader	RST7/CB/PSG	Spectrum AY	bulba/Ripped by Bulba/Loader.ay	ay
-Time Scanner	Spidersoft	Spectrum AY	bulba/Ripped by Bulba/TimeScanner.ay	ay
+Lop Ears	Sonic Graffiti	Spectrum AY	bulba/Ripped by Bulba/Lop Ears.ay	ay
+Lorna	TPM	Spectrum AY	bulba/Ripped by Bulba/Lorna.ay	ay
+Los Inhumanos	Unknown	Spectrum AY	bulba/Ripped by Bulba/LosInhumanosIntro.ay	ay
+Los Inhumanos	Unknown	Spectrum AY	bulba/Ripped by Bulba/LosInhumanosTitle.ay	ay
+Mean Streak	Matt Gray	Spectrum AY	bulba/Ripped by Bulba/MeanStreak.ay	ay
+Megaphoenix	Jose A. Martin	Spectrum AY	bulba/Ripped by Bulba/Megaphoenix.ay	ay
+Mercs	Manami Matsumae	Spectrum AY	bulba/Ripped by Bulba/Mercs.ay	ay
+MicroProse Soccer	Barry Leitch	Spectrum AY	bulba/Ripped by Bulba/MicroProseSoccer.ay	ay
+Mike Read's Pop Quiz	Mark Cooksey	Spectrum AY	bulba/Ripped by Bulba/MikeRead'sPopQuiz.ay	ay
+Missile Ground Zero	T. Follin	Spectrum AY	bulba/Ripped by Bulba/MissileGroundZero.ay	ay
+Monty Python's Flying Circus	Dave Pridmore	Spectrum AY	bulba/Ripped by Bulba/MontyPythonsFlyingCircus.ay	ay
+Mountain Bike Simulator	Unknown	Spectrum AY	bulba/Ripped by Bulba/Mountain Bike Simulator.ay	ay
+Mountain Bike Racer	Unknown	Spectrum AY	bulba/Ripped by Bulba/MountainBikeRacer(Positive).ay	ay
+Mountie Mick's Death Ride	We.M.U.S.I.C.	Spectrum AY	bulba/Ripped by Bulba/MountieMicksDeathRide.ay	ay
+From CDE Music Bank 3	Unknown	Spectrum AY	bulba/Ripped by Bulba/Msx 10-6.ay	ay
+The Muncher Eats Chewits	Unknown	Spectrum AY	bulba/Ripped by Bulba/MuncherEatsChewitsThe.ay	ay
+Mutant Fortress	Andy Severn, Sonic Graffiti, Ian Sheridan	Spectrum AY	bulba/Ripped by Bulba/MutantFortress.ay	ay
+Nigel Mansell's World Championship	Mike Chilton	Spectrum AY	bulba/Ripped by Bulba/Nigel Mansell's World Championship.ay	ay
+Night Hunter	Unknown	Spectrum AY	bulba/Ripped by Bulba/NightHunter.ay	ay
+Operation Hormuz	Unknown	Spectrum AY	bulba/Ripped by Bulba/Operation Hormuz.ay	ay
+Outlaw	Gerard Gourley	Spectrum AY	bulba/Ripped by Bulba/Outlaw.ay	ay
+Paris to Dakar	Lyndon Sharp of W.A.S.P.	Spectrum AY	bulba/Ripped by Bulba/Paris to Dakar.ay	ay
+Pick 'n Pile	Unknown	Spectrum AY	bulba/Ripped by Bulba/PickNPile.ay	ay
+Poli Diaz Boxeo	Unknown	Spectrum AY	bulba/Ripped by Bulba/PoliDiaz.ay	ay
+Power Drift	Dave Lowe	Spectrum AY	bulba/Ripped by Bulba/PowerDrift.ay	ay
+Predator 2	Unknown	Spectrum AY	bulba/Ripped by Bulba/Predator2.ay	ay
+Pro Simulators	Lyndon Sharp	Spectrum AY	bulba/Ripped by Bulba/Pro Simulators.ay	ay
+Purple Saturn Day	Stephane Picq	Spectrum AY	bulba/Ripped by Bulba/PurpleSaturnDay.ay	ay
+R.B.I. 2 Baseball	Andy Taylor	Spectrum AY	bulba/Ripped by Bulba/RBI2Baseball.ay	ay
+Rainbow Islands	Steve Turner	Spectrum AY	bulba/Ripped by Bulba/RainbowIslands.ay	ay
+Reaper	Unknown	Spectrum AY	bulba/Ripped by Bulba/Reaper.ay	ay
+Reckless Rufus	Unknown	Spectrum AY	bulba/Ripped by Bulba/Reckless Rufus.ay	ay
+Rescate Atlantida	Jose A. Martin	Spectrum AY	bulba/Ripped by Bulba/RescateAtlantida.ay	ay
+Road Runner And Wile E. Coyote	Sean Conran	Spectrum AY	bulba/Ripped by Bulba/Road Runner And Wile E. Coyote.ay	ay
+Road Blasters	Brad Fuller	Spectrum AY	bulba/Ripped by Bulba/RoadBlasters.ay	ay
+Robin Hood - Legend Quest	Lyndon Sharp	Spectrum AY	bulba/Ripped by Bulba/Robin Hood - Legend Quest.ay	ay
+The Running Man	Unknown	Spectrum AY	bulba/Ripped by Bulba/RunningManThe.ay	ay
+From AMS v2.3	Unknown	Spectrum AY	bulba/Ripped by Bulba/S.O.S..ay	ay
+Shanghai Warriors	Andy Severn, Mike Brown	Spectrum AY	bulba/Ripped by Bulba/ShanghaiWarriors.ay	ay
+Sharkey's Moll	Sound Images	Spectrum AY	bulba/Ripped by Bulba/Sharkey's Moll.ay	ay
+Skate Crazy Part 1	Ben Daglish	Spectrum AY	bulba/Ripped by Bulba/SkateCrazyPart1.ay	ay
+Skull & Crossbones	Matt Furniss	Spectrum AY	bulba/Ripped by Bulba/Skull & Crossbones.ay	ay
+Slightly Magic	Allister Brimble	Spectrum AY	bulba/Ripped by Bulba/SlightlyMagic.ay	ay
+Snow Strike	David Whittaker	Spectrum AY	bulba/Ripped by Bulba/SnowStrike.ay	ay
+Solaris	Theo Develegas	Spectrum AY	bulba/Ripped by Bulba/Solaris.ay	ay
+Sonic Boom	Source The Software House Ltd	Spectrum AY	bulba/Ripped by Bulba/Sonic Boom.ay	ay
+Spike in Transylvania	Lyndon Sharp	Spectrum AY	bulba/Ripped by Bulba/SpikeInTransylvania.ay	ay
+Star Pilot	J. Bond	Spectrum AY	bulba/Ripped by Bulba/StarPilot.ay	ay
+Stormlord Demo	Dave Rogers	Spectrum AY	bulba/Ripped by Bulba/Stormlord (demo).ay	ay
+Super League	Ian Sheridan	Spectrum AY	bulba/Ripped by Bulba/SuperLeague.ay	ay
+Super Tank Simulator	Lyndon Sharp	Spectrum AY	bulba/Ripped by Bulba/SuperTank.ay	ay
+Terminator 2 - Judgement Day	Jonathan Dunn	Spectrum AY	bulba/Ripped by Bulba/Terminator 2 - Judgement Day.ay	ay
+Thanatos	Julian Breeze	Spectrum AY	bulba/Ripped by Bulba/Thanatos128K.ay	ay
+The Exterminator	Dave Whittaker	Spectrum AY	bulba/Ripped by Bulba/The Exterminator.ay	ay
+The Jetsons	Unknown	Spectrum AY	bulba/Ripped by Bulba/The Jetsons.ay	ay
+Thunderbirds	Ben Daglish	Spectrum AY	bulba/Ripped by Bulba/Thunderbirds.ay	ay
+Time Scanner	Adam Gilmore	Spectrum AY	bulba/Ripped by Bulba/TimeScanner.ay	ay
+Tour 91	Lords of Sound	Spectrum AY	bulba/Ripped by Bulba/Tour 91.ay	ay
+Treasure Island Dizzy	David Whittaker	Spectrum AY	bulba/Ripped by Bulba/TreasureIslandDizzy.ay	ay
+Turbo Out Run	David Lowe	Spectrum AY	bulba/Ripped by Bulba/TurboOutRun.ay	ay
+Turrican II - The Final Fight	Sean Conran	Spectrum AY	bulba/Ripped by Bulba/Turrican II - The Final Fight.ay	ay
+U.N. Squadron	Mike Davies	Spectrum AY	bulba/Ripped by Bulba/UNSquadron.ay	ay
+The Untouchables (demo)	Matty	Spectrum AY	bulba/Ripped by Bulba/UntouchablesThe(demo).ay	ay
+From AMS 2.3	Unknown	Spectrum AY	bulba/Ripped by Bulba/V KILLER.ay	ay
+Vixen	Jas C. Brooke	Spectrum AY	bulba/Ripped by Bulba/Vixen.ay	ay
+War Cars Construction Set	Clive Brooker	Spectrum AY	bulba/Ripped by Bulba/WarCarsConstructionSet.ay	ay
+World Championship Soccer	Unknown	Spectrum AY	bulba/Ripped by Bulba/World Championship Soccer.ay	ay
+World Class Rugby	David Whittaker	Spectrum AY	bulba/Ripped by Bulba/World Class Rugby.ay	ay
+World Cup Challenge	Unknown	Spectrum AY	bulba/Ripped by Bulba/WorldCupChallenge.ay	ay
+Zone Trooper	Nigel Pritchard	Spectrum AY	bulba/Ripped by Bulba/ZoneTrooper.ay	ay
 AudioIllusions AID01	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID01.ay	ay
 AudioIllusions AID02	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID02.ay	ay
 AudioIllusions AID03	SoLO/CORPSE	Amstrad CPC	cpc/AudioIllusions/AID03.ay	ay
