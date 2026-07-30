@@ -601,10 +601,10 @@ void ChipMachine::updateKeys()
         bool isoffline = remoteLoader.isOffline(song.path);
 	// "+" = served straight from a local_dir mirror on disk (thus never
 	// cached); "*" = a cached remote file. isLocalFile tracks the real on-disk
-	// condition load() serves from, with isLocalAsset's prefix check as a
-	// cheap belt-and-suspenders for the app-shipped collections.
-	bool islocal = remoteLoader.isLocalFile(song.path) ||
-	               RemoteLoader::isLocalAsset(song.path);
+	// condition load() serves from. (The old isLocalAsset prefix check that used
+	// to OR in here is gone with db.lua VERSION 131 -- no collection ships inside
+	// the app any more, so only the user's /opt/Music mirrors can be local.)
+	bool islocal = remoteLoader.isLocalFile(song.path);
 	if (islocal) {
 	    topStatus.setText(utils::format("Format: %s (%s)%s", song.format,ext, "+"));
 	} else {

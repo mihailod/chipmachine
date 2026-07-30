@@ -57,9 +57,10 @@ public:
     // True when this song is served straight from a local_dir mirror on disk --
     // the SAME condition load()/inCache short-circuit on, so a local file is by
     // construction never fetched into the web cache. The GUI marks these with a
-    // "+" (vs "*" for cached remote files). Preferred over the prefix-based
-    // isLocalAsset() below because it tracks the actual on-disk reality, so the
-    // "+" mark can never drift from the never-cached behaviour.
+    // "+" (vs "*" for cached remote files). It tracks the actual on-disk reality,
+    // so the "+" mark can never drift from the never-cached behaviour. Since
+    // VERSION 131 this is the ONLY "is it local" answer (see the note below), and
+    // in practice it means the user's own /opt/Music mirrors.
     [[nodiscard]] bool isLocalFile(const std::string& p) const;
 
     void cancel()
@@ -91,27 +92,14 @@ public:
     static constexpr int PARAMETER = 1;
     static constexpr int END = 2;
 
-    [[nodiscard]] static bool isLocalAsset(const std::string& path) {
-        // std::cout << path << std::endl; 
-        // return path.find("http://") == std::string::npos &&
-        //       path.find("https://") == std::string::npos &&
-        //       path.find("ftp://") == std::string::npos;
-
-        // todo implement better
-        // the path prefix is actually db name prefix
-        // eg modland::Soundtracker/SLL/sll1.mod
-        // so need a map of dbs which are local
-        // The locally-shipped collections bundle their files inside the .app
-        // (a music/<dir> local_dir), so a song from one is always served from
-        // disk, never the network. NB: only APP-SHIPPED collections belong here
-        // -- collections with a /opt/Music local_dir (modland, asma, rko, ...)
-        // are the user's own mirrors and are NOT present on most machines.
-        //   projectay -> music/projectay   (projectay::ironfist/arkanoid.ay)
-        // hvtc (VERSION 129) and nsfe (VERSION 130) were here until they were
-        // un-bundled; both are plain remote collections now, so neither may claim
-        // the local "+" indicator. projectay is the last app-shipped store.
-        return path.find("projectay::") == 0;
-    }
+    // NB: there used to be a static isLocalAsset(path) here, a hardcoded list of
+    // the "<collection>::" prefixes whose files shipped inside the .app (nsfe,
+    // hvtc, projectay). db.lua VERSION 129/130/131 un-bundled all three -- the app
+    // ships no music at all now -- so the list had no members left and it is gone.
+    // isLocalFile() below is the sole "is this served from disk" answer, and it
+    // still covers what actually matters: the user's own /opt/Music mirrors
+    // (modland, asma, rko, ...), which it detects by testing the disk rather than
+    // by guessing from a prefix.
 
 private:
     struct Source

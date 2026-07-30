@@ -902,39 +902,34 @@ TEST_CASE("mirsoft game modules play via the host path", "[music]")
     }
 }
 
-// The GUI marks app-shipped local collections with a "+" (vs "*" for cached
-// remote files) via isLocalAsset, keyed by the "<collection>::" path prefix.
-// projectay is the only app-shipped collection left, so guard that it reports
-// local and that remote/URL songs do not. hvtc (VERSION 129) and nsfe (VERSION
-// 130) were shipped too until they were un-bundled -- no music ships inside the
-// app for Mac App Store submission -- so both must now report REMOTE.
-TEST_CASE("isLocalAsset marks shipped collections", "[music]")
-{
-    REQUIRE(RemoteLoader::isLocalAsset("projectay::ironfist/arkanoid.ay"));
-    REQUIRE(RemoteLoader::isLocalAsset("projectay::cpc/TribalMag5/TribalMag5_00.ay"));
-    REQUIRE_FALSE(RemoteLoader::isLocalAsset("nsfe::31_orange_painting.nsfe"));
-    REQUIRE_FALSE(RemoteLoader::isLocalAsset("hvtc::demos/crazy_scroll_89.prg"));
-    REQUIRE_FALSE(RemoteLoader::isLocalAsset("zxart::https://zxart.ee/file/id:44417/x.ay"));
-    REQUIRE_FALSE(RemoteLoader::isLocalAsset("modland::AY/Foo/bar.ay"));
-}
-
 // A local file (served from a local_dir mirror) is served straight from disk by
 // load() and thus NEVER written to the web cache: isLocalFile mirrors the exact
 // File::exists(local_dir + path) condition load() short-circuits on. So marking
-// a song "+" (local) and "never cached" are one and the same test. Guards that a
-// real shipped file reports local while a missing member / remote source do not.
+// a song "+" (local) and "never cached" are one and the same test.
+//
+// This used to point at a shipped music/projectay .ay, alongside a second test on
+// a static isLocalAsset() prefix list. db.lua VERSION 129/130/131 un-bundled nsfe,
+// hvtc and projectay -- the app ships NO music now -- so isLocalAsset is gone and
+// the only local_dir collections left are the user's own /opt/Music mirrors, which
+// no test machine can rely on. A testmus fixture dir stands in for such a mirror:
+// the condition under test is "does local_dir + path exist on disk", which is
+// collection-agnostic.
 TEST_CASE("local-dir files report local and are never cached", "[music]")
 {
     RemoteLoader rl;
-    rl.registerSource("projectay", "", "music/projectay"); // empty remote source
-    // A real shipped .ay: local -> load() serves it from disk, no fetch/cache.
-    REQUIRE(rl.isLocalFile("projectay::ironfist/1999.ay"));
-    REQUIRE(rl.inCache("projectay::ironfist/1999.ay"));  // present; nothing to fetch
+    rl.registerSource("mirror", "", "testmus/gme"); // stands in for /opt/Music/<x>
+    // A real on-disk file: local -> load() serves it from disk, no fetch/cache.
+    REQUIRE(rl.isLocalFile("mirror::ironfist-chasehq2.ay"));
+    REQUIRE(rl.inCache("mirror::ironfist-chasehq2.ay")); // present; nothing to fetch
     // A missing member is not local (would fall through to the network).
-    REQUIRE_FALSE(rl.isLocalFile("projectay::ironfist/no_such_tune.ay"));
-    // A purely-remote collection (no local_dir) is never "local".
+    REQUIRE_FALSE(rl.isLocalFile("mirror::no_such_tune.ay"));
+    // A purely-remote collection (no local_dir) is never "local" -- this now covers
+    // projectay/nsfe/hvtc too, which are ordinary remote collections.
     rl.registerSource("zxart", "https://zxart.ee/", "");
     REQUIRE_FALSE(rl.isLocalFile("zxart::file/id:1/x.ay"));
+    rl.registerSource("projectay",
+                      "https://archive.org/download/bulba-projectay/bulba-projectay.zip/", "");
+    REQUIRE_FALSE(rl.isLocalFile("projectay::ironfist/arkanoid.ay"));
     // Unknown collection prefix -> not local (no source, no crash).
     REQUIRE_FALSE(rl.isLocalFile("bogus::whatever.ay"));
 }

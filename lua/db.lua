@@ -987,7 +987,32 @@
 --     tune survives as 10_mikomiko.nsfe) and T_Original_DanceGirlDance-Love.nsfe.
 --     nsfe also gains a real `source` for the first time (it was ""), so it is no
 --     longer a collection that simply fails when its files are absent.
-VERSION = 130;
+-- 131: Project AY un-bundled -- the LAST one. music/projectay is deleted, and with
+--     it the whole music/ directory: the app now ships NO bundled music at all,
+--     which was the point of VERSION 129/130 (Mac App Store submission). Also gone:
+--     package_app.sh section 4d, and RemoteLoader::isLocalAsset (its entire job was
+--     naming the app-shipped collections, and there are none left -- the GUI "+"
+--     now comes solely from isLocalFile, which still covers the user's own
+--     /opt/Music mirrors for modland/asma/rko/...).
+--     Bulba publishes only whole archives (ifist_ay.zip + bulba_ay.7z + SoLOCPC.7z,
+--     and we cannot read .7z), so there is no per-song upstream URL. The 613 .ay
+--     were repacked into ONE ZIP preserving their relative paths and uploaded to
+--     https://archive.org/details/bulba-projectay; because the ZIP's inner paths
+--     equal the data/projectay.txt path column exactly, the song list needed no
+--     rewrite -- only `source` changed. Verified: local tree byte-identical to all
+--     three live upstream archives (613/613), and a full sweep of every path
+--     against IA returned 613x200 with matching sizes -- including the 74 paths
+--     containing spaces and "bulba/Ripped by Bulba/Grell&Falla.ay" (web.cpp escapes
+--     the path component via curl_easy_escape).
+--     Also removed 15 junk ".ay.ay" double-extension files that were byte-duplicates
+--     of listed tunes; build_projectay.py globs **/*.ay, so they would have become
+--     spurious duplicate rows on the next regeneration.
+--     NOT onboarded (deliberately, see the memory note): the other 10 music archives
+--     on bulba's page. Measured, not assumed -- TSMusicPack is 481/482 byte-identical
+--     to Tr_Songs, My_Songs 43/43 and sb_2000 2/2 likewise, Tr_Songs+/++ are the same
+--     modules re-laid-out, and 97 of a 120-file zxart sample are byte-identical to
+--     bulba content (~81%), so Tr_Songs is largely the corpus zxart already gives us.
+VERSION = 131;
 
 DB = {
 {
@@ -1263,17 +1288,20 @@ DB = {
 	-- Project AY / AY-EMUL (Sergey Bulba). Raw Z80 machine-code music rips in
 	-- the ZXAYEMUL (.ay) container: Ironfist's ZX Spectrum game rips + Bulba's
 	-- own rips ("Spectrum AY" -> ZX AY filter) and SoLO/CORPSE's Amstrad CPC
-	-- demo rips ("Amstrad CPC" -> CPC filter). Shipped LOCAL (like nsfe/hvtc):
-	-- Bulba only offers big archives and Ironfist's site is gone. Built by
+	-- demo rips ("Amstrad CPC" -> CPC filter). Built by
 	-- chipmachine/scripts/build_projectay.py from the embedded AY metadata; .ay plays via
-	-- gmeplugin (Ayfly renders CPC rips silent). source empty (local files).
+	-- gmeplugin (Ayfly renders CPC rips silent).
+	-- On-demand from an archive.org ZIP as of VERSION 131 -- NO local_dir. Bulba
+	-- only publishes whole archives (and two of the three are .7z, which we
+	-- cannot read), so the 613 .ay were repacked into one ZIP that PRESERVES the
+	-- paths; IA serves its members individually, so data/projectay.txt needed no
+	-- rewrite. NB a MISSING member answers 503, not 404.
 	name = "Project AY",
 	id =  "projectay",
 	priority = 850,  -- native ZX/CPC AY rips
-	source = "",
+	source = "https://archive.org/download/bulba-projectay/bulba-projectay.zip/",
 	song_list = "data/projectay.txt",
 	song_template = "title composer format path ext",
-	local_dir = "music/projectay",
 	color = 0xfffff
  },
  {

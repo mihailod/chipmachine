@@ -2,7 +2,8 @@ Mac App Store (MAS) compliance:
 
 - expand projectay
 
-- rename NSFE to FAMICOMPO in the id as well (maybe other cryptic ids too)
+- change cryptic db names -- cosmetic
+- code rename NSFE to FAMICOMPO in the id as well (maybe other cryptic ids too)
 
 - MAS: replace ALL logos/brands with generic txt/pics. Brand Logos: Keep official hardware logos (Nintendo, Sega, Commodore, Sony) out of your UI and App Store screenshots. Use text tags (e.g., ⁠C64⁠, ⁠NES⁠, ⁠ZX⁠). Maybe append generics and just disable/unbundle the branded from mas -- have parallel screenshots folders: branded and generic, screenshots-b, screenshots-g
 
