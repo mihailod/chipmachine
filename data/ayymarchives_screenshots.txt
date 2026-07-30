@@ -1,0 +1,882 @@
+Nostalgic/Boulder Dash/BoulDash.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/BoulderDash(PrismLeisureCorporationPLC).gif
+Nostalgic/Combat School/Combat1.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+Nostalgic/Combat School/Combat10.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+Nostalgic/Combat School/Combat2.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+Nostalgic/Combat School/Combat3.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+Nostalgic/Combat School/Combat4.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+Nostalgic/Combat School/Combat5.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+Nostalgic/Combat School/Combat6.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+Nostalgic/Combat School/Combat7.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+Nostalgic/Combat School/Combat8.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+Nostalgic/Combat School/Combat9.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CombatSchool.gif
+Nostalgic/Ghostbusters II/GB2_1.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GhostbustersII.gif
+Nostalgic/Ghostbusters II/GB2_2.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GhostbustersII.gif
+Nostalgic/Ghostbusters II/GB2_3.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GhostbustersII.gif
+Nostalgic/Ghostbusters II/GB2_4.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GhostbustersII.gif
+Nostalgic/Ghostbusters II/GB2_5.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GhostbustersII.gif
+Nostalgic/MoonWalker/MoonWalker.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Moonwalker.gif
+Nostalgic/The Flintstones/Flint1.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FlintstonesThe.gif
+Nostalgic/The Flintstones/Flint2.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FlintstonesThe.gif
+Nostalgic/The Flintstones/Loader.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/f/gif/FlintstonesThe.gif
+Nostalgic/The Real Ghost Busters/GB1_1.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RealGhostbustersThe.gif
+Nostalgic/The Real Ghost Busters/GB1_2.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RealGhostbustersThe.gif
+Nostalgic/The Real Ghost Busters/GB1_3.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RealGhostbustersThe.gif
+Nostalgic/The Real Ghost Busters/GB1_4.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RealGhostbustersThe.gif
+Nostalgic/The Vindicator/Intro.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/VindicatorThe.gif
+Nostalgic/The Vindicator/Vind1.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/VindicatorThe.gif
+Nostalgic/The Vindicator/Vind2.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/VindicatorThe.gif
+Nostalgic/The Vindicator/Vind3.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/VindicatorThe.gif
+Nostalgic/The Vindicator/Vind4.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/VindicatorThe.gif
+Nostalgic/Time Scanner/TimeScan1.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TimeScanner.gif
+Nostalgic/Time Scanner/TimeScan2.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TimeScanner.gif
+Nostalgic/Time Scanner/TimeScan3.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TimeScanner.gif
+Nostalgic/Time Scanner/TimeScan4.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TimeScanner.gif
+Nostalgic/VIZ The Computer Game/VIZ1.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Viz-TheComputerGame.gif
+Nostalgic/VIZ The Computer Game/VIZ2.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Viz-TheComputerGame.gif
+Nostalgic/VIZ The Computer Game/VIZ3.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Viz-TheComputerGame.gif
+Nostalgic/VIZ The Computer Game/VIZ4.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Viz-TheComputerGame.gif
+Nostalgic/VIZ The Computer Game/VIZ5.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Viz-TheComputerGame.gif
+Nostalgic/VIZ The Computer Game/VIZ6.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Viz-TheComputerGame.gif
+Nostalgic/VIZ The Computer Game/VIZ7.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Viz-TheComputerGame.gif
+Nostalgic/VIZ The Computer Game/VIZ8.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Viz-TheComputerGame.gif
+Nostalgic/VIZ The Computer Game/VIZ9.vtx	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Viz-TheComputerGame.gif
+Tr_Songs/Demos/Out Of ZSL/OutOfZSL 48K.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OutOfZSL.gif
+Tr_Songs/Demos/Out Of ZSL/OutOfZSL Loader by NN.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OutOfZSL.gif
+Tr_Songs/Demos/Out Of ZSL/OutOfZSL2.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/o/gif/OutOfZSL.gif
+Tr_Songs/Demos/The Miracle/Loadmix (RECLY).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MiracleThe.gif
+Tr_Songs/Demos/The Miracle/Loadmix.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MiracleThe.gif
+Tr_Songs/Demos/The Miracle/OUTFOX (Foxmix).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MiracleThe.gif
+Tr_Songs/Demos/The Miracle/OUTFOX.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MiracleThe.gif
+Tr_Songs/Demos/The Monsters/TheMonsters4.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/Monsters_2.gif
+Tr_Songs/Games/A Question Of Scruples/QuestionOfScruples.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/q/gif/QuestionOfScruplesA.gif
+Tr_Songs/Games/Ano Gaia/alexrex_info-147.TD0.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AnoGaia.gif
+Tr_Songs/Games/Bobsleigh/Pop Looks Bach.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Bobsleigh.gif
+Tr_Songs/Games/Brainstorm/Brainstorm.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/b/gif/Brainstorm.gif
+Tr_Songs/Games/Carlos Michelis/Carlos1.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CarlosMichelis.gif
+Tr_Songs/Games/Carlos Michelis/Carlos2.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CarlosMichelis.gif
+Tr_Songs/Games/Carlos Michelis/Carlos3.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CarlosMichelis.gif
+Tr_Songs/Games/Carlos Michelis/Carlos4.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CarlosMichelis.gif
+Tr_Songs/Games/Carlos Michelis/Carlos6.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/c/gif/CarlosMichelis.gif
+Tr_Songs/Games/Days of Thunder/Days of Thunder.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/DaysOfThunder.gif
+Tr_Songs/Games/Ghost Busters/GhostBusters.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/Ghostbusters.gif
+Tr_Songs/Games/Goto Hell/BENNY.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/g/gif/GoToHell.gif
+Tr_Songs/Games/Hamon IV/Hamon IV Happy Epilogue.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/HamonIV.gif
+Tr_Songs/Games/Hotshot/HotShot.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/Hotshot.gif
+Tr_Songs/Games/How to be a Complete Bastard/HowToBeACompleteBastard.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/h/gif/HowToBeACompleteBastard.gif
+Tr_Songs/Games/International Ninja Rabbits/InternationalNinjaRabbits.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/i/gif/InternationalNinjaRabbits.gif
+Tr_Songs/Games/Knightmare ZX/01_BGM1 - Majou Densets.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightmareZX.gif
+Tr_Songs/Games/Knightmare ZX/02_START - Into the battle.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightmareZX.gif
+Tr_Songs/Games/Knightmare ZX/03_BGM 2 - Knightmare.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightmareZX.gif
+Tr_Songs/Games/Knightmare ZX/04_BOSS 1 - Facing the Demon.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightmareZX.gif
+Tr_Songs/Games/Knightmare ZX/05_MISS - Popolon's Death.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightmareZX.gif
+Tr_Songs/Games/Knightmare ZX/06_Game Over .pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightmareZX.gif
+Tr_Songs/Games/Knightmare ZX/07_BOSS 2.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightmareZX.gif
+Tr_Songs/Games/Knightmare ZX/08_POWER UP.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightmareZX.gif
+Tr_Songs/Games/Knightmare ZX/09.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightmareZX.gif
+Tr_Songs/Games/Knightmare ZX/10_ENDING.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/k/gif/KnightmareZX.gif
+Tr_Songs/Games/LA Drugs Bust/LADrugsBust.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/l/gif/LADrugsBust.gif
+Tr_Songs/Games/Manic Miner/miner128.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/ManicMiner(SoftwareProjectsLtd).gif
+Tr_Songs/Games/Master Of Univers Demo/StarWars.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/StarWars.gif
+Tr_Songs/Games/Moon Strike/MoonStrike.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MoonStrike.gif
+Tr_Songs/Games/Mountain Bike Simulator/Mountain Bike Simulator.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MountainBike500.gif
+Tr_Songs/Games/Samurai Warrior/SamuraiWarrior.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SamuraiWarrior.gif
+Tr_Songs/Games/Skeletons/Skeletons Game Over.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/Skeletons.gif
+Tr_Songs/Games/Super Cars/SuperCars.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SuperCars.gif
+Tr_Songs/Games/Super Cup Football/SuperCupFootball.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/s/gif/SuperCupFootball.gif
+Tr_Songs/Games/Technician Ted - The Megamix/TechnicianTedTheMegamix.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TechnicianTed-TheMegamix.gif
+Tr_Songs/Games/Teenage Mutant Hero Turtles - The Coin-Op!/TeenageMutantHeroTurtlesCoin-Op.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/t/gif/TeenageMutantHeroTurtles-TheCoin-Op.gif
+Tr_Songs/Games/The Muncher/MuncherThe.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MuncherThe.gif
+Tr_Songs/Games/XOR/XOR.ay	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/x/gif/XOR.gif
+Tr_Songs/Intros/Abu Simbel Profanation/Abu Simbel Profanation Intro.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/a/gif/AbuSimbelProfanation.gif
+Tr_Songs/Intros/Dizzy/Dizzy 4 intro2 (SKYFOX).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Tr_Songs/Intros/Dizzy/Dizzy 4 intro2 (zx-show).stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/d/gif/Dizzy.gif
+Tr_Songs/Intros/Murray Mouse Super Cop/Murray Mouse Super Cop Intro 1.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/m/gif/MurrayMouseSupercop.gif
+Tr_Songs/Intros/Robo Xonix/Robo Xonix Intro.stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/r/gif/RoboXonix.gif
+Tr_Songs/Intros/The Paranoia Complex/paranois.pt3	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/p/gif/ParanoiaComplexThe.gif
+Tr_Songs/Intros/Venom/3,2,1,0..stc	https://web.archive.org/web/2id_/http://www.worldofspectrum.org/pub/sinclair/screens/load/v/gif/Venom.gif
+VtxYmEtc/botb/BotB 25843 hero of the galak sea.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/untitled_game_[no_publisher].png
+VtxYmEtc/botb/BotB 26535 DaJoshy - Wacky Saw Waves Dude.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/untitled_game_[no_publisher].png
+YM/YM/DEMO2.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/demo_2_2.gif
+YM/YM/DEMO3.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/demo3.gif
+YM/YM/DYNABLAS.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM/YM/GAMES/AFTERWAR.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/after_the_war.gif
+YM/YM/GAMES/BMXSIM.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bmx_simulator.gif
+YM/YM/GAMES/BMXSIML2.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bmx_simulator.gif
+YM/YM/GAMES/BOULDER.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/boulder_dash_[no_publisher].gif
+YM/YM/GAMES/CATCH-23.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/catch_23_2.gif
+YM/YM/GAMES/CYBNOID2.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/cybernoid_ii_-_the_revenge.gif
+YM/YM/GAMES/CYBRNOID.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/cybernoid.gif
+YM/YM/GAMES/DEFLEKTR.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/deflektor.gif
+YM/YM/GAMES/DELIVRNC.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/deliverance.gif
+YM/YM/GAMES/ELIMINAT.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/eliminator.gif
+YM/YM/GAMES/GOLDNAX1.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/golden_axe_16_blitz.gif
+YM/YM/GAMES/HARRIER.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/space_harrier.gif
+YM/YM/GAMES/IKARIWAR.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ikari_warriors.gif
+YM/YM/GAMES/LEVIATHN.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/leviathan_english_software.gif
+YM/YM/GAMES/NEBULUS.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nebulus.gif
+YM/YM/GAMES/STORMLRD.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/stormlord_hewson.gif
+YM/YM/GAMES/XENON.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/xenon.gif
+YM/YM/GAMES/ZOMBI.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zombi.gif
+YM/YM/TRANTOR.YM	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/trantor.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Awesome/Awesome1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/awesome.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Awesome/Awesome2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/awesome.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Awesome/Awesome3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/awesome.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Awesome/Awesome4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/awesome.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Awesome/Awesome5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/awesome.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Awesome/Awesome6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/awesome.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Awesome/Awesome7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/awesome.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/3D Dots.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/DecadeBoot.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/Flexiscroller.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/Gigadist.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/Intro.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/Loader.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/Mainmenu.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/Mini_Monty_Mix.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/Paralax.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/Pipeworx.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/Raster_Scroller.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/Reset.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/Decade Demo/Wheres_my_willy.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/decade_demo_p.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/KillingGameShow/Kgs_highscore.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/killing_game_show_(the)_psygnosis.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/KillingGameShow/Kgs_ingame.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/killing_game_show_(the)_psygnosis.gif
+YM_Archive_v5/YM Archive v5/Alderton.Nic (Count 0)/KillingGameShow/Kgs_title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/killing_game_show_(the)_psygnosis.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Circus Games/Circus Games 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/circus_games.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Circus Games/Circus Games 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/circus_games.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Circus Games/Circus Games 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/circus_games.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Circus Games/Circus Games 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/circus_games.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Circus Games/Circus Games 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/circus_games.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Hammerfist/Hammerfist1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/hammerfist_activision.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Hammerfist/Hammerfist2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/hammerfist_activision.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Hammerfist/Hammerfist3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/hammerfist_activision.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Hammerfist/Hammerfist4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/hammerfist_activision.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Hammerfist/Hammerfist5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/hammerfist_activision.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Hammerfist/Hammerfist6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/hammerfist_activision.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Hammerfist/Hammerfist7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/hammerfist_activision.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Summer_Olympiad/SummerOlympiad1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/summer_olympiad_micro-value.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Summer_Olympiad/SummerOlympiad2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/summer_olympiad_micro-value.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Summer_Olympiad/SummerOlympiad3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/summer_olympiad_micro-value.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Summer_Olympiad/SummerOlympiad4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/summer_olympiad_micro-value.gif
+YM_Archive_v5/YM Archive v5/Beben.Wally/Total_Eclipse.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/total_eclipse.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/1st Division/1st Division 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/1st_division_manager.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/1st Division/1st Division 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/1st_division_manager.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/1st Division/1st Division 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/1st_division_manager.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/1st Division/1st Division 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/1st_division_manager.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/1st Division/1st Division 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/1st_division_manager.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/1st Division/1st Division 6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/1st_division_manager.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/1st Division/1st Division 7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/1st_division_manager.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/1st Division/1st Division 8.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/1st_division_manager.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Fantasy Land Dizzy/Fantasy Land Dizzy 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/fantasy_world_dizzy.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Fantasy Land Dizzy/Fantasy Land Dizzy 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/fantasy_world_dizzy.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Fantasy Land Dizzy/Fantasy Land Dizzy 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/fantasy_world_dizzy.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Fast Food/Fastfood1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/fast_food_codemasters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Fast Food/Fastfood2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/fast_food_codemasters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Fast Food/Fastfood3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/fast_food_codemasters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Fast Food/Fastfood4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/fast_food_codemasters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Fast Food/Fastfood5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/fast_food_codemasters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Fast Food/Fastfood6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/fast_food_codemasters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Fast Food/Fastfood7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/fast_food_codemasters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Kwik Snax/Ks_cloud.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kwik_snax_code_masters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Kwik Snax/Ks_cuckoo.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kwik_snax_code_masters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Kwik Snax/Ks_ice.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kwik_snax_code_masters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Kwik Snax/Ks_kwik.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kwik_snax_code_masters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Kwik Snax/Ks_title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kwik_snax_code_masters.gif
+YM_Archive_v5/YM Archive v5/Brimble.Allistair/Kwik Snax/Ks_zaks.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kwik_snax_code_masters.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Buggy Boy/Bboy1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/buggy_boy.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Buggy Boy/Bboy2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/buggy_boy.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Buggy Boy/Bboy3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/buggy_boy.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Buggy Boy/Bboy4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/buggy_boy.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Buggy Boy/Bboy5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/buggy_boy.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Ikari Warriors/Ikari_war1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ikari_warriors.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Ikari Warriors/Ikari_war2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ikari_warriors.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Ikari Warriors/Ikari_war3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ikari_warriors.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Mutant_Camels_2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/revenge_of_the_mutant_camels_ii.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Outrun/Outrun1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/out_run.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Outrun/Outrun2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/out_run.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Overlander/Overlander1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/overlander_elite.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Overlander/Overlander2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/overlander_elite.gif
+YM_Archive_v5/YM Archive v5/Brooke.Jason/Overlander/Overlander3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/overlander_elite.gif
+YM_Archive_v5/YM Archive v5/Chrispy.Noodle/Captain_America.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/captain_america_-_defies_the_doom_tube_go.gif
+YM_Archive_v5/YM Archive v5/Chrispy.Noodle/Commando/Commando_Highscore.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/commando.gif
+YM_Archive_v5/YM Archive v5/Chrispy.Noodle/Sapiens/Sapiens1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Sapiens.gif
+YM_Archive_v5/YM Archive v5/Chrispy.Noodle/Sapiens/Sapiens2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Sapiens.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Artura.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/artura.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Axels Magic Hammer.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/axels_magic_hammer.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Blasteroids/Blasteroids1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/blasteroids.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Blasteroids/Blasteroids2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/blasteroids.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Butcher Hill/Butcher_Hill1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/butcher_hill_gremlin_graphics.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Butcher Hill/Butcher_Hill2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/butcher_hill_gremlin_graphics.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Butcher Hill/Butcher_Hill3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/butcher_hill_gremlin_graphics.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Butcher Hill/Butcher_Hill4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/butcher_hill_gremlin_graphics.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Chase HQ/Chase HQ 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chase_hq.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Chase HQ/Chase HQ 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chase_hq.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Chase HQ/Chase HQ 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chase_hq.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Chase HQ/Chase HQ 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chase_hq.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Chase HQ/Chase HQ 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chase_hq.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Chase HQ/Chase HQ 6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chase_hq.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 10.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 11.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 12.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 13.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 14.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 8.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/ContinentalCircus/ContinentalCircus 9.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/continental_circus.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Deflektor.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/deflektor.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/F_O_F_T.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/foft.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/He-Man/He-Man1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/masters_of_the_universe_gremlin_graphics.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/He-Man/He-man2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/masters_of_the_universe_gremlin_graphics.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/He-Man/He-man3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/masters_of_the_universe_gremlin_graphics.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Legends of Valours/Legends of Valours 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/legends_of_valour_st_format.png
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Legends of Valours/Legends of Valours 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/legends_of_valour_st_format.png
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Legends of Valours/Legends of Valours 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/legends_of_valour_st_format.png
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Legends of Valours/Legends of Valours 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/legends_of_valour_st_format.png
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Legends of Valours/Legends of Valours 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/legends_of_valour_st_format.png
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Legends of Valours/Legends of Valours 6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/legends_of_valour_st_format.png
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Motor Massacre/Motor Massacre1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/motor_massacre.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Motor Massacre/Motor Massacre2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/motor_massacre.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Northstar/Northstar1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Northstar.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Northstar/Northstar2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Northstar.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Northstar/Northstar3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Northstar.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Resolution_101.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/resolution_101_2.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Rick Dangerous 2/Rickd2_1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/rick_dangerous.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Rick Dangerous 2/Rickd2_2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/rick_dangerous.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Rick Dangerous/Rick Dangerous 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/rick_dangerous.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Rick Dangerous/Rick Dangerous 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/rick_dangerous.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Rick Dangerous/Rick Dangerous 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/rick_dangerous.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Rick Dangerous/Rick Dangerous 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/rick_dangerous.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Rick Dangerous/Rick Dangerous 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/rick_dangerous.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Rick Dangerous/Rick Dangerous 6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/rick_dangerous.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Rick Dangerous/Rick Dangerous 7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/rick_dangerous.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Supercars/Supercars1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_cars.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Supercars/Supercars2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_cars.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Supercars/Supercars3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_cars.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Supercars/Supercars4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_cars.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Supercars/Supercars5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_cars.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Supercars/Supercars6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_cars.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Supercars/Supercars7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_cars.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Switchblade/Switchblade1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/switchblade.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/Switchblade/Switchblade2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/switchblade.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/The Games - Winter/winter_jazz.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/the_games_winter_edition.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/The Games - Winter/winter_luge.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/the_games_winter_edition.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/The Games - Winter/winter_menu.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/the_games_winter_edition.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/The Games - Winter/winter_opening.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/the_games_winter_edition.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/The Games - Winter/winter_skijump.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/the_games_winter_edition.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/The Games - Winter/winter_sonata.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/the_games_winter_edition.gif
+YM_Archive_v5/YM Archive v5/Daglish.Ben/The Games - Winter/winter_title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/the_games_winter_edition.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_Anthem_1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_anthem 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_anthem 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_anthem 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_anthem 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_anthem 6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_level 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_level 10.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_level 11.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_level 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_level 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_level 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_level 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_level 6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_level 7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_level 8.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/DeMan.Joris (Scavenger)/Crapman/Crapman_level 9.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crapman.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Bionic Commando/Bionic Commando 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bionic_commando_go.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Bionic Commando/Bionic Commando 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bionic_commando_go.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Bionic Commando/Bionic Commando 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bionic_commando_go.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Follin, Brothers/Bionic Commando/Bionic Commando 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bionic_commando_go.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Ghouls & Ghosts/Ghouls 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghouls_n_ghosts_us_gold.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Ghouls & Ghosts/Ghouls 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghouls_n_ghosts_us_gold.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Ghouls & Ghosts/Ghouls 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghouls_n_ghosts_us_gold.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Ghouls & Ghosts/Ghouls 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghouls_n_ghosts_us_gold.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Ghouls & Ghosts/Ghouls 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghouls_n_ghosts_us_gold.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Ghouls & Ghosts/Ghouls 6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghouls_n_ghosts_us_gold.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Ghouls & Ghosts/Ghouls 7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghouls_n_ghosts_us_gold.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Ghouls & Ghosts/Ghouls 8.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghouls_n_ghosts_us_gold.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Led Storm/Led Storm 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/led_storm.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Led Storm/Led Storm 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/led_storm.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Led Storm/Led Storm 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/led_storm.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Led Storm/Led Storm 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/led_storm.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Led Storm/Led Storm 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/led_storm.gif
+YM_Archive_v5/YM Archive v5/Follin.Bros/Led Storm/Led Storm 6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/led_storm.gif
+YM_Archive_v5/YM Archive v5/Furniss.Matt (Havoc)/Klax/Klax_1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/klax.gif
+YM_Archive_v5/YM Archive v5/Furniss.Matt (Havoc)/Klax/Klax_2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/klax.gif
+YM_Archive_v5/YM Archive v5/Furniss.Matt (Havoc)/Klax/Klax_3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/klax.gif
+YM_Archive_v5/YM Archive v5/Furniss.Matt (Havoc)/Klax/Klax_4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/klax.gif
+YM_Archive_v5/YM Archive v5/Furniss.Matt (Havoc)/Klax/Klax_5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/klax.gif
+YM_Archive_v5/YM Archive v5/Furniss.Matt (Havoc)/Robot Monsters/Escape1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/escape_from_the_planet_of_the_robot_monsters_stampede_pre.gif
+YM_Archive_v5/YM Archive v5/Furniss.Matt (Havoc)/Robot Monsters/Escape2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/escape_from_the_planet_of_the_robot_monsters_stampede_pre.gif
+YM_Archive_v5/YM Archive v5/Furniss.Matt (Havoc)/Robot Monsters/Escape3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/escape_from_the_planet_of_the_robot_monsters_stampede_pre.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/No Second Prize/No Second Prize 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/no_second_prize.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/No Second Prize/No Second Prize 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/no_second_prize.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/No Second Prize/No Second Prize Title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/no_second_prize.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/No Second Prize/nsp_menu.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/no_second_prize.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/Punish Your Machine/Colors are going Bang Bang.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/punish_your_machine.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/Punish Your Machine/CopperKaahBaahNaah.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/punish_your_machine.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/Punish Your Machine/PYM Change disks.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/punish_your_machine.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/Punish Your Machine/PYM Intro.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/punish_your_machine.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/Punish Your Machine/PYM Ishido.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/punish_your_machine.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/Punish Your Machine/PYM Menu.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/punish_your_machine.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/Punish Your Machine/PYM SickestSoFar.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/punish_your_machine.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/Punish Your Machine/PYM loader.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/punish_your_machine.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/Punish Your Machine/Tubular Bells.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/punish_your_machine.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/RippedOff 119.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ripped_off_overscan_intro.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/WhatTimeIsIt/WTII Main Menu.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/what_time_is_it.gif
+YM_Archive_v5/YM Archive v5/Gaubatz.Gunnar (Big Alec)/WhatTimeIsIt/WTII Scrolly.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/what_time_is_it.gif
+YM_Archive_v5/YM Archive v5/Gerard.Jean-S. (Jess)/Generation 2_0.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/generation_[fanatics].png
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/5th Gear/5th Gear Title 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/5th_gear.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/7_gates_of_Jambala/JambalaIntro_digidrums.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/seven_gates_of_jambala.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 01.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 02.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 03.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 04.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 05.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 06.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 07.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 08.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 09.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 10.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 11.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 12.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 13.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 14.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 15.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 16.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Amberstar/Amberstar 17.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/amberstar.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Astaroth/Astaroth0.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/astaroth.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Astaroth/Astaroth1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/astaroth.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Astaroth/Astaroth2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/astaroth.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Astaroth/Astaroth3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/astaroth.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Big Demo/Battle of Britain.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/battle_of_britain.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Big Demo/Chimera1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chimera.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Big Demo/Chimera2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chimera.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Big Demo/Commando_game.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/commando.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Big Demo/Commando_highscore.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/commando.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Big Demo/Int. Karate.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/international_karate_system_3_software.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Big Demo/Lightforce.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/light_force_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Big Demo/Saboteur2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/saboteur_iii_-_the_egyptian_mission_shadow_team.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Big Demo/Thrust.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/thrust.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Big Demo/Zoolook.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zoolook.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/C64 Convertions/Eliminator.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/eliminator.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/C64 Convertions/Lightforce.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/light_force_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Chambers of Shaolin/Chambers (loader).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chambers_of_shaolin.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Chambers of Shaolin/Chambers (tests1).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chambers_of_shaolin.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Chambers of Shaolin/Chambers (tests2).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chambers_of_shaolin.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Chambers of Shaolin/Chambers (tests3).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chambers_of_shaolin.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Chambers of Shaolin/Chambers (title).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chambers_of_shaolin.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Chambers of Shaolin/Chambers (you blew it!).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chambers_of_shaolin.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Chambers of Shaolin/Chinese Revolution.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chambers_of_shaolin.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Chambers of Shaolin/Mega Pock Olipse.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chambers_of_shaolin.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Chambers of Shaolin/Modu Attack.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chambers_of_shaolin.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Chambers of Shaolin/Trapped in China.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chambers_of_shaolin.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Cuddly Demos/Colorshock.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/colorshock_6.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Cuddly Demos/Noname.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/no_name_(the_game)_%5Bno_publisher%5D.png
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Cybernoid 1/Cybernoid.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/cybernoid.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Cybernoid 2/Cybernoid2_1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/cybernoid.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Cybernoid 2/Cybernoid2_2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/cybernoid.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Dugger/dugger1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dugger.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Dugger/dugger2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dugger.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Dugger/dugger3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dugger.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Ghost Battle/GB Level 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghost_battle_thalion.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Ghost Battle/GB Level 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghost_battle_thalion.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Ghost Battle/GB Level 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghost_battle_thalion.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Ghost Battle/GB Level 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghost_battle_thalion.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Ghost Battle/GB Loader.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghost_battle_thalion.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Ghost Battle/GB Over.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghost_battle_thalion.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Ghost Battle/GB Title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ghost_battle_thalion.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Grand Monster Slam/Grand Monster Slam.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/grand_monster_slam_golden_goblins.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Grand Monster Slam/Jingle 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/grand_monster_slam_golden_goblins.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Grand Monster Slam/Jingle 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/grand_monster_slam_golden_goblins.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Grand Monster Slam/Jingle 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/grand_monster_slam_golden_goblins.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Lethal_Xcess/LethalXcess1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lethal_xcess.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Lethal_Xcess/LethalXcess2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lethal_xcess.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Lethal_Xcess/LethalXcess3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lethal_xcess.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Lethal_Xcess/LethalXcess4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lethal_xcess.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Lethal_Xcess/LethalXcess5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lethal_xcess.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Lethal_Xcess/LethalXcess6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lethal_xcess.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Lethal_Xcess/LethalXcess7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lethal_xcess.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Lifes a Bitch/Bitch_load.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/life_s_a_bitch.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Lifes a Bitch/akscreen.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/life_s_a_bitch.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Color Demo/Axel F.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_color_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Color Demo/Crazy Comets 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_color_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Color Demo/Crazy Comets 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_color_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Color Demo/Flash Gordon.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_color_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Color Demo/Human Race 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_color_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Color Demo/Human Race 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_color_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Color Demo/Monty (highscore).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_color_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Sound Demo/Commando 0.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_sound_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Sound Demo/Commando 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_sound_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Sound Demo/Commando 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_sound_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Sound Demo/International Karate Remix.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_sound_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Sound Demo/International Karate.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_sound_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Sound Demo/Mad Max 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_sound_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Sound Demo/Mad Max 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_sound_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Sound Demo/Mad Max 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_sound_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Sound Demo/Mad Max 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_sound_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Sound Demo/Monty 0.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_sound_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Little Sound Demo/Monty 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/little_sound_demo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Masterblazer/Masterblazer01.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/masterblazer_rainbow_arts.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Masterblazer/Masterblazer02.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/masterblazer_rainbow_arts.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Masterblazer/Masterblazer03.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/masterblazer_rainbow_arts.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Masterblazer/Masterblazer04.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/masterblazer_rainbow_arts.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Masterblazer/Masterblazer08.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/masterblazer_rainbow_arts.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Masterblazer/Masterblazer10.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/masterblazer_rainbow_arts.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Misc.Demos/Mindbomb.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/mindbomb.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Misc.Demos/Vitual_Escape_Final.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/virtual_escape.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Misc.Games/Atomix.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomix.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Misc.Games/Circus Attractions.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/circus_attractions_golden_goblins.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Prehistoric Tale/Prehistoric Tale (intro).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/prehistoric_tale_(a).gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Prehistoric Tale/Prehistoric Tale (title).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/prehistoric_tale_(a).gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Prehistoric Tale/Prehistoric Tale 1 .ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/prehistoric_tale_(a).gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Prehistoric Tale/Prehistoric Tale 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/prehistoric_tale_(a).gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Prehistoric Tale/Prehistoric Tale 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/prehistoric_tale_(a).gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Prehistoric Tale/Prehistoric Tale 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/prehistoric_tale_(a).gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Prehistoric Tale/Prehistoric Tale 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/prehistoric_tale_(a).gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Prehistoric Tale/Prehistoric Tale 6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/prehistoric_tale_(a).gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Prehistoric Tale/Prehistoric Tale 7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/prehistoric_tale_(a).gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Sowatt/Sowatt.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/SOWATT.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Sowatt/Tcb Sprites.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/SOWATT.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Stormlord/Stormlord (ingame).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/stormlord_hewson.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Stormlord/Stormlord (title).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/stormlord_hewson.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Syntax Terror/Syntax Terror (tex).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/syntax_terror.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Syntax Terror/Syntax Terror (tlb).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/syntax_terror.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Syntax Terror/Syntax Terror.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/syntax_terror.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/World 1 Finish.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/World 2 Finish.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/loader.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_1 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_1 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_1 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_1 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_2 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_2 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_2 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_3 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_3 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_3 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_4 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_4 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 1/world_4 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W1_1 (The Desert rocks).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W1_2 (The Traps).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W1_3 (Hi GI Joe).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W1_4 (Space Control).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W1_5 (Warhead).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W2_1 (Rockn Roll Balance).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W2_2 (The Great Bath).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W2_3 (Metal Stars).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W2_4 (Check the gripper).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W2_5 (Secret Dungeons).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W3_1 (Concerto for laser).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W3_2 (Unidirectional Fight).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W3_3 (Powerslide).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W3_4 (Take a look).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W3_5 (Go for the gunhead).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W3_6 (Hypercycle Drive).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W4_1 (Dragon Fight).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W4_2 (Mr. Walker).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W4_3 (The wall).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W5_1 (Danger ahead).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W5_2 (Go for the nuke!).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W5_3 (Yeah, done it!).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/W5_4 (The final challenge).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Turrican 2/WC.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/turrican.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Union Demo/Alloy Run.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/UnionDemo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Union Demo/Children Songs.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/UnionDemo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Union Demo/Level 16 fullscreen.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/UnionDemo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Union Demo/Mega Apocalypse.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/UnionDemo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Union Demo/Ninja Remix.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/UnionDemo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Union Demo/Pandora.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/UnionDemo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Union Demo/Pro. BMX sim.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/UnionDemo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Union Demo/Thats the way it is.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/UnionDemo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Union Demo/Think Twice.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/UnionDemo.gif
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Warp/Warp1 (Intro).ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/warp.png
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Warp/Warp2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/warp.png
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Warp/Warp3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/warp.png
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Warp/Warp4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/warp.png
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Warp/Warp5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/warp.png
+YM_Archive_v5/YM Archive v5/Hippel.Jochen (Mad Max)/Warp/Warp8.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/warp.png
+YM_Archive_v5/YM Archive v5/Lary.Emmanuel (Lap)/Phaleon Demo/Phaleon Intro.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/phaleon_demo.gif
+YM_Archive_v5/YM Archive v5/Lary.Emmanuel (Lap)/Phaleon Demo/PhaleonDungeon.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/phaleon_demo.gif
+YM_Archive_v5/YM Archive v5/Lary.Emmanuel (Lap)/YoDemoIntro.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/yo_demo_(the).gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_01.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_02.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_03.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_04.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_05.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_06.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_07.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_08.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_09.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_10.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_11.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_12.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_13.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_14.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_15.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Gemini Wing/Gemini Wing_16.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gemini_wing_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Harlequin/HarlequinLevel1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/harlequin_gremlin.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Harlequin/Harlequin_Title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/harlequin_gremlin.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Supercars 2/Supercars2_1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_cars.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Supercars 2/Supercars2_2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_cars.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Xenophobe/Xenophobe1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/xenophobe_micro_style.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Xenophobe/Xenophobe2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/xenophobe_micro_style.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Zone Warrior/Zonew1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zone_warrior.gif
+YM_Archive_v5/YM Archive v5/Leitch.Barry/Zone Warrior/Zonew2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zone_warrior.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/AJT.Hemoroids/Beachtro.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/beachtro.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Antichrist.Jedi/OnmFroggies/OhmFroggies Endtune.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/oh_no_more_froggies.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Antichrist.Jedi/OnmFroggies/OhmFroggies Intro.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/oh_no_more_froggies.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Bonnke.Tobias (Danny O)/LamebrainLoader.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lame-brain_bbs_demo_ii.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Brovosky.Ladislav/Hades_nebula.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/hades_nebula.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Chris.Mad/Fullscreen.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/full-screen-screen.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Chris.Mad/Overdrive/Loader.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/overdrive.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Chris.Mad/Overdrive/Mainmenu.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/overdrive.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Chris.Mad/Overdrive/Music.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/overdrive.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Chris.Mad/Overdrive/Overdrive_3Dscreen.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/overdrive.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Chris.Mad/Overdrive/Overdrive_Crazy.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/overdrive.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Chris.Mad/Overdrive/Overdrive_Dister.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/overdrive.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Conran.Sean/Videokid.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/videokid_gremlin_graphics.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Cooksey.Mark/Gremlins2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gremlins2.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Cooksey.Mark/Paperboy/Paperboy1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/paperboy_elite.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Cooksey.Mark/Paperboy/Paperboy2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/paperboy_elite.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_10.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_11.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_12.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_13.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_14.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_15.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_18.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_19.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_8.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Deneb.ZAP/KidneyBean/KidneyBean_9.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kidney_bean_megademo.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Dunn.Jonathan (Choroid)/New Zealand Story/NZS1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/new_zealand_story_(the)_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Dunn.Jonathan (Choroid)/New Zealand Story/NZS2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/new_zealand_story_(the)_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Dunn.Jonathan (Choroid)/New Zealand Story/NZS3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/new_zealand_story_(the)_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Dunn.Jonathan (Choroid)/New Zealand Story/NZS4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/new_zealand_story_(the)_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Dunn.Jonathan (Choroid)/New Zealand Story/NZS5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/new_zealand_story_(the)_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Dunn.Jonathan (Choroid)/New Zealand Story/NZS6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/new_zealand_story_(the)_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Dunn.Jonathan (Choroid)/New Zealand Story/NZS7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/new_zealand_story_(the)_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Dunn.Jonathan (Choroid)/New Zealand Story/NZS8.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/new_zealand_story_(the)_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Dunn.Jonathan (Choroid)/Operation Stealth/Operation Stealth1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/operation_stealth.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Dunn.Jonathan (Choroid)/Operation Stealth/Operation Stealth2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/operation_stealth.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Dunn.Jonathan (Choroid)/Pushover.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/pushover.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Furax/virtual_escape_main.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/virtual_escape.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Gray.Fred/Chronicles of Omega/Omega1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chronicles_of_omega.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Gray.Fred/Chronicles of Omega/Omega2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chronicles_of_omega.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Gray.Fred/Chronicles of Omega/Omega3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chronicles_of_omega.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Gray.Fred/Chronicles of Omega/Omega4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chronicles_of_omega.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Huelsbeck.Chris/Hollywood Poker Pro/Hollywood poker1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/hollywood_poker_pro_reline.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Huelsbeck.Chris/Hollywood Poker Pro/Hollywood poker2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/hollywood_poker_pro_reline.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Huelsbeck.Chris/Jim Power/Jimpowr3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/jim_power_loriciel.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Huelsbeck.Chris/Jim Power/jimpowr1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/jim_power_loriciel.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Huelsbeck.Chris/Jim Power/jimpowr2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/jim_power_loriciel.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Huelsbeck.Chris/Jim Power/jimpowr4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/jim_power_loriciel.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Huelsbeck.Chris/Jim Power/jimpowr5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/jim_power_loriciel.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Jedi.SectorOne/virtual_escape_intro.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/virtual_escape.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Kruse.Eckhard/GrafikUndSound.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/grafik_und_sound.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Kruse.Eckhard/Grusel1987.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/grusel.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Loraine.Paul/Huckleberry Hound/Huckleberry Hound 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/huckleberry_hound_in_hollywood_capers_alternative_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Loraine.Paul/Huckleberry Hound/Huckleberry Hound 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/huckleberry_hound_in_hollywood_capers_alternative_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Loraine.Paul/Huckleberry Hound/Huckleberry Hound 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/huckleberry_hound_in_hollywood_capers_alternative_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Loraine.Paul/Huckleberry Hound/Huckleberry Hound 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/huckleberry_hound_in_hollywood_capers_alternative_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Loriaux.Pierre-Eric/Cabal.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/cabal.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Lowe.Al/DonaldDuckPlayground/Dduck1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/donald_ducks_playground.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Philips.JM (JMP)/Eliminator/Eliminator_complete.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/eliminator.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Philips.JM (JMP)/Eliminator/Eliminator_game.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/eliminator.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Philips.JM (JMP)/Misc.Games/Eliminator/Eliminator_title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/eliminator.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Rogers.DaveJ/Arkanoid 2/Doh1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/arkanoid.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Rogers.DaveJ/Arkanoid 2/Doh2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/arkanoid.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Rogers.DaveJ/Arkanoid 2/Doh3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/arkanoid.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Rogers.DaveJ/Ranarama/Ranarama1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/rana_rama_hewson.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Rogers.DaveJ/Ranarama/Ranarama2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/rana_rama_hewson.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Rogers.DaveJ/Zynaps.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zynaps.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Scudds.Chris/Chase HQ II/Chase HQ II GameOver.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chase_hq_ii.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Scudds.Chris/Chase HQ II/Chase HQ II Intro.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chase_hq_ii.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Scudds.Chris/Chase HQ II/Chase HQ II Level 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chase_hq_ii.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Scudds.Chris/Hydra.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/hydra.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Shaft.Xtreme/Lack of spirits.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lack_of_spirits.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Shields.Paul/Airball/Airball_1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/airball.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Shields.Paul/Airball/Airball_2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/airball.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Shields.Paul/Airball/Airball_3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/airball.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Shields.Paul/Airball/Airball_4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/airball.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Shields.Paul/Tetra Quest/Tetra Quest 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/tetra_quest_microdeal.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Shields.Paul/Tetra Quest/Tetra Quest 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/tetra_quest_microdeal.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Shields.Paul/Tetra Quest/Tetra Quest 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/tetra_quest_microdeal.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Shields.Paul/Tetra Quest/Tetra Quest 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/tetra_quest_microdeal.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Shields.Paul/Tetra Quest/Tetra Quest 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/tetra_quest_microdeal.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Skyline.FutMinds/SnorkMainmenu.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/snork.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Sound Images/TeenageMutantHeroTurtles.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/teenage_mutant_hero_turtles.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Apprentice/Apprentice_l1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/apprentice_rainbow_arts.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Apprentice/Apprentice_l2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/apprentice_rainbow_arts.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Apprentice/Apprentice_l3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/apprentice_rainbow_arts.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Apprentice/Apprentice_title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/apprentice_rainbow_arts.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster01.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster02.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster03.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster04.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster05.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster06.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster07.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster08.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster09.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster10.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster11.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster12.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Dynablaster/Dynablaster13.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dyna_blaster.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Patrician/Patrician_1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/patrician_(the)_ascon.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Patrician/Patrician_2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/patrician_(the)_ascon.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Stember.Rudolf/Patrician/Patrician_3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/patrician_(the)_ascon.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Techno.Dune/Dune1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/techno.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Techno.Dune/Dune2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/techno.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Techno.Dune/Dune3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/techno.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Techno.Dune/DuneMathematica.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/techno.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Techno.Dune/SectionOne.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/techno.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Tisdale.Mark/Super Sprint/Intro.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_sprint.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Tisdale.Mark/Super Sprint/Prepare to race.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_sprint.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Tisdale.Mark/Super Sprint/Race Over1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_sprint.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Tisdale.Mark/Super Sprint/Race Over3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_sprint.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Tisdale.Mark/Super Sprint/Rave Over2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/super_sprint.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Tyan.Stax/RevolutionDemo/JamesBrown.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/james_brown_is_dead.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Williams.Tony/Shinobi/Shinobi 01.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/shinobi.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Williams.Tony/Shinobi/Shinobi 02.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/shinobi.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Williams.Tony/Shinobi/Shinobi 03.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/shinobi.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Williams.Tony/Shinobi/Shinobi 04.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/shinobi.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Williams.Tony/Shinobi/Shinobi 05.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/shinobi.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Williams.Tony/Shinobi/Shinobi 06.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/shinobi.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Williams.Tony/Shinobi/Shinobi 07.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/shinobi.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Williams.Tony/Shinobi/Shinobi 08.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/shinobi.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Williams.Tony/Shinobi/Shinobi 09.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/shinobi.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Williams.Tony/Shinobi/Shinobi 10.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/shinobi.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Wilson.Mark/BonanzaBros.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bonanza_bros.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/Wilson.Mark/CrystalKingdom.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crystal_kingdom_dizzy_code_masters.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/vdKlis.Laurens (The Mind)/bombthebass.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bomb_the_bass_-_winter_in_july.gif
+YM_Archive_v5/YM Archive v5/Misc.Composers/vdKlis.Laurens (The Mind)/chase2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chase.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Armalyte.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/armalyte.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Blues Brothers/Blues Brothers 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/blues_brothers_(the)_titus.png
+YM_Archive_v5/YM Archive v5/Misc.Games/Blues Brothers/Blues Brothers 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/blues_brothers_(the)_titus.png
+YM_Archive_v5/YM Archive v5/Misc.Games/BombJack/BombJack1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bomb_jack.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/BombJack/BombJack2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bomb_jack.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/BombJack/BombJack3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bomb_jack.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Chuckie Egg/Chuckie Egg 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chuckie_egg.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Chuckie Egg/Chuckie Egg 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chuckie_egg.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Cool World.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/cool_world.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Crackdown/Crackdown2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crack_down.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Crackdown/Crackdown3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crack_down.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Crackdown/Crackdown4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crack_down.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Crackdown/Crackdown5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crack_down.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Crackdown/Crackdown6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crack_down.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Crackdown/Crackdown7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crack_down.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Crackdown/Crackdown8.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crack_down.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Crackdown/Crackdown9.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/crack_down.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Dalek/Dalek1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Dalek_Attack.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Dalek/Dalek2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Dalek_Attack.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Dalek/Dalek3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Dalek_Attack.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Dalek/Dalek4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Dalek_Attack.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Dalek/Dalek5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Dalek_Attack.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Dalek/Dalek6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Dalek_Attack.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Dalek/Dalek_title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Dalek_Attack.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Deuteros.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/deuteros_6.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Dizzy Panic/Dizzy Panic Ingame.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dizzy_panic.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Dizzy Panic/Dizzy Panic Menu.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dizzy_panic.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Double Dragon 3/DoubleDragon3_Tune1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/double_dragon.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Double Dragon 3/DoubleDragon3_Tune2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/double_dragon.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/FirstSamurai.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/first_samurai_imageworks.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Frontier-Elite 2/Frontier2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/frontier2bbs.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Kingmaker/Kingmaker 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kingmaker_us_gold.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Kingmaker/Kingmaker 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kingmaker_us_gold.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Kingmaker/Kingmaker 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kingmaker_us_gold.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Kingmaker/Kingmaker 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kingmaker_us_gold.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Kingmaker/Kingmaker 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/kingmaker_us_gold.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_01.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_02.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_03.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_04.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_05.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_06.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_07.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_08.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_09.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_10.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_11.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_12.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_13.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_14.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_15.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_16.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_17.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_18.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_19.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_20.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings/Lemmings_21.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings2/Lemmings2_01.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings2/Lemmings2_02.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings2/Lemmings2_03.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings2/Lemmings2_04.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings2/Lemmings2_05.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings2/Lemmings2_06.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings2/Lemmings2_07.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings2/Lemmings2_08.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings2/Lemmings2_09.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings2/Lemmings2_11.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Lemmings2/Lemmings2_12.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/lemmings.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Midnight Resistance/Midnight Resistance 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/midnight_resistance_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Midnight Resistance/Midnight Resistance 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/midnight_resistance_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/SabreTeam.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/sabre_team_krisalis.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Simpsons.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/simpsons_(the).gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Space Gun.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/space_gun.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Space Harrier.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/space_harrier.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/SpaceQuest3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/space_quest_iii_-_the_pirates_of_pestulon_sierra_on-line.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/TimesOfLore/ToL_choose.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/times_of_lore_origin_systems.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/TimesOfLore/ToL_end1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/times_of_lore_origin_systems.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/TimesOfLore/ToL_end2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/times_of_lore_origin_systems.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/TimesOfLore/ToL_intro1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/times_of_lore_origin_systems.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/TimesOfLore/ToL_intro2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/times_of_lore_origin_systems.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/TimesOfLore/ToL_intro3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/times_of_lore_origin_systems.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/TimesOfLore/ToL_intro4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/times_of_lore_origin_systems.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/TimesOfLore/ToL_intro5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/times_of_lore_origin_systems.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/TimesOfLore/ToL_intro6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/times_of_lore_origin_systems.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/TimesOfLore/ToL_title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/times_of_lore_origin_systems.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Zool/Zool_funk.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zool.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Zool/Zool_green.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zool.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Zool/Zool_rave.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zool.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Zool/Zool_rock.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zool.gif
+YM_Archive_v5/YM Archive v5/Misc.Games/Zool/Zool_title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zool.gif
+YM_Archive_v5/YM Archive v5/Nilson.Anders (AN Cool)/Sowatt/Sowatt1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/SOWATT.gif
+YM_Archive_v5/YM Archive v5/Nilson.Anders (AN Cool)/Sowatt/Sowatt2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/SOWATT.gif
+YM_Archive_v5/YM Archive v5/Nilson.Anders (AN Cool)/Sowatt/Sowatt3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/SOWATT.gif
+YM_Archive_v5/YM Archive v5/Pennelin (Crawdaddy)/Partymuz.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/party.gif
+YM_Archive_v5/YM Archive v5/Pennelin (Crawdaddy)/Village.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/village_(the).gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Just Buggin (Normal)/Chicago.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/chicago_90.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Just Buggin (Normal)/Line of fire.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/line_of_fire_us_gold.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Just Buggin (Sid)/Line of fire.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/line_of_fire_us_gold.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Nostalgic demo/ND-3DIntro.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nostalgic-o-demo.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Nostalgic demo/ND-Credits.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nostalgic-o-demo.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Nostalgic demo/ND-Dots.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nostalgic-o-demo.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Nostalgic demo/ND-Fractal.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nostalgic-o-demo.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Nostalgic demo/ND-Fullscreen.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nostalgic-o-demo.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Nostalgic demo/ND-Loader.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nostalgic-o-demo.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Nostalgic demo/ND-Menu.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nostalgic-o-demo.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Nostalgic demo/ND-Reset.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nostalgic-o-demo.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Nostalgic demo/ND-Sleighride.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nostalgic-o-demo.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Nostalgic demo/ND-Toxygene.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nostalgic-o-demo.gif
+YM_Archive_v5/YM Archive v5/Seemann.Frank (Tao)/Nostalgic demo/ND-Union.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/nostalgic-o-demo.gif
+YM_Archive_v5/YM Archive v5/Walker.Martin/DragonBreed.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dragon_breed.gif
+YM_Archive_v5/YM Archive v5/Walker.Martin/Final_Blow/FinalBlow_1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/final_blow.gif
+YM_Archive_v5/YM Archive v5/Walker.Martin/Final_Blow/FinalBlow_2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/final_blow.gif
+YM_Archive_v5/YM Archive v5/Walker.Martin/Final_Blow/FinalBlow_3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/final_blow.gif
+YM_Archive_v5/YM Archive v5/Walker.Martin/Final_Blow/FinalBlow_4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/final_blow.gif
+YM_Archive_v5/YM Archive v5/Walker.Martin/Final_Blow/FinalBlow_5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/final_blow.gif
+YM_Archive_v5/YM Archive v5/Walker.Martin/Final_Blow/FinalBlow_6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/final_blow.gif
+YM_Archive_v5/YM Archive v5/Walker.Martin/Frenetic.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/frenetic_core.gif
+YM_Archive_v5/YM Archive v5/Walker.Martin/Robokid/Robokid_1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomic_robokid_st_format.png
+YM_Archive_v5/YM Archive v5/Walker.Martin/Robokid/Robokid_10.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomic_robokid_st_format.png
+YM_Archive_v5/YM Archive v5/Walker.Martin/Robokid/Robokid_14.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomic_robokid_st_format.png
+YM_Archive_v5/YM Archive v5/Walker.Martin/Robokid/Robokid_15.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomic_robokid_st_format.png
+YM_Archive_v5/YM Archive v5/Walker.Martin/Robokid/Robokid_16.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomic_robokid_st_format.png
+YM_Archive_v5/YM Archive v5/Walker.Martin/Robokid/Robokid_2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomic_robokid_st_format.png
+YM_Archive_v5/YM Archive v5/Walker.Martin/Robokid/Robokid_3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomic_robokid_st_format.png
+YM_Archive_v5/YM Archive v5/Walker.Martin/Robokid/Robokid_6.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomic_robokid_st_format.png
+YM_Archive_v5/YM Archive v5/Walker.Martin/Robokid/Robokid_7.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomic_robokid_st_format.png
+YM_Archive_v5/YM Archive v5/Walker.Martin/Robokid/Robokid_8.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomic_robokid_st_format.png
+YM_Archive_v5/YM Archive v5/Walker.Martin/Robokid/Robokid_9.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/atomic_robokid_st_format.png
+YM_Archive_v5/YM Archive v5/Whittacker.David/1943.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/1943.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Achipelagos/Archipelagos1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/archipelagos.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Achipelagos/Archipelagos2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/archipelagos.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/ArmyMoves.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/army_moves.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/BMX Simulator.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/bmx_simulator.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Beyond the Ice Palace/Beyond the Ice Palace1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/beyond_the_ice_palace_cheat_loader_st_amiga_format.png
+YM_Archive_v5/YM Archive v5/Whittacker.David/Beyond the Ice Palace/Beyond the Ice Palace2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/beyond_the_ice_palace_cheat_loader_st_amiga_format.png
+YM_Archive_v5/YM Archive v5/Whittacker.David/Custodian/Custodian1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/custodian.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Custodian/Custodian2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/custodian.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Custodian/Custodian3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/custodian.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Custodian/Custodian4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/custodian.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Dan Dare/Dan Dare1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Dan_Dare_3.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Dan Dare/Dan Dare2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Dan_Dare_3.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Dan Dare/Dan Dare3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Dan_Dare_3.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Days of Thunder.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/days_of_thunder.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Dogs of War/Dogswar1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dogs_of_war.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Dogs of War/Dogswar2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/dogs_of_war.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Empire Strikes Back.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/empire_strikes_back.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Enduro_Racer/EnduroRacer1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/enduro_racer.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Enduro_Racer/EnduroRacer2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/enduro_racer.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Enduro_Racer/EnduroRacer3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/enduro_racer.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Gold of the Aztecs/Gold of the Aztecs 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gold_of_the_aztecs.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Gold of the Aztecs/Gold of the Aztecs 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/gold_of_the_aztecs.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Golden Axe/Golden Axe1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/golden_axe_16_blitz.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Goldrunner2/Goldrunner2_1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/goldrunner.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Goldrunner2/Goldrunner2_2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/goldrunner.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Goldrunner2/Goldrunner2_3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/goldrunner.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Leatherneck/Leatherneck 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/leatherneck_microdeal.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Leatherneck/Leatherneck 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/leatherneck_microdeal.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Licence to Kill/Lickill1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/licence_to_kill.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Licence to Kill/Lickill2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/licence_to_kill.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Licence to Kill/Lickill3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/licence_to_kill.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/NinjaMission.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/ninja_mission_mastertronic_(uk).gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Oblitarator/Obliterator1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/obliterator.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Oblitarator/Obliterator2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/obliterator.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Oblitarator/Obliterator3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/obliterator.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Quadralien/Quadralien1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/quadralien_logotron.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Quadralien/Quadralien2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/quadralien_logotron.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Rampage/Rampage1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Rampage.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Rampage/Rampage2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/Rampage.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Return to Genesis/Return to Genesis1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/return_to_genesis_firebird.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Return to Genesis/Return to Genesis2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/return_to_genesis_firebird.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Roadblasters/Roadblasters1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/road_blasters.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Roadblasters/Roadblasters2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/road_blasters.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Spitting Image/Spitting image 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/spitting_image_domark.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Spitting Image/Spitting image 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/spitting_image_domark.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Starblaze/Starblaze1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/star-blaze_logotron.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Starblaze/Starblaze2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/star-blaze_logotron.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Stormtrooper/Stormtrooper1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/stormtrooper.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Stormtrooper/Stormtrooper2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/stormtrooper.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Supermacy.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/supremacy_melbourne_house.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Tetris/Tetris_ingame.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/tetris.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Tetris/Tetris_title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/tetris.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Total Recall/Totlrec1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/total_recall_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Total Recall/Totlrec2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/total_recall_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Total Recall/Totlrec3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/total_recall_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Total Recall/Totlrec4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/total_recall_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Total Recall/Totlrec5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/total_recall_ocean_software.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Trantor/Trantor1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/trantor.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Trantor/Trantor2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/trantor.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Trantor/Trantor3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/trantor.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Verminator/Verminator 1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/verminator_rainbird.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Verminator/Verminator 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/verminator_rainbird.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Verminator/Verminator 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/verminator_rainbird.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Verminator/Verminator 4.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/verminator_rainbird.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Verminator/Verminator 5.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/verminator_rainbird.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb01.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb02.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb03.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb04.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb05.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb06.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb07.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb08.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb09.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb10.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb11.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb12.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb13.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb14.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Wonderboy/Wb15.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/wonderboy_in_monsterland_activision.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Xenon 2/Xenon2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/xenon.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Xenon 2/Xenon2_digi.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/xenon.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Xenon/Xenon 2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/xenon.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Xenon/Xenon 3.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/xenon.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Xenon/Xenon Title.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/xenon.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Zombi/Zombi1.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zombi.gif
+YM_Archive_v5/YM Archive v5/Whittacker.David/Zombi/Zombi2.ym	https://web.archive.org/web/2id_/http://www.atarimania.com/st/screens/zombi.gif

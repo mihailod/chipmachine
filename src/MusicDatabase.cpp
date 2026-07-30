@@ -2611,7 +2611,8 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
                collection == "amp" || collection == "modarchive" ||
                collection == "projectay" || collection == "vgmrips" ||
                collection == "smspower" || collection == "mirsoft" ||
-               collection == "botb" || collection == "ocremix") {
+               collection == "botb" || collection == "ocremix" ||
+               collection == "ayymarchives") {
         // Game/production screenshots matched offline against an external
         // database, keyed by the song path/URL in data/<file>_screenshots.txt:
         // hvtc -> Plus/4 World ("games/<name>.prg"), sndh -> Atari Mania
@@ -2655,6 +2656,13 @@ std::string MusicDatabase::getSongScreenshots(SongInfo& s)
         // the generic One-Hour-Battle /disk/debris/ banners are dropped). Cover
         // art, not a game screenshot -- BotB entries are original community
         // compos, not rips.
+        // ayymarchives -> two sources, keyed by the ZIP member path: the Atari
+        // ST .ym rows match Atari Mania (same source as sndh), the ZX rows filed
+        // under Games/Demos/Intros/Groups/Magazines/Parties/ and Nostalgic/ match
+        // a World of Spectrum loading screen via ZXDB. Only ~14% of the
+        // collection is eligible at all -- 11.8k of its rows sit under
+        // Tr_Songs/Authors/ and are artist music, which per policy ships with NO
+        // screenshot. Built by scripts/update_ayymarchives_screenshots.py.
         // modland/hvsc/sndh/asma/
         // sceneorg are additionally augmented from Demozoo: a tune is matched to
         // the demos that use it as soundtrack and borrows that production's
