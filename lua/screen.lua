@@ -139,5 +139,10 @@ Settings.result_lines = (Y1-Y0)/(TEXT_HEIGHT*LINE_HEIGHT)
 
 Settings.toast_field = { 0, SCREEN_HEIGHT/2 - GSCALE * 20, GSCALE * 2.0, 0x00000000 }
 
-Settings.font = "data/Neutra.otf"
-Settings.list_font = "data/Neutra.otf"
+-- Small-caps display font: lowercase codepoints map to small capitals, so all
+-- UI text renders caps-only and no glyph descends below the baseline. Several
+-- layout offsets below (and the label/input gap in Dialog.h) assume that; a
+-- replacement with true lowercase would need those re-tuned. SIL OFL 1.1 --
+-- see data/FONT-LICENSES.txt.
+Settings.font = "data/AlegreyaSansSC-Bold.ttf"
+Settings.list_font = "data/AlegreyaSansSC-Bold.ttf"

@@ -1,5 +1,21 @@
 Mac App Store (MAS) compliance:
 
+MAS: replace ALL logos/brands with generic txt/pics
+1. Brand Logos: Keep official hardware logos (Nintendo, Sega, Commodore, Sony) out of your UI and App Store screenshots. Use text tags (e.g., ⁠C64⁠, ⁠NES⁠, ⁠ZX⁠). Maybe append generics and just disable/unbundle the branded from mas -- have parallel screenshots folders: branded and generic, screenshots-b, screenshots-g
+
+2. Binary Assets: Zero bundled music files (except an optional 100% original/CC0 demo track). 
+3. Delivery Mechanism: Stream/download files dynamically on-demand from public archive endpoints into temporary local cache storage.
+
+- Both: append flags of countries to the rotation
+
+- Both: append the chip which is playing
+
+- Add tracker-style scrolling note pattern where possible by format
+
+
+
+
+
 - implement real csid plugin, move from vice to csid for all possible format (make sure search by plugin reflects)
 ->> once csid work is done, remove vice and content it plays from MAS version
 

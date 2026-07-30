@@ -330,7 +330,9 @@ X •  STIL.txt : The SID Tune Information List contains textual background info
 
   •  OLDVICESonglengths.txt : Obsolete text file containing C64 track lengths for the old VICE emulators (scheduled for removal,
   completely ignored by database indexing).
-  •  Bello.otf / Neutra.otf : System typography font files used to render the graphical UI.
+  •  AlegreyaSansSC-Bold.ttf : Typography font file used to render the graphical UI.
+  •  fontsmainscroll/ : Font pool for the title scroller; every .otf inside is loaded at startup and ships with the app.
+  •  FONT-LICENSES.txt : Author and license record for every bundled font (see it before adding a font to fontsmainscroll).
   •  extractor.py : Python script used to fetch or process indexes, not loaded by C++ database builder.
   •  __pycache__  /  python_runtime  /  misc  /  c64  /  uade : Utility directories that house scripts, compilers, emulators,
   and assets.

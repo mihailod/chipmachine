@@ -1,0 +1,305 @@
+================================================================================
+CHIPMACHINE - FONT ATTRIBUTION AND LICENSES
+================================================================================
+
+ChipMachine bundles the font files listed below. This file records each font's
+author and license, and reproduces in full the text of the SIL Open Font
+License, Version 1.1, which governs several of them.
+
+Audited 2026-07-29. Licenses were read from each file's embedded OpenType
+`name` table (copyright / license / license-URL / designer records) and
+cross-checked against the distributor's own stated terms.
+
+Typography reaches the screen by two routes, and both are covered here:
+font files under data/ (sections 1-2), and one glyph atlas compiled into the
+executable (section 3). The build embeds no font files -- a scan of the linked
+binary finds no sfnt/WOFF payload and none of the name strings that vendored
+fonts (ProggyClean, Vera, DejaVu, Roboto, Font Awesome, JUCE, Dear ImGui) would
+leave behind. Fonts under external/ belong to vendored upstream projects and are
+not copied into the bundle by package_app.sh.
+
+Contents:
+  1. User-interface font (SIL OFL 1.1)
+  2. Scroller fonts (data/fontsmainscroll)
+  3. Glyph atlas compiled into the executable
+  4. Full text of the SIL Open Font License, Version 1.1
+
+
+================================================================================
+1. USER-INTERFACE FONT  (SIL OFL 1.1)
+================================================================================
+Loaded via Settings.font / Settings.list_font in lua/screen.lua.
+
+data/AlegreyaSansSC-Bold.ttf
+  Alegreya Sans SC Bold
+  Designer:  Juan Pablo del Peral (Huerta Tipografica)
+  Copyright: Copyright 2013 The Alegreya Sans Project Authors
+             https://github.com/huertatipografica/Alegreya-Sans
+  License:   SIL Open Font License, Version 1.1 (reproduced in full in
+             section 4 below)
+             http://scripts.sil.org/OFL
+  Web:       http://www.huertatipografica.com.ar
+  Version:   2.003
+  Note:      No Reserved Font Name is declared for this family. The file is
+             shipped exactly as published, unmodified.
+             This is a true small-caps font: lowercase codepoints map to small
+             capital glyphs, so no glyph descends below the baseline. The UI
+             layout depends on that -- see the comment at Settings.font in
+             lua/screen.lua before substituting a font with real lowercase.
+
+
+================================================================================
+2. SCROLLER FONTS  (data/fontsmainscroll)
+================================================================================
+Every .otf in this folder is loaded into the title scroller's rotating font
+pool at startup, in alphabetical order.
+
+--------------------------------------------------------------------------------
+2.1  SIL Open Font License, Version 1.1
+--------------------------------------------------------------------------------
+The following fonts are licensed under the SIL OFL 1.1, reproduced in full in
+section 4 below. http://scripts.sil.org/OFL
+
+Bebas Neue (Regular).otf
+  Bebas Neue
+  Designer:  Ryoichi Tsunekawa (Dharma Type)
+  Copyright: Copyright 2019 The Bebas Neue Project Authors
+             https://github.com/dharmatype/Bebas-Neue
+  Note:      Originally designed 2010. "Bebas Neue" is a trademark of
+             Dharma Type.
+
+Connection.otf
+  Connection II
+  Copyright: Copyright (c) 2019, Jasper, Robert Jablonski
+             @ KineticPlasma Fonts. All Rights Reserved.
+
+Connection (Serif).otf
+  Connection Serif
+  Copyright: Copyright (c) 2017, Jasper @ KineticPlasma Fonts.
+             All Rights Reserved.
+
+Falling Sky (Black).otf
+Falling Sky (Outline).otf
+  Falling Sky (Black / Outline)
+  Designer:  Paul D. Hunt (original), Cannot Into Space Fonts (modifications)
+  Copyright: Copyright 2010, 2012 Adobe Systems Incorporated. All Rights
+             Reserved. Design modifications and new weights 2015,
+             Cannot Into Space Fonts.
+  Note:      Derivative of Adobe's Source family, released under the OFL with
+             Reserved Font Name 'Source'. This derivative is distributed under
+             the name "Falling Sky" and therefore does not use the Reserved
+             Font Name, as OFL clause 3 requires. "Source" is a trademark of
+             Adobe Systems Incorporated in the United States and/or other
+             countries.
+
+--------------------------------------------------------------------------------
+2.2  Free for personal and commercial use
+--------------------------------------------------------------------------------
+The following fonts are released by their authors as free for both personal
+and commercial use. They are not OFL-licensed; the terms are the author's own,
+as published on the author's distribution page. Attribution is given here as a
+courtesy and as a record of provenance.
+
+Bigbelow.otf          Bigbelow      (c) 2026 Khurasan
+Boldone.otf           Boldone       (c) 2026 Khurasan
+Gwenchana.otf         Gwenchana     (c) 2025 Khurasan
+Kinder Cold.otf       Kinder Cold   (c) 2025 Khurasan
+Kindergo.otf          Kindergo      (c) 2025 Khurasan
+Lost Tumbler.otf      Lost Tumbler  (c) 2025 Khurasan
+Malam Poek.otf        Malam Poek    (c) 2026 Khurasan
+Octosale.otf          Octosale      (c) 2025 Khurasan
+Outline Style.otf     Outline Style (c) 2025 Khurasan
+Spicy Sale.otf        Spicy Sale    (c) 2025 Khurasan
+Winter Tosca.otf      Winter Tosca  (c) 2025 Khurasan
+
+  Designer:  Syafrizal, a.k.a. Khurasan (Khurasan Studio)
+  Web:       https://khurasanstudio.com
+  License:   https://khurasanstudio.com/license/
+  Contact:   hi@khurasanstudio.com  /  khurasantype@gmail.com
+  Terms:     Each font's release page states: "This font is free 100% for
+             personal use and commercial use." Each font name is a trademark
+             of Khurasan.
+  Note:      Khurasan Studio also offers paid tiers (including app/game
+             licenses) that lift limits on the free tier. Written confirmation
+             covering embedding in a distributed application has not been
+             obtained; see NOTES below.
+
+Dt Risya.otf
+  DT Risya
+  Designer:  Dryy Type
+  Copyright: Copyright (c) 2025 by Dryy Type. All rights reserved.
+  License:   "Free Commercial Use" (as stated in the font's embedded license
+             record)
+  Web:       https://www.behance.net/dryytype
+  Note:      Trademark by Dryy Type.
+
+--------------------------------------------------------------------------------
+NOTES
+--------------------------------------------------------------------------------
+No bundled font is awaiting license review. Every file in sections 1-2 is either
+OFL-licensed or released by its author as free for commercial use.
+
+Four fonts previously bundled here were removed on 2026-07-29 for lack of
+demonstrable redistribution rights, and must not be re-added:
+
+  * Neutra.otf  -- Neutra Text SC Alt Bold, House Industries / Brand Design Co.
+                   (c) 2002, designed by Christian Schwartz. Proprietary retail
+                   font from the Neutraface collection; the House Industries
+                   desktop license does not cover redistributing the font file
+                   inside an application bundle. Replaced as the UI font by
+                   Alegreya Sans SC Bold (section 1), chosen because it is
+                   likewise a true small-caps design, so the caps-only
+                   appearance and the layout that depends on it were preserved.
+  * Bello.otf   -- Bello SmCp, Underware (c) 2004. Proprietary retail font;
+                   application embedding requires a purchased license
+                   extension.
+  * Blunder.otf -- Blunder, 3wprotype (I Wayan Wisna Wijaya). The file carried
+                   no copyright, designer or license record of any kind, and
+                   the font is sold commercially by its publisher.
+  * Krisha (Regular).otf
+                -- Krisha, Daler Mukhiddinov (c) 2019, dalerms.com. The file
+                   carried no license record ("All rights reserved"). The font
+                   circulates as a free release, but published accounts of its
+                   terms conflict -- some state SIL OFL / free for commercial
+                   use, others personal use only -- and the original download
+                   source could not be established. Removed rather than shipped
+                   on an unresolved claim.
+
+Because the scroller loads every .otf in data/fontsmainscroll without an
+allowlist, any font dropped into that folder ships with the application. Add a
+font here only after recording its license in this file.
+
+
+================================================================================
+3. GLYPH ATLAS COMPILED INTO THE EXECUTABLE
+================================================================================
+
+external/apone/mods/grappix/grappix/staticfont.h
+  Symbol:    `static_font` (texture_font2_t)
+  Contents:  A 128x128 single-channel distance-field atlas holding 95 glyphs
+             (the printable ASCII range), plus their metrics and kerning. This
+             is a rasterised bitmap, not a font file -- which is why it does not
+             appear in any search for .ttf/.otf files.
+  Source:    Generated by the `makefont` tool of Freetype GL
+             (Copyright 2011, 2012 Nicolas P. Rougier, 2-clause BSD; the file
+             retains that notice in its header). Vendored via the apone
+             dependency.
+  Typeface:  Not recorded anywhere in the file. Rendering the atlas shows a
+             light humanist sans consistent with Bitstream Vera Sans, which is
+             the typeface Freetype GL's own demos and makefont examples use.
+             Bitstream Vera is freely redistributable under the Bitstream Vera
+             Fonts Copyright; its only substantive restrictions are on selling
+             the font software by itself and on reusing the "Bitstream Vera"
+             name for modified versions, neither of which a bitmap atlas
+             engages. Treated as free to redistribute on that basis, with the
+             identification recorded here as probable rather than confirmed.
+  Reached by: Font::Font(bool) builds a font from this atlas, and Font::covers()
+             and the text builder fall back to it whenever `ref->font` is null.
+             Nothing constructs Font(true) directly, but grappix::Font's default
+             constructor leaves `ref` null, and ChipMachine's `font` / `listFont`
+             members (ChipMachine.h) are default-constructed and only assigned a
+             real font if findFile() locates one (ChipMachine_config.cpp). So the
+             atlas is the live fallback if data/AlegreyaSansSC-Bold.ttf is
+             missing at runtime; in a correctly packaged build it never renders.
+
+
+================================================================================
+4. SIL OPEN FONT LICENSE, VERSION 1.1
+================================================================================
+
+Copyright (c) <dates>, <Copyright Holder> (<URL|email>),
+with Reserved Font Name <Reserved Font Name>.
+Copyright (c) <dates>, <additional Copyright Holder> (<URL|email>),
+with Reserved Font Name <additional Reserved Font Name>.
+Copyright (c) <dates>, <additional Copyright Holder> (<URL|email>).
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+
+-----------------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+-----------------------------------------------------------
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded,
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting -- in part or in whole -- any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
