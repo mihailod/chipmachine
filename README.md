@@ -111,8 +111,11 @@ ninja -C build-mas
 The two are **independent build trees** (each has its own objects and binary) sharing one source — pass `-GNinja` for `build-mas` too, or `ninja` there will have no `build.ninja`. The `mas` variant compiles out everything the App Store disallows or that has no in-sandbox form:
 
 * the **YouTube** plugin and its ~32k catalog rows (yt-dlp is a spawned executable — App Store §2.5.2),
-* the bundled **yt-dlp** helper, and
+* the bundled **yt-dlp** helper,
+* **UADE** and **VICE** (both GPL-2.0, incompatible with the App Store terms), together with their `data/uade` and `data/c64` payloads — the latter also carries Commodore's copyrighted KERNAL/BASIC/chargen ROM images, and
 * the **GitHub self-update** check (updates come through the App Store).
+
+Dropping those two engines costs formats, so the catalog hides what the build cannot play (see [not_supported_extensions.txt](data/misc/not_supported_extensions.txt) and `songHasNoPlayer()`): the Amiga custom-replayer formats UADE alone handled, and Compute!'s Sidplayer `.mus`/`.str` (~6.5k songs). **C64 SID itself is unaffected** — all ~62k `.sid` tunes play in both builds, because SID moved from VICE to the permissively-licensed **cSID** engine.
 
 It runs **App-Sandboxed**, with a distinct bundle id (`org.mihailod.chipmachine`) and its own cache/database/index, so Plus and MAS never share state. Per-variant product identity (name, bundle id, artifact) is the single source of truth in [variants.conf](variants.conf); the compile-time switch is `CM_VARIANT` / the `CM_MAS` define.
 
@@ -399,11 +402,20 @@ Support for MP3 music
 
 Extensions: `.mp3`
 
+### cSID
+
+Support for Commodore C64 music (the 6581/8580 SID chip, including 2SID/3SID tunes)
+
+Extensions: `.sid` `.rsid`
+
 ### Vice
 
-Support for Commodore C64 music (mono and stereo SID chip)
+Support for Compute!'s Sidplayer — a C64 *note* format with its own player, not a
+SID-chip dump. A stereo tune is a `.mus` (voices 1–3) plus a `.str` companion
+(voices 4–6), which the plugin loads together. **Plus build only** — see
+[Build variants](#build-variants-plus-vs-mac-app-store).
 
-Extensions: `.sid` `.mus` `.str`
+Extensions: `.mus` `.str`
 
 ### Hively
 
@@ -714,8 +726,10 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 
 * **OpenMPT (Tracker Formats):** Developed by the OpenMPT Project Team (originally founded by Olivier Lapicque). Licensed under BSD-3-Clause.
 * **GME / Game Music Emulator (Console Formats):** Developed by Shay Green. Licensed under LGPL-2.1-or-later. The `.gbr` (Game Boy rip) loader added on top of GME maps the GBR header onto GME's Game Boy emulator; the GBR header format was referenced from **gbsplay** by Tobias Diedrich, Christian Garbs et al. (GPL-2.0-or-later, <https://github.com/mmitch/gbsplay>).
-* **VICE (C64/SID emulation):** Developed by the VICE Core Team. Licensed under GPL-2.0-or-later.
-* **UADE (Amiga Exotic formats):** Developed by Heikki Orsila and the UADE Team (eagleplayers/format DB vendored from UADE 3.05). Licensed under GPL-2.0-or-later.
+* **cSID (C64/SID emulation):** Developed by **Mihaly Horvath (Hermit)**, <http://hermit.sidrip.com>, vendored from <https://github.com/mlund/csid>. Licensed under **WTFPL** — *"do what the fuck you want with this code, but please mention me as its original author."* A from-scratch 6581/8580 + 6510 + PSID player sharing no code with VICE, reSID or libsidplayfp, and needing no Commodore ROMs — which is what lets the Mac App Store build play SID at all. Plays every `.sid`/`.rsid` tune in both variants.
+* **VICE (C64 Compute! Sidplayer):** Developed by the VICE Core Team. Licensed under GPL-2.0-or-later. Now used only for `.mus`/`.str`; not included in the Mac App Store build.
+* **GoatTracker v2 (C64 `.sng`):** Developed by **Lasse Öörni (Cadaver)**; the vendored playback core (`gplay.c`, `gsid.cpp`, `gt2_load.c`) is driven directly with no editor/SDL layer. Licensed under GPL-2.0-or-later. Its SID emulation is **reSID** by **Dag Lem**, vendored verbatim, also GPL-2.0-or-later.
+* **UADE (Amiga Exotic formats):** Developed by Heikki Orsila and the UADE Team (eagleplayers/format DB vendored from UADE 3.05). Licensed under GPL-2.0-or-later. Not included in the Mac App Store build.
 * **StSound (Atari ST YM2149):** Developed by Arnaud Carré (Leonard/Oxygene). Licensed under MIT.
 * **SC68 (Atari ST/Amiga):** Developed by Benjamin Gerard. Licensed under GPL-3.0-or-later.
 * **AdPlug (PC AdLib/OPL):** Developed by Simon Peter and the AdPlug Team. Licensed under LGPL-2.1-or-later.

@@ -1111,6 +1111,42 @@ static bool prgForUnemulatedMachine(SongInfo const& song)
            routingExtension(song) == "prg";
 }
 
+// True when the catalog names a format that ONLY a plugin missing from this
+// build can play. Declared in MusicDatabase.h; see there for why it takes the
+// built-plugin set as a parameter instead of reading it from ChipPlugin.
+//
+// An extension shared by several unrelated formats can be "playable" on the
+// strength of a plugin that handles a DIFFERENT format under the same name, so
+// the extension test in songHasNoPlayer() cannot answer this on its own.
+//
+// ".mus" is the case that matters. libopenmpt advertises it for Karl Morton
+// Music Format and vgmstream advertises ".str", so BOTH are in
+// playableExtensions() even in a build with no Compute! Sidplayer decoder at
+// all -- and the 5,032 "Sidplayer" + 1,446 "Stereo Sidplayer" tunes would be
+// indexed, downloaded on select, and only then fail, which is the whole thing
+// that gate exists to prevent.
+//
+// So where the catalog names the real format, resolve it to the plugin that
+// actually plays it and ask whether THAT plugin is in this build. Same keys and
+// the same reasoning as the formatOverride table in buildPluginGroups(); keep
+// the two in step.
+bool songFormatHasNoPlayer(SongInfo const& song,
+                           std::set<std::string> const& builtPluginNames)
+{
+    static const std::map<std::pair<std::string, std::string>, std::string>
+        formatPlayer{
+            {{"mus", "sidplayer"}, "libvice"},
+            {{"mus", "stereo sidplayer"}, "libvice"},
+            {{"mus", "fac soundtracker"}, "uade"},
+            {{"str", "stereo sidplayer"}, "libvice"},
+        };
+    if (song.format.empty()) { return false; }
+    if (builtPluginNames.empty()) { return false; }
+    auto it = formatPlayer.find({ routingExtension(song), toLower(song.format) });
+    if (it == formatPlayer.end()) { return false; }
+    return builtPluginNames.count(it->second) == 0;
+}
+
 // Should this song be dropped from the index because we have no decoder for it?
 //
 // A MULTI: group is one GUI entry backed by several files, and its members are
@@ -1125,7 +1161,10 @@ static bool prgForUnemulatedMachine(SongInfo const& song)
 // unsupported; one playable member keeps the entry. Standalone companion rows
 // (the 149 bare "*.set" tunes-that-aren't) still match and are dropped, which is
 // the point of listing them.
-#ifdef CM_NO_UADE
+//
+// Compiled for the mas variant, which ships without BOTH uadeplugin and
+// vicepluginbridge (GPL -- see CM_HAVE_UADE / CM_HAVE_VICE in CMakeLists.txt).
+#if defined(CM_NO_UADE) || defined(CM_NO_VICE)
 static bool isContainerExt(std::string e); // defined near resolveExtension()
 
 // Every extension SOME registered plugin claims by name -- i.e. everything this
@@ -1143,6 +1182,20 @@ static std::set<std::string> const& playableExtensions()
         return s;
     }();
     return exts;
+}
+
+// Names of every plugin this build registered, the set songFormatHasNoPlayer()
+// resolves a format's owning plugin against.
+static std::set<std::string> const& builtPluginNames()
+{
+    static const std::set<std::string> names = [] {
+        std::set<std::string> s;
+        for (auto const& pl : musix::ChipPlugin::getPlugins()) {
+            s.insert(toLower(pl->name()));
+        }
+        return s;
+    }();
+    return names;
 }
 
 // Would ANY plugin in this build claim this name?
@@ -1197,6 +1250,9 @@ static bool songHasNoPlayer(SongInfo const& song,
                             std::set<std::string> const& playable)
 {
     if (playable.empty()) { return false; }
+    // A named format that only a plugin missing from this build can play beats
+    // any extension reasoning below -- see songFormatHasNoPlayer().
+    if (songFormatHasNoPlayer(song, builtPluginNames())) { return true; }
     // An `ext` template column names the format outright and wins over the path
     // for both plain rows and groups (same precedence as songIsUnsupported).
     if (!song.ext.empty()) {
@@ -1214,7 +1270,7 @@ static bool songHasNoPlayer(SongInfo const& song,
     if (first.empty()) { return false; }
     return !nameHasPlayer(first, playable);
 }
-#endif // CM_NO_UADE
+#endif // CM_NO_UADE || CM_NO_VICE
 
 static bool songIsUnsupported(SongInfo const& song,
                               std::set<std::string> const& unsupported)
@@ -1415,11 +1471,12 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // them, so indexing them only yields broken GUI entries that
                 // download then can't play.
                 if (songIsUnsupported(song, unsupportedExts)) { return; }
-#ifdef CM_NO_UADE
+#if defined(CM_NO_UADE) || defined(CM_NO_VICE)
                 // Same rule, build-scoped: without uadeplugin this variant has
-                // no decoder for the Amiga custom-replayer formats, so keep
-                // them out of the catalog instead of surfacing rows that
-                // download and then fail. See songHasNoPlayer().
+                // no decoder for the Amiga custom-replayer formats, and without
+                // vicepluginbridge none for Compute! Sidplayer, so keep them out
+                // of the catalog instead of surfacing rows that download and
+                // then fail. See songHasNoPlayer().
                 if (songHasNoPlayer(song, playableExtensions())) { return; }
 #endif
 #ifdef CM_MAS
@@ -1947,13 +2004,23 @@ void MusicDatabase::buildPluginGroups()
     // Stereo Sidplayer needs no entry -- it is filed under ".str", which only
     // libvice claims. A format name absent from this table keeps the plain
     // extension result, so unrecognized formats degrade to today's behaviour --
-    // as does a named plugin that is not in this build (UADE in the mas
-    // variant, where those FAC tunes are unplayable anyway).
+    // as does a named plugin that is not in this build (UADE and libvice in the
+    // mas variant, where those FAC and Sidplayer tunes are unplayable anyway and
+    // are dropped from the catalog outright by songHasNoPlayer()).
+    //
+    // ".sid" is the second case. It is now claimed by csidplugin (cSID) rather
+    // than vicepluginbridge, but the extension is shared: 62 modland tunes under
+    // it are Amiga "SidMon 1" files, which are not C64 SID images at all and are
+    // played by UADE. First-claimer-wins credited those to libvice before and
+    // would credit them to cSID now; name them explicitly instead. Playback was
+    // and stays correct either way -- CSIDPlugin::canHandle content-gates on the
+    // "PSID"/"RSID" magic and declines SidMon, which then falls through to UADE.
     static const std::map<std::pair<std::string, std::string>, std::string>
         formatOverride{
             {{"mus", "sidplayer"}, "libvice"},
             {{"mus", "stereo sidplayer"}, "libvice"},
             {{"mus", "fac soundtracker"}, "uade"},
+            {{"sid", "sidmon 1"}, "uade"},
         };
 
     std::vector<int> counts(plugins.size(), 0);

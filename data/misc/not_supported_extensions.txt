@@ -136,7 +136,7 @@
 # CyberTracker (C64 SID, CyberBrain/No Name; native magic NNTRKMZX, song PRG @
 # $0400). The only public converter (DOS ctpacker BETA) is broken (malloc/DPMI),
 # and a native plugin would need full RE of the .ct->SID packer. Low value: the
-# composers' own packed SIDs are already in HVSC and play via the sidplugin.
+# composers' own packed SIDs are already in HVSC and play via csidplugin (cSID).
 .ct
 
 # POLYTONE (.pol, prochazkaml) -- the PC-speaker sibling of MONOTONE played by

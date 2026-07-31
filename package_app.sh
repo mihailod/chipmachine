@@ -426,6 +426,25 @@ if [ "$VARIANT" = "mas" ]; then
     fi
 fi
 
+# 4c. VICE runtime payload -- plus variant only.
+#
+# data/c64/ is VICE's system directory: the KERNAL, BASIC and chargen ROM images
+# plus its keymaps and palettes. Two independent reasons it must not ship in the
+# mas bundle -- the mas build does not link vicepluginbridge at all
+# (CM_HAVE_VICE=OFF in CMakeLists.txt) so nothing can read it, and the three ROM
+# images are Commodore-copyrighted binaries redistributed under VICE's GPL
+# umbrella, which is its own App Store problem separate from the licence of the
+# emulator code. SID playback in the mas build is csidplugin (Hermit's cSID),
+# which synthesises the 6581/8580 from scratch and needs no ROMs whatsoever.
+# Drop it from the COPIED tree; the source tree under chipmachine/data/ is never
+# touched.
+if [ "$VARIANT" = "mas" ]; then
+    if [ -d "${RESOURCES_DIR}/data/c64" ]; then
+        echo "-> Removing VICE C64 ROM payload from mas bundle (GPL + Commodore ROMs, plugin not linked)"
+        rm -rf "${RESOURCES_DIR}/data/c64"
+    fi
+fi
+
 if [ -f "/opt/homebrew/etc/openssl@3/cert.pem" ]; then
     echo "-> Packaging OpenSSL certificates for standalone HTTPS..."
     cp -L "/opt/homebrew/etc/openssl@3/cert.pem" "${RESOURCES_DIR}/"

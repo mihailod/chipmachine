@@ -24,7 +24,9 @@ extern "C" {
     void tedplugin_register();     // Commodore Plus/4
     void usfplugin_register();     // Nintendo 64
     void v2plugin_register();      // Farbrausch V2
-    void vicepluginbridge_register();
+#ifndef CM_NO_VICE
+    void vicepluginbridge_register(); // C64 Compute! Sidplayer .mus/.str -- GPL, plus build only
+#endif
     void ffmpegplugin_register();
 #ifndef CM_NO_UADE
     void uadeplugin_register();    // Amiga 68k replayers -- GPL, plus build only
@@ -63,6 +65,7 @@ extern "C" {
     void vgmstreamplugin_register();   // vgmstream (.adx/.hca/.fsb/... hundreds of game-audio containers) via vendored vgmstream
     void victrackerplugin_register();  // VIC-TRACKER (.vt) Commodore VIC-20 via fake6502 + VICE VIC-I sound
     void klystrackplugin_register();   // Klystrack (.kt) via vendored libksnd / klystron cyd synth
+    void csidplugin_register();        // Commodore 64 SID (.sid/.rsid) via Hermit's cSID (WTFPL)
 }
 
 void register_plugins() {
@@ -89,7 +92,18 @@ void register_plugins() {
     tedplugin_register();
     usfplugin_register();
     v2plugin_register();
+    // Before vicepluginbridge, so cSID (permissive) claims .sid/.rsid and VICE
+    // is left with only the .mus/.str Compute! Sidplayer tunes it alone can
+    // play. The two gates are disjoint anyway -- CSIDPlugin never claims
+    // .mus/.str and VicePlugin no longer claims .sid/.rsid -- so the ordering
+    // is belt-and-braces, and it is what makes the mas build (no VICE at all)
+    // behave identically for every .sid in the catalog.
+    csidplugin_register();
+#ifndef CM_NO_VICE
+    // GPLv2 -- excluded from the Mac App Store build (CM_VARIANT=mas), where the
+    // vicepluginbridge target is not built at all. Only .mus/.str reach it.
     vicepluginbridge_register();
+#endif
     ffmpegplugin_register();
 #ifndef CM_NO_UADE
     // GPLv2 -- excluded from the Mac App Store build (CM_VARIANT=mas), where the

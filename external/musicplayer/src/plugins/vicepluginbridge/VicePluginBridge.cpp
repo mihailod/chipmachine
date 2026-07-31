@@ -1,9 +1,11 @@
 #include "VicePlugin.h"
 
+#include <coreutils/file.h>
 #include <coreutils/log.h>
 #include <coreutils/utils.h>
 #include <crypto/md5.h>
 
+#include <cstring>
 #include <filesystem>
 #include <string>
 
@@ -130,17 +132,49 @@ std::string musForStr(const std::string& fileName)
 
 } // namespace
 
+// VICE used to own ALL of .sid/.rsid. The bulk now goes to csidplugin (Hermit's
+// cSID, WTFPL), which measured 0.958-1.000 spectral cosine against this very
+// engine and, unlike it, can ship in the Mac App Store build.
+//
+// Two things stay here, both because cSID genuinely cannot do them:
+//   * Compute! Sidplayer .mus and its stereo .str companion -- a note format
+//     with its own player, not a SID-chip dump, with no permissive player; and
+//   * self-IRQ RSIDs (play=$0000), which need a real C64 environment.
+// Neither overlaps what cSID claims, so registration order cannot make the two
+// engines fight over a tune.
 bool VicePlugin::canHandle(const std::string& name) {
     auto lname = utils::toLower(name);
-    return utils::endsWith(lname, ".sid") || utils::endsWith(lname, ".rsid") ||
-           utils::endsWith(lname, ".mus") || utils::endsWith(lname, ".str");
+    if (utils::endsWith(lname, ".mus") || utils::endsWith(lname, ".str")) {
+        return true;
+    }
+    // ... plus the one SID shape cSID cannot carry: an RSID whose header play
+    // address is $0000, i.e. one that installs its own IRQ/NMI handler and needs
+    // a real C64 (KERNAL banked in, CIA and raster running). Sampling HVSC, only
+    // 2 of 14 such tunes are audible under cSID while VICE plays them all, so
+    // this build -- which links VICE for .mus/.str regardless -- keeps playing
+    // them exactly as it always did. CSIDPlugin::canHandle declines this same
+    // shape whenever VICE is in the build; keep the two in step.
+    //
+    // Everything else stays cSID's: ordinary PSIDs, and RSIDs that name a real
+    // play address, are NOT claimed here.
+    if (!utils::endsWith(lname, ".sid") && !utils::endsWith(lname, ".rsid")) {
+        return false;
+    }
+    utils::File f{ name };
+    if (!f.exists()) { return false; }
+    auto d = f.readAll();
+    return d.size() >= 0x7C && memcmp(d.data(), "RSID", 4) == 0 &&
+           (d[0x0C] * 256 + d[0x0D]) == 0;
 }
 
 std::set<std::string> VicePlugin::getSupportedExtensions() const
 {
-    // .rsid is the "real C64" SID variant; psid_load_file accepts its "RSID"
-    // magic just like a "PSID", so VICE plays it the same way.
-    return {"sid", "rsid", "mus", "str"};
+    // .sid/.rsid are listed because VICE really is the routed player for the
+    // self-IRQ RSID subset above (canHandle content-gates it). csidplugin is
+    // registered first and claims the same two extensions, so the browse-list
+    // and ext->plugin map still credit SID to cSID, which is where the
+    // overwhelming majority of it plays.
+    return {"mus", "str", "sid", "rsid"};
 }
 
 ChipPlayer* VicePlugin::fromFile(const std::string& fileName) {

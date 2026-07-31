@@ -20,6 +20,7 @@ namespace di = boost::di;
 #include <musicplayer/src/plugins/openmptplugin/OpenMPTPlugin.h>
 #include <musicplayer/src/plugins/quartetplugin/QuartetPlugin.h>
 #include <musicplayer/src/plugins/dmfplugin/DMFPlugin.h>
+#include <musicplayer/src/plugins/csidplugin/CSIDPlugin.h>
 
 #include <algorithm>
 #include <array>
@@ -1389,6 +1390,31 @@ TEST_CASE("VGMStream", "[music]") { testPlugin<musix::VGMStreamPlugin>("testmus/
 // distribution songs cover the format's features (mystic=portamento only,
 // blippblopp=arpeggios, vt-theme/slowride=everything, djungel-zagor=multi-song).
 TEST_CASE("VicTracker", "[music]") { testPlugin<musix::VTPlugin>("testmus/victracker", "nowork"); }
+// Every .sid/.rsid fixture played through cSID, the same systematic coverage
+// every other plugin gets. The old VicePlugin never had one (its fixtures were
+// only reached by a single hand-written RSID case), which is why this dir was
+// invisible in the coverage report until now.
+//
+// "knockout" is excluded deliberately: that RSID installs its own IRQ handler
+// and cSID renders it as pure silence, which is a KNOWN gap pinned by its own
+// test ("cSID reports a silent self-IRQ RSID as unplayable"). Left in, it would
+// count as a NO SOUND error here rather than the handled case it actually is.
+TEST_CASE("cSID", "[music]") { testPlugin<musix::CSIDPlugin>("testmus/csid", ""); }
+// vicepluginbridge never had a testPlugin case either, so testmus/libvice was
+// invisible in the coverage report for its whole life. It plays Compute!
+// Sidplayer .mus/.str AND the self-IRQ RSIDs cSID hands back (see
+// VicePlugin::canHandle) -- the .rsid fixtures live here for that reason, and
+// this case is what gives .rsid real playback coverage in the plus build.
+// "first samurai.mus" is excluded because NOTHING in the build can play it:
+// VICE rejects it ("Not a sid file"), and routing it through the real plugin
+// chain (cm --dump-metadata) falls all the way through to UADE, which throws
+// the same. Its first bytes do not match the Compute! Sidplayer voice-length
+// layout that "raistlin the magician.mus" has, nor Karl Morton's "SONG" nor
+// the MSX BSAVE 0xFE, so it appears to be a mis-filed or truncated file. It
+// predates this test case -- testmus/libvice had no testPlugin coverage at
+// all until now, which is exactly why it went unnoticed. Left on disk rather
+// than deleted; it is a fixture, so removing it is the owner's call.
+TEST_CASE("Vice", "[music]") { testPlugin<musix::VicePlugin>("testmus/libvice", "first samurai", "data"); }
 
 // The host routing path (createPlugins -> MusicPlayer::playFile -> getSamples),
 // which only works if victrackerplugin is registered in plugin_register.cpp --
@@ -1831,17 +1857,51 @@ TEST_CASE("Westwood SND plays sound", "[music]")
 // Exclude the TFMX/SoundMaster sample banks (turrican2.smpl, smp.starball) which
 // are companion files, not standalone songs -- but NOT ".smpro" SoundMaster songs
 // (futureshock-gameover.smpro), which the old broad "smp" substring wrongly hid.
-// .rsid (the "real C64" SID variant) is played by VICE just like .sid -- VICE's
-// psid_load_file accepts the "RSID" magic. libvice now claims it; this checks a
-// genuine RSID rip renders audio. (testmus/libvice isn't folder-scanned, so the
-// fixture needs an explicit test.)
-TEST_CASE("RSID plays sound", "[music]")
+// .sid/.rsid moved from vicepluginbridge (GPL) to csidplugin (Hermit's cSID,
+// WTFPL) so the Mac App Store build can play C64 music at all. Guard the split
+// itself: cSID takes the SID-chip files, VICE keeps only Compute! Sidplayer.
+TEST_CASE("cSID owns .sid/.rsid, not .mus/.str", "[music][csid]")
 {
-    musix::VicePlugin vice{ "data" };
-    std::string const rsid = "testmus/libvice/10... knockout!.rsid";
-    REQUIRE(vice.canHandle(rsid));
-    auto* p = vice.fromFile(rsid);
+    musix::CSIDPlugin csid;
+    REQUIRE(csid.canHandle("testmus/csid/Commando.sid"));
+    // cmtest is built in the PLUS tree, where vicepluginbridge exists -- so cSID
+    // hands the self-IRQ RSIDs (play=$0000) back to VICE, which plays all of them
+    // instead of the ~2-in-14 cSID manages. In a mas tree (CM_NO_VICE) there is
+    // no fallback and cSID keeps them; that path is what the fromFile tests below
+    // exercise, since fromFile deliberately stays permissive.
+    REQUIRE_FALSE(csid.canHandle("testmus/libvice/10... knockout!.rsid"));
+    REQUIRE_FALSE(csid.canHandle("testmus/libvice/Cannon_Fodder_Digi.rsid"));
+
+    auto exts = csid.getSupportedExtensions();
+    REQUIRE(exts.count("sid") == 1);
+    REQUIRE(exts.count("rsid") == 1);
+    // Never .mus/.str: cSID has no Compute! Sidplayer parser and would read
+    // their first bytes as a PSID header and emit garbage. It must DECLINE so
+    // the file falls through to vicepluginbridge (plus build) or is dropped
+    // from the catalog entirely (mas build).
+    REQUIRE(exts.count("mus") == 0);
+    REQUIRE(exts.count("str") == 0);
+    REQUIRE_FALSE(csid.canHandle("testmus/libvice/first samurai.mus"));
+    REQUIRE_FALSE(
+        csid.canHandle("testmus/libvice/raistlin the magician.str"));
+
+    // The gate is on content, not the name: Amiga SidMon tunes are also called
+    // ".sid" and carry no PSID/RSID magic, so they must be declined too.
+    REQUIRE_FALSE(csid.canHandle("testmus/uade/sid.gizmo"));
+}
+
+// A plain PSID renders audio through cSID, with the subtune count read off the
+// header. (testmus/csid isn't folder-scanned, so the fixtures need explicit
+// tests.)
+TEST_CASE("cSID plays sound", "[music][csid]")
+{
+    musix::CSIDPlugin csid;
+    auto* p = csid.fromFile("testmus/csid/Commando.sid");
     REQUIRE(p != nullptr);
+    auto const* songs = std::get_if<uint32_t>(&p->meta("songs"));
+    REQUIRE(songs != nullptr);
+    REQUIRE(*songs == 11);
+
     std::array<int16_t, 8192> buf{};
     int64_t e = 0;
     for (int i = 0; i < 50 && e == 0; i++) {
@@ -1851,6 +1911,154 @@ TEST_CASE("RSID plays sound", "[music]")
     }
     delete p;
     REQUIRE(e != 0);
+}
+
+// The mas variant drops songs it cannot play from the CATALOG, not just from
+// playback -- an indexed row that downloads and then fails is the exact thing
+// that gate exists to prevent. For the VICE formats the extension is not enough
+// to decide, which is what this pins.
+//
+// chipmachine::songFormatHasNoPlayer() takes the built-plugin set as a parameter precisely so
+// this can run from the plus tree (where the mas #ifdefs are not compiled): pass
+// a set standing in for the mas build and assert what it would decide.
+TEST_CASE("mas index drops Compute! Sidplayer, keeps .sid", "[music][csid][mas]")
+{
+    // What each build actually registers, reduced to the names that matter.
+    std::set<std::string> const plusPlugins{ "csid",   "libvice", "uade",
+                                             "openmpt", "vgmstream" };
+    std::set<std::string> const masPlugins{ "csid", "openmpt", "vgmstream" };
+
+    auto row = [](std::string const& path, std::string const& format) {
+        SongInfo s;
+        s.path = path;
+        s.format = format;
+        return s;
+    };
+
+    // The 5,032 Compute! Sidplayer tunes. ".mus" is advertised by OpenMPT (Karl
+    // Morton Music Format) in EVERY build, so the extension says "playable" and
+    // only the format name reveals that the real player is gone.
+    auto sidplayer = row("Sidplayer/Some Composer/tune.mus", "Sidplayer");
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(sidplayer, plusPlugins));
+    REQUIRE(chipmachine::songFormatHasNoPlayer(sidplayer, masPlugins));
+
+    // The 1,446 Stereo Sidplayer tunes, filed under ".str" -- advertised by
+    // vgmstream in every build, so the same trap applies.
+    auto stereo = row("Sidplayer/Some Composer/tune.str", "Stereo Sidplayer");
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(stereo, plusPlugins));
+    REQUIRE(chipmachine::songFormatHasNoPlayer(stereo, masPlugins));
+
+    // FAC SoundTracker is the same ".mus" extension but a UADE format (MSX
+    // BSAVE image) -- also gone in mas, for the other GPL reason.
+    auto fac = row("FAC SoundTracker/x/tune.mus", "FAC SoundTracker");
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(fac, plusPlugins));
+    REQUIRE(chipmachine::songFormatHasNoPlayer(fac, masPlugins));
+
+    // The whole point of the migration: C64 SID is KEPT in mas, because cSID
+    // plays it. This is the ~61.8k-song bulk of the old VICE domain.
+    auto sid = row("Commodore 64/Rob Hubbard/Commando.sid", "Commodore 64");
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(sid, plusPlugins));
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(sid, masPlugins));
+
+    // Karl Morton .mus really is OpenMPT's and survives in both.
+    auto karl = row("Karl Morton/x/tune.mus", "Karl Morton Music Format");
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(karl, masPlugins));
+
+    // A row with no format recorded is never dropped on this rule -- the
+    // extension logic in songHasNoPlayer() still gets its say.
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(row("x/tune.mus", ""), masPlugins));
+    // And an empty plugin set (registration failed) drops nothing.
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(sidplayer, {}));
+}
+
+// An RSID that cSID CAN play must survive the silence probe untouched. Without
+// this, a probe that was too aggressive (or a threshold nudged upward) would
+// silently kill working RSIDs and every other test here would still pass.
+//
+// Cannon_Fodder_Digi.rsid is a genuine HVSC RSID (play=$0000, like all of them)
+// that renders at peak ~9240 -- two orders of magnitude above the threshold.
+TEST_CASE("cSID plays a working RSID", "[music][csid]")
+{
+    musix::CSIDPlugin csid;
+    std::string const rsid = "testmus/libvice/Cannon_Fodder_Digi.rsid";
+    auto* p = csid.fromFile(rsid);
+    REQUIRE(p != nullptr);
+
+    std::array<int16_t, 8192> buf{};
+    int peak = 0;
+    int rc = 0;
+    for (int i = 0; i < 60; i++) {
+        rc = p->getSamples(buf.data(), static_cast<int>(buf.size()));
+        REQUIRE(rc > 0); // never reported unplayable
+        for (int j = 0; j < rc; j++) {
+            peak = std::max(peak, std::abs(static_cast<int>(buf[j])));
+        }
+    }
+    delete p;
+    REQUIRE(peak > 1000);
+}
+
+// The other half of the threshold: an RSID that renders a tiny inaudible
+// residue instead of exact zero must ALSO be reported unplayable.
+//
+// Jump.rsid peaks at 54 out of 32767 (~-56 dBFS) -- silent to a listener, but
+// non-zero, so the original "any non-zero sample counts as audio" test let it
+// through and it would have played as dead air. This pins the amplitude
+// threshold that replaced it.
+TEST_CASE("cSID rejects a near-silent RSID, not just a zero one",
+          "[music][csid]")
+{
+    musix::CSIDPlugin csid;
+    auto* p = csid.fromFile("testmus/libvice/Jump.rsid");
+    REQUIRE(p != nullptr);
+
+    std::array<int16_t, 8192> buf{};
+    int rc = 0;
+    int peak = 0;
+    int i = 0;
+    for (; i < 200; i++) {
+        rc = p->getSamples(buf.data(), static_cast<int>(buf.size()));
+        if (rc < 0) { break; }
+        for (int j = 0; j < rc; j++) {
+            peak = std::max(peak, std::abs(static_cast<int>(buf[j])));
+        }
+    }
+    delete p;
+    REQUIRE(rc < 0);   // reported unplayable...
+    REQUIRE(peak > 0); // ...even though it was never digitally silent
+    REQUIRE(i < 200);
+}
+
+// The known cSID gap, pinned so it stays a graceful skip rather than dead air.
+//
+// "10... knockout!.rsid" is an RSID with play=$0000: it installs its own IRQ
+// handler and expects a genuine C64 (KERNAL banked in, CIA/raster running).
+// VICE played it; cSID defeats its own IRQ-vector detection here and renders
+// pure digital silence forever. Rather than play silence until the user
+// notices, CSIDPlayer watches the first few seconds of a play=$0000 RSID and
+// reports the track unplayable (getSamples < 0), which MusicPlayer turns into
+// play_ended and the list skips on.
+TEST_CASE("cSID reports a silent self-IRQ RSID as unplayable", "[music][csid]")
+{
+    musix::CSIDPlugin csid;
+    std::string const rsid = "testmus/libvice/10... knockout!.rsid";
+    auto* p = csid.fromFile(rsid);
+    REQUIRE(p != nullptr);
+
+    std::array<int16_t, 8192> buf{};
+    int rc = 0;
+    int64_t e = 0;
+    // 3s of silence at 44.1kHz stereo is ~27 buffers; give it generous room.
+    int i = 0;
+    for (; i < 200; i++) {
+        rc = p->getSamples(buf.data(), static_cast<int>(buf.size()));
+        if (rc < 0) { break; }
+        for (int j = 0; j < rc; j++) { e += std::abs(static_cast<int>(buf[j])); }
+    }
+    delete p;
+    REQUIRE(rc < 0);  // reported unplayable...
+    REQUIRE(e == 0);  // ...and never emitted anything audible on the way there
+    REQUIRE(i < 200); // ...within the probe window, not by running out of loop
 }
 
 TEST_CASE("UADE", "[music]") { testPlugin<musix::UADEPlugin>("testmus/uade", ".mod.nt", "data"); }
@@ -4564,16 +4772,28 @@ TEST_CASE("Vice Stereo Sidplayer", "[music][vice]")
     logging::setLevel(logging::Level::Warning);
     musix::VicePlugin plugin{ "data" };
 
-    REQUIRE(plugin.canHandle("foo.sid"));
     REQUIRE(plugin.canHandle("foo.mus"));
     REQUIRE(plugin.canHandle("foo.str"));
     REQUIRE(plugin.canHandle("FOO.STR"));
     REQUIRE_FALSE(plugin.canHandle("foo.mod"));
+    // Ordinary SID belongs to csidplugin now, and VICE must NOT take it back --
+    // a name-only claim would hand tunes to whichever plugin registered first.
+    // canHandle content-gates, so a bare name claims nothing.
+    REQUIRE_FALSE(plugin.canHandle("foo.sid"));
+    REQUIRE_FALSE(plugin.canHandle("foo.rsid"));
+    REQUIRE_FALSE(plugin.canHandle("testmus/csid/Commando.sid"));
+
+    // ...but VICE DOES take the self-IRQ RSIDs (play=$0000) back, because cSID
+    // renders most of them silent. This is the plus build's fallback and the
+    // reason it did not lose ~2.6k C64 tunes to the engine swap.
+    REQUIRE(plugin.canHandle("testmus/libvice/10... knockout!.rsid"));
+    REQUIRE(plugin.canHandle("testmus/libvice/Cannon_Fodder_Digi.rsid"));
 
     auto exts = plugin.getSupportedExtensions();
-    REQUIRE(exts.count("sid") == 1);
     REQUIRE(exts.count("mus") == 1);
     REQUIRE(exts.count("str") == 1);
+    REQUIRE(exts.count("sid") == 1);
+    REQUIRE(exts.count("rsid") == 1);
 
     // The stereo (.str) file declares its .mus companion as a secondary file...
     REQUIRE(plugin.getSecondaryFiles(
@@ -4608,8 +4828,6 @@ TEST_CASE("Vice Stereo Sidplayer", "[music][vice]")
     REQUIRE(playsSound("testmus/libvice/stereo/linus and lucy.mus"));
     // Loading the .str redirects to the .mus companion and also plays.
     REQUIRE(playsSound("testmus/libvice/stereo/raistlin the magician.str"));
-    // A regular .sid still loads and plays (no regression in psid_load_file).
-    REQUIRE(playsSound("testmus/libvice/10_Orbyte.sid"));
 }
 
 // Dump the "Other Platforms" sub-platform groups (the OTHER format byte, one

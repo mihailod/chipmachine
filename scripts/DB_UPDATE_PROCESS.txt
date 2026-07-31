@@ -63,23 +63,24 @@ Download and unzip https://ftp.modland.com/allmods.zip
 
 **********************************************
 
-  102721 chipmachine/data-notbundled/Songlengths.txt -- DONE
-this is obsolete, used by VicePlugin and renamed to OLDVICESonglengths.txt
-the vicepluginbridge gets these lengths automatically from the sid files
-this MD5 file however is used by the code and was missing (harmless but no data was available):
- curl -L -o chipmachine/data-notbundled/Songlengths.md5 https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/Songlengths.md5
-After your change: STIL.cpp can now successfully open and digest the database.
-however this was never used:
-./musicplayer/src/stil/STIL.cpp says:
-    //readLengths();
+  102721 chipmachine/data-notbundled/Songlengths.txt -- DONE, NOW FULLY DEAD
+this was obsolete already (used by the old VicePlugin, renamed to OLDVICESonglengths.txt);
+as of the cSID migration (2026-07-30) nothing reads song lengths from a file at all.
+The reader they existed for -- musicplayer/src/stil/STIL.cpp -- has been DELETED along
+with plugins/sidplugin/, its only consumer, which was never registered and never built.
+Its readLengths() was commented out the whole time, so no data ever flowed through it.
+Songlengths.md5 / Songlengths.txt / OLDVICESonglengths.txt are now pure archive: no code
+reads them, and nothing needs re-downloading on an HVSC update.
 
 **********************************************
 
-   87075 chipmachine/data-notbundled/STIL.txt -- DONE 87,075 -> 108,101
-SID Tune Information List
-used by sid plugin
+   87075 chipmachine/data-notbundled/STIL.txt -- DONE 87,075 -> 108,101, NOW UNUSED
+SID Tune Information List. WAS used by the (now deleted) sidplugin via STIL.cpp;
+no current code reads it -- csidplugin takes its metadata from the catalog and the
+PSID header, not from STIL. Kept as archive only; refreshing it changes nothing.
+If a future plugin wants tune trivia back, this is where it came from:
 curl -L -o STIL.txt https://www.hvsc.c64.org/download/C64Music/DOCUMENTS/STIL.txt
-and put is in chipmachine/data-notbundled
+and put it in chipmachine/data-notbundled
 
 **********************************************
 
@@ -340,10 +341,12 @@ N/A playlists  (Dir) | Playlists ( pl )                       | Directory
 
   #### Plugin & Engine-Specific Files (Used at Playback Time, not DB Build Time):
 
-X •  Songlengths.md5 / STIL.txt : NOT read from data/ at all -- SidPlugin::fromFile
-  walks up from the .sid file looking for a sibling HVSC "DOCUMENTS/STIL.txt"
-  (SidPlugin.cpp) and hands THAT directory to STIL.cpp, so the copies kept here
-  are reference/update material only. Both now live in data-notbundled/.
+X •  Songlengths.md5 / STIL.txt : NO READER AT ALL as of 2026-07-30. They were
+  never read from data/ -- SidPlugin::fromFile walked up from the .sid file to a
+  sibling HVSC "DOCUMENTS/STIL.txt" and handed that directory to STIL.cpp -- and
+  both SidPlugin.cpp and STIL.cpp are now deleted (sidplugin was GPL, unregistered
+  and never built; see the cSID migration). Archive material only, in
+  data-notbundled/.
 - •  adplug.db : An internal binary database used solely by the AdPlug player plugin to handle OPL2/OPL3 (AdLib) metadata.
   Loaded from data/ (createPlugins config dir) -- stays bundled.
 - •  hebios.bin : Emulation BIOS file utilized exclusively by the HEBIOS console sound emulator.
@@ -355,7 +358,8 @@ X •  Songlengths.md5 / STIL.txt : NOT read from data/ at all -- SidPlugin::fro
   #### Obsolete & System Files:
 
   •  OLDVICESonglengths.txt : Obsolete text file containing C64 track lengths for the old VICE emulators (scheduled for removal,
-  completely ignored by database indexing). Moved to data-notbundled/.
+  completely ignored by database indexing). Moved to data-notbundled/. Doubly dead
+  since the cSID migration removed VICE from the mas build and deleted STIL.cpp.
   •  AlegreyaSansSC-Bold.ttf : Typography font file used to render the graphical UI.
   •  fontsmainscroll/ : Font pool for the title scroller; every .otf inside is loaded at startup and ships with the app.
   •  FONT-LICENSES.txt : Author and license record for every bundled font (see it before adding a font to fontsmainscroll).

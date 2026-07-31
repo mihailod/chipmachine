@@ -52,13 +52,36 @@ Component: SC68 (Atari ST/Amiga)
 Author: Developed by Benjamin Gerard
 License: GNU General Public License v3.0 or later
 
-Component: VICE (C64/SID Emulation)
+Component: VICE (C64 Compute! Sidplayer -- .mus/.str only)
 Author: Developed by the VICE Core Team
 License: GNU General Public License v2.0 or later
+Notice: SID-chip playback (.sid/.rsid) moved OFF VICE to cSID (WTFPL, section 5)
+        on 2026-07-30; VICE is retained only for Compute! Sidplayer .mus/.str,
+        for which no permissive player exists. NOT LINKED into the Mac App Store
+        variant (CM_VARIANT=mas builds with CM_HAVE_VICE=OFF, so neither
+        vicepluginbridge nor its vendored VICE sources are compiled), and its
+        data/c64 payload -- which includes the Commodore-copyrighted KERNAL,
+        BASIC and chargen ROM images -- is stripped from that bundle by
+        package_app.sh.
 
 Component: UADE (Amiga Exotic Formats)
 Author: Developed by Heikki Orsila and the UADE Team
 License: GNU General Public License v2.0 or later
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_UADE=OFF), and its data/uade payload is stripped from that
+        bundle by package_app.sh.
+
+Component: GoatTracker v2 + reSID (C64 GoatTracker songs, .sng)
+Author: GoatTracker v2 by Lasse Oorni ("Cadaver"); the vendored playback core is
+        gplay.c (playroutine), gsid.cpp (reSID interface) and gt2_load.c
+        (loadsong). The SID emulation underneath it is reSID by Dag Lem
+        <resid@nimrod.no>, vendored verbatim under
+        musicplayer/src/plugins/goattrackerplugin/resid/.
+License: GNU General Public License v2.0 or later (both GoatTracker and reSID).
+Notice: This is a SECOND, independent C64 SID emulator in the tree, unrelated to
+        cSID (section 5) and to VICE. It is GPL and therefore a blocker for a
+        GPL-clean Mac App Store build; unlike UADE and VICE it is currently
+        STILL LINKED into the mas variant.
 
 Component: MDX / S98 (PC-98 & Sharp X68000 Engine variants)
 Author: Adapted from OpenMSX/GME variants
@@ -367,6 +390,21 @@ Component: AudioOverload Backend / AOSDK
 Author: Developed by Richard Bannister and contributors
 License: Custom Permissive Freeware License
 Notice: Included non-commercially under authors' custom permissive terms.
+
+Component: cSID (Commodore 64 SID chip, .sid/.rsid)
+Author: Mihaly Horvath ("Hermit"), 2016-2017. http://hermit.sidrip.com
+        Vendored from https://github.com/mlund/csid (the cycle-based csid.c),
+        at musicplayer/src/plugins/csidplugin/csid/csid_engine.c.
+License: WTFPL -- "Do what the fuck you want with this code, but please mention
+         me as its original author." Fully permissive; no copyleft obligation.
+Notice: A from-scratch 6581/8580 + 6510 + PSID player. It shares NO code with
+        VICE, reSID or libsidplayfp, and needs no Commodore ROM images, which is
+        what makes C64 SID playback possible in the Mac App Store variant. The
+        emulation is vendored unchanged apart from library-isation (SDL and
+        main() removed, file-scope symbols made static, an unsequenced-evaluation
+        fix in the operand fetch); rendered output was verified bit-identical to
+        the pristine upstream. Attribution to Hermit is a licence condition and
+        is carried in README.md and data/misc/Credits.rtf.
 
 Component: SCC-Musixx replay routine (MSX, .SNG)
 Author: Tyfoon-Software (M. Spoor), 1990. "MUSIXX REPLAY ROUTINE v1.2".

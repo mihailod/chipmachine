@@ -183,6 +183,18 @@ enum Formats
 
 };
 
+// True when the catalog names a format that ONLY a plugin missing from this
+// build can play, so the indexer must not surface the song.
+//
+// Split out of songHasNoPlayer() and parameterised on the built-plugin name set
+// so it is testable from the plus tree, where the mas variant's gating is not
+// compiled: pass a set without "libvice"/"uade" to ask what the mas build would
+// decide. See the definition in MusicDatabase.cpp for why the extension alone
+// cannot answer this (".mus" is claimed by OpenMPT, ".str" by vgmstream, in
+// every build).
+bool songFormatHasNoPlayer(SongInfo const& song,
+                           std::set<std::string> const& builtPluginNames);
+
 struct Product
 {
     std::string title;

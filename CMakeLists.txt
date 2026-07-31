@@ -81,7 +81,31 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_UADE ON)
 endif()
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE})")
+
+# VICE is GPLv2, and the same App Store reasoning applies: vicepluginbridge must
+# be ABSENT from the mas binary, not merely disabled. It follows CM_HAVE_UADE's
+# pattern exactly -- CM_NO_VICE reaches every target compiling against the plugin
+# list (cmtest included) because it states which targets were linked.
+#
+# Unlike UADE, though, VICE's MAIN job is gone rather than lost: ordinary SID
+# (.sid/.rsid) is now played by csidplugin (Hermit's cSID, WTFPL) in BOTH
+# variants, at 0.958-1.000 spectral cosine against VICE/reSID. In the plus build
+# vicepluginbridge is retained for the two things cSID cannot do -- Compute!
+# Sidplayer .mus/.str, and self-IRQ RSIDs (play=$0000), of which only ~2 in 14
+# are audible under cSID (see VicePlugin::canHandle). The mas build has neither
+# fallback: the ~6.5k .mus/.str rows are dropped at index time by the same
+# songHasNoPlayer() rule that handles the UADE formats, and the self-IRQ RSIDs
+# stay with cSID, which reports the silent ones unplayable so they Skip.
+#
+# Dropping VICE also drops its data/c64 KERNAL/BASIC/chargen ROM images, which
+# are Commodore-copyrighted and a separate App Store problem from the licence.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_VICE OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_VICE)
+else()
+    set(CM_HAVE_VICE ON)
+endif()
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -221,11 +245,17 @@ set(MUSICPLAYER_PLUGINS
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin fnkplugin
     famitrackerplugin goattrackerplugin dmfplugin libvgmplugin vgmstreamplugin
-    victrackerplugin klystrackplugin
+    victrackerplugin klystrackplugin csidplugin
 )
 # GPL -- plus build only, see CM_HAVE_UADE above.
 if(CM_HAVE_UADE)
     list(APPEND MUSICPLAYER_PLUGINS uadeplugin)
+endif()
+# Empty in a mas tree, where the vicepluginbridge target does not exist at all.
+if(CM_HAVE_VICE)
+    set(CM_VICE_LIB vicepluginbridge)
+else()
+    set(CM_VICE_LIB "")
 endif()
 add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
 add_subdirectory(${MUSICPLAYER}/src/psf psf)
@@ -254,6 +284,13 @@ add_library(plugin_register STATIC src/plugin_register.cpp)
 # the symbol only exists when the uadeplugin target was built (see CM_HAVE_UADE).
 if(NOT CM_HAVE_UADE)
     target_compile_definitions(plugin_register PRIVATE CM_NO_UADE)
+endif()
+# Same for vicepluginbridge_register() -- see CM_HAVE_VICE above.
+if(NOT CM_HAVE_VICE)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_VICE)
+    # csidplugin also needs it: with VICE present it hands self-IRQ RSIDs back to
+    # VICE, and without VICE it must keep them (see CSIDPlugin::canHandle).
+    target_compile_definitions(csidplugin PRIVATE CM_NO_VICE)
 endif()
 target_link_libraries(musicplayer INTERFACE psf plugin_register)
 target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)
@@ -335,7 +372,7 @@ target_link_libraries(chipmachine PRIVATE
     ${GUI_MODULES}
     ${MUSICPLAYER_PLUGINS}
     lhasa
-    vicepluginbridge
+    ${CM_VICE_LIB}
     sol
     ${APPLE_FRAMEWORKS}
     avcodec
@@ -355,7 +392,7 @@ if(NOT WIN32)
         ${CORE_MODULES}
         ${MUSICPLAYER_PLUGINS}
         lhasa
-        vicepluginbridge
+        ${CM_VICE_LIB}
         sol
         ${APPLE_FRAMEWORKS}
         avcodec
@@ -431,7 +468,7 @@ endif()
 # --- EXTERNAL STUFF COMPILER WARNING SUPPRESSION ---
 if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     set(SILENT_TARGETS
-        vicepluginbridge ndsplugin gsfplugin usfplugin heplugin adplugin
+        vicepluginbridge ndsplugin gsfplugin usfplugin heplugin adplugin csidplugin
         aoplugin v2plugin unrar coreutils lua crypto tedplugin gmeplugin
         openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin ffmpegplugin rsnplugin fmpplugin
     )
