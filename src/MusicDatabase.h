@@ -443,9 +443,13 @@ public:
         return reindexingNow.load(std::memory_order_relaxed);
     }
 
-    // Collection id ("hvsc", "mirsoft", ...) the indexer is currently working
-    // on, published for the startup progress screen. Same tag the search results
-    // show next to the format line. Empty when nothing is in flight.
+    // What the indexer is currently working on, published for the startup
+    // progress screen: "Creating <name>" during the per-collection DB build,
+    // "Indexing <name>" during the search-index pass (each collection is
+    // announced once per phase, so the prefix tells the two apart). <name> is
+    // the collection's display name ("High Voltage SID Collection"), falling
+    // back to its terse id ("hvsc") when it has none. Empty when nothing is in
+    // flight.
     std::string getIndexingName() const
     {
         std::lock_guard lock{ indexNameMutex };

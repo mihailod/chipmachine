@@ -1344,7 +1344,9 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
 
     reindexNeeded = true;
     reindexingNow.store(true, std::memory_order_relaxed);
-    setIndexingName(id);
+    // "Creating" (this phase) vs "Indexing" (the search-index pass below) so the
+    // two times each collection is announced are told apart on the bar.
+    setIndexingName("Creating " + (name.empty() ? id : name));
 
     if (!local_dir.empty()) {
         if (!local_dir.is_absolute()) local_dir = workDir / local_dir;
@@ -5184,14 +5186,18 @@ void MusicDatabase::generateIndex()
     int unexoticaColl = collId("unexotica"); // Amiga games music (mp3 rips)
     int zxartColl = collId("zxart");         // ZX tunes rendered to ogg
 
-    // ROWID -> collection id, so the loop below can name the collection each row
-    // belongs to on the startup progress screen.
+    // ROWID -> collection display name, so the loop below can name the
+    // collection each row belongs to on the startup progress screen. The
+    // human-readable `name` ("High Voltage SID Collection") is what the bar
+    // shows; the terse `id` ("hvsc") is only a fallback for rows that have no
+    // name set.
     std::unordered_map<int, std::string> collNames;
     try {
-        auto cq = db.query<int, std::string>("SELECT ROWID, id FROM collection");
+        auto cq = db.query<int, std::string, std::string>(
+            "SELECT ROWID, id, name FROM collection");
         while (cq.step()) {
-            auto [rowid, cid] = cq.get_tuple();
-            collNames[rowid] = cid;
+            auto [rowid, cid, cname] = cq.get_tuple();
+            collNames[rowid] = cname.empty() ? cid : cname;
         }
     } catch (...) {}
     int lastNamedColl = -1;
@@ -5252,7 +5258,8 @@ void MusicDatabase::generateIndex()
         if (collection != lastNamedColl) {
             lastNamedColl = collection;
             auto cn = collNames.find(collection);
-            setIndexingName(cn != collNames.end() ? cn->second : std::string());
+            setIndexingName(cn != collNames.end() ? "Indexing " + cn->second
+                                                  : std::string());
         }
 
         // Real-format token for the search dedup key (see add_unique).
