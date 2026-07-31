@@ -168,17 +168,6 @@ License: GNU General Public License v2.0 (Mupen64Plus-rsp-hle / Mupen64 lineage;
 Notice: Currently STILL LINKED into the mas variant (unconditional plugin list),
         an outstanding GPL blocker -- same status as GoatTracker.
 
-Component: TFMX (tfmxplay 1.1.7)
-Author: tfmxplay by Jonathan H. Pickard, maintained by Neochrome (oversampling by
-        Peter Schlaile), vendored at
-        musicplayer/src/plugins/tfmxplugin/tfmxplay-1.1.7.
-License: GNU General Public License v2.0 (see tfmxplugin/tfmxplay-1.1.7/COPYING).
-Notice: VENDORED BUT NOT COMPILED. The tfmxplugin target is absent from the build
-        plugin list and is never registered; actual TFMX playback (mdat./tfmx./
-        tfhd. prefixes) goes through UADE (see data/uade/eagleplayer.conf). Listed
-        for source-tree completeness only -- it contributes no code to either
-        binary, and so is not a mas blocker.
-
 ===============================================================================
 3. LESSER COPYLEFT DEPENDENCIES
 ===============================================================================
