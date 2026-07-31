@@ -135,6 +135,50 @@ Notice: The plugin compiles the slice at hidden visibility and partial-links
         (ld -r) so the APU's generic symbols (Blip_Buffer, ...) are localized
         and do not collide with GME's / NerdTracker's blargg emulation.
 
+Component: Furnace (DefleMask .dmf playback)
+Author: The Furnace chiptune engine (DivEngine) by tildearrow and contributors
+        (https://github.com/tildearrow/furnace). A headless slice of the engine
+        is vendored at musicplayer/src/plugins/dmfplugin/furnace and driven
+        directly to play DefleMask .dmf modules across every DefleMask target
+        (Genesis, Master System, Game Boy, PC Engine, NES, C64, Arcade, Neo Geo).
+License: GNU General Public License v2.0 or later (see dmfplugin/furnace/LICENSE;
+        the bundled emulation cores under furnace/extern/ carry their own
+        per-tree licenses).
+Notice: DefleMask .dmf is content-gated (zlib magic 0x78 -> ".DelekDefleMask.")
+        against the unrelated X-Tracker "DDMF" .dmf handled by libopenmpt. Like
+        GoatTracker above, this is currently STILL LINKED into the mas variant
+        (it is in the unconditional plugin list, not gated like UADE/VICE) and is
+        therefore an outstanding GPL blocker for a clean Mac App Store build.
+
+Component: GSF (Game Boy Advance -- .gsf / .minigsf)
+Author: GSF playback via a vendored VisualBoyAdvance (VBA) Game Boy Advance
+        CPU/audio core at musicplayer/src/plugins/gsfplugin/playgsf/VBA, with the
+        playgsf driver (gsf.cpp) and libresample. Bundles zlib.
+License: GNU General Public License v2.0 or later (VisualBoyAdvance; see the
+        per-file GPL headers under gsfplugin/playgsf/VBA).
+Notice: Currently STILL LINKED into the mas variant (unconditional plugin list),
+        an outstanding GPL blocker -- same status as GoatTracker.
+
+Component: USF (Nintendo 64 -- .usf / .miniusf)
+Author: USF playback via lazyusf2 by Christopher Snowhill (kode54), a Nintendo 64
+        audio core built on Mupen64Plus-rsp-hle and Mupen64 v0.5 sources, vendored
+        at musicplayer/src/plugins/usfplugin/lazyusf2 with a resampler.
+License: GNU General Public License v2.0 (Mupen64Plus-rsp-hle / Mupen64 lineage;
+        see usfplugin/lazyusf2/rsp_hle/LICENSES).
+Notice: Currently STILL LINKED into the mas variant (unconditional plugin list),
+        an outstanding GPL blocker -- same status as GoatTracker.
+
+Component: TFMX (tfmxplay 1.1.7)
+Author: tfmxplay by Jonathan H. Pickard, maintained by Neochrome (oversampling by
+        Peter Schlaile), vendored at
+        musicplayer/src/plugins/tfmxplugin/tfmxplay-1.1.7.
+License: GNU General Public License v2.0 (see tfmxplugin/tfmxplay-1.1.7/COPYING).
+Notice: VENDORED BUT NOT COMPILED. The tfmxplugin target is absent from the build
+        plugin list and is never registered; actual TFMX playback (mdat./tfmx./
+        tfhd. prefixes) goes through UADE (see data/uade/eagleplayer.conf). Listed
+        for source-tree completeness only -- it contributes no code to either
+        binary, and so is not a mas blocker.
+
 ===============================================================================
 3. LESSER COPYLEFT DEPENDENCIES
 ===============================================================================
@@ -222,15 +266,18 @@ Component: HivelyTracker (AHX/HVL)
 Author: Developed by IRIS (Peter "Yohng" V, Curt Cool)
 License: BSD-3-Clause
 
-Component: libxmp (Acorn Archimedes Tracker .musx, Coconizer .coco, Megatracker .mgt)
+Component: libxmp (Acorn Archimedes Tracker .musx, Coconizer .coco,
+           Megatracker .mgt, FunkTracker .fnk)
 Author: Developed by Claudio Matsuoka, Hipolito Carraro Jr and contributors
 License: MIT License
-Notice: Only the Archimedes Tracker (arch_load.c), Coconizer (coco_load.c) and
-        Megatracker (mgt_load.c) loaders plus the minimal libxmp core needed to
-        drive them are compiled in (vendored under zxtune/3rdparty/xmp). The
-        cocoplugin and mgtplugin reuse the same libxmp slice as musxplugin. The
-        arch_load.c, coco_load.c and mgt_load.c source files themselves carry a
-        GNU Lesser General Public License v2.1 or later header.
+Notice: Only the Archimedes Tracker (arch_load.c), Coconizer (coco_load.c),
+        Megatracker (mgt_load.c) and FunkTracker (fnk_load.c) loaders plus the
+        minimal libxmp core needed to drive them are compiled in (vendored under
+        zxtune/3rdparty/xmp). The cocoplugin, mgtplugin and fnkplugin each build
+        their own single-loader slice from the same shared libxmp sources as
+        musxplugin. The arch_load.c, coco_load.c, mgt_load.c and fnk_load.c
+        source files themselves carry a GNU Lesser General Public License v2.1 or
+        later header.
 
 Component: libpac (SBStudio .pac)
 Author: Thomas Pfaff (http://libpac.sourceforge.net/)
@@ -239,6 +286,15 @@ Notice: Vendored under musicplayer/src/plugins/sbstudioplugin/libpac. An ANSI C
         library that decodes SBStudio PAC modules directly to PCM. Used as-is
         except for one local patch to mix.c (FRAC_MASK shifts an unsigned value
         to avoid undefined behaviour; the mask value 0x7FFF is unchanged).
+
+Component: Farbrausch V2 Synthesizer System (.v2 / .v2m)
+Author: The V2 software synthesizer and its .v2m player by Farbrausch (Tammo
+        "kb" Hinrichs et al.), from the released .the .product / V2 sources. The
+        player (v2mplayer.cpp), synth core (synth_core.cpp), the "ronan"
+        phoneme/speech synth (ronan.cpp) and the .v2m converter are vendored at
+        musicplayer/src/plugins/v2plugin.
+License: Artistic License 2.0 (stated in the header of every vendored source
+        file; see v2plugin/LICENSE.txt).
 
 Component: FreeType / Grappix (UI & Text)
 Author: The FreeType Project and Grappix contributors
@@ -512,3 +568,15 @@ Notice: The cyd sound core was written against SDL for its integer typedefs,
         stubs for the never-called SDL audio-device path) is supplied by a small
         local shim at klystron/shim/, so the plugin has no real SDL dependency.
         The vendored snd/ and lib/ sources are otherwise unmodified.
+
+Component: UnRAR (RAR extraction for RSN archives, .rsn)
+Author: Alexander Roshal / RARLAB. The UnRAR "free portable version" sources are
+        vendored at apone/mods/archive/unrar and reached by rsnplugin through
+        utils::Archive (TYPE_RAR) to unpack .rsn files (a RAR archive of .spc
+        SNES tunes).
+License: UnRAR license (freeware). Per apone/mods/archive/unrar/license.txt, the
+         sources may be used in any software to handle RAR archives free of
+         charge, but may NOT be used to re-create the RAR compression algorithm
+         or to develop a RAR/WinRAR-compatible archiver. Used here for extraction
+         only. This is a non-copyleft freeware licence with that single
+         use-restriction; it does not impose GPL obligations on the combined work.
