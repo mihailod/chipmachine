@@ -411,6 +411,21 @@ for PRUNE_ROOT in "${RESOURCES_DIR}/data" "${RESOURCES_DIR}/lua"; do
     find "$PRUNE_ROOT" \( -name '.DS_Store' -o -name '*.pyc' \) -delete 2>/dev/null || true
 done
 
+# 4b. UADE runtime payload -- plus variant only.
+#
+# data/uade/ holds UADE's eagleplayer.conf, uaerc, the 68k `score` binary and
+# the players/ tree of Amiga replayers. All of it is GPLv2, and the mas build
+# does not link uadeplugin at all (CM_HAVE_UADE=OFF in CMakeLists.txt), so
+# shipping the payload would put GPL material into an App Store bundle for a
+# binary that cannot even load it. Drop it from the COPIED tree; the source
+# tree under chipmachine/data/ is never touched.
+if [ "$VARIANT" = "mas" ]; then
+    if [ -d "${RESOURCES_DIR}/data/uade" ]; then
+        echo "-> Removing UADE runtime payload from mas bundle (GPL, plugin not linked)"
+        rm -rf "${RESOURCES_DIR}/data/uade"
+    fi
+fi
+
 if [ -f "/opt/homebrew/etc/openssl@3/cert.pem" ]; then
     echo "-> Packaging OpenSSL certificates for standalone HTTPS..."
     cp -L "/opt/homebrew/etc/openssl@3/cert.pem" "${RESOURCES_DIR}/"

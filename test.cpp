@@ -2625,12 +2625,12 @@ TEST_CASE("IXS plays sound", "[music]")
 
 // Regression test for OctaMED MMD3 routing. libopenmpt's MED loader decodes the
 // whole MMD0..MMD3 family by content, but Tables.cpp only advertises the "med"
-// extension, so openmpt_is_extension_supported("mmd3") is false. UADE already
-// claims mmd0/mmd1/mmd2 (and registers later, so first-match routing leaves them
-// with UADE), but nothing claimed ".mmd3" at all -- the file was rejected by
-// every plugin. OpenMPTPlugin::canHandle now maps ".mmd3" in explicitly. This
-// test fails if that mapping is removed (canHandle goes false) or if libopenmpt
-// stops decoding the format (no audio).
+// extension, so openmpt_is_extension_supported("mmd3") is false, and nothing
+// claimed ".mmd3" at all -- the file was rejected by every plugin.
+// OpenMPTPlugin::canHandle now maps the whole family in via unadvertisedExts()
+// (mmd0/mmd1/mmd2 moved across from UADE at the same time; see "OpenMPT decodes
+// the formats lifted out of UADE"). This test fails if that mapping is removed
+// (canHandle goes false) or if libopenmpt stops decoding the format (no audio).
 TEST_CASE("OpenMPT MMD3 plays sound", "[music]")
 {
     logging::setLevel(logging::Level::Warning);
@@ -2654,6 +2654,116 @@ TEST_CASE("OpenMPT MMD3 plays sound", "[music]")
     delete player;
 
     REQUIRE(energy != 0);
+}
+
+// The UADE -> OpenMPT migration, in both directions.
+//
+// UADE is GPLv2 and cannot ship in the Mac App Store build, so every format
+// libopenmpt can decode must be claimed by OpenMPTPlugin rather than left to
+// UADE. Two mechanisms do that, and this guards both:
+//
+//   * excludedExts() used to hold an "Amiga batch" (smod/fc/fc13/fc14/puma/
+//     unic/gmc/ims/st26/kris) that was deliberately declined so the formats
+//     stayed with UADE's original 68k replayers. That opt-out is gone.
+//   * canHandle()'s content probe (openmptCanDecode) asks libopenmpt about the
+//     bytes when the name is unknown -- which is how ".okta", ".mod3", ".sfx20"
+//     and UnExoticA's prefix-named files ("med.<name>") get claimed at all.
+//
+// Fails if either mechanism regresses (canHandle goes false) or if a loader
+// stops producing audio -- a silent decode here would be worse than the old
+// routing, because the mas build has no UADE to fall through to.
+static void requireOpenMPTPlays(musix::OpenMPTPlugin& plugin,
+                                std::string const& file)
+{
+    INFO("file: " << file);
+    REQUIRE(utils::File{ file }.exists());
+    REQUIRE(plugin.canHandle(file));
+
+    auto* player = plugin.fromFile(file);
+    REQUIRE(player != nullptr);
+
+    std::array<int16_t, 8192> buffer{};
+    int64_t energy = 0;
+    for (int count = 0; count < 100 && energy == 0; ++count) {
+        int rc = player->getSamples(buffer.data(), buffer.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i < rc; ++i) {
+            energy += std::abs(static_cast<int>(buffer[i]));
+        }
+    }
+    delete player;
+
+    REQUIRE(energy != 0);
+}
+
+TEST_CASE("OpenMPT decodes the formats lifted out of UADE", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::OpenMPTPlugin plugin;
+
+    // Formerly in excludedExts() -- claimed by extension again.
+    requireOpenMPTPlays(plugin, "testmus/uade/legendcrack.smod"); // FC 1.0-1.3
+    requireOpenMPTPlays(plugin, "testmus/uade/AMAZE.fc13");       // FC 1.0-1.3
+    requireOpenMPTPlays(plugin, "testmus/uade/dug.fc");           // FC 1.4
+    requireOpenMPTPlays(plugin, "testmus/uade/amos.gmc");    // Game Music Creator
+    requireOpenMPTPlays(plugin, "testmus/uade/knights-of-the-sky-3.gmc");
+    requireOpenMPTPlays(plugin, "testmus/uade/elf-castle.puma"); // Puma Tracker
+    requireOpenMPTPlays(plugin, "testmus/uade/toki-5.puma");
+    requireOpenMPTPlays(plugin, "testmus/uade/beast-busters.ims"); // Images MS
+    requireOpenMPTPlays(plugin, "testmus/uade/redoctober-sub-docking.ims");
+
+    // Decoded by an advertised loader under an unadvertised extension.
+    requireOpenMPTPlays(plugin, "testmus/uade/achybreakyind.mmd0");
+    requireOpenMPTPlays(plugin, "testmus/uade/p50a.mmd1");
+    requireOpenMPTPlays(plugin, "testmus/uade/oldgabba.mmd2");
+    requireOpenMPTPlays(plugin, "testmus/uade/les granges brulees.okta");
+
+    // Reached ONLY by the content probe: no advertised extension, no explicit
+    // mapping. ".mod3"/".sfx20" are modland spellings; the "octamed." ones are
+    // prefix-named the way UnExoticA files its corpus.
+    requireOpenMPTPlays(plugin, "testmus/uade/the_drainer.mod3");
+    requireOpenMPTPlays(plugin, "testmus/uade/housemix.sfx20");
+    requireOpenMPTPlays(plugin, "testmus/uade/octamed.gone away.mmd0");
+    requireOpenMPTPlays(plugin, "testmus/uade/octamed.zoks rave.mmd1");
+}
+
+// The other direction: the probe must NOT claim files that belong elsewhere.
+// It runs only after every explicit `return false` in canHandle, so those
+// hand-offs stay terminal -- if the probe were reachable from them it would
+// simply claim the file straight back.
+TEST_CASE("OpenMPT content probe respects existing hand-offs", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::OpenMPTPlugin plugin;
+
+    // ".mus" is shared three ways. libopenmpt owns only Karl Morton Music
+    // Format (IFF-ish "SONG" chunk); it advertises "mus" flatly, so it used to
+    // claim all three, fail in fromFile, and reach the right engine only via
+    // MusicPlayer::fromFile's catch-and-continue -- right answer by accident.
+    // C64 Compute's Sidplayer (-> vicepluginbridge) and FAC SoundTracker for
+    // MSX (BSAVE image, -> UADE) must now be declined up front.
+    REQUIRE_FALSE(plugin.canHandle("testmus/libvice/first samurai.mus"));
+    REQUIRE_FALSE(plugin.canHandle("testmus/libvice/raistlin the magician.mus"));
+    REQUIRE_FALSE(plugin.canHandle("testmus/fac/32 color.mus"));
+
+    // Startrekker AM / AudioSculpture keep their synth instruments in an
+    // external .nt/.as companion that this libopenmpt build cannot load, so the
+    // module LOADS but renders its synth voices silent. OpenMPTPlayer's ctor
+    // throws on them and openmptCanDecode mirrors that, so ".adsc" stays with
+    // UADE instead of being claimed by the probe and played half-silent.
+    REQUIRE_FALSE(plugin.canHandle("testmus/uade/daisy.adsc"));
+    REQUIRE_FALSE(plugin.canHandle("testmus/uade/amsyntdemo.adsc"));
+
+    // Old MED (magic "MED\x02".."MED\x04") belongs to medplugin: libopenmpt's
+    // Load_med only reads MMD0..MMD3. Extension-gated decline, must stay false.
+    REQUIRE_FALSE(plugin.canHandle("testmus/med/fresnel.med"));
+
+    // Genuinely-UADE synth replayers: no libopenmpt loader exists, so the probe
+    // must reject them rather than claim-and-fail.
+    REQUIRE_FALSE(plugin.canHandle("testmus/uade/suspected.ahx"));
+    REQUIRE_FALSE(plugin.canHandle("testmus/uade/protector.cus"));
+    REQUIRE_FALSE(plugin.canHandle("testmus/uade/panicaco.sa"));
+    REQUIRE_FALSE(plugin.canHandle("testmus/uade/hawkeye.bp"));
 }
 
 // DSIK "old" Internal Format (.dsm v1) plays sound. libopenmpt only ships the

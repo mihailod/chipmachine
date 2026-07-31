@@ -13,8 +13,10 @@
 #include <cstring>
 #include <fstream>
 #include <iterator>
+#include <mutex>
 #include <optional>
 #include <set>
+#include <string>
 #include <vector>
 
 #include <coreutils/file.h>
@@ -168,6 +170,98 @@ static std::vector<uint8_t> readFileBytes(const std::string& path)
                                 std::istreambuf_iterator<char>());
 }
 
+// ---------------------------------------------------------------------------
+// Content probe: "can libopenmpt actually decode these bytes?"
+//
+// Everything above this line routes on the file *name*. libopenmpt itself
+// routes on the file *content*: openmpt_module_create runs the whole loader
+// chain from Sndfile.cpp regardless of what the file is called. The two
+// disagree in three ways, and each one used to hand a decodable file to
+// another engine (in practice UADE, which is registered after this plugin):
+//
+//   * loaders whose extension libopenmpt never advertises. Kris Tracker has a
+//     loader -- MPT_DECLARE_FORMAT(KRIS) -- but no modFormatInfo row in
+//     Tables.cpp, so openmpt_is_extension_supported("kris") is false and the
+//     loader was unreachable from here.
+//   * loaders that cover more extensions than they advertise. The OctaMED
+//     loader decodes the whole MMD0..MMD3 family but only "med" is advertised;
+//     Oktalyzer is advertised as "okt" while modland ships it as ".okta".
+//   * collections that key the format on a filename *prefix* rather than an
+//     extension. UnExoticA stores OctaMED as "med.<name>" and SoundFX as
+//     "sfx.<name>", so there is no meaningful extension to look up at all.
+//
+// So when the name tells us nothing, ask libopenmpt directly. Two stages:
+// openmpt_probe_file_header_without_filesize() is a cheap header heuristic that
+// rejects the overwhelming majority (every genuinely-UADE synth replayer) after
+// reading a few KB; only files it likes pay for a full load, which is the
+// authoritative answer. The probe alone is documented as approximate and we
+// must not claim a file we cannot actually decode: in the plus build a false
+// claim only costs a wasted load before MusicPlayer::fromFile falls through to
+// the next plugin, but in the MAS build (no UADE) there is nothing to fall
+// through to, so "claimed" has to mean "plays".
+//
+// Silent log/error handlers are mandatory here: the default libopenmpt logger
+// prints "ERROR: error loading file" to stderr, and a probe that declines is
+// the normal case, not a fault.
+static bool isStartrekkerAM(std::vector<uint8_t> const& data);
+
+static bool openmptCanDecode(const std::string& path)
+{
+    auto data = readFileBytes(path);
+    // Nothing libopenmpt loads is smaller than a MOD's 1084-byte header, but
+    // stay well under that: the loaders do their own bounds checks and the
+    // point here is only to avoid probing empty/virtual paths.
+    if (data.size() < 64) { return false; }
+
+    size_t headerSize = openmpt_probe_file_header_get_recommended_size();
+    if (headerSize > data.size()) { headerSize = data.size(); }
+    int probe = openmpt_probe_file_header_without_filesize(
+        OPENMPT_PROBE_FILE_HEADER_FLAGS_DEFAULT, data.data(), headerSize,
+        &openmpt_log_func_silent, nullptr, &openmpt_error_func_ignore, nullptr,
+        nullptr, nullptr);
+    // WANTMOREDATA means "undecided" (the magic-less 15-sample Soundtracker
+    // family lands here), so only a hard FAILURE short-circuits.
+    if (probe == OPENMPT_PROBE_FILE_HEADER_RESULT_FAILURE) { return false; }
+
+    // Startrekker AM / AudioSculpture modules LOAD here but render their synth
+    // voices silent, because this build has no external-instrument support --
+    // OpenMPTPlayer's constructor throws on them so UADE gets them instead.
+    // Mirror that decision, or the probe would claim (and pay to decode) a file
+    // fromFile is about to refuse. modland files these as ".adsc"/"mod_adsc4",
+    // which libopenmpt does not advertise, so they only reach the probe.
+    if (isStartrekkerAM(data)) { return false; }
+
+    openmpt_module* mod = openmpt_module_create_from_memory2(
+        data.data(), data.size(), &openmpt_log_func_silent, nullptr,
+        &openmpt_error_func_ignore, nullptr, nullptr, nullptr, nullptr);
+    if (mod == nullptr) { return false; }
+    openmpt_module_destroy(mod);
+    return true;
+}
+
+// canHandle() is asked about the same path several times per song (the
+// getSecondaryFiles sweep, then the fromFile sweep, then --dump-metadata), so
+// memoize the last probe. One entry is enough: the calls for a given song are
+// consecutive. Guarded because plugins are shared between the UI and player
+// threads.
+static bool openmptCanDecodeCached(const std::string& path)
+{
+    static std::mutex mutex;
+    static std::string lastPath;
+    static bool lastResult = false;
+    static bool haveLast = false;
+
+    std::lock_guard<std::mutex> lock(mutex);
+    if (haveLast && lastPath == path) { return lastResult; }
+    // Unlock around the decode would be nicer, but probes are short and the
+    // contention window here is a single song change.
+    bool result = openmptCanDecode(path);
+    lastPath = path;
+    lastResult = result;
+    haveLast = true;
+    return result;
+}
+
 // Startrekker AM (and AudioSculpture EXO) modules store their synthesized
 // instruments in an external .nt/.as companion. This libopenmpt build has no
 // external-instrument loading, so those voices would render silent -- UADE
@@ -298,20 +392,49 @@ private:
 //    variant and now content-gates its claim (magic "DeFy DTM "), and AdPlug
 //    is registered first, so DeFy files still route there; the D.T. ones fall
 //    through to here.
-//  - the Amiga batch: the libopenmpt 0.8 upgrade added portable loaders for
-//    formats UADEPlugin already plays via the original 68k replayers.
-//    openmptplugin is registered before uadeplugin, so without this guard the
-//    upgrade would silently re-route them away from UADE. Keep them with UADE
-//    (no behavior change for existing files); revisit individually if the
-//    portable decode is preferred. The genuinely-new formats led by Symphonie
-//    (.symmod) and Digital Symphony (.dsym) are unaffected and flow through.
+//  - the Amiga batch (smod/fc/fc13/fc14/puma/kris/unic/gmc/ims/st26) USED to be
+//    excluded here. The libopenmpt 0.8 upgrade added portable loaders for those
+//    formats, and since openmptplugin is registered before uadeplugin the guard
+//    existed to stop the upgrade from silently re-routing them away from the
+//    original 68k replayers. That is now the wrong default: UADE is GPL and
+//    cannot ship in the Mac App Store build, so anything libopenmpt decodes
+//    should decode here. Each of them was verified to load and play from the
+//    testmus/uade fixtures before the exclusion was lifted (see the
+//    "OpenMPT decodes the formats lifted out of UADE" test), and in the plus
+//    build UADE is still reachable by fall-through if a given file fails.
 // getSupportedExtensions() subtracts this set too, so the advertised list and
 // the routing decision stay consistent (coverage/priority_map reflect reality).
 static const std::set<std::string>& excludedExts()
 {
-    static const std::set<std::string> s{
-        "gz",   "rns",  "smod", "fc",   "fc13", "fc14",
-        "puma", "kris", "unic", "gmc",  "ims",  "st26"};
+    static const std::set<std::string> s{"gz", "rns"};
+    return s;
+}
+
+// Extensions libopenmpt decodes but does NOT advertise in Tables.cpp, so
+// openmpt_is_extension_supported() says no while the loader chain says yes.
+// The content probe finds these on its own, but claiming them by name too
+// keeps the cheap path cheap AND -- more importantly -- gets them into
+// getSupportedExtensions(), which is what MusicDatabase builds its
+// extension->plugin map from (that map is deliberately name-only, never
+// canHandle, see MusicDatabase.cpp) and what package_app.sh turns into the
+// macOS document-type list.
+//  - mmd0/mmd1/mmd2/mmd3: Load_med decodes the whole MMD0..MMD3 family, but
+//    only "med" is advertised. modland splits them into one dir per revision.
+//  - okta: modland's "Oktalyzer" dir spells the Oktalyzer extension in full;
+//    libopenmpt advertises the "okt" spelling of the very same loader.
+//  - kris: Kris Tracker has a loader in the chain -- MPT_DECLARE_FORMAT(KRIS)
+//    in Sndfile.cpp -- but no modFormatInfo row in Tables.cpp at all, so it is
+//    advertised nowhere and was simply unreachable by name.
+//  - mod3, sfx20: modland spellings of ProTracker and SoundFX 2.0. The content
+//    probe already claims them, but the mas index gate hides songs no plugin
+//    claims BY NAME (see MusicDatabase's songHasNoPlayer), so a format that
+//    only the probe knows about would be dropped from the catalog before
+//    anything got a chance to decode it. Anything the probe can play must
+//    therefore also be advertised here.
+static const std::set<std::string>& unadvertisedExts()
+{
+    static const std::set<std::string> s{"mmd0", "mmd1", "mmd2",  "mmd3",
+                                         "okta", "kris", "mod3", "sfx20"};
     return s;
 }
 
@@ -355,10 +478,31 @@ bool OpenMPTPlugin::canHandle(const std::string& n)
         }
     }
     // libopenmpt only advertises "med" for OctaMED, but its loader decodes the
-    // whole MMD0..MMD3 family by content. UADE already claims mmd0/mmd1/mmd2
-    // (and is registered later, so first-match routing keeps them there); MMD3
-    // is unclaimed by any plugin, so route it here where it actually decodes.
-    if (ext == "mmd3") { return true; }
+    // whole MMD0..MMD3 family by content, and modland files them one dir per
+    // revision (".mmd0"/".mmd1"/".mmd2"/".mmd3"). All four decode here; see
+    // unadvertisedExts().
+    if (unadvertisedExts().count(ext) > 0) { return true; }
+    // ".mus" is shared three ways and libopenmpt owns the rarest of the three.
+    // Its loader is Karl Morton Music Format (Load_mus_km, IFF-ish "SONG"
+    // chunk). The other two are C64 Compute's Sidplayer (modland "Sidplayer" /
+    // "Stereo Sidplayer", ~6.5k tunes, played by vicepluginbridge) and FAC
+    // SoundTracker for MSX (raw BSAVE image, first byte 0xFE, played by UADE).
+    // libopenmpt advertises "mus" flatly, so this plugin used to claim all
+    // three, fail in fromFile on the two it cannot decode, and rely on
+    // MusicPlayer::fromFile's catch-and-continue to reach the right engine --
+    // correct output by accident, at the cost of a wasted load per song and a
+    // wrong extension->plugin entry in MusicDatabase's name-only map. Gate on
+    // Karl Morton's magic so the claim is honest. Keep claim-all when the
+    // header is unreadable (dry canHandle on a virtual path) so nothing
+    // regresses for remote catalog entries.
+    if (ext == "mus") {
+        std::ifstream in(n, std::ios::binary);
+        char hdr[4] = {0, 0, 0, 0};
+        if (in && in.read(hdr, 4)) {
+            return std::memcmp(hdr, "SONG", 4) == 0;
+        }
+        return true;
+    }
     // modland's "Digital Symphony/" dir is almost all ".dsym" (which libopenmpt
     // advertises and plays), but 8 files from one composer dir carry the
     // extension MISSPELLED -- 7 ".dsyn" and 1 ".dysn" -- so they routed nowhere
@@ -428,7 +572,13 @@ bool OpenMPTPlugin::canHandle(const std::string& n)
         }
         return true;
     }
-    return openmpt_is_extension_supported(ext.c_str()) != 0;
+    if (openmpt_is_extension_supported(ext.c_str()) != 0) { return true; }
+    // The name says nothing -- ask libopenmpt what the bytes say. Every
+    // `return false` above is a deliberate hand-off to a better-suited plugin
+    // (Deflemask .dmf -> dmfplugin, old MED -> medplugin, ZX .psm -> zxtune,
+    // C64 .mus -> vicepluginbridge, ...), so those must stay terminal and NOT
+    // reach the probe -- otherwise it would claim the file straight back.
+    return openmptCanDecodeCached(n);
 }
 
 std::vector<std::string>
@@ -466,6 +616,11 @@ std::set<std::string> OpenMPTPlugin::getSupportedExtensions() const
     // libopenmpt advertises only "dsym", but the same loader decodes these.
     res.insert("dsyn");
     res.insert("dysn");
+    // OctaMED MMD0..MMD3 and Oktalyzer's ".okta" spelling: decoded by loaders
+    // libopenmpt advertises under a different name only. See unadvertisedExts().
+    for (auto const& e : unadvertisedExts()) {
+        res.insert(e);
+    }
     return res;
 }
 

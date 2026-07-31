@@ -50,7 +50,14 @@ private:
     std::shared_ptr<hvl_tune> tune;
 };
 
-static const std::set<std::string> supported_ext = {"ahx", "hvl"};
+// ".thx" is the SAME format as ".ahx", not a relative of it: AHX files carry the
+// magic "THX\x01" (Abyss' Highest eXperience grew out of The Hidden Xperience),
+// and hvl_LoadTune reads them through the same path. Only the extension was
+// missing here, so ".thx" tunes fell through to UADE -- which plays them fine,
+// but UADE is GPL and absent from the Mac App Store build, where they were
+// dropped from the catalog as unplayable. Verified byte-identical handling: a
+// ".thx" renamed to ".ahx" loads here and reports the same title.
+static const std::set<std::string> supported_ext = {"ahx", "hvl", "thx"};
 
 HivelyPlugin::HivelyPlugin()
 {

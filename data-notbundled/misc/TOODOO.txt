@@ -11,8 +11,6 @@ Mac App Store (MAS) compliance:
 - implement real csid plugin, move from vice to csid for all possible format (make sure search by plugin reflects)
 ->> once csid work is done, remove vice and content it plays from MAS version
 
-- move from uade to openmpt for all possible formats (make sure search by plugin reflects)
-->> once uade to openmpt done, remove uade and its content from the MAS version
 
 
 

@@ -1125,6 +1125,97 @@ static bool prgForUnemulatedMachine(SongInfo const& song)
 // unsupported; one playable member keeps the entry. Standalone companion rows
 // (the 149 bare "*.set" tunes-that-aren't) still match and are dropped, which is
 // the point of listing them.
+#ifdef CM_NO_UADE
+static bool isContainerExt(std::string e); // defined near resolveExtension()
+
+// Every extension SOME registered plugin claims by name -- i.e. everything this
+// build can plausibly play. Union of getSupportedExtensions() over the plugin
+// list, the same source the ext->plugin map in buildPluginGroups() uses.
+static std::set<std::string> const& playableExtensions()
+{
+    static const std::set<std::string> exts = [] {
+        std::set<std::string> s;
+        for (auto const& pl : musix::ChipPlugin::getPlugins()) {
+            for (auto const& e : pl->getSupportedExtensions()) {
+                s.insert(toLower(e));
+            }
+        }
+        return s;
+    }();
+    return exts;
+}
+
+// Would ANY plugin in this build claim this name?
+//
+// Checks the suffix and, for modland/UnExoticA prefix-form names, the leading
+// token: those collections put the format BEFORE the dot ("med.<song>",
+// "cust.<song>", "mdat.<song>") where pathExtension() cannot see it. Without
+// the prefix check the 351 UnExoticA "med.*" OctaMED tunes that OpenMPT plays
+// would be hidden along with the genuinely-dead "cust.*".
+static bool nameHasPlayer(std::string const& p,
+                          std::set<std::string> const& playable)
+{
+    auto ext = pathExtension(p);
+    if (ext.empty()) { return true; } // no extension -> not ours to judge
+    // A container says nothing about what is inside it: modarchive/zophar/
+    // vgmrips/demozoo rows end in ".zip"/".lha"/".7z"/".rar" and the real
+    // format is only known once MusicPlayerList picks a member out of the
+    // archive. Never judge those here.
+    if (isContainerExt(ext)) { return true; }
+    if (playable.count(ext) > 0) { return true; }
+    auto leaf = toLower(utils::path_filename(p));
+    auto dot = leaf.find('.');
+    return dot != std::string::npos && dot > 0 &&
+           playable.count(leaf.substr(0, dot)) > 0;
+}
+
+// True when nothing in this build can play the song, so the indexer must not
+// add it.
+//
+// Only compiled for the mas variant, which ships without uadeplugin (GPL, see
+// CM_HAVE_UADE in CMakeLists.txt). Dropping UADE removes ~360 Amiga extensions,
+// and modland/UnExoticA carry ~8.3k songs routing on them. Left indexed they
+// appear in the browser, download on select, and then fail with no player --
+// which is exactly the "we have no decoder for this" case that
+// data/misc/not_supported_extensions.txt already exists to keep out of the
+// catalog, so they are skipped by the same rule rather than a second one.
+//
+// Deliberately conservative: surfacing an unplayable row is bad, hiding a
+// playable one is worse.
+//   * An EMPTY routing extension is NEVER dropped. Radio streams, podcasts and
+//     bare-named songs (Apple IIgs SoundSmith) carry no extension at all
+//     (~34.9k rows) and are routed by other means entirely.
+//   * If the plugin list somehow came back empty, drop nothing.
+//   * MULTI: groups are judged on their FIRST member only -- deliberately NOT
+//     songIsUnsupported()'s "every member must match" rule. That rule is right
+//     for a deny-list, but inverted here it never fires: the trailing members
+//     are companion samples ("cust.<song>" + "instr/dummy", "instr/bass.x"),
+//     and an extensionless companion counts as playable under the rule above,
+//     so one "instr/dummy" would keep the whole dead group. The first member is
+//     the song the player actually routes on -- see routingExtension(path).
+static bool songHasNoPlayer(SongInfo const& song,
+                            std::set<std::string> const& playable)
+{
+    if (playable.empty()) { return false; }
+    // An `ext` template column names the format outright and wins over the path
+    // for both plain rows and groups (same precedence as songIsUnsupported).
+    if (!song.ext.empty()) {
+        auto e = routingExtension(song);
+        // ... unless it only names the container (see nameHasPlayer), in which
+        // case fall through to the path, which may still carry the real format.
+        if (!e.empty() && !isContainerExt(e)) { return playable.count(e) == 0; }
+    }
+    if (!startsWith(song.path, "MULTI:")) {
+        return !nameHasPlayer(song.path, playable);
+    }
+    std::string first = song.path.substr(6);
+    auto tab = first.find('\t');
+    if (tab != std::string::npos) { first = first.substr(0, tab); }
+    if (first.empty()) { return false; }
+    return !nameHasPlayer(first, playable);
+}
+#endif // CM_NO_UADE
+
 static bool songIsUnsupported(SongInfo const& song,
                               std::set<std::string> const& unsupported)
 {
@@ -1324,6 +1415,13 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // them, so indexing them only yields broken GUI entries that
                 // download then can't play.
                 if (songIsUnsupported(song, unsupportedExts)) { return; }
+#ifdef CM_NO_UADE
+                // Same rule, build-scoped: without uadeplugin this variant has
+                // no decoder for the Amiga custom-replayer formats, so keep
+                // them out of the catalog instead of surfacing rows that
+                // download and then fail. See songHasNoPlayer().
+                if (songHasNoPlayer(song, playableExtensions())) { return; }
+#endif
 #ifdef CM_MAS
                 // Mac App Store build has no YouTube plugin (see main.cpp's
                 // initYoutube gate -- yt-dlp is a spawned executable barred by
@@ -1822,11 +1920,41 @@ void MusicDatabase::buildPluginGroups()
     // catalog paths here are mostly remote/uncached, so calling canHandle()
     // against every song crashes on the first uncached magic-gated file.
     std::unordered_map<std::string, int> extToPlugin;
+    std::unordered_map<std::string, int> nameToPlugin;
     for (int pIdx = 0; pIdx < (int)plugins.size(); pIdx++) {
         for (auto const& rawExt : plugins[pIdx]->getSupportedExtensions()) {
             extToPlugin.emplace(toLower(rawExt), pIdx); // first wins
         }
+        nameToPlugin.emplace(toLower(plugins[pIdx]->name()), pIdx);
     }
+
+    // Where one extension is shared by unrelated formats, first-claimer-wins
+    // credits every one of them to whichever plugin happens to be registered
+    // first -- and being name-only, this map has no way to tell them apart. But
+    // the catalog often already KNOWS the real format, so use it: keyed on
+    // (resolved extension, lower-cased DB format name) -> plugin name.
+    //
+    // ".mus" is the case that matters. libopenmpt advertises it for Karl Morton
+    // Music Format and openmptplugin is registered first, so every modland
+    // "Sidplayer" tune (C64 Compute's Sidplayer, actually played by
+    // vicepluginbridge) and "FAC SoundTracker" tune (MSX BSAVE image, actually
+    // played by UADE) was credited to OpenMPT -- ~5.2k songs on the plugin
+    // filter screen, with libvice under-counted by the same amount. Playback
+    // itself was always correct: OpenMPTPlugin::canHandle content-gates ".mus"
+    // on Karl Morton's "SONG" magic and declines the other two. This aligns the
+    // browse list (and the per-plugin song sets built from it) with that.
+    //
+    // Stereo Sidplayer needs no entry -- it is filed under ".str", which only
+    // libvice claims. A format name absent from this table keeps the plain
+    // extension result, so unrecognized formats degrade to today's behaviour --
+    // as does a named plugin that is not in this build (UADE in the mas
+    // variant, where those FAC tunes are unplayable anyway).
+    static const std::map<std::pair<std::string, std::string>, std::string>
+        formatOverride{
+            {{"mus", "sidplayer"}, "libvice"},
+            {{"mus", "stereo sidplayer"}, "libvice"},
+            {{"mus", "fac soundtracker"}, "uade"},
+        };
 
     std::vector<int> counts(plugins.size(), 0);
     std::vector<std::vector<int>> idxs(plugins.size());
@@ -1854,6 +1982,12 @@ void MusicDatabase::buildPluginGroups()
         auto it = extToPlugin.find(e);
         if (it == extToPlugin.end()) continue;
         int pIdx = it->second;
+        // Shared extension the catalog can disambiguate by format name.
+        auto ov = formatOverride.find({e, toLower(fmt)});
+        if (ov != formatOverride.end()) {
+            auto np = nameToPlugin.find(ov->second);
+            if (np != nameToPlugin.end()) { pIdx = np->second; }
+        }
         counts[pIdx]++;
         idxs[pIdx].push_back(i);
         uint8_t plat = classifyFormat(fmt, "");

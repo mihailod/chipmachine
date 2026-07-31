@@ -26,7 +26,9 @@ extern "C" {
     void v2plugin_register();      // Farbrausch V2
     void vicepluginbridge_register();
     void ffmpegplugin_register();
-    void uadeplugin_register();
+#ifndef CM_NO_UADE
+    void uadeplugin_register();    // Amiga 68k replayers -- GPL, plus build only
+#endif
     void pxtoneplugin_register();
     void ptkplugin_register();
     void orgplugin_register();     // Organya / Cave Story (.org)
@@ -89,7 +91,14 @@ void register_plugins() {
     v2plugin_register();
     vicepluginbridge_register();
     ffmpegplugin_register();
+#ifndef CM_NO_UADE
+    // GPLv2 -- excluded from the Mac App Store build (CM_VARIANT=mas), where the
+    // uadeplugin target is not built at all. Registered AFTER openmptplugin, so
+    // anything libopenmpt can decode (including via OpenMPTPlugin's content
+    // probe) is already claimed by the time we get here and UADE only sees the
+    // Amiga formats no portable decoder covers.
     uadeplugin_register();
+#endif
     pxtoneplugin_register();
     ptkplugin_register();
     orgplugin_register();

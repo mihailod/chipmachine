@@ -58,7 +58,30 @@ set(CM_VARIANT_DEFS "PROGRAM_NAME=\"${CM_PROGRAM_NAME}\"")
 if(CM_VARIANT STREQUAL "mas")
     list(APPEND CM_VARIANT_DEFS CM_MAS)
 endif()
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\")")
+
+# UADE is GPLv2. The App Store distribution terms are incompatible with it (the
+# same reason the whole app is Developer-ID-only outside the MAS variant), so
+# the mas build must not merely disable UADE -- the code must be ABSENT from the
+# binary. uadeplugin is therefore dropped from MUSICPLAYER_PLUGINS below, which
+# means the uadeplugin CMake target does not exist at all in a mas build tree
+# and nothing may reference uadeplugin_register() or <uadeplugin/UADEPlugin.h>.
+#
+# This is a SEPARATE flag from CM_MAS on purpose. CM_MAS carries the product
+# identity and the YouTube gating and is deliberately withheld from cmtest;
+# CM_NO_UADE is a hard statement about which targets got linked, so it must
+# reach every target that compiles against the plugin list -- cmtest included,
+# or the test binary would not link in a mas tree.
+#
+# Formats only UADE plays therefore Skip in the mas build. That set is kept as
+# small as possible by OpenMPTPlugin's content probe (see openmptCanDecode),
+# which routes everything libopenmpt can decode here regardless of filename.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_UADE OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_UADE)
+else()
+    set(CM_HAVE_UADE ON)
+endif()
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -193,13 +216,17 @@ set(MUSICPLAYER_PLUGINS
     openmptplugin htplugin heplugin ndsplugin gmeplugin sc68plugin
     usfplugin stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
     ayflyplugin mdxplugin s98plugin aoplugin gsfplugin tedplugin v2plugin
-    ffmpegplugin uadeplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
+    ffmpegplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
     kssplugin quartetplugin wsrplugin zxtuneplugin pokeynoiseplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin fnkplugin
     famitrackerplugin goattrackerplugin dmfplugin libvgmplugin vgmstreamplugin
     victrackerplugin klystrackplugin
 )
+# GPL -- plus build only, see CM_HAVE_UADE above.
+if(CM_HAVE_UADE)
+    list(APPEND MUSICPLAYER_PLUGINS uadeplugin)
+endif()
 add_subdirectory(${MUSICPLAYER}/src/plugins plugins)
 add_subdirectory(${MUSICPLAYER}/src/psf psf)
 
@@ -223,6 +250,11 @@ endif()
 
 add_library(musicplayer INTERFACE)
 add_library(plugin_register STATIC src/plugin_register.cpp)
+# register_plugins() calls uadeplugin_register() unless CM_NO_UADE is set, and
+# the symbol only exists when the uadeplugin target was built (see CM_HAVE_UADE).
+if(NOT CM_HAVE_UADE)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_UADE)
+endif()
 target_link_libraries(musicplayer INTERFACE psf plugin_register)
 target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)
 
@@ -336,6 +368,14 @@ endif()
 add_executable(mksonglist scripts/mksonglist/mksonglist.cpp src/SongFileIdentifier.cpp)
 target_link_libraries(mksonglist PRIVATE coreutils archive sc68plugin mp3plugin)
 
+# cmtest is built for the plus tree only. test.cpp has ~20 hard references to
+# musix::UADEPlugin (routing, prefix-collision and companion-file cases that are
+# specifically ABOUT UADE), and in a mas tree that target does not exist. The
+# suite is variant-independent otherwise -- mas is plus minus UADE and YouTube,
+# and every line of shared code is covered by the plus run -- so run the tests
+# from the plus build tree (./cmtest in build/) and configure -DCM_VARIANT=mas
+# purely to produce the App Store binary.
+if(CM_HAVE_UADE)
 add_executable(cmtest testmain.cpp test.cpp test_opna_rhythm.cpp ${MAIN_FILES})
 target_link_libraries(cmtest PRIVATE
     plugin_register
@@ -354,6 +394,10 @@ target_link_libraries(cmtest PRIVATE
 target_include_directories(cmtest PRIVATE ${APONE}/mods
     ${MUSICPLAYER}/src/plugins/s98plugin/m_s98/device/fmgen)
 target_compile_definitions(cmtest PRIVATE -DTESTING)
+else()
+    message(STATUS "cmtest: not built for the mas variant (test.cpp depends on "
+                   "uadeplugin); run the suite from the plus build tree")
+endif()
 
 # The SunVox engine is a prebuilt shared library that the plugin dlopen()s at
 # runtime from next to the executable. Copy it beside each binary that can play
@@ -389,8 +433,11 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     set(SILENT_TARGETS
         vicepluginbridge ndsplugin gsfplugin usfplugin heplugin adplugin
         aoplugin v2plugin unrar coreutils lua crypto tedplugin gmeplugin
-        openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin ffmpegplugin uadeplugin rsnplugin fmpplugin
+        openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin ffmpegplugin rsnplugin fmpplugin
     )
+    if(CM_HAVE_UADE)
+        list(APPEND SILENT_TARGETS uadeplugin)
+    endif()
     foreach(target_item ${SILENT_TARGETS})
         if(TARGET ${target_item})
             target_compile_options(${target_item} PRIVATE -w)
