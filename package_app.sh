@@ -544,6 +544,16 @@ fi
 # 5. Fix Native ARM64 Dynamic Library Linkages Deeply
 echo "-> Resolving recursive dynamic library paths..."
 
+# Clean up hardcoded local developer and Homebrew search paths from executable
+echo "-> Normalizing LC_RPATH search paths..."
+otool -l "${MAC_OS_DIR}/chipmachine" | grep -A 2 LC_RPATH | awk '/path/ {print $2}' | while read -r rpath; do
+    if [[ "$rpath" == /Users/* || "$rpath" == /opt/homebrew/* ]]; then
+        echo "    Removing local RPATH: $rpath"
+        install_name_tool -delete_rpath "$rpath" "${MAC_OS_DIR}/chipmachine" 2>/dev/null || true
+    fi
+done
+install_name_tool -add_rpath "@executable_path/../Frameworks" "${MAC_OS_DIR}/chipmachine" 2>/dev/null || true
+
 typeset -A PROCESSED_LIBS
 
 discover_and_patch() {
