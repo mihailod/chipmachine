@@ -45,6 +45,8 @@ UMBRELLA_UTI=""
 APP_CATEGORY=""      # LSApplicationCategoryType; emitted only when non-empty (MAS)
 APP_ICON="AppIcon.icns"
 DOC_ICON="DocIcon.icns"
+DEVELOPMENT_REGION="en"
+COPYRIGHT="Copyright © 2026 Mihailo Despotovic. All rights reserved."
 
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -56,6 +58,8 @@ while [ $# -gt 0 ]; do
         --display-name)  DISPLAY_NAME="$2"; shift 2 ;;
         --umbrella-uti)  UMBRELLA_UTI="$2"; shift 2 ;;
         --app-category)  APP_CATEGORY="$2"; shift 2 ;;
+        --copyright)     COPYRIGHT="$2"; shift 2 ;;
+        --dev-region)    DEVELOPMENT_REGION="$2"; shift 2 ;;
         *) echo "gen_info_plist.sh: unknown arg '$1'" >&2; exit 2 ;;
     esac
 done
@@ -127,6 +131,8 @@ cat <<PLIST_HEAD
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>${DEVELOPMENT_REGION}</string>
     <key>CFBundleExecutable</key>
     <string>chipmachine</string>
     <key>CFBundleIconFile</key>
@@ -147,6 +153,8 @@ cat <<PLIST_HEAD
     <string>11.0</string>
     <key>NSHighResolutionCapable</key>
     <true/>
+    <key>NSHumanReadableCopyright</key>
+    <string>${COPYRIGHT}</string>
 
     <key>UTExportedTypeDeclarations</key>
     <array>
