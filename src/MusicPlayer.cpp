@@ -95,15 +95,24 @@ void MusicPlayer::update()
 MusicPlayer::~MusicPlayer()
 {
     // 1. Null out the callback under the mutex so fill_audio() becomes a no-op.
-    //    This is safe to call before pausing — fill_audio checks callback != null.
     audio_player->play(nullptr);
 
-    // 2. Pause the AudioQueue synchronously. After this returns, the audio thread
-    //    is guaranteed not to be inside fill_audio(), so no FIFO access can race
-    //    with the quit()/destructor below. Without this, AudioQueueDispose (called
-    //    when audio_player destructs) would block waiting for fill_audio to finish,
-    //    which in turn would be stuck waiting on fifo.m — deadlock.
-    audio_player->pause();
+    // 2. Stop the AudioQueue for good, synchronously.
+    //
+    //    This used to be pause(). Do NOT go back to that: AudioQueuePause() only
+    //    halts callback dispatch, so a buffer callback already handed to the
+    //    client queue stayed pending forever. The AudioQueueDispose() that runs
+    //    later (when the main()-scoped audio_player shared_ptr finally drops)
+    //    then blocked the main thread in AwaitAllPendingCallbacks until
+    //    CoreAudio's ~10s timeout — the freeze-on-quit, after which macOS killed
+    //    the app as unresponsive. It reproduced with nothing playing at all,
+    //    since the queue is fed silence either way.
+    //
+    //    close() stops with immediate=true, which flushes pending callbacks and
+    //    guarantees the audio thread is not in fill_audio() when it returns — a
+    //    strictly stronger guarantee than pause() ever gave, so the FIFO teardown
+    //    below is still race-free.
+    audio_player->close();
 
     // 3. Quit both FIFOs to unblock any pending put() calls.
     stream_fifo->quit();

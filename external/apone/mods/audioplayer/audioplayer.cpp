@@ -31,10 +31,12 @@ void AudioPlayer::play(std::function<void(int16_t*, int)> cb)
 
 void AudioPlayer::close()
 {
-    // TODO: Uncomment if close not called from destructor
-    // staticInternalPlayer = nullptr;
-    // if(staticInternalPlayer)
-    //  staticInternalPlayer->close();
+    // Hard, synchronous stop. Idempotent, and safe to call well before the
+    // AudioPlayer itself is destroyed. Backends without close() keep the old
+    // no-op behaviour.
+#ifdef AUDIOPLAYER_HAS_CLOSE
+    internalPlayer->close();
+#endif
 }
 
 void AudioPlayer::pause()

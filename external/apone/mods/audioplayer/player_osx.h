@@ -1,6 +1,9 @@
 #ifndef AUDIOPLAYER_OSX_H
 #define AUDIOPLAYER_OSX_H
 
+// Signals to audioplayer.cpp that this backend implements InternalPlayer::close().
+#define AUDIOPLAYER_HAS_CLOSE 1
+
 #include <AudioToolbox/AudioToolbox.h>
 #include <atomic>
 #include <cstring>
@@ -76,34 +79,46 @@ public:
 			}
 		}
 
-		// Once teardown has begun, STOP recycling buffers. Re-enqueueing here
-		// while the destructor runs AudioQueueStop/AudioQueueDispose on the main
-		// thread is exactly what produced the multi-second beachball: the queue
-		// could never drain because every callback fed it another buffer.
-		if(player->quit) return;
-
+		// ALWAYS hand the buffer back, teardown or not. A buffer that is handed
+		// to this callback and never re-enqueued stays checked out to the client
+		// forever, and AudioQueueDispose() then blocks in AwaitAllPendingCallbacks
+		// until CoreAudio's ~10s timeout fires ("waiting for callbacks timed out!,
+		// buffer count = 1") -- which is the beachball-on-quit itself.
+		//
+		// Recycling during teardown is safe because close() stops the queue with
+		// immediate=true: the queue resets rather than draining, so it does not
+		// matter that we keep feeding it, and no callback runs at all once Stop
+		// has returned. On an already-stopped queue this call simply errors out
+		// harmlessly.
 		AudioQueueEnqueueBuffer(aQueue, buf, 0, NULL);
 	}
 
 	int get_delay() const { return 1; }
 
 
-	~InternalPlayer() {
-		// 1. Mark teardown under the callback mutex. After this, any in-flight
-		//    fill_audio either already finished or will emit silence and will
-		//    NOT re-enqueue a buffer.
+	// Bring the queue to a hard stop, synchronously and idempotently.
+	//
+	// MUST be used instead of pause() on any teardown path. AudioQueuePause()
+	// only halts callback *dispatch*; a buffer callback that CoreAudio has
+	// already handed to the client queue stays pending indefinitely, and the
+	// later AudioQueueDispose() blocks ~10s waiting for it. Stop(immediate=true)
+	// flushes that pending work and guarantees no fill_audio runs afterwards.
+	void close() {
+		if(closed) return;
+		closed = true;
+
+		// 1. Mark teardown under the callback mutex, so any in-flight fill_audio
+		//    either already finished or emits silence.
 		{
 			std::lock_guard<std::mutex> lock(callbackMutex);
 			quit = true;
 		}
 
 		if(aQueue) {
-			// 2. Stop the queue SYNCHRONOUSLY (immediate = true). CoreAudio
-			//    guarantees no further fill_audio callbacks run after this
-			//    returns, and it returns promptly because fill_audio no longer
-			//    recycles buffers. This bounded stop replaces relying on
-			//    AudioQueueDispose to untangle an actively-fed queue (which
-			//    beachballed the main thread for several seconds on quit).
+			// 2. Stop SYNCHRONOUSLY. immediate=true resets the queue instead of
+			//    playing it out, so this returns promptly even though fill_audio
+			//    keeps recycling buffers. On return, no callback can be running
+			//    or pending.
 			AudioQueueStop(aQueue, true);
 
 			// 3. Drop the user callback now that nothing can invoke it.
@@ -111,8 +126,14 @@ public:
 				std::lock_guard<std::mutex> lock(callbackMutex);
 				callback = nullptr;
 			}
+		}
+	}
 
-			// 4. Dispose the now-stopped, idle queue and its buffers.
+	~InternalPlayer() {
+		close();
+		if(aQueue) {
+			// Dispose a queue that is already stopped and owes no buffers, so
+			// AwaitAllPendingCallbacks has nothing to wait for and returns at once.
 			AudioQueueDispose(aQueue, true);
 			aQueue = nullptr;
 		}
@@ -124,6 +145,7 @@ public:
 	std::function<void(int16_t *, int)> callback;
     std::mutex callbackMutex;
 	std::atomic<bool> quit;
+	bool closed = false;
 	int freq;
 	AudioQueueRef aQueue = nullptr;
 };
