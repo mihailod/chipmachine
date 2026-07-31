@@ -233,6 +233,11 @@ esac
 APP_NAME="${ARTIFACT}.app"
 TARGET_DIR="${WORKSPACE_ROOT}/${APP_NAME}"
 MAC_OS_DIR="${TARGET_DIR}/Contents/MacOS"
+# Apple's bundle layout reserves Contents/MacOS/ for the main executable; every
+# shared library belongs in Contents/Frameworks/ (loose .dylib files are fine
+# there -- a full .framework wrapper is not required). See step 5 for how the
+# link commands are rewritten so dyld finds them at the new location.
+FRAMEWORKS_DIR="${TARGET_DIR}/Contents/Frameworks"
 RESOURCES_DIR="${TARGET_DIR}/Contents/Resources"
 YTDLP_DEST="${RESOURCES_DIR}/bin/ytdlp"
 
@@ -314,6 +319,7 @@ fi
 # 1. Clean previous packaging attempts and set up pristine directories
 rm -rf "${TARGET_DIR}"
 mkdir -p "${MAC_OS_DIR}"
+mkdir -p "${FRAMEWORKS_DIR}"
 mkdir -p "${RESOURCES_DIR}"
 
 # 2. Copy compiled binary as the primary bundle entry point
@@ -494,15 +500,16 @@ else
 fi
 
 # SunVox engine: prebuilt, MIT-licensed shared library that SunVoxPlugin
-# dlopen()s at runtime from next to the executable (Environment::getExeDir()).
-# It is a lone arm64 Mach-O dylib, legal in Contents/MacOS/ and signed
-# individually in step 7. The vendored copy is arm64-only so the step 5b
-# architecture check passes.
+# dlopen()s at runtime by absolute path. It goes in Contents/Frameworks/ with
+# every other dylib; SunVoxPlugin::acquireEngine() looks there (it probes
+# exeDir/../Frameworks, exeDir and exeDir/../Resources -- keep that list in sync
+# if this path ever changes). Signed individually in step 7. The vendored copy is
+# arm64-only so the step 5b architecture check passes.
 SUNVOX_DYLIB_SRC="${CHIPMACHINE_DIR}/external/musicplayer/src/plugins/sunvoxplugin/sunvox_lib/sunvox.dylib"
 if [ -f "${SUNVOX_DYLIB_SRC}" ]; then
     echo "-> Packaging SunVox engine (sunvox.dylib) into bundle..."
-    cp "${SUNVOX_DYLIB_SRC}" "${MAC_OS_DIR}/sunvox.dylib"
-    chmod +w "${MAC_OS_DIR}/sunvox.dylib"
+    cp "${SUNVOX_DYLIB_SRC}" "${FRAMEWORKS_DIR}/sunvox.dylib"
+    chmod +w "${FRAMEWORKS_DIR}/sunvox.dylib"
 else
     echo "WARNING: sunvox.dylib not found at ${SUNVOX_DYLIB_SRC}. .sunvox playback will fail."
 fi
@@ -556,6 +563,22 @@ install_name_tool -add_rpath "@executable_path/../Frameworks" "${MAC_OS_DIR}/chi
 
 typeset -A PROCESSED_LIBS
 
+# How a given file inside the bundle should refer to a dylib in Contents/Frameworks:
+#   * a dylib that already lives in Frameworks/  -> @loader_path/<name>
+#     (its siblings sit right next to it, so this resolves with no LC_RPATH at
+#     all -- more robust than @rpath, which relies on the rpath list of whoever
+#     happens to be loading the chain)
+#   * anything else (the main executable, stray Mach-O elsewhere in the bundle)
+#     -> @rpath/<name>, resolved through the @executable_path/../Frameworks
+#     LC_RPATH added to the executable above.
+ref_prefix_for() {
+    if [[ "$1" == "${FRAMEWORKS_DIR}/"* ]]; then
+        echo "@loader_path/"
+    else
+        echo "@rpath/"
+    fi
+}
+
 discover_and_patch() {
     local TARGET_FILE_PATH="$1"
 
@@ -563,49 +586,83 @@ discover_and_patch() {
         return 0
     fi
 
-    otool -L "$TARGET_FILE_PATH" | grep -E '/opt/homebrew/|/usr/local/' | awk '{print $1}' | while read -r RAW_LIB; do
+    local SELF_BASE=$(basename "$TARGET_FILE_PATH")
+    local REF_PREFIX=$(ref_prefix_for "$TARGET_FILE_PATH")
+
+    # Three kinds of load command need rewriting:
+    #   /opt/homebrew/..., /usr/local/...  -- Homebrew deps to be vendored in.
+    #   @executable_path/...               -- ALREADY-relative refs baked in at
+    #                                         link time. The vendored LGPL libav
+    #                                         dylibs are built with
+    #                                         @executable_path install names, so
+    #                                         the main executable and the libav
+    #                                         libs reference each other that way.
+    #                                         Those point at Contents/MacOS/ and
+    #                                         MUST be re-pointed at Frameworks/,
+    #                                         or the app dies at launch with
+    #                                         "Library not loaded". This is the
+    #                                         case the naive move misses.
+    otool -L "$TARGET_FILE_PATH" | grep -E '/opt/homebrew/|/usr/local/|@executable_path/' | awk '{print $1}' | while read -r RAW_LIB; do
         local LIB=$(echo "$RAW_LIB" | tr -d '[:space:]')
         [ -z "$LIB" ] && continue
 
         local LIB_BASE=$(basename "$LIB")
-        local DEST_LIB_PATH="${MAC_OS_DIR}/${LIB_BASE}"
+
+        # otool -L prints a dylib's own LC_ID_DYLIB as the first line. Skipping
+        # the self-reference avoids infinite recursion (and the -id is rewritten
+        # separately at the end of this function).
+        [ "$LIB_BASE" = "$SELF_BASE" ] && continue
+
+        local DEST_LIB_PATH="${FRAMEWORKS_DIR}/${LIB_BASE}"
 
         if [ -z "${PROCESSED_LIBS[$LIB_BASE]}" ]; then
-            echo "    Isolating dependency: $LIB_BASE (Required by $(basename "$TARGET_FILE_PATH"))"
+            echo "    Isolating dependency: $LIB_BASE (Required by ${SELF_BASE})"
 
             if [ ! -f "$DEST_LIB_PATH" ]; then
-                cp "$LIB" "$DEST_LIB_PATH"
-                chmod +w "$DEST_LIB_PATH"
+                if [ -f "$LIB" ]; then
+                    cp "$LIB" "$DEST_LIB_PATH"
+                    chmod +w "$DEST_LIB_PATH"
+                else
+                    # A relative (@executable_path/@rpath) ref whose target was
+                    # never staged into Frameworks/ -- nothing to copy from and
+                    # nothing to point at. Fail loudly rather than ship a bundle
+                    # that dies at launch.
+                    echo "CRITICAL: ${SELF_BASE} needs ${LIB_BASE} (${LIB}) but it is not in Frameworks/"
+                    echo "          and the reference is not an absolute path, so it cannot be staged."
+                    exit 1
+                fi
             fi
 
             PROCESSED_LIBS[$LIB_BASE]=1
             discover_and_patch "$DEST_LIB_PATH"
         fi
 
-        echo "    [Patching Executable Linkage] inside $(basename "$TARGET_FILE_PATH"): changing $LIB -> @executable_path/$LIB_BASE"
-        install_name_tool -change "$LIB" "@executable_path/$LIB_BASE" "$TARGET_FILE_PATH"
+        echo "    [Patching Executable Linkage] inside ${SELF_BASE}: changing $LIB -> ${REF_PREFIX}${LIB_BASE}"
+        install_name_tool -change "$LIB" "${REF_PREFIX}${LIB_BASE}" "$TARGET_FILE_PATH"
     done
 
     if [[ "$TARGET_FILE_PATH" == *.dylib ]]; then
-        install_name_tool -id "@executable_path/$(basename "$TARGET_FILE_PATH")" "$TARGET_FILE_PATH"
+        # The install name is what OTHER binaries record, so it is always the
+        # @rpath form regardless of who is loading it.
+        install_name_tool -id "@rpath/${SELF_BASE}" "$TARGET_FILE_PATH"
     fi
 }
 
 # --- Ship LGPL (not GPL) libav ---
 # The build links Homebrew's FFmpeg, which is a GPL build (--enable-gpl + libx264/
 # libx265) and incompatible with App Store terms. Overwrite the four libav dylibs
-# in MacOS/ with our vendored LGPLv3, decode-only build BEFORE discover_and_patch
+# in Frameworks/ with our vendored LGPLv3, decode-only build BEFORE discover_and_patch
 # runs. That function skips copying a dylib whose file already exists (so it keeps
 # these LGPL ones instead of pulling Homebrew's GPL copies via otool), then still
-# rewrites their openssl/sibling refs + id to @executable_path. Sonames match
+# rewrites their openssl/sibling refs + id off @executable_path. Sonames match
 # (avcodec.62/avformat.62/avutil.60/swresample.6) so it is an ABI drop-in.
 # See external/ffmpeg-lgpl/README.md for provenance + license.
 FFMPEG_LGPL_DIR="${CHIPMACHINE_DIR}/external/ffmpeg-lgpl/lib"
 echo "-> Substituting LGPL libav dylibs (replacing the GPL Homebrew build)..."
 for L in libavcodec.62 libavformat.62 libavutil.60 libswresample.6; do
     if [ -f "${FFMPEG_LGPL_DIR}/${L}.dylib" ]; then
-        cp -f "${FFMPEG_LGPL_DIR}/${L}.dylib" "${MAC_OS_DIR}/${L}.dylib"
-        chmod +w "${MAC_OS_DIR}/${L}.dylib"
+        cp -f "${FFMPEG_LGPL_DIR}/${L}.dylib" "${FRAMEWORKS_DIR}/${L}.dylib"
+        chmod +w "${FRAMEWORKS_DIR}/${L}.dylib"
     else
         echo "CRITICAL: vendored LGPL ${L}.dylib not found at ${FFMPEG_LGPL_DIR}."
         echo "          Build it via external/ffmpeg-lgpl/build_lgpl_ffmpeg.sh."
@@ -613,9 +670,19 @@ for L in libavcodec.62 libavformat.62 libavutil.60 libswresample.6; do
     fi
 done
 
+# Seed the walk with the executables in MacOS/ FIRST -- that pulls the whole
+# dependency graph into Frameworks/ recursively -- then sweep Frameworks/ so the
+# pre-staged dylibs nothing links against (sunvox.dylib, which is dlopen()ed) are
+# patched too. Globs expand once, before the loop body runs, but that is fine:
+# libraries copied in during the walk are patched by the recursion itself.
 for EXE in "${MAC_OS_DIR}/"*; do
     if [ -f "$EXE" ] && [ -x "$EXE" ] && [ ! -L "$EXE" ]; then
         discover_and_patch "$EXE"
+    fi
+done
+for LIB in "${FRAMEWORKS_DIR}/"*(N); do
+    if [ -f "$LIB" ] && [ ! -L "$LIB" ]; then
+        discover_and_patch "$LIB"
     fi
 done
 
@@ -628,8 +695,8 @@ fi
 
 # 5b. Verify ALL bundled Mach-O binaries are pure arm64 (no Intel slices).
 # Runs after dylib bundling so every copied library is covered — not just
-# the helper executables that existed before step 5. Scans both Contents/MacOS/
-# (main exe, ffmpeg, bundled dylibs) and the yt-dlp tree in Resources/bin
+# the helper executables that existed before step 5. Scans Contents/MacOS/ (main
+# exe), Contents/Frameworks/ (every bundled dylib) and the yt-dlp tree in Resources/bin
 # (its yt-dlp exe + every *.so/*.dylib under _internal/).
 # Uses process substitution (< <(...)) so the while loop runs in the current
 # shell, not a subshell — this ensures `exit 1` aborts the whole script.
@@ -641,7 +708,7 @@ while read -r MACH_O_CANDIDATE; do
             exit 1
         fi
     fi
-done < <(find "${MAC_OS_DIR}" "${YTDLP_DEST}" -type f 2>/dev/null)
+done < <(find "${MAC_OS_DIR}" "${FRAMEWORKS_DIR}" "${YTDLP_DEST}" -type f 2>/dev/null)
 
 # 6. Build the Icons
 if [ -f "${ICON_PATH}" ]; then
@@ -757,11 +824,12 @@ if command -v codesign &> /dev/null; then
         done
     fi
 
-    # Sign every Mach-O under MacOS/ and (plus only) the Resources ytdlp tree.
+    # Sign every Mach-O under MacOS/ + Frameworks/ and (plus only) the Resources
+    # ytdlp tree.
     # Filter to Mach-O only — codesign rejects .py, .pyc, and other data files.
     # The yt-dlp launcher gets the helper entitlements (plus, real signing only);
     # for the mas variant YTDLP_DEST does not exist and this branch never matches.
-    find "${MAC_OS_DIR}" "${YTDLP_DEST}" -type f 2>/dev/null | while read -r mf; do
+    find "${MAC_OS_DIR}" "${FRAMEWORKS_DIR}" "${YTDLP_DEST}" -type f 2>/dev/null | while read -r mf; do
         file "$mf" | grep -q "Mach-O" || continue
         if [ "$SIGN_ID" != "-" ] && [ "$VARIANT" = "plus" ] && [ "$mf" = "${YTDLP_DEST}/yt-dlp" ]; then
             codesign "${SIGN_FLAGS[@]}" --entitlements "$ENT_HELPER" "$mf"

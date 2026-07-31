@@ -57,10 +57,13 @@ bool acquireEngine()
         return true;
     }
 
-    // The shared library is shipped next to the executable (build dir or
-    // Contents/MacOS) and, for the macOS bundle, also under Contents/Resources.
+    // In the macOS .app the library lives in Contents/Frameworks/, where every
+    // other bundled dylib goes (package_app.sh stages it there). The remaining
+    // entries cover a plain build dir, where it sits next to the executable, and
+    // Contents/Resources (getAppDir) for older layouts.
     bool loaded = false;
-    std::vector<utils::path> dirs = {Environment::getExeDir(),
+    std::vector<utils::path> dirs = {Environment::getExeDir() / ".." / "Frameworks",
+                                     Environment::getExeDir(),
                                      Environment::getAppDir()};
     for (auto const& d : dirs) {
         auto p = d / libName();
