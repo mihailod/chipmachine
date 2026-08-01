@@ -64,7 +64,10 @@
 #include "platform/n163.h"
 #include "platform/pet.h"
 #include "platform/pong.h"
-#include "platform/vic20.h"
+// [chipmachine local patch] platform/vic20.h dropped -- DIV_SYSTEM_VIC20 is a
+// .fur-only target and DMFPlugin claims only .dmf, so it is unreachable here.
+// It was the sole user of sound/vic20sound.c, which is VICE-derived GPLv2 and
+// must not be linked. DIV_SYSTEM_VIC20 now falls through to DivPlatformDummy.
 #include "platform/vrc6.h"
 #include "platform/fds.h"
 #include "platform/mmc5.h"
@@ -623,9 +626,9 @@ void DivDispatchContainer::init(DivSystem sys, DivEngine* eng, int chanCount, do
     case DIV_SYSTEM_PET:
       dispatch=new DivPlatformPET;
       break;
-    case DIV_SYSTEM_VIC20:
-      dispatch=new DivPlatformVIC20;
-      break;
+    // [chipmachine local patch] case DIV_SYSTEM_VIC20 removed -- see the
+    // platform/vic20.h include above. Falls through to the default:
+    // DivPlatformDummy arm.
     case DIV_SYSTEM_PONG:
       dispatch=new DivPlatformPong;
       break;

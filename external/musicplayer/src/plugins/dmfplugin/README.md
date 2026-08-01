@@ -58,6 +58,17 @@ Grep the tree for `[chipmachine local patch]`:
 - `furnace/src/fileutils.h` — add `#include <cerrno>` (`ENXIO` was only
   transitively available on Furnace's own toolchain).
 - `furnace/src/fileutils/cfile.cpp` — add `#include <cstring>` (`memset`).
+- `furnace/src/engine/dispatchContainer.cpp` — **licence fix**: drop the
+  `platform/vic20.h` include and the `case DIV_SYSTEM_VIC20` arm.
+  `sound/vic20sound.c` is lifted from VICE and carries VICE's GPLv2 header (it
+  is the same file `victrackerplugin`'s VIC-I core was extracted from), and
+  `platform/vic20.cpp` was its only user. `DIV_SYSTEM_VIC20` is a Furnace
+  `.fur`-only target — DefleMask has no VIC-20 system and `DMFPlugin::canHandle`
+  claims only `dmf` — so the code was unreachable, and both files are omitted
+  from the source list in `CMakeLists.txt` for **both** build variants. The
+  switch's `default:` arm already falls back to `DivPlatformDummy`, so nothing
+  else changes. Verify with
+  `nm -a <binary> | grep voltagefunction` — it must print nothing.
 - `furnace/src/engine/engine.h` — **memory-safety fix** (report upstream): the
   `DivEngine` constructor zeroed the `float* filePlayerBuf[DIV_MAX_OUTPUTS]`
   pointer array with `sizeof(float)` instead of `sizeof(float*)`, leaving the

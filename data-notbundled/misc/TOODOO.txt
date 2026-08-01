@@ -6,8 +6,6 @@
 
 Mac App Store (MAS) compliance:
 
-
-
 Continuation of the Mac App Store (MAS) compliance work:
 
 - now investigate xxxxxxx and how many songs are impacted 

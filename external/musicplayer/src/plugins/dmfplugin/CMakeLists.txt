@@ -273,7 +273,9 @@ add_library(dmfplugin_objs OBJECT
     ${FURNACE_DIR}/src/engine/platform/sound/upd1771.cpp
     ${FURNACE_DIR}/src/engine/platform/sound/vera_pcm.c
     ${FURNACE_DIR}/src/engine/platform/sound/vera_psg.c
-    ${FURNACE_DIR}/src/engine/platform/sound/vic20sound.c
+    # sound/vic20sound.c deliberately omitted: VICE-derived GPLv2, and its only
+    # user (platform/vic20.cpp, also omitted) drives a .fur-only target that
+    # DMFPlugin can never reach. See dispatchContainer.cpp's local patch.
     ${FURNACE_DIR}/src/engine/platform/sound/vsu.cpp
     ${FURNACE_DIR}/src/engine/platform/sound/ymf278b/ymf278.cpp
     ${FURNACE_DIR}/src/engine/platform/sound/ymfm/ymfm_adpcm.cpp
@@ -293,7 +295,7 @@ add_library(dmfplugin_objs OBJECT
     ${FURNACE_DIR}/src/engine/platform/tx81z.cpp
     ${FURNACE_DIR}/src/engine/platform/vb.cpp
     ${FURNACE_DIR}/src/engine/platform/vera.cpp
-    ${FURNACE_DIR}/src/engine/platform/vic20.cpp
+    # platform/vic20.cpp deliberately omitted -- see sound/vic20sound.c above.
     ${FURNACE_DIR}/src/engine/platform/vrc6.cpp
     ${FURNACE_DIR}/src/engine/platform/x1_010.cpp
     ${FURNACE_DIR}/src/engine/platform/ym2203.cpp
