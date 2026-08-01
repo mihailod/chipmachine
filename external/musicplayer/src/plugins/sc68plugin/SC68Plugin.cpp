@@ -133,18 +133,36 @@ public:
 
         int n = noSamples / 2;
 
+        // sc68_process() updates n in place to the number of stereo frames it
+        // actually produced, which is NOT always the number asked for: it bails
+        // out of its fill loop the moment a pending track change (or the end of
+        // the disk) is applied. That first call after a subsong switch typically
+        // yields only a frame or two.
         int code = sc68_process(sc68, target, &n);
-
-        if (!trackChanged && ((code & SC68_CHANGE) != 0)) {
-            LOGD("Ending track");
-            return -1;
-        }
-
-        trackChanged = false;
 
         if (code == SC68_ERROR) { return -1; }
 
-        return noSamples;
+        if ((code & SC68_CHANGE) != 0) {
+            if (!trackChanged) {
+                // Not ours: sc68 rolled over to the next track on its own, which
+                // is how it signals that the current one finished.
+                LOGD("Ending track");
+                return -1;
+            }
+            // Our own seekTo() request just landed. Only clear the flag here --
+            // clearing it unconditionally used to swallow the wrong callback
+            // when the change needed more than one process() call to apply, and
+            // the real SC68_CHANGE then read as an end-of-track.
+            trackChanged = false;
+        }
+
+        // Last track played out; sc68 asked to stop rather than change.
+        if ((code & SC68_END) != 0) { return -1; }
+
+        // Report what was really written. Returning noSamples here handed the
+        // mixer up to a full fifo (~1.5s) of whatever the shared, never-cleared
+        // temp buffer held -- i.e. the previous subsong -- on every seek.
+        return n * 2;
     }
 
     bool seekTo(int song, int seconds) override

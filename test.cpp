@@ -1840,6 +1840,80 @@ static int64_t adplugEnergy(musix::ChipPlayer* player, int buffers)
 // no-op'd because the base ChipPlayer::seekTo() returned false. Fails if the
 // .snd routing/validation regresses, the ADL decoder goes silent, or subsong
 // seeking breaks.
+// Regression test for the sc68 subsong-switch stutter: pressing right/left arrow
+// on a multi-subsong tune (Wings of Death STE, Goldrunner, ...) replayed 1-2
+// seconds of the PREVIOUS subsong before the new one started.
+//
+// Cause: sc68_process() reports the frames it actually wrote via its in/out `n`,
+// and it bails out of the fill loop the instant a pending track change is
+// applied -- so the first call after a seek produces almost nothing.
+// SC68Player::getSamples() ignored `n` and returned the full request anyway.
+// MusicPlayer::seek() clears the fifo and then immediately asks for ~130k
+// samples into a *static* scratch buffer still holding the old subsong, so that
+// entire 1.48s of stale audio got pushed into the freshly-cleared fifo.
+//
+// Assert it structurally rather than by ear: poison the target buffer, then
+// require that every sample getSamples() claims to have produced was actually
+// written by the decoder.
+TEST_CASE("sc68 subsong switch does not replay the previous subsong", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::SC68Plugin plugin{"data"};
+
+    // Goldrunner is the multi-subsong fixture; the bug needs >1 track to show.
+    std::string const sndh = "testmus/sc68/Goldrunner.sndh";
+    REQUIRE(plugin.canHandle(sndh));
+
+    auto* player = plugin.fromFile(sndh);
+    REQUIRE(player != nullptr);
+
+    auto const* songs = std::get_if<uint32_t>(&player->meta("songs"));
+    REQUIRE(songs != nullptr);
+    REQUIRE(*songs > 1);
+
+    constexpr int16_t poison = 0x5a5a;
+    // Same order of magnitude as the real post-seek request in
+    // MusicPlayer::update() (fifo.left() - 1024), which is what made the stale
+    // tail audible rather than a click.
+    std::vector<int16_t> buf(130120);
+
+    // Prime the decoder on the default subsong so there is old audio to leak.
+    for (int i = 0; i < 20; ++i) {
+        REQUIRE(player->getSamples(buf.data(), static_cast<int>(buf.size())) >= 0);
+    }
+
+    for (int song = 1; song < static_cast<int>(*songs); ++song) {
+        REQUIRE(player->seekTo(song, -1));
+
+        std::fill(buf.begin(), buf.end(), poison);
+        int produced = player->getSamples(buf.data(), static_cast<int>(buf.size()));
+        REQUIRE(produced >= 0);
+        REQUIRE(produced <= static_cast<int>(buf.size()));
+
+        // Every sample the player vouched for must have been written by sc68.
+        // Pre-fix this failed immediately: `produced` was the whole request
+        // while sc68 had touched only a handful of frames.
+        auto untouched = std::count(buf.begin(), buf.begin() + produced, poison);
+        INFO("subsong " << song << ": claimed " << produced << " samples, "
+                        << untouched << " never written by the decoder");
+        REQUIRE(untouched == 0);
+
+        // And the new subsong must still actually play.
+        int64_t sum = 0;
+        for (int i = 0; i < 40 && sum == 0; ++i) {
+            int n = player->getSamples(buf.data(), static_cast<int>(buf.size()));
+            if (n < 0) { break; }
+            for (int j = 0; j < n; ++j) {
+                sum += std::abs(buf[j]);
+            }
+        }
+        INFO("subsong " << song << " produced no audio");
+        REQUIRE(sum != 0);
+    }
+
+    delete player;
+}
+
 TEST_CASE("Westwood SND plays sound", "[music]")
 {
     logging::setLevel(logging::Level::Warning);
