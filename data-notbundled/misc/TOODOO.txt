@@ -30,9 +30,6 @@ aoplugin (aosdk eng_psf/peops SPU)	GPL-2	153
 
 maxtraxplugin (ScummVM paula/maxtrax)	GPL-2+	82
 
-pokeynoiseplugin (ASAP)	GPL-2	17 but some bangers
-
-
 ------------------------
 - - - - 
 

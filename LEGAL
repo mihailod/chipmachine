@@ -108,6 +108,26 @@ Notice: This is a SECOND, independent C64 SID emulator in the tree, unrelated to
         GoatTracker-format .sng songs are dropped from that variant's index to
         match; every other .sng format has its own player and is unaffected.
 
+Component: ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise .pn)
+Author: Developed by Piotr Fusik. Vendored at
+        musicplayer/src/plugins/pokeynoiseplugin/asap/.
+License: GNU General Public License v2.0 or later
+Notice: MOVED here from the permissive section on 2026-08-01 -- the entry always
+        declared GPL-2, it was simply filed in the wrong place.
+        NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_POKEYNOISE=OFF), and the 17 modland ".pn" songs are dropped from
+        that variant's index to match.
+        Atari 8-bit POKEY music is NOT otherwise affected. pokeynoiseplugin
+        claims two extensions and only ".pn" is lost: the 6,617-song ".sap" ASMA
+        corpus is claimed first by GME (LGPL, section 3) in BOTH variants.
+        The 17 cost almost nothing, measured rather than assumed -- 16 of them
+        already exist in the catalog as a ".sap" with the same title AND the same
+        composer (Ballblazer, Behind Jaggi Lines!, Boulder Dash, International
+        Karate, Jet Set Willy, Warhawk, Draconus, Zybex, four David Whittakers,
+        Schreckenstein, Space Lobsters, Whistlers Brothers, Feud), so they keep
+        playing in mas through GME. Only "pn.tetris", whose composer is unknown,
+        is a possible real loss.
+
 Component: MDX / S98 (PC-98 & Sharp X68000 Engine variants)
 Author: Adapted from OpenMSX/GME variants
 License: GNU General Public License v2.0 or later
@@ -446,10 +466,6 @@ License: zlib License
 Component: minimp3 (MP3 decoding)
 Author: Developed by Lieven van den Hauwe
 License: Creative Commons Zero v1.0 Universal (CC0-1.0 Public Domain)
-
-Component: ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise .pn)
-Author: Developed by Piotr Fusik
-License: GNU General Public License v2.0 or later
 
 Component: MaxTrax + Paula player (Amiga MaxTrax .mxtx)
 Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and

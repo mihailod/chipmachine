@@ -43,7 +43,9 @@ extern "C" {
     void quartetplugin_register(); // Microdeal Quartet / Atari ST (.4v, .4q)
     void wsrplugin_register();     // Bandai WonderSwan (.wsr) via in_wsr
     void zxtuneplugin_register();  // ZX Spectrum Sound Tracker 1.1 (.st11) via ZXTune
-    void pokeynoiseplugin_register(); // Atari 800 PokeyNoise (.pn) via ASAP (6502+POKEY)
+#ifndef CM_NO_POKEYNOISE
+    void pokeynoiseplugin_register(); // Atari 800 PokeyNoise (.pn) via ASAP -- GPL-2, plus build only
+#endif
     void bbsongplugin_register();  // Beepola .bbsong (ZX Spectrum beeper) via Z80 + speaker sampling
     void soundsmithplugin_register(); // Apple IIgs SoundSmith (bare song + .W wavebank) via Ensoniq 5503
     void ixsplugin_register();     // Ixalance (.ixs) via webixs (RE'd Shortcut Software synth tracker)
@@ -145,7 +147,13 @@ void register_plugins() {
     quartetplugin_register();
     wsrplugin_register();
     zxtuneplugin_register();
+#ifndef CM_NO_POKEYNOISE
+    // GPL-2 (ASAP) -- excluded from the Mac App Store build (CM_VARIANT=mas),
+    // where the pokeynoiseplugin target is not built at all. Only the 17 modland
+    // ".pn" tunes are lost with it; ".sap" (the 6,617-song ASMA corpus) is
+    // claimed by gmeplugin first in BOTH variants and is unaffected.
     pokeynoiseplugin_register();
+#endif
     bbsongplugin_register();
     soundsmithplugin_register();
     ixsplugin_register();

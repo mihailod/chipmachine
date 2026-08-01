@@ -1238,11 +1238,12 @@ bool songIsSilentSid(SongInfo const& song, std::set<std::string> const& silent)
 // the point of listing them.
 //
 // Compiled for the mas variant, which ships without uadeplugin,
-// vicepluginbridge, goattrackerplugin, dmfplugin OR sc68plugin (all GPL -- see
-// CM_HAVE_UADE / CM_HAVE_VICE / CM_HAVE_GOATTRACKER / CM_HAVE_DMF /
-// CM_HAVE_SC68 in CMakeLists.txt).
+// vicepluginbridge, goattrackerplugin, dmfplugin, sc68plugin OR
+// pokeynoiseplugin (all GPL -- see CM_HAVE_UADE / CM_HAVE_VICE /
+// CM_HAVE_GOATTRACKER / CM_HAVE_DMF / CM_HAVE_SC68 / CM_HAVE_POKEYNOISE in
+// CMakeLists.txt).
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
-    defined(CM_NO_DMF) || defined(CM_NO_SC68)
+    defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE)
 static bool isContainerExt(std::string e); // defined near resolveExtension()
 
 // Every extension SOME registered plugin claims by name -- i.e. everything this
@@ -1552,7 +1553,7 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // download then can't play.
                 if (songIsUnsupported(song, unsupportedExts)) { return; }
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
-    defined(CM_NO_DMF) || defined(CM_NO_SC68)
+    defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE)
                 // Same rule, build-scoped: without uadeplugin this variant has
                 // no decoder for the Amiga custom-replayer formats, without
                 // vicepluginbridge none for Compute! Sidplayer, without
@@ -1560,7 +1561,10 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // sc68plugin none for the ".sc68" container (1,894 rows -- and
                 // note this costs NOTHING for ".sndh", which sndhplugin claims
                 // in both variants, nor for the 100 AdLib ".snd" rows AdPlug
-                // owns), and without
+                // owns), without pokeynoiseplugin none for the 17 modland
+                // ".pn" tunes (and note this likewise costs nothing for the
+                // 6,617 ".sap" rows, which gmeplugin claims in both variants),
+                // and without
                 // dmfplugin none for DefleMask .dmf, so keep them out of the
                 // catalog instead of surfacing rows that download and then
                 // fail. See songHasNoPlayer().

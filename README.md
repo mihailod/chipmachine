@@ -565,6 +565,12 @@ Support for Atari XL/XE series POKEY chip PokeyNoise music
 
 Extensions: `.pn` (more often `pn.<song>`)
 
+> **ChipMachinePlus only.** ASAP is GPL-2, so it is not part of the App Store
+> build and those 17 songs are hidden there. Atari 8-bit POKEY music is otherwise
+> unaffected — the 6,617-song `.sap` ASMA corpus plays through GME in both
+> builds, and 16 of the 17 exist there under the same title and composer
+> (Ballblazer, Boulder Dash, International Karate, Draconus, Zybex …).
+
 ### S98
 
 Support for retro hardware Music, including OPNA hardware-rhythm drums
@@ -810,7 +816,7 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **zingzong (Atari ST Quartet format):** Developed by Ben G. (benjihan). Licensed under MIT.
 * **audiodecoder.wsr (Bandai WonderSwan):** WonderSwan replayer by Mamiya (NEC V30MZ core derived from MAME/Oswan), as packaged in Kodi's `audiodecoder.wsr`. Licensed under GPL-2.0-or-later.
 * **vio2sf (Nintendo DS — .2sf / .mini2sf):** NDS emulation core derived from DeSmuME (the DeSmuME Team); maintained reentrant 2SF fork ("vio2sf") by Christopher Snowhill (kode54), as used by foobar2000 / Cog. Licensed under GPL-2.0-or-later.
-* **ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise):** Developed by Piotr Fusik. Licensed under GPL-2.0-or-later.
+* **ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise):** Developed by Piotr Fusik. Licensed under GPL-2.0-or-later. Not included in the Mac App Store build, where the 17 `.pn` songs are dropped from the index to match; `.sap` is GME's in both builds and is unaffected.
 * **Beepola (ZX Spectrum beeper):** The `.bbsong` format and the Beepola tool are by Chris Cowley. Engine players: **Phaser1** by Shiru (public domain, from 1tracker); **Music Box** reverse-engineered from WHAM! The Music Box (original Z80 code by Mark Alexander, 1985); **Music Studio** reverse-engineered from The Music Studio (original Z80 code by Saša Pušica, 1988); **SFX** (Special FX / Fuzz Click) reverse-engineered from the game Firefly (original Z80 code by Jonathan Smith / Special FX Software Ltd) — its player and compiled data format reproduced from Beepola. The in-repo Z80 assembler is ported from 1tracker's `z80ass` (Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1); the ZX Spectrum 48K ROM is redistributed under Amstrad's emulation permission.
 * **SoundSmith (Apple IIgs):** The original SoundSmith tracker is by Huibert Aalbers (1989). The Ensoniq 5503 "DOC" player is a faithful in-process port of the SoundSmith player by Sean Kasun (mrkite). Licensed under BSD-2-Clause.
 * **Archimedes Tracker (Acorn Archimedes):** The original 8-channel *!Tracker* is by Dan Wilson (1991). Playback uses the **libxmp** `arch_loader` by Claudio Matsuoka, Hipolito Carraro Jr and contributors. libxmp is licensed under MIT; the arch loader source file carries an LGPL-2.1-or-later header.

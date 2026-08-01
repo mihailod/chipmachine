@@ -199,6 +199,35 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_SC68 ON)
 endif()
+# pokeynoiseplugin is the sixth case, and by far the cheapest. It drives ASAP
+# (Another Slight Atari Player, GPL-2, vendored at pokeynoiseplugin/asap/), so it
+# must be ABSENT from the mas binary. Follows CM_HAVE_UADE's pattern exactly.
+#
+# It claims two extensions and only loses one of them. ".sap" -- the 6,617-song
+# ASMA corpus -- is ALSO claimed by gmeplugin (LGPL, in both variants), which
+# already wins it on registration order, so Atari 8-bit POKEY music is unaffected
+# by this gate. What goes is ".pn": the 17 modland
+# "PokeyNoise/<artist>/pn.<game>" tunes, which nothing else claims.
+#
+# Those 17 cost almost nothing, and that was MEASURED rather than assumed: 16 of
+# them already exist in the catalog as a ".sap" with the same title AND the same
+# composer -- Ballblazer, Behind Jaggi Lines! (pn.bjl, the working title of
+# Rescue on Fractalus), Boulder Dash, International Karate, Jet Set Willy,
+# Warhawk, Draconus, Zybex, four David Whittakers, Schreckenstein, Space
+# Lobsters, Whistlers Brothers and Feud. Every one keeps playing in mas through
+# GME. The single possible loss is "pn.tetris", whose composer is unknown and
+# whose three same-titled .sap entries are by unrelated authors.
+#
+# No formatPlayer entry is needed: ".pn" has no other claimer, so the plain
+# extension test in songHasNoPlayer() drops the rows on its own -- via
+# nameHasPlayer()'s modland prefix-before-dot branch, since these paths carry the
+# format BEFORE the dot ("pn.draconus") and have no usable suffix.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_POKEYNOISE OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_POKEYNOISE)
+else()
+    set(CM_HAVE_POKEYNOISE ON)
+endif()
 # victrackerplugin (.vt, VIC-20) needed NO variant gate, unlike the four above.
 # Its GPL was internal rather than structural -- the plugin is ours, but it drove
 # two GPLv2 engine cores (the omarandlorraine fake6502 fork, and a VIC-I sound
@@ -207,7 +236,7 @@ endif()
 # chip; the replacements were A/B'd by ear against the originals and shipped to
 # both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
 # index. See the plugin's README.md.
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68})")
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -343,7 +372,7 @@ set(MUSICPLAYER_PLUGINS
     usfplugin stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
     ayflyplugin mdxplugin s98plugin aoplugin gsfplugin tedplugin v2plugin
     ffmpegplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
-    kssplugin quartetplugin wsrplugin zxtuneplugin pokeynoiseplugin bbsongplugin
+    kssplugin quartetplugin wsrplugin zxtuneplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin fnkplugin
     famitrackerplugin libvgmplugin vgmstreamplugin
@@ -365,6 +394,11 @@ endif()
 # above. .sndh is handled by sndhplugin in both variants; only .sc68 needs this.
 if(CM_HAVE_SC68)
     list(APPEND MUSICPLAYER_PLUGINS sc68plugin)
+endif()
+# GPL-2 (ASAP) -- plus build only, see CM_HAVE_POKEYNOISE above. Costs .pn only;
+# .sap stays with gmeplugin in both variants.
+if(CM_HAVE_POKEYNOISE)
+    list(APPEND MUSICPLAYER_PLUGINS pokeynoiseplugin)
 endif()
 # Empty in a mas tree, where the vicepluginbridge target does not exist at all.
 if(CM_HAVE_VICE)
@@ -418,6 +452,10 @@ endif()
 # Same for sc68plugin_register() -- see CM_HAVE_SC68 above.
 if(NOT CM_HAVE_SC68)
     target_compile_definitions(plugin_register PRIVATE CM_NO_SC68)
+endif()
+# Same for pokeynoiseplugin_register() -- see CM_HAVE_POKEYNOISE above.
+if(NOT CM_HAVE_POKEYNOISE)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_POKEYNOISE)
 endif()
 target_link_libraries(musicplayer INTERFACE psf plugin_register)
 target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)
