@@ -32,3 +32,4 @@ shared/infra deps (`zxtune`, `apone`, `sol2`, `lua`, `musicplayer`) stay at the
 | `furnace` | `musicplayer/src/plugins/dmfplugin/furnace` | https://github.com/mihailod/furnace.git | master | `caccf29c6e719e48172496f5695597fb4bd2d0d4` |
 | `vgmstream` | `musicplayer/src/plugins/vgmstreamplugin/vgmstream` | https://github.com/vgmstream/vgmstream | master | `7f1ceb3058f581ed42d265c8980e44a0a281b4f6` |
 | `atariaudio` | `musicplayer/src/plugins/sndhplugin/atariaudio` | https://github.com/arnaud-carre/sndh-player | main | `19c814b1401fdd1c3dbfc0aef9279ec53698c795` |
+| `stsound` | `musicplayer/src/plugins/stsoundplugin/StSoundLibrary` | https://github.com/arnaud-carre/StSound | main | `d1876bc137ab4a3852fc72076a0cdbff704a43be` |

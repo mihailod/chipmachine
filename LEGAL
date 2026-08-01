@@ -382,9 +382,30 @@ Notice: Most SNDH files in the archive are ICE!-packed. Besides serving the
         their tags (via the exported musix::sndh::iceDepack wrapper), replacing
         the GPL-3 unice68 that shared app code previously called into.
 
-Component: StSound (Atari ST YM2149)
-Author: Developed by Arnaud Carré (Leonard/Oxygene)
-License: MIT License
+Component: StSound (Atari ST YM2149 -- .ym / .mix)
+Author: Developed by Arnaud Carré (Leonard/Oxygene), vendored verbatim from
+        https://github.com/arnaud-carre/StSound at
+        musicplayer/src/plugins/stsoundplugin/StSoundLibrary. The LZH depacking
+        code (StSoundLibrary/LZH/) is by Haruhiko Okumura (1991), modified and
+        improved by Kerwin F. Medina (1996), redistributed by Arnaud under the
+        same terms; almost every .ym on the web is LZH-packed.
+License: BSD-2-Clause (the per-file source headers) / MIT (the repository's
+        LICENSE file, "Copyright (c) 2021 Arnaud Carré"). Upstream carries both,
+        and its README additionally describes the library as public domain. All
+        three are permissive; the per-file BSD-2 headers are the operative terms
+        for the code actually compiled here.
+Notice: RE-VENDORED 2026-08-01, and the reason matters. The copy previously in
+        this tree was a pre-2005 snapshot whose every file carried
+        LGPL-3.0-or-later headers -- statically linked, that is an App Store
+        problem, and it silently contradicted this entry's "MIT". The licence was
+        never wrong: Arnaud relicensed StSound LGPL -> BSD-2 (2005) -> MIT
+        (2021), and only our snapshot was stale. Re-vendoring from upstream main
+        removed the last LGPL header from the tree and keeps all 13,210 .ym/.mix
+        songs in BOTH variants -- no gate, nothing hidden.
+        Verified against the old copy over a 70-file random sample of modland's
+        YM corpus: 70/70 loaded on both, identical title/author/length metadata
+        on every file, and 69 of 70 bit-identical in rendered RMS (one file
+        differs by 7%, an upstream fix; both play).
 
 Component: 98fmplayer
 Author: Developed by areis

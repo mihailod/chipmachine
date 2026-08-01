@@ -2,32 +2,39 @@
 
 	ST-Sound ( YM files player library )
 
-	Copyright (C) 1995-1999 Arnaud Carre ( http://leonard.oxg.free.fr )
-
 	Manage YM file depacking and parsing
 
 -----------------------------------------------------------------------------*/
 
 /*-----------------------------------------------------------------------------
-
-	This file is part of ST-Sound
-
-	ST-Sound is free software; you can redistribute it and/or modify
-	it under the terms of the GNU Lesser General Public License as published by
-	the Free Software Foundation; either version 3 of the License, or
-	(at your option) any later version.
-
-	ST-Sound is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU Lesser General Public License for more details.
-
-	You should have received a copy of the GNU Lesser General Public License
-	along with ST-Sound; if not, write to the Free Software
-	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-
+* ST-Sound, ATARI-ST Music Emulator
+* Copyright (c) 1995-1999 Arnaud Carre ( http://leonard.oxg.free.fr )
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions
+* are met:
+* 1. Redistributions of source code must retain the above copyright
+*    notice, this list of conditions and the following disclaimer.
+* 2. Redistributions in binary form must reproduce the above copyright
+*    notice, this list of conditions and the following disclaimer in the
+*    documentation and/or other materials provided with the distribution.
+*
+* THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+* ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+* OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+* HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+* OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+* SUCH DAMAGE.
+*
 -----------------------------------------------------------------------------*/
 
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,7 +60,7 @@ static	void	signeSample(ymu8 *ptr,yms32 size)
 
 char	*mstrdup(const char *in)
 {
-	const int size = strlen(in)+1;
+	const int size = (int)strlen(in)+1;
 	char *out = (char*)malloc(size);
 	if (out)
 		strcpy(out,in);
@@ -127,14 +134,6 @@ unsigned char	*CYmMusic::depackFile(ymu32 checkOriginalSize)
 
 		fileSize = (ymu32)-1;
 
-		if (pHeader->level != 0)					// NOTE: Endianness works because value is 0
-		{ // Compression LH5, header !=0 : Error.
-			free(pBigMalloc);
-			pBigMalloc = NULL;
-			setLastError("LHARC Header must be 0 !");
-			return NULL;
-		}
-
 		fileSize = ReadLittleEndian32((ymu8*)&pHeader->original);
 		pNew = (ymu8*)malloc(fileSize);
 		if (!pNew)
@@ -145,12 +144,10 @@ unsigned char	*CYmMusic::depackFile(ymu32 checkOriginalSize)
 			return NULL;
 		}
 
-		pSrc = pBigMalloc+sizeof(lzhHeader_t)+pHeader->name_lenght;			// NOTE: Endianness works because name_lenght is a byte
-
-		pSrc += 2;		// skip CRC16
-
+		pSrc = pBigMalloc + pHeader->size;
 		ymu32		packedSize = ReadLittleEndian32((ymu8*)&pHeader->packed);
 
+		pSrc += 2;		// skip CRC16
 		checkOriginalSize -= ymu32(pSrc - pBigMalloc);
 
 		if (packedSize > checkOriginalSize)
@@ -160,7 +157,7 @@ unsigned char	*CYmMusic::depackFile(ymu32 checkOriginalSize)
 		if (packedSize <= checkOriginalSize)
 		{
 			// alloc space for depacker and depack data
-			CLzhDepacker *pDepacker = new CLzhDepacker;	
+			CLzhDepacker *pDepacker = new CLzhDepacker;
 			const bool bRet = pDepacker->LzUnpack(pSrc,packedSize,pNew,fileSize);
 			delete pDepacker;
 
@@ -263,7 +260,7 @@ ymbool	CYmMusic::ymDecode(void)
  ymu32 sampleSize;
  yms32 tmp;
  ymu32 id;
- 
+
 
 		id = ReadBigEndian32((unsigned char*)pBigMalloc);
 		switch (id)
@@ -427,6 +424,8 @@ ymbool	CYmMusic::ymDecode(void)
 				computeTimeInfo();
 
 				mixPos = -1;		// numero du block info.
+				currentPente = 0;
+				currentPos = 0;
 				pSongType = mstrdup("MIX1");
 				pSongPlayer = mstrdup("Digi-Mix driver");
 
@@ -532,7 +531,7 @@ ymbool	CYmMusic::ymDecode(void)
 		return YMTRUE;
  }
 
- 
+
 ymbool	CYmMusic::checkCompilerTypes()
 {
 	setLastError("Basic types size are not correct (check ymTypes.h)");
@@ -602,7 +601,7 @@ FILE	*in;
 		fclose(in);
 
 		//---------------------------------------------------
-		// Transforme les donnes en donnes valides.
+		// Transforme les donn‚es en donn‚es valides.
 		//---------------------------------------------------
 		pBigMalloc = depackFile(fileSize);
 		if (!pBigMalloc)
@@ -611,7 +610,7 @@ FILE	*in;
 		}
 
 		//---------------------------------------------------
-		// Lecture des donnes YM:
+		// Lecture des donn‚es YM:
 		//---------------------------------------------------
 		if (!ymDecode())
 		{
@@ -628,28 +627,41 @@ FILE	*in;
 
 ymbool	CYmMusic::loadMemory(void *pBlock,ymu32 size)
 {
+
+
 		stop();
 		unLoad();
 
 		if (!checkCompilerTypes())
 			return YMFALSE;
 
+		//---------------------------------------------------
+		// Allocation d'un buffer pour lire le fichier.
+		//---------------------------------------------------
 		fileSize = size;
 		pBigMalloc = (unsigned char*)malloc(fileSize);
-		if (!pBigMalloc) return YMFALSE;
-		memcpy(pBigMalloc, pBlock, size);
+		if (!pBigMalloc)
+		{
+			setLastError("MALLOC Error");
+			return YMFALSE;
+		}
 
 		//---------------------------------------------------
-		// Transforme les donnees en donnees valides.
+		// Chargement du fichier complet.
 		//---------------------------------------------------
-		pBigMalloc = depackFile(fileSize);
+		memcpy(pBigMalloc,pBlock,size);
+
+		//---------------------------------------------------
+		// Transforme les donn‚es en donn‚es valides.
+		//---------------------------------------------------
+		pBigMalloc = depackFile(size);
 		if (!pBigMalloc)
 		{
 			return YMFALSE;
 		}
 
 		//---------------------------------------------------
-		// Lecture des donnees YM:
+		// Lecture des donn‚es YM:
 		//---------------------------------------------------
 		if (!ymDecode())
 		{
@@ -662,8 +674,7 @@ ymbool	CYmMusic::loadMemory(void *pBlock,ymu32 size)
 		bMusicOk = YMTRUE;
 		bPause = YMFALSE;
 		return YMTRUE;
-}
-
+ }
 
 void	myFree(void **pPtr)
 {
