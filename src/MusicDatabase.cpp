@@ -1085,7 +1085,7 @@ static std::string routingExtension(SongInfo const& song)
 // To lift this you would build VICE's vendored-but-unbuilt xvic/xpet cores, not
 // extend tedplay. See db.lua v118 for why that was judged not worth it.
 //
-// REVISITED 2026-07-17 after victrackerplugin shipped (fake6502 + the VIC-I
+// REVISITED 2026-07-17 after victrackerplugin shipped (a 6502 core + a VIC-I
 // sound core). It does NOT make these trivial -- .vt worked because we had the
 // replayer SOURCE and could call pl_Play per frame, skipping ROMs/VIA/CPU timing.
 // A .prg is a whole machine. Disassembling the three (all BASIC-SYS + ML):

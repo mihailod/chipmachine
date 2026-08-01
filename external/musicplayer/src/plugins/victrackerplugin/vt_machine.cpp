@@ -1,7 +1,7 @@
 #include "vt_machine.h"
 
-#include "fake6502.h"
 #include "vic_sound.h"
+#include "vt_cpu.h"
 #include "vtplayer_bin.h"
 
 #include <algorithm>
@@ -32,23 +32,26 @@ constexpr size_t T1_STRUCT_SIZE = 10432;
 // loop forever, so the host's default song length / fade normally stops first).
 constexpr int MAX_SECONDS = 600;
 
-// The one machine whose memory the global fake6502 hooks currently address.
-// Playback is single-threaded (one song at a time), so a simple active pointer
-// is sufficient and avoids threading a context userdata pointer fake6502 lacks.
+// Instruction budget for one pl_Init/pl_Play call; a single one is a few
+// thousand, so this is purely a hang backstop.
+constexpr int MAX_INSTRUCTIONS = 2000000;
+
+// The one machine whose memory the global CPU hooks currently address. Playback
+// is single-threaded (one song at a time), so a simple active pointer is
+// sufficient and avoids threading a userdata pointer neither core carries.
 VTMachine* g_active = nullptr;
 
 } // namespace
 
 } // namespace musix::victracker
 
-// fake6502 memory hooks (global, as the core requires). Route to the active
-// machine's 64K image.
-extern "C" uint8_t fake6502_mem_read(fake6502_context* /*c*/, uint16_t addr)
+// Memory hooks for whichever 6502 core this variant built (see vt_cpu.h). Global,
+// as both cores require; routed to the active machine's 64K image.
+extern "C" uint8_t vt_mem_read(uint16_t addr)
 {
     return musix::victracker::g_active->mem()[addr];
 }
-extern "C" void fake6502_mem_write(fake6502_context* /*c*/, uint16_t addr,
-                                   uint8_t val)
+extern "C" void vt_mem_write(uint16_t addr, uint8_t val)
 {
     musix::victracker::g_active->mem()[addr] = val;
 }
@@ -62,19 +65,7 @@ VTMachine::VTMachine(int sampleRate)
 
 void VTMachine::callVector(uint16_t entry)
 {
-    fake6502_context cpu;
-    std::memset(&cpu, 0, sizeof(cpu));
-    fake6502_reset(&cpu);
-    cpu.cpu.s = 0xFD;
-    fake6502_push_16(&cpu, TRAP - 1); // RTS -> TRAP
-    cpu.cpu.pc = entry;
-    // Generous instruction budget; a single pl_Play/pl_Init is a few thousand.
-    for (int i = 0; i < 2000000; i++) {
-        if (cpu.cpu.pc == TRAP) {
-            return;
-        }
-        fake6502_step(&cpu);
-    }
+    vtcpu_call(entry, TRAP, MAX_INSTRUCTIONS);
 }
 
 bool VTMachine::init(const uint8_t* data, size_t len, int subsong)

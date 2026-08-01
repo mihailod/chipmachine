@@ -131,6 +131,14 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_GOATTRACKER ON)
 endif()
+# victrackerplugin (.vt, VIC-20) needed NO variant gate, unlike the three above.
+# Its GPL was internal rather than structural -- the plugin is ours, but it drove
+# two GPLv2 engine cores (the omarandlorraine fake6502 fork, and a VIC-I sound
+# core lifted from VICE's vic20sound.c). Both were replaced in place, by
+# MyLittle6502 (public domain / CC0) and by a VIC-I written against the documented
+# chip; the replacements were A/B'd by ear against the originals and shipped to
+# both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
+# index. See the plugin's README.md.
 message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER})")
 
 # ---------------------------------------------------------------------------

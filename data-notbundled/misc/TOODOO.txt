@@ -6,15 +6,26 @@
 
 Mac App Store (MAS) compliance:
 
-- replace with non-GPL if possible or remove: victrackerplugin's vic_sound.c (GPL VICE VIC-I derived, 11 songs impacted) replacement in the MAS version of the app (and not surface the content they play)?
 
-- MAS: GPL Furnace (what is this? how many songs impacted?)
 
-- reSIDfp is still in the mas binary. Unrelated to GoatTracker — nm finds 321 reSIDfp:: symbols in build-mas, and the only archive carrying them is libdmfplugin.a (the vendored Furnace engine). reSIDfp is GPL-2+ and Furnace itself is GPL-2, so that's an open MAS exposure
+Continuation of the Mac App Store (MAS) compliance work:
 
-- MAS: replace with non-GPL if possible or remove GPL GSF (what is this? how many songs impacted?)
+- now investigate xxxxxxx and how many songs are impacted 
 
-- MAS: replace with non-GPL if possible or remove GPL USF (182 songs)
+options:
+
+- handle these with another plugin?
+- replace with a non-GPL plugin implementation. if we do this, do it only in the MAS and leave PLUS unchanged so i can A/B compare and decide if we unify or is stays split. when i say a/b i mean ChipMachine (MAS) and ChipMachinePlus (PLUS) apps -- i will compare by running them both and listening. before i listen you do the best effort to make sure they are similar enough by rendering and comparing with your methods (cosine similarity like what we did for vice replacement, etc.) before i listen with my ears by running both apps
+- worst case: remove it from MAS and don't surface its songs (there is existing logic and gate for that)
+
+in case of any changes update accordingly the LEGAL, the main README.md and Credits.rtf
+
+investigate and report before doing any work
+
+xxxxxxx stands for these:
+
+* GPL GSF 
+* GPL USF (182 songs)
 
 - closing the mas TFMX gap is a real open question, just not one this code answered — it would need a permissively-licensed TFMX replayer (the usual candidate being a clean reimplementation rather than a tfmxplay derivative). Say the word and I'll scope that; I haven't counted how many tunes are currently hidden in mas, since there's no song DB in the tree to query.
 

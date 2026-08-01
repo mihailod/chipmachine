@@ -1,255 +1,252 @@
-/* Standalone VIC-I sound core, extracted from VICE vic20sound.c (GPLv2).
-   Written by Rami Rasanen and Ville-Matias Heikkila. Glue trimmed. */
+// VIC-I (MOS 6560/6561) sound core. See README.md.
+//
+// This replaced a core lifted from VICE's vic20/vic20sound.c (GPLv2), and is
+// written against the documented behaviour of the chip rather than against
+// VICE's implementation of it -- specifically WITHOUT the two data tables that
+// made that file a licensing problem:
+//
+//   * VICE ships a 1024-byte dump of the noise generator's output. The generator
+//     itself is documented (Asger Alstrup Nielsen): a 23-bit shift register
+//     seeded 0x7ffff8 whose new bit 0 is bit 22 XOR bit 13. It is generated here
+//     instead of tabulated, taking the register geometry from MAME's
+//     src/devices/sound/mos6560.cpp -- BSD-3-Clause, copyright Peter Trauner.
+//   * VICE ships a ~350-entry table of measured output voltages, which is the
+//     authors' own measurement data. This uses the parametric saturating DAC
+//     below plus the output filtering, which lands in the same place by ear.
+//
+// Everything else is the chip: three tone channels, each an 8-bit shift register
+// clocked at clock/(divider << 4|3|2) whose feedback is the inverted MSB (so it
+// emits a square wave at 1/16 of its shift rate), a noise channel on the same
+// divider ladder, and a 4-bit master volume. The divider mapping
+// 128 - ((reg + 1) & 0x7f) is likewise MAME's expression of it.
+
+#include "vic_sound.h"
+
+#include <math.h>
 #include <string.h>
-#include <stdint.h>
-typedef int16_t SWORD;
-typedef uint8_t BYTE;
-static BYTE noisepattern[1024] = {
-      7, 30, 30, 28, 28, 62, 60, 56,120,248,124, 30, 31,143,  7,  7,193,192,224,
-    241,224,240,227,225,192,224,120,126, 60, 56,224,225,195,195,135,199,  7, 30,
-     28, 31, 14, 14, 30, 14, 15, 15,195,195,241,225,227,193,227,195,195,252, 60,
-     30, 15,131,195,193,193,195,195,199,135,135,199, 15, 14, 60,124,120, 60, 60,
-     60, 56, 62, 28,124, 30, 60, 15, 14, 62,120,240,240,224,225,241,193,195,199,
-    195,225,241,224,225,240,241,227,192,240,224,248,112,227,135,135,192,240,224,
-    241,225,225,199,131,135,131,143,135,135,199,131,195,131,195,241,225,195,199,
-    129,207,135,  3,135,199,199,135,131,225,195,  7,195,135,135,  7,135,195,135,
-    131,225,195,199,195,135,135,143, 15,135,135, 15,207, 31,135,142, 14,  7,129,
-    195,227,193,224,240,224,227,131,135,  7,135,142, 30, 15,  7,135,143, 31,  7,
-    135,193,240,225,225,227,199, 15,  3,143,135, 14, 30, 30, 15,135,135, 15,135,
-     31, 15,195,195,240,248,240,112,241,240,240,225,240,224,120,124,120,124,112,
-    113,225,225,195,195,199,135, 28, 60, 60, 28, 60,124, 30, 30, 30, 28, 60,120,
-    248,248,225,195,135, 30, 30, 60, 62, 15, 15,135, 31,142, 15, 15,142, 30, 30,
-     30, 30, 15, 15,143,135,135,195,131,193,225,195,193,195,199,143, 15, 15, 15,
-     15,131,199,195,193,225,224,248, 62, 60, 60, 60, 60, 60,120, 62, 30, 30, 30,
-     15, 15, 15, 30, 14, 30, 30, 15, 15,135, 31,135,135, 28, 62, 31, 15, 15,142,
-     62, 14, 62, 30, 28, 60,124,252, 56,120,120, 56,120,112,248,124, 30, 60, 60,
-     48,241,240,112,112,224,248,240,248,120,120,113,225,240,227,193,240,113,227,
-    199,135,142, 62, 14, 30, 62, 15,  7,135, 12, 62, 15,135, 15, 30, 60, 60, 56,
-    120,241,231,195,195,199,142, 60, 56,240,224,126, 30, 62, 14, 15, 15, 15,  3,
-    195,195,199,135, 31, 14, 30, 28, 60, 60, 15,  7,  7,199,199,135,135,143, 15,
-    192,240,248, 96,240,240,225,227,227,195,195,195,135, 15,135,142, 30, 30, 63,
-     30, 14, 28, 60,126, 30, 60, 56,120,120,120, 56,120, 60,225,227,143, 31, 28,
-    120,112,126, 15,135,  7,195,199, 15, 30, 60, 14, 15, 14, 30,  3,240,240,241,
-    227,193,199,192,225,225,225,225,224,112,225,240,120,112,227,199, 15,193,225,
-    227,195,192,240,252, 28, 60,112,248,112,248,120, 60,112,240,120,112,124,124,
-     60, 56, 30, 62, 60,126,  7,131,199,193,193,225,195,195,195,225,225,240,120,
-    124, 62, 15, 31,  7,143, 15,131,135,193,227,227,195,195,225,240,248,240, 60,
-    124, 60, 15,142, 14, 31, 31, 14, 60, 56,120,112,112,240,240,248,112,112,120,
-     56, 60,112,224,240,120,241,240,120, 62, 60, 15,  7, 14, 62, 30, 63, 30, 14,
-     15,135,135,  7, 15,  7,199,143, 15,135, 30, 30, 31, 30, 30, 60, 30, 28, 62,
-     15,  3,195,129,224,240,252, 56, 60, 62, 14, 30, 28,124, 30, 31, 14, 62, 28,
-    120,120,124, 30, 62, 30, 60, 31, 15, 31, 15, 15,143, 28, 60,120,248,240,248,
-    112,240,120,120, 60, 60,120, 60, 31, 15,  7,134, 28, 30, 28, 30, 30, 31,  3,
-    195,199,142, 60, 60, 28, 24,240,225,195,225,193,225,227,195,195,227,195,131,
-    135,131,135, 15,  7,  7,225,225,224,124,120, 56,120,120, 60, 31, 15,143, 14,
-      7, 15,  7,131,195,195,129,240,248,241,224,227,199, 28, 62, 30, 15, 15,195,
-    240,240,227,131,195,199,  7, 15, 15, 15, 15, 15,  7,135, 15, 15, 14, 15, 15,
-     30, 15, 15,135,135,135,143,199,199,131,131,195,199,143,135,  7,195,142, 30,
-     56, 62, 60, 56,124, 31, 28, 56, 60,120,124, 30, 28, 60, 63, 30, 14, 62, 28,
-     60, 31, 15,  7,195,227,131,135,129,193,227,207, 14, 15, 30, 62, 30, 31, 15,
-    143,195,135, 14,  3,240,240,112,224,225,225,199,142, 15, 15, 30, 14, 30, 31,
-     28,120,240,241,241,224,241,225,225,224,224,241,193,240,113,225,195,131,199,
-    131,225,225,248,112,240,240,240,240,240,112,248,112,112, 97,224,240,225,224,
-    120,113,224,240,248, 56, 30, 28, 56,112,248, 96,120, 56, 60, 63, 31, 15, 31,
-     15, 31,135,135,131,135,131,225,225,240,120,241,240,112, 56, 56,112,224,227,
-    192,224,248,120,120,248, 56,241,225,225,195,135,135, 14, 30, 31, 14, 14, 15,
-     15,135,195,135,  7,131,192,240, 56, 60, 60, 56,240,252, 62, 30, 28, 28, 56,
-    112,240,241,224,240,224,224,241,227,224,225,240,240,120,124,120, 60,120,120,
-     56,120,120,120,120,112,227,131,131,224,195,193,225,193,193,193,227,195,199,
-     30, 14, 31, 30, 30, 15, 15, 14, 14, 14,  7,131,135,135, 14,  7,143, 15, 15,
-     15, 14, 28,112,225,224,113,193,131,131,135, 15, 30, 24,120,120,124, 62, 28,
-     56,240,225,224,120,112, 56, 60, 62, 30, 60, 30, 28,112, 60, 56, 63
+
+#define TONE_CHANNELS 3
+#define NOISE_SEED 0x7ffff8
+
+// Output stage. The mixer produces 0..4 averaged channel bits scaled by the 0..15
+// master volume, so 60 is full deflection.
+//
+// The DAC is NOT linear in that: the resistor ladder drives the RF modulator
+// through a stage that compresses as it approaches its rail, which is why a tune
+// with everything sounding at once is not four times as loud as one channel.
+// Modelled as a soft knee, y = Gx / (1 + Gx/L) -- small-signal gain G, asymptote
+// L -- applied while the mix is still unipolar, i.e. before the DC block, which
+// is where the real saturation happens too. G and L were trimmed against the
+// VICE-derived core this replaced, to within ~1dB RMS and with peaks ~8% under
+// full scale, across chipmachine/testmus/victracker; see README.md.
+//
+// VIC-20 audio is also filtered hard on its way to the modulator -- without the
+// low-pass the square waves are far brighter than the machine ever sounded.
+#define VIC_DAC_GAIN 1400.0f
+#define VIC_DAC_LIMIT 50000.0f
+#define VIC_LOWPASS_HZ 2500.0f
+#define VIC_HIGHPASS_HZ 20.0f
+
+struct vic_channel
+{
+    unsigned char reg;   // $900A..$900D: bit 7 enable, bits 0-6 period
+    int counter;         // VIC cycles until the next shift
+    unsigned char shift; // 8-bit tone shift register
+    int out;             // current output bit
 };
 
-static float voltagefunction[] = {
-        0.00f,   148.28f,   296.55f,   735.97f,   914.88f,  1126.89f,  1321.86f,  1503.07f,  1603.50f,
-     1758.00f,  1913.98f,  2070.94f,  2220.36f,  2342.91f,  2488.07f,  3188.98f,  3285.76f,  3382.53f,
-     3479.31f,  3576.08f,  3672.86f,  3769.63f,  3866.41f,  3963.18f,  4059.96f,  4248.10f,  4436.24f,
-     4624.38f,  4812.53f,  5000.67f,  5188.81f,  5192.91f,  5197.00f,  5338.52f,  5480.04f,  5621.56f,
-     5763.07f,  5904.59f,  6046.11f,  6187.62f,  6329.14f,  6609.31f,  6889.47f,  7169.64f,  7449.80f,
-     7729.97f,  7809.36f,  7888.75f,  7968.13f,  8047.52f,  8126.91f,  8206.30f,  8285.69f,  8365.07f,
-     8444.46f,  8523.85f,  8603.24f,  8905.93f,  9208.63f,  9511.32f,  9814.02f,  9832.86f,  9851.70f,
-     9870.54f,  9889.38f,  9908.22f,  9927.07f,  9945.91f,  9964.75f,  9983.59f, 10002.43f, 10021.27f,
-    10040.12f, 10787.23f, 11534.34f, 12281.45f, 12284.98f, 12288.50f, 12292.03f, 12295.56f, 12299.09f,
-    12302.62f, 12306.15f, 12309.68f, 12313.21f, 12316.74f, 12320.26f, 12323.79f, 12327.32f, 13113.05f,
-    13898.78f, 13910.58f, 13922.39f, 13934.19f, 13945.99f, 13957.80f, 13969.60f, 13981.40f, 13993.21f,
-    14005.01f, 14016.81f, 14028.62f, 14040.42f, 14052.22f, 14064.03f, 16926.31f, 16987.04f, 17047.77f,
-    17108.50f, 17169.23f, 17229.96f, 17290.69f, 17351.42f, 17412.15f, 17472.88f, 17533.61f, 17594.34f,
-    17655.07f, 17715.80f, 17776.53f, 17837.26f, 18041.51f, 18245.77f, 18450.02f, 18654.28f, 18858.53f,
-    19062.78f, 19267.04f, 19471.29f, 19675.55f, 19879.80f, 20084.05f, 20288.31f, 20417.74f, 20547.17f,
-    20676.61f, 20774.26f, 20871.91f, 20969.55f, 21067.20f, 21164.85f, 21262.50f, 21360.15f, 21457.80f,
-    21555.45f, 21653.09f, 21750.74f, 21848.39f, 21946.04f, 22043.69f, 22141.34f, 22212.33f, 22283.33f,
-    22354.33f, 22425.33f, 22496.32f, 22567.32f, 22638.32f, 22709.32f, 22780.31f, 22851.31f, 22922.31f,
-    22993.31f, 23064.30f, 23135.30f, 23206.30f, 23255.45f, 23304.60f, 23353.75f, 23402.91f, 23452.06f,
-    23501.21f, 23550.36f, 23599.51f, 23648.67f, 23768.81f, 23888.96f, 24009.11f, 24129.26f, 24249.41f,
-    24369.56f, 24451.92f, 24534.28f, 24616.63f, 24698.99f, 24781.35f, 24863.70f, 24946.06f, 25028.42f,
-    25110.77f, 25193.13f, 25275.49f, 25357.84f, 25440.20f, 25522.56f, 25604.92f, 25658.87f, 25712.83f,
-    25766.79f, 25820.75f, 25874.71f, 25928.66f, 25982.62f, 26036.58f, 26090.54f, 26144.49f, 26198.45f,
-    26252.41f, 26306.37f, 26360.33f, 26414.28f, 26501.23f, 26588.17f, 26675.12f, 26762.06f, 26849.01f,
-    26935.95f, 27022.90f, 27109.84f, 27196.78f, 27283.73f, 27370.67f, 27457.62f, 27544.56f, 27631.51f,
-    27718.45f, 27726.89f, 27735.33f, 27743.78f, 27752.22f, 27760.66f, 27769.10f, 27777.54f, 27785.98f,
-    27794.43f, 27802.87f, 27811.31f, 27819.75f, 27828.19f, 27836.63f, 27845.08f, 27853.52f, 27861.96f,
-    27870.40f, 27878.84f, 27887.28f, 27895.73f, 27904.17f, 27912.61f, 27921.05f, 27929.49f, 27937.93f,
-    27946.38f, 27954.82f, 27963.26f, 27971.70f, 27980.14f, 27988.58f, 27997.03f, 28005.47f, 28013.91f,
-    28022.35f, 28030.79f, 28039.23f, 28047.68f, 28056.12f, 28064.56f, 28073.00f, 28081.44f, 28089.88f,
-    28098.33f, 28106.77f, 28115.21f, 28123.65f, 28132.09f, 28140.53f, 28148.98f, 28157.42f, 28165.86f,
-    28174.30f, 28182.74f, 28191.18f, 28199.63f, 28208.07f, 28216.51f, 28224.95f, 28233.39f, 28241.83f,
-    28250.28f, 28258.72f, 28267.16f, 28275.60f, 28284.04f, 28292.48f, 28300.93f, 28309.37f, 28317.81f,
-    28326.25f, 28334.69f, 28343.13f, 28351.58f, 28360.02f, 28368.46f, 28376.90f, 28385.34f, 28393.78f,
-    28402.23f, 28410.67f, 28419.11f, 28427.55f, 28435.99f, 28444.43f, 28452.88f, 28461.32f, 28469.76f,
-    28478.20f, 28486.64f, 28495.08f, 28503.53f, 28511.97f, 28520.41f, 28528.85f, 28537.29f, 28545.73f,
-    28554.18f, 28562.62f, 28571.06f, 28579.50f, 28587.94f, 28596.38f, 28604.83f, 28613.27f, 28621.71f,
-    28630.15f, 28638.59f, 28647.03f, 28655.48f, 28663.92f, 28672.36f, 28680.80f, 28689.24f, 28697.68f,
-    28706.13f, 28714.57f, 28723.01f, 28731.45f, 28739.89f, 28748.33f, 28756.78f, 28765.22f, 28773.66f,
-    28782.10f, 28790.54f, 28798.98f, 28807.43f, 28815.87f, 28824.31f, 28832.75f, 28841.19f, 28849.63f,
-    28858.08f, 28866.52f, 28874.96f, 28883.40f, 28891.84f, 28900.28f, 28908.73f, 28917.17f, 28925.61f,
-    28934.05f, 28942.49f, 28950.93f, 28959.38f, 28967.82f, 28976.26f, 28984.70f, 28993.14f, 29001.58f,
-    29010.03f, 29018.47f, 29026.91f, 29035.35f, 29043.79f, 29052.23f, 29060.68f, 29069.12f, 29077.56f,
-    29086.00f, 29094.44f, 29102.88f, 29111.33f, 29119.77f, 29128.21f, 29136.65f, 29145.09f, 29153.53f,
-    29161.98f, 29170.42f, 29178.86f, 29187.30f, 29195.74f, 29204.18f, 29212.63f, 29221.07f, 29229.51f,
-    29237.95f, 29246.39f, 29254.83f, 29263.28f, 29271.72f, 29280.16f, 29288.60f, 29297.04f, 29305.48f,
-    29313.93f, 29322.37f, 29330.81f, 29339.25f, 29347.69f, 29356.13f, 29364.58f, 29373.02f, 29381.46f,
-    29389.90f, 29398.34f, 29406.78f, 29415.23f, 29423.67f, 29432.11f, 29440.55f, 29448.99f, 29457.43f,
-    29465.88f, 29474.32f, 29482.76f, 29491.20f
-};
-struct sound_vic20_s {
-    unsigned char div;
-    struct { unsigned char out; unsigned char reg; unsigned char shift; signed short ctr; } ch[4];
-    unsigned short noisectr;
-    unsigned char volume;
-    int cyclecount;
-    int accum; int accum_cycles;
-    float cycles_per_sample; float leftover_cycles; int speed;
-    float highpassbuf; float highpassbeta; float lowpassbuf; float lowpassbeta;
-};
-static struct sound_vic20_s snd;
-static void vic_sound_clock(int cycles);
-static void vic_sound_clock(int cycles)
+static struct
 {
-    int i,j;
+    struct vic_channel tone[TONE_CHANNELS];
+    struct vic_channel noise;
+    unsigned int lfsr; // 23-bit noise shift register
+    int volume;        // $900E bits 0-3
+
+    // Sample clock: how many VIC cycles one output sample is worth, and the
+    // fractional remainder carried between calls.
+    float cycles_per_sample;
+    float leftover_cycles;
+
+    // Mixer accumulator: sum of the four output bits over the cycles that make
+    // up the sample currently being built.
+    int accum;
+    int accum_cycles;
+
+    float lowpass_state;
+    float lowpass_a;
+    float highpass_state;
+    float highpass_a;
+} snd;
+
+// The tone channels shift at clock/16, /8 and /4 of the divider ladder; the
+// noise channel sits on the slowest of them.
+static const int tone_prescale[TONE_CHANNELS] = {4, 3, 2};
+static const int noise_prescale = 4;
+
+// Period in VIC cycles for a channel register value, before the prescale.
+static int divider(unsigned char reg)
+{
+    return 128 - ((reg + 1) & 0x7f);
+}
+
+// One step of the tone shift register: shift left, feeding in the complement of
+// the bit falling off the top. Free-running like this it spends 8 steps high and
+// 8 steps low, which is the channel's square wave.
+static void step_tone(struct vic_channel* ch)
+{
+    if (ch->reg & 0x80) {
+        ch->shift = (unsigned char)((ch->shift << 1) | (((ch->shift >> 7) & 1) ^ 1));
+        ch->out = ch->shift & 1;
+    } else {
+        ch->shift <<= 1;
+        ch->out = 0;
+    }
+}
+
+// One step of the 23-bit noise register (bit 22 XOR bit 13 -> bit 0). The
+// channel's output is the bit leaving the top of the register.
+static void step_noise(void)
+{
+    unsigned int bit22 = (snd.lfsr >> 22) & 1;
+    unsigned int bit13 = (snd.lfsr >> 13) & 1;
+    snd.lfsr = ((snd.lfsr << 1) | (bit22 ^ bit13)) & 0x7fffff;
+    snd.noise.out = (snd.noise.reg & 0x80) ? (int)bit22 : 0;
+}
+
+// Advances the whole chip by `cycles` VIC cycles, summing the four channel
+// output bits into the mixer accumulator as it goes.
+static void run_cycles(int cycles)
+{
+    int i;
+    int c;
 
     if (cycles <= 0) {
         return;
     }
 
-    for (j = 0; j < 3; j++) {
-        int chspeed="\4\3\2"[j];
-
-        if (snd.ch[j].ctr > cycles) {
-            snd.accum += snd.ch[j].out * cycles;
-            snd.ch[j].ctr -= cycles;
-        } else {
-            for (i = cycles; i; i--) {
-                snd.ch[j].ctr--;
-                if (snd.ch[j].ctr <= 0) {
-                    int a = (~snd.ch[j].reg)&127;
-                    a = a?a:128;
-                    snd.ch[j].ctr += a << chspeed;
-                    if (snd.ch[j].reg&128) {
-                        unsigned char shift = snd.ch[j].shift;
-                        shift = ((shift<<1) | ((shift&128)>>7))^1;
-                        snd.ch[j].shift = shift;
-                        snd.ch[j].out = shift&1;
-                    } else {
-                        snd.ch[j].shift <<= 1;
-                        snd.ch[j].out = 0;
-                    }
-                }
-                snd.accum += snd.ch[j].out;
+    for (c = 0; c < TONE_CHANNELS; c++) {
+        struct vic_channel* ch = &snd.tone[c];
+        // Nothing can change state before the counter runs out, so a channel
+        // whose next shift is beyond this block is just a multiply.
+        if (ch->counter > cycles) {
+            snd.accum += ch->out * cycles;
+            ch->counter -= cycles;
+            continue;
+        }
+        for (i = 0; i < cycles; i++) {
+            if (--ch->counter <= 0) {
+                ch->counter += divider(ch->reg) << tone_prescale[c];
+                step_tone(ch);
             }
+            snd.accum += ch->out;
         }
     }
 
-    if (snd.ch[3].ctr > cycles) {
-        snd.accum += snd.ch[3].out * cycles;
-        snd.ch[3].ctr -= cycles;
+    if (snd.noise.counter > cycles) {
+        snd.accum += snd.noise.out * cycles;
+        snd.noise.counter -= cycles;
     } else {
-        for (i = cycles; i; i--) {
-            snd.ch[3].ctr--;
-            if (snd.ch[3].ctr <= 0) {
-                int a = (~snd.ch[3].reg)&127;
-                a = a?a:128;
-                snd.ch[3].ctr += a << 4;
-                if (snd.ch[3].reg&128) {
-                    snd.ch[3].out =
-                        (noisepattern[(snd.noisectr>>3)&1023]>>(snd.noisectr&7))&1;
-                } else {
-                    snd.ch[3].out = 0;
-                }
-                snd.noisectr++;
+        for (i = 0; i < cycles; i++) {
+            if (--snd.noise.counter <= 0) {
+                snd.noise.counter += divider(snd.noise.reg) << noise_prescale;
+                step_noise();
             }
-            snd.accum += snd.ch[3].out;
+            snd.accum += snd.noise.out;
         }
     }
 
     snd.accum_cycles += cycles;
 }
-int vicsnd_render(SWORD *pbuf, int nr, int soc, int *delta_t)
+
+// Converts the accumulated mixer bits into one output sample. The mix is
+// unipolar (0..4 channel-bits, scaled by the 4-bit volume), so the high-pass
+// below is what centres it on zero.
+static int16_t make_sample(void)
+{
+    float level;
+    float o;
+
+    if (snd.accum_cycles <= 0) {
+        return 0;
+    }
+    // 0..4 average bits * 0..15 volume, through the saturating DAC.
+    level = (float)snd.accum / (float)snd.accum_cycles;
+    o = level * (float)snd.volume * VIC_DAC_GAIN;
+    o = o / (1.0f + o / VIC_DAC_LIMIT);
+
+    // One-pole low-pass: the VIC-20's audio output is heavily filtered on its
+    // way to the modulator, which is what stops the square waves sounding like
+    // raw square waves.
+    snd.lowpass_state += (o - snd.lowpass_state) * snd.lowpass_a;
+    o = snd.lowpass_state;
+
+    // One-pole high-pass, i.e. remove the running DC level.
+    snd.highpass_state += (o - snd.highpass_state) * snd.highpass_a;
+    o -= snd.highpass_state;
+
+    if (o < -32768.0f) {
+        return -32768;
+    }
+    if (o > 32767.0f) {
+        return 32767;
+    }
+    return (int16_t)o;
+}
+
+int vicsnd_render(int16_t* pbuf, int nr, int soc, int* delta_t)
 {
     int s = 0;
     int i;
-    float o;
-    SWORD vicbuf;
-    int samples_to_do;
 
-    while (s < nr && *delta_t >= snd.cycles_per_sample - snd.leftover_cycles) {
-        samples_to_do = (int)(snd.cycles_per_sample - snd.leftover_cycles);
-        snd.leftover_cycles += samples_to_do - snd.cycles_per_sample;
-        vic_sound_clock(samples_to_do);
+    while (s < nr && (float)*delta_t >= snd.cycles_per_sample - snd.leftover_cycles) {
+        int cycles = (int)(snd.cycles_per_sample - snd.leftover_cycles);
+        int16_t sample;
 
-        o = voltagefunction[(((snd.accum * 7) / snd.accum_cycles) + 1) * snd.volume];
-        o = snd.lowpassbuf * snd.lowpassbeta + o * (1.0f - snd.lowpassbeta); /* 0.75f + o*0.25f; */
-        snd.lowpassbuf = o;
-        o -= snd.highpassbuf;
-        snd.highpassbuf += o * snd.highpassbeta;
-
-        if (o < -32768) {
-            vicbuf = -32768;
-        } else if (o > 32767) {
-            vicbuf = 32767;
-        } else {
-            vicbuf = (SWORD)o;
-        }
-
+        snd.leftover_cycles += (float)cycles - snd.cycles_per_sample;
+        run_cycles(cycles);
+        sample = make_sample();
         for (i = 0; i < soc; i++) {
-            pbuf[(s * soc) + i] = vicbuf;
+            pbuf[(s * soc) + i] = sample;
         }
         s++;
         snd.accum = 0;
         snd.accum_cycles = 0;
-        *delta_t -= samples_to_do;
+        *delta_t -= cycles;
     }
+    // Cycles left over from this call are clocked into the sample being built,
+    // and finished on the next call.
     if (*delta_t > 0) {
-        snd.leftover_cycles += *delta_t;
-        vic_sound_clock(*delta_t);
+        snd.leftover_cycles += (float)*delta_t;
+        run_cycles(*delta_t);
         *delta_t = 0;
     }
     return s;
 }
+
 void vicsnd_store(int addr, unsigned char value)
 {
     switch (addr) {
-      case 0xA:
-        snd.ch[0].reg = value;
-        break;
-      case 0xB:
-        snd.ch[1].reg = value;
-        break;
-      case 0xC:
-        snd.ch[2].reg = value;
-        break;
-      case 0xD:
-        snd.ch[3].reg = value;
-        break;
-      case 0xE:
-        snd.volume = value & 0x0f;
-        break;
+    case 0xA: snd.tone[0].reg = value; break;
+    case 0xB: snd.tone[1].reg = value; break;
+    case 0xC: snd.tone[2].reg = value; break;
+    case 0xD: snd.noise.reg = value; break;
+    case 0xE: snd.volume = value & 0x0f; break;
+    default: break;
     }
 }
-void vicsnd_init(int cycles_per_sec, int speed) {
+
+// One-pole coefficient for a cutoff of `hz` at the output sample rate.
+static float pole(float hz, int rate)
+{
+    return 1.0f - expf(-2.0f * 3.14159265f * hz / (float)rate);
+}
+
+void vicsnd_init(int cycles_per_sec, int speed)
+{
     memset(&snd, 0, sizeof(snd));
-    snd.cycles_per_sample = (float)cycles_per_sec / speed;
-    snd.leftover_cycles = 0.0f; snd.speed = speed;
-    snd.lowpassbeta  = 1.0f - snd.cycles_per_sample / (snd.cycles_per_sample + 62.0f);
-    snd.highpassbeta = 1.0f - snd.cycles_per_sample / (snd.cycles_per_sample + 0.04f);
+    snd.lfsr = NOISE_SEED;
+    snd.cycles_per_sample = (float)cycles_per_sec / (float)speed;
+    snd.leftover_cycles = 0.0f;
+    snd.lowpass_a = pole(VIC_LOWPASS_HZ, speed);
+    snd.highpass_a = pole(VIC_HIGHPASS_HZ, speed);
 }

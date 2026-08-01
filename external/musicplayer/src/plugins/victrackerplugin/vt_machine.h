@@ -6,8 +6,8 @@
 // Daniel Kahlin's VIC-TRACKER "T1" (or legacy "T0") tune struct. The tune is
 // interpreted by the tracker's own 6502 replay routine (player.asm), which we
 // vendor pre-assembled as a position-fixed blob (vtplayer_bin.h, BSD) and run on
-// the fake6502 CPU core. The player's writes to the VIC sound registers
-// ($900A-$900E) are fed into the VIC-I sound core lifted from VICE (vic_sound.*).
+// the MyLittle6502 CPU core (vt_cpu.h). The player's writes to the VIC sound
+// registers ($900A-$900E) are fed into our VIC-I sound core (vic_sound.h).
 //
 // We drive the player exactly as the VIC-20 IRQ would: load the tune at $3300,
 // call pl_Init once, then call pl_Play once per interrupt tick (rate set by the
@@ -37,7 +37,7 @@ public:
 
     int subsongCount() const { return subsongs_; }
 
-    // Access for the fake6502 memory hooks (single active machine at a time).
+    // Access for the CPU core's memory hooks (single active machine at a time).
     uint8_t* mem() { return mem_.data(); }
 
 private:

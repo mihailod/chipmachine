@@ -1386,8 +1386,8 @@ TEST_CASE("LibVGM", "[music]") { testPlugin<musix::LibVGMPlugin>("testmus/libvgm
 TEST_CASE("VGMStream", "[music]") { testPlugin<musix::VGMStreamPlugin>("testmus/vgmstream", "nowork"); }
 
 // VIC-TRACKER (.vt) Commodore VIC-20 tunes (the modland "Vic-Tracker" corpus).
-// Each fixture runs Daniel Kahlin's own 6502 replayer on the fake6502 core with
-// the VIC-I sound core from VICE and must produce non-silent audio. The five
+// Each fixture runs Daniel Kahlin's own 6502 replayer on the MyLittle6502 core
+// with our own VIC-I sound core and must produce non-silent audio. The five
 // distribution songs cover the format's features (mystic=portamento only,
 // blippblopp=arpeggios, vt-theme/slowride=everything, djungel-zagor=multi-song).
 TEST_CASE("VicTracker", "[music]") { testPlugin<musix::VTPlugin>("testmus/victracker", "nowork"); }

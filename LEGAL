@@ -577,17 +577,29 @@ Author: VIC-TRACKER and its .vt format are by Daniel Kahlin (1994/2004,
         http://www.kahlin.net/daniel/victracker/). The tunes are played by
         Kahlin's own 6502 replay routine (player.asm), vendored pre-assembled as
         vtplayer_bin.h at musicplayer/src/plugins/victrackerplugin/. The 6502 CPU
-        core is fake6502 by Mike Chambers (omarandlorraine fork). The VIC-I (MOS
-        6560/6561) sound core is extracted from VICE's vic20/vic20sound.c by Rami
-        Räsänen and Ville-Matias Heikkilä.
+        core is MyLittle6502 (pd6502.h), David MHS Webster's continuation of
+        Fake6502 by Mike Chambers (https://github.com/C-Chads/MyLittle6502). The
+        VIC-I (MOS 6560/6561) sound core (vic_sound.c) was written for this
+        project.
 License: VIC-TRACKER player (player.asm et al.): BSD 2-Clause License (Daniel
         Kahlin; see victrackerplugin/victracker/LICENSE.txt).
-        fake6502: GNU General Public License v2.0.
-        VIC-I sound core (from VICE): GNU General Public License v2.0 or later.
-Notice: The VIC-I sound source is lifted verbatim from VICE (already vendored for
-        the SID bridge but not compiled there); only its internal vic_sound_clock
-        is made static to avoid a symbol collision. The player blob is Kahlin's
-        BSD sources assembled unchanged with dasm (see victracker/build_player.sh).
+        MyLittle6502: public domain / CC0.
+        VIC-I sound core: no third-party licence; see the notice below for what
+        it was derived from.
+Notice: The player blob is Kahlin's BSD sources assembled unchanged with dasm
+        (see victracker/build_player.sh). MyLittle6502 is vendored unmodified;
+        vt_cpu.c prefixes its non-static symbols (read6502, step6502, ...) to
+        avoid full-link collisions.
+        The VIC-I core is written against the documented behaviour of the chip.
+        Two details are taken from MAME's src/devices/sound/mos6560.cpp (BSD
+        3-Clause, copyright Peter Trauner): the noise generator's 23-bit shift
+        register (seed 0x7ffff8, new bit 0 = bit 22 XOR bit 13, documented by
+        Asger Alstrup Nielsen) and the 128 - ((reg + 1) & 0x7f) channel divider
+        mapping. The output stage uses a parametric saturating DAC and one-pole
+        filters. Earlier revisions of this plugin ran on the omarandlorraine
+        fake6502 fork (GPL-2.0) and on a VIC-I core lifted from VICE's
+        vic20/vic20sound.c (GPL-2.0-or-later); both were replaced by the above
+        and no longer appear in any build.
 
 Component: klystron / libksnd (klystrack tracker music, .kt)
 Author: Tero Lindeman ("kometbomb"), klystrack and its klystron engine

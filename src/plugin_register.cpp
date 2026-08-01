@@ -65,7 +65,7 @@ extern "C" {
 #endif
     void dmfplugin_register();         // DefleMask (.dmf) multi-system chiptune via vendored Furnace engine
     void vgmstreamplugin_register();   // vgmstream (.adx/.hca/.fsb/... hundreds of game-audio containers) via vendored vgmstream
-    void victrackerplugin_register();  // VIC-TRACKER (.vt) Commodore VIC-20 via fake6502 + VICE VIC-I sound
+    void victrackerplugin_register();  // VIC-TRACKER (.vt) Commodore VIC-20 via MyLittle6502 + our VIC-I sound
     void klystrackplugin_register();   // Klystrack (.kt) via vendored libksnd / klystron cyd synth
     void csidplugin_register();        // Commodore 64 SID (.sid/.rsid) via Hermit's cSID (WTFPL)
     void musplugin_register();         // Compute! Sidplayer (.mus/.str) -- clean-room sequencer on cSID
