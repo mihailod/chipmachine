@@ -158,7 +158,15 @@ void register_plugins() {
     // dropped from the mas index to match; see songFormatHasNoPlayer().
     goattrackerplugin_register();
 #endif
+#ifndef CM_NO_DMF
+    // The whole vendored Furnace engine is GPL-2.0-or-later (engine, all 80
+    // DivPlatform wrappers, and several sound cores) -- excluded from the Mac
+    // App Store build (CM_VARIANT=mas), where the dmfplugin target is not built
+    // at all. The 2,071 DefleMask-format .dmf rows are dropped from the mas
+    // index to match; see songFormatHasNoPlayer(). The unrelated X-Tracker DDMF
+    // .dmf rows keep playing via libopenmpt in both variants.
     dmfplugin_register();
+#endif
     vgmstreamplugin_register();
     victrackerplugin_register();
     klystrackplugin_register();

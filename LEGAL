@@ -83,9 +83,10 @@ Author: GoatTracker v2 by Lasse Oorni ("Cadaver"); the vendored playback core is
         musicplayer/src/plugins/goattrackerplugin/resid/.
 License: GNU General Public License v2.0 or later (both GoatTracker and reSID).
 Notice: This is a SECOND, independent C64 SID emulator in the tree, unrelated to
-        cSID (section 5) and to VICE. It is GPL and therefore a blocker for a
-        GPL-clean Mac App Store build; unlike UADE and VICE it is currently
-        STILL LINKED into the mas variant.
+        cSID (section 5) and to VICE. NOT LINKED into the Mac App Store variant
+        (CM_VARIANT=mas builds with CM_HAVE_GOATTRACKER=OFF). The 104
+        GoatTracker-format .sng songs are dropped from that variant's index to
+        match; every other .sng format has its own player and is unaffected.
 
 Component: MDX / S98 (PC-98 & Sharp X68000 Engine variants)
 Author: Adapted from OpenMSX/GME variants
@@ -148,11 +149,25 @@ Author: The Furnace chiptune engine (DivEngine) by tildearrow and contributors
 License: GNU General Public License v2.0 or later (see dmfplugin/furnace/LICENSE;
         the bundled emulation cores under furnace/extern/ carry their own
         per-tree licenses).
-Notice: DefleMask .dmf is content-gated (zlib magic 0x78 -> ".DelekDefleMask.")
-        against the unrelated X-Tracker "DDMF" .dmf handled by libopenmpt. Like
-        GoatTracker above, this is currently STILL LINKED into the mas variant
-        (it is in the unconditional plugin list, not gated like UADE/VICE) and is
-        therefore an outstanding GPL blocker for a clean Mac App Store build.
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_DMF=OFF). The GPL here is structural rather than a swappable
+        core -- 76 of 77 files under furnace/src/engine, all 80
+        platform/DivPlatform*.cpp wrappers and several sound cores (reSID,
+        reSIDfp, sid2, nes, pce_psg, tia, vsu, pokey, dave, lynx, ted-sound,
+        ymf278b) carry the GPL header -- so the whole plugin is excluded rather
+        than patched. This is also what removes reSIDfp from the mas build:
+        dmfplugin was its sole source there.
+
+        The 2,071 DefleMask-format .dmf songs are dropped from that variant's
+        index to match. ".dmf" is TWO unrelated formats, and only the DefleMask
+        one is affected: the X-Tracker "DDMF" .dmf (723 songs) is played by
+        libopenmpt and is unaffected in both variants. Routing between them is
+        by content, not extension (zlib magic 0x78 -> ".DelekDefleMask.").
+
+        Also removed from BOTH variants, as unreachable GPL code:
+        furnace/src/engine/platform/sound/vic20sound.c (lifted from VICE, GPLv2)
+        and its only user platform/vic20.cpp. DIV_SYSTEM_VIC20 is a Furnace
+        .fur-only target and DMFPlugin claims only .dmf, so it could never run.
 
 Component: GSF (Game Boy Advance -- .gsf / .minigsf)
 Author: GSF playback via a vendored VisualBoyAdvance (VBA) Game Boy Advance

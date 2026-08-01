@@ -1158,6 +1158,28 @@ bool songFormatHasNoPlayer(SongInfo const& song,
             // Not present in today's allmods.txt, but formats.h and the
             // format_map already anticipate the name; keep the three in step.
             {{"sng", "goattracker stereo"}, { "goattracker" }},
+            // ".dmf" is the fourth case, and the largest. It is TWO unrelated
+            // formats: DefleMask (zlib -> ".DelekDefleMask.", played by the
+            // GPL Furnace slice in dmfplugin) and X-Tracker (magic "DDMF",
+            // played by libopenmpt). libopenmpt advertises the extension in
+            // EVERY build, so the extension test says "playable" even in mas
+            // where dmfplugin is absent (GPL; see CM_HAVE_DMF in CMakeLists.txt)
+            // -- only the format name separates them. These three keys were
+            // content-probed over the network, not inferred from the label:
+            // every sampled "Deflemask"/"DefleMask" row inflates to the
+            // DefleMask magic, and spacecoast.dmf (the lone "NEC PC Engine" row)
+            // does too. Single-candidate: there is no mas replacement yet.
+            //
+            // DELETE the matching key when a clean-room non-GPL target ships --
+            // that is all it takes to resurface those songs on the next reindex.
+            // Genesis alone is ~46% of this pool.
+            {{"dmf", "deflemask"}, { "dmf" }},
+            {{"dmf", "nec pc engine"}, { "dmf" }},
+            // NOT listed, deliberately -- all verified X-Tracker DDMF, all still
+            // played by libopenmpt in both variants: "x-tracker" (366),
+            // "dsmi compact" (13), the generic "dmf" bucket (328, amp +
+            // modarchive) and demozoo "demoscene" (16, every one fetched and
+            // checked). Hiding a playable row is the worse error here.
         };
     if (song.format.empty()) { return false; }
     if (builtPluginNames.empty()) { return false; }
@@ -1194,9 +1216,10 @@ bool songIsSilentSid(SongInfo const& song, std::set<std::string> const& silent)
 // the point of listing them.
 //
 // Compiled for the mas variant, which ships without uadeplugin,
-// vicepluginbridge OR goattrackerplugin (all GPL -- see CM_HAVE_UADE /
-// CM_HAVE_VICE / CM_HAVE_GOATTRACKER in CMakeLists.txt).
-#if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER)
+// vicepluginbridge, goattrackerplugin OR dmfplugin (all GPL -- see CM_HAVE_UADE
+// / CM_HAVE_VICE / CM_HAVE_GOATTRACKER / CM_HAVE_DMF in CMakeLists.txt).
+#if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
+    defined(CM_NO_DMF)
 static bool isContainerExt(std::string e); // defined near resolveExtension()
 
 // Every extension SOME registered plugin claims by name -- i.e. everything this
@@ -1302,7 +1325,7 @@ static bool songHasNoPlayer(SongInfo const& song,
     if (first.empty()) { return false; }
     return !nameHasPlayer(first, playable);
 }
-#endif // CM_NO_UADE || CM_NO_VICE || CM_NO_GOATTRACKER
+#endif // CM_NO_UADE || CM_NO_VICE || CM_NO_GOATTRACKER || CM_NO_DMF
 
 static bool songIsUnsupported(SongInfo const& song,
                               std::set<std::string> const& unsupported)
@@ -1505,13 +1528,15 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // them, so indexing them only yields broken GUI entries that
                 // download then can't play.
                 if (songIsUnsupported(song, unsupportedExts)) { return; }
-#if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER)
+#if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
+    defined(CM_NO_DMF)
                 // Same rule, build-scoped: without uadeplugin this variant has
-                // no decoder for the Amiga custom-replayer formats, and without
-                // vicepluginbridge none for Compute! Sidplayer, and without
-                // goattrackerplugin none for GoatTracker .sng, so keep them out
-                // of the catalog instead of surfacing rows that download and
-                // then fail. See songHasNoPlayer().
+                // no decoder for the Amiga custom-replayer formats, without
+                // vicepluginbridge none for Compute! Sidplayer, without
+                // goattrackerplugin none for GoatTracker .sng, and without
+                // dmfplugin none for DefleMask .dmf, so keep them out of the
+                // catalog instead of surfacing rows that download and then
+                // fail. See songHasNoPlayer().
                 if (songHasNoPlayer(song, playableExtensions())) { return; }
 #endif
 #ifdef CM_NO_VICE

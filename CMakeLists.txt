@@ -131,7 +131,46 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_GOATTRACKER ON)
 endif()
-# victrackerplugin (.vt, VIC-20) needed NO variant gate, unlike the three above.
+# DefleMask .dmf is the fourth and largest case. dmfplugin drives a headless
+# slice of the Furnace engine (tildearrow, GPL-2.0-or-later), and unlike the
+# three above the GPL here is STRUCTURAL rather than a swappable core: 76 of 77
+# files under furnace/src/engine, all 80 platform/DivPlatform*.cpp wrappers, and
+# several sound cores (reSID, reSIDfp, sid2, nes, pce_psg, tia, vsu, pokey,
+# dave, lynx, ted-sound, ymf278b) carry the GPL header. There is no file to
+# remove and no second implementation to swap in -- DefleMask itself is closed
+# source and Furnace is the only engine that reads .dmf -- so the whole plugin
+# must be ABSENT from the mas binary. Follows CM_HAVE_UADE's pattern exactly.
+#
+# dmfplugin is also the SOLE source of reSIDfp in the mas link (183 symbols in
+# libdmfplugin.a; verified with nm over every static lib in build-mas), so this
+# gate is what finally clears reSIDfp out of the App Store build -- GoatTracker's
+# reSID was already gone via CM_HAVE_GOATTRACKER.
+#
+# The exposure is 2,071 songs (0.28% of the catalog), dropped from the mas index
+# by songFormatHasNoPlayer() in MusicDatabase.cpp. Content-probed, not guessed:
+# ".dmf" is TWO unrelated formats and libopenmpt plays the other one, so only the
+# rows whose format column names DefleMask are hidden -- modland "Deflemask"
+# (1,807) + BotB "DefleMask" (263) + demozoo "NEC PC Engine" (1). The X-Tracker
+# DDMF rows stay indexed and keep playing: "X-Tracker" (366), "DSMI Compact"
+# (13), the generic "DMF" bucket (328, amp + modarchive -- sampled and 100%
+# DDMF) and demozoo "Demoscene" (16, all 16 fetched and all DDMF).
+#
+# PARTIALLY REVERSIBLE, and meant to be reversed. A clean-room non-GPL .dmf
+# player is a live follow-up project. The chip cores needed are already
+# available under permissive licences (ymfm/BSD for YM2612 + YM2610, SameBoy/MIT
+# for Game Boy, sn76496/BSD for SN76489, and the WTFPL cSID already vendored
+# here for the C64 rows); what has to be written is the sequencer. By measured
+# target share of the hidden pool -- Genesis 46%, Game Boy 16%, PC Engine 13%,
+# Neo Geo 10%, NES 6%, C64 5%, SMS 3% -- Genesis alone would resurface ~950
+# songs. When a target lands, DELETE the matching formatPlayer row rather than
+# adding a second gate: the rows come straight back on the next reindex.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_DMF OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_DMF)
+else()
+    set(CM_HAVE_DMF ON)
+endif()
+# victrackerplugin (.vt, VIC-20) needed NO variant gate, unlike the four above.
 # Its GPL was internal rather than structural -- the plugin is ours, but it drove
 # two GPLv2 engine cores (the omarandlorraine fake6502 fork, and a VIC-I sound
 # core lifted from VICE's vic20sound.c). Both were replaced in place, by
@@ -139,7 +178,7 @@ endif()
 # chip; the replacements were A/B'd by ear against the originals and shipped to
 # both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
 # index. See the plugin's README.md.
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER})")
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -278,7 +317,7 @@ set(MUSICPLAYER_PLUGINS
     kssplugin quartetplugin wsrplugin zxtuneplugin pokeynoiseplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin fnkplugin
-    famitrackerplugin dmfplugin libvgmplugin vgmstreamplugin
+    famitrackerplugin libvgmplugin vgmstreamplugin
     victrackerplugin klystrackplugin csidplugin musplugin
 )
 # GPL -- plus build only, see CM_HAVE_UADE above.
@@ -288,6 +327,10 @@ endif()
 # GPL (GoatTracker + reSID) -- plus build only, see CM_HAVE_GOATTRACKER above.
 if(CM_HAVE_GOATTRACKER)
     list(APPEND MUSICPLAYER_PLUGINS goattrackerplugin)
+endif()
+# GPL (the whole vendored Furnace engine) -- plus build only, see CM_HAVE_DMF above.
+if(CM_HAVE_DMF)
+    list(APPEND MUSICPLAYER_PLUGINS dmfplugin)
 endif()
 # Empty in a mas tree, where the vicepluginbridge target does not exist at all.
 if(CM_HAVE_VICE)
@@ -333,6 +376,10 @@ endif()
 # Same for goattrackerplugin_register() -- see CM_HAVE_GOATTRACKER above.
 if(NOT CM_HAVE_GOATTRACKER)
     target_compile_definitions(plugin_register PRIVATE CM_NO_GOATTRACKER)
+endif()
+# Same for dmfplugin_register() -- see CM_HAVE_DMF above.
+if(NOT CM_HAVE_DMF)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_DMF)
 endif()
 target_link_libraries(musicplayer INTERFACE psf plugin_register)
 target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)
