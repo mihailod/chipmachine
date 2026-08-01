@@ -43,6 +43,26 @@ void csid_init_tune(int subtune);
 // Render `frames` MONO samples. Returns `frames`.
 int csid_render(int16_t* out, int frames);
 
+// ---------------------------------------------------------------------------
+// Register-level API, used by musplugin's Compute! Sidplayer sequencer.
+//
+// A .mus is note-sequence DATA, not 6502 code, so its player needs the SID CHIP
+// emulation but none of the CPU/PSID machinery: it writes SID registers itself
+// once per tick and asks for samples in between. These three entry points give
+// exactly that and bypass csid_load()/the 6502 loop entirely.
+// ---------------------------------------------------------------------------
+
+// sid_count is 1 or 2; sid2_base is the second chip's base address (Stereo
+// Sidplayer routes its voices 4-6 there).
+void csid_chip_init(int rate, int sid_count, unsigned int sid2_base);
+void csid_poke(unsigned int addr, unsigned char val);
+int csid_chip_render(int16_t* out, int frames);
+
+// Interleaved L/R. With two chips the FIRST goes left and the SECOND right,
+// which is how VICE positions a Stereo Sidplayer pair (its L and R differ by up
+// to half full scale). With one chip both channels carry the same signal.
+int csid_chip_render_stereo(int16_t* out, int frames);
+
 #ifdef __cplusplus
 }
 #endif

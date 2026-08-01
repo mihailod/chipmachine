@@ -112,10 +112,21 @@ The two are **independent build trees** (each has its own objects and binary) sh
 
 * the **YouTube** plugin and its ~32k catalog rows (yt-dlp is a spawned executable — App Store §2.5.2),
 * the bundled **yt-dlp** helper,
-* **UADE** and **VICE** (both GPL-2.0, incompatible with the App Store terms), together with their `data/uade` and `data/c64` payloads — the latter also carries Commodore's copyrighted KERNAL/BASIC/chargen ROM images, and
+* **UADE** and **VICE** (both GPL-2.0, incompatible with the App Store terms), together with their `data/uade` and `data/c64` payloads — the latter also carries Commodore's copyrighted KERNAL/BASIC/chargen ROM images (Compute!'s Sidplayer `.mus`/`.str` survives regardless, via the permissive **ChipMachine Clean Room SIDPlayer** plugin), and
 * the **GitHub self-update** check (updates come through the App Store).
 
-Dropping those two engines costs formats, so the catalog hides what the build cannot play (see [not_supported_extensions.txt](data/misc/not_supported_extensions.txt) and `songHasNoPlayer()`): the Amiga custom-replayer formats UADE alone handled, and Compute!'s Sidplayer `.mus`/`.str` (~6.5k songs). **C64 SID itself is unaffected** — all ~62k `.sid` tunes play in both builds, because SID moved from VICE to the permissively-licensed **cSID** engine.
+Dropping those two engines costs formats, so the catalog hides what the build cannot play (see [not_supported_extensions.txt](data/misc/not_supported_extensions.txt) and `songHasNoPlayer()`): the Amiga custom-replayer formats UADE alone handled.
+
+The C64 formats are **almost** unaffected. The ~6.5k Compute!'s Sidplayer `.mus`/`.str` tunes play via the clean-room **ChipMachine Clean Room SIDPlayer** plugin, and ~59.9k of the ~62k `.sid` tunes via the permissively-licensed **cSID** engine. The exception is an RSID whose header play address is `$0000`: it installs its own IRQ/NMI handler and expects a real C64 (KERNAL banked in, CIA and raster running), which cSID does not emulate, so it renders as dead air. Those are enumerated **by measurement** in [csid_silent_sids.txt](data/misc/csid_silent_sids.txt) and dropped at index time in the MAS build only, so no unplayable row ever surfaces.
+
+The list is measured rather than inferred, because the obvious rule would be badly wrong. Every `play=$0000` file was rendered through the same engine and the same 3 s / peak>64 test the player uses at runtime:
+
+| | files | wholly silent | wholly fine | mixed subtunes |
+|---|---|---|---|---|
+| RSID `play=$0000` | 3708 | 2363 | 1242 | 103 |
+| PSID `play=$0000` | 109 | 19 | 90 | — |
+
+So hiding every `play=$0000` RSID would have hidden **1,345 files that play perfectly well**. Only the 2,382 wholly-silent ones are listed; the mixed files stay indexed and the runtime probe in `CSIDPlugin` skips their silent subtunes one at a time. **Plus is unchanged** — it plays all of them through VICE and never reads the list.
 
 It runs **App-Sandboxed**, with a distinct bundle id (`org.mihailod.chipmachine`) and its own cache/database/index, so Plus and MAS never share state. Per-variant product identity (name, bundle id, artifact) is the single source of truth in [variants.conf](variants.conf); the compile-time switch is `CM_VARIANT` / the `CM_MAS` define.
 
@@ -326,7 +337,7 @@ Support for PC and Amiga tracker formats
 
 Extensions: `.mod` `.xm` `.it` `.s3m` `.mptm` `.stm` `.nst` `.m15` `.stk` `.wow` `.ult` `.669` `.mtm` `.med` `.far` `.mdl` `.ams` `.dsm` `.amf` `.okt` `.omf` `.dmf` `.mt2` `.dbm` `.digi` `.imf` `.j2b` `.gdm` `.umx` `.mo3` `.symmod` `.dsym` `.dsyn` `.dysn` `.ftm` `.gt2` `.gtk` `.tcb` `.rtm` `.xmf` `.667` `.etx` `.fmt` `.cba` `.c67` `.fst` `.ice` `.mmcmp` `.mms` `.mus` `.oxm` `.plm` `.ppm` `.psm` `.pt36` `.ptm` `.sfx` `.sfx2` `.stp` `.stx` `.xpk`
 
-(`.mus`, `.psm` and `.stp` are shared extensions: libopenmpt claims them, but a SID `.mus` falls through to libvice, a ZX `.psm`/`.stp` to ZXTune/Ayfly — routing is by content.)
+(`.mus`, `.psm` and `.stp` are shared extensions: libopenmpt claims them, but a SID `.mus` falls through to the Compute! Sidplayer player — libvice in Plus, ChipMachine Clean Room SIDPlayer in MAS — and a ZX `.psm`/`.stp` to ZXTune/Ayfly. Routing is by content.)
 
 > Note: `.dsm` covers three unrelated DSIK/Dynamic-Studio variants. libopenmpt natively plays the newer DSIK "RIFF" format (`RIFF…DSMF`) and Dynamic Studio (`DSm`), but not the original DSIK "old" Internal Format (`DSM` + 0x10, e.g. the Necros tunes). Support for that v1 variant was added in a local patch to the vendored libopenmpt `Load_dsm.cpp`, with the loader adapted from MilkyTracker's `LoaderDSMv1` (BSD-3-Clause).
 
@@ -394,7 +405,7 @@ Mlat Adlib Tracker, MPU-401 Trakker by SuBZeR0, Note Sequencer by Lee Ho Bum (so
 
 Extensions: `.a2m` `.a2t` `.adl` `.adlib` `.agd` `.amd` `.as3m` `.bam` `.bmf` `.cff` `.cmf` `.d00` `.dfm` `.dmo` `.dro` `.dtm` `.got` `.ha2` `.hsc` `.hsp` `.hsq` `.imf` `.jbm` `.ksm` `.laa` `.lds` `.m` `.mad` `.mdi` `.mdy` `.mid` `.mkf` `.mkj` `.msc` `.mtk` `.mtr` `.pis` `.plx` `.rac` `.rad` `.raw` `.rix` `.rol` `.sa2` `.sat` `.sci` `.sdb` `.snd` `.sop` `.sqx` `.wlf` `.xad` `.xms` `.xsm`
 
-> Note: `.s3m` is exposed as `.as3m` (the AdLib variant) so it doesn't clash with OpenMPT; `.sng`, `.ims`, `.mus` and `.vgm`/`.vgz` are intentionally routed to UADE / Vice / GME instead.
+> Note: `.s3m` is exposed as `.as3m` (the AdLib variant) so it doesn't clash with OpenMPT; `.sng`, `.ims`, `.mus` and `.vgm`/`.vgz` are intentionally routed to UADE / the Compute! Sidplayer player (Vice in Plus, ChipMachine Clean Room SIDPlayer in MAS) / GME instead.
 
 ### MP3
 
@@ -413,7 +424,35 @@ Extensions: `.sid` `.rsid`
 Support for Compute!'s Sidplayer — a C64 *note* format with its own player, not a
 SID-chip dump. A stereo tune is a `.mus` (voices 1–3) plus a `.str` companion
 (voices 4–6), which the plugin loads together. **Plus build only** — see
-[Build variants](#build-variants-plus-vs-mac-app-store).
+[Build variants](#build-variants-plus-vs-mac-app-store); the Mac App Store build
+plays the same formats through **ChipMachine Clean Room SIDPlayer** below.
+
+Extensions: `.mus` `.str`
+
+### ChipMachine Clean Room SIDPlayer
+
+The same Compute!'s Sidplayer formats, played by a **clean-room** sequencer over
+the cSID chip emulation instead of VICE — which is what lets the Mac App Store
+build play these ~6.5k songs at all. Written from two freely-distributed format
+write-ups in the Compute's Gazette SID Collection; no GPL player source was
+consulted.
+
+The two documents describe the *encoding* but not the *behaviour*, so thirteen
+rules were recovered by comparing our SID register writes against an emulator's,
+on a 1 ms grid — among them the CIA-driven tick rate, the truncated NTSC note
+table, the default tempo, a two-tick startup delay, `HED` as a total play count,
+`UTL` explicit note lengths, zero-length events, `AUT` filter-tracking, and the
+pulse, filter and portamento sweeps. Where a rule could not be recovered from
+output alone it was left unimplemented and written up as a known gap rather than
+guessed at.
+
+Validated over the whole CGSC archive: **all 16,601 files render** with no
+crashes, hangs or parse failures, and register agreement with the reference has a
+**median of 98.5%**. See
+[musplugin/README.md](external/musicplayer/src/plugins/musplugin/README.md) for
+the derivation and the remaining gaps.
+
+Registered *after* Vice, so the Plus build is unchanged and keeps using VICE.
 
 Extensions: `.mus` `.str`
 
@@ -726,8 +765,9 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 
 * **OpenMPT (Tracker Formats):** Developed by the OpenMPT Project Team (originally founded by Olivier Lapicque). Licensed under BSD-3-Clause.
 * **GME / Game Music Emulator (Console Formats):** Developed by Shay Green. Licensed under LGPL-2.1-or-later. The `.gbr` (Game Boy rip) loader added on top of GME maps the GBR header onto GME's Game Boy emulator; the GBR header format was referenced from **gbsplay** by Tobias Diedrich, Christian Garbs et al. (GPL-2.0-or-later, <https://github.com/mmitch/gbsplay>).
-* **cSID (C64/SID emulation):** Developed by **Mihaly Horvath (Hermit)**, <http://hermit.sidrip.com>, vendored from <https://github.com/mlund/csid>. Licensed under **WTFPL** — *"do what the fuck you want with this code, but please mention me as its original author."* A from-scratch 6581/8580 + 6510 + PSID player sharing no code with VICE, reSID or libsidplayfp, and needing no Commodore ROMs — which is what lets the Mac App Store build play SID at all. Plays every `.sid`/`.rsid` tune in both variants.
-* **VICE (C64 Compute! Sidplayer):** Developed by the VICE Core Team. Licensed under GPL-2.0-or-later. Now used only for `.mus`/`.str`; not included in the Mac App Store build.
+* **cSID (C64/SID emulation):** Developed by **Mihaly Horvath (Hermit)**, <http://hermit.sidrip.com>, vendored from <https://github.com/mlund/csid>. Licensed under **WTFPL** — *"do what the fuck you want with this code, but please mention me as its original author."* A from-scratch 6581/8580 + 6510 + PSID player sharing no code with VICE, reSID or libsidplayfp, and needing no Commodore ROMs — which is what lets the Mac App Store build play SID at all. Plays every `.sid`/`.rsid` tune in both variants **except** an RSID whose header play address is `$0000`: that shape installs its own IRQ/NMI handler and needs a real C64, which cSID deliberately does not emulate. Measured across HVSC, 2,382 files are silent under it — Plus plays those through VICE, MAS drops them from the catalog (see [csid_silent_sids.txt](data/misc/csid_silent_sids.txt)).
+* **VICE (C64 Compute! Sidplayer):** Developed by the VICE Core Team. Licensed under GPL-2.0-or-later. In the Plus build it now serves only two things: `.mus`/`.str`, and the 2,382 self-IRQ RSIDs cSID cannot voice. Not included in the Mac App Store build.
+* **Compute!'s Sidplayer (`.mus`/`.str`):** the format itself is **Craig Chamberlin**'s, published by COMPUTE! Publications. Our player is original clean-room code, written from two freely-distributed format descriptions in the Compute's Gazette SID Collection by **Peter Weighill** (`MUS_format_A.txt`) and **Dick Thornton** (`MUS_format_B.txt`) — with thanks to both, and to the CGSC maintainers. Shown in the app as **ChipMachine Clean Room SIDPlayer**. No GPL player source was used, and no disassembly of the original 1980s routine was read; behaviour the documents leave unspecified was recovered by comparing SID register output alone.
 * **GoatTracker v2 (C64 `.sng`):** Developed by **Lasse Öörni (Cadaver)**; the vendored playback core (`gplay.c`, `gsid.cpp`, `gt2_load.c`) is driven directly with no editor/SDL layer. Licensed under GPL-2.0-or-later. Its SID emulation is **reSID** by **Dag Lem**, vendored verbatim, also GPL-2.0-or-later.
 * **UADE (Amiga Exotic formats):** Developed by Heikki Orsila and the UADE Team (eagleplayers/format DB vendored from UADE 3.05). Licensed under GPL-2.0-or-later. Not included in the Mac App Store build.
 * **StSound (Atari ST YM2149):** Developed by Arnaud Carré (Leonard/Oxygene). Licensed under MIT.

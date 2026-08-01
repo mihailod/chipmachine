@@ -195,6 +195,14 @@ enum Formats
 bool songFormatHasNoPlayer(SongInfo const& song,
                            std::set<std::string> const& builtPluginNames);
 
+// True when this row is a SID that the cSID engine cannot make a sound with, so
+// the mas build must not surface it. `silent` is the set loaded from
+// data/misc/csid_silent_sids.txt (HVSC-relative paths).
+//
+// A free function, parameterised like songFormatHasNoPlayer above, so the plus
+// tree can test the mas decision without compiling the mas gating.
+bool songIsSilentSid(SongInfo const& song, std::set<std::string> const& silent);
+
 struct Product
 {
     std::string title;
@@ -595,7 +603,9 @@ private:
     // ".ext" lines land here (lowercased, no leading dot); commented-out lines
     // ("# .gtk") are ignored, so those extensions stay indexable.
     std::set<std::string> unsupportedExts;
+    std::set<std::string> csidSilentSids;
     void loadUnsupportedExtensions(utils::path const& workDir);
+    void loadCsidSilentSids(utils::path const& workDir);
 
     // --- Podcast live-feed refresh (Q4) ---------------------------------
     // A podcast whose episode list can be augmented from a live RSS feed.

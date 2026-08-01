@@ -56,10 +56,14 @@ Component: VICE (C64 Compute! Sidplayer -- .mus/.str only)
 Author: Developed by the VICE Core Team
 License: GNU General Public License v2.0 or later
 Notice: SID-chip playback (.sid/.rsid) moved OFF VICE to cSID (WTFPL, section 5)
-        on 2026-07-30; VICE is retained only for Compute! Sidplayer .mus/.str,
-        for which no permissive player exists. NOT LINKED into the Mac App Store
-        variant (CM_VARIANT=mas builds with CM_HAVE_VICE=OFF, so neither
-        vicepluginbridge nor its vendored VICE sources are compiled), and its
+        on 2026-07-30. In the plus build VICE now serves only two things: the
+        Compute! Sidplayer .mus/.str formats (which since gained a permissive
+        clean-room player of their own, section 5, so the mas build keeps them),
+        and the 2382 self-IRQ RSIDs cSID cannot voice -- see the Coverage note on
+        cSID. Neither is a reason to ship VICE outside the plus build. NOT
+        LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_VICE=OFF, so neither vicepluginbridge nor its vendored VICE
+        sources are compiled), and its
         data/c64 payload -- which includes the Commodore-copyrighted KERNAL,
         BASIC and chargen ROM images -- is stripped from that bundle by
         package_app.sh.
@@ -450,6 +454,49 @@ Notice: A from-scratch 6581/8580 + 6510 + PSID player. It shares NO code with
         fix in the operand fetch); rendered output was verified bit-identical to
         the pristine upstream. Attribution to Hermit is a licence condition and
         is carried in README.md and data/misc/Credits.rtf.
+Coverage: cSID does not emulate enough of a real C64 (KERNAL banked in, CIA and
+        raster running) to run an RSID whose header play address is $0000 and
+        which therefore installs its own IRQ/NMI handler. Measured over the whole
+        collection: 3708 RSIDs and 109 PSIDs carry play=$0000; 2382 of them are
+        silent on EVERY subtune, 1332 play normally and 103 are mixed. The silent
+        ones are listed in data/misc/csid_silent_sids.txt and dropped from the
+        catalog in the Mac App Store build only, so no unplayable row is shown.
+        The plus build plays them through VICE and is unaffected.
+
+Component: Compute!'s Sidplayer sequencer (.mus / .str) -- musplugin,
+           shown in the app as "ChipMachine Clean Room SIDPlayer"
+Author: Original code written for this project (clean room). The FORMAT is Craig
+        Chamberlin's Compute!'s Sidplayer, published by COMPUTE! Publications.
+        Implemented from two freely-distributed format descriptions shipped in
+        the Compute's Gazette SID Collection: MUS_format_A.txt by Peter Weighill
+        -- which states it was produced by hex-editing editor output "without any
+        reference to the book written by Craig Chamberlin" -- and
+        MUS_format_B.txt by Dick Thornton.
+License: Our implementation is original work under this project's terms. The two
+         format descriptions are freely distributed within the CGSC archive.
+Notice: CLEAN ROOM. No code was taken or consulted from libsidplayfp, sidplayfp
+        or JSIDPlay2 (all GPL), nor from any disassembly of the original 1980s
+        Sidplayer routine. Behaviour the documents leave unspecified was derived
+        by black-box observation of emulator register OUTPUT only. This is what
+        allows Compute!'s Sidplayer to ship in the Mac App Store variant, where
+        the GPL VICE bridge cannot. The SID chip emulation underneath is cSID
+        (WTFPL, see above). See musplugin/README.md for the full derivation.
+        METHOD, for the record: the only thing observed was the stream of SID
+        register writes an emulator produces while playing a file -- address,
+        value and cycle timestamp. That output was compared against ours on a
+        1 ms grid and the sequencer's rules were fitted to the difference. No
+        player code, symbol, table or disassembly listing was read at any point;
+        where a rule could not be recovered from output alone it was left
+        unimplemented and recorded as a known gap rather than guessed at from
+        source. Thirteen behaviours the documents do not specify were recovered
+        this way (tick rate, note table rounding, default tempo, startup delay,
+        repeat-count semantics, explicit note lengths, zero-length events,
+        filter-tracking, filter register scope, the modulation schedule, the two
+        sweeps and portamento).
+        VALIDATION: all 16,601 .mus files in the CGSC archive render -- zero
+        crashes, zero hangs, zero parse failures; 9 render silent and all 9 are
+        silent in the reference too. Register agreement with the reference has a
+        median of 98.5% across the full corpus.
 
 Component: SCC-Musixx replay routine (MSX, .SNG)
 Author: Tyfoon-Software (M. Spoor), 1990. "MUSIXX REPLAY ROUTINE v1.2".

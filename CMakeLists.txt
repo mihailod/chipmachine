@@ -92,10 +92,12 @@ endif()
 # variants, at 0.958-1.000 spectral cosine against VICE/reSID. In the plus build
 # vicepluginbridge is retained for the two things cSID cannot do -- Compute!
 # Sidplayer .mus/.str, and self-IRQ RSIDs (play=$0000), of which only ~2 in 14
-# are audible under cSID (see VicePlugin::canHandle). The mas build has neither
-# fallback: the ~6.5k .mus/.str rows are dropped at index time by the same
-# songHasNoPlayer() rule that handles the UADE formats, and the self-IRQ RSIDs
-# stay with cSID, which reports the silent ones unplayable so they Skip.
+# are audible under cSID (see VicePlugin::canHandle). In the mas build those
+# .mus/.str tunes are played instead by musplugin -- a clean-room Compute!
+# Sidplayer sequencer over cSID, registered after vicepluginbridge so the plus
+# build keeps using VICE and is bit-for-bit unchanged. The self-IRQ RSIDs have no
+# mas fallback and stay with cSID, which reports the silent ones unplayable so
+# they Skip.
 #
 # Dropping VICE also drops its data/c64 KERNAL/BASIC/chargen ROM images, which
 # are Commodore-copyrighted and a separate App Store problem from the licence.
@@ -245,7 +247,7 @@ set(MUSICPLAYER_PLUGINS
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin fnkplugin
     famitrackerplugin goattrackerplugin dmfplugin libvgmplugin vgmstreamplugin
-    victrackerplugin klystrackplugin csidplugin
+    victrackerplugin klystrackplugin csidplugin musplugin
 )
 # GPL -- plus build only, see CM_HAVE_UADE above.
 if(CM_HAVE_UADE)

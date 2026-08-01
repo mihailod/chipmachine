@@ -21,6 +21,7 @@ namespace di = boost::di;
 #include <musicplayer/src/plugins/quartetplugin/QuartetPlugin.h>
 #include <musicplayer/src/plugins/dmfplugin/DMFPlugin.h>
 #include <musicplayer/src/plugins/csidplugin/CSIDPlugin.h>
+#include <musicplayer/src/plugins/musplugin/MusPlugin.h>
 
 #include <algorithm>
 #include <array>
@@ -1414,6 +1415,12 @@ TEST_CASE("cSID", "[music]") { testPlugin<musix::CSIDPlugin>("testmus/csid", "")
 // predates this test case -- testmus/libvice had no testPlugin coverage at
 // all until now, which is exactly why it went unnoticed. Left on disk rather
 // than deleted; it is a fixture, so removing it is the owner's call.
+// Compute! Sidplayer via the clean-room musplugin. This is what plays .mus/.str
+// in the mas build, where vicepluginbridge (GPL) is not linked -- so it needs
+// its own fixtures and its own playback coverage even though the plus build,
+// which is the only one cmtest builds in, routes these tunes to VICE.
+TEST_CASE("Sidplayer", "[music]") { testPlugin<musix::MusPlugin>("testmus/sidplayer", ""); }
+
 TEST_CASE("Vice", "[music]") { testPlugin<musix::VicePlugin>("testmus/libvice", "first samurai", "data"); }
 
 // The host routing path (createPlugins -> MusicPlayer::playFile -> getSamples),
@@ -1921,12 +1928,52 @@ TEST_CASE("cSID plays sound", "[music][csid]")
 // chipmachine::songFormatHasNoPlayer() takes the built-plugin set as a parameter precisely so
 // this can run from the plus tree (where the mas #ifdefs are not compiled): pass
 // a set standing in for the mas build and assert what it would decide.
-TEST_CASE("mas index drops Compute! Sidplayer, keeps .sid", "[music][csid][mas]")
+// The mas build has no VICE fallback, so an RSID that installs its own IRQ
+// handler renders as dead air. Those files are enumerated by measurement in
+// data/misc/csid_silent_sids.txt and dropped at index time. Parameterised like
+// songFormatHasNoPlayer so it runs from the plus tree.
+TEST_CASE("mas index: measured-silent SIDs are dropped, playable ones kept",
+          "[music][csid][mas]")
+{
+    auto row = [](std::string const& path) {
+        SongInfo s;
+        s.path = path;
+        s.ext = "sid";
+        return s;
+    };
+    // Two real entries from the generated list (RSID, play=$0000, every subtune
+    // silent under cSID).
+    std::set<std::string> const silent{
+        "MUSICIANS/Z/Zod/Tragic_Error.sid",
+        "MUSICIANS/Z/Zonzo/Perfection_part_4.sid",
+    };
+
+    REQUIRE(chipmachine::songIsSilentSid(row("MUSICIANS/Z/Zod/Tragic_Error.sid"),
+                                         silent));
+    // A SID that is NOT on the list stays indexed -- this is the whole point of
+    // measuring rather than hiding every play=$0000 RSID, which would have cost
+    // 1345 files that play perfectly well.
+    REQUIRE_FALSE(chipmachine::songIsSilentSid(
+        row("MUSICIANS/N/Nebula/M0PPEL.sid"), silent));
+    // With no list loaded nothing is dropped, so a missing data file degrades to
+    // the runtime probe rather than emptying the catalog.
+    REQUIRE_FALSE(chipmachine::songIsSilentSid(
+        row("MUSICIANS/Z/Zod/Tragic_Error.sid"), std::set<std::string>{}));
+    // MULTI: groups never carry SIDs and must never be matched.
+    REQUIRE_FALSE(chipmachine::songIsSilentSid(
+        row("MULTI:MUSICIANS/Z/Zod/Tragic_Error.sid"), silent));
+}
+
+TEST_CASE("mas index: Sidplayer now playable, UADE formats still dropped", "[music][csid][mas]")
 {
     // What each build actually registers, reduced to the names that matter.
     std::set<std::string> const plusPlugins{ "csid",   "libvice", "uade",
                                              "openmpt", "vgmstream" };
-    std::set<std::string> const masPlugins{ "csid", "openmpt", "vgmstream" };
+    // mas now ships musplugin ("Sidplayer") for Compute! Sidplayer, so those rows
+    // are PLAYABLE there and must no longer be dropped -- only the UADE-only
+    // formats still are.
+    std::set<std::string> const masPlugins{ "csid", "openmpt", "vgmstream",
+                                            "chipmachine clean room sidplayer" };
 
     auto row = [](std::string const& path, std::string const& format) {
         SongInfo s;
@@ -1940,13 +1987,16 @@ TEST_CASE("mas index drops Compute! Sidplayer, keeps .sid", "[music][csid][mas]"
     // only the format name reveals that the real player is gone.
     auto sidplayer = row("Sidplayer/Some Composer/tune.mus", "Sidplayer");
     REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(sidplayer, plusPlugins));
-    REQUIRE(chipmachine::songFormatHasNoPlayer(sidplayer, masPlugins));
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(sidplayer, masPlugins));
+    // ...but still dropped by a build with NEITHER player.
+    REQUIRE(chipmachine::songFormatHasNoPlayer(
+        sidplayer, std::set<std::string>{ "csid", "openmpt", "vgmstream" }));
 
     // The 1,446 Stereo Sidplayer tunes, filed under ".str" -- advertised by
     // vgmstream in every build, so the same trap applies.
     auto stereo = row("Sidplayer/Some Composer/tune.str", "Stereo Sidplayer");
     REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(stereo, plusPlugins));
-    REQUIRE(chipmachine::songFormatHasNoPlayer(stereo, masPlugins));
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(stereo, masPlugins));
 
     // FAC SoundTracker is the same ".mus" extension but a UADE format (MSX
     // BSAVE image) -- also gone in mas, for the other GPL reason.

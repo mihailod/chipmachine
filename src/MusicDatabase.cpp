@@ -1133,18 +1133,36 @@ static bool prgForUnemulatedMachine(SongInfo const& song)
 bool songFormatHasNoPlayer(SongInfo const& song,
                            std::set<std::string> const& builtPluginNames)
 {
-    static const std::map<std::pair<std::string, std::string>, std::string>
+    // Each entry lists EVERY plugin that can play the pair, because which one is
+    // present depends on the variant: Compute! Sidplayer is vicepluginbridge in
+    // the plus build and musplugin ("ChipMachine Clean Room SIDPlayer") in the
+    // mas build, so the row is
+    // only unplayable when NONE of the candidates was linked.
+    static const std::map<std::pair<std::string, std::string>,
+                          std::vector<std::string>>
         formatPlayer{
-            {{"mus", "sidplayer"}, "libvice"},
-            {{"mus", "stereo sidplayer"}, "libvice"},
-            {{"mus", "fac soundtracker"}, "uade"},
-            {{"str", "stereo sidplayer"}, "libvice"},
+            {{"mus", "sidplayer"}, { "libvice", "chipmachine clean room sidplayer" }},
+            {{"mus", "stereo sidplayer"}, { "libvice", "chipmachine clean room sidplayer" }},
+            {{"mus", "fac soundtracker"}, { "uade" }},
+            {{"str", "stereo sidplayer"}, { "libvice", "chipmachine clean room sidplayer" }},
         };
     if (song.format.empty()) { return false; }
     if (builtPluginNames.empty()) { return false; }
     auto it = formatPlayer.find({ routingExtension(song), toLower(song.format) });
     if (it == formatPlayer.end()) { return false; }
-    return builtPluginNames.count(it->second) == 0;
+    for (auto const& cand : it->second) {
+        if (builtPluginNames.count(cand) > 0) { return false; }
+    }
+    return true;
+}
+
+bool songIsSilentSid(SongInfo const& song, std::set<std::string> const& silent)
+{
+    if (silent.empty()) { return false; }
+    // MULTI: groups never carry SIDs, and a prefixed path ("hvsc::...") only
+    // appears after lookup, not at index time -- so a plain compare is enough.
+    if (startsWith(song.path, "MULTI:")) { return false; }
+    return silent.count(song.path) > 0;
 }
 
 // Should this song be dropped from the index because we have no decoder for it?
@@ -1480,6 +1498,17 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // of the catalog instead of surfacing rows that download and
                 // then fail. See songHasNoPlayer().
                 if (songHasNoPlayer(song, playableExtensions())) { return; }
+#endif
+#ifdef CM_NO_VICE
+                // Without the VICE bridge there is no fallback for an RSID that
+                // installs its own IRQ handler and expects a real C64, so cSID
+                // renders it as dead air. Those are enumerated by MEASUREMENT in
+                // data/misc/csid_silent_sids.txt -- 2382 files whose every
+                // subtune stayed silent -- and dropped here. The 1345 play=$0000
+                // files that DO play are deliberately absent from that list, as
+                // are files with a mix of silent and playing subtunes, which the
+                // runtime probe in CSIDPlugin skips one subtune at a time.
+                if (songIsSilentSid(song, csidSilentSids)) { return; }
 #endif
 #ifdef CM_MAS
                 // Mac App Store build has no YouTube plugin (see main.cpp's
@@ -2017,12 +2046,16 @@ void MusicDatabase::buildPluginGroups()
     // would credit them to cSID now; name them explicitly instead. Playback was
     // and stays correct either way -- CSIDPlugin::canHandle content-gates on the
     // "PSID"/"RSID" magic and declines SidMon, which then falls through to UADE.
-    static const std::map<std::pair<std::string, std::string>, std::string>
+    // Values are candidate lists for the same reason as formatPlayer above: the
+    // plugin that owns Compute! Sidplayer differs per variant, so credit the
+    // first candidate this build actually registered.
+    static const std::map<std::pair<std::string, std::string>,
+                          std::vector<std::string>>
         formatOverride{
-            {{"mus", "sidplayer"}, "libvice"},
-            {{"mus", "stereo sidplayer"}, "libvice"},
-            {{"mus", "fac soundtracker"}, "uade"},
-            {{"sid", "sidmon 1"}, "uade"},
+            {{"mus", "sidplayer"}, { "libvice", "chipmachine clean room sidplayer" }},
+            {{"mus", "stereo sidplayer"}, { "libvice", "chipmachine clean room sidplayer" }},
+            {{"mus", "fac soundtracker"}, { "uade" }},
+            {{"sid", "sidmon 1"}, { "uade" }},
         };
 
     std::vector<int> counts(plugins.size(), 0);
@@ -2054,8 +2087,10 @@ void MusicDatabase::buildPluginGroups()
         // Shared extension the catalog can disambiguate by format name.
         auto ov = formatOverride.find({e, toLower(fmt)});
         if (ov != formatOverride.end()) {
-            auto np = nameToPlugin.find(ov->second);
-            if (np != nameToPlugin.end()) { pIdx = np->second; }
+            for (auto const& cand : ov->second) {
+                auto np = nameToPlugin.find(cand);
+                if (np != nameToPlugin.end()) { pIdx = np->second; break; }
+            }
         }
         counts[pIdx]++;
         idxs[pIdx].push_back(i);
@@ -5428,6 +5463,25 @@ void MusicDatabase::initFromLuaAsync(utils::path const& workDir)
     });
 }
 
+void MusicDatabase::loadCsidSilentSids(utils::path const& workDir)
+{
+    csidSilentSids.clear();
+    auto f = findFile(workDir.string(), "data/misc/csid_silent_sids.txt");
+    if (!f) {
+        LOGW("csid_silent_sids.txt not found; indexing all SIDs");
+        return;
+    }
+    for (auto line : utils::File{ *f }.getLines()) {
+        auto a = line.find_first_not_of(" \t\r\n");
+        if (a == std::string::npos) { continue; }
+        auto b = line.find_last_not_of(" \t\r\n");
+        line = line.substr(a, b - a + 1);
+        if (line[0] == '#') { continue; }
+        csidSilentSids.insert(line);
+    }
+    LOGD("csid_silent_sids: %d paths", (int)csidSilentSids.size());
+}
+
 void MusicDatabase::loadUnsupportedExtensions(utils::path const& workDir)
 {
     unsupportedExts.clear();
@@ -5455,6 +5509,12 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
 {
     this->workDir = workDir;
     loadUnsupportedExtensions(workDir);
+#ifdef CM_NO_VICE
+    // Only the mas build consults this list; the plus build plays these tunes
+    // through VICE, so there is no reason for it to read 2382 paths it will
+    // never test against.
+    loadCsidSilentSids(workDir);
+#endif
     auto playlistPath = Environment::getConfigDir() / "playlists";
     utils::create_directory(playlistPath);
     bool favFound = false;

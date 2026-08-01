@@ -1,12 +1,61 @@
 Mac App Store (MAS) compliance:
 
-- The same audit turned up seven more components missing from LEGAL and Credits.rtf, pre-dating this work: Furnace/DefleMask (.dmf), GSF, USF, unrar (rsnplugin), Farbrausch V2, TFMX, and FunkTracker (the libxmp entry lists only musx/coco/mgt). I left them alone — each needs its licence verified from its own vendored source, and a wrong licence in LEGAL is worse than an absent one. Say the word and I'll work through them the same way I did GoatTracker.
+- for both MAS and PLUS Exclude these dangling pics from being packaged from data/misc by the package_app.sh script (remove them after the recursive copy if that is the easiest to do): search.png, formats.png, amegas.png (we cannot move them unfortunately since there are external web forums pointers to it).
 
-- unless we can find some workaround we need to remove both goattrackerplugin (vendors reSID), and victrackerplugin's vic_sound.c (VICE VIC-I derived) from the MAS version of the app (and not surface the content they play). The goal is a GPL-clean MAS build for Apple Mac App Store clearance. The PLUS version should remain unchanged.
+- how many songs are impacted for GPL goattracker -- cannot find it in plugins search?! unless we can find some workaround (non-GPL or clean room implementation based on some specs) we need to remove goattrackerplugin (vendors GPL reSID), 
+
+- replace with non-GPL if possible or remove: victrackerplugin's vic_sound.c (GPL VICE VIC-I derived, 11 songs impacted) replacement in the MAS version of the app (and not surface the content they play)?
+
+- MAS: GPL Furnace (what is this? how many songs impacted?)
+
+- MAS: replace with non-GPL if possible or remove GPL GSF (what is this? how many songs impacted?)
+
+- MAS: replace with non-GPL if possible or remove GPL USF (182 songs)
+
+- closing the mas TFMX gap is a real open question, just not one this code answered — it would need a permissively-licensed TFMX replayer (the usual candidate being a clean reimplementation rather than a tfmxplay derivative). Say the word and I'll scope that; I haven't counted how many tunes are currently hidden in mas, since there's no song DB in the tree to query.
 
 -CONFIRM NO GPL CODE OR REFERENCES ARE ANYWHERE in the MAS version -- look at the ChipMachine.app built and packaged by me for the mac app store submission
 
-- database indexing progress bar to show names of databases, not ids
+- sc68 plays 1-2 seconds of subsong1 before switching to subsongN, example: Wings of Death STE
+
+---------------------------------------------
+
+- agy found more issues, look into them:
+
+  ──────
+  #### 2. Legal & Open-Source License Conflicts (App Store Review Guideline 5.2)
+
+  • Statically Linked GPL Code (Apple EULA Incompatibility):
+      • Inspection of  ChipMachine.app/Contents/MacOS/chipmachine  shows that several GPL-licensed plugins are compiled directly into the executable (e.g.  SC68Plugin  [GPL-3.0],  ZXTunePlugin  [GPL-3.0],                  
+      FamiTrackerPlugin  [GPL-2.0],  GoatTracker / reSID ,  ASAP ,  Ayfly ,  MaxTrax ,  Vic-Tracker ).
+      • App Store Requirement: Distributing GPL-licensed software on the Mac App Store creates a legal conflict with Apple’s App Store EULA DRM terms. GPL components must be stripped/disabled from MAS builds.
+  • Creative Commons NonCommercial (CC BY-NC-SA 4.0) License:
+      • As noted in Credits.rtf, Ixalance ( webixs ) is licensed under CC BY-NC-SA 4.0 (NonCommercial).
+      • App Store Requirement: Mac App Store distribution is legally treated as commercial distribution under Apple's Developer Terms (even for $0 free apps). Distributing NonCommercial (NC) code violates its license.
+
+any GPL player we remove we should make an honest attempt to replace with non-GPL alternative or make our own if specs are known 
+
+LATEST info:
+
+  ### ⚠️ Remaining Issues (Actionable Without $99)
+
+  1. GPL-Licensed Plugins Still Compiled Into the MAS Binary
+
+  The  chipmachine  executable in the MAS build still contains symbols for GPL-licensed plugins:
+  •  SC68Plugin  (GPL-3.0)
+  •  ZXTunePlugin  (GPL-3.0)
+  •  FamiTrackerPlugin  (GPL-2.0)
+  •  GoatTrackerPlugin  (GPL-2.0)
+  │ Risk: Apple's App Store EULA DRM terms conflict with GPL license requirements. Apple App Review may reject the app on legal grounds (Guideline 5.2), or the GPL authors could issue a takedown.
+  ││ Fix: Your CMake  CM_VARIANT=mas  build should disable these plugins at compile time ( -DCM_HAVE_SC68=OFF -DCM_HAVE_ZXTUNE=OFF  etc.) so their code is not linked into the MAS binary. This is a build-system change, not a packaging change.
+
+  2.  sc68/Replay/  Contains Commercial Game Audio Data
+  Files like  alteredbeast.bin ,  lastninja3.bin ,  cabal.bin ,  shadowdancer.bin  are Atari ST replay routines extracted from commercial games. While these are replayer binaries (not the songs themselves), Apple reviewers may flag them as third-party copyrighted material.
+  │ Risk: Low-to-medium. These are format replayers, not music content, but the filenames are conspicuous.
+  ││ Fix: Consider whether these can be documented as open-source format replayers (they ship with sc68 under GPL) or whether they need to be fetched at runtime instead.
+
+
+-------------------------------
 
 - MAS: replace ALL logos/brands with generic txt/pics. Brand Logos: Keep official hardware logos (Nintendo, Sega, Commodore, Sony) out of your UI and App Store screenshots. Use text tags (e.g., ⁠C64⁠, ⁠NES⁠, ⁠ZX⁠). Maybe append generics and just disable/unbundle the branded from mas -- have parallel screenshots folders: branded and generic, screenshots-b, screenshots-g
 
@@ -16,7 +65,7 @@ Mac App Store (MAS) compliance:
 
 - Add tracker-style scrolling note pattern where possible by format
 
-- recheck everything and submit to apple!
+- recheck everything (both signing and MAS) and submit to apple!
 
 ----------------------------
 

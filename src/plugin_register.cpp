@@ -66,6 +66,7 @@ extern "C" {
     void victrackerplugin_register();  // VIC-TRACKER (.vt) Commodore VIC-20 via fake6502 + VICE VIC-I sound
     void klystrackplugin_register();   // Klystrack (.kt) via vendored libksnd / klystron cyd synth
     void csidplugin_register();        // Commodore 64 SID (.sid/.rsid) via Hermit's cSID (WTFPL)
+    void musplugin_register();         // Compute! Sidplayer (.mus/.str) -- clean-room sequencer on cSID
 }
 
 void register_plugins() {
@@ -104,6 +105,12 @@ void register_plugins() {
     // vicepluginbridge target is not built at all. Only .mus/.str reach it.
     vicepluginbridge_register();
 #endif
+    // AFTER vicepluginbridge on purpose -- registration order is the variant
+    // gate for Compute! Sidplayer. In the plus build VICE exists and claims
+    // .mus/.str first, so that build is completely unchanged; in the mas build
+    // vicepluginbridge is not linked at all and this permissive sequencer picks
+    // them up, making ~6.5k Sidplayer songs playable there instead of hidden.
+    musplugin_register();
     ffmpegplugin_register();
 #ifndef CM_NO_UADE
     // GPLv2 -- excluded from the Mac App Store build (CM_VARIANT=mas), where the

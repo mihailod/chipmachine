@@ -1167,3 +1167,68 @@ static void createCombinedWF(unsigned int* wfarray, float bitmul,
         wfarray[i] *= 12;
     }
 }
+
+// ---------------------------------------------------------------------------
+// Register-level API -- see csid_engine.h. Used by musplugin (.mus/.str), which
+// drives the SID registers directly instead of running 6502 code.
+// ---------------------------------------------------------------------------
+void csid_chip_init(int rate, int sid_count, unsigned int sid2_base)
+{
+    samplerate = rate > 0 ? rate : DEFAULT_SAMPLERATE;
+    sampleratio = (int)round((double)C64_PAL_CPUCLK / samplerate);
+    if (sampleratio < 1) { sampleratio = 1; }
+    SIDamount = sid_count < 1 ? 1 : (sid_count > 2 ? 2 : sid_count);
+    SID_address[0] = 0xD400;
+    SID_address[1] = sid2_base;
+    SID_model[0] = SID_model[1] = SID_model[2] = 8580;
+    OUTPUT_SCALEDOWN = OUTPUT_SCALEDOWN_BASE;
+    if (SIDamount == 2) { OUTPUT_SCALEDOWN /= 0.6; }
+    memory[1] = 0x37;
+    cSID_init(samplerate);
+}
+
+void csid_poke(unsigned int addr, unsigned char val)
+{
+    if (addr < MAX_DATA_LEN) { memory[addr] = val; }
+}
+
+int csid_chip_render(int16_t* out, int frames)
+{
+    int i, j;
+    long int acc;
+    for (i = 0; i < frames; i++) {
+        acc = 0;
+        for (j = 0; j < sampleratio; j++) {
+            acc += SID(0, 0xD400);
+            if (SIDamount >= 2) { acc += SID(1, SID_address[1]); }
+        }
+        acc /= sampleratio;
+        if (acc > 32767) { acc = 32767; }
+        else if (acc < -32768) { acc = -32768; }
+        out[i] = (int16_t)acc;
+    }
+    return frames;
+}
+
+// Stereo variant: chip 1 -> left, chip 2 -> right. Summing both chips to mono
+// (which csid_chip_render does) collapses a Stereo Sidplayer tune to a single
+// channel -- audibly wrong, since VICE keeps them separated.
+int csid_chip_render_stereo(int16_t* out, int frames)
+{
+    int i, j;
+    long int l, r;
+    for (i = 0; i < frames; i++) {
+        l = r = 0;
+        for (j = 0; j < sampleratio; j++) {
+            l += SID(0, 0xD400);
+            if (SIDamount >= 2) { r += SID(1, SID_address[1]); }
+        }
+        l /= sampleratio;
+        if (SIDamount >= 2) { r /= sampleratio; } else { r = l; }
+        if (l > 32767) { l = 32767; } else if (l < -32768) { l = -32768; }
+        if (r > 32767) { r = 32767; } else if (r < -32768) { r = -32768; }
+        out[i * 2] = (int16_t)l;
+        out[i * 2 + 1] = (int16_t)r;
+    }
+    return frames;
+}
