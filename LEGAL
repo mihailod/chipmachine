@@ -46,7 +46,9 @@ You should have received a copy of the PolyForm Noncommercial License 1.0.0
 along with this program. If not, see <https://polyformproject.org/licenses/noncommercial/1.0.0/>.
 
 ===============================================================================
-2. COPYLEFT DEPENDENCIES (FORCING COMBINED WORK TO GPL-3.0-OR-LATER)
+2. COPYLEFT AND OTHER RESTRICTED DEPENDENCIES
+   (FORCING COMBINED WORK TO GPL-3.0-OR-LATER, OR OTHERWISE NOT REDISTRIBUTABLE
+   ON THE MAC APP STORE)
 ===============================================================================
 Component: SC68 (Atari ST -- .sc68 container only)
 Author: Developed by Benjamin Gerard. Covers libsc68, the emu68 68000 core,
@@ -71,6 +73,86 @@ Notice: NO LONGER the .sndh decoder. As of 2026-08-01 both variants play .sndh
         ICE! depacking for SNDH tag parsing (SongFileIdentifier::parseSndh) also
         moved off unice68 onto the public-domain ice_24.c that ships with
         AtariAudio, so no GPL-3 code is reachable from shared app code.
+
+Component: Audio Overload SDK / AOSDK (aoplugin -- Sega Saturn .ssf, Capcom
+           QSound .qsf, PlayStation SPU dumps .spu, AND PlayStation 1/2
+           .psf/.minipsf/.psf2/.minipsf2)
+Author: R. Belmont and Richard Bannister (the SDK and the BSD-licensed engine
+        wrappers); Nicola Salmoria and the MAME team (the emulator cores);
+        Pete Bernert (the PEOpS SPU/SPU2 cores). Vendored under
+        musicplayer/src/plugins/aoplugin/aosdk/.
+License: MIXED, and two of the three parts are restrictive. Per the vendored
+        aosdk/license.txt, which lists every file:
+          * BSD-3-Clause (R. Belmont / Richard Bannister) -- corlett.c, ao.h,
+            eng_psf/{eng_psf.c,eng_psf2.c,eng_spu.c,psx_hw.c},
+            eng_qsf/eng_qsf.c, eng_ssf/{eng_ssf.c,sat_hw.c}.
+          * MAME 1997-2008 licence (Nicola Salmoria and the MAME team) --
+            eng_psf/{psx.c,cpuintrf.h,mamemem.h}, all of eng_ssf's Musashi
+            68000 and SCSP, and eng_qsf's z80.c / qsound.c / kabuki.c. That
+            licence states: "Redistributions may not be sold, nor may they be
+            used in a commercial product or activity."
+          * GNU General Public License v2 (Pete Bernert) -- the whole of
+            eng_psf/peops/ and eng_psf/peops2/, i.e. the SPU and SPU2 cores.
+            Full text at eng_psf/peops/License.txt.
+        The upstream licence file states outright that anything built from this
+        SDK including MAME-licensed components must be distributed with source.
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_AO=OFF, so neither aoplugin nor its vendored AOSDK sources are
+        compiled). The MAME and GPL parts ARE the emulator cores -- one per
+        target -- so there is no file to drop and no permissive substitute
+        vendored here.
+        This component GAINED the four PSF extensions on 2026-08-01, when the
+        Sony PS2 BIOS image that Highly Experimental required was deleted from
+        the tree (see the next entry -- the plugin itself went with it). AOSDK's
+        eng_psf/eng_psf2 are HLE: psx_hw.c emulates the PS1 BIOS A0/B0/C0
+        vectors and the PS2 IOP kernel in software, so they need no BIOS image
+        at all. They were already being compiled; only AOPlugin::supported_ext
+        had to change.
+        The mas variant therefore loses 685 rows, dropped from its index to
+        match: 668 PlayStation (.minipsf 353, .psf 137, .psf2 130, .minipsf2 47)
+        plus 17 that were AOSDK-only anyway (.spu 9, .miniqsf 8). Sega Saturn
+        .ssf/.minissf is NOT lost -- HTPlugin (section 4) declares priority 1 and
+        owns those 136 rows in both variants.
+        LOCAL PATCH, re-apply on revendor: eng_psf/peops/spu.c sets iVolume to
+        128 rather than upstream's 255. 255 is a pre-clip global gain of ~1.0
+        and measured exactly 2x what Highly Experimental produced for the same
+        rips, clipping 7 of 13 sampled modland PSF1 tunes; 128 restores the
+        level this app has always shipped for PSF and removes the clipping.
+
+Component: Highly Experimental (PlayStation 1/2 PSF) -- REMOVED FROM THE TREE
+Author: Neill Corlett (the PSF format and the original Highly Experimental);
+        vendored here in kode54's form, formerly at
+        musicplayer/src/plugins/heplugin/.
+License: NONE STATED. There was no licence file, no SPDX identifier and no
+        per-file licence header anywhere in the vendored tree or in the upstream
+        it came from. This file previously recorded "zlib License" for this
+        component; that was WRONG and is corrected here -- the "zlib" evidence
+        turned out to be `#include <zlib.h>`, i.e. a dependency on zlib, not a
+        licence grant covering Highly Experimental itself.
+Notice: DELETED 2026-08-01, along with the Sony BIOS image it required. The
+        engine could not initialise without a real Sony PlayStation 2 BIOS:
+        HEPlugin::fromFile() loaded data/hebios.bin, passed it to
+        bios_set_image(), and returned nullptr if it was absent. That file was
+        512 KB of Sony Computer Entertainment firmware -- it contains the
+        literal string "Copyright 1999-2002 (C) Sony Computer Entertainment
+        Inc." -- and it was shipping inside BOTH bundles at
+        Contents/Resources/data/hebios.bin, with no entry in this file. It is
+        not ours to redistribute under any licence or on any store, so it was
+        removed (both copies: data/hebios.bin and the unreferenced duplicate at
+        external/musicplayer/data/hebios.bin). With the BIOS gone the plugin
+        could not decode anything in any variant, and an unlicensed engine that
+        plays nothing is pure liability, so the plugin was deleted outright
+        rather than kept behind a build gate.
+        NO SONGS WERE LOST. PSF1/PSF2 playback moved to AOSDK's BIOS-free HLE
+        engines, above; verified over ~100 modland rips with
+        `cm --dump-metadata` -- every file Highly Experimental could load, AOSDK
+        loads. The rips that fail fail under BOTH engines, for a reason that is
+        neither engine's fault: their "_lib2" tags name companion libraries with
+        underscores that modland stores with spaces.
+        A second, equally unlicensed copy of this engine still sits unused and
+        UNCOMPILED at external/zxtune/3rdparty/he/ -- it arrived with the zxtune
+        vendor drop, is referenced only by an upstream app subdirectory this
+        project does not build, and reaches neither binary.
 
 Component: VICE (C64 Compute! Sidplayer -- .mus/.str only)
 Author: Developed by the VICE Core Team
@@ -480,10 +562,6 @@ Component: zingzong (Atari ST Quartet format)
 Author: Developed by Ben G. (benjihan)
 License: MIT License
 
-Component: Highly Experimental (PSF1/2)
-Author: Developed by Neill Corlett
-License: zlib License
-
 Component: minimp3 (MP3 decoding)
 Author: Developed by Lieven van den Hauwe
 License: Creative Commons Zero v1.0 Universal (CC0-1.0 Public Domain)
@@ -541,11 +619,6 @@ License: Redistributable for emulation use under Amstrad's 1999 permission.
 ===============================================================================
 5. CUSTOM / FREEWARE PERMISSIVE DEPENDENCIES
 ===============================================================================
-Component: AudioOverload Backend / AOSDK
-Author: Developed by Richard Bannister and contributors
-License: Custom Permissive Freeware License
-Notice: Included non-commercially under authors' custom permissive terms.
-
 Component: cSID (Commodore 64 SID chip, .sid/.rsid)
 Author: Mihaly Horvath ("Hermit"), 2016-2017. http://hermit.sidrip.com
         Vendored from https://github.com/mlund/csid (the cycle-based csid.c),

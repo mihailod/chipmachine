@@ -10,7 +10,7 @@ Dev notes on various databases and how they are updated
       lua/db.lua, and every <collection>_screenshots.txt (MusicDatabase.cpp
       loads these lazily by collection name);
     - plugin payloads loaded from ChipPlugin::createPlugins(work_dir/"data"):
-      adplug.db, hebios.bin, c64/ (VICE ROMs), sc68/, uade/;
+      adplug.db, c64/ (VICE ROMs), sc68/, uade/;
     - UI assets: AlegreyaSansSC-Bold.ttf, FONT-LICENSES.txt, fontsmainscroll/,
       playlists/, misc/{icon,paused,muted}.png, misc/platformscreenshots/,
       misc/extensionscreenshots/, misc/formats_descriptions.txt,
@@ -352,8 +352,13 @@ X •  Songlengths.md5 / STIL.txt : NO READER AT ALL as of 2026-07-30. They were
   data-notbundled/.
 - •  adplug.db : An internal binary database used solely by the AdPlug player plugin to handle OPL2/OPL3 (AdLib) metadata.
   Loaded from data/ (createPlugins config dir) -- stays bundled.
-- •  hebios.bin : Emulation BIOS file utilized exclusively by the HEBIOS console sound emulator.
-  Loaded from data/ (createPlugins config dir) -- stays bundled.
+- •  hebios.bin : DELETED 2026-08-01, do NOT restore. This was a real Sony
+  PlayStation 2 BIOS image (512 KB, containing "Copyright 1999-2002 (C) Sony
+  Computer Entertainment Inc."), read by heplugin to boot Highly Experimental,
+  and it was shipping in BOTH bundles with no entry in LEGAL. We have no right
+  to redistribute it. PSF1/PSF2 playback moved to aoplugin's AOSDK engines,
+  which are HLE and need no BIOS. A second, unreferenced copy under
+  external/musicplayer/data/ was deleted at the same time.
 - •  sc68/sc68.cfg : The emulator engine configuration file and resources for SC68 (Atari ST) playback.
   Loaded as data/sc68 -- stays bundled. (The stray duplicate that sat at data/sc68.cfg
   had no reader and moved to data-notbundled/sc68.cfg.)

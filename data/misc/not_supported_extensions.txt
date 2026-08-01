@@ -357,7 +357,7 @@
 .set
 
 # playstation 2 sound format shared driver/sample lib, referenced by the
-# .psf2/.minipsf2 tunes in the same dir (heplugin pulls it in as a psflib).
+# .psf2/.minipsf2 tunes in the same dir (aoplugin pulls it in as a psflib).
 # Never a standalone row today -- all 6 rows are MULTI groups that survive -- so
 # this line is pre-emptive: it stops a bare "*.psf2lib" from ever becoming an
 # entry if a future rip lists one.

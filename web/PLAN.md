@@ -168,8 +168,9 @@ Bring plugins up in waves; each wave is a shippable increment.
 - **Wave 1 (chip staples):** `gmeplugin` (NES/SPC/GB/…), `sidplugin` **or**
   `vicepluginbridge` (C64 SID), `hivelyplugin` (AHX/HVL), `sc68plugin`,
   `stsoundplugin`, `adplugin`. Mostly self-contained emulators.
-- **Wave 2 (PSF/console family):** `heplugin`, `htplugin`, `usfplugin`,
-  `ndsplugin`, `gsfplugin`, `aoplugin` + the `psf` support lib.
+- **Wave 2 (PSF/console family):** `htplugin`, `usfplugin`, `ndsplugin`,
+  `gsfplugin`, `aoplugin` (which now owns PS1/PS2 `.psf*` too, since `heplugin`
+  was deleted along with the Sony BIOS it needed) + the `psf` support lib.
 - **Wave 3 (large/complex):** `uadeplugin` (verify the in-process m68k path has
   no fork/exec — `uade/src/frontends/*` reference `posix_spawn`; may need the
   library-mode entry points only), `zxtuneplugin`, `vgmstreamplugin`,

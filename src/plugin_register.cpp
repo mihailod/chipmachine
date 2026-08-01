@@ -4,12 +4,17 @@
 
 extern "C" {
     void adplugin_register();      // Adlib / OPL
-    void aoplugin_register();      // Adlib Objective
+#ifndef CM_NO_AO
+    // Audio Overload: Saturn/QSound/SPU AND PlayStation 1-2 PSF (which it took
+    // over from the deleted heplugin -- AOSDK's PS1/PS2 engines are HLE and
+    // need no Sony BIOS image). MAME 1997-2008 (non-commercial) + GPL-2 peops
+    // SPU, so plus build only.
+    void aoplugin_register();
+#endif
     void ayflyplugin_register();   // ZX Spectrum / CPC (AY-3-8910)
     void gmeplugin_register();     // Game Music Emu (NES, SNES, etc.)
     void libvgmplugin_register();  // OPL2/OPL3 VGM/VGZ (AdLib/SB) via libvgm
     void gsfplugin_register();     // Gameboy Advance
-    void heplugin_register();      // PS1/PS2 Executables
     void hivelyplugin_register();  // Amiga HivelyTracker
     void htplugin_register();      // Hudson Soft (TurboGrafx)
     void mdxplugin_register();     // Sharp X68000
@@ -78,14 +83,15 @@ extern "C" {
 
 void register_plugins() {
     adplugin_register();
+#ifndef CM_NO_AO
     aoplugin_register();
+#endif
     ayflyplugin_register();
     // Before gmeplugin so OPL VGMs are claimed here first; the two canHandle
     // gates are disjoint (GME declines OPL) so order is belt-and-braces.
     libvgmplugin_register();
     gmeplugin_register();
     gsfplugin_register();
-    heplugin_register();
     hivelyplugin_register();
     htplugin_register();
     mdxplugin_register();

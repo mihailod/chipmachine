@@ -1192,6 +1192,43 @@ bool songFormatHasNoPlayer(SongInfo const& song,
             // data/sc68/Replay/ as 95 prebuilt 68k binaries built from GPL-3
             // sc68 sources -- no permissive equivalent, no published spec.
             {{"sc68", "sc68"}, { "sc68" }},
+            // ".psf" is the sixth case, and it is here for exactly the ".mus"
+            // reason: vgmstream ALSO advertises the extension (and UADE lists it
+            // for the Amiga "SoundFactory" format), so playableExtensions()
+            // contains "psf" in every build and the plain extension test in
+            // songHasNoPlayer() would keep all 137 PlayStation rows in a mas
+            // index that has no PS1 decoder at all.
+            //
+            // The other three are listed for a second reason, and it was
+            // MEASURED rather than anticipated: nameHasPlayer() also accepts a
+            // modland-style prefix-before-dot ("med.<song>"), so a file whose
+            // name merely BEGINS with a claimed token survives the extension
+            // test even when its own suffix is unclaimed. A first mas reindex
+            // with only the ".psf" row below dropped 684 rows instead of 685,
+            // and the survivor was
+            //   MULTI:Playstation 2 Sound Format/- unknown/Net De Bomberman/bgm.psf2
+            // -- "bgm" is an MSX extension kssplugin claims, so the leading
+            // token rescued it. Exactly the trap the three ".sc68" stragglers
+            // sprang. Keying on the format column beats that path entirely, so
+            // all four extensions are listed rather than only the ambiguous one.
+            //
+            // Single-candidate, and there is no mas replacement. AOSDK's
+            // PS1/PS2 path is MAME-licensed (non-commercial) over GPL-2 PEOpS.
+            // The only other PSF engine this project ever had, Highly
+            // Experimental, has been deleted outright: it carried no licence at
+            // all and required a Sony PS2 BIOS image (data/hebios.bin) that was
+            // unredistributable Sony copyright and is gone. See the CM_HAVE_AO
+            // block in CMakeLists.txt.
+            {{"psf", "playstation sound format"}, { "audio overload" }},
+            {{"minipsf", "playstation sound format"}, { "audio overload" }},
+            {{"psf2", "playstation 2 sound format"}, { "audio overload" }},
+            {{"minipsf2", "playstation 2 sound format"}, { "audio overload" }},
+            // NOT listed: the 11 modland "SoundFactory" rows that also end in
+            // ".psf". That is an Amiga format with no connection to the
+            // PlayStation -- AOPlugin::canHandle declines any path containing
+            // "/soundfactory" -- and it was always
+            // UADE's. It is unplayable in mas for the UADE reason, not this one,
+            // and gating it belongs with the UADE work rather than here.
             // ".sndh" is the mirror image and must NOT be listed anywhere:
             // sndhplugin (AtariAudio, MIT) claims it in BOTH variants, so all
             // 6,079 of those rows keep playing in mas. That is the whole point
@@ -1238,12 +1275,14 @@ bool songIsSilentSid(SongInfo const& song, std::set<std::string> const& silent)
 // the point of listing them.
 //
 // Compiled for the mas variant, which ships without uadeplugin,
-// vicepluginbridge, goattrackerplugin, dmfplugin, sc68plugin OR
-// pokeynoiseplugin (all GPL -- see CM_HAVE_UADE / CM_HAVE_VICE /
-// CM_HAVE_GOATTRACKER / CM_HAVE_DMF / CM_HAVE_SC68 / CM_HAVE_POKEYNOISE in
-// CMakeLists.txt).
+// vicepluginbridge, goattrackerplugin, dmfplugin, sc68plugin,
+// pokeynoiseplugin OR aoplugin (see CM_HAVE_UADE / CM_HAVE_VICE /
+// CM_HAVE_GOATTRACKER / CM_HAVE_DMF / CM_HAVE_SC68 / CM_HAVE_POKEYNOISE /
+// CM_HAVE_AO in CMakeLists.txt -- GPL for the first six, MAME non-commercial
+// over GPL-2 for aoplugin).
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
-    defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE)
+    defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE) || \
+    defined(CM_NO_AO)
 static bool isContainerExt(std::string e); // defined near resolveExtension()
 
 // Every extension SOME registered plugin claims by name -- i.e. everything this
@@ -1553,7 +1592,8 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // download then can't play.
                 if (songIsUnsupported(song, unsupportedExts)) { return; }
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
-    defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE)
+    defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE) || \
+    defined(CM_NO_AO)
                 // Same rule, build-scoped: without uadeplugin this variant has
                 // no decoder for the Amiga custom-replayer formats, without
                 // vicepluginbridge none for Compute! Sidplayer, without
@@ -2242,6 +2282,14 @@ void MusicDatabase::buildPluginGroups()
             // under "sng" rather than "mod" and need naming explicitly.
             {{"sng", "protracker"}, { "openmpt" }},
             {{"sng", "noisetracker"}, { "openmpt" }},
+            // ".psf" is not only PlayStation: 11 modland rows under
+            // "SoundFactory/" are an Amiga format that borrowed the suffix, and
+            // UADE is the only thing that plays them. Both PlayStation claimers
+            // decline them on the "/soundfactory" path check, so playback was
+            // always right; the count was not. These used to be credited to
+            // HEPlugin, and would now be credited to Audio Overload, which is
+            // just as wrong.
+            {{"psf", "soundfactory"}, { "uade" }},
             //
             // STILL mis-credited, deliberately not fixed here: SoundSmith's 180
             // rows -- bare-named, so resolveExtension() returns empty and they
@@ -4368,7 +4416,6 @@ std::string MusicDatabase::platformForExtension(std::string const& rawExt)
         { "ZX Spectrum (ZXTune)", "ZX Spectrum 128" },
         { "RSNPlugin", "Nintendo SNES" },
         { "MSX (libkss)", "MSX" },
-        { "HEPlugin", "PlayStation" },
         { "libvice", "Commodore 64" },
         { "SC68", "Atari ST/STE/TT" },
         { "FMPPlugin", "PC-98" },

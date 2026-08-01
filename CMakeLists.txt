@@ -228,6 +228,77 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_POKEYNOISE ON)
 endif()
+# PlayStation audio is the seventh case, and the only one that started as a
+# COPYRIGHT problem rather than a licence one.
+#
+# heplugin (Highly Experimental, kode54) used to play all four PSF extensions,
+# and it could not initialise at all without a real Sony PlayStation 2 BIOS
+# image: HEPlugin::fromFile() opened data/hebios.bin, fed it to
+# bios_set_image(), and returned nullptr if it was not there. That file was
+# 512 KB of Sony Computer Entertainment firmware -- it contains the literal
+# string "Copyright 1999-2002 (C) Sony Computer Entertainment Inc." -- and it
+# was shipping inside BOTH bundles, unmentioned in LEGAL. Nothing about a free
+# app, a GPL argument or an App Store guideline is relevant to that; it is
+# simply not ours to redistribute. It was DELETED from the tree (both copies:
+# data/hebios.bin and an unreferenced duplicate under
+# external/musicplayer/data/), which removes it from both bundles, since data/
+# is copied wholesale by package_app.sh.
+#
+# heplugin itself was then DELETED too, and has no gate here for that reason.
+# It carried NO licence statement at all, in-tree or upstream (LEGAL used to
+# claim "zlib License" for it, which was wrong -- the zlib hits were
+# `#include <zlib.h>`), and with the BIOS gone its fromFile() returned nullptr
+# for every file in every variant. An unlicensed engine that cannot decode
+# anything is pure liability, so nothing is kept to gate.
+#
+# The replacement was already in this repo, compiled and unreachable. aoplugin's
+# AOSDK builds eng_psf/{eng_psf.c,eng_psf2.c,psx.c,psx_hw.c}, and psx_hw.c is an
+# HLE implementation -- it emulates the PS1 BIOS A0/B0/C0 vectors and the PS2
+# IOP kernel in software, so it needs NO BIOS image. Those engines were dead
+# code only because AOPlugin::supported_ext did not list the PSF extensions. It
+# does now, so ".psf/.minipsf/.psf2/.minipsf2" keep playing in the plus build.
+# Verified over ~100 modland rips with `cm --dump-metadata`: every file Highly
+# Experimental could load, AOSDK loads. (The handful that fail fail under BOTH
+# engines, and for a reason that is neither engine's fault -- their "_lib2" tags
+# name companions with underscores that modland stores with spaces.)
+#
+# aoplugin cannot go to the App Store, so it IS gated. Per aosdk/license.txt
+# (which is explicit, file by file):
+#   * BSD-3 (R. Belmont / Richard Bannister) -- corlett.c, eng_psf.c, eng_psf2.c,
+#     eng_spu.c, psx_hw.c, eng_qsf.c, eng_ssf.c, sat_hw.c.
+#   * MAME 1997-2008 (Nicola Salmoria and the MAME team) -- psx.c and cpuintrf.h
+#     for PS1, the whole Musashi 68000 + SCSP for Saturn, and z80.c + qsound.c +
+#     kabuki.c for QSound. That licence says outright "Redistributions may not be
+#     sold, nor may they be used in a commercial product or activity", which no
+#     App Store submission can satisfy.
+#   * GPL-2 (Pete Bernert) -- eng_psf/peops/ and eng_psf/peops2/, the SPU and
+#     SPU2 cores. Same reasoning as the six gates above.
+# The MAME and GPL parts are the emulator cores themselves, one per target, so
+# there is nothing to remove and no permissive substitute vendored here; the
+# plugin must be ABSENT from the mas binary. Follows CM_HAVE_UADE's pattern.
+#
+# Exposure in mas, measured by reindex (742,929 -> 742,244, exactly -685, with
+# nothing resurfacing):
+#   .minipsf   353 | .psf 137 | .psf2 130 | .minipsf2 47   = 668 PSF rows
+#   .spu         9 | .miniqsf 8                            =  17 AO-only rows
+# ".ssf"/".minissf" (136 rows) are NOT lost: HTPlugin declares priority 1 and
+# already owns them in both variants -- see [[plugin-order-stable-sort]].
+# The 11 modland "SoundFactory" rows that carry a ".psf" suffix are not lost
+# either; they are an Amiga format, they were always UADE's, and AOPlugin
+# declines them on the "/soundfactory" path check.
+#
+# All FOUR extensions need formatPlayer rows in songFormatHasNoPlayer(). ".psf"
+# because vgmstream also advertises it, so the plain extension test would keep
+# those 137 rows; the other three because nameHasPlayer() also accepts a
+# modland prefix-before-dot, and a first reindex with only the ".psf" row left
+# exactly one straggler behind ("bgm.psf2" -- "bgm" is an MSX extension
+# kssplugin claims). Same trap the three ".sc68" stragglers sprang.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_AO OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_AO)
+else()
+    set(CM_HAVE_AO ON)
+endif()
 # victrackerplugin (.vt, VIC-20) needed NO variant gate, unlike the four above.
 # Its GPL was internal rather than structural -- the plugin is ours, but it drove
 # two GPLv2 engine cores (the omarandlorraine fake6502 fork, and a VIC-I sound
@@ -236,7 +307,7 @@ endif()
 # chip; the replacements were A/B'd by ear against the originals and shipped to
 # both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
 # index. See the plugin's README.md.
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE})")
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, AO=${CM_HAVE_AO})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -368,9 +439,9 @@ add_subdirectory(${AP1_ROOT}/mods ap1mods)
 
 # Define core plugin array
 set(MUSICPLAYER_PLUGINS
-    openmptplugin htplugin heplugin ndsplugin gmeplugin sndhplugin
+    openmptplugin htplugin ndsplugin gmeplugin sndhplugin
     usfplugin stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
-    ayflyplugin mdxplugin s98plugin aoplugin gsfplugin tedplugin v2plugin
+    ayflyplugin mdxplugin s98plugin gsfplugin tedplugin v2plugin
     ffmpegplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
     kssplugin quartetplugin wsrplugin zxtuneplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
@@ -399,6 +470,11 @@ endif()
 # .sap stays with gmeplugin in both variants.
 if(CM_HAVE_POKEYNOISE)
     list(APPEND MUSICPLAYER_PLUGINS pokeynoiseplugin)
+endif()
+# MAME 1997-2008 (non-commercial) + GPL-2 peops -- plus build only, see
+# CM_HAVE_AO above. This is what plays PSF/PSF2 now that the Sony BIOS is gone.
+if(CM_HAVE_AO)
+    list(APPEND MUSICPLAYER_PLUGINS aoplugin)
 endif()
 # Empty in a mas tree, where the vicepluginbridge target does not exist at all.
 if(CM_HAVE_VICE)
@@ -456,6 +532,10 @@ endif()
 # Same for pokeynoiseplugin_register() -- see CM_HAVE_POKEYNOISE above.
 if(NOT CM_HAVE_POKEYNOISE)
     target_compile_definitions(plugin_register PRIVATE CM_NO_POKEYNOISE)
+endif()
+# Same for aoplugin_register() -- see CM_HAVE_AO above.
+if(NOT CM_HAVE_AO)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_AO)
 endif()
 target_link_libraries(musicplayer INTERFACE psf plugin_register)
 target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)
@@ -641,7 +721,7 @@ endif()
 # --- EXTERNAL STUFF COMPILER WARNING SUPPRESSION ---
 if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     set(SILENT_TARGETS
-        vicepluginbridge ndsplugin gsfplugin usfplugin heplugin adplugin csidplugin
+        vicepluginbridge ndsplugin gsfplugin usfplugin adplugin csidplugin
         aoplugin v2plugin unrar coreutils lua crypto tedplugin gmeplugin
         openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin ffmpegplugin rsnplugin fmpplugin
     )

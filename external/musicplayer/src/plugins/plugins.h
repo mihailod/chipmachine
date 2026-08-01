@@ -2,7 +2,6 @@
 
 #include "openmptplugin/OpenMPTPlugin.h"
 #include "htplugin/HTPlugin.h"
-#include "heplugin/HEPlugin.h"
 #include "gsfplugin/GSFPlugin.h"
 #include "ndsplugin/NDSPlugin.h"
 #include "usfplugin/USFPlugin.h"

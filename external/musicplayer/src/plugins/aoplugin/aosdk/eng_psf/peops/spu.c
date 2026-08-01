@@ -596,7 +596,19 @@ int SPUopen(void)
  memset((void *)s_chan,0,(MAXCHAN+1)*sizeof(SPUCHAN));
  pSpuIrq=0;
 
- iVolume=255; //85;
+ /* LOCAL PATCH -- RE-APPLY ON REVENDOR. Upstream AOSDK ships 255 (the "//85"
+    is its own older default). 255 is a post-mix global gain of ~1.0 applied
+    just before the +-32767 CLIP a few lines down in the mixer, and it is
+    exactly 2x what Highly Experimental produced for the same files -- which is
+    the level ChipMachine shipped for every PSF in the catalog until eng_psf
+    took over from heplugin. Measured over 13 modland PSF1 rips: the RMS ratio
+    AO:HE was 1.94-2.00 on every tune that did not clip, and SEVEN of them hit
+    peak 32767 with 0.02%-1.35% of samples clipped, where HE clipped 0.008% on
+    one tune and 0% on the rest. 128 halves it before the clip (128>>8 == /2
+    exactly) and lands on HE's level with the distortion gone.
+    Only eng_psf (.psf/.minipsf) and eng_spu (.spu) use this SPU; PSF2 has its
+    own core in peops2/ and is untouched. */
+ iVolume=128; //255; //85;
  SetupStreams();                                       // prepare streaming
 
  bSPUIsOpen=1;

@@ -355,11 +355,20 @@ Support for Dreamcast and Sega Saturn music
 
 Extensions: `.ssf` `.dsf` `.minissf` `.minidsf`
 
-### Highly Experimental
+### Highly Experimental — removed
 
-Support for Playstation 1 & 2 music
+Playstation 1 & 2 music (`.psf` `.psf2` `.minipsf` `.minipsf2`) used to be
+decoded here. This plugin has been **deleted**. It could not start without a
+real Sony PlayStation 2 BIOS image, and the copy this project was shipping
+(`data/hebios.bin`, 512 KB of Sony Computer Entertainment firmware) was not ours
+to redistribute; it is gone from the tree and from both bundles. With no BIOS the
+engine decoded nothing, and it carried no licence of its own, so there was
+nothing worth keeping.
 
-Extensions: `.psf` `.psf2` `.minipsf` `.minipsf2`
+**No songs were lost.** All four extensions moved to **AudioOverload** below,
+whose PS1/PS2 engines are HLE and need no BIOS. Checked over ~100 modland rips
+with `cm --dump-metadata`: every file Highly Experimental could load, AOSDK
+loads.
 
 ### NDS
 
@@ -698,9 +707,34 @@ Extensions: `.adx` `.hca` `.fsb` `.xwb` `.xma` `.dsp` `.vag` `.at3` `.at9` `.acb
 
 ### AudioOverload
 
-Support for Sega Saturn and Capcom Q music
+Support for Sega Saturn, Capcom Q and **Playstation 1 & 2** music.
 
-Extensions: `.ssf` `.minissf` `.qsf` `.miniqsf` `.spu`
+The PSF family arrived here on 2026-08-01, when the Sony PS2 BIOS image that
+Highly Experimental needed was deleted from the tree. AOSDK's `eng_psf` /
+`eng_psf2` were already compiled into this plugin and simply unreachable — no
+extension pointed at them — and unlike Highly Experimental they are **HLE**:
+`psx_hw.c` emulates the PS1 BIOS `A0`/`B0`/`C0` vectors and the PS2 IOP kernel in
+software, so no BIOS image is involved at any point.
+
+This is now the **only** PSF decoder in the tree — Highly Experimental was
+deleted along with the BIOS it needed.
+
+Not in the Mac App Store build. The PS1/PS2 path is MAME-licensed
+("Redistributions may not be sold, nor may they be used in a commercial product
+or activity") over GPL-2 PEOpS SPU cores, so 685 rows are dropped from that
+index — 668 Playstation plus the 17 `.spu`/`.miniqsf` that were AOSDK-only
+anyway. Saturn `.ssf`/`.minissf` is unaffected: **High Technology** declares a
+higher priority and owns those in both builds.
+
+Extensions: `.ssf` `.minissf` `.qsf` `.miniqsf` `.spu` `.psf` `.minipsf` `.psf2` `.minipsf2`
+
+Known issue, pre-existing and unrelated to the PSF work: `.spu` (raw SPU RAM +
+register dumps, 9 songs) loads and steps its register stream but renders
+silence. Until 2026-08-01 it appeared to work only because the signature test
+never matched — `.spu` rips say `SPU1`, the test looked for `SPU\0` — so no
+engine ran and the decoder returned the caller's buffer untouched, which in the
+live app is the audio fifo's scratch buffer, i.e. the previous song's tail. It
+now correctly returns silence.
 
 ### GSF
 
@@ -798,8 +832,8 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **AtariAudio (Atari ST/STE `.sndh`):** Developed by **Arnaud Carré (Leonard/Oxygene)**, vendored from <https://github.com/arnaud-carre/sndh-player>. Licensed under **MIT**. A dependency-free ST audio machine — YM2149, MFP 68901 timers and STE DMA sound — bundling **Musashi** (68000 CPU core by **Karl Stenerud**, MIT) and the **ICE! 2.4 depacker** (universal C version placed in the **public domain** by **Hans Wessels**). This replaced GPL-3 SC68 as the `.sndh` decoder in *both* builds, which is what keeps 6,079 Atari ST songs in the Mac App Store build. Checked against libsc68 over a 127-file random sample of the SNDH archive: same load result and same subsong count on every file, and three STE DMA tunes that libsc68 cuts to silence after one block play properly here.
 * **SC68 (Atari ST `.sc68`):** Developed by Benjamin Gerard. Licensed under GPL-3.0-or-later. No longer the `.sndh` decoder (see AtariAudio above); it stays in the Plus build for the `.sc68` container and as a `.sndh` fallback. Not included in the Mac App Store build, where the 1,894 `.sc68` songs are dropped from the index to match — those files call out to the 95 prebuilt GPL-3 68k replay routines in `data/sc68/Replay`, for which there is no permissive equivalent. The 100 AdLib `.snd` songs are AdPlug's and are unaffected.
 * **AdPlug (PC AdLib/OPL):** Developed by Simon Peter and the AdPlug Team. Licensed under LGPL-2.1-or-later.
-* **Highly Experimental / PSF1/2:** Developed by Neill Corlett. Licensed under zlib License.
-* **AudioOverload Backend / AOSDK:** Developed by Richard Bannister and contributors. Licensed under Custom/Freeware permissive license.
+* **AudioOverload Backend / AOSDK (Sega Saturn, Capcom QSound, Playstation 1/2):** Developed by **R. Belmont** and **Richard Bannister**. **Mixed licence, and not permissive:** the SDK wrappers are BSD-3-Clause, but the emulator cores are under the **MAME 1997-2008 licence** (Nicola Salmoria and the MAME team — *"Redistributions may not be sold, nor may they be used in a commercial product or activity"*) and the PS1/PS2 SPU cores are **PEOpS** by **Pete Bernert**, GPL-2. See `aosdk/license.txt`, which lists every file. Not included in the Mac App Store build; the 685 rows it owns there are dropped from the index to match. This project's earlier "Custom/Freeware permissive" description of AOSDK was wrong and is corrected here. One local patch: `eng_psf/peops/spu.c` sets `iVolume` to 128 instead of upstream's 255, which was measurably 2× hot and clipped.
+* **Highly Experimental / PSF1/2 — REMOVED:** Developed by **Neill Corlett**. **No licence was ever stated** — not upstream, not in the vendored tree, not per-file. This project previously described it as "zlib License"; that was wrong (the zlib evidence was `#include <zlib.h>`) and is corrected here. It also could not run without a **Sony PlayStation 2 BIOS image**, which this project was shipping in both bundles as `data/hebios.bin` and had no right to redistribute. Both the BIOS and the plugin have been deleted; PSF playback moved to AOSDK with no song loss.
 * **HivelyTracker (AHX/HVL):** Developed by IRIS (Peter "Yohng" V, Curt Cool). Licensed under BSD-3-Clause.
 * **MDX / S98 (PC-98 & Sharp X68000):** Emulation engines adapted from OpenMSX/GME variants. Licensed under GPL-2.0-or-later.
 * **Ayfly (ZX Spectrum AY-3-8910):** Developed by Sergey Vladimirov. Licensed under GPL-2.0-or-later. The **Fuxoft AY Language** (`.fxm`) player added here is a C++ transliteration of the FXM routines from **AY_Emul** by **Sergey Bulba** (sources made available with the request to credit the author); the format is **Frantisek Fuka's** (Fuxoft), documented in his `fxmasm` project. The **AY Amadeus** (`.amad`) player added here reuses that FXM engine and transliterates AY_Emul's `ZXAY`/`AMAD` container loader (`OpenAYFile`); the tunes are by **Frantisek Fuka** (Fuxoft) and **Patrik Rak**.

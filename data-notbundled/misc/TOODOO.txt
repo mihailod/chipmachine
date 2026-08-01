@@ -19,9 +19,6 @@ famitrackerplugin	external/famitracker-cx	GPL-2 — 56 GPL files in famitracker-
 ayflyplugin (Deryabin Andrew + z80ex/FUSE)	GPL-2	67,293
 ayflyplugin alone is ~6× the five plugins you asked about combined (.pt3 25,576 · .pt2 17,507 · .stc 9,972 · .asc 4,748 …). If ZX AY has to be solved anyway for ayfly, ZXTune's 479 rows fold into that same effort rather than being gated separately — which would change the ZXTune call above. 
 
-stsoundplugin	LGPL-3 (statically linked — same problem)	13,210
-AtariAudio's MIT YM2149 may also be able to displace StSound's LGPL-3 .ym path, making the SNDH swap pay twice.
-
 mdxplugin (mdxmini)	GPL-2	6,913
 
 ndsplugin (vio2sf/DeSmuME)	GPL-2	2,040
