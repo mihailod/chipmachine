@@ -1,9 +1,3 @@
-- SoundSmith (180, discarded before any override can apply because the rows are bare-named), and the UADE-owned .sng formats (Richard Joseph 77, Synder 157, Zoundmonitor 9).
-
-- now the OPL Archive/AdLib subset for libvgm with a comment noting it's partial.
-
-- now do "the SoundSmith as a separate change since it touches the empty-extension path, and I'd want to check it doesn't disturb the ~34.9k other extensionless rows (radio, podcasts)." 
-
 - sc68 plays 1-2 seconds of subsong1 before switching to subsongN, example: Wings of Death STE
 
 - Add tracker-style scrolling note pattern where possible by format

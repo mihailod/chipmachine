@@ -2114,15 +2114,71 @@ void MusicDatabase::buildPluginGroups()
             // Adlib Tracker, and adplugin is registered first. A clean 9/26
             // split by format name; both plugins content-gate.
             {{"mad", "playerpro"}, { "playerpro" }},
+            // ".vgm"/".vgz" are GME's by extension, and libvgm exists only for
+            // the VGMs GME CANNOT decode -- LibVGMPlugin::canHandle claims by
+            // chip, not by name ("any VGM whose chips GME can't decode": OPL,
+            // YM2151, the OPN family). So libvgm had a count of zero and was
+            // missing from the plugin screen too.
             //
-            // STILL mis-credited, deliberately not fixed here: libvgm's VGMs
-            // (its claim is "any VGM whose chips GME cannot decode", and only
-            // the "OPL Archive"/"AdLib" rows are identifiable by name -- the
-            // YM2151/OPN ones share platform names with GME-playable VGMs);
-            // SoundSmith's 180 rows (bare-named, so resolveExtension() returns
-            // empty and they are skipped above before any override can apply);
-            // and the other .sng formats (Richard Joseph 77, Synder 157,
-            // Zoundmonitor 9), which belong to UADE.
+            // DELIBERATELY PARTIAL. Only the OPL rows are identifiable from the
+            // catalog: the whole "OPL Archive" collection (1,341 .vgz, OPL by
+            // definition -- opl.wafflenet.com) and the 50 BotB .vgm that the
+            // chip-clock reclassification named "AdLib" outright. Note the
+            // ".vgm" key confines that second row to VGMs: "AdLib" is a BotB
+            // format name spanning ~350 rows across a2m/snd/rad/amd/hsc/d00/...
+            // which really ARE AdPlug's and must keep the default result.
+            //
+            // The REST of libvgm's domain stays credited to GME: the YM2151 and
+            // OPN VGMs are filed under platform names ("Arcade", "Sharp X68000",
+            // "NEC PC-98", "Atari ST", "FM Towns") shared with VGMs that GME
+            // plays perfectly well, so no (ext, format) key can separate them --
+            // it would take the chip-clock probe canHandle already does, which
+            // this table cannot call (catalog paths are mostly remote and
+            // uncached; see the comment on extToPlugin above). The same is true
+            // of the 247 "IBM PC" .vgz, which mix OPL with SN76489/PC speaker.
+            // So libvgm now appears with ~1,391 of its songs rather than none;
+            // finishing the job needs a content pass at index time, not a row
+            // here.
+            {{"vgz", "opl archive"}, { "libvgm" }},
+            {{"vgm", "adlib"}, { "libvgm" }},
+            // The two .sng families UADE genuinely plays, both of which AdPlug
+            // was being credited for. UADEPlugin::canHandle declines .sng
+            // wholesale EXCEPT these: Richard Joseph, gated on the "RJP1SMOD"
+            // magic (isUnplayableUadeSng), and ZoundMonitor, claimed explicitly
+            // ahead of that blanket decline because we can fetch its shared
+            // Samples/ dir via getSecondaryFiles (isZoundMonitor).
+            {{"sng", "richard joseph"}, { "uade" }},
+            {{"sng", "zoundmonitor"}, { "uade" }},
+            // NOT Synder (67 "Synder SNG-Player Stereo" + 66 "Synder SNG-Player"
+            // + 24 "Synder Tracker"). UADE DECLINES those -- they are SID, not
+            // Amiga, and isUnplayableUadeSng exists precisely to keep them away
+            // from the 68k engine. Nothing in the build plays them, so they
+            // Skip; crediting them to UADE would put 157 dead rows in its group.
+            // They stay with AdPlug (which also declines them) until something
+            // drops them at index time. Same for the 2 "SNG Player" rows.
+            //
+            // Last of the .sng families: 15 modland "Sam Coupe SNG" rows.
+            // copplugin advertises the extension and content-matches it (see
+            // CopPlugin::canHandle, where ".sng" is the content-matched case and
+            // ".cop" the outright claim), but AdPlug is registered first and was
+            // credited. Unlike the plugins above this one was never INVISIBLE --
+            // it owns ".cop" -- just undercounted by 15.
+            {{"sng", "sam coupe sng"}, { "sam coupe (cop)" }},
+            // Three UnExoticA rows are ordinary Amiga MODs that happen to carry
+            // a ".sng" suffix (Nicky Boom 2, Atomix, Aquaventura). They are in
+            // modland/UnExoticA PREFIX form -- "mod.nic.sng", "mod.title.sng",
+            // "mod.attract.sng" -- and OpenMPTPlugin::canHandle claims any path
+            // whose prefix is "mod" outright, before any extension reasoning. So
+            // libopenmpt really does play them; it just never advertises ".sng",
+            // which is why the extension went to AdPlug. resolveExtension()
+            // prefers the described suffix over the prefix here, so they land
+            // under "sng" rather than "mod" and need naming explicitly.
+            {{"sng", "protracker"}, { "openmpt" }},
+            {{"sng", "noisetracker"}, { "openmpt" }},
+            //
+            // STILL mis-credited, deliberately not fixed here: SoundSmith's 180
+            // rows -- bare-named, so resolveExtension() returns empty and they
+            // are skipped above before any override can apply.
             //
             // NOTE: these four have no counterpart in songFormatHasNoPlayer()'s
             // formatPlayer table, and should not. That table answers "is this

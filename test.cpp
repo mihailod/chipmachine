@@ -2804,16 +2804,18 @@ TEST_CASE("GoatTracker", "[music]")
 // table exists to fix, with no error anywhere. Every name used as an override
 // target must therefore be a name some registered plugin actually reports.
 //
-// These five all lost their whole song count to a first-claimer on a shared
+// These six all lost their whole song count to a first-claimer on a shared
 // extension and so were missing from the TAB plugin screen entirely: GoatTracker
 // and SCC-Musixx to AdPlug on ".sng", FamiTracker to OpenMPT on ".ftm" (Face The
-// Music), MED to OpenMPT on ".med" (OctaMED), PlayerPRO to AdPlug on ".mad".
+// Music), MED to OpenMPT on ".med" (OctaMED), PlayerPRO to AdPlug on ".mad", and
+// libvgm to Game Music Engine on ".vgm"/".vgz".
 TEST_CASE("plugin browse list: formatOverride target names all resolve",
           "[music][plugins]")
 {
     musix::ChipPlugin::createPlugins("data");
     for (auto const* name : { "GoatTracker", "SCC-Musixx", "FamiTracker", "MED",
-                              "PlayerPRO", "AdPlug", "OpenMPT" }) {
+                              "PlayerPRO", "libvgm", "AdPlug", "OpenMPT",
+                              "Game Music Engine", "UADE", "Sam Coupe (COP)" }) {
         INFO("formatOverride names a plugin that does not exist: " << name);
         REQUIRE(musix::ChipPlugin::getPlugin(name) != nullptr);
     }
