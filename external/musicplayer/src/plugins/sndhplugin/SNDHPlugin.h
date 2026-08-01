@@ -25,7 +25,16 @@ namespace musix {
 class SNDHPlugin : public ChipPlugin
 {
 public:
-    std::string name() const override { return "SNDH (Atari ST)"; }
+    // Names the ENGINE, not the machine -- this string is what the TAB plugin
+    // filter screen shows, and there it sits next to StSound and (in the plus
+    // build) SC68, which are also Atari ST. "AtariAudio" is the useful
+    // distinction; "Atari ST" would not be. The per-song `format` metadata is a
+    // separate string and stays "SNDH (Atari ST)", which describes the file
+    // format rather than the decoder.
+    //
+    // cmtest derives its fixture directory from this name -- rename
+    // testmus/sndh (atariaudio)/ in step if it ever changes again.
+    std::string name() const override { return "SNDH (AtariAudio)"; }
     bool canHandle(const std::string& name) override;
     std::set<std::string> getSupportedExtensions() const override;
     ChipPlayer* fromFile(const std::string& fileName) override;

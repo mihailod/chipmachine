@@ -1865,7 +1865,7 @@ TEST_CASE("SNDH plugin takes .sndh ahead of sc68 and plays every subsong",
     musix::SNDHPlugin sndh;
     musix::SC68Plugin sc68{ "data" };
 
-    std::string const file = "testmus/sndh (atari st)/Goldrunner.sndh";
+    std::string const file = "testmus/sndh (atariaudio)/Goldrunner.sndh";
     REQUIRE(sndh.canHandle(file));
     // Both claim it -- that is deliberate, sc68 stays as the plus-build fallback
     // -- so what decides is priority, and sndhplugin must win.
@@ -1935,7 +1935,7 @@ TEST_CASE("SNDH STE DMA tune keeps playing past the first block", "[music]")
     logging::setLevel(logging::Level::Warning);
     musix::SNDHPlugin sndh;
 
-    std::string const file = "testmus/sndh (atari st)/Lost_STe_DMA.sndh";
+    std::string const file = "testmus/sndh (atariaudio)/Lost_STe_DMA.sndh";
     REQUIRE(sndh.canHandle(file));
 
     std::unique_ptr<musix::ChipPlayer> player{ sndh.fromFile(file) };
@@ -4671,7 +4671,7 @@ TEST_CASE("FFMPEG URL path handles unreachable host without hanging", "[music]")
 }
 
 TEST_CASE("HT", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
-TEST_CASE("SNDH (Atari ST)", "[music]") { testPlugin<musix::SNDHPlugin>("testmus/sndh (atari st)", ""); }
+TEST_CASE("SNDH (AtariAudio)", "[music]") { testPlugin<musix::SNDHPlugin>("testmus/sndh (atariaudio)", ""); }
 TEST_CASE("SC68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
 TEST_CASE("USF", "[music]") { testPlugin<musix::USFPlugin>("testmus/usf", ""); }
 TEST_CASE("StSound", "[music]") { testPlugin<musix::StSoundPlugin>("testmus/stsound", ""); }

@@ -2143,6 +2143,17 @@ void MusicDatabase::buildPluginGroups()
             // it too was absent from the plugin screen. SccMusixxPlugin
             // content-gates on the Konami SCC signature.
             {{"sng", "scc-musixx"}, { "scc-musixx" }},
+            // ".snd" is the same shape one extension over. sndhplugin declares
+            // priority 2 (it has to outrank SC68 to own ".sndh"), which also
+            // makes it the first claimer of ".snd" -- so first-claimer-wins
+            // would credit the 100 BotB "AdLib" Westwood tunes to
+            // SNDH (AtariAudio). They are AdPlug's in BOTH variants and always
+            // were; SC68 used to shadow them the same way from priority 1, so
+            // this fixes a miscount that predates the AtariAudio swap rather
+            // than one it introduced. Playback was never affected either way:
+            // SNDHPlugin::canHandle content-gates ".snd" on the SNDH magic and
+            // declines these, exactly as SC68Plugin did.
+            {{"snd", "adlib"}, { "adplug" }},
             // ".ftm" is two formats: FamiTracker (NES 2A03, magic "FTM") and
             // Face The Music (Atari, magic "FTMN"). libopenmpt advertises the
             // extension for Face The Music and openmptplugin is registered

@@ -379,7 +379,7 @@ Extensions: `.spc` `.nsf` `.nsfe` `.gbs` `.gbr` `.ay` `.gym` `.sap` `.vgm` `.vgz
 > GBR carries no "first song" field and many rips keep a silent stop-track
 > at song 0 — use the subsong controls (LEFT-RIGHT cursor keys) if a tune starts silent.
 
-### SNDH (Atari ST)
+### SNDH (AtariAudio)
 
 Support for Atari ST/STE music in the SNDH archive format, via **AtariAudio** by
 Arnaud Carré (Leonard/Oxygene) — a self-contained ST machine (Musashi 68000 +
