@@ -22,8 +22,28 @@ class ChipPlugin
 public:
     virtual ~ChipPlugin() = default;
 
-    // Must be implemented
+    // Must be implemented.
+    //
+    // This is the plugin's IDENTITY, not a label: it is a key in the
+    // formatOverride / formatPlayer tables in MusicDatabase.cpp, is compared
+    // literally in a few places (MusicPlayer's "ffmpeg" checks, MusicPlayerList's
+    // renderer set), is what ChipPlugin::getPlugin() looks up, and is what cmtest
+    // derives a plugin's testmus/ fixture directory from. Renaming one means
+    // chasing all of those. To change what the TAB plugin screen SHOWS, override
+    // displayName() instead and leave this alone.
     virtual std::string name() const = 0;
+
+    // Optional human-readable label for the TAB plugin filter screen.
+    //
+    // Empty (the default) means "no override" and the screen falls back to
+    // name(), so plugins whose name is already presentable need not implement
+    // this. Only the plugin screen consults it -- it is display-only and is
+    // deliberately NOT usable as a lookup key, so it is free of every constraint
+    // listed on name() above.
+    //
+    // The screen's type-to-narrow searches whatever it displays, so overriding
+    // this also makes the plugin findable by its friendly name.
+    virtual std::string displayName() const { return ""; }
     virtual bool canHandle(const std::string& name) = 0;
     virtual ChipPlayer* fromFile(const std::string& fileName) = 0;
 

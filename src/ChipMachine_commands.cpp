@@ -250,7 +250,7 @@ void ChipMachine::setupCommands()
             int gid = pluginVisibleGroups[idx - 1];
             auto const& grp = groups[gid];
             musicDatabase.setPluginFilter(gid);
-            selectedFilterName = grp.name; // the plugin's full name()
+            selectedFilterName = grp.name; // the plugin's display label, not name()
             activeFilterCount = grp.count;
             mainFilterField.setText(grp.name + "  (TAB to change)");
         } else {

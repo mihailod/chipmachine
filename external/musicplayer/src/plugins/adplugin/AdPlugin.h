@@ -9,6 +9,8 @@ class AdPlugin : public ChipPlugin
 public:
     explicit AdPlugin(const std::string& configDir) : configDir(configDir) {}
     std::string name() const override { return "AdPlug"; }
+    // Display-only label for the TAB plugin screen; see ChipPlugin.
+    std::string displayName() const override { return "AdLib / OPL (AdPlug)"; }
     bool canHandle(const std::string& name) override;
     std::set<std::string> getSupportedExtensions() const override;
     ChipPlayer* fromFile(const std::string& fileName) override;

@@ -13,6 +13,8 @@ class VicePlugin : public ChipPlugin
 {
 public:
     virtual std::string name() const override { return "libvice"; }
+    // Display-only label for the TAB plugin screen; see ChipPlugin.
+    virtual std::string displayName() const override { return "Compute! Sidplayer (VICE)"; }
     explicit VicePlugin(const std::string& dataDir);
     virtual ~VicePlugin() override;
     bool canHandle(const std::string& name) override;

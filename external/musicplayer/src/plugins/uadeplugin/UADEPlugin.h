@@ -11,6 +11,8 @@ public:
     explicit UADEPlugin(const std::string& _dataDir) : dataDir(_dataDir) {}
 
     std::string name() const override { return "UADE"; }
+    // Display-only label for the TAB plugin screen; see ChipPlugin.
+    std::string displayName() const override { return "Amiga (UADE)"; }
     bool canHandle(const std::string& name) override;
     std::set<std::string> getSupportedExtensions() const override;
     ChipPlayer* fromFile(const std::string& fileName) override;

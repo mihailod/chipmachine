@@ -78,10 +78,13 @@ MusicPlayerList::archiveExtensions()
         // The RENDERED-AUDIO decoders. Their formats are the fallback bucket, so
         // a compo zip shipping a module next to its .mp3 preview plays the
         // module. Everything else is a chip/console/tracker plugin and preferred.
-        // Listed by name because a plugin exposes no "is this a rendering"
-        // property; keep this in step when adding a codec plugin -- ffmpeg alone
-        // was not enough, since mp3plugin/minimp3plugin both call themselves
-        // "libmpg123" and their .mp3 would otherwise outrank a real module.
+        // Listed by name() -- the plugin's identity, NOT its displayName(),
+        // which is a display-only label the plugin screen uses -- because a
+        // plugin exposes no "is this a rendering" property. Keep this in step
+        // when adding a codec plugin: ffmpeg alone was not enough, since
+        // mp3plugin also calls itself "libmpg123" and its .mp3 would otherwise
+        // outrank a real module. (A second, never-built minimp3plugin used the
+        // same name; it was deleted along with the unbuilt modplugin.)
         static const std::set<std::string> renderers = { "ffmpeg", "libmpg123" };
         std::set<std::string> song, audio;
         for (auto const& pl : musix::ChipPlugin::getPlugins()) {

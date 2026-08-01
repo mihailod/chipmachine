@@ -5,6 +5,35 @@
 - clean room partial dmf -- PROMPT ready for Monday
 
 ------------------------
+
+- remain:
+
+gsfplugin	playgsf/VBA/ (GBA.cpp, Sound.cpp, Globals.cpp)	GPL-2-or-later — VisualBoyAdvance headers, confirmed
+
+usfplugin	lazyusf2/ (r4300, rsp_lle, rdp, memory…)	GPL-2-or-later — Mupen64Plus headers, 127 GPL files
+
+zxtuneplugin	external/zxtune	Fork's LICENSE.md says LGPL-3, upstream (vitamin-caig) is GPL. Also pulls 3rdparty/z80ex, which contains FUSE code "released under GNU GPL v2". Either reading is App-Store-fatal for a static link.
+
+famitrackerplugin	external/famitracker-cx	GPL-2 — 56 GPL files in famitracker-core/; PROVENANCE.md already says "mixed GPL v2 / New BSD"
+
+ayflyplugin (Deryabin Andrew + z80ex/FUSE)	GPL-2	67,293
+ayflyplugin alone is ~6× the five plugins you asked about combined (.pt3 25,576 · .pt2 17,507 · .stc 9,972 · .asc 4,748 …). If ZX AY has to be solved anyway for ayfly, ZXTune's 479 rows fold into that same effort rather than being gated separately — which would change the ZXTune call above. 
+
+stsoundplugin	LGPL-3 (statically linked — same problem)	13,210
+AtariAudio's MIT YM2149 may also be able to displace StSound's LGPL-3 .ym path, making the SNDH swap pay twice.
+
+mdxplugin (mdxmini)	GPL-2	6,913
+
+ndsplugin (vio2sf/DeSmuME)	GPL-2	2,040
+
+aoplugin (aosdk eng_psf/peops SPU)	GPL-2	153
+
+maxtraxplugin (ScummVM paula/maxtrax)	GPL-2+	82
+
+???? this one has 6635 songs pokeynoiseplugin (ASAP)	GPL-2	0 today
+
+
+------------------------
 - - - - 
 
 if doing work: if we do this, do it only in the MAS and leave PLUS unchanged so i can A/B compare and decide if we unify or is stays split. when i say a/b i mean ChipMachine (MAS) and ChipMachinePlus (PLUS) apps -- i will compare by running them both and listening. before i listen you do the best effort to make sure they are similar enough by rendering and comparing with your methods (cosine similarity like what we did for vice replacement, etc.) before i listen with my ears by running both apps. in case of any changes update accordingly the LEGAL, the main README.md and Credits.rtf

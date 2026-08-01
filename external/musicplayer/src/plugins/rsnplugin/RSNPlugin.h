@@ -11,6 +11,8 @@ public:
     // RSNPlugin(std::vector<std::shared_ptr<ChipPlugin>> &plugins) :
     // plugins(plugins) {}
     virtual std::string name() const { return "RSNPlugin"; }
+    // Display-only label for the TAB plugin screen; see ChipPlugin.
+    virtual std::string displayName() const { return "Super Nintendo (RSN)"; }
     virtual ChipPlayer* fromFile(const std::string& fileName);
 
     virtual bool canHandle(const std::string& name);

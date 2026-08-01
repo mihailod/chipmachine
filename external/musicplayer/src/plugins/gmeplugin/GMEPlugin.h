@@ -7,6 +7,8 @@ namespace musix {
 class GMEPlugin : public ChipPlugin {
 public:
     virtual std::string name() const override { return "Game Music Engine"; }
+    // Display-only label for the TAB plugin screen; see ChipPlugin.
+    virtual std::string displayName() const override { return "Game Music Emu (GME)"; }
     virtual bool canHandle(const std::string &name) override;
     virtual std::set<std::string> getSupportedExtensions() const override;
     virtual ChipPlayer *fromFile(const std::string &fileName) override;

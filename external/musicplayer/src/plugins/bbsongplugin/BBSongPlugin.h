@@ -17,6 +17,8 @@ class BBSongPlugin : public ChipPlugin
 {
 public:
     std::string name() const override { return "BBSong"; }
+    // Display-only label for the TAB plugin screen; see ChipPlugin.
+    std::string displayName() const override { return "Beepola (ZX beeper)"; }
     bool canHandle(const std::string& name) override;
     std::set<std::string> getSupportedExtensions() const override;
     ChipPlayer* fromFile(const std::string& fileName) override;

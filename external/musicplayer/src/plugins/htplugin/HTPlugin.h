@@ -9,6 +9,8 @@ class HTPlugin : public ChipPlugin
 {
 public:
     std::string name() const override { return "HTPlugin"; }
+    // Display-only label for the TAB plugin screen; see ChipPlugin.
+    std::string displayName() const override { return "Dreamcast & Saturn (DSF/SSF)"; }
     bool canHandle(const std::string& name) override;
     std::set<std::string> getSupportedExtensions() const override;
     std::vector<std::string> getSecondaryFiles(const std::string& name) override;

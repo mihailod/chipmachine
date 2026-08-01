@@ -8,6 +8,8 @@ class MP3Plugin : public ChipPlugin
 {
 public:
     std::string name() const override { return "libmpg123"; }
+    // Display-only label for the TAB plugin screen; see ChipPlugin.
+    std::string displayName() const override { return "MP3 (libmpg123)"; }
     bool canHandle(const std::string& name) override;
     // MUST stay in sync with canHandle(). The base class defaults this to EMPTY,
     // and callers that need the set up front (the archive track picker, the

@@ -27,6 +27,8 @@ public:
     // distinct from the FORMAT name ("Sidplayer" / "Stereo Sidplayer"),
     // which the catalog uses and which VICE also serves in the plus build.
     std::string name() const override { return "ChipMachine Clean Room SIDPlayer"; }
+    // Display-only label for the TAB plugin screen; see ChipPlugin.
+    std::string displayName() const override { return "Compute! Sidplayer (clean room)"; }
     bool canHandle(const std::string& name) override;
     std::set<std::string> getSupportedExtensions() const override;
     ChipPlayer* fromFile(const std::string& fileName) override;

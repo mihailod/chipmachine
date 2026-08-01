@@ -8,6 +8,8 @@ namespace musix {
 class NDSPlugin : public ChipPlugin {
 public:
     virtual std::string name() const override { return "NDSPlugin"; }
+    // Display-only label for the TAB plugin screen; see ChipPlugin.
+    virtual std::string displayName() const override { return "Nintendo DS (2SF)"; }
     virtual bool canHandle(const std::string& name) override;
     virtual std::set<std::string> getSupportedExtensions() const override;
     virtual std::vector<std::string>

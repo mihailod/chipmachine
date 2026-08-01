@@ -780,8 +780,8 @@
 --     suffix-only, matching MusicPlayerList's picker.
 -- 116: no data change -- recorded here because it fixes a hole the whole session
 --     kept falling into. ChipPlugin::getSupportedExtensions() DEFAULTS TO EMPTY
---     in the base class, and five plugins never overrode it: ptkplugin
---     (.ptk/.ntk), tfmxplugin (mdat.), mp3plugin + minimp3plugin (.mp3) and
+--     in the base class, and four plugins never overrode it: ptkplugin
+--     (.ptk/.ntk), tfmxplugin (mdat.), mp3plugin (.mp3) and
 --     GZPlugin (.gz). Anything deriving a list from it therefore could not see
 --     those formats: a loose .ptk played, but a .ptk inside a ZIP was "No
 --     playable tracks in archive", and the playability audit called those rows

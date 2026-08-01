@@ -2310,7 +2310,15 @@ void MusicDatabase::buildPluginGroups()
                     modal = b.first;
                 }
             }
-            admitted.push_back({ plugins[pIdx]->name(), pIdx, counts[pIdx], modal, std::move(idxs[pIdx]) });
+            // PluginGroup::name is display-and-search only -- the row label, the
+            // type-to-narrow haystack in rebuildPluginVisible(), and the filter
+            // banner text. Nothing keys off it. So resolve the friendly label
+            // here, once, and both the screen and its search follow for free.
+            // Everything that needs the plugin's IDENTITY (formatOverride,
+            // nameToPlugin above) keeps using name().
+            auto label = plugins[pIdx]->displayName();
+            if (label.empty()) { label = plugins[pIdx]->name(); }
+            admitted.push_back({ label, pIdx, counts[pIdx], modal, std::move(idxs[pIdx]) });
         }
     }
 

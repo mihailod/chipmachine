@@ -19,6 +19,8 @@ class CSIDPlugin : public ChipPlugin
 {
 public:
     std::string name() const override { return "cSID"; }
+    // Display-only label for the TAB plugin screen; see ChipPlugin.
+    std::string displayName() const override { return "Commodore 64 SID (cSID)"; }
     bool canHandle(const std::string& name) override;
     std::set<std::string> getSupportedExtensions() const override;
     ChipPlayer* fromFile(const std::string& fileName) override;
