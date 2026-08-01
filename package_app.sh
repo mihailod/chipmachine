@@ -417,6 +417,20 @@ for PRUNE_ROOT in "${RESOURCES_DIR}/data" "${RESOURCES_DIR}/lua"; do
     find "$PRUNE_ROOT" \( -name '.DS_Store' -o -name '*.pyc' \) -delete 2>/dev/null || true
 done
 
+# 4a-bis. Drop the marketing screenshots from the COPIED tree (both variants).
+#
+# data/misc/{search,formats,amegas}.png are web-forum illustrations, not runtime
+# assets -- nothing in the app or the Lua layer loads them, they just add ~2.7MB
+# of dead weight to every bundle. They cannot be moved to data-notbundled/
+# because external forum posts hot-link them at their current paths, so they stay
+# in the source tree and are removed here, after the recursive copy.
+for DANGLING_PIC in search.png formats.png amegas.png; do
+    if [ -f "${RESOURCES_DIR}/data/misc/${DANGLING_PIC}" ]; then
+        echo "-> Removing dangling marketing screenshot from bundle: misc/${DANGLING_PIC}"
+        rm -f "${RESOURCES_DIR}/data/misc/${DANGLING_PIC}"
+    fi
+done
+
 # 4b. UADE runtime payload -- plus variant only.
 #
 # data/uade/ holds UADE's eagleplayer.conf, uaerc, the 68k `score` binary and

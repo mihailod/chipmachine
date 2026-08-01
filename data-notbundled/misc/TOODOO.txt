@@ -1,7 +1,5 @@
 Mac App Store (MAS) compliance:
 
-- for both MAS and PLUS Exclude these dangling pics from being packaged from data/misc by the package_app.sh script (remove them after the recursive copy if that is the easiest to do): search.png, formats.png, amegas.png (we cannot move them unfortunately since there are external web forums pointers to it).
-
 - how many songs are impacted for GPL goattracker -- cannot find it in plugins search?! unless we can find some workaround (non-GPL or clean room implementation based on some specs) we need to remove goattrackerplugin (vendors GPL reSID), 
 
 - replace with non-GPL if possible or remove: victrackerplugin's vic_sound.c (GPL VICE VIC-I derived, 11 songs impacted) replacement in the MAS version of the app (and not surface the content they play)?

@@ -15,8 +15,11 @@ Dev notes on various databases and how they are updated
       playlists/, misc/{icon,paused,muted}.png, misc/platformscreenshots/,
       misc/extensionscreenshots/, misc/formats_descriptions.txt,
       misc/not_supported_extensions.txt, misc/Credits.rtf.
-      (misc/formats.png, misc/search.png and misc/amegas.png also stay put --
-       external sites hot-link them; they are not read by the app.)
+      (misc/formats.png, misc/search.png and misc/amegas.png stay in the SOURCE
+       tree because external sites hot-link them at those paths, but they are
+       not read by the app, so package_app.sh deletes them from the copied
+       Resources/data/misc/ right after the recursive copy -- both variants.
+       Never move them out of data/: the hot-links would break.)
   Everything else -- raw scrape inputs for scripts/build_*.py, side tables,
   project docs, marketing screenshots -- lives in the sister tree
   chipmachine/data-notbundled/, which mirrors the same layout
