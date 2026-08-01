@@ -4967,16 +4967,22 @@ std::string MusicDatabase::resolveExtension(SongInfo const& s)
     if (described(suffix)) return suffix;
     if (described(prefix)) return prefix;
 
-    // Neither token is a described format. getTypeAndBase still resolves the
-    // core modland prefixes ("mdat", "smp", ...); else fall back to the suffix.
-    std::string type = toLower(getTypeFromName(leaf));
-    if (!type.empty() && !isContainerExt(type)) return type;
-    if (!suffix.empty() && !isContainerExt(suffix)) return suffix;
-
-    // Last resort: some formats have NO extension on disk (the song is a
-    // bare-named file, e.g. Apple IIgs SoundSmith on Modland), so neither the
-    // path nor the stored ext yields a key. Map the DB format NAME to its
-    // canonical described extension so the scroller still finds a description.
+    // Neither token names a format we know. Some formats have NO extension on
+    // disk at all -- the song is a bare-named file, e.g. Apple IIgs SoundSmith
+    // on Modland ("SoundSmith/Bret Victor/Bunny Tune") -- so the path can never
+    // yield a key and the DB format NAME is the only signal left. Map it to the
+    // format's canonical described extension.
+    //
+    // This sits ABOVE the two heuristic fallbacks below, not after them, and the
+    // distinction matters: "bare-named" does not mean "dot-free". Six modland
+    // SoundSmith songs have a dot in the TITLE ("FTA.Song (stripped)", "Closer
+    // to.the Heart (Rush)", "SS V0.7 Theme"), and the suffix that produces is a
+    // fragment of the name, not a format -- so the `return suffix` line below
+    // used to win and hand back "song (stripped)". That matches no plugin, so
+    // buildPluginGroups() dropped those rows from the browse list entirely (it
+    // skips extensions no plugin claims) and the scroller found no description.
+    // A format name we have a canonical extension for is better evidence than
+    // any token guessed off a filename, so it goes first.
     std::string fmt = toLower(s.format);
     if (!fmt.empty()) {
         static const std::map<std::string, std::string> nameToExt = {
@@ -4985,6 +4991,13 @@ std::string MusicDatabase::resolveExtension(SongInfo const& s)
         auto it = nameToExt.find(fmt);
         if (it != nameToExt.end()) return it->second;
     }
+
+    // Still nothing named. getTypeAndBase resolves the core modland prefixes
+    // ("mdat", "smp", ...); else fall back to the suffix.
+    std::string type = toLower(getTypeFromName(leaf));
+    if (!type.empty() && !isContainerExt(type)) return type;
+    if (!suffix.empty() && !isContainerExt(suffix)) return suffix;
+
     return "";
 }
 

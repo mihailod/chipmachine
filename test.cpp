@@ -2894,6 +2894,30 @@ TEST_CASE("SoundSmith format resolves to w", "[music]")
     info.format = "SoundSmith";
     info.path = "SoundSmith/- unknown/Amiga remakes/End Theme (Obarski)";
     REQUIRE(chipmachine::MusicDatabase::resolveExtension(info) == "w");
+
+    // ...and bare-named does not mean dot-free. Six modland SoundSmith songs
+    // have a dot somewhere in the TITLE, and the suffix that produces is not a
+    // format, it is a fragment of the name. Before the format-name map was
+    // hoisted above the heuristic fallbacks these returned that fragment, which
+    // matches no plugin -- so they were dropped from the plugin browse list
+    // (buildPluginGroups skips an extension no plugin claims) and filed under a
+    // junk group on the Formats screen, which uses the same resolver. The mas
+    // index gate is NOT affected either way: songHasNoPlayer routes on
+    // routingExtension(), not on this.
+    for (auto const* p : {
+             "SoundSmith/FTA (Free Tools Association)/FTA.Song (stripped)",
+             "SoundSmith/Ian Schmidt/FTA.Song (IAN9 remake)",
+             "SoundSmith/Ken Burtch/The Harmonious Blacksmith (G. F. Handel)",
+             "SoundSmith/King Lerch/Closer to.the Heart (Rush)",
+             "SoundSmith/- unknown/Amiga remakes/v48.Remix (Firefox)",
+             "SoundSmith/- unknown/SS V0.7 Theme",
+         }) {
+        SongInfo dotted;
+        dotted.format = "SoundSmith";
+        dotted.path = p;
+        INFO("dotted SoundSmith title: " << p);
+        REQUIRE(chipmachine::MusicDatabase::resolveExtension(dotted) == "w");
+    }
 }
 
 // Ixalance (.ixs). A synth tracker from the defunct Shortcut Software: it stores

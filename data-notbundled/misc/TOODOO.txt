@@ -10,7 +10,7 @@ Mac App Store (MAS) compliance:
 
 - MAS: GPL Furnace (what is this? how many songs impacted?)
 
-- reSIDfp is still in the mas binary. Unrelated to GoatTracker — nm finds 321 reSIDfp:: symbols in build-mas, and the only archive carrying them is libdmfplugin.a (the vendored Furnace engine). reSIDfp is GPL-2+ and Furnace itself is GPL-2, so that's an open MAS exposure of exactly the same class as the one we just closed. I didn't touch it.
+- reSIDfp is still in the mas binary. Unrelated to GoatTracker — nm finds 321 reSIDfp:: symbols in build-mas, and the only archive carrying them is libdmfplugin.a (the vendored Furnace engine). reSIDfp is GPL-2+ and Furnace itself is GPL-2, so that's an open MAS exposure
 
 - MAS: replace with non-GPL if possible or remove GPL GSF (what is this? how many songs impacted?)
 
