@@ -89,10 +89,26 @@ public:
             fprintf(stderr, "No plugins registered!\n");
         }
 
-        std::sort(plugins.begin(), plugins.end(),
-                  [](auto const& a, auto const& b) {
-                      return a->priority() > b->priority();
-                  });
+        // stable_sort, NOT sort. Priority is a coarse knob and most plugins sit
+        // at 0, so ties are the common case -- and registration order is what
+        // breaks them. register_plugins() states that in so many words
+        // ("Before gmeplugin so OPL VGMs are claimed here first", "Before
+        // vicepluginbridge, so cSID claims .sid/.rsid", "AFTER vicepluginbridge
+        // on purpose -- registration order is the variant gate for Compute!
+        // Sidplayer"), and MusicPlayer::fromFile walks getPlugins() in this
+        // order, so it decides which engine actually plays a shared extension.
+        //
+        // std::sort gives no guarantee for equivalent elements, and it really
+        // does reshuffle them: inserting sndhplugin_register() in the middle of
+        // the list silently flipped ".sap" from Game Music Emu to PokeyNoise --
+        // 6,618 songs quietly changing decoder because an unrelated plugin was
+        // added 50 lines above. stable_sort makes the documented intent the
+        // actual behaviour, so adding a plugin can no longer perturb the routing
+        // of plugins it has nothing to do with.
+        std::stable_sort(plugins.begin(), plugins.end(),
+                         [](auto const& a, auto const& b) {
+                             return a->priority() > b->priority();
+                         });
         constructors.clear();
     }
 
