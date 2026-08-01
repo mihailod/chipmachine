@@ -379,11 +379,26 @@ Extensions: `.spc` `.nsf` `.nsfe` `.gbs` `.gbr` `.ay` `.gym` `.sap` `.vgm` `.vgz
 > GBR carries no "first song" field and many rips keep a silent stop-track
 > at song 0 — use the subsong controls (LEFT-RIGHT cursor keys) if a tune starts silent.
 
+### SNDH (Atari ST)
+
+Support for Atari ST/STE music in the SNDH archive format, via **AtariAudio** by
+Arnaud Carré (Leonard/Oxygene) — a self-contained ST machine (Musashi 68000 +
+YM2149 + MFP timers + STE DMA sound + an ICE! depacker).
+
+Extensions: `.sndh` `.snd`
+
+> This replaced SC68 as the `.sndh` decoder in both builds. It also fixes STE
+> DMA-sound tunes that SC68 played as a single block and then silence.
+
 ### SC68
 
-Support for Atari 16 bit music
+Support for Atari 16 bit music in the `.sc68` container format
 
 Extensions: `.sc68` `.sndh` `.snd` `.4v`
+
+> **ChipMachinePlus only.** SC68 is GPL-3, so it is not part of the App Store
+> build; `.sc68` songs are hidden there. `.sndh` is unaffected — SNDH above plays
+> it in both builds, and takes priority here too, leaving SC68 as a fallback.
 
 ### USF
 
@@ -773,7 +788,8 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **GoatTracker v2 (C64 `.sng`):** Developed by **Lasse Öörni (Cadaver)**; the vendored playback core (`gplay.c`, `gsid.cpp`, `gt2_load.c`) is driven directly with no editor/SDL layer. Licensed under GPL-2.0-or-later. Its SID emulation is **reSID** by **Dag Lem**, vendored verbatim, also GPL-2.0-or-later. Not included in the Mac App Store build, where the 104 GoatTracker-format `.sng` songs are dropped from the index to match (every other `.sng` format has its own player and is unaffected).
 * **UADE (Amiga Exotic formats):** Developed by Heikki Orsila and the UADE Team (eagleplayers/format DB vendored from UADE 3.05). Licensed under GPL-2.0-or-later. Not included in the Mac App Store build.
 * **StSound (Atari ST YM2149):** Developed by Arnaud Carré (Leonard/Oxygene). Licensed under MIT.
-* **SC68 (Atari ST/Amiga):** Developed by Benjamin Gerard. Licensed under GPL-3.0-or-later.
+* **AtariAudio (Atari ST/STE `.sndh`):** Developed by **Arnaud Carré (Leonard/Oxygene)**, vendored from <https://github.com/arnaud-carre/sndh-player>. Licensed under **MIT**. A dependency-free ST audio machine — YM2149, MFP 68901 timers and STE DMA sound — bundling **Musashi** (68000 CPU core by **Karl Stenerud**, MIT) and the **ICE! 2.4 depacker** (universal C version placed in the **public domain** by **Hans Wessels**). This replaced GPL-3 SC68 as the `.sndh` decoder in *both* builds, which is what keeps 6,079 Atari ST songs in the Mac App Store build. Checked against libsc68 over a 127-file random sample of the SNDH archive: same load result and same subsong count on every file, and three STE DMA tunes that libsc68 cuts to silence after one block play properly here.
+* **SC68 (Atari ST `.sc68`):** Developed by Benjamin Gerard. Licensed under GPL-3.0-or-later. No longer the `.sndh` decoder (see AtariAudio above); it stays in the Plus build for the `.sc68` container and as a `.sndh` fallback. Not included in the Mac App Store build, where the 1,894 `.sc68` songs are dropped from the index to match — those files call out to the 95 prebuilt GPL-3 68k replay routines in `data/sc68/Replay`, for which there is no permissive equivalent. The 100 AdLib `.snd` songs are AdPlug's and are unaffected.
 * **AdPlug (PC AdLib/OPL):** Developed by Simon Peter and the AdPlug Team. Licensed under LGPL-2.1-or-later.
 * **Highly Experimental / PSF1/2:** Developed by Neill Corlett. Licensed under zlib License.
 * **AudioOverload Backend / AOSDK:** Developed by Richard Bannister and contributors. Licensed under Custom/Freeware permissive license.

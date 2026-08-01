@@ -9,6 +9,7 @@
 #include "vicepluginbridge/VicePlugin.h"
 #include "gmeplugin/GMEPlugin.h"
 #include "libvgmplugin/LibVGMPlugin.h"
+#include "sndhplugin/SNDHPlugin.h"
 #include "sc68plugin/SC68Plugin.h"
 #include "stsoundplugin/StSoundPlugin.h"
 #include "adplugin/AdPlugin.h"

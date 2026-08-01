@@ -1,6 +1,8 @@
 #include "SongFileIdentifier.h"
 #include "modutils.h"
 
+#include <musicplayer/src/plugins/sndhplugin/IceDepack.h>
+
 #include <archive/archive.h>
 #include <coreutils/environment.h>
 #include <coreutils/file.h>
@@ -17,6 +19,7 @@
 #include <memory>
 #include <string>
 #include <mutex>
+#include <vector>
 
 using apone::File;
 
@@ -97,16 +100,10 @@ bool parseSap(SongInfo& info)
     return true;
 }
 
-extern "C"
-{
-    int unice68_depacker(void* dest, const void* src);
-    int unice68_get_depacked_size(const void* buffer, int* p_csize);
-}
-
 bool parseSndh(SongInfo& info)
 {
 
-    std::unique_ptr<uint8_t[]> unpackPtr;
+    std::vector<uint8_t> unpacked;
     File f{ info.path };
     LOGD("SNDH >%s", info.path);
     auto data = f.readAll();
@@ -114,11 +111,13 @@ bool parseSndh(SongInfo& info)
     auto* ptr = &data[0];
     std::string head = get_string(ptr, 4);
     if (head == "ICE!") {
-        int dsize = unice68_get_depacked_size(ptr, nullptr);
-        LOGD("Unicing %d bytes to %d bytes", data.size(), dsize);
-        unpackPtr = std::make_unique<uint8_t[]>(dsize);
-        int res = unice68_depacker(unpackPtr.get(), ptr);
-        if (res == 0) ptr = unpackPtr.get();
+        // Was unice68 (sc68plugin, GPL-3), which the mas build does not link --
+        // see CM_HAVE_SC68 in CMakeLists.txt. This is the public-domain ice_24.c
+        // that AtariAudio vendors, reached through the exported wrapper in
+        // sndhplugin so both variants parse ICE!-packed SNDH tags identically.
+        unpacked = musix::sndh::iceDepack(ptr, data.size());
+        LOGD("Unicing %d bytes to %d bytes", data.size(), unpacked.size());
+        if (!unpacked.empty()) ptr = unpacked.data();
     }
 
     auto id = get_string(ptr + 12, 4);

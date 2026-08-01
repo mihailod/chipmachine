@@ -644,7 +644,6 @@ sbk
 sbr
 sbv
 sc
-sc68
 scd
 sch
 sci

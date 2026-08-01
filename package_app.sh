@@ -465,6 +465,35 @@ if [ "$VARIANT" = "mas" ]; then
     fi
 fi
 
+# 4d. sc68 runtime payload -- plus variant only.
+#
+# data/sc68/ is libsc68's user directory: sc68.cfg plus Replay/, the 95 prebuilt
+# 68k replay routines (.bin/.deli) that a .sc68 file names rather than embeds.
+# Same reasoning as data/uade above -- they are sc68 project build outputs under
+# its GPL-3, and the mas build does not link sc68plugin at all
+# (CM_HAVE_SC68=OFF in CMakeLists.txt), so nothing there could read them.
+#
+# TWO paths, not one. Besides the directory there is a stray data/sc68.cfg
+# sitting at the top level of data/ -- libsc68 writes its global config there at
+# start-up (it is NOT a copy of data/sc68/sc68.cfg; the two differ, since each
+# accumulates its own total-playing-time counters). A rule that only removed the
+# directory left that file in the bundle. Both go.
+#
+# .sndh playback is NOT affected: sndhplugin drives AtariAudio (MIT), which is
+# entirely self-contained -- an SNDH file carries its own 68k driver, so there is
+# no replay directory and no config to ship. Drop them from the COPIED tree; the
+# source tree under chipmachine/data/ is never touched.
+if [ "$VARIANT" = "mas" ]; then
+    if [ -d "${RESOURCES_DIR}/data/sc68" ]; then
+        echo "-> Removing sc68 replay payload from mas bundle (GPL-3, plugin not linked)"
+        rm -rf "${RESOURCES_DIR}/data/sc68"
+    fi
+    if [ -f "${RESOURCES_DIR}/data/sc68.cfg" ]; then
+        echo "-> Removing stray sc68.cfg from mas bundle (GPL-3, plugin not linked)"
+        rm -f "${RESOURCES_DIR}/data/sc68.cfg"
+    fi
+fi
+
 if [ -f "/opt/homebrew/etc/openssl@3/cert.pem" ]; then
     echo "-> Packaging OpenSSL certificates for standalone HTTPS..."
     cp -L "/opt/homebrew/etc/openssl@3/cert.pem" "${RESOURCES_DIR}/"

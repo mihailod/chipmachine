@@ -48,9 +48,29 @@ along with this program. If not, see <https://polyformproject.org/licenses/nonco
 ===============================================================================
 2. COPYLEFT DEPENDENCIES (FORCING COMBINED WORK TO GPL-3.0-OR-LATER)
 ===============================================================================
-Component: SC68 (Atari ST/Amiga)
-Author: Developed by Benjamin Gerard
+Component: SC68 (Atari ST -- .sc68 container only)
+Author: Developed by Benjamin Gerard. Covers libsc68, the emu68 68000 core,
+        file68 and unice68, vendored under musicplayer/src/plugins/sc68plugin.
 License: GNU General Public License v3.0 or later
+Notice: NO LONGER the .sndh decoder. As of 2026-08-01 both variants play .sndh
+        with AtariAudio (MIT, section 4), which is 6,079 of the 7,976 songs this
+        component used to own; sc68plugin is left claiming .sndh at a lower
+        priority in the plus build, purely as a fallback for anything AtariAudio
+        declines. NOT LINKED into the Mac App Store variant (CM_VARIANT=mas
+        builds with CM_HAVE_SC68=OFF, so neither sc68plugin nor its vendored
+        libsc68/emu68/file68/unice68 sources are compiled), and its data/sc68
+        payload -- sc68.cfg plus Replay/, the 95 prebuilt 68k replay routines --
+        is stripped from that bundle by package_app.sh.
+        What the mas variant does lose is the ".sc68" container itself: 1,894
+        songs, dropped from that variant's index to match. Those files NAME an
+        external replay routine rather than embedding one, and the routines are
+        exactly the GPL-3 binaries in data/sc68/Replay -- there is no permissive
+        equivalent and no published spec, so unlike .sndh there was nothing to
+        swap in. Every other extension sc68plugin content-gated is unaffected:
+        the 100 AdLib ".snd" songs are AdPlug's in both variants.
+        ICE! depacking for SNDH tag parsing (SongFileIdentifier::parseSndh) also
+        moved off unice68 onto the public-domain ice_24.c that ships with
+        AtariAudio, so no GPL-3 code is reachable from shared app code.
 
 Component: VICE (C64 Compute! Sidplayer -- .mus/.str only)
 Author: Developed by the VICE Core Team
@@ -307,6 +327,40 @@ License: Artistic License 2.0 (stated in the header of every vendored source
 Component: FreeType / Grappix (UI & Text)
 Author: The FreeType Project and Grappix contributors
 License: FreeType License (FTL) / BSD-2-Clause
+
+Component: AtariAudio (Atari ST/STE SNDH playback -- .sndh)
+Author: Developed by Arnaud Carré (Leonard/Oxygene), vendored verbatim from
+        https://github.com/arnaud-carre/sndh-player under
+        musicplayer/src/plugins/sndhplugin/atariaudio. A complete, dependency-free
+        ST audio machine: SndhFile (container + tag parsing), AtariMachine (bus),
+        Ym2149c (YM2149 sound chip), Mk68901 (MFP timers) and SteDac (STE DMA
+        sound). Bundles two further components, listed separately below.
+License: MIT License
+Notice: This REPLACED GPL-3 libsc68 as the .sndh decoder in BOTH variants on
+        2026-08-01 -- see the SC68 entry in section 2. It is what makes 6,079
+        Atari ST songs shippable in the Mac App Store build. Verified against
+        libsc68 over a 127-file random sample of the SNDH archive: identical load
+        results and subsong counts on every file, and three STE DMA tunes that
+        libsc68 renders as a single block then silence play correctly here.
+
+Component: Musashi (Motorola 68000 CPU core)
+Author: Developed by Karl Stenerud. Vendored as part of AtariAudio, at
+        musicplayer/src/plugins/sndhplugin/atariaudio/external/Musashi.
+License: MIT License
+Notice: A SECOND, independent Musashi in the tree -- aoplugin's Saturn core
+        (aosdk/eng_ssf) is also one, and exports the same un-prefixed C entry
+        points. sndhplugin is built at hidden visibility and partial-linked
+        (ld -r) so its copy's symbols are localized and the two do not collide.
+
+Component: ICE! 2.4 depacker (Atari ST data packer)
+Author: Universal C version placed in the public domain in 2007 by Hans Wessels.
+        Vendored as part of AtariAudio, at
+        musicplayer/src/plugins/sndhplugin/atariaudio/external/ice_24.c.
+License: Public domain
+Notice: Most SNDH files in the archive are ICE!-packed. Besides serving the
+        decoder, this is also what SongFileIdentifier::parseSndh now uses to read
+        their tags (via the exported musix::sndh::iceDepack wrapper), replacing
+        the GPL-3 unice68 that shared app code previously called into.
 
 Component: StSound (Atari ST YM2149)
 Author: Developed by Arnaud Carré (Leonard/Oxygene)

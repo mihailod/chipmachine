@@ -170,6 +170,35 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_DMF ON)
 endif()
+# sc68plugin is the fifth case, and the first where the REPLACEMENT landed in the
+# same change as the gate. libsc68 + emu68 + file68 + unice68 are GPL-3 (Benjamin
+# Gerard), so the plugin must be ABSENT from the mas binary. Follows
+# CM_HAVE_UADE's pattern exactly.
+#
+# Most of what it played does NOT go away. sc68plugin owned 7,976 rows, and 6,079
+# of them (76%) are ".sndh" -- those are now decoded by sndhplugin, built in BOTH
+# variants on AtariAudio (Arnaud Carre, MIT: Musashi 68000 + a from-scratch
+# YM2149 + MFP timers + STE DMA DAC + a public-domain ICE! depacker). AtariAudio
+# is the engine behind Arnaud Carre's own SNDH archive player, and he wrote the
+# original StSound this project already ships. sndhplugin declares priority 2, so
+# in the plus build it takes .sndh first and libsc68 remains reachable as a
+# fallback for anything it declines -- that build can only get better, never
+# worse.
+#
+# What IS lost is ".sc68" itself: 1,894 rows. That container dispatches to the 95
+# prebuilt 68k replay binaries in data/sc68/Replay/, which are sc68 project build
+# outputs under the same GPL-3 and have no permissive equivalent -- there is no
+# second implementation to swap in and no spec to clean-room against. Those rows
+# are dropped from the mas index by songHasNoPlayer() in MusicDatabase.cpp.
+#
+# The 100 AdLib ".snd" rows are unaffected: SC68Plugin only ever content-gated
+# that extension, and AdPlug claims them in both variants.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_SC68 OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_SC68)
+else()
+    set(CM_HAVE_SC68 ON)
+endif()
 # victrackerplugin (.vt, VIC-20) needed NO variant gate, unlike the four above.
 # Its GPL was internal rather than structural -- the plugin is ours, but it drove
 # two GPLv2 engine cores (the omarandlorraine fake6502 fork, and a VIC-I sound
@@ -178,7 +207,7 @@ endif()
 # chip; the replacements were A/B'd by ear against the originals and shipped to
 # both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
 # index. See the plugin's README.md.
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF})")
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -310,7 +339,7 @@ add_subdirectory(${AP1_ROOT}/mods ap1mods)
 
 # Define core plugin array
 set(MUSICPLAYER_PLUGINS
-    openmptplugin htplugin heplugin ndsplugin gmeplugin sc68plugin
+    openmptplugin htplugin heplugin ndsplugin gmeplugin sndhplugin
     usfplugin stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
     ayflyplugin mdxplugin s98plugin aoplugin gsfplugin tedplugin v2plugin
     ffmpegplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
@@ -331,6 +360,11 @@ endif()
 # GPL (the whole vendored Furnace engine) -- plus build only, see CM_HAVE_DMF above.
 if(CM_HAVE_DMF)
     list(APPEND MUSICPLAYER_PLUGINS dmfplugin)
+endif()
+# GPL-3 (libsc68 + emu68 + file68 + unice68) -- plus build only, see CM_HAVE_SC68
+# above. .sndh is handled by sndhplugin in both variants; only .sc68 needs this.
+if(CM_HAVE_SC68)
+    list(APPEND MUSICPLAYER_PLUGINS sc68plugin)
 endif()
 # Empty in a mas tree, where the vicepluginbridge target does not exist at all.
 if(CM_HAVE_VICE)
@@ -380,6 +414,10 @@ endif()
 # Same for dmfplugin_register() -- see CM_HAVE_DMF above.
 if(NOT CM_HAVE_DMF)
     target_compile_definitions(plugin_register PRIVATE CM_NO_DMF)
+endif()
+# Same for sc68plugin_register() -- see CM_HAVE_SC68 above.
+if(NOT CM_HAVE_SC68)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_SC68)
 endif()
 target_link_libraries(musicplayer INTERFACE psf plugin_register)
 target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)
@@ -492,7 +530,15 @@ if(NOT WIN32)
 endif()
 
 add_executable(mksonglist scripts/mksonglist/mksonglist.cpp src/SongFileIdentifier.cpp)
-target_link_libraries(mksonglist PRIVATE coreutils archive sc68plugin mp3plugin)
+# sndhplugin, not sc68plugin: SongFileIdentifier::parseSndh has to depack
+# ICE!-packed SNDH files before it can read their tags, and it now does that
+# through musix::sndh::iceDepack (public-domain ice_24.c, vendored with
+# AtariAudio) instead of unice68 (GPL-3, and absent from a mas tree).
+target_link_libraries(mksonglist PRIVATE coreutils archive mp3plugin sndhplugin)
+# ...and the include root that makes <musicplayer/src/plugins/...> resolve. The
+# app targets inherit it from the `musicplayer` INTERFACE library; mksonglist
+# does not link that, so it needs the path directly.
+target_include_directories(mksonglist PRIVATE ${MUSICPLAYER}/..)
 
 # cmtest is built for the plus tree only. test.cpp has ~20 hard references to
 # musix::UADEPlugin (routing, prefix-collision and companion-file cases that are
@@ -564,6 +610,10 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     if(CM_HAVE_UADE)
         list(APPEND SILENT_TARGETS uadeplugin)
     endif()
+    # sndhplugin silences the vendored AtariAudio sources per-file in its own
+    # CMakeLists (our SNDHPlugin.cpp deliberately stays strict), so it is not
+    # listed here. sc68plugin is, and the loop below already skips targets that
+    # do not exist -- which is what a mas tree has.
     foreach(target_item ${SILENT_TARGETS})
         if(TARGET ${target_item})
             target_compile_options(${target_item} PRIVATE -w)

@@ -1855,6 +1855,111 @@ static int64_t adplugEnergy(musix::ChipPlayer* player, int buffers)
 // Assert it structurally rather than by ear: poison the target buffer, then
 // require that every sample getSamples() claims to have produced was actually
 // written by the decoder.
+// AtariAudio (MIT) replaced GPL-3 libsc68 as the .sndh decoder in BOTH variants;
+// this is what keeps 6,079 rows playable in the App Store build, so it needs to
+// hold the same guarantees the SC68 case below does.
+TEST_CASE("SNDH plugin takes .sndh ahead of sc68 and plays every subsong",
+          "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::SNDHPlugin sndh;
+    musix::SC68Plugin sc68{ "data" };
+
+    std::string const file = "testmus/sndh (atari st)/Goldrunner.sndh";
+    REQUIRE(sndh.canHandle(file));
+    // Both claim it -- that is deliberate, sc68 stays as the plus-build fallback
+    // -- so what decides is priority, and sndhplugin must win.
+    REQUIRE(sc68.canHandle(file));
+    REQUIRE(sndh.priority() > sc68.priority());
+
+    std::unique_ptr<musix::ChipPlayer> player{ sndh.fromFile(file) };
+    REQUIRE(player != nullptr);
+
+    auto const* songs = std::get_if<uint32_t>(&player->meta("songs"));
+    REQUIRE(songs != nullptr);
+    REQUIRE(*songs > 1);
+
+    // startSong is a 0-based index everywhere in the host (MusicPlayer::seek
+    // passes it straight to seekTo), even though SNDH numbers subsongs from 1.
+    auto const* start = std::get_if<uint32_t>(&player->meta("startSong"));
+    REQUIRE(start != nullptr);
+    REQUIRE(*start < *songs);
+
+    constexpr int16_t poison = 0x5a5a;
+    std::vector<int16_t> buf(65536);
+
+    auto energyOf = [&](int tries) {
+        int64_t sum = 0;
+        for (int i = 0; i < tries && sum == 0; ++i) {
+            int n = player->getSamples(buf.data(), static_cast<int>(buf.size()));
+            if (n < 0) { break; }
+            for (int j = 0; j < n; ++j) {
+                sum += std::abs(buf[j]);
+            }
+        }
+        return sum;
+    };
+
+    REQUIRE(energyOf(20) != 0);
+
+    for (int song = 0; song < static_cast<int>(*songs); ++song) {
+        REQUIRE(player->seekTo(song, -1));
+
+        // Same contract the sc68 case guards: never vouch for samples the
+        // decoder did not write, or the host hands a fifo of the PREVIOUS
+        // subsong to the mixer on every switch.
+        std::fill(buf.begin(), buf.end(), poison);
+        int produced =
+            player->getSamples(buf.data(), static_cast<int>(buf.size()));
+        REQUIRE(produced >= 0);
+        REQUIRE(produced <= static_cast<int>(buf.size()));
+        auto untouched =
+            std::count(buf.begin(), buf.begin() + produced, poison);
+        INFO("subsong " << song << ": claimed " << produced << " samples, "
+                        << untouched << " never written by the decoder");
+        REQUIRE(untouched == 0);
+
+        INFO("subsong " << song << " produced no audio");
+        REQUIRE(energyOf(40) != 0);
+    }
+}
+
+// The STE DMA sound path is the one place AtariAudio is measurably BETTER than
+// libsc68 rather than merely equivalent: over a 127-file random sample of the
+// SNDH archive the two agreed on every load and every subsong count, and the
+// only differences were three STE tunes that libsc68 renders as one block of
+// audio then silence. This fixture is one of them -- it guards the reason the
+// swap is not a regression.
+TEST_CASE("SNDH STE DMA tune keeps playing past the first block", "[music]")
+{
+    logging::setLevel(logging::Level::Warning);
+    musix::SNDHPlugin sndh;
+
+    std::string const file = "testmus/sndh (atari st)/Lost_STe_DMA.sndh";
+    REQUIRE(sndh.canHandle(file));
+
+    std::unique_ptr<musix::ChipPlayer> player{ sndh.fromFile(file) };
+    REQUIRE(player != nullptr);
+
+    std::vector<int16_t> buf(8192);
+    int activeBlocks = 0;
+    int blocks = 0;
+    for (int i = 0; i < 60; ++i) {
+        int n = player->getSamples(buf.data(), static_cast<int>(buf.size()));
+        if (n <= 0) { break; }
+        int64_t sum = 0;
+        for (int j = 0; j < n; ++j) {
+            sum += std::abs(buf[j]);
+        }
+        blocks++;
+        if (sum / n > 8) { activeBlocks++; }
+    }
+    INFO("only " << activeBlocks << " of " << blocks << " blocks had audio");
+    REQUIRE(blocks > 40);
+    // libsc68 scores 1 here. Anything above "a click then nothing" is the fix.
+    REQUIRE(activeBlocks > blocks / 2);
+}
+
 TEST_CASE("sc68 subsong switch does not replay the previous subsong", "[music]")
 {
     logging::setLevel(logging::Level::Warning);
@@ -4566,6 +4671,7 @@ TEST_CASE("FFMPEG URL path handles unreachable host without hanging", "[music]")
 }
 
 TEST_CASE("HT", "[music]") { testPlugin<musix::HTPlugin>("testmus/ht", ""); }
+TEST_CASE("SNDH (Atari ST)", "[music]") { testPlugin<musix::SNDHPlugin>("testmus/sndh (atari st)", ""); }
 TEST_CASE("SC68", "[music]") { testPlugin<musix::SC68Plugin>("testmus/sc68", "", "data"); }
 TEST_CASE("USF", "[music]") { testPlugin<musix::USFPlugin>("testmus/usf", ""); }
 TEST_CASE("StSound", "[music]") { testPlugin<musix::StSoundPlugin>("testmus/stsound", ""); }

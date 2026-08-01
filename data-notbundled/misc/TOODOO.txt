@@ -5,25 +5,6 @@
 - clean room partial dmf -- PROMPT ready for Monday
 
 ------------------------
-
-Continuation of the Mac App Store (MAS) compliance work: now investigate this:
-
-  * GSF (VisualBoyAdvance, GPL-2.0-or-later) 
-  * USF (lazyusf2/Mupen64, GPL-2.0) 
-  •  SC68Plugin  (GPL-3.0)
-  •  ZXTunePlugin  (GPL-3.0)
-  •  FamiTrackerPlugin  (GPL-2.0)
-
-and how many songs are impacted 
-
-propose one of these options or something else:
-
-- handle these with another plugin?
-- replace with a non-GPL plugin implementation (you found a non-GPL one on the internet or clean room is possible because there are specs like we did for mus/str)
-- worst case: remove it from MAS and don't surface its songs (there is existing logic and gate for that)
-
-investigate and report before doing any work
-
 - - - - 
 
 if doing work: if we do this, do it only in the MAS and leave PLUS unchanged so i can A/B compare and decide if we unify or is stays split. when i say a/b i mean ChipMachine (MAS) and ChipMachinePlus (PLUS) apps -- i will compare by running them both and listening. before i listen you do the best effort to make sure they are similar enough by rendering and comparing with your methods (cosine similarity like what we did for vice replacement, etc.) before i listen with my ears by running both apps. in case of any changes update accordingly the LEGAL, the main README.md and Credits.rtf

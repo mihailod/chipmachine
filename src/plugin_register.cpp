@@ -19,7 +19,10 @@ extern "C" {
     void rsnplugin_register();     // Rar-packaged SNES
     void s98plugin_register();     // PC-98
     void fmpplugin_register();     // PC-98 FMP
-    void sc68plugin_register();    // Atari ST
+    void sndhplugin_register();    // Atari ST/STE SNDH via AtariAudio (MIT)
+#ifndef CM_NO_SC68
+    void sc68plugin_register();    // Atari ST .sc68 -- GPL-3, plus build only
+#endif
     void stsoundplugin_register(); // Atari ST (YM2149)
     void tedplugin_register();     // Commodore Plus/4
     void usfplugin_register();     // Nintendo 64
@@ -90,7 +93,18 @@ void register_plugins() {
     rsnplugin_register();
     s98plugin_register();
     fmpplugin_register();
+    // AtariAudio (MIT) owns .sndh in BOTH variants. It declares priority 2 --
+    // above SC68Plugin's 1 -- so registration order here is belt-and-braces:
+    // what actually decides is the priority sort in ChipPlugin::createPlugins().
+    sndhplugin_register();
+#ifndef CM_NO_SC68
+    // GPL-3 (libsc68 + emu68 + file68 + unice68) -- excluded from the Mac App
+    // Store build (CM_VARIANT=mas), where the sc68plugin target is not built at
+    // all. In the plus build it keeps .sc68 (which needs data/sc68/Replay's 95
+    // prebuilt replay binaries and has no permissive equivalent) and stays
+    // reachable as a .sndh fallback for anything AtariAudio declines.
     sc68plugin_register();
+#endif
     stsoundplugin_register();
     tedplugin_register();
     usfplugin_register();

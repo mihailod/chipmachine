@@ -1175,6 +1175,28 @@ bool songFormatHasNoPlayer(SongInfo const& song,
             // Genesis alone is ~46% of this pool.
             {{"dmf", "deflemask"}, { "dmf" }},
             {{"dmf", "nec pc engine"}, { "dmf" }},
+            // ".sc68" is the fifth case, and it is here for a smaller reason
+            // than the four above: the plain extension test in songHasNoPlayer()
+            // already drops 1,891 of the 1,894 rows on its own (nothing but
+            // sc68plugin ever claimed the extension, so it is simply absent from
+            // playableExtensions() in a mas build). The last 3 survive it --
+            // "m. jackson remix.sc68", "no.sc68", "l.f.o.sc68" -- because
+            // nameHasPlayer() ALSO accepts a modland-style prefix-before-dot
+            // ("med.<song>"), and the leading token of those three filenames
+            // happens to be an extension vgmstream claims. Measured, not
+            // guessed: a mas reindex left exactly those 3. Keying on the format
+            // column instead beats that path entirely.
+            //
+            // Single-candidate, like GoatTracker: there is no mas replacement.
+            // A .sc68 names an external replay routine, and those live in
+            // data/sc68/Replay/ as 95 prebuilt 68k binaries built from GPL-3
+            // sc68 sources -- no permissive equivalent, no published spec.
+            {{"sc68", "sc68"}, { "sc68" }},
+            // ".sndh" is the mirror image and must NOT be listed anywhere:
+            // sndhplugin (AtariAudio, MIT) claims it in BOTH variants, so all
+            // 6,079 of those rows keep playing in mas. That is the whole point
+            // of the swap -- see external/.../sndhplugin/README.md.
+            //
             // NOT listed, deliberately -- all verified X-Tracker DDMF, all still
             // played by libopenmpt in both variants: "x-tracker" (366),
             // "dsmi compact" (13), the generic "dmf" bucket (328, amp +
@@ -1216,10 +1238,11 @@ bool songIsSilentSid(SongInfo const& song, std::set<std::string> const& silent)
 // the point of listing them.
 //
 // Compiled for the mas variant, which ships without uadeplugin,
-// vicepluginbridge, goattrackerplugin OR dmfplugin (all GPL -- see CM_HAVE_UADE
-// / CM_HAVE_VICE / CM_HAVE_GOATTRACKER / CM_HAVE_DMF in CMakeLists.txt).
+// vicepluginbridge, goattrackerplugin, dmfplugin OR sc68plugin (all GPL -- see
+// CM_HAVE_UADE / CM_HAVE_VICE / CM_HAVE_GOATTRACKER / CM_HAVE_DMF /
+// CM_HAVE_SC68 in CMakeLists.txt).
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
-    defined(CM_NO_DMF)
+    defined(CM_NO_DMF) || defined(CM_NO_SC68)
 static bool isContainerExt(std::string e); // defined near resolveExtension()
 
 // Every extension SOME registered plugin claims by name -- i.e. everything this
@@ -1529,11 +1552,15 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // download then can't play.
                 if (songIsUnsupported(song, unsupportedExts)) { return; }
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
-    defined(CM_NO_DMF)
+    defined(CM_NO_DMF) || defined(CM_NO_SC68)
                 // Same rule, build-scoped: without uadeplugin this variant has
                 // no decoder for the Amiga custom-replayer formats, without
                 // vicepluginbridge none for Compute! Sidplayer, without
-                // goattrackerplugin none for GoatTracker .sng, and without
+                // goattrackerplugin none for GoatTracker .sng, without
+                // sc68plugin none for the ".sc68" container (1,894 rows -- and
+                // note this costs NOTHING for ".sndh", which sndhplugin claims
+                // in both variants, nor for the 100 AdLib ".snd" rows AdPlug
+                // owns), and without
                 // dmfplugin none for DefleMask .dmf, so keep them out of the
                 // catalog instead of surfacing rows that download and then
                 // fail. See songHasNoPlayer().
