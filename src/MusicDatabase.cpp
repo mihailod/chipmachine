@@ -1145,6 +1145,19 @@ bool songFormatHasNoPlayer(SongInfo const& song,
             {{"mus", "stereo sidplayer"}, { "libvice", "chipmachine clean room sidplayer" }},
             {{"mus", "fac soundtracker"}, { "uade" }},
             {{"str", "stereo sidplayer"}, { "libvice", "chipmachine clean room sidplayer" }},
+            // ".sng" is the third case, and the one with no fallback at all.
+            // Six plugins advertise the extension (AdPlug, SCC-Musixx, Sam
+            // Coupe, GoatTracker, UADE, vgmstream) for six unrelated formats, so
+            // the extension test says "playable" in every build. Only the format
+            // name reveals that these 104 rows -- modland "GoatTracker" (90) and
+            // "GoatTracker 2" (14) -- need goattrackerplugin specifically, which
+            // the mas build does not link (GPL; see CM_HAVE_GOATTRACKER in
+            // CMakeLists.txt). Single-candidate: there is no mas replacement.
+            {{"sng", "goattracker"}, { "goattracker" }},
+            {{"sng", "goattracker 2"}, { "goattracker" }},
+            // Not present in today's allmods.txt, but formats.h and the
+            // format_map already anticipate the name; keep the three in step.
+            {{"sng", "goattracker stereo"}, { "goattracker" }},
         };
     if (song.format.empty()) { return false; }
     if (builtPluginNames.empty()) { return false; }
@@ -1180,9 +1193,10 @@ bool songIsSilentSid(SongInfo const& song, std::set<std::string> const& silent)
 // (the 149 bare "*.set" tunes-that-aren't) still match and are dropped, which is
 // the point of listing them.
 //
-// Compiled for the mas variant, which ships without BOTH uadeplugin and
-// vicepluginbridge (GPL -- see CM_HAVE_UADE / CM_HAVE_VICE in CMakeLists.txt).
-#if defined(CM_NO_UADE) || defined(CM_NO_VICE)
+// Compiled for the mas variant, which ships without uadeplugin,
+// vicepluginbridge OR goattrackerplugin (all GPL -- see CM_HAVE_UADE /
+// CM_HAVE_VICE / CM_HAVE_GOATTRACKER in CMakeLists.txt).
+#if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER)
 static bool isContainerExt(std::string e); // defined near resolveExtension()
 
 // Every extension SOME registered plugin claims by name -- i.e. everything this
@@ -1288,7 +1302,7 @@ static bool songHasNoPlayer(SongInfo const& song,
     if (first.empty()) { return false; }
     return !nameHasPlayer(first, playable);
 }
-#endif // CM_NO_UADE || CM_NO_VICE
+#endif // CM_NO_UADE || CM_NO_VICE || CM_NO_GOATTRACKER
 
 static bool songIsUnsupported(SongInfo const& song,
                               std::set<std::string> const& unsupported)
@@ -1491,10 +1505,11 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // them, so indexing them only yields broken GUI entries that
                 // download then can't play.
                 if (songIsUnsupported(song, unsupportedExts)) { return; }
-#if defined(CM_NO_UADE) || defined(CM_NO_VICE)
+#if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER)
                 // Same rule, build-scoped: without uadeplugin this variant has
                 // no decoder for the Amiga custom-replayer formats, and without
-                // vicepluginbridge none for Compute! Sidplayer, so keep them out
+                // vicepluginbridge none for Compute! Sidplayer, and without
+                // goattrackerplugin none for GoatTracker .sng, so keep them out
                 // of the catalog instead of surfacing rows that download and
                 // then fail. See songHasNoPlayer().
                 if (songHasNoPlayer(song, playableExtensions())) { return; }
@@ -2056,6 +2071,25 @@ void MusicDatabase::buildPluginGroups()
             {{"mus", "stereo sidplayer"}, { "libvice", "chipmachine clean room sidplayer" }},
             {{"mus", "fac soundtracker"}, { "uade" }},
             {{"sid", "sidmon 1"}, { "uade" }},
+            // ".sng" is the third case, and the one where first-claimer-wins hid
+            // a whole plugin. Six plugins advertise the extension for six
+            // unrelated formats and adplugin is registered first, so all 493
+            // modland .sng rows were credited to AdPlug -- leaving GoatTracker
+            // (and SCC-Musixx, which claims nothing else) with a count of zero,
+            // and plugins with zero songs are not admitted to the browse list at
+            // all. So GoatTracker was missing from the TAB plugin screen
+            // entirely despite playing its 104 tunes correctly. Playback was
+            // never affected: dispatch is by GTS magic in
+            // GoatTrackerPlugin::canHandle, and AdPlug content-gates ".sng" on
+            // its own adlib signature and declines these.
+            //
+            // Only the GoatTracker names are listed here. The other .sng formats
+            // (SCC-Musixx 97, Richard Joseph 77, Synder 247, Sam Coupe 15, ...)
+            // are still credited to AdPlug by the same first-claimer rule; that
+            // is a pre-existing mis-attribution and wants its own pass.
+            {{"sng", "goattracker"}, { "goattracker" }},
+            {{"sng", "goattracker 2"}, { "goattracker" }},
+            {{"sng", "goattracker stereo"}, { "goattracker" }},
         };
 
     std::vector<int> counts(plugins.size(), 0);

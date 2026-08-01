@@ -107,7 +107,31 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_VICE ON)
 endif()
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE})")
+# GoatTracker is GPLv2 twice over and the same App Store reasoning applies a
+# third time: goattrackerplugin vendors GoatTracker's own gplay.c playroutine and
+# gsong.c loader (Lasse Oorni, GPL-2) on top of reSID (Dag Lem, GPL-2), so it
+# must be ABSENT from the mas binary. Follows CM_HAVE_UADE's pattern exactly.
+#
+# Unlike UADE and VICE there is no fallback and none is worth building. Swapping
+# reSID for the already-vendored cSID (WTFPL) would not help -- the GT2
+# playroutine is the other half of the licence problem -- so a mas fallback means
+# clean-rooming the whole sequencer. The .sng file format is documented in
+# GoatTracker's goattrk2.txt, but the playroutine semantics (wave/pulse/filter
+# tables, arpeggio, hard-restart/ADSR-bug timing) are not, and a hand-written
+# parser has already been tried once and got the version-gated fixups wrong (see
+# memory [[goattracker-sng-support]]). The exposure is 104 songs -- modland
+# "GoatTracker" (90) + "GoatTracker 2" (14), the only GoatTracker-format .sng in
+# the whole catalog -- so they are dropped from the mas index instead, by
+# songFormatHasNoPlayer() in MusicDatabase.cpp. Every OTHER .sng format
+# (SCC-Musixx, Richard Joseph, Sam Coupe, Ad Lib, ...) has its own player and is
+# unaffected.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_GOATTRACKER OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_GOATTRACKER)
+else()
+    set(CM_HAVE_GOATTRACKER ON)
+endif()
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -246,12 +270,16 @@ set(MUSICPLAYER_PLUGINS
     kssplugin quartetplugin wsrplugin zxtuneplugin pokeynoiseplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin fnkplugin
-    famitrackerplugin goattrackerplugin dmfplugin libvgmplugin vgmstreamplugin
+    famitrackerplugin dmfplugin libvgmplugin vgmstreamplugin
     victrackerplugin klystrackplugin csidplugin musplugin
 )
 # GPL -- plus build only, see CM_HAVE_UADE above.
 if(CM_HAVE_UADE)
     list(APPEND MUSICPLAYER_PLUGINS uadeplugin)
+endif()
+# GPL (GoatTracker + reSID) -- plus build only, see CM_HAVE_GOATTRACKER above.
+if(CM_HAVE_GOATTRACKER)
+    list(APPEND MUSICPLAYER_PLUGINS goattrackerplugin)
 endif()
 # Empty in a mas tree, where the vicepluginbridge target does not exist at all.
 if(CM_HAVE_VICE)
@@ -293,6 +321,10 @@ if(NOT CM_HAVE_VICE)
     # csidplugin also needs it: with VICE present it hands self-IRQ RSIDs back to
     # VICE, and without VICE it must keep them (see CSIDPlugin::canHandle).
     target_compile_definitions(csidplugin PRIVATE CM_NO_VICE)
+endif()
+# Same for goattrackerplugin_register() -- see CM_HAVE_GOATTRACKER above.
+if(NOT CM_HAVE_GOATTRACKER)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_GOATTRACKER)
 endif()
 target_link_libraries(musicplayer INTERFACE psf plugin_register)
 target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)

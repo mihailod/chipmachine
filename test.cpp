@@ -2014,6 +2014,29 @@ TEST_CASE("mas index: Sidplayer now playable, UADE formats still dropped", "[mus
     auto karl = row("Karl Morton/x/tune.mus", "Karl Morton Music Format");
     REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(karl, masPlugins));
 
+    // GoatTracker .sng: GPL (GoatTracker's own playroutine + reSID), dropped
+    // from mas with no fallback at all. ".sng" is advertised by AdPlug, UADE,
+    // vgmstream, SCC-Musixx and Sam Coupe in every build, so the extension says
+    // "playable" and only the format name gives it away -- exactly the .mus trap
+    // above. 104 rows: modland "GoatTracker" (90) + "GoatTracker 2" (14).
+    auto gtPlus = plusPlugins;
+    gtPlus.insert("goattracker");
+    auto gt = row("GoatTracker/Stinsen/tune.sng", "GoatTracker");
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(gt, gtPlus));
+    REQUIRE(chipmachine::songFormatHasNoPlayer(gt, masPlugins));
+    auto gt2 = row("GoatTracker 2/Cadaver/tune.sng", "GoatTracker 2");
+    REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(gt2, gtPlus));
+    REQUIRE(chipmachine::songFormatHasNoPlayer(gt2, masPlugins));
+    // ...and the .sng formats that DO keep a player in mas are untouched -- the
+    // rule must stay format-scoped, not take the whole extension down with it.
+    // (Richard Joseph / Zoundmonitor / Synder .sng are UADE-only and so are
+    // unplayable in mas, but they are not listed in formatPlayer and this rule
+    // says nothing about them -- a separate, pre-existing gap.)
+    for (auto const& other : { "SCC-Musixx", "Sam Coupe SNG", "Ad Lib" }) {
+        REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(
+            row(std::string(other) + "/x/tune.sng", other), masPlugins));
+    }
+
     // A row with no format recorded is never dropped on this rule -- the
     // extension logic in songHasNoPlayer() still gets its say.
     REQUIRE_FALSE(chipmachine::songFormatHasNoPlayer(row("x/tune.mus", ""), masPlugins));

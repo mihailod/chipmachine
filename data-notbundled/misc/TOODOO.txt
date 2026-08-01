@@ -1,10 +1,10 @@
 Mac App Store (MAS) compliance:
 
-- how many songs are impacted for GPL goattracker -- cannot find it in plugins search?! unless we can find some workaround (non-GPL or clean room implementation based on some specs) we need to remove goattrackerplugin (vendors GPL reSID), 
-
 - replace with non-GPL if possible or remove: victrackerplugin's vic_sound.c (GPL VICE VIC-I derived, 11 songs impacted) replacement in the MAS version of the app (and not surface the content they play)?
 
 - MAS: GPL Furnace (what is this? how many songs impacted?)
+
+- reSIDfp is still in the mas binary. Unrelated to GoatTracker — nm finds 321 reSIDfp:: symbols in build-mas, and the only archive carrying them is libdmfplugin.a (the vendored Furnace engine). reSIDfp is GPL-2+ and Furnace itself is GPL-2, so that's an open MAS exposure of exactly the same class as the one we just closed. I didn't touch it.
 
 - MAS: replace with non-GPL if possible or remove GPL GSF (what is this? how many songs impacted?)
 
@@ -25,7 +25,7 @@ Mac App Store (MAS) compliance:
 
   • Statically Linked GPL Code (Apple EULA Incompatibility):
       • Inspection of  ChipMachine.app/Contents/MacOS/chipmachine  shows that several GPL-licensed plugins are compiled directly into the executable (e.g.  SC68Plugin  [GPL-3.0],  ZXTunePlugin  [GPL-3.0],                  
-      FamiTrackerPlugin  [GPL-2.0],  GoatTracker / reSID ,  ASAP ,  Ayfly ,  MaxTrax ,  Vic-Tracker ).
+      FamiTrackerPlugin  [GPL-2.0], ASAP ,  Ayfly ,  MaxTrax ,  Vic-Tracker ).
       • App Store Requirement: Distributing GPL-licensed software on the Mac App Store creates a legal conflict with Apple’s App Store EULA DRM terms. GPL components must be stripped/disabled from MAS builds.
   • Creative Commons NonCommercial (CC BY-NC-SA 4.0) License:
       • As noted in Credits.rtf, Ixalance ( webixs ) is licensed under CC BY-NC-SA 4.0 (NonCommercial).
@@ -43,7 +43,6 @@ LATEST info:
   •  SC68Plugin  (GPL-3.0)
   •  ZXTunePlugin  (GPL-3.0)
   •  FamiTrackerPlugin  (GPL-2.0)
-  •  GoatTrackerPlugin  (GPL-2.0)
   │ Risk: Apple's App Store EULA DRM terms conflict with GPL license requirements. Apple App Review may reject the app on legal grounds (Guideline 5.2), or the GPL authors could issue a takedown.
   ││ Fix: Your CMake  CM_VARIANT=mas  build should disable these plugins at compile time ( -DCM_HAVE_SC68=OFF -DCM_HAVE_ZXTUNE=OFF  etc.) so their code is not linked into the MAS binary. This is a build-system change, not a packaging change.
 

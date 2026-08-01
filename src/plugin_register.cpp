@@ -60,7 +60,9 @@ extern "C" {
     void monotoneplugin_register(); // MONOTONE / PC-speaker tracker (.mon) via vendored PTPlayer (BSD-3)
     void mikmodplugin_register();  // MikMod UNITRK / UNIMOD (.uni) via vendored libmikmod slice
     void famitrackerplugin_register(); // FamiTracker (.ftm) NES 2A03 + expansions via vendored FamiTracker CX
+#ifndef CM_NO_GOATTRACKER
     void goattrackerplugin_register(); // GoatTracker (.sng) C64 SID via vendored GoatTracker player + reSID
+#endif
     void dmfplugin_register();         // DefleMask (.dmf) multi-system chiptune via vendored Furnace engine
     void vgmstreamplugin_register();   // vgmstream (.adx/.hca/.fsb/... hundreds of game-audio containers) via vendored vgmstream
     void victrackerplugin_register();  // VIC-TRACKER (.vt) Commodore VIC-20 via fake6502 + VICE VIC-I sound
@@ -149,7 +151,13 @@ void register_plugins() {
     monotoneplugin_register();
     mikmodplugin_register();
     famitrackerplugin_register();
+#ifndef CM_NO_GOATTRACKER
+    // GPLv2 twice over (GoatTracker's gplay.c/gsong.c + reSID) -- excluded from
+    // the Mac App Store build (CM_VARIANT=mas), where the goattrackerplugin
+    // target is not built at all. The 104 GoatTracker-format .sng rows are
+    // dropped from the mas index to match; see songFormatHasNoPlayer().
     goattrackerplugin_register();
+#endif
     dmfplugin_register();
     vgmstreamplugin_register();
     victrackerplugin_register();
