@@ -1,3 +1,15 @@
+- SoundSmith (180, discarded before any override can apply because the rows are bare-named), and the UADE-owned .sng formats (Richard Joseph 77, Synder 157, Zoundmonitor 9).
+
+- now the OPL Archive/AdLib subset for libvgm with a comment noting it's partial.
+
+- now do "the SoundSmith as a separate change since it touches the empty-extension path, and I'd want to check it doesn't disturb the ~34.9k other extensionless rows (radio, podcasts)." 
+
+- sc68 plays 1-2 seconds of subsong1 before switching to subsongN, example: Wings of Death STE
+
+- Add tracker-style scrolling note pattern where possible by format
+
+------------------------
+
 Mac App Store (MAS) compliance:
 
 - replace with non-GPL if possible or remove: victrackerplugin's vic_sound.c (GPL VICE VIC-I derived, 11 songs impacted) replacement in the MAS version of the app (and not surface the content they play)?
@@ -14,7 +26,6 @@ Mac App Store (MAS) compliance:
 
 -CONFIRM NO GPL CODE OR REFERENCES ARE ANYWHERE in the MAS version -- look at the ChipMachine.app built and packaged by me for the mac app store submission
 
-- sc68 plays 1-2 seconds of subsong1 before switching to subsongN, example: Wings of Death STE
 
 ---------------------------------------------
 
@@ -51,45 +62,15 @@ LATEST info:
   │ Risk: Low-to-medium. These are format replayers, not music content, but the filenames are conspicuous.
   ││ Fix: Consider whether these can be documented as open-source format replayers (they ship with sc68 under GPL) or whether they need to be fetched at runtime instead.
 
-
 -------------------------------
 
+Check if this is a rejection reason:
 - MAS: replace ALL logos/brands with generic txt/pics. Brand Logos: Keep official hardware logos (Nintendo, Sega, Commodore, Sony) out of your UI and App Store screenshots. Use text tags (e.g., ⁠C64⁠, ⁠NES⁠, ⁠ZX⁠). Maybe append generics and just disable/unbundle the branded from mas -- have parallel screenshots folders: branded and generic, screenshots-b, screenshots-g
+- ? Both: append flags of countries to the rotation
+- ? Both: append the chip which is playing
 
-- Both: append flags of countries to the rotation
+- recheck everything (both signing and MAS) and do everything that needs to be done before the $99 payment
 
-- Both: append the chip which is playing
+- pay $99 and do post payment parts
 
-- Add tracker-style scrolling note pattern where possible by format
-
-- recheck everything (both signing and MAS) and submit to apple!
-
-----------------------------
-
-- investigate: separate db from code and auto-update db independently from code. the current process stays but the app phones home to github and if there is a new database updates it. but we have to distinguish db changes that don't need code change from the ones that do -- more complex, would need 2 database versions...
-
-----------------------------
-SIGNING HERE (for now):
-
-1. Pay the $99 — join the Apple Developer Program (enrollment can take anywhere from minutes to a couple days if they verify identity).
-
-2. Create + install a "Developer ID Application" certificate - from developer.apple.com (or Xcode → Settings → Accounts → Manage Certificates → +). This lands in your login keychain. That gives you the param --signid:
-security find-identity -v -p codesigning
-# - "Developer ID Application: Your Name (ABCDE12345)"
-
-3. Store a notarization profile (one-time) — gives you the param --notaryprofile:
-xorun notarytool store-credentials chipmachine-notary --apple-id you@example.com --team-id ABCDE12345
-
-You'll need an app-specific password from appleid.apple.com (not your main Apple ID password).
-
-4. Run it:
-•/package_app.sh --applesign --signid="Developer ID Application: Your Name (ABCDE12345)" --notaryprofile=chipmachine-notary
-
-Two caveats worth knowing before you pay
-
-• Notarization can reject on the first try for reasons only Apple's server sees (a stray unsigned Mach-O, a missing secure timestamp, etc.). The script fails loudly and points you to xcrun notarytool history. My dry-run proved the signing mechanics locally, but the actual Apple round-trip can't be simulated without the account - so budget for one iteration.
-
-• Team ID must match across the cert, the --signid string, and the store-credentials command
-- they all reference the same ABCDE12345.
-Everything on my side is in place: the flags, entitlements, hardened-runtime signing, and the notarize+staple step. Once you have the cert and profile, it's the single command above.
-
+- submit to apple!

@@ -2798,6 +2798,27 @@ TEST_CASE("GoatTracker", "[music]")
     REQUIRE(musix::ChipPlugin::getPlugin("GoatTracker") != nullptr);
 }
 
+// The browse-list formatOverride table in buildPluginGroups() resolves plugin
+// NAMES through nameToPlugin, and a name that matches nothing is silently
+// ignored -- the row just keeps the first-claimer result, i.e. the exact bug the
+// table exists to fix, with no error anywhere. Every name used as an override
+// target must therefore be a name some registered plugin actually reports.
+//
+// These five all lost their whole song count to a first-claimer on a shared
+// extension and so were missing from the TAB plugin screen entirely: GoatTracker
+// and SCC-Musixx to AdPlug on ".sng", FamiTracker to OpenMPT on ".ftm" (Face The
+// Music), MED to OpenMPT on ".med" (OctaMED), PlayerPRO to AdPlug on ".mad".
+TEST_CASE("plugin browse list: formatOverride target names all resolve",
+          "[music][plugins]")
+{
+    musix::ChipPlugin::createPlugins("data");
+    for (auto const* name : { "GoatTracker", "SCC-Musixx", "FamiTracker", "MED",
+                              "PlayerPRO", "AdPlug", "OpenMPT" }) {
+        INFO("formatOverride names a plugin that does not exist: " << name);
+        REQUIRE(musix::ChipPlugin::getPlugin(name) != nullptr);
+    }
+}
+
 // ZoundMonitor (.sng, Amiga). UADE genuinely has this player; the tunes load
 // their instruments by name from a shared "Samples/" directory (on modland one
 // level above the song, at the collection root -- fetched via the parent-dir

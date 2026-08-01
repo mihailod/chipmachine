@@ -2083,13 +2083,54 @@ void MusicDatabase::buildPluginGroups()
             // GoatTrackerPlugin::canHandle, and AdPlug content-gates ".sng" on
             // its own adlib signature and declines these.
             //
-            // Only the GoatTracker names are listed here. The other .sng formats
-            // (SCC-Musixx 97, Richard Joseph 77, Synder 247, Sam Coupe 15, ...)
-            // are still credited to AdPlug by the same first-claimer rule; that
-            // is a pre-existing mis-attribution and wants its own pass.
             {{"sng", "goattracker"}, { "goattracker" }},
             {{"sng", "goattracker 2"}, { "goattracker" }},
             {{"sng", "goattracker stereo"}, { "goattracker" }},
+            // ".sng" again, same shadow: SCC-Musixx claims NOTHING but ".sng",
+            // so AdPlug winning the extension left it with a count of zero and
+            // it too was absent from the plugin screen. SccMusixxPlugin
+            // content-gates on the Konami SCC signature.
+            {{"sng", "scc-musixx"}, { "scc-musixx" }},
+            // ".ftm" is two formats: FamiTracker (NES 2A03, magic "FTM") and
+            // Face The Music (Atari, magic "FTMN"). libopenmpt advertises the
+            // extension for Face The Music and openmptplugin is registered
+            // first, so all 1,597 modland "FamiTracker" rows were credited to
+            // OpenMPT and famitrackerplugin showed zero. FamiTrackerPlugin's
+            // canHandle content-gates on the FamiTracker magic and lets "FTMN"
+            // fall through, so playback was always right. The 95 "Face The
+            // Music" rows keep the plain extension result (OpenMPT), as do the
+            // ~41 rows filed under names that do not say which format they are
+            // ("FTM", "Demoscene", "Nintendo Entertainment System (NES)").
+            {{"ftm", "famitracker"}, { "famitracker" }},
+            // ".med" is old MED (magic "MED\x02".."MED\x04") vs the OctaMED
+            // MMD0..MMD3 containers, which OpenMPT and UADE handle and which
+            // medplugin deliberately does not claim. OpenMPT owns the extension,
+            // so medplugin showed zero. Modland files the old ones under "Music
+            // Editor" -- 132 rows -- which is exactly the split; the 3,809 "MED",
+            // 591 "OSS" and 7 "OctaMED MMD*" rows really are OpenMPT's and are
+            // left alone. See MedPlugin::canHandle, which says the same thing.
+            {{"med", "music editor"}, { "med" }},
+            // ".mad" is PlayerPRO (Macintosh, MADG/MADF/MADK) vs AdPlug's Mlat
+            // Adlib Tracker, and adplugin is registered first. A clean 9/26
+            // split by format name; both plugins content-gate.
+            {{"mad", "playerpro"}, { "playerpro" }},
+            //
+            // STILL mis-credited, deliberately not fixed here: libvgm's VGMs
+            // (its claim is "any VGM whose chips GME cannot decode", and only
+            // the "OPL Archive"/"AdLib" rows are identifiable by name -- the
+            // YM2151/OPN ones share platform names with GME-playable VGMs);
+            // SoundSmith's 180 rows (bare-named, so resolveExtension() returns
+            // empty and they are skipped above before any override can apply);
+            // and the other .sng formats (Richard Joseph 77, Synder 157,
+            // Zoundmonitor 9), which belong to UADE.
+            //
+            // NOTE: these four have no counterpart in songFormatHasNoPlayer()'s
+            // formatPlayer table, and should not. That table answers "is this
+            // row unplayable in THIS build", and famitracker/med/scc-musixx/
+            // playerpro are linked into both variants -- only goattracker (and
+            // the GPL pair above) can be missing. This table answers a different
+            // question: "which plugin should the browse list credit", which is
+            // variant-independent.
         };
 
     std::vector<int> counts(plugins.size(), 0);
