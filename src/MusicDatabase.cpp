@@ -1223,12 +1223,50 @@ bool songFormatHasNoPlayer(SongInfo const& song,
             {{"minipsf", "playstation sound format"}, { "audio overload" }},
             {{"psf2", "playstation 2 sound format"}, { "audio overload" }},
             {{"minipsf2", "playstation 2 sound format"}, { "audio overload" }},
-            // NOT listed: the 11 modland "SoundFactory" rows that also end in
-            // ".psf". That is an Amiga format with no connection to the
-            // PlayStation -- AOPlugin::canHandle declines any path containing
-            // "/soundfactory" -- and it was always
-            // UADE's. It is unplayable in mas for the UADE reason, not this one,
-            // and gating it belongs with the UADE work rather than here.
+            // Sega Saturn / Dreamcast, gated 2026-08-01 with htplugin
+            // (kode54/Highly_Theoretical is GPL-3 -- verified at the upstream
+            // repo, since the licence files were never vendored here and the
+            // in-tree copy looks unlicensed apart from a stale non-commercial
+            // Musashi header). ".dsf" and ".ssf" need naming because vgmstream
+            // ALSO advertises both, so the plain extension test in
+            // songHasNoPlayer() would keep all 169 rows; ".minidsf"/".minissf"
+            // are sole-claimed and drop on their own.
+            //
+            // Two candidates for ".ssf" because htplugin (priority 1) and
+            // aoplugin's eng_ssf both play it -- but both are gated in mas, so
+            // naming both is what makes the row fire there while staying inert
+            // in plus.
+            {{"dsf", "dreamcast sound format"}, { "htplugin" }},
+            {{"ssf", "saturn sound format"}, { "htplugin", "audio overload" }},
+            // ".2sf"/".mini2sf" (vio2sf, GPL-2 DeSmuME) and ".usf"/".miniusf"
+            // (lazyusf2, GPL-2 Mupen64Plus) need NO entry: nothing else claims
+            // those four extensions, so they drop on the extension test alone.
+            // The MULTI: form of the same thing. Six "Playstation Sound Format"
+            // groups LEAD with an extensionless driver lib ("driver",
+            // "abe_drv") and carry the .minipsf tunes after it, so
+            // routingExtension() returns EMPTY and the ".psf" key above never
+            // fires. Keying on the empty extension is unusual but exact: it can
+            // only match a row that resolves to no extension AND carries this
+            // format name. Without it those six survive every other test and
+            // surface in mas as unplayable rows.
+            {{"", "playstation sound format"}, { "audio overload" }},
+            // "SoundFactory" is an AMIGA format that merely shares the ".psf"
+            // suffix -- no connection to the PlayStation, and always UADE's
+            // (AOPlugin::canHandle declines any path containing
+            // "/soundfactory"). It is unplayable in mas because UADE is absent,
+            // and vgmstream advertising ".psf" is what keeps it indexed, so it
+            // needs naming here just like the PlayStation rows.
+            //
+            // TWO keys and BOTH casings. The DB carries "SoundFactory" (11
+            // suffix-form rows, "axelf.psf" -> routing ext "psf") and
+            // "Soundfactory" (1 row,
+            // "Danger-Castle.lha/psf.Danger-Castle" -- UnExoticA prefix-form, so
+            // pathExtension takes the SUFFIX and the routing ext is the song
+            // name "danger-castle", while nameHasPlayer's prefix branch sees the
+            // playable-looking "psf"). toLower() on the format folds the casing;
+            // the two extension keys cannot be folded and must both be present.
+            {{"psf", "soundfactory"}, { "uade" }},
+            {{"danger-castle", "soundfactory"}, { "uade" }},
             // ".sndh" is the mirror image and must NOT be listed anywhere:
             // sndhplugin (AtariAudio, MIT) claims it in BOTH variants, so all
             // 6,079 of those rows keep playing in mas. That is the whole point
@@ -1282,7 +1320,7 @@ bool songIsSilentSid(SongInfo const& song, std::set<std::string> const& silent)
 // over GPL-2 for aoplugin).
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
     defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE) || \
-    defined(CM_NO_AO)
+    defined(CM_NO_AO) || defined(CM_NO_NDS) || defined(CM_NO_USF) || defined(CM_NO_HT)
 static bool isContainerExt(std::string e); // defined near resolveExtension()
 
 // Every extension SOME registered plugin claims by name -- i.e. everything this
@@ -1593,7 +1631,7 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 if (songIsUnsupported(song, unsupportedExts)) { return; }
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
     defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE) || \
-    defined(CM_NO_AO)
+    defined(CM_NO_AO) || defined(CM_NO_NDS) || defined(CM_NO_USF) || defined(CM_NO_HT)
                 // Same rule, build-scoped: without uadeplugin this variant has
                 // no decoder for the Amiga custom-replayer formats, without
                 // vicepluginbridge none for Compute! Sidplayer, without

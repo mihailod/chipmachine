@@ -277,9 +277,12 @@ endif()
 # there is nothing to remove and no permissive substitute vendored here; the
 # plugin must be ABSENT from the mas binary. Follows CM_HAVE_UADE's pattern.
 #
-# Exposure in mas, measured by reindex (742,929 -> 742,244, exactly -685, with
-# nothing resurfacing):
-#   .minipsf   353 | .psf 137 | .psf2 130 | .minipsf2 47   = 668 PSF rows
+# Exposure in mas: 685 rows. Measured as a SET DIFFERENCE between a completed
+# plus index and a completed mas index (every row in mas is also in plus, so the
+# difference is exactly what the gates hide) -- not as a before/after total,
+# which is unreliable here because a --forcedbreindex rewrites the song table
+# collection by collection and an interim COUNT(*) is meaningless:
+#   .minipsf   353 | .psf 137 | .psf2 131 | .minipsf2 47   = 668 PSF rows
 #   .spu         9 | .miniqsf 8                            =  17 AO-only rows
 # ".ssf"/".minissf" (136 rows) are NOT lost: HTPlugin declares priority 1 and
 # already owns them in both variants -- see [[plugin-order-stable-sort]].
@@ -299,6 +302,47 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_AO ON)
 endif()
+# The last three console cores, gated together on 2026-08-01 after a licence
+# review that found no permissive replacement for any of them. All three are
+# "possible to clean-room, wildly disproportionate to the songs recovered".
+#
+# ndsplugin -- vio2sf, whose NDS core is derived from DeSmuME (GPL-2). Playing a
+# .2sf means emulating BOTH DS CPUs (ARM7TDMI + ARM9/ARMv5TE) plus the 16-channel
+# SPU. GBATEK documents the SPU and memory map exhaustively and mGBA (MPL-2.0)
+# would supply an ARM7TDMI, but no permissive ARMv5TE core exists and melonDS is
+# GPL-3. 2,040 songs -- the largest of the three, and still not worth an emulator.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_NDS OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_NDS)
+else()
+    set(CM_HAVE_NDS ON)
+endif()
+# usfplugin -- lazyusf2, a near-rewrite of Mupen64Plus (GPL-2). This is the one
+# case with a STRUCTURAL blocker rather than merely a large one: a .usf is a
+# Project 64 SAVESTATE, an undocumented emulator-private memory layout, not a
+# published hardware format. A clean-room needs a spec to work from and there
+# isn't one, so this is the single entry on the list written off outright.
+# 184 songs.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_USF OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_USF)
+else()
+    set(CM_HAVE_USF ON)
+endif()
+# htplugin -- Neill Corlett's SegaCore as maintained in kode54/Highly_Theoretical,
+# which carries GPL-3 at the repo root AND in Core/COPYING.txt. Note the licence
+# files were never vendored here, so the in-tree copy looks unlicensed except for
+# an old non-commercial Musashi header -- do not be misled by that again; the
+# upstream repo is the source of truth. The CPU halves are actually solvable
+# (MIT Musashi is already vendored for sndhplugin, and mGBA's MPL-2.0 ARM7TDMI is
+# close kin to the Dreamcast's ARM7DI); what is not is SCSP/AICA, a 32/64-channel
+# Yamaha part with a real DSP. 273 songs.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_HT OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_HT)
+else()
+    set(CM_HAVE_HT ON)
+endif()
 # victrackerplugin (.vt, VIC-20) needed NO variant gate, unlike the four above.
 # Its GPL was internal rather than structural -- the plugin is ours, but it drove
 # two GPLv2 engine cores (the omarandlorraine fake6502 fork, and a VIC-I sound
@@ -307,7 +351,7 @@ endif()
 # chip; the replacements were A/B'd by ear against the originals and shipped to
 # both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
 # index. See the plugin's README.md.
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, AO=${CM_HAVE_AO})")
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -439,8 +483,8 @@ add_subdirectory(${AP1_ROOT}/mods ap1mods)
 
 # Define core plugin array
 set(MUSICPLAYER_PLUGINS
-    openmptplugin htplugin ndsplugin gmeplugin sndhplugin
-    usfplugin stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
+    openmptplugin gmeplugin sndhplugin
+    stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
     ayflyplugin mdxplugin s98plugin gsfplugin tedplugin v2plugin
     ffmpegplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
     kssplugin quartetplugin wsrplugin zxtuneplugin bbsongplugin
@@ -475,6 +519,18 @@ endif()
 # CM_HAVE_AO above. This is what plays PSF/PSF2 now that the Sony BIOS is gone.
 if(CM_HAVE_AO)
     list(APPEND MUSICPLAYER_PLUGINS aoplugin)
+endif()
+# GPL-2 (DeSmuME-derived vio2sf) -- plus build only, see CM_HAVE_NDS above.
+if(CM_HAVE_NDS)
+    list(APPEND MUSICPLAYER_PLUGINS ndsplugin)
+endif()
+# GPL-2 (lazyusf2 / Mupen64Plus) -- plus build only, see CM_HAVE_USF above.
+if(CM_HAVE_USF)
+    list(APPEND MUSICPLAYER_PLUGINS usfplugin)
+endif()
+# GPL-3 (Highly Theoretical SegaCore) -- plus build only, see CM_HAVE_HT above.
+if(CM_HAVE_HT)
+    list(APPEND MUSICPLAYER_PLUGINS htplugin)
 endif()
 # Empty in a mas tree, where the vicepluginbridge target does not exist at all.
 if(CM_HAVE_VICE)
@@ -536,6 +592,16 @@ endif()
 # Same for aoplugin_register() -- see CM_HAVE_AO above.
 if(NOT CM_HAVE_AO)
     target_compile_definitions(plugin_register PRIVATE CM_NO_AO)
+endif()
+# Same for ndsplugin_register() / usfplugin_register() / htplugin_register().
+if(NOT CM_HAVE_NDS)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_NDS)
+endif()
+if(NOT CM_HAVE_USF)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_USF)
+endif()
+if(NOT CM_HAVE_HT)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_HT)
 endif()
 target_link_libraries(musicplayer INTERFACE psf plugin_register)
 target_include_directories(musicplayer INTERFACE ${MUSICPLAYER}/..)

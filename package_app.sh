@@ -339,29 +339,42 @@ chmod +x "${MAC_OS_DIR}/chipmachine"
 # extension list (extensions.txt) and the two hand-editable list files
 # (MacOSHandlerDenyList.txt, MacOSSystemTypeExtensions.txt) next to it.
 #
-# extensions.txt is the union of every extension the plugins advertise; it is
-# the single source of truth, so we refresh it here from the freshly-built
-# binary (`--dump-extensions`) before generating the plist. If that fails for
-# any reason we fall back to the checked-in copy rather than shipping an empty
-# association list.
+# The extension list is the union of every extension the plugins advertise, so
+# the built binary is the only real source of truth -- we dump it here with
+# `--dump-extensions` and feed that to gen_info_plist.sh.
+#
+# The dump goes into the BUILD DIR, never back into the source tree. It is
+# VARIANT-SPECIFIC (mas has no aoplugin/uadeplugin/pokeynoiseplugin, so it
+# advertises several hundred fewer extensions than plus), and this step used to
+# overwrite the tracked src/macnative/extensions.txt in place -- which meant
+# every package run left a large diff in git, and whichever variant you packaged
+# LAST silently decided what was checked in. Writing per-variant into
+# ${BUILD_DIR} keeps both lists correct and the working tree clean.
+#
+# src/macnative/extensions.txt stays tracked as the fallback, and as the input
+# for dev_update_doctypes.sh (the no-recompile loop, which has no build dir to
+# read). Refresh it by hand from a PLUS build when plugin coverage changes:
+#     build/chipmachine --dump-extensions > src/macnative/extensions.txt
 # MACNATIVE_DIR is defined near the top (needed by the signing step too).
 GEN_PLIST="${MACNATIVE_DIR}/gen_info_plist.sh"
-EXTS_FILE="${MACNATIVE_DIR}/extensions.txt"
+EXTS_FILE="${MACNATIVE_DIR}/extensions.txt"      # tracked fallback
+EXTS_BUILT="${BUILD_DIR}/extensions.txt"         # generated, untracked
 
-echo "-> Refreshing playable-extension list from built binary..."
-if "${BUILD_DIR}/chipmachine" --dump-extensions > "${EXTS_FILE}.tmp" 2>/dev/null \
-        && [ -s "${EXTS_FILE}.tmp" ]; then
-    mv "${EXTS_FILE}.tmp" "${EXTS_FILE}"
-    echo "   extensions.txt: $(wc -l < "${EXTS_FILE}" | tr -d '[:space:]') extensions"
+echo "-> Dumping playable-extension list from built binary..."
+if "${BUILD_DIR}/chipmachine" --dump-extensions > "${EXTS_BUILT}.tmp" 2>/dev/null \
+        && [ -s "${EXTS_BUILT}.tmp" ]; then
+    mv "${EXTS_BUILT}.tmp" "${EXTS_BUILT}"
+    EXTS_FILE="${EXTS_BUILT}"
+    echo "   ${EXTS_BUILT}: $(wc -l < "${EXTS_FILE}" | tr -d '[:space:]') extensions (${VARIANT})"
 else
-    rm -f "${EXTS_FILE}.tmp"
+    rm -f "${EXTS_BUILT}.tmp"
     echo "   WARNING: --dump-extensions failed; using checked-in extensions.txt"
 fi
 
 echo "-> Creating Info.plist (with macOS file associations)..."
 # Build args as an array (zsh does not word-split unquoted ${:+...}); append the
 # App Store category only for the mas variant (APP_CATEGORY empty for plus).
-GEN_ARGS=(--version "${VERSION_STR}" --bundle-id "${BUNDLE_ID}" --display-name "${DISPLAY_NAME}")
+GEN_ARGS=(--version "${VERSION_STR}" --bundle-id "${BUNDLE_ID}" --display-name "${DISPLAY_NAME}" --exts "${EXTS_FILE}")
 [ -n "${APP_CATEGORY}" ] && GEN_ARGS+=(--app-category "${APP_CATEGORY}")
 "${GEN_PLIST}" "${GEN_ARGS[@]}" > "${TARGET_DIR}/Contents/Info.plist"
 if ! plutil -lint "${TARGET_DIR}/Contents/Info.plist" >/dev/null; then

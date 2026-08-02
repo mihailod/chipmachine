@@ -16,10 +16,14 @@ extern "C" {
     void libvgmplugin_register();  // OPL2/OPL3 VGM/VGZ (AdLib/SB) via libvgm
     void gsfplugin_register();     // Gameboy Advance
     void hivelyplugin_register();  // Amiga HivelyTracker
+#ifndef CM_NO_HT
     void htplugin_register();      // Hudson Soft (TurboGrafx)
+#endif
     void mdxplugin_register();     // Sharp X68000
     void mp3plugin_register();     // MPEG Audio
+#ifndef CM_NO_NDS
     void ndsplugin_register();     // Nintendo DS
+#endif
     void openmptplugin_register(); // Trackers (MOD, XM, IT, S3M)
     void rsnplugin_register();     // Rar-packaged SNES
     void s98plugin_register();     // PC-98
@@ -30,7 +34,9 @@ extern "C" {
 #endif
     void stsoundplugin_register(); // Atari ST (YM2149)
     void tedplugin_register();     // Commodore Plus/4
+#ifndef CM_NO_USF
     void usfplugin_register();     // Nintendo 64
+#endif
     void v2plugin_register();      // Farbrausch V2
 #ifndef CM_NO_VICE
     void vicepluginbridge_register(); // C64 Compute! Sidplayer .mus/.str -- GPL, plus build only
@@ -93,10 +99,16 @@ void register_plugins() {
     gmeplugin_register();
     gsfplugin_register();
     hivelyplugin_register();
+#ifndef CM_NO_HT
+    // GPL-3 (Highly Theoretical SegaCore) -- plus build only.
     htplugin_register();
+#endif
     mdxplugin_register();
     mp3plugin_register();
+#ifndef CM_NO_NDS
+    // GPL-2 (DeSmuME-derived vio2sf) -- plus build only.
     ndsplugin_register();
+#endif
     openmptplugin_register();
     rsnplugin_register();
     s98plugin_register();
@@ -115,7 +127,10 @@ void register_plugins() {
 #endif
     stsoundplugin_register();
     tedplugin_register();
+#ifndef CM_NO_USF
+    // GPL-2 (lazyusf2 / Mupen64Plus) -- plus build only.
     usfplugin_register();
+#endif
     v2plugin_register();
     // Before vicepluginbridge, so cSID (permissive) claims .sid/.rsid and VICE
     // is left with only the .mus/.str Compute! Sidplayer tunes it alone can

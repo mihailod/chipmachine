@@ -109,10 +109,12 @@ Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         at all. They were already being compiled; only AOPlugin::supported_ext
         had to change.
         The mas variant therefore loses 685 rows, dropped from its index to
-        match: 668 PlayStation (.minipsf 353, .psf 137, .psf2 130, .minipsf2 47)
+        match: 668 PlayStation (.minipsf 353, .psf 137, .psf2 131, .minipsf2 47)
         plus 17 that were AOSDK-only anyway (.spu 9, .miniqsf 8). Sega Saturn
-        .ssf/.minissf is NOT lost -- HTPlugin (section 4) declares priority 1 and
-        owns those 136 rows in both variants.
+        .ssf/.minissf was initially retained here because HTPlugin declares
+        priority 1 and owned those 136 rows -- but htplugin was itself gated on
+        2026-08-01 (GPL-3, see its entry above), so as of that date .ssf/.minissf
+        are lost in mas too.
         LOCAL PATCH, re-apply on revendor: eng_psf/peops/spu.c sets iVolume to
         128 rather than upstream's 255. 255 is a pre-clip global gain of ~1.0
         and measured exactly 2x what Highly Experimental produced for the same
@@ -240,6 +242,32 @@ Author: WonderSwan replayer by Mamiya; NEC V30MZ CPU core derived from
         MAME/Oswan. Vendored as packaged in Kodi's audiodecoder.wsr addon.
 License: GNU General Public License v2.0 or later
 
+Component: Highly Theoretical / SegaCore (Sega Saturn .ssf, Dreamcast .dsf)
+Author: Originally by Neill Corlett; maintained fork at
+        https://github.com/kode54/Highly_Theoretical. Vendored at
+        musicplayer/src/plugins/htplugin/ht -- yam.c (the SCSP/AICA sound chip),
+        arm.c (Dreamcast ARM7), sega.c, satsound.cpp, dcsound.c, and a
+        reentrant C++ Musashi 68000 under ht/m68k for the Saturn.
+License: GNU General Public License v3.0 (upstream LICENSE.TXT and
+        Core/COPYING.txt).
+Notice: READ THIS BEFORE RE-AUDITING. The upstream licence files were never
+        vendored, so the in-tree copy appears unlicensed: not one SegaCore source
+        carries a header, and the only licence text present is a stale
+        NON-COMMERCIAL notice on the bundled Musashi 3.3. Neither reflects the
+        actual terms -- the upstream repo is GPL-3 and is the source of truth.
+        (That Musashi header is stale twice over: Karl Stenerud has since
+        relicensed Musashi to MIT, and the MIT version is already vendored here
+        under sndhplugin/atariaudio/external/Musashi.)
+        NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_HT=OFF); the 273 songs (.dsf 84, .minidsf 53, .ssf 85,
+        .minissf 51) are dropped from that variant's index. ".dsf" and ".ssf"
+        need formatPlayer rows because vgmstream also advertises them; the two
+        "mini" forms are sole-claimed and drop on the extension test.
+        A clean-room is conceivable but disproportionate: the CPU halves are
+        already solvable (MIT Musashi; mGBA's MPL-2.0 ARM7TDMI is close kin to
+        the Dreamcast's ARM7DI), but SCSP/AICA is a 32/64-channel Yamaha part
+        with a real DSP -- an emulator project to recover 273 songs.
+
 Component: vio2sf (Nintendo DS -- .2sf / .mini2sf)
 Author: NDS emulation core derived from DeSmuME (the DeSmuME Team). 2SF
         playability layer ("vio2sf") by Christopher Snowhill (kode54), the
@@ -248,6 +276,14 @@ Author: NDS emulation core derived from DeSmuME (the DeSmuME Team). 2SF
         musicplayer/src/plugins/ndsplugin. GPU emulation is stripped (audio
         only); the portable C resampler path is used (NO_ASM).
 License: GNU General Public License v2.0 or later
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_NDS=OFF), and the 2,040 ".2sf"/".mini2sf" songs are dropped from
+        that variant's index to match. No permissive replacement exists: playing
+        a 2SF means emulating BOTH DS CPUs (ARM7TDMI + ARM9/ARMv5TE) plus the
+        16-channel SPU. GBATEK documents the SPU and memory map, and mGBA
+        (MPL-2.0) would supply an ARM7TDMI, but there is no permissive ARMv5TE
+        core and melonDS is GPL-3. Neither extension needs a formatPlayer row --
+        nothing else claims them.
 
 Component: FamiTracker CX (FamiTracker .ftm playback -- NES 2A03 + expansions)
 Author: FamiTracker by jsr (Jonathan Liss); cross-platform "FamiTracker CX"
@@ -298,7 +334,13 @@ Author: GSF playback via a vendored VisualBoyAdvance (VBA) Game Boy Advance
 License: GNU General Public License v2.0 or later (VisualBoyAdvance; see the
         per-file GPL headers under gsfplugin/playgsf/VBA).
 Notice: Currently STILL LINKED into the mas variant (unconditional plugin list),
-        an outstanding GPL blocker -- same status as GoatTracker.
+        an outstanding GPL blocker covering 1,246 songs.
+        Unlike the other console formats this one has a known, permissive
+        replacement rather than a clean-room: mGBA (MPL-2.0, actively
+        maintained). That substitution is already proven in the wild --
+        foobar2000's foo_input_gsf / "Highly Advanced" uses mGBA as its GSF
+        core, and kode54 maintains a GSF-modified mGBA. Swapping it would keep
+        all 1,246 songs in both variants instead of gating them.
 
 Component: USF (Nintendo 64 -- .usf / .miniusf)
 Author: USF playback via lazyusf2 by Christopher Snowhill (kode54), a Nintendo 64
@@ -306,8 +348,14 @@ Author: USF playback via lazyusf2 by Christopher Snowhill (kode54), a Nintendo 6
         at musicplayer/src/plugins/usfplugin/lazyusf2 with a resampler.
 License: GNU General Public License v2.0 (Mupen64Plus-rsp-hle / Mupen64 lineage;
         see usfplugin/lazyusf2/rsp_hle/LICENSES).
-Notice: Currently STILL LINKED into the mas variant (unconditional plugin list),
-        an outstanding GPL blocker -- same status as GoatTracker.
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_USF=OFF), and the 184 ".usf"/".miniusf" songs are dropped from
+        that variant's index to match.
+        This is the one component on the list written off outright rather than
+        merely deferred. Every other gated format is documented hardware that
+        could in principle be clean-roomed; a ".usf" is a Project 64 SAVESTATE --
+        an undocumented, emulator-private memory layout, not a published format.
+        There is no spec to implement against, so no clean-room path exists.
 
 ===============================================================================
 3. LESSER COPYLEFT DEPENDENCIES
