@@ -14,7 +14,10 @@ verify the result is contiguous and self-consistent.
 import re
 import sys
 
-LINE = re.compile(r'^([0-9A-Fa-f]{4})\s\s+((?:[0-9A-Fa-f]{2})+)(?:\s|$)')
+# MONS4D writes an orphaned index prefix (a DD/FD with no instruction after it)
+# as "DD*" -- the '*' is the disassembler flagging it, not a byte. The prefix
+# itself is real and must go into the image, so accept the marker.
+LINE = re.compile(r'^([0-9A-Fa-f]{4})\s\s+((?:[0-9A-Fa-f]{2})+)\*?(?:\s|$)')
 
 
 def parse(path):

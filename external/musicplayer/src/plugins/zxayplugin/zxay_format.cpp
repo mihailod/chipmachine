@@ -154,6 +154,26 @@ bool looksLikeAsc(const uint8_t* d, size_t len, bool& isAsc1)
     return false;
 }
 
+// Pro Sound Maker (.psm): four offsets from the module start, then a remark
+// string. The ".psm" extension is SHARED with two unrelated PC tracker formats
+// that libopenmpt plays (Epic MegaGames PSM and Protracker Studio), so this
+// deliberately insists on the "psm1" tag the tracker writes at +8 rather than
+// on the offsets alone -- OpenMPT is registered first and content-probes, but
+// a loose test here would still mis-claim in the mas build.
+bool looksLikePsm(const uint8_t* d, size_t len)
+{
+    if (len < 32) {
+        return false;
+    }
+    uint16_t pos = word(d, 0), smp = word(d, 2), orn = word(d, 4),
+             pat = word(d, 6);
+    if (pos < 8 || !offsetInFile(pos, len) || !offsetInFile(smp, len) ||
+        !offsetInFile(orn, len) || !offsetInFile(pat, len)) {
+        return false;
+    }
+    return std::memcmp(d + 8, "psm1", 4) == 0;
+}
+
 // SQ-Tracker: a 16-bit total size at +0 that matches the file, then six
 // ABSOLUTE addresses (the format is not relocatable).
 bool looksLikeSqt(const uint8_t* d, size_t len)
@@ -196,6 +216,10 @@ const char* formatName(Format f)
     case Format::fxm: return "Fuxoft AY Language (Spectrum)";
     case Format::amad: return "AY Amadeus (Spectrum)";
     case Format::vt2: return "Vortex Tracker II (Spectrum)";
+    case Format::ftc: return "Fast Tracker (Spectrum)";
+    case Format::psm: return "Pro Sound Maker (Spectrum)";
+    case Format::gtr: return "Global Tracker (Spectrum)";
+    case Format::st11: return "Sound Tracker (Spectrum)";
     case Format::unknown: break;
     }
     return "AY (Spectrum)";
@@ -208,8 +232,9 @@ bool isSupportedExtension(const std::string& ext)
     // plugins claim ".vt2" and the content decides, so neither can steal the
     // other's files.
     static const std::set<std::string> exts = {
-        "pt1", "pt2", "pt3", "stc", "st13", "zxs", "stp",  "stp2",
-        "asc", "psc", "sqt", "vtx", "psg",  "fxm", "amad", "vt2"};
+        "pt1", "pt2", "pt3", "stc", "st13", "zxs",  "stp", "stp2",
+        "asc", "psc", "sqt", "vtx", "psg",  "fxm",  "amad", "vt2",
+        "ftc", "psm", "gtr", "st11"};
     return exts.count(ext) > 0;
 }
 
@@ -235,6 +260,11 @@ Format detect(const uint8_t* data, size_t len, const std::string& ext)
     if (magic(data, len, 0, "ZXAYAMAD")) {
         return Format::amad;
     }
+    // The same container with a different payload: an UNCOMPILED Sound Tracker
+    // 1.1 module, which is compiled to the ordinary .stc layout on load.
+    if (magic(data, len, 0, "ZXAYST11")) {
+        return Format::st11;
+    }
     if (magic(data, len, 0, "FXSM")) {
         return Format::fxm;
     }
@@ -247,6 +277,15 @@ Format detect(const uint8_t* data, size_t len, const std::string& ext)
     }
     if (magic(data, len, 0, "PSC ")) {
         return Format::psc;
+    }
+    // Fast Tracker writes a fixed "Module: " tag ahead of its 0xD4-byte header.
+    if (magic(data, len, 0, "Module: ")) {
+        return Format::ftc;
+    }
+    // Global Tracker: a delay byte, then "GTR" and a version byte.
+    if (magic(data, len, 1, "GTR") && len > 4 &&
+        (data[4] == 0x10 || data[4] == 0x11)) {
+        return Format::gtr;
     }
 
     // Picatune2 stores a 1-bit beeper project as XML under the ".pt2"
@@ -262,6 +301,9 @@ Format detect(const uint8_t* data, size_t len, const std::string& ext)
     // --- headerless formats -------------------------------------------------
     // Order matters: the more specific shapes are tested before the looser
     // ones, and the extension breaks genuine ties.
+    if (looksLikePsm(data, len)) {
+        return Format::psm;
+    }
     if (looksLikeSqt(data, len)) {
         return Format::sqt;
     }
@@ -320,6 +362,9 @@ Format detect(const uint8_t* data, size_t len, const std::string& ext)
     if (ext == "psc") return Format::psc;
     if (ext == "sqt") return Format::sqt;
     if (ext == "vt2") return Format::pt3;
+    if (ext == "ftc") return Format::ftc;
+    if (ext == "gtr") return Format::gtr;
+    if (ext == "st11") return Format::st11;
 
     return Format::unknown;
 }

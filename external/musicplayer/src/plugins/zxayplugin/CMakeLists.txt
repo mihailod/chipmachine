@@ -14,6 +14,10 @@ add_library(zxayplugin
     zxay_stc.cpp
     zxay_stp.cpp
     zxay_sqt.cpp
+    zxay_psm.cpp
+    zxay_gtr.cpp
+    zxay_st11.cpp
+    zxay_container.cpp
     zxay_asc.cpp
     zxay_fxm.cpp
     zxay_dump.cpp

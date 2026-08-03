@@ -328,37 +328,15 @@ std::unique_ptr<Source> createFxmSource(Format f,
         return src;
     }
 
-    // ZXAY/AMAD. Big-endian throughout, and every pointer is relative to its
-    // OWN position in the file rather than to the start.
-    if (data.size() < 24) {
+    // ZXAY/AMAD -- see zxay_container.cpp for the container itself.
+    ZxayEntry entry{};
+    if (!parseZxayContainer(data, "AMAD", &entry)) {
         return nullptr;
     }
-    auto rel = [&](size_t at) -> long {
-        return static_cast<long>(at) +
-               static_cast<int16_t>(be16(data.data() + at));
-    };
-    auto zstring = [&](long at) {
-        std::string s;
-        while (at >= 0 && at < static_cast<long>(data.size()) && data[at] != 0) {
-            s.push_back(static_cast<char>(data[at++]));
-        }
-        return s;
-    };
-
-    const long author = rel(12);
-    // Song 0 only: every .amad in this corpus is single-song, and the format
-    // has no way to surface a subsong index through this plugin.
-    const long songs = rel(18);
-    if (songs < 0 || songs + 4 > static_cast<long>(data.size())) {
+    const long dataAt = entry.songData;
+    if (dataAt + 14 > static_cast<long>(data.size())) {
         return nullptr;
     }
-    const long cursor = songs + 4; // AY_Emul's "position after the structure"
-    const long nameAt = cursor - 4 + static_cast<int16_t>(be16(&data[songs]));
-    const long dataAt = cursor - 2 + static_cast<int16_t>(be16(&data[songs + 2]));
-    if (dataAt < 0 || dataAt + 14 > static_cast<long>(data.size())) {
-        return nullptr;
-    }
-
     // The song-data block is: load address (big-endian), the noise mask, a
     // byte and a word that multiply out to the playing time, and then the
     // bytecode -- which starts 14 bytes in, not 6. The extra 8 are what a
@@ -375,8 +353,8 @@ std::unique_ptr<Source> createFxmSource(Format f,
         imageAt(data.data() + body, data.size() - body, address), address,
         noiseMask, sampleRate);
     SongInfo info;
-    info.title = zstring(nameAt);
-    info.author = zstring(author);
+    info.title = zxayString(data, entry.songName);
+    info.author = zxayString(data, entry.author);
     src->setInfo(info);
     return src;
 }

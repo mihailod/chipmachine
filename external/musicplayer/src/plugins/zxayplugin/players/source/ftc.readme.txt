@@ -1,0 +1,3 @@
+ft.txt - Fast Tracker Player. Disassembled with MONS4D program in Z80 Speccy emulator.
+playa107.a80 - Fast Tracker 1.07 player. Can be used for playing previous versions, but new Classic note table will be used (slightly diffs).
+playa108.txt - Fast Tracker 1.08 player. Added new special command: full envelope+tone retrig.

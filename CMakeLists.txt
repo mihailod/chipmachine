@@ -378,6 +378,41 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_AYFLY ON)
 endif()
+# zxtuneplugin is the twelfth case, and the smallest by songs -- but it is the
+# last GPL-3 in the App Store binary. Vitamin/CAIG's ZXTune is GPL-3 (djdron's
+# CMake fork ships an LICENSE.md claiming LGPL-3; upstream is GPL and the
+# vendored sources carry GPL headers), so it must be ABSENT from the mas
+# binary. Follows CM_HAVE_UADE's pattern exactly.
+#
+# It owned 569 rows across six ZX Spectrum formats, and 378 of them -- every
+# one that is actually AY music -- are now played in BOTH variants by
+# zxayplugin, which reclaimed them once the ZX AY machine built for the Ayfly
+# replacement existed (see CM_HAVE_AYFLY):
+#   .psm 188  Pro Sound Maker -- sequencer, from Bulba's AY_Emul
+#   .ftc  88  Fast Tracker    -- Bulba's own MONS4D disassembly, run on the Z80
+#   .st11 59  Sound Tracker 1.1, the UNCOMPILED form -- no player at all: it is
+#             compiled to the ordinary .stc layout on load and handed to the
+#             Sound Tracker player this plugin already had, which is what "ST
+#             COMPILE" did on the Spectrum. See zxay_st11.cpp.
+#   .gtr  43  Global Tracker  -- sequencer, from Bulba's AY_Emul
+# All four were A/B'd against ZXTune (cmtest "[.zxtab]"): spectral cosine
+# 0.80-0.98, envelope correlation 0.72-0.98, zero lag across 35 fixtures --
+# i.e. the same music, differing only by chip model, which is as close as two
+# AY emulations get.
+#
+# The mas variant loses the remaining 191 rows, dropped from its index to
+# match. Both are out of scope because they are not AY music at all:
+#   .tfe  148  TFM Music Maker -- TurboSound FM, i.e. a pair of YM2203s. The ZX
+#              AY machine cannot help; it would need an OPN core plus an
+#              undocumented sequencer.
+#   .chi   43  Chip Tracker -- 4-channel DIGITAL sample playback, not the AY.
+#              Same story: different hardware, no published format.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_ZXTUNE OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_ZXTUNE)
+else()
+    set(CM_HAVE_ZXTUNE ON)
+endif()
 # victrackerplugin (.vt, VIC-20) needed NO variant gate, unlike the four above.
 # Its GPL was internal rather than structural -- the plugin is ours, but it drove
 # two GPLv2 engine cores (the omarandlorraine fake6502 fork, and a VIC-I sound
@@ -386,7 +421,7 @@ endif()
 # chip; the replacements were A/B'd by ear against the originals and shipped to
 # both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
 # index. See the plugin's README.md.
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT}, AYFLY=${CM_HAVE_AYFLY})")
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT}, AYFLY=${CM_HAVE_AYFLY}, ZXTUNE=${CM_HAVE_ZXTUNE})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -522,7 +557,7 @@ set(MUSICPLAYER_PLUGINS
     stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
     zxayplugin mdxplugin s98plugin gsfplugin tedplugin v2plugin
     ffmpegplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
-    kssplugin quartetplugin wsrplugin zxtuneplugin bbsongplugin
+    kssplugin quartetplugin wsrplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin fnkplugin
     famitrackerplugin libvgmplugin vgmstreamplugin
@@ -536,6 +571,11 @@ endif()
 # covers the same formats in both variants.
 if(CM_HAVE_AYFLY)
     list(APPEND MUSICPLAYER_PLUGINS ayflyplugin)
+endif()
+# GPL-3 (ZXTune) -- plus build only, see CM_HAVE_ZXTUNE above. zxayplugin covers
+# .psm/.ftc/.gtr in both variants; .st11/.tfe/.chi are lost in mas.
+if(CM_HAVE_ZXTUNE)
+    list(APPEND MUSICPLAYER_PLUGINS zxtuneplugin)
 endif()
 # GPL (GoatTracker + reSID) -- plus build only, see CM_HAVE_GOATTRACKER above.
 if(CM_HAVE_GOATTRACKER)
@@ -590,10 +630,16 @@ include_directories(${AP1_ROOT}/mods/grappix ${MUSICPLAYER}/plugins)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 # liblhasa (vendored under zxtune) decompresses the .lha archives that the
-# UnExoticA collection ships its tunes in. The `lhasa` static-lib target is
-# created by the zxtuneplugin subproject above.
+# UnExoticA collection ships its tunes in. It is ISC-licensed (Simon Howard)
+# and only HAPPENS to live inside the zxtune tree -- it is not part of ZXTune
+# and is needed in BOTH variants. In a plus tree the `lhasa` static-lib target
+# is created by the zxtuneplugin subproject; in a mas tree that subproject does
+# not exist (see CM_HAVE_ZXTUNE), so the target has to be created here instead.
 get_filename_component(ZXTUNE_ROOT "${CMAKE_SOURCE_DIR}/external/zxtune" ABSOLUTE)
 include_directories(${ZXTUNE_ROOT}/3rdparty/lhasa/lib/public)
+if(NOT CM_HAVE_ZXTUNE AND NOT TARGET lhasa)
+    add_subdirectory(${ZXTUNE_ROOT}/3rdparty/lhasa lhasa_standalone)
+endif()
 
 if(WIN32)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
@@ -609,6 +655,10 @@ endif()
 # Same for ayflyplugin_register() -- see CM_HAVE_AYFLY above.
 if(NOT CM_HAVE_AYFLY)
     target_compile_definitions(plugin_register PRIVATE CM_NO_AYFLY)
+endif()
+# Same for zxtuneplugin_register() -- see CM_HAVE_ZXTUNE above.
+if(NOT CM_HAVE_ZXTUNE)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_ZXTUNE)
 endif()
 # Same for vicepluginbridge_register() -- see CM_HAVE_VICE above.
 if(NOT CM_HAVE_VICE)

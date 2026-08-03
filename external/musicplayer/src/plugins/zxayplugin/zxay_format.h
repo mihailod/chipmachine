@@ -31,6 +31,11 @@ enum class Format
     fxm,  // Fuxoft AY Language ("FXSM")                   -- native
     amad, // AY Amadeus (ZXAYAMAD container over FXM)      -- native
     vt2,  // Vortex Tracker II text module   -- Arkos Tracker 3 importer
+    ftc,  // Fast Tracker               -- Z80 player
+    psm,  // Pro Sound Maker            -- native
+    gtr,  // Global Tracker             -- native
+    st11, // Sound Tracker 1.1 uncompiled, in a ZXAY container
+          //                            -- compiled to .stc, then native
 };
 
 // Human-readable name for the "format" metadata column, e.g. "Pro Tracker 3".

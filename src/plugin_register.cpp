@@ -57,7 +57,10 @@ extern "C" {
     void kssplugin_register();     // MGSDRV / MSX (.mgs) via libkss
     void quartetplugin_register(); // Microdeal Quartet / Atari ST (.4v, .4q)
     void wsrplugin_register();     // Bandai WonderSwan (.wsr) via in_wsr
-    void zxtuneplugin_register();  // ZX Spectrum Sound Tracker 1.1 (.st11) via ZXTune
+#ifndef CM_NO_ZXTUNE
+    // ZX Spectrum Sound Tracker 1.1 / TFM / Chip Tracker -- GPL-3, plus only.
+    void zxtuneplugin_register();
+#endif
 #ifndef CM_NO_POKEYNOISE
     void pokeynoiseplugin_register(); // Atari 800 PokeyNoise (.pn) via ASAP -- GPL-2, plus build only
 #endif
@@ -99,12 +102,6 @@ void register_plugins() {
 #ifndef CM_NO_AYFLY
     ayflyplugin_register();
 #endif
-    // AFTER ayflyplugin deliberately. Both claim the same extensions at equal
-    // priority, and ties break on registration order, so the plus build keeps
-    // routing every ZX AY song to Ayfly and stays bit-for-bit unchanged. In the
-    // mas build ayflyplugin does not exist and this is the only claimant.
-    // See [[plugin-order-stable-sort]] and CM_HAVE_AYFLY in CMakeLists.txt.
-    zxayplugin_register();
     // Before gmeplugin so OPL VGMs are claimed here first; the two canHandle
     // gates are disjoint (GME declines OPL) so order is belt-and-braces.
     libvgmplugin_register();
@@ -179,7 +176,17 @@ void register_plugins() {
     kssplugin_register();
     quartetplugin_register();
     wsrplugin_register();
+#ifndef CM_NO_ZXTUNE
     zxtuneplugin_register();
+#endif
+    // zxayplugin registers AFTER BOTH the engines it replaces -- ayflyplugin
+    // above and zxtuneplugin here. All three claim overlapping extensions at
+    // equal priority and ties break on registration order, so the plus build
+    // keeps routing every ZX AY song exactly where it did before and stays
+    // unchanged. In the mas build neither of the other two is compiled and
+    // this is the only claimant.
+    // See [[plugin-order-stable-sort]], CM_HAVE_AYFLY and CM_HAVE_ZXTUNE.
+    zxayplugin_register();
 #ifndef CM_NO_POKEYNOISE
     // GPL-2 (ASAP) -- excluded from the Mac App Store build (CM_VARIANT=mas),
     // where the pokeynoiseplugin target is not built at all. Only the 17 modland

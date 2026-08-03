@@ -92,8 +92,9 @@ bool ZXAYPlugin::canHandle(const std::string& name)
 
 std::set<std::string> ZXAYPlugin::getSupportedExtensions() const
 {
-    return {"pt1", "pt2", "pt3", "stc", "st13", "zxs", "stp",  "stp2",
-            "asc", "psc", "sqt", "vtx", "psg",  "fxm", "amad", "vt2"};
+    return {"pt1", "pt2", "pt3", "stc", "st13", "zxs",  "stp",  "stp2",
+            "asc", "psc", "sqt", "vtx", "psg",  "fxm",  "amad", "vt2",
+            "ftc", "psm", "gtr", "st11"};
 }
 
 ChipPlayer* ZXAYPlugin::fromFile(const std::string& name)

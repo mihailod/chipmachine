@@ -4142,6 +4142,28 @@ TEST_CASE("Ayfly", "[music]") { testPlugin<musix::AyflyPlugin>("testmus/zx", ".v
 // reason it is for Ayfly -- the Vortex Tracker II text module belongs to
 // sksplugin's Arkos Tracker 3 importer, which is asserted separately below.
 TEST_CASE("ZX AY", "[music]") { testPlugin<musix::ZXAYPlugin>("testmus/zx", ".vt2"); }
+// The ZX AY formats reclaimed from ZXTune (GPL-3), which is gated out of the
+// mas build. ZXTune still owns them in the plus build -- it registers first --
+// so these run the new engine directly against the same fixture dirs.
+TEST_CASE("ZX AY: Fast Tracker (ex-ZXTune)", "[music]")
+{
+    testPlugin<musix::ZXAYPlugin>("testmus/ftc", "");
+}
+TEST_CASE("ZX AY: Pro Sound Maker (ex-ZXTune)", "[music]")
+{
+    testPlugin<musix::ZXAYPlugin>("testmus/psm", "");
+}
+TEST_CASE("ZX AY: Global Tracker (ex-ZXTune)", "[music]")
+{
+    testPlugin<musix::ZXAYPlugin>("testmus/gtr", "");
+}
+// .st11 has no player of its own: an UNCOMPILED Sound Tracker 1.1 module is
+// compiled to the ordinary .stc layout on load and handed to the Sound Tracker
+// player, exactly as "ST COMPILE" did on the Spectrum.
+TEST_CASE("ZX AY: Sound Tracker 1.1 uncompiled (ex-ZXTune)", "[music]")
+{
+    testPlugin<musix::ZXAYPlugin>("testmus/st11", "");
+}
 // ".vt2" is the one ZX AY extension Ayfly claimed and could never play: all 551
 // of the catalog's rows throw in ay_initsong(), and because Ayfly registers
 // first and wins the tie, claiming them stopped anything else from trying. They
@@ -6147,5 +6169,77 @@ TEST_CASE("A/B diagnostics: ZX AY vs Ayfly, why they differ", "[.zxdiag]")
         printf("%-24s %6.3f %7.3f %7d %6.2f %6.2f %6.1f %6.1f  %s\n",
                base.substr(0, 24).c_str(), cos, bestCorr, bestLag, rmsRatio,
                centRatio, secA, secB, reading);
+    }
+}
+
+// ---------------------------------------------------------------------------
+// ZXTune vs ZX AY, for the formats reclaimed from it
+// ---------------------------------------------------------------------------
+// Hidden ('.' tag). Run with: cmtest "[.zxtab]"
+//
+// Same method and the same caveats as "[.zxdiag]" above -- cosine measures
+// timbre, envelope correlation measures music, and only the second can tell a
+// real sequencing fault from two different chip renderings. ZXTune has its own
+// AY model and its own filtering, so the ceiling here is no better than the
+// ~0.95 the .vtx control establishes for Ayfly.
+TEST_CASE("A/B: ZX AY vs ZXTune, reclaimed formats", "[.zxtab]")
+{
+    musix::ZXTunePlugin zxtune;
+    musix::ZXAYPlugin zxay;
+    constexpr int kHop = kAbRate / 100;
+
+    printf("%-24s %6s %7s %7s %6s %6s %6s  %s\n", "file", "cos", "envCorr",
+           "bestLag", "rms", "secA", "secB", "reading");
+    printf("%s\n", std::string(96, '-').c_str());
+
+    for (auto const* dir : { "testmus/ftc", "testmus/psm", "testmus/gtr",
+                             "testmus/st11" }) {
+        for (auto const& f : utils::File{dir}.listFiles()) {
+            if (f.isDir()) { continue; }
+            const auto base = utils::path_filename(f.getName());
+            if (base.empty() || base[0] == '.') { continue; }
+            if (!zxtune.canHandle(f.getName()) || !zxay.canHandle(f.getName())) {
+                printf("%-24s  (not claimed by both)\n", base.c_str());
+                continue;
+            }
+            std::vector<double> monoA, monoB;
+            try {
+                std::unique_ptr<musix::ChipPlayer> p{zxtune.fromFile(f.getName())};
+                if (p) { monoA = abRender(*p); }
+                std::unique_ptr<musix::ChipPlayer> q{zxay.fromFile(f.getName())};
+                if (q) { monoB = abRender(*q); }
+            } catch (std::exception& e) {
+                printf("%-24s  EXCEPTION %s\n", base.c_str(), e.what());
+                continue;
+            }
+            if (monoA.size() < kAbRate || monoB.size() < kAbRate) {
+                printf("%-24s  too short (A=%zu B=%zu)\n", base.c_str(),
+                       monoA.size(), monoB.size());
+                continue;
+            }
+            const double secA = monoA.size() / double(kAbRate);
+            const double secB = monoB.size() / double(kAbRate);
+            const size_t common = std::min(monoA.size(), monoB.size());
+            monoA.resize(common);
+            monoB.resize(common);
+
+            const auto specA = abSpectrum(monoA), specB = abSpectrum(monoB);
+            const auto envA = abEnvelope(monoA, kHop), envB = abEnvelope(monoB, kHop);
+            int bestLag = 0;
+            double bestCorr = -2.0;
+            for (int lag = -100; lag <= 100; lag++) {
+                const double c = abCorr(envA, envB, lag);
+                if (c > bestCorr) { bestCorr = c; bestLag = lag; }
+            }
+            const double rmsRatio = abRms(monoA) > 0 ? abRms(monoB) / abRms(monoA) : 0;
+            const char* reading =
+                bestCorr >= 0.90 ? "timbre only"
+                : bestCorr >= 0.70 ? "mostly timbre"
+                : bestCorr >= 0.40 ? "SUSPECT: arrangement drifts"
+                                   : "SUSPECT: different music";
+            printf("%-24s %6.3f %7.3f %7d %6.2f %6.1f %6.1f  %s\n",
+                   base.substr(0, 24).c_str(), abCosine(specA, specB), bestCorr,
+                   bestLag, rmsRatio, secA, secB, reading);
+        }
     }
 }

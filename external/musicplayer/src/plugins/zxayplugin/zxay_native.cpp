@@ -15,6 +15,12 @@ std::unique_ptr<Source> createNativeSource(Format f,
         return createStpSource(data, sampleRate);
     case Format::sqt:
         return createSqtSource(data, sampleRate);
+    case Format::psm:
+        return createPsmSource(data, sampleRate);
+    case Format::gtr:
+        return createGtrSource(data, sampleRate);
+    case Format::st11:
+        return createSt11Source(data, sampleRate);
     case Format::fxm:
     case Format::amad:
         return createFxmSource(f, data, sampleRate);

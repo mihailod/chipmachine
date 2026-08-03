@@ -7,6 +7,7 @@
 
 #include "players/psc_bin.h"
 #include "players/pt1_bin.h"
+#include "players/ftc_bin.h"
 #include "players/ptxplay_bin.h"
 
 #include <algorithm>
@@ -122,6 +123,8 @@ Z80Player playerFor(Format f)
         return {pt1_bin, pt1_bin_len, pt1_bin_org};
     case Format::psc:
         return {psc_bin, psc_bin_len, psc_bin_org};
+    case Format::ftc:
+        return {ftc_bin, ftc_bin_len, ftc_bin_org};
     default:
         return {nullptr, 0, 0};
     }
@@ -156,6 +159,14 @@ void readMeta(Format f, const std::vector<uint8_t>& d, SongInfo& info)
     case Format::psc:
         info.title = at(0, 69);
         break;
+    case Format::ftc:
+        // "Module: <title>" then "Song by <author>", both blank-padded.
+        info.title = at(8, 32);
+        info.author = at(48, 32);
+        break;
+    case Format::gtr:
+        info.title = at(7, 32);
+        break;
     default:
         break;
     }
@@ -180,7 +191,8 @@ std::unique_ptr<Source> createSource(std::vector<uint8_t> data,
     case Format::pt1:
     case Format::pt2:
     case Format::pt3:
-    case Format::psc: {
+    case Format::psc:
+    case Format::ftc: {
         Z80Player pl = playerFor(f);
         if (pl.code == nullptr) {
             return nullptr;
@@ -194,6 +206,9 @@ std::unique_ptr<Source> createSource(std::vector<uint8_t> data,
     }
     case Format::stp:
     case Format::sqt:
+    case Format::psm:
+    case Format::gtr:
+    case Format::st11:
     case Format::stc:
     case Format::asc:
     case Format::fxm:

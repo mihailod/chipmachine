@@ -247,14 +247,57 @@ Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         sksplugin. Both builds gain those rows. This follows the precedent
         already set for ".ftc", which was moved to ZXTune for the same reason.
 
-Component: ZXTune (ZX Spectrum / Sam Coupe -- Sound Tracker 1.1 .st11,
-           Global Tracker .gtr, Chip Tracker .chi, TFM Music Maker .tfe,
-           Pro Sound Maker .psm, Fast Tracker .ftc, E-Tracker / COP .cop)
+Component: ZXTune (ZX Spectrum -- Sound Tracker 1.1 .st11, Chip Tracker .chi,
+           TFM Music Maker .tfe, and in the plus build also Global Tracker
+           .gtr, Pro Sound Maker .psm and Fast Tracker .ftc)
 Author: Developed by Vitamin/CAIG (vitamin.caig@gmail.com); CMake build fork
         by djdron. Only the AY/YM + DAC + SAA + FM tracker decoders + container
         scanner are vendored (see musicplayer/src/plugins/zxtuneplugin). Bundles
         fmt, z80ex, liblhasa and liblzma.
-License: GNU General Public License v3.0 or later
+License: GNU General Public License v3.0 or later (the fork's LICENSE.md claims
+        LGPL-3; upstream is GPL and the vendored sources carry GPL headers, so
+        the stricter reading is the one applied here)
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_ZXTUNE=OFF, so neither zxtuneplugin nor its vendored ZXTune
+        sources are compiled). This was the last GPL-3 in the App Store binary.
+
+        It owned 569 rows across six formats, and 378 of them -- every one that
+        is actually AY music -- are now played in BOTH variants by the ZX AY
+        engine (section 4), which reclaimed them once the ZX Spectrum machine
+        built for the Ayfly replacement existed:
+          .psm 188  Pro Sound Maker -- sequencer, from Bulba's AY_Emul
+          .ftc  88  Fast Tracker    -- Bulba's own MONS4D disassembly of the
+                                       1.07 player, run on the emulated Z80
+          .st11 59  Sound Tracker 1.1, the UNCOMPILED form -- compiled to the
+                                       ordinary .stc layout on load, then
+                                       played by the Sound Tracker sequencer
+                                       this engine already had
+          .gtr  43  Global Tracker  -- sequencer, from Bulba's AY_Emul
+        All four were A/B'd against ZXTune itself (cmtest "[.zxtab]"): spectral
+        cosine 0.80-0.98 and envelope correlation 0.72-0.98 at zero lag across
+        35 fixtures, i.e. the same music differing only by chip model.
+
+        zxtuneplugin is retained in the plus build and registers BEFORE
+        zxayplugin, so that build routes all six formats exactly where it did
+        before and is unchanged.
+
+        The mas variant loses the remaining 191 rows, dropped from its index to
+        match. No formatPlayer entry is needed for either -- nothing else
+        claims those two extensions, so the plain extension test in
+        songHasNoPlayer() drops them. Both are out of scope because they are
+        not AY music:
+          .tfe  148  TFM Music Maker -- TurboSound FM, a pair of YM2203s. It
+                     would need an OPN core and an undocumented sequencer.
+          .chi   43  Chip Tracker -- four channels of DIGITAL sample playback,
+                     not the AY at all. Same story.
+
+        liblhasa (Simon Howard, ISC -- see the permissive section) lives inside
+        the vendored ZXTune tree but is NOT part of ZXTune, and the UnExoticA
+        .lha collection needs it in both variants. In a mas tree, where the
+        zxtuneplugin subproject does not exist to create the target, it is
+        added directly by the top-level CMakeLists. The same is true of libvgm
+        and libxmp, which also sit under zxtune/3rdparty/ and are compiled into
+        both variants by libvgmplugin / cocoplugin / mgtplugin / fnkplugin.
 
 Component: in_wsr (Bandai WonderSwan / WonderSwan Color)
 Author: WonderSwan replayer by Mamiya; NEC V30MZ CPU core derived from
@@ -435,7 +478,8 @@ Notice: Used only as FFmpeg's TLS backend for HTTPS radio / resolved stream
         URLs; shipped as libssl / libcrypto dylibs in Contents/MacOS/.
 
 Component: ZX AY (ZX Spectrum AY-3-8912 trackers -- .pt1 .pt2 .pt3 .vt2 .stc
-           .zxs .st13 .stp .stp2 .asc .psc .sqt .vtx .psg .fxm .amad)
+           .zxs .st13 .stp .stp2 .asc .psc .sqt .vtx .psg .fxm .amad, and the
+           .ftc .psm .gtr .st11 reclaimed from ZXTune)
 Author: chipmachine's own engine, at musicplayer/src/plugins/zxayplugin. Built
         into BOTH variants; it is what keeps 67,305 ZX Spectrum songs in the
         Mac App Store build after Ayfly (section 2) is gated out of it.
@@ -451,9 +495,10 @@ Author: chipmachine's own engine, at musicplayer/src/plugins/zxayplugin. Built
             Tracker 3 player -- his own assembled binary, byte for byte, with
             his Z80 source and entry-point documentation vendored beside it.
             Covers .pt2, .pt3 and .vt2.
-          * his MONS4D disassemblies of the Pro Tracker 1.xx and Pro Sound
-            Creator players, rebuilt from the hex column of the published
-            listings, which are vendored. Covers .pt1 and .psc.
+          * his MONS4D disassemblies of the Pro Tracker 1.xx, Pro Sound
+            Creator and Fast Tracker 1.07 players, rebuilt from the hex column
+            of the published listings, which are vendored. Covers .pt1, .psc
+            and .ftc.
         Bulba's terms, as stated on the Vortex Tracker II distribution: "You
         can use and distribute sources freely, simply credit me somewhere in
         your projects, where you include all or part of the sources and (or) my
@@ -462,13 +507,22 @@ Author: chipmachine's own engine, at musicplayer/src/plugins/zxayplugin. Built
 
         (2) A SEQUENCER WRITTEN HERE, for the formats with no redistributable
         ZX player: .stc (and the .zxs/.st13 files that are the same format),
-        .asc, .stp/.stp2, .sqt, and the .fxm/.amad bytecode. Sound Tracker's
+        .asc, .stp/.stp2, .sqt, .psm, .gtr, and the .fxm/.amad bytecode.
+        ".st11" needs no sequencer at all -- it is an UNCOMPILED Sound Tracker
+        module, so it is compiled into the ordinary .stc layout on load and
+        handed to the Sound Tracker player above, exactly as the tracker's own
+        "ST COMPILE" did on the Spectrum; the compilation follows AY_Emul's
+        ST12STC, including its note-name table and one documented quirk of the
+        original compiler. Sound Tracker's
         layout comes from the format description Bulba publishes (RAMSOFT,
         1993, sent to him by Roman Scherbakov, vendored as ST11FMT.txt); Sound
         Tracker Pro's from the description and player listing decompiled by
         VfNG/NEW in 1997, also vendored. Where no description exists -- ASC
-        Sound Master, SQ-Tracker -- the behaviour follows Bulba's own AY_Emul
-        implementation under the grant above. The Fuxoft AY Language format is
+        Sound Master, SQ-Tracker, Pro Sound Maker -- the behaviour follows
+        Bulba's own AY_Emul implementation under the grant above. Global
+        Tracker's player was published only as a symbolic listing (by Doctor
+        Max / Global Corporation), vendored as the cross-reference, so it is
+        sequenced the same way. The Fuxoft AY Language format is
         Frantisek Fuka's (Fuxoft), documented in his fxmasm project; the .amad
         tunes are by Frantisek Fuka and Patrik Rak.
 
