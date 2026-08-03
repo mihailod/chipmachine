@@ -5,14 +5,16 @@ Finish suggestions from the plugins chat
 plugin		GPL LOC	GPL files	songs	what fixing it means
 
 IN PROGRESS:
-gsfplugin	21,293	20		1,246	delete + swap — permissive engine exists
-
-TO DO:
 ayflyplugin	9,676	46		67,293	clean-room, 16 formats
+
+follow up on ayfly, use it for:
+zxtuneplugin	451 .cpp (external)	381	not viable alone
+
+
+TODO:
 mdxplugin	~3,900 	1 header	6,913	clean-room sequencer
 maxtraxplugin	1,812	4		93	clean-room Paula + driver
 famitrackerplug	21,082 (external)	1,638	clean-room driver
-zxtuneplugin	451 .cpp (external)	381	not viable alone
 
 - - -
 

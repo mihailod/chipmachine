@@ -56,9 +56,17 @@ private:
 // GME's Ay_Emul-lineage core plays BOTH reliably (86/86 across Ironfist ZX, CPC
 // and zxart ZX). So .ay is owned by gmeplugin; ayfly keeps the tracker AY
 // formats GME cannot decode (pt3/stc/vtx/psg/...).
+//
+// NB: .vt2 is NOT here either, and for exactly the .ftc reason. libayfly has no
+// Vortex Tracker II TEXT loader at all -- ay_initsong() rejects every one of
+// the catalog's 551 ".vt2" rows, which have therefore never played. Claiming
+// them here only stopped anything else from trying, because Ayfly registers
+// first and wins the tie. Arkos Tracker 3 reads the format, and sksplugin
+// already drives AT3, so .vt2 is routed there and those rows play for the
+// first time -- in BOTH variants.
 static const std::set<std::string> supported_ext = {
     "stp2", "psg", "asc", "stc", "psc", "sqt", "stp",
-    "pt1",  "pt2", "pt3", "vtx", "vt2", "zxs", "st13", "fxm", "amad"};
+    "pt1",  "pt2", "pt3", "vtx", "zxs", "st13", "fxm", "amad"};
 
 bool AyflyPlugin::canHandle(const std::string& name)
 {

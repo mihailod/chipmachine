@@ -4451,6 +4451,11 @@ std::string MusicDatabase::platformForExtension(std::string const& rawExt)
         { "UADE", "Amiga" },
         { "AdPlug", "PC AdLib" },
         { "Ayfly ZX", "ZX Spectrum 128" },
+        // Both ZX AY engines must be here. Ayfly is absent from the mas build
+        // (CM_HAVE_AYFLY), so there this is the plugin every ZX AY extension
+        // resolves to -- without the entry all 67k of them would fall through
+        // with no platform at all.
+        { "ZX AY", "ZX Spectrum 128" },
         { "ZX Spectrum (ZXTune)", "ZX Spectrum 128" },
         { "RSNPlugin", "Nintendo SNES" },
         { "MSX (libkss)", "MSX" },

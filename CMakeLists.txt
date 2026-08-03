@@ -343,6 +343,41 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_HT ON)
 endif()
+# ayflyplugin is the eleventh case, and the first where the replacement covers
+# the WHOLE format list rather than part of it.
+#
+# Ayfly (Deryabin Andrew, GPL-2-or-later) plus its z80ex CPU core (Boo-boo,
+# GPL-2, containing FUSE code) owned 67,305 songs -- ZX Spectrum AY trackers,
+# far and away the largest single format family in the catalog and the largest
+# unresolved copyleft dependency in the App Store binary. It must be ABSENT
+# from the mas binary. Follows CM_HAVE_UADE's pattern exactly.
+#
+# Nothing is lost. zxayplugin is built in BOTH variants and covers every
+# extension Ayfly claimed, by three routes (see its players/PROVENANCE.md):
+#   * the tracker's ORIGINAL ZX Spectrum Z80 replay routine, run on the GME Z80
+#     core into Ayumi (Peter Sovietov, MIT) -- .pt1/.pt2/.pt3/.psc/.sqt. The
+#     routines are Sergey Bulba's published players, used under his attribution
+#     grant, the same footing on which this project already ships the .fxm and
+#     .amad players.
+#   * a sequencer written from the published format description where no
+#     redistributable player exists -- .stc (and its .zxs/.st13 aliases), .asc,
+#     .stp/.stp2, .fxm/.amad.
+#   * no player at all for the recorded register streams, .vtx and .psg.
+# ".vt2" -- which Ayfly could NOT play, a measured 0 of 551 rows -- is picked up
+# by sksplugin's Arkos Tracker 3 importer (MIT), so this change makes the mas
+# index LARGER here than the plus index was.
+#
+# zxayplugin is registered AFTER ayflyplugin in plugin_register.cpp, so in the
+# plus build -- where both exist and claim the same extensions -- Ayfly wins
+# every tie on registration order and that build is bit-for-bit unchanged. Same
+# arrangement as musplugin behind vicepluginbridge. No formatPlayer rows are
+# needed in songFormatHasNoPlayer() because no extension loses its claimant.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_AYFLY OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_AYFLY)
+else()
+    set(CM_HAVE_AYFLY ON)
+endif()
 # victrackerplugin (.vt, VIC-20) needed NO variant gate, unlike the four above.
 # Its GPL was internal rather than structural -- the plugin is ours, but it drove
 # two GPLv2 engine cores (the omarandlorraine fake6502 fork, and a VIC-I sound
@@ -351,7 +386,7 @@ endif()
 # chip; the replacements were A/B'd by ear against the originals and shipped to
 # both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
 # index. See the plugin's README.md.
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT})")
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT}, AYFLY=${CM_HAVE_AYFLY})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -485,7 +520,7 @@ add_subdirectory(${AP1_ROOT}/mods ap1mods)
 set(MUSICPLAYER_PLUGINS
     openmptplugin gmeplugin sndhplugin
     stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
-    ayflyplugin mdxplugin s98plugin gsfplugin tedplugin v2plugin
+    zxayplugin mdxplugin s98plugin gsfplugin tedplugin v2plugin
     ffmpegplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
     kssplugin quartetplugin wsrplugin zxtuneplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
@@ -496,6 +531,11 @@ set(MUSICPLAYER_PLUGINS
 # GPL -- plus build only, see CM_HAVE_UADE above.
 if(CM_HAVE_UADE)
     list(APPEND MUSICPLAYER_PLUGINS uadeplugin)
+endif()
+# GPL-2 (Ayfly + z80ex) -- plus build only, see CM_HAVE_AYFLY above. zxayplugin
+# covers the same formats in both variants.
+if(CM_HAVE_AYFLY)
+    list(APPEND MUSICPLAYER_PLUGINS ayflyplugin)
 endif()
 # GPL (GoatTracker + reSID) -- plus build only, see CM_HAVE_GOATTRACKER above.
 if(CM_HAVE_GOATTRACKER)
@@ -565,6 +605,10 @@ add_library(plugin_register STATIC src/plugin_register.cpp)
 # the symbol only exists when the uadeplugin target was built (see CM_HAVE_UADE).
 if(NOT CM_HAVE_UADE)
     target_compile_definitions(plugin_register PRIVATE CM_NO_UADE)
+endif()
+# Same for ayflyplugin_register() -- see CM_HAVE_AYFLY above.
+if(NOT CM_HAVE_AYFLY)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_AYFLY)
 endif()
 # Same for vicepluginbridge_register() -- see CM_HAVE_VICE above.
 if(NOT CM_HAVE_VICE)

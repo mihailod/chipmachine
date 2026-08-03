@@ -217,16 +217,35 @@ Author: Adapted from OpenMSX/GME variants
 License: GNU General Public License v2.0 or later
 
 Component: Ayfly (ZX Spectrum AY-3-8910)
-Author: Developed by Sergey Vladimirov. The Fuxoft AY Language (.fxm / "FXSM")
-        player in players/FXMPlay.h is a C++ transliteration of the FXM
-        routines from AY_Emul by Sergey Bulba, whose sources are published with
-        the request that the author be credited. The Fuxoft AY Language format
-        itself is by Frantisek Fuka (Fuxoft), documented in his fxmasm project.
-        The AY Amadeus (.amad) player in players/AMADPlay.h reuses that FXM
-        engine and transliterates AY_Emul's ZXAY/AMAD container loader; the
-        tunes are by Frantisek Fuka (Fuxoft) and Patrik Rak.
-License: GNU General Public License v2.0 or later (Ayfly engine); AY_Emul-derived
-         FXM code used under attribution as requested by its author
+Author: Developed by Sergey Vladimirov (Deryabin Andrew). The embedded Z80 CPU
+        core is z80ex by Boo-boo, which contains code from the FUSE emulator
+        project.
+License: GNU General Public License v2.0 or later
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_AYFLY=OFF, so neither ayflyplugin nor its vendored libayfly /
+        z80ex sources are compiled). This was the largest unresolved copyleft
+        dependency in the App Store binary: 67,305 songs, the biggest single
+        format family in the catalog.
+
+        NO SONGS ARE LOST, and the mas index is not reduced by one row. Every
+        extension Ayfly claimed is played in BOTH variants by the ZX AY engine
+        (section 4), so unlike the gates above this one needs no formatPlayer
+        entry in songFormatHasNoPlayer() -- no extension loses its claimant.
+
+        ayflyplugin is retained in the plus build and REGISTERED FIRST, ahead of
+        zxayplugin. Both declare the same extensions at equal priority and ties
+        break on registration order, so the plus build routes every ZX AY song
+        exactly where it did before and is unchanged. Same arrangement as
+        musplugin behind vicepluginbridge.
+
+        One extension was TAKEN from Ayfly in both variants: ".vt2". libayfly
+        has no Vortex Tracker II loader at all -- ay_initsong() throws on every
+        one of the catalog's 551 rows -- and claiming the extension only
+        prevented anything else from trying. Vortex Tracker II's binary save is
+        a PT3 module with a different identifier and now plays through PTxPlay;
+        the editor's ini-style text export goes to Arkos Tracker 3 via
+        sksplugin. Both builds gain those rows. This follows the precedent
+        already set for ".ftc", which was moved to ZXTune for the same reason.
 
 Component: ZXTune (ZX Spectrum / Sam Coupe -- Sound Tracker 1.1 .st11,
            Global Tracker .gtr, Chip Tracker .chi, TFM Music Maker .tfe,
@@ -414,6 +433,69 @@ Author: The OpenSSL Project (https://www.openssl.org)
 License: Apache License 2.0
 Notice: Used only as FFmpeg's TLS backend for HTTPS radio / resolved stream
         URLs; shipped as libssl / libcrypto dylibs in Contents/MacOS/.
+
+Component: ZX AY (ZX Spectrum AY-3-8912 trackers -- .pt1 .pt2 .pt3 .vt2 .stc
+           .zxs .st13 .stp .stp2 .asc .psc .sqt .vtx .psg .fxm .amad)
+Author: chipmachine's own engine, at musicplayer/src/plugins/zxayplugin. Built
+        into BOTH variants; it is what keeps 67,305 ZX Spectrum songs in the
+        Mac App Store build after Ayfly (section 2) is gated out of it.
+
+        It plays these formats by three routes, and only the first involves
+        third-party code:
+
+        (1) THE TRACKER'S ORIGINAL ZX SPECTRUM REPLAY ROUTINE, executed on the
+        GME Z80 core (see the LGPL-2.1 section) inside a minimal ZX machine,
+        with its OUTs to #FFFD/#BFFD fed to Ayumi (below). The routines are
+        Sergey Bulba's published players, from https://ay.strangled.net/ :
+          * PTxPlay Release 1 (2004-2007), the universal Pro Tracker 2 / Pro
+            Tracker 3 player -- his own assembled binary, byte for byte, with
+            his Z80 source and entry-point documentation vendored beside it.
+            Covers .pt2, .pt3 and .vt2.
+          * his MONS4D disassemblies of the Pro Tracker 1.xx and Pro Sound
+            Creator players, rebuilt from the hex column of the published
+            listings, which are vendored. Covers .pt1 and .psc.
+        Bulba's terms, as stated on the Vortex Tracker II distribution: "You
+        can use and distribute sources freely, simply credit me somewhere in
+        your projects, where you include all or part of the sources and (or) my
+        algorithms." That is the same attribution footing on which this project
+        has shipped the .fxm and .amad players since they were added.
+
+        (2) A SEQUENCER WRITTEN HERE, for the formats with no redistributable
+        ZX player: .stc (and the .zxs/.st13 files that are the same format),
+        .asc, .stp/.stp2, .sqt, and the .fxm/.amad bytecode. Sound Tracker's
+        layout comes from the format description Bulba publishes (RAMSOFT,
+        1993, sent to him by Roman Scherbakov, vendored as ST11FMT.txt); Sound
+        Tracker Pro's from the description and player listing decompiled by
+        VfNG/NEW in 1997, also vendored. Where no description exists -- ASC
+        Sound Master, SQ-Tracker -- the behaviour follows Bulba's own AY_Emul
+        implementation under the grant above. The Fuxoft AY Language format is
+        Frantisek Fuka's (Fuxoft), documented in his fxmasm project; the .amad
+        tunes are by Frantisek Fuka and Patrik Rak.
+
+        (3) NO PLAYER AT ALL for .vtx and .psg, which are recorded AY register
+        streams rather than modules. .vtx is LH5-packed and is depacked with
+        StSound's CLzhDepacker (BSD-2, see the StSound entry).
+
+        NO CODE FROM AYFLY was copied, transcribed or consulted for any of
+        this. Ayfly's own players are themselves C++ transliterations of
+        AY_Emul; where the same behaviour was needed here it was taken from
+        Bulba's sources directly, which is what his grant covers.
+        Full provenance, file by file: zxayplugin/players/PROVENANCE.md.
+License: PolyForm Noncommercial License 1.0.0 (the engine, as section 1);
+         Bulba's replay routines and format descriptions used under attribution
+         as requested by their author
+
+Component: Ayumi (AY-3-8910 / YM2149 sound chip emulation)
+Author: Peter Sovietov, http://sovietov.com
+        (https://github.com/true-grue/ayumi). Vendored at
+        musicplayer/src/plugins/zxayplugin/ayumi.
+License: MIT License (see zxayplugin/ayumi/LICENSE)
+Notice: Renders the AY for every ZX AY format in both variants, configured for
+        the AY-3-8910 volume curve rather than the YM2149 one. One local
+        change: `update_envelope` is marked static. Upstream leaves that single
+        internal helper with external linkage -- every other one in the file is
+        already static -- and the name collides at link time with musxplugin's
+        envelope.c.
 
 Component: OpenMPT (Tracker Formats)
 Author: Developed by the OpenMPT Project Team (originally Olivier Lapicque)
@@ -637,7 +719,8 @@ Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
         shim replacing the ScummVM-internal dependencies.
 License: GNU General Public License v3.0 or later
 
-Component: Arkos Tracker 3 (STarKos .sks importer + AY/YM player/renderer)
+Component: Arkos Tracker 3 (STarKos .sks / Arkos .aks / Vortex Tracker II
+           text .vt2 importers + AY/YM player/renderer)
 Author: Developed by Julien Névo (Targhan / Arkos). The non-GUI "BaseExport"
         slice of the Arkos Tracker 3 source (song import, the SongPlayer engine
         and the PsgStreamGenerator software AY/YM renderer) is vendored at

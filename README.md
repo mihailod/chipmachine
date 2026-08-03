@@ -339,7 +339,7 @@ Support for PC and Amiga tracker formats
 
 Extensions: `.mod` `.xm` `.it` `.s3m` `.mptm` `.stm` `.nst` `.m15` `.stk` `.wow` `.ult` `.669` `.mtm` `.med` `.far` `.mdl` `.ams` `.dsm` `.amf` `.okt` `.omf` `.dmf` `.mt2` `.dbm` `.digi` `.imf` `.j2b` `.gdm` `.umx` `.mo3` `.symmod` `.dsym` `.dsyn` `.dysn` `.ftm` `.gt2` `.gtk` `.tcb` `.rtm` `.xmf` `.667` `.etx` `.fmt` `.cba` `.c67` `.fst` `.ice` `.mmcmp` `.mms` `.mus` `.oxm` `.plm` `.ppm` `.psm` `.pt36` `.ptm` `.sfx` `.sfx2` `.stp` `.stx` `.xpk`
 
-(`.mus`, `.psm` and `.stp` are shared extensions: libopenmpt claims them, but a SID `.mus` falls through to the Compute! Sidplayer player — libvice in Plus, ChipMachine Clean Room SIDPlayer in MAS — and a ZX `.psm`/`.stp` to ZXTune/Ayfly. Routing is by content.)
+(`.mus`, `.psm` and `.stp` are shared extensions: libopenmpt claims them, but a SID `.mus` falls through to the Compute! Sidplayer player — libvice in Plus, ChipMachine Clean Room SIDPlayer in MAS — and a ZX `.psm` to ZXTune, a ZX `.stp` to the ZX Spectrum AY engine. Routing is by content.)
 
 > Note: `.dsm` covers three unrelated DSIK/Dynamic-Studio variants. libopenmpt natively plays the newer DSIK "RIFF" format (`RIFF…DSMF`) and Dynamic Studio (`DSm`), but not the original DSIK "old" Internal Format (`DSM` + 0x10, e.g. the Necros tunes). Support for that v1 variant was added in a local patch to the vendored libopenmpt `Load_dsm.cpp`, with the loader adapted from MilkyTracker's `LoaderDSMv1` (BSD-3-Clause).
 
@@ -501,13 +501,24 @@ Support for RAR packed music (primarily SNES)
 
 Extensions: `.rsn` `.rps` `.rdc` `.rds` `.rgs` `.r64`
 
-### Ayfly
+### ZX Spectrum AY
 
-Support for various ZX Spectrum formats, including **Fuxoft AY Language** (`.fxm`) — František Fuka's compiled AY music format ("FXSM" files). The `.fxm` player is a C++ transliteration of the Fuxoft routines in Sergey Bulba's AY_Emul (the same lineage as the rest of the Ayfly engine); a 64K Spectrum image is rebuilt from the file's origin address and the interpreter runs over it exactly as the original Z80 playroutine does.
+ZX Spectrum AY-3-8912 tracker music — at 67,305 songs, the largest single format family in the catalog. Two engines cover it, and which one you get depends on the build.
 
-Also **AY Amadeus** (`.amad`) — ZX Spectrum AY tunes by František Fuka (Fuxoft) and Patrik Rak, stored in the `ZXAY` container with the `AMAD` type tag.
+**ZX AY** is the engine written for this project, with no copyleft anywhere in the chain, and it is present in **both** builds. It plays each format by whichever of three routes suits it:
 
-Extensions: `.ay` `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2` `.pt3` `.vtx` `.vt2` `.zxs` `.st13` `.fxm` `.amad`
+* **The tracker's own ZX Spectrum replay routine**, run on an emulated Z80 (the same GME core the Beepola and Sam Coupé players use) with its `OUT`s to `#FFFD`/`#BFFD` fed into **Ayumi**, Peter Sovietov's AY-3-8910 emulation. This is how `.pt1`, `.pt2`, `.pt3`, `.vt2` and `.psc` play. Running the original code is the point: each of these formats has exactly one authoritative definition — the author's own player — and that is where the version-gated fixups, portamento variants and table quirks actually live. The routines are Sergey Bulba's published players; see `zxayplugin/players/PROVENANCE.md`.
+* **A sequencer written from the published format description**, where no redistributable ZX player exists: `.stc` (and the `.zxs` / `.st13` files that are the same format under another name), `.asc`, `.stp` / `.stp2`, `.sqt`, and the `.fxm` / `.amad` bytecode.
+* **No player at all** for `.vtx` and `.psg`, which are not modules but recorded AY register streams — the file *is* the register writes. `.vtx` is LH5-packed, the same packing the `.ym` files elsewhere in this app use.
+
+**Ayfly** (GPL-2) remains in the Plus build only, registered first, so that build routes every ZX AY song exactly where it always did. The App Store build ships without it.
+
+One format gets *better* rather than merely surviving: `.vt2`. Ayfly claimed the extension and then threw on every one of the catalog's 551 rows, which also stopped anything else from trying. Vortex Tracker II's binary save is really a PT3 module wearing a different identifier, so it now plays through Bulba's PTxPlay; the editor's rarer ini-style text export goes to Arkos Tracker 3 via the STarKos plugin. Both builds gain those rows.
+
+`.fxm` is **Fuxoft AY Language** — František Fuka's compiled AY music format ("FXSM" files) — and `.amad` is **AY Amadeus**, the same bytecode in the `ZXAY` container with an `AMAD` type tag, by František Fuka and Patrik Rak. Both rebuild a 64K Spectrum image from the file's origin address and interpret over it as the original Z80 playroutine does.
+
+Extensions: `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2` `.pt3` `.vtx` `.vt2` `.zxs` `.st13` `.fxm` `.amad`
+(`.ay` — the ZXAYEMUL container of raw Z80 rips — belongs to GME in both builds, which plays Amstrad CPC rips that Ayfly renders silent.)
 
 ### ZXTune
 
@@ -853,7 +864,9 @@ Here is the attribution for the individual emulators, audio players, plugins, an
 * **Highly Experimental / PSF1/2 — REMOVED:** Developed by **Neill Corlett**. **No licence was ever stated** — not upstream, not in the vendored tree, not per-file. This project previously described it as "zlib License"; that was wrong (the zlib evidence was `#include <zlib.h>`) and is corrected here. It also could not run without a **Sony PlayStation 2 BIOS image**, which this project was shipping in both bundles as `data/hebios.bin` and had no right to redistribute. Both the BIOS and the plugin have been deleted; PSF playback moved to AOSDK with no song loss.
 * **HivelyTracker (AHX/HVL):** Developed by IRIS (Peter "Yohng" V, Curt Cool). Licensed under BSD-3-Clause.
 * **MDX / S98 (PC-98 & Sharp X68000):** Emulation engines adapted from OpenMSX/GME variants. Licensed under GPL-2.0-or-later.
-* **Ayfly (ZX Spectrum AY-3-8910):** Developed by Sergey Vladimirov. Licensed under GPL-2.0-or-later. The **Fuxoft AY Language** (`.fxm`) player added here is a C++ transliteration of the FXM routines from **AY_Emul** by **Sergey Bulba** (sources made available with the request to credit the author); the format is **Frantisek Fuka's** (Fuxoft), documented in his `fxmasm` project. The **AY Amadeus** (`.amad`) player added here reuses that FXM engine and transliterates AY_Emul's `ZXAY`/`AMAD` container loader (`OpenAYFile`); the tunes are by **Frantisek Fuka** (Fuxoft) and **Patrik Rak**.
+* **Ayfly (ZX Spectrum AY-3-8910):** Developed by Sergey Vladimirov, with a Z80 core (z80ex) by **Boo-boo** containing code from the **FUSE** project. Licensed under GPL-2.0-or-later. **Plus build only** — see the ZX Spectrum AY section above.
+* **ZX AY (ZX Spectrum AY-3-8912, both builds):** The ZX replay routines are **Sergey Bulba's** published players — the universal PT2/PT3 player *PTxPlay*, and his MONS4D disassemblies of the Pro Tracker 1.xx and Pro Sound Creator players — used under his stated terms ("You can use and distribute sources freely, simply credit me somewhere in your projects"), which is also the footing the `.fxm`/`.amad` support has always been on. The Sound Tracker, Sound Tracker Pro, ASC Sound Master, SQ-Tracker, Fuxoft AY Language and AY Amadeus sequencers are written here, following the format descriptions Bulba published (Sound Tracker's is **RAMSOFT's**, 1993, sent to him by **Roman Scherbakov**) and, where there was no description, his own **AY_Emul** implementation. The Sound Tracker Pro player listing was decompiled by **VfNG/NEW**. The **Fuxoft AY Language** format is **Frantisek Fuka's** (Fuxoft), documented in his `fxmasm` project; the `.amad` tunes are by **Frantisek Fuka** and **Patrik Rak**. Full detail in `zxayplugin/players/PROVENANCE.md`.
+* **Ayumi (AY-3-8910 / YM2149 emulation):** Developed by **Peter Sovietov**. Licensed under MIT.
 * **ZXTune (ZX Spectrum / Sam Coupe — Sound Tracker 1.1, Global Tracker, Chip Tracker, TFM Music Maker, Pro Sound Maker, Fast Tracker, E-Tracker):** Developed by Vitamin/CAIG; CMake fork by djdron. Licensed under GPL-3.0-or-later.
 * **98fmplayer:** Developed by areis. Licensed under MIT.
 * **libkss (MSX KSS):** Developed by Mitsutaka Okazaki. Licensed under MIT.

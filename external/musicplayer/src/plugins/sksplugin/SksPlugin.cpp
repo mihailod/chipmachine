@@ -129,9 +129,10 @@ public:
         std::string author = utils::rstrip(song->getAuthor().toStdString());
         // The same AT3 engine renders both STarKos (.sks) and native Arkos
         // Tracker (.aks) songs; label by the source extension.
-        const char* fmt =
-            utils::toLower(utils::path_extension(fileName)) == "aks" ? "Arkos Tracker"
-                                                                     : "STarKos";
+        const auto srcExt = utils::toLower(utils::path_extension(fileName));
+        const char* fmt = srcExt == "aks"   ? "Arkos Tracker"
+                          : srcExt == "vt2" ? "Vortex Tracker II (Spectrum)"
+                                            : "STarKos";
         setMeta("title", title,
                 "composer", author,
                 "channels", static_cast<int>(song->getChannelCount(subsongId)),
@@ -194,10 +195,29 @@ private:
     bool ended = false;
 };
 
+namespace {
+
+// Vortex Tracker II's ini-style TEXT export opens with the "[Module]" section
+// header, which is exactly what AT3's own Vt2SongImporter::doesFormatMatch
+// tests for.
+//
+// This must NOT also accept a leading "Vortex Tracker II": that is the same
+// editor's BINARY save, a PT3 module wearing a different identifier, and it
+// belongs to zxayplugin. Both plugins advertise ".vt2" and this is the line
+// between them.
+bool looksLikeVortexText(const std::vector<uint8_t>& d)
+{
+    static const char marker[] = "[Module]";
+    constexpr size_t n = sizeof(marker) - 1;
+    return d.size() >= n && memcmp(d.data(), marker, n) == 0;
+}
+
+} // namespace
+
 bool SksPlugin::canHandle(const std::string& name)
 {
     const auto ext = utils::toLower(utils::path_extension(name));
-    if (ext != "sks" && ext != "aks") {
+    if (ext != "sks" && ext != "aks" && ext != "vt2") {
         return false;
     }
     // canHandle is called by the host *outside* its try/catch, so it must never
@@ -208,6 +228,7 @@ bool SksPlugin::canHandle(const std::string& name)
             return false;
         }
         auto data = file.readAll();
+        if (ext == "vt2") { return looksLikeVortexText(data); }
         return ext == "aks" ? looksLikeArkosSong(data) : hasStarkosMagic(data);
     } catch (std::exception&) {
         return false;

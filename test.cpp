@@ -4136,6 +4136,46 @@ TEST_CASE("NDS", "[music]") { testPlugin<musix::NDSPlugin>("testmus/nds", "lib")
 // and carried no licence of its own.
 TEST_CASE("PSX", "[music]") { testPlugin<musix::AOPlugin>("testmus/psx", "lib"); }
 TEST_CASE("Ayfly", "[music]") { testPlugin<musix::AyflyPlugin>("testmus/zx", ".vt2"); }
+// The non-copyleft ZX AY engine that replaces Ayfly in the mas build (and runs
+// behind it in the plus build). Same corpus, and it must clear the SAME bar:
+// every fixture plays and none is silent. ".vt2" is excluded for the same
+// reason it is for Ayfly -- the Vortex Tracker II text module belongs to
+// sksplugin's Arkos Tracker 3 importer, which is asserted separately below.
+TEST_CASE("ZX AY", "[music]") { testPlugin<musix::ZXAYPlugin>("testmus/zx", ".vt2"); }
+// ".vt2" is the one ZX AY extension Ayfly claimed and could never play: all 551
+// of the catalog's rows throw in ay_initsong(), and because Ayfly registers
+// first and wins the tie, claiming them stopped anything else from trying. They
+// have simply been dead.
+//
+// The extension covers TWO things, and only the first is common:
+//   * Vortex Tracker II's BINARY save -- a PT3 module carrying the editor's own
+//     identifier instead of "ProTracker 3.x". Bulba's PTxPlay plays it as a
+//     PT 3.6 module, so ZXAYPlugin takes it.
+//   * the editor's ini-style TEXT export, which Arkos Tracker 3 reads and
+//     sksplugin therefore claims.
+// Both plugins advertise ".vt2" and decide on content, so assert that the
+// binary fixture lands on the ZX AY engine, plays, and is NOT stolen by AT3.
+TEST_CASE("Vortex Tracker II (.vt2) is no longer dead", "[music]")
+{
+    const std::string vt2 = "testmus/zx/krunk.vt2";
+    REQUIRE(musix::AyflyPlugin().canHandle(vt2) == false);
+    REQUIRE(musix::SksPlugin().canHandle(vt2) == false); // binary, not text
+
+    musix::ZXAYPlugin zxay;
+    REQUIRE(zxay.canHandle(vt2));
+    std::unique_ptr<musix::ChipPlayer> player{zxay.fromFile(vt2)};
+    REQUIRE(player != nullptr);
+    std::array<int16_t, 8192> buffer{};
+    bool heard = false;
+    for (int i = 0; i < 50 && !heard; i++) {
+        int rc = player->getSamples(&buffer[0], buffer.size());
+        if (rc <= 0) { break; }
+        for (int j = 0; j < rc; j++) {
+            if (buffer[j] != 0) { heard = true; break; }
+        }
+    }
+    REQUIRE(heard);
+}
 // Regression: a malformed / non-SQT file that reaches libayfly's SQT loader
 // (here a Quartet PSG module carrying a .sqt extension) used to SIGSEGV in
 // SQT_Play -- SQT_Init bailed out of SQT_PreInit without allocating info.data,
@@ -5499,6 +5539,9 @@ TEST_CASE("coverage", "[music]")
         {"Gameboy Advance", "testmus/gsf"},
         {"NDSPlugin", "testmus/nds"},
         {"Ayfly ZX", "testmus/zx"},
+        // Same fixture dir: the two ZX AY engines cover the same formats, and
+        // the coverage check has to see both claim them.
+        {"ZX AY", "testmus/zx"},
         {"ffmpeg", "testmus/ffmpeg"},
         {"HTPlugin", "testmus/ht"},
         {"SC68", "testmus/sc68"},
@@ -5800,3 +5843,309 @@ TEST_CASE("coverage", "[music]")
 }
 
 
+
+// ---------------------------------------------------------------------------
+// Ayfly vs ZX AY: how close is the replacement?
+// ---------------------------------------------------------------------------
+// Hidden ('.' tag). Run with: cmtest "[.zxab]"
+//
+// The two engines are NOT expected to be sample-identical and cannot be. Ayfly
+// hand-ports each tracker's sequencer into C++ and renders through its own
+// chip model and Filter3; this plugin runs the tracker's original Z80 routine
+// (or a sequencer written from the format description) into Ayumi. Different
+// chip, different filtering, different volume curve.
+//
+// What SHOULD match is the music: the same notes, the same envelopes, the same
+// arrangement. So the metric is the one the cSID-vs-VICE swap used -- cosine
+// similarity between the two engines' average magnitude spectra -- but summed
+// into 1/6-OCTAVE bands first. Raw FFT bins are the wrong resolution for this
+// music: a chip spectrum is a comb of narrow harmonics, and a fraction of a
+// bin's worth of detune between two chip models drops a bin-wise cosine
+// through the floor while the two are plainly the same tune. Log bands measure
+// what a listener hears and stay sensitive to the failures that matter -- a
+// wrong note table, a mis-parsed pattern, a channel that never sounds.
+//
+// ".vtx" is the CONTROL, and the reason it must stay in the fixture set. A
+// .vtx is a recorded register stream, so both engines push byte-identical
+// writes into their chip and the only difference left is the chip model and
+// its filtering. Whatever .vtx scores is this metric's ceiling; a tracker
+// format scoring near it is as close as two different chip models get.
+//
+// This prints a table rather than asserting a threshold: the useful output is
+// per-format, and a low score on one file is a lead to chase, not a build
+// failure.
+namespace {
+
+constexpr int kAbFftSize = 1024;
+constexpr int kAbSeconds = 20;
+constexpr int kAbRate = 44100;
+
+// In-place iterative radix-2 FFT, magnitude only.
+void abFft(std::array<double, kAbFftSize>& re, std::array<double, kAbFftSize>& im)
+{
+    for (int i = 1, j = 0; i < kAbFftSize; i++) {
+        int bit = kAbFftSize >> 1;
+        for (; j & bit; bit >>= 1) { j ^= bit; }
+        j ^= bit;
+        if (i < j) { std::swap(re[i], re[j]); std::swap(im[i], im[j]); }
+    }
+    for (int len = 2; len <= kAbFftSize; len <<= 1) {
+        const double ang = -2.0 * M_PI / len;
+        for (int i = 0; i < kAbFftSize; i += len) {
+            for (int k = 0; k < len / 2; k++) {
+                const double wr = std::cos(ang * k), wi = std::sin(ang * k);
+                const double ur = re[i + k], ui = im[i + k];
+                const double vr = re[i + k + len / 2] * wr - im[i + k + len / 2] * wi;
+                const double vi = re[i + k + len / 2] * wi + im[i + k + len / 2] * wr;
+                re[i + k] = ur + vr;         im[i + k] = ui + vi;
+                re[i + k + len / 2] = ur - vr; im[i + k + len / 2] = ui - vi;
+            }
+        }
+    }
+}
+
+// Renders up to kAbSeconds of mono PCM from a player.
+std::vector<double> abRender(musix::ChipPlayer& player)
+{
+    std::vector<double> mono;
+    mono.reserve(static_cast<size_t>(kAbRate) * kAbSeconds);
+    std::array<int16_t, 8192> buf{};
+    while (mono.size() < static_cast<size_t>(kAbRate) * kAbSeconds) {
+        const int rc = player.getSamples(&buf[0], buf.size());
+        if (rc <= 0) { break; }
+        for (int i = 0; i + 1 < rc; i += 2) {
+            mono.push_back((buf[i] + buf[i + 1]) * 0.5);
+        }
+    }
+    return mono;
+}
+
+// Average magnitude spectrum over Hann-windowed frames, summed into
+// 1/6-octave bands from 40 Hz to 16 kHz.
+std::vector<double> abSpectrum(const std::vector<double>& mono)
+{
+    constexpr double kLoHz = 40.0, kHiHz = 16000.0, kBandsPerOctave = 6.0;
+    const int bandCount = static_cast<int>(
+        std::log2(kHiHz / kLoHz) * kBandsPerOctave);
+    std::vector<double> bands(bandCount, 0.0);
+    int frames = 0;
+    for (size_t at = 0; at + kAbFftSize <= mono.size(); at += kAbFftSize / 2) {
+        std::array<double, kAbFftSize> re{}, im{};
+        for (int i = 0; i < kAbFftSize; i++) {
+            const double w = 0.5 - 0.5 * std::cos(2.0 * M_PI * i / (kAbFftSize - 1));
+            re[i] = mono[at + i] * w;
+        }
+        abFft(re, im);
+        for (int i = 1; i < kAbFftSize / 2; i++) {
+            const double hz = static_cast<double>(i) * kAbRate / kAbFftSize;
+            if (hz < kLoHz || hz >= kHiHz) { continue; }
+            const int b = static_cast<int>(
+                std::log2(hz / kLoHz) * kBandsPerOctave);
+            if (b >= 0 && b < bandCount) {
+                bands[b] += std::sqrt(re[i] * re[i] + im[i] * im[i]);
+            }
+        }
+        frames++;
+    }
+    if (frames > 0) {
+        for (auto& v : bands) { v /= frames; }
+    }
+    return bands;
+}
+
+double abCosine(const std::vector<double>& a, const std::vector<double>& b)
+{
+    double dot = 0, na = 0, nb = 0;
+    for (size_t i = 0; i < a.size() && i < b.size(); i++) {
+        dot += a[i] * b[i]; na += a[i] * a[i]; nb += b[i] * b[i];
+    }
+    return (na > 0 && nb > 0) ? dot / (std::sqrt(na) * std::sqrt(nb)) : 0.0;
+}
+
+} // namespace
+
+TEST_CASE("A/B: ZX AY vs Ayfly spectral similarity", "[.zxab]")
+{
+    musix::AyflyPlugin ayfly;
+    musix::ZXAYPlugin zxay;
+    printf("%-34s %-10s %8s  %s\n", "file", "format", "cosine", "notes");
+    printf("%s\n", std::string(78, '-').c_str());
+
+    double worst = 1.0;
+    std::string worstFile;
+    for (auto const& f : utils::File{"testmus/zx"}.listFiles()) {
+        if (f.isDir()) { continue; }
+        const auto base = utils::path_filename(f.getName());
+        if (base.empty() || base[0] == '.') { continue; }
+        const auto ext = utils::toLower(utils::path_extension(f.getName()));
+
+        std::vector<double> monoA, monoB;
+        std::string note;
+        if (ayfly.canHandle(f.getName())) {
+            try {
+                std::unique_ptr<musix::ChipPlayer> p{ayfly.fromFile(f.getName())};
+                if (p) { monoA = abRender(*p); }
+            } catch (std::exception& e) { note = "ayfly: "; note += e.what(); }
+        } else {
+            note = "ayfly declines";
+        }
+        if (zxay.canHandle(f.getName())) {
+            try {
+                std::unique_ptr<musix::ChipPlayer> p{zxay.fromFile(f.getName())};
+                if (p) { monoB = abRender(*p); }
+            } catch (std::exception& e) { note += " zxay: "; note += e.what(); }
+        } else {
+            note += " zxay declines";
+        }
+
+        // Compare over a COMMON duration. This engine ends a tune at its loop
+        // point where Ayfly plays on for ever, so without this the two spectra
+        // would cover different stretches of music and the difference would be
+        // read as a rendering fault rather than as the intended behaviour.
+        const size_t common = std::min(monoA.size(), monoB.size());
+        monoA.resize(common);
+        monoB.resize(common);
+        const auto specA = abSpectrum(monoA);
+        const auto specB = abSpectrum(monoB);
+        if (specA.empty() || specB.empty()) {
+            printf("%-34s %-10s %8s  %s\n", base.c_str(), ext.c_str(), "-",
+                   note.empty() ? "no common baseline" : note.c_str());
+            continue;
+        }
+        const double cos = abCosine(specA, specB);
+        if (cos < worst) { worst = cos; worstFile = base; }
+        printf("%-34s %-10s %8.4f  %s\n", base.c_str(), ext.c_str(), cos,
+               note.c_str());
+    }
+    printf("%s\nworst: %.4f (%s)\n", std::string(78, '-').c_str(), worst,
+           worstFile.c_str());
+}
+
+// ---------------------------------------------------------------------------
+// Ayfly vs ZX AY: WHY do the low scorers score low?
+// ---------------------------------------------------------------------------
+// Hidden ('.' tag). Run with: cmtest "[.zxdiag]"
+//
+// A spectral cosine says two renderings differ but not how, and "differs" has
+// two very different causes here:
+//
+//   * TIMBRE -- same notes, different chip. Expected and unfixable: different
+//     volume curve, no Filter3, different resampling. Shows up as a poor
+//     spectral cosine but a near-perfect loudness envelope correlation, and
+//     usually a spectral centroid ratio away from 1.
+//   * MUSIC -- a wrong tempo, a channel that never sounds, a mis-parsed
+//     pattern. Shows up in the ENVELOPE: the two renderings stop agreeing
+//     about when notes happen, or about how many voices are sounding.
+//
+// So this prints, per fixture: the correlation of the two 100 Hz RMS envelopes
+// (arrangement/tempo agreement), the ratio of overall RMS (level), the ratio of
+// spectral centroids (brightness), and the best lag at which the envelopes line
+// up (a non-zero lag means one engine starts late, not that it is wrong).
+namespace {
+
+std::vector<double> abEnvelope(const std::vector<double>& mono, int hopSamples)
+{
+    std::vector<double> env;
+    for (size_t at = 0; at + hopSamples <= mono.size(); at += hopSamples) {
+        double sum = 0;
+        for (int i = 0; i < hopSamples; i++) {
+            sum += mono[at + i] * mono[at + i];
+        }
+        env.push_back(std::sqrt(sum / hopSamples));
+    }
+    return env;
+}
+
+double abCorr(const std::vector<double>& a, const std::vector<double>& b, int lag)
+{
+    const size_t n = std::min(a.size(), b.size()) - std::abs(lag);
+    if (n < 16) { return 0.0; }
+    const size_t ai = lag < 0 ? static_cast<size_t>(-lag) : 0;
+    const size_t bi = lag > 0 ? static_cast<size_t>(lag) : 0;
+    double ma = 0, mb = 0;
+    for (size_t i = 0; i < n; i++) { ma += a[ai + i]; mb += b[bi + i]; }
+    ma /= n; mb /= n;
+    double num = 0, da = 0, db = 0;
+    for (size_t i = 0; i < n; i++) {
+        const double x = a[ai + i] - ma, y = b[bi + i] - mb;
+        num += x * y; da += x * x; db += y * y;
+    }
+    return (da > 0 && db > 0) ? num / std::sqrt(da * db) : 0.0;
+}
+
+double abCentroid(const std::vector<double>& bands)
+{
+    // Band index centroid: bands are 1/6-octave, so this is a log-frequency
+    // brightness measure. Only ratios between the two engines are meaningful.
+    double num = 0, den = 0;
+    for (size_t i = 0; i < bands.size(); i++) {
+        num += static_cast<double>(i) * bands[i];
+        den += bands[i];
+    }
+    return den > 0 ? num / den : 0.0;
+}
+
+double abRms(const std::vector<double>& mono)
+{
+    double sum = 0;
+    for (double v : mono) { sum += v * v; }
+    return mono.empty() ? 0.0 : std::sqrt(sum / mono.size());
+}
+
+} // namespace
+
+TEST_CASE("A/B diagnostics: ZX AY vs Ayfly, why they differ", "[.zxdiag]")
+{
+    musix::AyflyPlugin ayfly;
+    musix::ZXAYPlugin zxay;
+    constexpr int kHop = kAbRate / 100; // 100 Hz envelope
+
+    printf("%-24s %6s %7s %7s %6s %6s %6s %6s  %s\n", "file", "cos", "envCorr",
+           "bestLag", "rms", "cent", "secA", "secB", "reading");
+    printf("%s\n", std::string(106, '-').c_str());
+
+    for (auto const& f : utils::File{"testmus/zx"}.listFiles()) {
+        if (f.isDir()) { continue; }
+        const auto base = utils::path_filename(f.getName());
+        if (base.empty() || base[0] == '.') { continue; }
+        if (!ayfly.canHandle(f.getName()) || !zxay.canHandle(f.getName())) {
+            continue;
+        }
+        std::vector<double> monoA, monoB;
+        try {
+            std::unique_ptr<musix::ChipPlayer> p{ayfly.fromFile(f.getName())};
+            if (p) { monoA = abRender(*p); }
+            std::unique_ptr<musix::ChipPlayer> q{zxay.fromFile(f.getName())};
+            if (q) { monoB = abRender(*q); }
+        } catch (std::exception&) { continue; }
+        if (monoA.size() < kAbRate || monoB.size() < kAbRate) { continue; }
+        // Same common-duration trim as the [.zxab] table -- see there.
+        const double secA = monoA.size() / double(kAbRate);
+        const double secB = monoB.size() / double(kAbRate);
+        const size_t common = std::min(monoA.size(), monoB.size());
+        monoA.resize(common);
+        monoB.resize(common);
+
+        const auto specA = abSpectrum(monoA), specB = abSpectrum(monoB);
+        const auto envA = abEnvelope(monoA, kHop), envB = abEnvelope(monoB, kHop);
+        int bestLag = 0;
+        double bestCorr = -2.0;
+        for (int lag = -100; lag <= 100; lag++) { // +/- 1 second
+            const double c = abCorr(envA, envB, lag);
+            if (c > bestCorr) { bestCorr = c; bestLag = lag; }
+        }
+        const double cos = abCosine(specA, specB);
+        const double rmsRatio = abRms(monoA) > 0 ? abRms(monoB) / abRms(monoA) : 0;
+        const double cA = abCentroid(specA), cB = abCentroid(specB);
+        const double centRatio = cA > 0 ? cB / cA : 0;
+
+        const char* reading =
+            bestCorr >= 0.90 ? "timbre only"
+            : bestCorr >= 0.70 ? "mostly timbre"
+            : bestCorr >= 0.40 ? "SUSPECT: arrangement drifts"
+                               : "SUSPECT: different music";
+        printf("%-24s %6.3f %7.3f %7d %6.2f %6.2f %6.1f %6.1f  %s\n",
+               base.substr(0, 24).c_str(), cos, bestCorr, bestLag, rmsRatio,
+               centRatio, secA, secB, reading);
+    }
+}

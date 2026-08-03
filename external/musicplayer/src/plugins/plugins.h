@@ -16,6 +16,7 @@
 #include "uadeplugin/UADEPlugin.h"
 #include "rsnplugin/RSNPlugin.h"
 #include "ayflyplugin/AyflyPlugin.h"
+#include "zxayplugin/ZXAYPlugin.h"
 #include "ffmpegplugin/FFMPEGPlugin.h"
 #include "hivelyplugin/HivelyPlugin.h"
 #include "mdxplugin/MDXPlugin.h"

@@ -11,7 +11,11 @@ extern "C" {
     // SPU, so plus build only.
     void aoplugin_register();
 #endif
-    void ayflyplugin_register();   // ZX Spectrum / CPC (AY-3-8910)
+#ifndef CM_NO_AYFLY
+    // ZX Spectrum AY trackers -- GPL-2 (Ayfly + z80ex), plus build only.
+    void ayflyplugin_register();
+#endif
+    void zxayplugin_register();    // the same formats, no copyleft; both builds
     void gmeplugin_register();     // Game Music Emu (NES, SNES, etc.)
     void libvgmplugin_register();  // OPL2/OPL3 VGM/VGZ (AdLib/SB) via libvgm
     void gsfplugin_register();     // Gameboy Advance
@@ -92,7 +96,15 @@ void register_plugins() {
 #ifndef CM_NO_AO
     aoplugin_register();
 #endif
+#ifndef CM_NO_AYFLY
     ayflyplugin_register();
+#endif
+    // AFTER ayflyplugin deliberately. Both claim the same extensions at equal
+    // priority, and ties break on registration order, so the plus build keeps
+    // routing every ZX AY song to Ayfly and stays bit-for-bit unchanged. In the
+    // mas build ayflyplugin does not exist and this is the only claimant.
+    // See [[plugin-order-stable-sort]] and CM_HAVE_AYFLY in CMakeLists.txt.
+    zxayplugin_register();
     // Before gmeplugin so OPL VGMs are claimed here first; the two canHandle
     // gates are disjoint (GME declines OPL) so order is belt-and-braces.
     libvgmplugin_register();
