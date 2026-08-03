@@ -1,87 +1,309 @@
-- Add tracker-style scrolling note pattern where possible by format
+Big tasks:
 
-------------------------
+Finish suggestions from the plugins chat
+
+plugin		GPL LOC	GPL files	songs	what fixing it means
+
+IN PROGRESS:
+gsfplugin	21,293	20		1,246	delete + swap — permissive engine exists
+
+TO DO:
+ayflyplugin	9,676	46		67,293	clean-room, 16 formats
+mdxplugin	~3,900 	1 header	6,913	clean-room sequencer
+maxtraxplugin	1,812	4		93	clean-room Paula + driver
+famitrackerplug	21,082 (external)	1,638	clean-room driver
+zxtuneplugin	451 .cpp (external)	381	not viable alone
+
+- - -
 
 - clean room partial dmf -- PROMPT ready for Monday
 
-------------------------
+----------------------------
+BUGS:
 
-- remain:
+- many songs are shown in MAS which should not be, at the formats tail formats with less than 5 songs almost none of them play and most of them should not be shown at all. i think this is some bug in pruning for MAS -- investigate. example: ymst format has 1 song -- should not be shown at all, .tw format shows 1 unplayable song, .tme also 1 unplayable etc... i think there is some bug making this songs surface in MAS (they all do play in PLUS and are a part of a wider corpus for example .tme has 16 songs, ymst has 1379, tw has 46...)
 
-gsfplugin	playgsf/VBA/ (GBA.cpp, Sound.cpp, Globals.cpp)	GPL-2-or-later — VisualBoyAdvance headers, confirmed
+- we now ship extensions we handle in plist and those need to be split into MAS and PLUS versions since MAS cannot handle all the extensions PLUS can. also we handle 1900+ extensions, that seems excessive, are we sure on this? apple mac app store review process might flag it. in the cmtest we test 350 or so unique ones, where is the rest coming from? i think we should reduce the extension list to the ones we actually tested in cmtest working just in case. -- what do you think? investigate and report before any work.
 
-usfplugin	lazyusf2/ (r4300, rsp_lle, rdp, memory…)	GPL-2-or-later — Mupen64Plus headers, 127 GPL files
+--------------------
+Credits / Licenses overhaul:
 
-zxtuneplugin	external/zxtune	Fork's LICENSE.md says LGPL-3, upstream (vitamin-caig) is GPL. Also pulls 3rdparty/z80ex, which contains FUSE code "released under GNU GPL v2". Either reading is App-Store-fatal for a static link.
+1. Credits.rtf is now unified. Since it gets copied into both versions i think we need to fork it CreditsAndLicenses.rtf and CreditsAndLicensesPlus.rtf and change its content accordingly and make sure only the correct one is copied (and then used inside the .app package) in its respective package by package_app.sh. CreditsAndLicensesPlus should be just the addendum/diff to the CreditsAndLicenses.rtf (which should be treated as the main licenses file since it will be checked by mac app store), do not repeat redundant stuff (since almost all of it is shared/same. And do not mention "PLUS" version in the MAS file, that could be a yellow flag.
 
-famitrackerplugin	external/famitracker-cx	GPL-2 — 56 GPL files in famitracker-core/; PROVENANCE.md already says "mixed GPL v2 / New BSD"
+2. right now we have LEGAL, README.md (the bottom part), and Credits.rtf all mentioning and attributing licenses used and they need to be in sync with the code and vendored libraries for both MAS and PLUS cases. we need to have a single source of truth for those so i propose getting rid of LEGAL and the README.md (the bottom part) and moving/combining all that into CreditsAndLicences.rtf (and the PLUS addendum for it) 
 
-ayflyplugin (Deryabin Andrew + z80ex/FUSE)	GPL-2	67,293
-ayflyplugin alone is ~6× the five plugins you asked about combined (.pt3 25,576 · .pt2 17,507 · .stc 9,972 · .asc 4,748 …). If ZX AY has to be solved anyway for ayfly, ZXTune's 479 rows fold into that same effort rather than being gated separately — which would change the ZXTune call above. 
+3. LEGAL should be just one line saying "see CreditsAndLicenses files"
+4. The segment with licensing in README.md should also just link to the CreditsAndLicenses files" 
 
-mdxplugin (mdxmini)	GPL-2	6,913
-
-ndsplugin (vio2sf/DeSmuME)	GPL-2	2,040
-
-aoplugin (aosdk eng_psf/peops SPU)	GPL-2	153
-
-maxtraxplugin (ScummVM paula/maxtrax)	GPL-2+	82
-
-------------------------
-- - - - 
-
-if doing work: if we do this, do it only in the MAS and leave PLUS unchanged so i can A/B compare and decide if we unify or is stays split. when i say a/b i mean ChipMachine (MAS) and ChipMachinePlus (PLUS) apps -- i will compare by running them both and listening. before i listen you do the best effort to make sure they are similar enough by rendering and comparing with your methods (cosine similarity like what we did for vice replacement, etc.) before i listen with my ears by running both apps. in case of any changes update accordingly the LEGAL, the main README.md and Credits.rtf
-
+4. what do you think? investigate and report before any work
 -------------------
+
+Features:
+
+- Add tracker-style scrolling note pattern where possible by format
+
+- enhance operations on lists, need playlist tab filter with drill that shows the members with artwork on the side like when they play when you scroll up down in the drilled list
+------------------------
 
 - closing the mas TFMX gap is a real open question, just not one this code answered — it would need a permissively-licensed TFMX replayer (the usual candidate being a clean reimplementation rather than a tfmxplay derivative). Say the word and I'll scope that; I haven't counted how many tunes are currently hidden in mas, since there's no song DB in the tree to query.
 
-- confirm LEGAL, README.md, and Credits.rtf are correct and in sync with the code and vendored libraries for both MAS and PLUS cases. HOWEVER SEE MY OBSERVATION: Credits.rtf is now unified. Since it gets copied into both versions i think we need to fork it CreditsMAS.rtf and CreditsPlus.rtf and change its content accordingly and make sure the correct one is copied (and then renamed inside the .app package because it must be called Credits.rtf) in the appropriate package by package_app.sh.
+------------------
+
+Audit Feedback 1:
+
+- Since the two apps are now called ChipMachine and ChipMachinePlus, we need to make the bundle identifier match the product name in ChipMachine.app and ChipMachinePlus.app bundles: package_app.sh needs to use these respectively (instead of org.mihailod.chipmachineas which does now):
+org.mihailod.chipmachine
+org.mihailod.chipmachineplus
+
+- i don't see LSApplicationCategoryType in .app bundle plist
+For Developer ID distribution this is optional.
+For the Mac App Store it would be required.
+figure out what it is and add one -- ask me questions if needed
+
+- need the privacy nose in plist per recommendation:
+create data/misc/PrivacyInfo.xcprivacy
+and copy it when packaging via package_app.sh into:
+ChipMachine.app/Contents/Resources/PrivacyInfo.xcprivacy
+with content (or recommend better based on what you know about the app):
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+"https://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>NSPrivacyCollectedDataTypes</key>
+    <array/>
+
+    <key>NSPrivacyAccessedAPITypes</key>
+    <array>
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array>
+                <string>C617.1</string>
+            </array>
+        </dict>
+    </array>
+</dict>
+</plist>
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Audit feedback 2:
+
+Here is the breakdown of your audit output. There are several critical blockers that will cause immediate rejection upon ingestion into App Store Connect, alongside a few structural flags you need to handle.
+
+---
+
+## Critical Blockers (Will Cause Immediate Rejection)
+
+### 1. Hardcoded Deprecated `@rpath` Dependency Linking
+
+In the `otool -L` output, your main executable links directly to bare dynamic libraries:
+
+```text
+@rpath/libavcodec.62.dylib
+@rpath/libavformat.62.dylib
+@rpath/libavutil.60.dylib
+...
+
+```
+
+Apple requires `@rpath` to map cleanly inside `@executable_path/../Frameworks/`. If the `@rpath` search path is not explicitly set in the main binary's load commands, App Store validation will fail.
+
+### 2. Embedded Dynamic Libraries Signatures & Framework Structure
+
+Look at your `find` output:
+`ChipMachine.app/Contents/Frameworks/sunvox.dylib`
+`ChipMachine.app/Contents/Frameworks/libcrypto.3.dylib`
+`ChipMachine.app/Contents/Frameworks/libssl.3.dylib`
+...
+
+* **Unused/Exposed Crypto Libraries:** `libcrypto.3.dylib` and `libssl.3.dylib` are present in `Frameworks/`. If you are not linking them directly or via `libcurl`, remove them. If you do use OpenSSL, Apple strictly checks export compliance regulations during App Store ingestion.
+* **Codesign Verification:** Every single `.dylib` inside `Contents/Frameworks/` must be individually signed with your production Developer ID / App Store distribution certificate and possess matching team identifiers. Since the root app is currently ad-hoc signed (`Signature=adhoc`), all nested `.dylib`s will also fail signature validation until signed individually.
+
+### 3. Missing `ITSAppUsesNonExemptEncryption` Key
+
+Because you have OpenSSL (`libcrypto`/`libssl`) and `libcurl` in your tree, Apple's automated intake will flag missing export compliance metadata.
+
+If your app only uses standard HTTPS/TLS (via `libcurl` or `NSURLConnection`), you must explicitly declare this in `Info.plist`:
+
+```xml
+<key>ITSAppUsesNonExemptEncryption</key>
+<false/>
+
+```
+
+Without this key, you will be blocked from submitting builds to TestFlight or Review until you manually complete export compliance questionnaires for every build.
+
+### 4. Direct Linking to Legacy OpenGL Framework
+
+Your binary links directly to `/System/Library/Frameworks/OpenGL.framework`.
+While macOS still ships OpenGL, Apple deprecated OpenGL in 10.14. App Store ingestion permits legacy OpenGL apps, but reviewer scrutiny on GUI rendering drops and crash logs under Sandboxing is severe. Ensure your render loop handles headless/sandboxed contexts cleanly.
+
+---
+
+## Entitlements & Sandboxing Verification
+
+Your sandboxing entitlements look decent for basic audio playback:
+
+* `com.apple.security.app-sandbox = true`
+* `com.apple.security.files.bookmarks.app-scoped = true`
+* `com.apple.security.files.user-selected.read-only = true`
+* `com.apple.security.network.client = true`
+
+**Warning on Sandboxing vs. File Access:**
+Since `user-selected.read-only` is active, if `ChipMachine` attempts to open local `.mod` or `.sid` files via a custom file browser UI or internal path scanning (rather than an `NSOpenPanel` drag-and-drop / file picker invocation), access will be denied at runtime silently by kernel sandbox checks.
+
+---
+
+This is a remarkably clean baseline. Your `@rpath` setup (`@executable_path/../Frameworks`) is properly mapped, all nested dylibs are validated without broken linkage paths, and there are no forbidden executable binaries sitting in `Contents/Resources/`.
+
+However, looking at the exact cross-section of your two test outputs, there are **4 mandatory App Store rejection traps** and **1 runtime crash hazard** you must fix before submitting.
+
+---
+
+## 1. App Store Mandatory Rejection Factors
+
+### Key Blocker 1: Missing Hardened Runtime (`runtime` flag)
+
+Your `codesign` output shows:
+
+```text
+CodeDirectory v=20400 size=38353 flags=0x2(adhoc)
+
+```
+
+For Mac App Store submissions, Apple strictly requires the **Hardened Runtime** flag (`0x10000(runtime)` or `flags=0x10000(runtime)`).
+Without `--options runtime` passed during codesign, `altool` / App Store Connect will instantly reject the package during ingestion.
+
+### Key Blocker 2: Orphaned Dynamic Libraries (`libcrypto.3.dylib`, `libssl.3.dylib`, `libpng16.16.dylib`)
+
+* **OpenSSL (`libcrypto`/`libssl`):** Your main binary links to `/usr/lib/libcurl.4.dylib`, but `libcrypto.3.dylib` and `libssl.3.dylib` are physically present in `Contents/Frameworks/`. If your executable doesn't explicitly link them (or if `libcurl` isn't compiled to link them via `@rpath`), Apple's automated scanner will flag them. If they are unused, **delete them**. If they *are* used, you MUST add `<key>ITSAppUsesNonExemptEncryption</key>` to your `Info.plist`.
+* **PNG (`libpng16.16.dylib`):** `libpng16` is sitting in `Frameworks/`, but it does not appear in `otool -L` for `chipmachine`. Unlinked dylibs bundled inside an app package trigger static analysis warnings during ingest.
+
+### Key Blocker 3: Missing Export Compliance Key in `Info.plist`
+
+Even if you remove OpenSSL, your app links `/usr/lib/libcurl.4.dylib`. You need to explicitly set encryption compliance in `Info.plist` to prevent TestFlight / Store ingestion holds:
+
+```xml
+<key>ITSAppUsesNonExemptEncryption</key>
+<false/>
+
+```
+
+### Key Blocker 4: Document Type Extension Fallback (`LSItemContentTypes`)
+
+In your `Info.plist`, Document Type #1 uses `CFBundleTypeExtensions` instead of conforming to Uniform Type Identifiers (`LSItemContentTypes`):
+
+```text
+"CFBundleTypeExtensions" => [ "208", "2dx", ... ]
+
+```
+
+Since macOS Catalina (and strictly enforced in macOS 11+ App Store guidelines), file association declarations relying solely on `CFBundleTypeExtensions` without corresponding `UTImportedTypeDeclarations` or `UTExportedTypeDeclarations` are deprecated and trigger submission warnings or rejection for custom/legacy file extensions.
+
+---
+
+## 2. The Runtime Sandbox Hazard
+
+You have `com.apple.security.files.user-selected.read-only = true` enabled.
+
+Because `ChipMachine` is an audio/tracker player:
+
+* If the user selects a directory or playlist file via `NSOpenPanel`, macOS issues a security bookmark grant for that exact path/folder.
+* **The Catch:** If a tracker module (e.g., `.mod`, `.xm`, `.it`, or Amiga disk images) tries to load external sub-instruments, samples, or related bank files from parent/sibling folders *outside* the explicitly opened file path without Security-Scoped Bookmarks, the sandbox kernel will block `fopen()` / `read()` calls with `EACCES` (Permission Denied).
+
+---
+
+The output from this round gives us the exact technical map of what will trigger rejection in Apple’s automated ingestion system.
+
+Here are the concrete findings, ranked from **Instant Rejection** down to **Runtime Rejections**.
+
+---
+
+## 1. INSTANT REJECTION: Dynamic Library Linking & Cross-Dependencies
+
+Look closely at your `otool -L` output for internal Frameworks:
+
+```text
+@loader_path/libssl.3.dylib
+@loader_path/libcrypto.3.dylib
+...
+@loader_path/libpng16.16.dylib
+
+```
+
+### What is broken:
+
+1. **`libssl.3.dylib` and `libcrypto.3.dylib`:** They are actively linked by other dynamic libraries in your bundle (e.g., `libcurl` or your FFmpeg libraries) via `@loader_path`. Because OpenSSL is physically linked and loaded, **Apple’s static analyzer will flag your submission for missing export compliance paperwork**.
+2. **`libpng16.16.dylib`:** It is linked via `@loader_path` inside `libcrypto.3.dylib`.
+
+### The Fix:
+
+You MUST add the explicit encryption declaration to your `Info.plist` to prevent your app from being placed on hold upon submission:
+
+```xml
+<key>ITSAppUsesNonExemptEncryption</key>
+<false/>
+
+```
+
+---
+
+## 2. INSTANT REJECTION: Document Types vs. UTI Mismatch
+
+Your exported UTI (`org.mihailod.chipmachine.chiptune`) in `UTExportedTypeDeclarations` explicitly declares hundreds of raw extensions (`208`, `2dx`, `mod`, `xm`, `sid`, `s3m`, etc.).
+
+**However, look back at your `Info.plist` document types:**
+
+* Document Type #1 maps `org.mihailod.chipmachine.chiptune`.
+* Document Type #2 maps raw extensions (`CFBundleTypeExtensions`) directly without UTI references.
+
+### What is broken:
+
+Mac App Store validation enforces **strict UTI mapping**. Standard raw `CFBundleTypeExtensions` in `CFBundleDocumentTypes` without a mapped `LSItemContentTypes` are flagged as deprecated and rejected during App Store Connect ingestion.
+
+### The Fix:
+
+Delete Document Type #2 (`CFBundleTypeExtensions`) completely from your `Info.plist`. Since all extensions are already mapped inside your `UTExportedTypeDeclarations` under `org.mihailod.chipmachine.chiptune`, Document Type #1 covers every single one of those tracker extensions legally.
+
+---
+
+## 3. INSTANT REJECTION: Code Signing & Hardened Runtime
+
+Because your build currently has `Signature=adhoc` and `CodeDirectory v=20400 flags=0x2(adhoc)`:
+
+When you eventually sign with your Apple Developer account ($99 keys), your `codesign` command MUST include `--options runtime`.
+
+If you code sign without the Hardened Runtime bit set (`0x10000(runtime)`), App Store Connect will reject the `.pkg`/`.app` upload instantly.
+
+---
+
+## 4. RUNTIME REJECTION: Network Access vs. Local File Access
+
+You have `com.apple.security.network.client = true` enabled in your entitlements, which is correct for online streaming/radio features.
+
+However, because `com.apple.security.files.user-selected.read-only = true` is active:
+
+* If ChipMachine uses internal direct C/C++ file paths (like `fopen("/Users/...")`) without going through an `NSOpenPanel` or `NSOpen Save Panel` interaction, macOS Sandbox will crash or return `EACCES` when attempting to load local music files or samples.
+
+---
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+- - - - - - - - -
+
+
 
 -CONFIRM NO GPL CODE OR REFERENCES ARE ANYWHERE in the MAS version -- look at the ChipMachine.app built and packaged by me for the mac app store submission
 
 
 ---------------------------------------------
-
-- agy found more issues, look into them:
-
-  ──────
-  #### 2. Legal & Open-Source License Conflicts (App Store Review Guideline 5.2)
-
-  • Statically Linked GPL Code (Apple EULA Incompatibility):
-      • Inspection of  ChipMachine.app/Contents/MacOS/chipmachine  shows that several GPL-licensed plugins are compiled directly into the executable (e.g.  SC68Plugin  [GPL-3.0],  ZXTunePlugin  [GPL-3.0],                  
-      FamiTrackerPlugin  [GPL-2.0], ASAP ,  Ayfly ,  MaxTrax ,  Vic-Tracker ).
-      • App Store Requirement: Distributing GPL-licensed software on the Mac App Store creates a legal conflict with Apple’s App Store EULA DRM terms. GPL components must be stripped/disabled from MAS builds.
-  • Creative Commons NonCommercial (CC BY-NC-SA 4.0) License:
-      • As noted in Credits.rtf, Ixalance ( webixs ) is licensed under CC BY-NC-SA 4.0 (NonCommercial).
-      • App Store Requirement: Mac App Store distribution is legally treated as commercial distribution under Apple's Developer Terms (even for $0 free apps). Distributing NonCommercial (NC) code violates its license.
-
-any GPL player we remove we should make an honest attempt to replace with non-GPL alternative or make our own if specs are known 
-
-LATEST info:
-
-  ### ⚠️ Remaining Issues (Actionable Without $99)
-
-  1. GPL-Licensed Plugins Still Compiled Into the MAS Binary
-
-  The  chipmachine  executable in the MAS build still contains symbols for GPL-licensed plugins:
-  •  SC68Plugin  (GPL-3.0)
-  •  ZXTunePlugin  (GPL-3.0)
-  •  FamiTrackerPlugin  (GPL-2.0)
-  │ Risk: Apple's App Store EULA DRM terms conflict with GPL license requirements. Apple App Review may reject the app on legal grounds (Guideline 5.2), or the GPL authors could issue a takedown.
-  ││ Fix: Your CMake  CM_VARIANT=mas  build should disable these plugins at compile time ( -DCM_HAVE_SC68=OFF -DCM_HAVE_ZXTUNE=OFF  etc.) so their code is not linked into the MAS binary. This is a build-system change, not a packaging change.
-
-  2.  sc68/Replay/  Contains Commercial Game Audio Data
-  Files like  alteredbeast.bin ,  lastninja3.bin ,  cabal.bin ,  shadowdancer.bin  are Atari ST replay routines extracted from commercial games. While these are replayer binaries (not the songs themselves), Apple reviewers may flag them as third-party copyrighted material.
-  │ Risk: Low-to-medium. These are format replayers, not music content, but the filenames are conspicuous.
-  ││ Fix: Consider whether these can be documented as open-source format replayers (they ship with sc68 under GPL) or whether they need to be fetched at runtime instead.
-
--------------------------------
-
-Check if this is a rejection reason:
-- MAS: replace ALL logos/brands with generic txt/pics. Brand Logos: Keep official hardware logos (Nintendo, Sega, Commodore, Sony) out of your UI and App Store screenshots. Use text tags (e.g., ⁠C64⁠, ⁠NES⁠, ⁠ZX⁠). Maybe append generics and just disable/unbundle the branded from mas -- have parallel screenshots folders: branded and generic, screenshots-b, screenshots-g
-- ? Both: append flags of countries to the rotation
-- ? Both: append the chip which is playing
 
 - recheck everything (both signing and MAS) and do everything that needs to be done before the $99 payment
 

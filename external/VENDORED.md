@@ -33,3 +33,15 @@ shared/infra deps (`zxtune`, `apone`, `sol2`, `lua`, `musicplayer`) stay at the
 | `vgmstream` | `musicplayer/src/plugins/vgmstreamplugin/vgmstream` | https://github.com/vgmstream/vgmstream | master | `7f1ceb3058f581ed42d265c8980e44a0a281b4f6` |
 | `atariaudio` | `musicplayer/src/plugins/sndhplugin/atariaudio` | https://github.com/arnaud-carre/sndh-player | main | `19c814b1401fdd1c3dbfc0aef9279ec53698c795` |
 | `stsound` | `musicplayer/src/plugins/stsoundplugin/StSoundLibrary` | https://github.com/arnaud-carre/StSound | main | `d1876bc137ab4a3852fc72076a0cdbff704a43be` |
+| `mgba` | `musicplayer/src/plugins/gsfplugin/mgba` | https://github.com/mgba-emu/mgba | master | `669817d03e4858e65d0b992bcd96d3009236cc1e` |
+
+`mgba` is the one PRUNED import: only `include/`, `src/{arm,core,feature,gb,gba,
+util}`, `src/platform/posix`, `src/third-party/inih` and the top-level
+`LICENSE`/`README.md`/`CHANGES`. The Qt/SDL/libretro frontends, the non-POSIX
+platform ports, `cinema/` (36 MB of test video) and `src/third-party/zlib`
+(24 MB, only wanted for minizip, which is disabled) are not imported. To
+re-sync, re-clone at/after the recorded commit and copy those paths only; then
+re-derive the source list in `gsfplugin/CMakeLists.txt` from a
+`CMAKE_EXPORT_COMPILE_COMMANDS` configure, as documented there.
+`gsfplugin/mgba-version.c` is ours, standing in for the `version.c` upstream
+generates from git — bump the commit string in it to match this row.

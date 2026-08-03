@@ -327,21 +327,6 @@ Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         and its only user platform/vic20.cpp. DIV_SYSTEM_VIC20 is a Furnace
         .fur-only target and DMFPlugin claims only .dmf, so it could never run.
 
-Component: GSF (Game Boy Advance -- .gsf / .minigsf)
-Author: GSF playback via a vendored VisualBoyAdvance (VBA) Game Boy Advance
-        CPU/audio core at musicplayer/src/plugins/gsfplugin/playgsf/VBA, with the
-        playgsf driver (gsf.cpp) and libresample. Bundles zlib.
-License: GNU General Public License v2.0 or later (VisualBoyAdvance; see the
-        per-file GPL headers under gsfplugin/playgsf/VBA).
-Notice: Currently STILL LINKED into the mas variant (unconditional plugin list),
-        an outstanding GPL blocker covering 1,246 songs.
-        Unlike the other console formats this one has a known, permissive
-        replacement rather than a clean-room: mGBA (MPL-2.0, actively
-        maintained). That substitution is already proven in the wild --
-        foobar2000's foo_input_gsf / "Highly Advanced" uses mGBA as its GSF
-        core, and kode54 maintains a GSF-modified mGBA. Swapping it would keep
-        all 1,246 songs in both variants instead of gating them.
-
 Component: USF (Nintendo 64 -- .usf / .miniusf)
 Author: USF playback via lazyusf2 by Christopher Snowhill (kode54), a Nintendo 64
         audio core built on Mupen64Plus-rsp-hle and Mupen64 v0.5 sources, vendored
@@ -372,6 +357,37 @@ Notice: The .gbr (Game Boy rip) loader built on top of GME rewrites the GBR
 Component: AdPlug (PC AdLib/OPL)
 Author: Developed by Simon Peter and the AdPlug Team
 License: GNU Lesser General Public License v2.1 or later
+
+Component: mGBA (Game Boy Advance -- .gsf / .minigsf)
+Author: mGBA by Jeffrey Pfau ("endrift") and contributors
+        (https://github.com/mgba-emu/mgba). A GBA-only, headless slice --
+        the ARM7TDMI core, the GBA hardware, and the audio/util layers, with no
+        debugger, scripting, zip or frontend code -- is vendored at
+        musicplayer/src/plugins/gsfplugin/mgba and driven directly to render
+        Game Boy Advance rips. The GSF container itself (PSF header, zlib
+        program section, "_lib" chain, cartridge vs. multiboot placement) is
+        chipmachine's own GsfRom.cpp, written from Neill Corlett's published
+        psf_format.txt; see gsfplugin/README.md.
+License: Mozilla Public License 2.0 (see gsfplugin/mgba/LICENSE)
+Notice: LINKED INTO BOTH VARIANTS, including the Mac App Store build, and the
+        1,246 ".gsf"/".minigsf" rows stay in both indexes.
+
+        This REPLACED a vendored VisualBoyAdvance (GPL-2.0-or-later) on
+        2026-08-01, which had been the last unconditional GPL dependency in the
+        App Store binary. It is the one console format on this list that got a
+        permissive drop-in rather than a gate or a clean-room -- mGBA is the
+        core foobar2000's foo_input_gsf / "Highly Advanced" uses, and kode54
+        keeps a GSF-modified mGBA -- so unlike 2SF/USF/SSF no songs were lost.
+        The whole VBA tree (playgsf/, ~10.5k LOC) and its libresample copy are
+        deleted, not merely unreferenced.
+
+        MPL-2.0 is per-file weak copyleft: it covers only mGBA's own files, is
+        explicitly compatible with distributing a "Larger Work" under other
+        terms (MPL 2.0 §3.3), and imposes no relink obligation, so static
+        linking into a signed, sandboxed App Store binary is fine. The
+        corresponding source for the vendored slice is the tree under
+        gsfplugin/mgba/ itself; the upstream commit is recorded in
+        external/VENDORED.md.
 
 Component: FFmpeg (libavcodec / libavformat / libavutil / libswresample)
 Author: The FFmpeg project (https://ffmpeg.org). A DECODE-ONLY, LGPL build is

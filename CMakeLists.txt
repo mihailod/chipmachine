@@ -787,17 +787,19 @@ endif()
 # --- EXTERNAL STUFF COMPILER WARNING SUPPRESSION ---
 if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     set(SILENT_TARGETS
-        vicepluginbridge ndsplugin gsfplugin usfplugin adplugin csidplugin
+        vicepluginbridge ndsplugin usfplugin adplugin csidplugin
         aoplugin v2plugin unrar coreutils lua crypto tedplugin gmeplugin
         openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin ffmpegplugin rsnplugin fmpplugin
     )
     if(CM_HAVE_UADE)
         list(APPEND SILENT_TARGETS uadeplugin)
     endif()
-    # sndhplugin silences the vendored AtariAudio sources per-file in its own
-    # CMakeLists (our SNDHPlugin.cpp deliberately stays strict), so it is not
-    # listed here. sc68plugin is, and the loop below already skips targets that
-    # do not exist -- which is what a mas tree has.
+    # sndhplugin and gsfplugin silence their vendored engines (AtariAudio, mGBA)
+    # per-file in their own CMakeLists, so that our SNDHPlugin.cpp /
+    # GSFPlugin.cpp stay strict; neither is listed here. sc68plugin is, and the
+    # loop below already skips targets that do not exist -- which is what a mas
+    # tree has. Note also that -w here would not reach gsfplugin anyway: it is
+    # an `ld -r` wrapper around gsfplugin_objs, which compiles nothing itself.
     foreach(target_item ${SILENT_TARGETS})
         if(TARGET ${target_item})
             target_compile_options(${target_item} PRIVATE -w)
