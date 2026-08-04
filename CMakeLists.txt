@@ -1,14 +1,40 @@
 cmake_minimum_required(VERSION 3.15)
 
-# Auto-detect macOS deployment target from host OS (can be overridden with -D)
+# macOS deployment target. PINNED, deliberately -- do not go back to deriving it
+# from the build host's `sw_vers`.
+#
+# This used to auto-detect from the host, which made the shipped minimum OS an
+# accident of whichever Mac ran the build (a machine on 26.5 produced a binary
+# no 26.4 user could launch), and made builds unreproducible across machines.
+#
+# 26.0 rather than the host's version because every dylib in
+# Contents/Frameworks (libav*, libssl/libcrypto, libglfw, libGLEW, libfreetype,
+# libpng, libmpg123) is itself built for 26.0. Check with:
+#     otool -l Contents/Frameworks/libavformat.62.dylib | grep -A4 LC_BUILD_VERSION
+#
+# To be precise about what this number does and does not guarantee: minos is a
+# COMPILE-time contract, not a hard runtime gate. dyld is largely permissive, so
+# a build targeting 26.0 can in fact launch on much older macOS if no code path
+# happens to touch a newer API -- this has been observed working on an old Mac
+# with LSMinimumSystemVersion hand-edited to 11.0.
+#
+# That is luck, not support. Targeting 26.0 tells the compiler every API up to
+# 26.0 exists, so it emits NO availability diagnostics and strong-links freely;
+# the first call into a post-11.0 API -- from this tree, from any of the ~20
+# vendored deps, or from a future ffmpeg/glfw bump -- becomes a launch-time
+# "Symbol not found" crash on those systems with no build-time warning at all.
+# We also have no older hardware to test on.
+#
+# So 26.0 is an HONEST floor, not a physical one. Genuinely supporting older
+# macOS means lowering this AND rebuilding the vendored dylibs at the same
+# target, so the compiler enforces availability -- then testing on that OS.
+# Lowering this line alone only converts a tested claim into an untested one.
+#
+# package_app.sh reads LSMinimumSystemVersion back off the built binary, so the
+# Info.plist follows this value automatically -- there is no second place to
+# update. Override for experiments with -DCMAKE_OSX_DEPLOYMENT_TARGET=...
 if(APPLE AND NOT CMAKE_OSX_DEPLOYMENT_TARGET)
-    execute_process(COMMAND sw_vers -productVersion
-        OUTPUT_VARIABLE _MACOS_VERSION
-        OUTPUT_STRIP_TRAILING_WHITESPACE)
-    string(REGEX MATCH "^[0-9]+\\.[0-9]+" _MACOS_MAJOR_MINOR "${_MACOS_VERSION}")
-    if(_MACOS_MAJOR_MINOR)
-        set(CMAKE_OSX_DEPLOYMENT_TARGET "${_MACOS_MAJOR_MINOR}" CACHE STRING "macOS Deployment Target")
-    endif()
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "26.0" CACHE STRING "macOS Deployment Target")
 endif()
 
 project(chipmachine)

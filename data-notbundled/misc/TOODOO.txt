@@ -25,35 +25,6 @@ Features:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Audit feedback 2:
-
-Here is the breakdown of your audit output. There are several critical blockers that will cause immediate rejection upon ingestion into App Store Connect, alongside a few structural flags you need to handle.
-
----
-
-## Critical Blockers (Will Cause Immediate Rejection)
-### 3. Missing `ITSAppUsesNonExemptEncryption` Key
-
-Because you have OpenSSL (`libcrypto`/`libssl`) and `libcurl` in your tree, Apple's automated intake will flag missing export compliance metadata.
-
-If your app only uses standard HTTPS/TLS (via `libcurl` or `NSURLConnection`), you must explicitly declare this in `Info.plist`:
-
-```xml
-<key>ITSAppUsesNonExemptEncryption</key>
-<false/>
-
-```
-
-Without this key, you will be blocked from submitting builds to TestFlight or Review until you manually complete export compliance questionnaires for every build.
-
-## Critical Blockers (Will Cause Immediate Rejection)
-### 4. Direct Linking to Legacy OpenGL Framework
-
-Your binary links directly to `/System/Library/Frameworks/OpenGL.framework`.
-While macOS still ships OpenGL, Apple deprecated OpenGL in 10.14. App Store ingestion permits legacy OpenGL apps, but reviewer scrutiny on GUI rendering drops and crash logs under Sandboxing is severe. Ensure your render loop handles headless/sandboxed contexts cleanly.
-
----
-
 ## Entitlements & Sandboxing Verification
 
 Your sandboxing entitlements look decent for basic audio playback:

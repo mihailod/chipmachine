@@ -43,6 +43,15 @@ BUNDLE_ID="org.mihailod.chipmachineplus"
 DISPLAY_NAME="ChipMachineAS"
 UMBRELLA_UTI=""
 APP_CATEGORY=""      # LSApplicationCategoryType; emitted only when non-empty (MAS)
+# LSMinimumSystemVersion. This MUST match the deployment target actually baked
+# into the built binary (LC_BUILD_VERSION / minos), so package_app.sh reads it
+# off the binary and passes --min-os. It used to be hardcoded to "11.0" while
+# CMakeLists.txt derived the real target from the BUILD HOST's macOS version --
+# so the plist advertised 11.0 while the binary required 26.5, letting users on
+# older systems install an app that could not launch. Never hardcode this again.
+# The fallback below is only for callers that pass no --min-os (dev_update_
+# doctypes.sh, which rewrites doc types in an ALREADY-BUILT bundle).
+MIN_OS="11.0"
 APP_ICON="AppIcon.icns"
 DOC_ICON="DocIcon.icns"
 DEVELOPMENT_REGION="en"
@@ -58,6 +67,7 @@ while [ $# -gt 0 ]; do
         --display-name)  DISPLAY_NAME="$2"; shift 2 ;;
         --umbrella-uti)  UMBRELLA_UTI="$2"; shift 2 ;;
         --app-category)  APP_CATEGORY="$2"; shift 2 ;;
+        --min-os)        MIN_OS="$2"; shift 2 ;;
         --copyright)     COPYRIGHT="$2"; shift 2 ;;
         --dev-region)    DEVELOPMENT_REGION="$2"; shift 2 ;;
         *) echo "gen_info_plist.sh: unknown arg '$1'" >&2; exit 2 ;;
@@ -150,7 +160,7 @@ cat <<PLIST_HEAD
     <key>CFBundleVersion</key>
     <string>${VERSION}</string>
     <key>LSMinimumSystemVersion</key>
-    <string>11.0</string>
+    <string>${MIN_OS}</string>
     <key>NSHighResolutionCapable</key>
     <true/>
     <key>NSHumanReadableCopyright</key>

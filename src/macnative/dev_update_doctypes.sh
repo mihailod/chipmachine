@@ -99,8 +99,27 @@ VERSION_STR=$(sed -n 's/#define VERSION_STR "\(.*\)"/\1/p' "$VERSION_H" | tr -d 
 RES_DIR="${APP}/Contents/Resources"
 PLIST="${APP}/Contents/Info.plist"
 
+# gen_info_plist.sh regenerates the WHOLE plist, so every field that is not
+# passed through falls back to the script's defaults. Carry the existing bundle
+# identity over from the plist we are about to replace, and read the deployment
+# target off the bundle's own binary, so a doc-type refresh cannot silently
+# rewrite the app's identity or its minimum-OS. Without this a refresh of a mas
+# bundle would stamp it with the plus bundle id, drop LSApplicationCategoryType,
+# and claim LSMinimumSystemVersion 11.0 for a binary that needs far newer.
+plist_get() { /usr/libexec/PlistBuddy -c "Print :$1" "$PLIST" 2>/dev/null || true; }
+DEV_ARGS=(--version "${VERSION_STR}")
+for pair in "CFBundleIdentifier --bundle-id" "CFBundleName --display-name" \
+            "LSApplicationCategoryType --app-category"; do
+    set -- $pair
+    val=$(plist_get "$1")
+    [ -n "$val" ] && DEV_ARGS+=("$2" "$val")
+done
+DEV_MIN_OS=$(otool -l "${APP}/Contents/MacOS/chipmachine" 2>/dev/null \
+    | awk '/LC_BUILD_VERSION/{f=1} f&&/minos/{print $2; exit}')
+[ -n "$DEV_MIN_OS" ] && DEV_ARGS+=(--min-os "$DEV_MIN_OS")
+
 echo "-> Regenerating Info.plist for ${APP##*/} (v${VERSION_STR})..."
-"${SCRIPT_DIR}/gen_info_plist.sh" --version "${VERSION_STR}" > "${PLIST}.tmp"
+"${SCRIPT_DIR}/gen_info_plist.sh" "${DEV_ARGS[@]}" > "${PLIST}.tmp"
 if ! plutil -lint "${PLIST}.tmp" >/dev/null; then
     echo "error: generated plist failed plutil -lint" >&2
     rm -f "${PLIST}.tmp"

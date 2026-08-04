@@ -372,11 +372,36 @@ else
 fi
 
 echo "-> Creating Info.plist (with macOS file associations)..."
+
+# LSMinimumSystemVersion is READ OFF THE BINARY, never hardcoded. CMakeLists.txt
+# derives CMAKE_OSX_DEPLOYMENT_TARGET from the build host's `sw_vers` unless it
+# is overridden, so the real floor changes with whatever Mac did the build. The
+# plist used to claim a fixed "11.0" regardless, which let users on older
+# systems install a bundle whose binary refused to launch, and gave App Store
+# ingestion two disagreeing minimum-OS values.
+#
+# LC_BUILD_VERSION/minos is the modern load command; LC_VERSION_MIN_MACOSX is
+# the pre-10.14 form, kept as a fallback so this keeps working if the target is
+# ever lowered far enough for the linker to emit the old command instead.
+MIN_OS=$(otool -l "${BUILD_DIR}/chipmachine" 2>/dev/null \
+    | awk '/LC_BUILD_VERSION/{f=1} f&&/minos/{print $2; exit}')
+if [ -z "${MIN_OS}" ]; then
+    MIN_OS=$(otool -l "${BUILD_DIR}/chipmachine" 2>/dev/null \
+        | awk '/LC_VERSION_MIN_MACOSX/{f=1} f&&/version/{print $2; exit}')
+fi
+if [ -z "${MIN_OS}" ]; then
+    echo "ERROR: could not read the deployment target from ${BUILD_DIR}/chipmachine."
+    echo "       Refusing to guess -- a wrong LSMinimumSystemVersion ships an app"
+    echo "       that installs on systems it cannot run on."
+    exit 1
+fi
+echo "   LSMinimumSystemVersion: ${MIN_OS} (from the built binary)"
+
 # Build args as an array (zsh does not word-split unquoted ${:+...}); append the
 # app category only when the variant defines one in variants.conf. Both variants
 # set it today (mas requires it, plus carries it for Finder/Launchpad grouping),
 # but the guard stays so clearing *_APP_CATEGORY omits the key cleanly.
-GEN_ARGS=(--version "${VERSION_STR}" --bundle-id "${BUNDLE_ID}" --display-name "${DISPLAY_NAME}" --exts "${EXTS_FILE}")
+GEN_ARGS=(--version "${VERSION_STR}" --bundle-id "${BUNDLE_ID}" --display-name "${DISPLAY_NAME}" --exts "${EXTS_FILE}" --min-os "${MIN_OS}")
 [ -n "${APP_CATEGORY}" ] && GEN_ARGS+=(--app-category "${APP_CATEGORY}")
 "${GEN_PLIST}" "${GEN_ARGS[@]}" > "${TARGET_DIR}/Contents/Info.plist"
 if ! plutil -lint "${TARGET_DIR}/Contents/Info.plist" >/dev/null; then
