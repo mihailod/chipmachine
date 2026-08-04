@@ -228,6 +228,42 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_POKEYNOISE ON)
 endif()
+# mdxplugin drives mdxmini (BouKiCHi's mdxplay derivative, Daisuke Nagano), which
+# is GPL-2 at the package level -- COPYING is the GPL-2 text and mdxmini.txt says
+# in as many words that linking to it, statically or dynamically, imposes GPL2.
+# Only src/mdxmini.c carries the boilerplate header, so a per-file audit
+# understates this badly; there is no header-stripping argument available.
+# The plugin must therefore be ABSENT from the mas binary. Follows
+# CM_HAVE_UADE's pattern exactly.
+#
+# This one is a clean, total loss of 6,913 rows, with no partial rescue: it is
+# the sole claimer of ".mdx" (rsnplugin lists the extension only to hand archive
+# members off to whoever claims them), every row ends in ".mdx" with format
+# "MDX", and there are no MULTI: groups and no ".pdx" rows. So the plain
+# extension test in songHasNoPlayer() drops all of them and NO formatPlayer
+# entry is needed -- unlike mus/dmf/sc68, which needed format-name keys.
+#
+# There is no replacement to swap in, and this was checked properly rather than
+# assumed. Every other MDX player is either GPL (mdxtools/mdx2vgm are GPL-3;
+# webMDX is mdxmini compiled to JS) or worse: GAMDX/MXDRVg looks like the answer
+# because GORRY licenses his own code Apache-2.0, but its actual driver engine is
+# a DISASSEMBLY of the proprietary 1988 mxdrv.x, under a licence its own
+# distributor says he cannot locate. That is a worse App Store risk than GPL, not
+# a better one. Running the real mxdrv.x under the MIT Musashi already vendored
+# for sndhplugin hits the same wall -- it means shipping the proprietary driver.
+#
+# A clean-room OPM-only engine was prototyped (cmdx, see
+# plugins/mdxcrplugin/cmdx/, not wired into either build) on the measured fact
+# that 69.3% of the corpus never references a .pdx sample bank and so can never
+# start a PCM8 voice. It reached only ~3.7% median register-stream fidelity
+# against the reference and is SHELVED. If it is ever finished, this gate
+# becomes conditional on the MDX/MDX-PCM split rather than being removed.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_MDX OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_MDX)
+else()
+    set(CM_HAVE_MDX ON)
+endif()
 # PlayStation audio is the seventh case, and the only one that started as a
 # COPYRIGHT problem rather than a licence one.
 #
@@ -421,7 +457,7 @@ endif()
 # chip; the replacements were A/B'd by ear against the originals and shipped to
 # both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
 # index. See the plugin's README.md.
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT}, AYFLY=${CM_HAVE_AYFLY}, ZXTUNE=${CM_HAVE_ZXTUNE})")
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, MDX=${CM_HAVE_MDX}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT}, AYFLY=${CM_HAVE_AYFLY}, ZXTUNE=${CM_HAVE_ZXTUNE})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -555,7 +591,7 @@ add_subdirectory(${AP1_ROOT}/mods ap1mods)
 set(MUSICPLAYER_PLUGINS
     openmptplugin gmeplugin sndhplugin
     stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
-    zxayplugin mdxplugin s98plugin gsfplugin tedplugin v2plugin
+    zxayplugin s98plugin gsfplugin tedplugin v2plugin
     ffmpegplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
     kssplugin quartetplugin wsrplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
@@ -594,6 +630,11 @@ endif()
 # .sap stays with gmeplugin in both variants.
 if(CM_HAVE_POKEYNOISE)
     list(APPEND MUSICPLAYER_PLUGINS pokeynoiseplugin)
+endif()
+# GPL-2 (mdxmini) -- plus build only, see CM_HAVE_MDX above. Costs all 6,913
+# ".mdx" rows; nothing else claims the extension.
+if(CM_HAVE_MDX)
+    list(APPEND MUSICPLAYER_PLUGINS mdxplugin)
 endif()
 # MAME 1997-2008 (non-commercial) + GPL-2 peops -- plus build only, see
 # CM_HAVE_AO above. This is what plays PSF/PSF2 now that the Sony BIOS is gone.
@@ -682,6 +723,10 @@ endif()
 # Same for pokeynoiseplugin_register() -- see CM_HAVE_POKEYNOISE above.
 if(NOT CM_HAVE_POKEYNOISE)
     target_compile_definitions(plugin_register PRIVATE CM_NO_POKEYNOISE)
+endif()
+# Same for mdxplugin_register() -- see CM_HAVE_MDX above.
+if(NOT CM_HAVE_MDX)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_MDX)
 endif()
 # Same for aoplugin_register() -- see CM_HAVE_AO above.
 if(NOT CM_HAVE_AO)

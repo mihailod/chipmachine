@@ -22,6 +22,10 @@
 
 #include "class.h"
 
+#ifdef MDX_TRACE
+#include "mdxtrace_hook.h"
+#endif
+
 #ifdef USE_NLG
 
 #include "nlg.h"
@@ -812,6 +816,10 @@ reg_write( int adr, int val, songdata *data )
 
   if ( adr > 0x0ff ) { return; }
   self->ym2151_register_map[adr] = val;
+
+#ifdef MDX_TRACE
+  mdxtrace_opm(adr, val);
+#endif
 
 #ifdef USE_NLG
   if (self->nlg_logging)

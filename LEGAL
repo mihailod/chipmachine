@@ -212,9 +212,51 @@ Notice: MOVED here from the permissive section on 2026-08-01 -- the entry always
         playing in mas through GME. Only "pn.tetris", whose composer is unknown,
         is a possible real loss.
 
-Component: MDX / S98 (PC-98 & Sharp X68000 Engine variants)
-Author: Adapted from OpenMSX/GME variants
+Component: MDX (Sharp X68000 -- MXDRV .mdx)
+Author: mdxmini by BouKiCHi, a library-ised derivative of Daisuke Nagano's
+        mdxplay, itself written from KOUNO Takeshi's mdxform.doc format
+        description. Original X68000 MXDRV by milk., K.MAEKAWA and Missy.M.
+        The bundled YM2151 emulator is Jarek Burczynski's, via MAME.
+        Vendored under musicplayer/src/plugins/mdxplugin/mdxmini.
 License: GNU General Public License v2.0 or later
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_MDX=OFF, so neither mdxplugin nor its vendored mdxmini sources
+        are compiled). All 6,913 ".mdx" songs are dropped from that variant's
+        index to match -- mdxplugin is the sole claimer of the extension, so
+        there is no partial rescue and no fallback decoder.
+        The licence is stated at the PACKAGE level, not per file: only
+        src/mdxmini.c carries the GPL boilerplate, but COPYING is the GPL-2 text
+        and mdxmini.txt states that linking to the library, statically or
+        dynamically, imposes GPL-2. A per-file audit understates this.
+        No permissive replacement exists, and this was checked rather than
+        assumed. mdxtools and mdx2vgm are GPL-3; webMDX is mdxmini compiled to
+        JavaScript. GAMDX/MXDRVg appears to be an exception because its author
+        licenses HIS OWN code Apache-2.0, but the MXDRV driver engine inside it
+        is a disassembly of the proprietary 1988 mxdrv.x binary under a licence
+        its own distributor states he has been unable to locate -- a worse
+        position than GPL, not a better one. Running the original mxdrv.x under
+        the MIT Musashi core already vendored for sndhplugin fails for the same
+        reason: it requires shipping the proprietary driver.
+        A clean-room OPM-only sequencer was prototyped (musicplayer/src/plugins/
+        mdxcrplugin/cmdx, not built by either variant) and shelved at roughly
+        3.7% median register-stream fidelity against the reference.
+
+Component: S98 (PC-98 / FM sound log)
+Author: s98plugin, vendored under musicplayer/src/plugins/s98plugin. The FM
+        synthesis core is cisc's fmgen (m_s98/device/fmgen).
+License: UNRESOLVED -- see notice.
+Notice: This component was previously documented here jointly with MDX as
+        "Adapted from OpenMSX/GME variants", GPL-2.0-or-later. That attribution
+        was incorrect on both counts: neither component derives from OpenMSX or
+        GME, and the two have entirely separate provenance. The MDX half is
+        described above.
+        s98plugin ships NO licence text anywhere in the vendored tree -- no
+        LICENSE, no COPYING, and no source file that states terms -- so the
+        GPL-2 label it inherited from the joint entry is unsupported rather than
+        verified. It is currently built into BOTH variants and covers 520 songs.
+        cisc's fmgen is distributed under its own terms, which are not the GPL.
+        This needs its own audit before the next App Store submission; it is
+        recorded here as an open item rather than left silently mislabelled.
 
 Component: Ayfly (ZX Spectrum AY-3-8910)
 Author: Developed by Sergey Vladimirov (Deryabin Andrew). The embedded Z80 CPU

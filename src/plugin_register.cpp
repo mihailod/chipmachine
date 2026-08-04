@@ -23,7 +23,9 @@ extern "C" {
 #ifndef CM_NO_HT
     void htplugin_register();      // Hudson Soft (TurboGrafx)
 #endif
-    void mdxplugin_register();     // Sharp X68000
+#ifndef CM_NO_MDX
+    void mdxplugin_register();     // Sharp X68000 -- GPL-2 mdxmini, plus only
+#endif
     void mp3plugin_register();     // MPEG Audio
 #ifndef CM_NO_NDS
     void ndsplugin_register();     // Nintendo DS
@@ -112,7 +114,12 @@ void register_plugins() {
     // GPL-3 (Highly Theoretical SegaCore) -- plus build only.
     htplugin_register();
 #endif
+#ifndef CM_NO_MDX
+    // GPL-2 (mdxmini / BouKiCHi's mdxplay derivative) -- excluded from the Mac
+    // App Store build (CM_VARIANT=mas), where the mdxplugin target is not built
+    // at all. Sole claimer of ".mdx", so all 6,913 rows drop from the mas index.
     mdxplugin_register();
+#endif
     mp3plugin_register();
 #ifndef CM_NO_NDS
     // GPL-2 (DeSmuME-derived vio2sf) -- plus build only.

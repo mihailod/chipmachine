@@ -30,6 +30,10 @@
 #include "mdxmini.h"
 #include "class.h"
 
+#ifdef MDX_TRACE
+#include "mdxtrace_hook.h"
+#endif
+
 #ifdef USE_NLG
 
 #include "nlg.h"
@@ -219,6 +223,9 @@ void mdx_disp_info(t_mdxmini *data)
 
 int mdx_next_frame ( t_mdxmini *data )
 {
+#ifdef MDX_TRACE
+	mdxtrace_frame(data->mdx ? data->mdx->tempo : -1);
+#endif
 	if (data->self)
 	{
 		return mdx_parse_mml_ym2151_async(data->songdata);

@@ -20,6 +20,10 @@
 #include "mdxmini.h"
 #include "class.h"
 
+#ifdef MDX_TRACE
+#include "mdxtrace_hook.h"
+#endif
+
 
 /* ------------------------------------------------------------------ */
 /* local instances */
@@ -328,6 +332,10 @@ int pcm8_set_pcm_freq( int ch, int hz, songdata *data ) {
     self->work[ch].adpcm = FLAG_TRUE;
   }
 
+#ifdef MDX_TRACE
+  mdxtrace_pcm_freq(ch, self->work[ch].freq);
+#endif
+
   return 0;
 }
 
@@ -343,7 +351,12 @@ int pcm8_note_on( int ch, int *ptr, int size, int* orig_ptr, int orig_size, song
   if ( self->pcm8_opened == FLAG_FALSE ) return 1;
   if ( ch >= PCM8_MAX_NOTE || ch < 0 ) return 1;
 
-  if ( self->work[ch].top_ptr!=NULL ) return 0; /* tie */
+  if ( self->work[ch].top_ptr!=NULL ) {
+#ifdef MDX_TRACE
+    mdxtrace_pcm_tie(ch);
+#endif
+    return 0; /* tie */
+  }
 
   if (self->work[ch].adpcm) {
     self->work[ch].ptr = ptr;
@@ -356,6 +369,13 @@ int pcm8_note_on( int ch, int *ptr, int size, int* orig_ptr, int orig_size, song
   }
 
   self->work[ch].isloop = FLAG_FALSE;
+
+#ifdef MDX_TRACE
+  mdxtrace_pcm_on(ch,
+                  self->work[ch].top_ptr,
+                  (int)((self->work[ch].end_ptr - self->work[ch].top_ptr)
+                        * (int)sizeof(int)));
+#endif
 
   return 0;
 }
@@ -373,6 +393,10 @@ int pcm8_note_off( int ch, songdata *data ) {
 
   self->work[ch].isloop = FLAG_FALSE;
 
+#ifdef MDX_TRACE
+  mdxtrace_pcm_off(ch);
+#endif
+
   return 0;
 }
 
@@ -387,6 +411,10 @@ int pcm8_set_volume( int ch, int val, songdata *data ) {
 
   self->work[ch].volume = val;
 
+#ifdef MDX_TRACE
+  mdxtrace_pcm_vol(ch, val);
+#endif
+
   return 0;
 }
 
@@ -399,6 +427,10 @@ int pcm8_set_master_volume( int val, songdata *data ) {
 
   self->master_volume = val;
 
+#ifdef MDX_TRACE
+  mdxtrace_pcm_mvol(val);
+#endif
+
   return 0;
 }
 
@@ -408,6 +440,10 @@ int pcm8_set_pan( int val, songdata *data ) {
 
   if ( self->pcm8_opened == FLAG_FALSE ) { return 1; }
   self->master_pan = val;
+
+#ifdef MDX_TRACE
+  mdxtrace_pcm_pan(val);
+#endif
 
   return 0;
 }

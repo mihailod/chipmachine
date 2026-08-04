@@ -1321,7 +1321,7 @@ bool songIsSilentSid(SongInfo const& song, std::set<std::string> const& silent)
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
     defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE) || \
     defined(CM_NO_AO) || defined(CM_NO_NDS) || defined(CM_NO_USF) ||    \
-    defined(CM_NO_HT) || defined(CM_NO_ZXTUNE)
+    defined(CM_NO_HT) || defined(CM_NO_ZXTUNE) || defined(CM_NO_MDX)
 static bool isContainerExt(std::string e); // defined near resolveExtension()
 
 // Every extension SOME registered plugin claims by name -- i.e. everything this
@@ -1633,7 +1633,7 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
     defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE) || \
     defined(CM_NO_AO) || defined(CM_NO_NDS) || defined(CM_NO_USF) ||    \
-    defined(CM_NO_HT) || defined(CM_NO_ZXTUNE)
+    defined(CM_NO_HT) || defined(CM_NO_ZXTUNE) || defined(CM_NO_MDX)
                 // Same rule, build-scoped: without uadeplugin this variant has
                 // no decoder for the Amiga custom-replayer formats, without
                 // vicepluginbridge none for Compute! Sidplayer, without

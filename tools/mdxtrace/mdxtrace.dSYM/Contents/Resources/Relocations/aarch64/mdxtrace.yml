@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/mihailod/Documents/chipmachine-as/chipmachine/tools/mdxtrace/mdxtrace'
+relocations:     []
+...

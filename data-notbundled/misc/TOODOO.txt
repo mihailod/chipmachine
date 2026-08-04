@@ -5,13 +5,10 @@ Finish suggestions from the plugins chat
 plugin		GPL LOC	GPL files	songs	what fixing it means
 
 TODO:
-mdxplugin	~3,900 	1 header	6,913	clean-room sequencer
 maxtraxplugin	1,812	4		93	clean-room Paula + driver
 famitrackerplug	21,082 (external)	1,638	clean-room driver
 
-- - -
-
-- clean room partial dmf -- PROMPT ready for Monday
+clean room partial dmf (2071 songs) -- PROMPT ready
 
 ----------------------------
 BUGS:
@@ -21,17 +18,6 @@ BUGS:
 - we now ship extensions we handle in plist and those need to be split into MAS and PLUS versions since MAS cannot handle all the extensions PLUS can. also we handle 1900+ extensions, that seems excessive, are we sure on this? apple mac app store review process might flag it. in the cmtest we test 350 or so unique ones, where is the rest coming from? i think we should reduce the extension list to the ones we actually tested in cmtest working just in case. -- what do you think? investigate and report before any work.
 
 --------------------
-Credits / Licenses overhaul:
-
-1. Credits.rtf is now unified. Since it gets copied into both versions i think we need to fork it CreditsAndLicenses.rtf and CreditsAndLicensesPlus.rtf and change its content accordingly and make sure only the correct one is copied (and then used inside the .app package) in its respective package by package_app.sh. CreditsAndLicensesPlus should be just the addendum/diff to the CreditsAndLicenses.rtf (which should be treated as the main licenses file since it will be checked by mac app store), do not repeat redundant stuff (since almost all of it is shared/same. And do not mention "PLUS" version in the MAS file, that could be a yellow flag.
-
-2. right now we have LEGAL, README.md (the bottom part), and Credits.rtf all mentioning and attributing licenses used and they need to be in sync with the code and vendored libraries for both MAS and PLUS cases. we need to have a single source of truth for those so i propose getting rid of LEGAL and the README.md (the bottom part) and moving/combining all that into CreditsAndLicences.rtf (and the PLUS addendum for it) 
-
-3. LEGAL should be just one line saying "see CreditsAndLicenses files"
-4. The segment with licensing in README.md should also just link to the CreditsAndLicenses files" 
-
-4. what do you think? investigate and report before any work
--------------------
 
 Features:
 
@@ -39,10 +25,6 @@ Features:
 
 - enhance operations on lists, need playlist tab filter with drill that shows the members with artwork on the side like when they play when you scroll up down in the drilled list
 ------------------------
-
-- closing the mas TFMX gap is a real open question, just not one this code answered — it would need a permissively-licensed TFMX replayer (the usual candidate being a clean reimplementation rather than a tfmxplay derivative). Say the word and I'll scope that; I haven't counted how many tunes are currently hidden in mas, since there's no song DB in the tree to query.
-
-------------------
 
 Audit Feedback 1:
 
@@ -289,14 +271,7 @@ However, because `com.apple.security.files.user-selected.read-only = true` is ac
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-
-- - - - - - - - -
-
-
-
 -CONFIRM NO GPL CODE OR REFERENCES ARE ANYWHERE in the MAS version -- look at the ChipMachine.app built and packaged by me for the mac app store submission
-
 
 ---------------------------------------------
 
