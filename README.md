@@ -112,15 +112,12 @@ The two are **independent build trees** (each has its own objects and binary) sh
 
 * the **YouTube** plugin and its ~32k catalog rows (yt-dlp is a spawned executable — App Store §2.5.2),
 * the bundled **yt-dlp** helper,
-* **UADE** and **VICE** (both GPL-2.0, incompatible with the App Store terms), together with their `data/uade` and `data/c64` payloads — the latter also carries Commodore's copyrighted KERNAL/BASIC/chargen ROM images (Compute!'s Sidplayer `.mus`/`.str` survives regardless, via the permissive **ChipMachine Clean Room SIDPlayer** plugin),
-* **GoatTracker v2** (GPL-2.0 twice over: its own playroutine on top of reSID),
-* **Furnace** / the DefleMask `.dmf` plugin (GPL-2.0-or-later throughout — engine, platform wrappers and a dozen chip cores), which is also the last thing pulling **reSIDfp** into the build,
-* **mdxmini**, the Sharp X68000 `.mdx` player (GPL-2.0 at the package level — only one source file carries the header, but `COPYING` is the GPL-2 text and `mdxmini.txt` states that linking to it, statically or dynamically, imposes GPL-2), and
+* **UADE**, **VICE**, **GoatTracker v2**, **Furnace** (the DefleMask `.dmf` plugin), **mdxmini** (the Sharp X68000 `.mdx` player), **SC68**, **ASAP**/PokeyNoise, **AOSDK**, **Highly Theoretical**, **vio2sf**, **USF**, **Ayfly** and **ZXTune**, together with the `data/uade`, `data/c64` and `data/sc68` payloads that go with them — dropping Furnace is also what clears **reSIDfp** from the build, and dropping VICE is what removes Commodore's copyrighted KERNAL/BASIC/chargen ROM images (Compute!'s Sidplayer `.mus`/`.str` survives regardless, via the **ChipMachine Clean Room SIDPlayer** plugin),
 * the **GitHub self-update** check (updates come through the App Store).
 
-Dropping those engines costs formats, so the catalog hides what the build cannot play (see [not_supported_extensions.txt](data/misc/not_supported_extensions.txt), `songHasNoPlayer()` and `songFormatHasNoPlayer()`): the Amiga custom-replayer formats UADE alone handled, the 104 GoatTracker `.sng` songs, the 2,071 DefleMask `.dmf` songs, and all 6,913 Sharp X68000 `.mdx` songs. The `.dmf` group is **0.28% of the catalog** and is meant to come back — see the Furnace entry under [Credits](#credits) for the clean-room plan. Where an extension covers several formats, only the affected one is hidden: the 723 X-Tracker `DDMF` `.dmf` songs and every non-GoatTracker `.sng` keep playing, because the gate keys on the *format name*, not the extension. `.mdx` is the opposite case and needs no format key — nothing else claims the extension, so the plain extension test drops all of it.
+Why each of those is excluded — the exact terms, what it costs, and whether a replacement exists — is documented per component in [`LEGAL-PLUS`](./LEGAL-PLUS). The build gates themselves are `CM_HAVE_*` in [CMakeLists.txt](CMakeLists.txt).
 
-`.mdx` is also the one gate with no partial rescue and no replacement in sight, which was established by checking rather than assuming. The other MDX players are GPL-3 (`mdxtools`, `mdx2vgm`) or are mdxmini in another wrapper (`webMDX`). GAMDX/MXDRVg looks like an exception because its author licenses *his own* code Apache-2.0, but the MXDRV engine inside it is a disassembly of the proprietary 1988 `mxdrv.x` under a licence its own distributor says he cannot find — worse than GPL, not better. A clean-room OPM-only sequencer was prototyped on the measured fact that 69.3% of the corpus never references a `.pdx` sample bank and so can never start an ADPCM voice; it reached ~3.7% median register-stream fidelity against the reference and is shelved, not abandoned.
+Dropping those engines costs formats, so the catalog hides what the build cannot play (see [not_supported_extensions.txt](data/misc/not_supported_extensions.txt), `songHasNoPlayer()` and `songFormatHasNoPlayer()`): the Amiga custom-replayer formats UADE alone handled, the 104 GoatTracker `.sng` songs, the 2,071 DefleMask `.dmf` songs, and all 6,913 Sharp X68000 `.mdx` songs. Where an extension covers several formats, only the affected one is hidden: the 723 X-Tracker `DDMF` `.dmf` songs and every non-GoatTracker `.sng` keep playing, because the gate keys on the *format name*, not the extension. `.mdx` is the opposite case and needs no format key — nothing else claims the extension, so the plain extension test drops all of it.
 
 The C64 formats are **almost** unaffected. The ~6.5k Compute!'s Sidplayer `.mus`/`.str` tunes play via the clean-room **ChipMachine Clean Room SIDPlayer** plugin, and ~59.9k of the ~62k `.sid` tunes via the permissively-licensed **cSID** engine. The exception is an RSID whose header play address is `$0000`: it installs its own IRQ/NMI handler and expects a real C64 (KERNAL banked in, CIA and raster running), which cSID does not emulate, so it renders as dead air. Those are enumerated **by measurement** in [csid_silent_sids.txt](data/misc/csid_silent_sids.txt) and dropped at index time in the MAS build only, so no unplayable row ever surfaces.
 
@@ -359,10 +356,10 @@ Support for Dreamcast and Sega Saturn music
 Extensions: `.ssf` `.dsf` `.minissf` `.minidsf`
 
 > **ChipMachinePlus only.** The engine is Neill Corlett's SegaCore as maintained
-> in kode54's *Highly Theoretical*, which is GPL-3, so it is not part of the App
-> Store build and those 273 songs are hidden there. A clean-room is conceivable
-> — the CPU halves are already available permissively — but SCSP/AICA is a
-> 32/64-channel Yamaha part with a real DSP, i.e. an emulator project.
+> in kode54's *Highly Theoretical*; it is not part of the App Store build and
+> those 273 songs are hidden there. A clean-room is conceivable — the CPU
+> halves are already available permissively — but SCSP/AICA is a 32/64-channel
+> Yamaha part with a real DSP, i.e. an emulator project. See [`LEGAL-PLUS`](./LEGAL-PLUS).
 
 ### Highly Experimental — removed
 
@@ -372,7 +369,7 @@ real Sony PlayStation 2 BIOS image, and the copy this project was shipping
 (`data/hebios.bin`, 512 KB of Sony Computer Entertainment firmware) was not ours
 to redistribute; it is gone from the tree and from both bundles. With no BIOS the
 engine decoded nothing, and it carried no licence of its own, so there was
-nothing worth keeping.
+nothing worth keeping. The full write-up is in [`LEGAL-PLUS`](./LEGAL-PLUS).
 
 **No songs were lost.** All four extensions moved to **AudioOverload** below,
 whose PS1/PS2 engines are HLE and need no BIOS. Checked over ~100 modland rips
@@ -414,8 +411,8 @@ Support for Atari 16 bit music in the `.sc68` container format
 
 Extensions: `.sc68` `.sndh` `.snd` `.4v`
 
-> **ChipMachinePlus only.** SC68 is GPL-3, so it is not part of the App Store
-> build; `.sc68` songs are hidden there. `.sndh` is unaffected — SNDH above plays
+> **ChipMachinePlus only.** SC68 is not part of the App Store build (see
+> [`LEGAL-PLUS`](./LEGAL-PLUS)); `.sc68` songs are hidden there. `.sndh` is unaffected — SNDH above plays
 > it in both builds, and takes priority here too, leaving SC68 as a fallback.
 
 ### USF
@@ -470,8 +467,8 @@ Extensions: `.mus` `.str`
 The same Compute!'s Sidplayer formats, played by a **clean-room** sequencer over
 the cSID chip emulation instead of VICE — which is what lets the Mac App Store
 build play these ~6.5k songs at all. Written from two freely-distributed format
-write-ups in the Compute's Gazette SID Collection; no GPL player source was
-consulted.
+write-ups in the Compute's Gazette SID Collection; no third-party player source
+was consulted.
 
 The two documents describe the *encoding* but not the *behaviour*, so thirteen
 rules were recovered by comparing our SID register writes against an emulator's,
@@ -514,7 +511,7 @@ ZX Spectrum AY-3-8912 tracker music — at 67,305 songs, the largest single form
 * **A sequencer written from the published format description**, where no redistributable ZX player exists: `.stc` (and the `.zxs` / `.st13` files that are the same format under another name), `.asc`, `.stp` / `.stp2`, `.sqt`, `.psm`, `.gtr`, and the `.fxm` / `.amad` bytecode.
 * **No player at all** for `.vtx` and `.psg`, which are not modules but recorded AY register streams — the file *is* the register writes. `.vtx` is LH5-packed, the same packing the `.ym` files elsewhere in this app use. `.st11` needs no player either, for a different reason: it is an *uncompiled* Sound Tracker module, so it is compiled into the ordinary `.stc` layout on load and handed to the Sound Tracker sequencer above — which is precisely what the tracker's own "ST COMPILE" did on the Spectrum.
 
-**Ayfly** (GPL-2) and **ZXTune** (GPL-3) both remain in the Plus build only, registered ahead of ZX AY, so that build routes every ZX AY song exactly where it always did. The App Store build ships without either.
+**Ayfly** and **ZXTune** both remain in the Plus build only (see [`LEGAL-PLUS`](./LEGAL-PLUS)), registered ahead of ZX AY, so that build routes every ZX AY song exactly where it always did. The App Store build ships without either.
 
 Four more formats were reclaimed from ZXTune the same way once this machine existed — **Pro Sound Maker** (`.psm`), **Fast Tracker** (`.ftc`), **Sound Tracker 1.1** uncompiled (`.st11`) and **Global Tracker** (`.gtr`), 378 songs — so they too play in both builds. That is every ZXTune format that is actually AY music.
 
@@ -527,7 +524,7 @@ Extensions: `.psg` `.asc` `.stc` `.psc` `.sqt` `.stp` `.stp2` `.pt1` `.pt2` `.pt
 
 ### ZXTune
 
-Additional ZX Spectrum formats. **Plus build only** (GPL-3) — the App Store build keeps `.ftc`, `.psm`, `.st11` and `.gtr` through the ZX Spectrum AY engine above, and loses only the two that are not AY music: `.tfe` (TFM Music Maker — TurboSound **FM**, a pair of YM2203s) and `.chi` (Chip Tracker — four channels of **digital samples**).
+Additional ZX Spectrum formats. **Plus build only** — the App Store build keeps `.ftc`, `.psm`, `.st11` and `.gtr` through the ZX Spectrum AY engine above, and loses only the two that are not AY music: `.tfe` (TFM Music Maker — TurboSound **FM**, a pair of YM2203s) and `.chi` (Chip Tracker — four channels of **digital samples**).
 
 Extensions: `.st11` `.gtr` `.chi` `.tfe` `.psm` `.ftc`
 
@@ -535,10 +532,10 @@ Extensions: `.st11` `.gtr` `.chi` `.tfe` `.psm` `.ftc`
 
 Support for the Sharp X68000 Music Macro Language
 
-**ChipMachinePlus only.** mdxmini is GPL-2 at the package level, so it is not
-part of the App Store build, and all 6,913 `.mdx` songs are hidden there — it is
-the sole claimer of the extension, so there is no fallback decoder. See the MDX
-entry under [Credits](#credits).
+**ChipMachinePlus only.** mdxmini is not part of the App Store build, and all
+6,913 `.mdx` songs are hidden there — it is the sole claimer of the extension,
+so there is no fallback decoder. See the MDX entry in [`LEGAL-PLUS`](./LEGAL-PLUS)
+for the terms and for why no permissive replacement exists.
 
 Extensions: `.mdx` (with optional `.pdx` sample banks)
 
@@ -602,8 +599,8 @@ Support for Atari XL/XE series POKEY chip PokeyNoise music
 
 Extensions: `.pn` (more often `pn.<song>`)
 
-> **ChipMachinePlus only.** ASAP is GPL-2, so it is not part of the App Store
-> build and those 17 songs are hidden there. Atari 8-bit POKEY music is otherwise
+> **ChipMachinePlus only.** ASAP is not part of the App Store build (see
+> [`LEGAL-PLUS`](./LEGAL-PLUS)) and those 17 songs are hidden there. Atari 8-bit POKEY music is otherwise
 > unaffected — the 6,617-song `.sap` ASMA corpus plays through GME in both
 > builds, and 16 of the 17 exist there under the same title and composer
 > (Ballblazer, Boulder Dash, International Karate, Draconus, Zybex …).
@@ -746,13 +743,12 @@ software, so no BIOS image is involved at any point.
 This is now the **only** PSF decoder in the tree — Highly Experimental was
 deleted along with the BIOS it needed.
 
-Not in the Mac App Store build. The PS1/PS2 path is MAME-licensed
-("Redistributions may not be sold, nor may they be used in a commercial product
-or activity") over GPL-2 PEOpS SPU cores, so 685 rows are dropped from that
-index — 668 Playstation plus the 17 `.spu`/`.miniqsf` that were AOSDK-only
+Not in the Mac App Store build (its emulator cores are neither permissively nor
+commercially licensed — see [`LEGAL-PLUS`](./LEGAL-PLUS)), so 685 rows are
+dropped from that index — 668 Playstation plus the 17 `.spu`/`.miniqsf` that were AOSDK-only
 anyway. Saturn `.ssf`/`.minissf` was initially unaffected — **High Technology**
 declares a higher priority and owned those — but that plugin has since been
-gated too (GPL-3), so Saturn is absent from the App Store build as well.
+gated too, so Saturn is absent from the App Store build as well.
 
 Extensions: `.ssf` `.minissf` `.qsf` `.miniqsf` `.spu` `.psf` `.minipsf` `.psf2` `.minipsf2`
 
@@ -766,9 +762,9 @@ now correctly returns silence.
 
 ### GSF
 
-Support for Gameboy Advance music, on the **mGBA** core (MPL-2.0). Replaced a
-vendored VisualBoyAdvance (GPL-2.0-or-later) in 2026; since mGBA is permissive
-the format keeps all its songs in the App Store build instead of being gated.
+Support for Gameboy Advance music, on the **mGBA** core. It replaced a vendored
+VisualBoyAdvance in 2026; because mGBA is permissively licensed the format keeps
+all its songs in the App Store build instead of being gated.
 
 The container loader is ours and spec-derived (`GsfRom.cpp`). One non-obvious
 thing it has to get right: mGBA's public `loadROM` picks between the cartridge
@@ -857,76 +853,22 @@ My work here is mostly based around:
 
 **I don't take or imply any credit for the original idea and implementation and actual players development (the hardest part IMO).**
 
-Here is the attribution for the individual emulators, audio players, plugins, and core sub-routines utilized across this project sofar:
-
-* **OpenMPT (Tracker Formats):** Developed by the OpenMPT Project Team (originally founded by Olivier Lapicque). Licensed under BSD-3-Clause.
-* **GME / Game Music Emulator (Console Formats):** Developed by Shay Green. Licensed under LGPL-2.1-or-later. The `.gbr` (Game Boy rip) loader added on top of GME maps the GBR header onto GME's Game Boy emulator; the GBR header format was referenced from **gbsplay** by Tobias Diedrich, Christian Garbs et al. (GPL-2.0-or-later, <https://github.com/mmitch/gbsplay>).
-* **cSID (C64/SID emulation):** Developed by **Mihaly Horvath (Hermit)**, <http://hermit.sidrip.com>, vendored from <https://github.com/mlund/csid>. Licensed under **WTFPL** — *"do what the fuck you want with this code, but please mention me as its original author."* A from-scratch 6581/8580 + 6510 + PSID player sharing no code with VICE, reSID or libsidplayfp, and needing no Commodore ROMs — which is what lets the Mac App Store build play SID at all. Plays every `.sid`/`.rsid` tune in both variants **except** an RSID whose header play address is `$0000`: that shape installs its own IRQ/NMI handler and needs a real C64, which cSID deliberately does not emulate. Measured across HVSC, 2,382 files are silent under it — Plus plays those through VICE, MAS drops them from the catalog (see [csid_silent_sids.txt](data/misc/csid_silent_sids.txt)).
-* **VICE (C64 Compute! Sidplayer):** Developed by the VICE Core Team. Licensed under GPL-2.0-or-later. In the Plus build it now serves only two things: `.mus`/`.str`, and the 2,382 self-IRQ RSIDs cSID cannot voice. Not included in the Mac App Store build.
-* **Compute!'s Sidplayer (`.mus`/`.str`):** the format itself is **Craig Chamberlin**'s, published by COMPUTE! Publications. Our player is original clean-room code, written from two freely-distributed format descriptions in the Compute's Gazette SID Collection by **Peter Weighill** (`MUS_format_A.txt`) and **Dick Thornton** (`MUS_format_B.txt`) — with thanks to both, and to the CGSC maintainers. Shown in the app as **ChipMachine Clean Room SIDPlayer**. No GPL player source was used, and no disassembly of the original 1980s routine was read; behaviour the documents leave unspecified was recovered by comparing SID register output alone.
-* **GoatTracker v2 (C64 `.sng`):** Developed by **Lasse Öörni (Cadaver)**; the vendored playback core (`gplay.c`, `gsid.cpp`, `gt2_load.c`) is driven directly with no editor/SDL layer. Licensed under GPL-2.0-or-later. Its SID emulation is **reSID** by **Dag Lem**, vendored verbatim, also GPL-2.0-or-later. Not included in the Mac App Store build, where the 104 GoatTracker-format `.sng` songs are dropped from the index to match (every other `.sng` format has its own player and is unaffected).
-* **UADE (Amiga Exotic formats):** Developed by Heikki Orsila and the UADE Team (eagleplayers/format DB vendored from UADE 3.05). Licensed under GPL-2.0-or-later. Not included in the Mac App Store build.
-* **StSound (Atari ST YM2149, `.ym`/`.mix`):** Developed by **Arnaud Carré (Leonard/Oxygene)**, vendored from <https://github.com/arnaud-carre/StSound>. Licensed under **BSD-2-Clause** (per-file source headers); the repository's `LICENSE` is **MIT** and its README additionally calls the library public domain — all permissive. Includes LZH depacking code by **Haruhiko Okumura** (1991), modified by **Kerwin F. Medina** (1996), since nearly every `.ym` on the web is LZH-packed. Re-vendored 2026-08-01: the previous snapshot predated Arnaud's 2005 relicensing and still carried LGPL-3 headers, which would have forced these 13,210 songs out of the Mac App Store build. Nothing is gated — they play in both builds.
-* **AtariAudio (Atari ST/STE `.sndh`):** Developed by **Arnaud Carré (Leonard/Oxygene)**, vendored from <https://github.com/arnaud-carre/sndh-player>. Licensed under **MIT**. A dependency-free ST audio machine — YM2149, MFP 68901 timers and STE DMA sound — bundling **Musashi** (68000 CPU core by **Karl Stenerud**, MIT) and the **ICE! 2.4 depacker** (universal C version placed in the **public domain** by **Hans Wessels**). This replaced GPL-3 SC68 as the `.sndh` decoder in *both* builds, which is what keeps 6,079 Atari ST songs in the Mac App Store build. Checked against libsc68 over a 127-file random sample of the SNDH archive: same load result and same subsong count on every file, and three STE DMA tunes that libsc68 cuts to silence after one block play properly here.
-* **SC68 (Atari ST `.sc68`):** Developed by Benjamin Gerard. Licensed under GPL-3.0-or-later. No longer the `.sndh` decoder (see AtariAudio above); it stays in the Plus build for the `.sc68` container and as a `.sndh` fallback. Not included in the Mac App Store build, where the 1,894 `.sc68` songs are dropped from the index to match — those files call out to the 95 prebuilt GPL-3 68k replay routines in `data/sc68/Replay`, for which there is no permissive equivalent. The 100 AdLib `.snd` songs are AdPlug's and are unaffected.
-* **AdPlug (PC AdLib/OPL):** Developed by Simon Peter and the AdPlug Team. Licensed under LGPL-2.1-or-later.
-* **AudioOverload Backend / AOSDK (Sega Saturn, Capcom QSound, Playstation 1/2):** Developed by **R. Belmont** and **Richard Bannister**. **Mixed licence, and not permissive:** the SDK wrappers are BSD-3-Clause, but the emulator cores are under the **MAME 1997-2008 licence** (Nicola Salmoria and the MAME team — *"Redistributions may not be sold, nor may they be used in a commercial product or activity"*) and the PS1/PS2 SPU cores are **PEOpS** by **Pete Bernert**, GPL-2. See `aosdk/license.txt`, which lists every file. Not included in the Mac App Store build; the 685 rows it owns there are dropped from the index to match. This project's earlier "Custom/Freeware permissive" description of AOSDK was wrong and is corrected here. One local patch: `eng_psf/peops/spu.c` sets `iVolume` to 128 instead of upstream's 255, which was measurably 2× hot and clipped.
-* **Highly Experimental / PSF1/2 — REMOVED:** Developed by **Neill Corlett**. **No licence was ever stated** — not upstream, not in the vendored tree, not per-file. This project previously described it as "zlib License"; that was wrong (the zlib evidence was `#include <zlib.h>`) and is corrected here. It also could not run without a **Sony PlayStation 2 BIOS image**, which this project was shipping in both bundles as `data/hebios.bin` and had no right to redistribute. Both the BIOS and the plugin have been deleted; PSF playback moved to AOSDK with no song loss.
-* **HivelyTracker (AHX/HVL):** Developed by IRIS (Peter "Yohng" V, Curt Cool). Licensed under BSD-3-Clause.
-* **MDX (Sharp X68000):** **mdxmini** by **BouKiCHi**, a library-ised derivative of **Daisuke Nagano's** *mdxplay*, itself written from **KOUNO Takeshi's** `mdxform.doc`; the original X68000 MXDRV is by **milk.**, **K.MAEKAWA** and **Missy.M**, and the bundled YM2151 emulator is **Jarek Burczynski's** via MAME. Licensed under GPL-2.0-or-later — stated at the package level rather than per file, so a per-file audit understates it. **Plus build only.** No permissive replacement exists: the alternatives are GPL-3 (`mdxtools`) or, in GAMDX/MXDRVg's case, an Apache-2.0 wrapper around a **disassembly of the proprietary 1988 `mxdrv.x`** whose licence its own distributor cannot locate. A clean-room OPM-only sequencer was prototyped and shelved at ~3.7% median register-stream fidelity. (This project previously credited MDX and S98 jointly as "adapted from OpenMSX/GME variants"; that was wrong on both counts and is corrected here.)
-* **S98 (PC-98 / FM sound log):** FM synthesis by **cisc's** *fmgen*. **Licence unresolved** — the vendored tree carries no licence text of any kind, so the GPL-2.0 label it inherited from the joint MDX/S98 entry above is unsupported rather than verified. Built into **both** variants, 520 songs; flagged in `LEGAL` as an open item pending its own audit.
-* **Ayfly (ZX Spectrum AY-3-8910):** Developed by Sergey Vladimirov, with a Z80 core (z80ex) by **Boo-boo** containing code from the **FUSE** project. Licensed under GPL-2.0-or-later. **Plus build only** — see the ZX Spectrum AY section above.
-* **ZX AY (ZX Spectrum AY-3-8912, both builds):** The ZX replay routines are **Sergey Bulba's** published players — the universal PT2/PT3 player *PTxPlay*, and his MONS4D disassemblies of the Pro Tracker 1.xx, Pro Sound Creator and Fast Tracker 1.07 players — used under his stated terms ("You can use and distribute sources freely, simply credit me somewhere in your projects"), which is also the footing the `.fxm`/`.amad` support has always been on. The Sound Tracker, Sound Tracker Pro, ASC Sound Master, SQ-Tracker, Pro Sound Maker, Global Tracker, Fuxoft AY Language and AY Amadeus sequencers — and the uncompiled-Sound-Tracker (`.st11`) compiler — are written here, following the format descriptions Bulba published (Sound Tracker's is **RAMSOFT's**, 1993, sent to him by **Roman Scherbakov**) and, where there was no description, his own **AY_Emul** implementation. The Sound Tracker Pro player listing was decompiled by **VfNG/NEW**; Global Tracker's is by **Doctor Max / Global Corporation**. The **Fuxoft AY Language** format is **Frantisek Fuka's** (Fuxoft), documented in his `fxmasm` project; the `.amad` tunes are by **Frantisek Fuka** and **Patrik Rak**. Full detail in `zxayplugin/players/PROVENANCE.md`.
-* **Ayumi (AY-3-8910 / YM2149 emulation):** Developed by **Peter Sovietov**. Licensed under MIT.
-* **ZXTune (ZX Spectrum — Chip Tracker, TFM Music Maker, and in the Plus build also Sound Tracker 1.1, Global Tracker, Pro Sound Maker, Fast Tracker):** Developed by Vitamin/CAIG; CMake fork by djdron. Licensed under GPL-3.0-or-later. **Plus build only** — see the ZX Spectrum AY section above.
-* **98fmplayer:** Developed by areis. Licensed under MIT.
-* **libkss (MSX KSS):** Developed by Mitsutaka Okazaki. Licensed under MIT.
-* **organya (Cave Story Organya format):** Developed by Studio Pixel (Daisuke Amaya). Portions adapted under MIT / Open Source.
-* **ProTrekkr / NoiseTrekker:** Developed by Franck Charlet (Hitchhikr), based on NoiseTrekker by Juan Antonio Argüelles Rius. Licensed under BSD-2-Clause.
-* **SunVox:** Developed by Alexander Zolotov (NightRadio). The SunVox library is free for commercial and non-commercial use.
-* **libpxtone (PixelTone audio):** Developed by Studio Pixel (Daisuke Amaya). Licensed under MIT.
-* **eupmini (PC-98 EUP audio):** Developed by various retro-computing contributors. Licensed under MIT.
-* **minimp3 (MP3 decoding):** Developed by Lieven van den Hauwe. Licensed under CC0-1.0 (Public Domain).
-* **Sol3 / Pybind11 / fmt (Core Infrastructure):** Developed by The Sol3/Pybind11/fmt Maintainers. Licensed under MIT.
-* **Freetype / Grappix (UI & Text):** Developed by The FreeType Project and Grappix contributors. Licensed under FTL / BSD-2-Clause.
-* **zingzong (Atari ST Quartet format):** Developed by Ben G. (benjihan). Licensed under MIT.
-* **audiodecoder.wsr (Bandai WonderSwan):** WonderSwan replayer by Mamiya (NEC V30MZ core derived from MAME/Oswan), as packaged in Kodi's `audiodecoder.wsr`. Licensed under GPL-2.0-or-later.
-* **vio2sf (Nintendo DS — `.2sf`/`.mini2sf`):** NDS emulation core derived from DeSmuME (the DeSmuME Team); maintained reentrant 2SF fork ("vio2sf") by Christopher Snowhill (kode54), as used by foobar2000 / Cog. Licensed under GPL-2.0-or-later. Not included in the Mac App Store build, where the 2,040 songs are dropped from the index to match — playing a 2SF needs both DS CPUs plus the SPU, and no permissive ARMv5TE core exists.
-* **ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise):** Developed by Piotr Fusik. Licensed under GPL-2.0-or-later. Not included in the Mac App Store build, where the 17 `.pn` songs are dropped from the index to match; `.sap` is GME's in both builds and is unaffected.
-* **Beepola (ZX Spectrum beeper):** The `.bbsong` format and the Beepola tool are by Chris Cowley. Engine players: **Phaser1** by Shiru (public domain, from 1tracker); **Music Box** reverse-engineered from WHAM! The Music Box (original Z80 code by Mark Alexander, 1985); **Music Studio** reverse-engineered from The Music Studio (original Z80 code by Saša Pušica, 1988); **SFX** (Special FX / Fuzz Click) reverse-engineered from the game Firefly (original Z80 code by Jonathan Smith / Special FX Software Ltd) — its player and compiled data format reproduced from Beepola. The in-repo Z80 assembler is ported from 1tracker's `z80ass` (Shiru). The Z80 CPU core is GME's (Shay Green, LGPL-2.1); the ZX Spectrum 48K ROM is redistributed under Amstrad's emulation permission.
-* **SoundSmith (Apple IIgs):** The original SoundSmith tracker is by Huibert Aalbers (1989). The Ensoniq 5503 "DOC" player is a faithful in-process port of the SoundSmith player by Sean Kasun (mrkite). Licensed under BSD-2-Clause.
-* **Archimedes Tracker (Acorn Archimedes):** The original 8-channel *!Tracker* is by Dan Wilson (1991). Playback uses the **libxmp** `arch_loader` by Claudio Matsuoka, Hipolito Carraro Jr and contributors. libxmp is licensed under MIT; the arch loader source file carries an LGPL-2.1-or-later header.
-* **Megatracker (Atari ST):** Megatracker and its `.mgt` format are by Cream (modland `Megatracker/`). Playback uses the **libxmp** `mgt_loader` by Claudio Matsuoka, Hipolito Carraro Jr and contributors, driven through the same shared libxmp slice as Archimedes Tracker / Coconizer. libxmp is licensed under MIT; the loader source file carries an LGPL-2.1-or-later header.
-* **SBStudio (MS-DOS):** SBStudio and its `.pac` format are by Henning Hellstroem (early 1990s; modland `SBStudio/`). Playback uses a vendored copy of **libpac** by Thomas Pfaff (http://libpac.sourceforge.net/), an ANSI C library that decodes a module straight to PCM. Licensed under ISC (permissive MIT-style).
-* **MaxTrax (Amiga):** The MaxTrax sound engine drives games such as *Dark Seed* (music by David A. Bean). Playback uses a vendored port of the **ScummVM** MaxTrax sequencer and Paula mixer, by the ScummVM Team. Licensed under GPL-3.0-or-later.
-* **STarKos (Amstrad CPC):** STarKos is the AY-3-8912 / YM2149 CPC tracker by Targhan / Arkos, predecessor of Arkos Tracker. Playback uses a vendored non-GUI slice of the **Arkos Tracker 3** source by Julien Névo — the author's own `.sks` importer plus the `SongPlayer` engine and `PsgStreamGenerator` software AY/YM renderer (the same path as AT3's headless `SongToWav` tool). Arkos Tracker 3 is licensed under MIT; it is built on three ISC-licensed **JUCE** core modules (`juce_core`, `juce_events`, `juce_audio_basics`) by Raw Material Software / the JUCE team.
-* **NerdTracker II (NES / Famicom):** The original NerdTracker II tracker is by Michel Iwaniec ("Bananmos"). Playback uses the player/loader core of the **NerdTracker 2 SDL port** by thefox (Mika Keränen), which drives blargg's (Shay Green) **Nes_Snd_Emu** 2A03 APU emulation — the same lineage as GME above. The vendored Nes_Snd_Emu (0.1.7) is licensed under LGPL-2.1; the NerdTracker II and SDL-port code is used with attribution. We clock the APU at NTSC speed (the port's bundled `Simple_Apu_PAL` used the PAL clock, which played notes ~a semitone flat).
-* **SCC-Musixx (MSX):** SCC-Musixx and its `.SNG` format are by **Tyfoon-Software** (M. Spoor, 1990); the original "MUSIXX REPLAY ROUTINE v1.2" (`REPLAY.BIN`, freeware, distributed via the MSX Resource Center) is embedded and run unmodified. The Konami **SCC** sound chip is emulated by **emu2212** by Mitsutaka Okazaki (MIT, the same vendored copy used by libkss). The Z80 CPU core is GME's (Shay Green, LGPL-2.1).
-* **FAC SoundTracker (MSX, `.mus`):** FAC SoundTracker and its `.mus`/`.sm1`/`.sm2` formats are by the **Federation Against Commodore** (FAC, 1990/1991), a PSG-plus-sampled-drumkit MSX tracker. The `.mus`→KSS converter (`FacMus2Kss.cpp`) is ported from **rePlayer**'s `ReplayNEZplugMUS2KSS.cpp` (Arnaud Nény), itself a port of **Jürgen Wothke**'s `mus_converter.js` (the *webnez* project, https://bitbucket.org/wothke/webnez). The embedded `fac_player[]` is FAC SoundTracker 2.0's own Z80 replay routine ((C)1990/1991 FAC), scene freeware redistributed verbatim — the same arrangement as the MGSDRV / REPLAY.BIN driver blobs above. Playback runs the resulting KSS through libkss (PSG via Okazaki's emu2149).
-* **PlayerPRO (Macintosh):** PlayerPRO and its `MADG`/`MADF`/`MADK` module formats are by **Antoine Rosset**, who released the source to the **Public Domain**. Playback uses a minimal slice of PlayerPRO's own "MADDriver" software-synth engine (from the MaddTheSane/PlayerPRO mirror), vendored at repo-root `playerpro/` and driven offline in its `NoHardwareDriver` mode. The chipmachine-specific glue — a static loader registry replacing the dlopen scanner, inert stubs for the Mac CoreAudio/Finder entry points, and two small header patches — is documented in `playerpro/PROVENANCE.md`.
-* **DSIK "old" Internal Format (`.dsm` v1):** libopenmpt decodes the newer DSIK "RIFF" and Dynamic Studio `.dsm` variants but not the original DSIK Internal Format (`DSM` + 0x10, e.g. the Necros demoscene tunes). Support for that variant is a local patch to the vendored libopenmpt `Load_dsm.cpp`, with the loader adapted from **MilkyTracker**'s `LoaderDSMv1` (`milkyplay/LoaderDSM.cpp`) by the MilkyTracker Team. Playback itself reuses libopenmpt's existing DSIK engine. Licensed under BSD-3-Clause.
-* **Onyx Music File (`.omf`):** the MOD-like Amiga format of the 1993 Onyx musicdisk *Jangle* (modland `Onyx Music File/`, 24 tunes). No standalone replayer ever existed. Support is a chipmachine-local loader, `soundlib/Load_omf.cpp`, added to the vendored libopenmpt and written from the byte-level format specification reverse-engineered by **Martin Bazley** (*swirlythingy*) on 6 December 2009 (archived in modland's `documents/format_documentation/`). Playback reuses libopenmpt's existing MOD engine. Licensed under BSD-3-Clause (consistent with the surrounding libopenmpt soundlib).
-* **MONOTONE (IBM PC speaker):** MONOTONE and its `.mon` format are by Jim "Trixter" Leonard of Hornet. Playback uses **PTPlayer** by Michal Procházka — the player library for the modern *Polytone* tracker, which also loads legacy Monotone files (and the `.pol` format). Licensed under BSD-3-Clause.
-* **MikMod UNITRK / UNIMOD (`.uni`):** the UNIMOD on-disk format and its reader are part of **libmikmod**, originally by Jean-Paul Mikkers ("MikMak") and Jake Stine, maintained by the libmikmod team (Raphaël Assenat, Ozkan Sezer and others). A minimal slice of libmikmod 3.3.13 is vendored at `musicplayer/src/plugins/mikmodplugin/libmikmod/` (player core + virtual mixer + `load_uni` + depackers + null driver only). Licensed under LGPL-2.1-or-later. The vendored sources are unmodified; the chipmachine glue registers only the UNI loader and null driver and pulls PCM via the virtual mixer.
-* **Ixalance (`.ixs`):** the format and its original Win32 player are by **Shortcut Software Development BV** (~2000); the music is by **Maarten van Strien**. The original sources are lost, so playback uses **webixs** — Juergen Wothke's native C++ reimplementation reverse-engineered with Ghidra from the surviving Win32 player (`https://bitbucket.org/wothke/webixs`), vendored at repo-root `webixs/` and built with `-DLINUX` (the non-Win32 path) so its pull-style render API is exposed. The format synthesizes and zlib-compresses its own wavetables, hence the zlib dependency. **Licensed CC BY-NC-SA 4.0 (NonCommercial)** — the only NonCommercial component in the project; see `webixs/LICENSE`. (Built with `-fsigned-char`, like PlayerPRO, since the decompiled code relies on signed-char semantics.)
-* **vgmstream (streamed game audio):** the library that decodes hundreds of console/PC streamed game-audio containers (CRI ADX/HCA, FMOD FSB, Microsoft XWB/XMA, platform DSP/VAG/AT3/AT9, …) by **Adam Gashlin**, **bnnm**, **Christopher Snowhill**, NicknineTheEagle, bxaimc, Thealexbarney, EdnessP and the vgmstream contributors (<https://github.com/vgmstream/vgmstream>). The core decode library is vendored at `external/vgmstream/` and driven through its `libvgmstream` API, built without any of the optional `VGM_USE_*` codec libraries. `canHandle` content/extension-gates against the formats already owned by other plugins. Licensed under the **ISC License** (some bundled codec sources carry their own permissive/public-domain notices; see `external/vgmstream/COPYING`).
-* **Vic-Tracker (Commodore VIC-20):** VIC-TRACKER and its `.vt` format are by **Daniel Kahlin** (1994/2004; `http://www.kahlin.net/daniel/victracker/`). The tunes are played by Kahlin's own 6502 replay routine (`player.asm`), vendored pre-assembled and **licensed under BSD-2-Clause** (see `victrackerplugin/victracker/LICENSE.txt`). It runs on the **MyLittle6502** CPU core — David MHS Webster's **public-domain/CC0** continuation of Fake6502 by Mike Chambers — and its VIC-I (MOS 6560/6561) sound-register writes drive a VIC-20 sound core written for this project, whose noise generator and channel divider follow **MAME**'s `mos6560.cpp` (by Peter Trauner, BSD-3-Clause).
-* **Klystrack:** *klystrack* and its `.kt` format, together with the *klystron* engine and its **libksnd** playback library, are by **Tero Lindeman** ("kometbomb"; `https://github.com/kometbomb/klystron`). The `snd/` "cyd" synth core and `lib/ksnd.c` are vendored at `klystrackplugin/klystron/` and built SDL-free — driven via `KSND_CreatePlayerUnregistered`/`KSND_FillBuffer` with `NOSDL_MIXER` and without the SDL mutex/RWops paths, so a small local shim (`klystron/shim/`) supplies only SDL's integer/endian types. **Licensed under the MIT License** (see the notice in `klystrackplugin/klystron/macros.h`).
-* **FFmpeg (streaming & compressed audio):** MP3, AAC, M4A/MP4, Ogg/Vorbis, Opus, FLAC, WAV, AIFF, AC3, MP2, WMA and IFF-8SVX are decoded **in-process** by **FFmpeg**'s `libavcodec` / `libavformat` / `libavutil` / `libswresample` (<https://ffmpeg.org>). To keep the app free of GPL, a **decode-only, LGPL** build (FFmpeg 8.1.1, `--disable-gpl --disable-nonfree`, no libx264/libx265, and no `ffmpeg` command-line tool) is vendored at [`external/ffmpeg-lgpl/`](external/ffmpeg-lgpl/) and **dynamically linked as replaceable dylibs** (satisfying the LGPL relink requirement). Licensed under **LGPL-2.1-or-later**. HTTPS for radio / resolved stream URLs is provided by **OpenSSL** (The OpenSSL Project, Apache-2.0).
-* **Furnace (DefleMask `.dmf`):** DefleMask `.dmf` modules are played by a headless slice of the **Furnace** engine (`DivEngine`) by **tildearrow** and contributors (<https://github.com/tildearrow/furnace>), driven directly across every DefleMask target (Genesis, Master System, Game Boy, PC Engine, NES, C64, Arcade, Neo Geo). Content-gated (zlib magic → `.DelekDefleMask.`) against the unrelated X-Tracker `DDMF` `.dmf` handled by libopenmpt. Licensed under **GPL-2.0-or-later**, and structurally so — 76 of 77 files under `furnace/src/engine`, all 80 `DivPlatform*` wrappers and a dozen sound cores carry the GPL header, so there is no file to patch out. **Not included in the Mac App Store build**, where the 2,071 DefleMask-format `.dmf` songs are dropped from the index to match; excluding it is also what clears **reSIDfp** from that build, since dmfplugin was its only source. The 723 X-Tracker `DDMF` `.dmf` songs are unaffected and keep playing via libopenmpt in both variants. A clean-room non-GPL replacement is a live follow-up project — the chip cores are already available permissively (ymfm/BSD, SameBoy/MIT, cSID/WTFPL); it is the sequencer that has to be written. By measured share of the hidden pool (Genesis 46%, Game Boy 16%, PC Engine 13%, Neo Geo 10%, NES 6%, C64 5%, SMS 3%) a Genesis-only target alone would resurface ~950 songs.
-* **GSF (Game Boy Advance — `.gsf`/`.minigsf`):** Playback via **mGBA** by **Jeffrey Pfau ("endrift")** and contributors (<https://github.com/mgba-emu/mgba>) — a GBA-only, headless slice (ARM7TDMI + GBA hardware + audio/util, no debugger, scripting, zip or frontend code) vendored at `gsfplugin/mgba/` and driven a frame at a time, resampled to 44100 Hz through mGBA's own sinc resampler. Licensed under **MPL-2.0**. The GSF container — PSF header, zlib program section, `_lib` chain, cartridge-vs-multiboot placement — is chipmachine's own `GsfRom.cpp`, written from Neill Corlett's published `psf_format.txt`. This **replaced a vendored VisualBoyAdvance (GPL-2.0-or-later) in 2026**, the last unconditional GPL dependency in the App Store binary; because mGBA is permissive it is a straight swap, so all 1,246 `.gsf`/`.minigsf` rows stay in **both** variants rather than being gated. Same pairing foobar2000's `foo_input_gsf` / "Highly Advanced" uses.
-* **USF (Nintendo 64 — `.usf`/`.miniusf`):** Playback via **lazyusf2** by **Christopher Snowhill (kode54)**, built on **Mupen64Plus-rsp-hle** and Mupen64 v0.5. Licensed under **GPL-2.0**. Not included in the Mac App Store build, where the 184 songs are dropped from the index to match. This is the only format on the list with no clean-room path at all: a `.usf` is a Project 64 *savestate*, an undocumented emulator-private layout rather than a published hardware format.
-* **Farbrausch V2 (`.v2`/`.v2m`):** The **V2** software synthesizer and its `.v2m` player by **Farbrausch** (Tammo "kb" Hinrichs et al.), including the `ronan` phoneme/speech synth. Licensed under the **Artistic License 2.0**.
-* **UnRAR (`.rsn` extraction):** RAR extraction for `.rsn` archives (a RAR of `.spc` tunes) by **Alexander Roshal / RARLAB**, reached through `utils::Archive`. **UnRAR freeware license** — the sources may handle RAR archives free of charge but may not be used to build a RAR/WinRAR-compatible archiver; extraction only.
-* **Funktracker (`.fnk`):** Funktracker by **Elias Ehlin** (1994-96). Playback uses **libxmp**'s `fnk_loader`, a minimal single-loader slice (the same approach as Archimedes Tracker / Coconizer / Megatracker). libxmp is licensed under MIT; the `fnk_load.c` source carries an LGPL-2.1-or-later header.
+Attribution for the individual emulators, audio players, plugins and core
+sub-routines used across this project is maintained as a single source of truth
+in the licence notices, **not** here — see [Licensing](#licensing) below.
 
 ---
 
 ## Licensing
-  
+
 * **ChipMachineAS:** Copyright (c) 2026 Mihailo Despotovic. Licensed under [`PolyForm Noncommercial License 1.0.0.`](./LICENSE)
 - 🟢 **Free to use** for personal, educational, research, and non-commercial projects.
 - 🔴 **Commercial use prohibited.** If you intend to use my code in any way in any revenue-generating product, contact me for a commercial license.
-  
-* **Original ChipMachine Program:** Copyright (c) 2022 Jonas Minnberg. Licensed under the MIT License.  
-* **Other Components:** See the [`LEGAL`](./LEGAL)
+
+* **Original ChipMachine Program:** Copyright (c) 2022 Jonas Minnberg. Licensed under the MIT License.
+* **Third-party components:** see [`LEGAL`](./LEGAL) — the standalone notice covering everything in the app, and the single source of truth for attribution.
+* **ChipMachinePlus extras:** see [`LEGAL-PLUS`](./LEGAL-PLUS) — an addendum to `LEGAL` covering only the copyleft engines the Plus build links and the Mac App Store build does not.
+
+`package_app.sh` assembles the in-app **About** panel (`Credits.rtf`) from those
+same two files, so the app, the repo and the release always agree: the Mac App
+Store bundle gets `LEGAL`, the Plus bundle gets `LEGAL` + `LEGAL-PLUS`.

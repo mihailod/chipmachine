@@ -398,10 +398,85 @@ else
     exit 1
 fi
 
-if [ -f "${CHIPMACHINE_DIR}/data/misc/Credits.rtf" ]; then
-    echo "-> Packaging Credits into bundle..."
-    cp "${CHIPMACHINE_DIR}/data/misc/Credits.rtf" "${RESOURCES_DIR}/"
+# 4-bis. Build Contents/Resources/Credits.rtf from a SINGLE SOURCE OF TRUTH.
+#
+# macOS's standard About panel renders Contents/Resources/Credits.rtf verbatim,
+# so that file has to be a complete, valid RTF document. It used to be a
+# hand-maintained copy of the licence list that drifted out of sync with LEGAL
+# and README.md, and the SAME copy shipped in both variants -- including the
+# GPL-only components the mas build does not contain.
+#
+# It is now assembled here from three tracked plain-text inputs:
+#   data/misc/Credits.rtf  the human-written preamble ONLY. It is a valid RTF on
+#                          its own and its last line is "Here is the attribution
+#                          for the individual emulators, ...".
+#   LEGAL                  the standalone licence notice. Everything in it is in
+#                          BOTH builds; it mentions no variant and no build gate.
+#   LEGAL-PLUS             the addendum listing what only the plus build links
+#                          (the copyleft engines + their data payloads). Repeats
+#                          nothing from LEGAL.
+#
+#   mas  -> preamble + LEGAL                 -> CreditsAndLicences.rtf
+#   plus -> preamble + LEGAL + LEGAL-PLUS    -> CreditsAndLicencesPlus.rtf
+#
+# Whichever one this run produces is installed as Resources/Credits.rtf, so no
+# C++/Info.plist change is needed. Both intermediates are written into the BUILD
+# DIR, never back into the source tree (same rule as extensions.txt above).
+#
+# The plain-text inputs are appended as PREFORMATTED monospace paragraphs: the
+# RTF metacharacters \ { } are escaped, tabs become \tab, every non-ASCII
+# codepoint becomes a \uN ? escape (so the .rtf stays 7-bit ASCII and TextEdit /
+# NSDocumentController parse it identically), and each source line becomes one
+# RTF paragraph. \f8 is the Menlo-Regular entry added to the preamble's font
+# table -- LEGAL is column-aligned and only reads correctly in a fixed pitch.
+CREDITS_PREAMBLE="${CHIPMACHINE_DIR}/data/misc/Credits.rtf"
+LEGAL_FILE="${CHIPMACHINE_DIR}/LEGAL"
+LEGAL_PLUS_FILE="${CHIPMACHINE_DIR}/LEGAL-PLUS"
+
+if [ "$VARIANT" = "mas" ]; then
+    CREDITS_BUILT="${BUILD_DIR}/CreditsAndLicences.rtf"
+    CREDITS_PARTS=("${LEGAL_FILE}")
+else
+    CREDITS_BUILT="${BUILD_DIR}/CreditsAndLicencesPlus.rtf"
+    CREDITS_PARTS=("${LEGAL_FILE}" "${LEGAL_PLUS_FILE}")
 fi
+
+echo "-> Generating ${CREDITS_BUILT:t} from the Credits preamble + ${CREDITS_PARTS[@]:t}..."
+for CREDITS_INPUT in "${CREDITS_PREAMBLE}" "${CREDITS_PARTS[@]}"; do
+    [ -f "${CREDITS_INPUT}" ] || { echo "CRITICAL: missing Credits input ${CREDITS_INPUT}"; exit 1; }
+done
+
+# The preamble minus its final closing brace -- we re-add it after the body.
+perl -0777 -pe 's/\}\s*\z//' "${CREDITS_PREAMBLE}" > "${CREDITS_BUILT}"
+# 10pt Menlo, no paragraph spacing, left aligned.
+printf '\\pard\\pardeftab720\\sa0\\ql\\partightenfactor0\n\\f8\\b0\\i0\\fs20 \\cf2 \\\n' >> "${CREDITS_BUILT}"
+for CREDITS_INPUT in "${CREDITS_PARTS[@]}"; do
+    perl -CSD -ne '
+        chomp;
+        s/\\/\\\\/g; s/\{/\\{/g; s/\}/\\}/g;
+        s/\t/\\tab /g;
+        s/([^\x00-\x7f])/sprintf("\\u%d ?", ord($1))/ge;
+        print $_ . "\\\n";
+    ' "${CREDITS_INPUT}" >> "${CREDITS_BUILT}"
+    printf '\\\n' >> "${CREDITS_BUILT}"
+done
+printf '}\n' >> "${CREDITS_BUILT}"
+
+# Fail the build on a malformed document rather than shipping an About panel
+# that renders raw RTF markup (or nothing at all). textutil is the same parser
+# AppKit uses, and it is silent on success.
+if ! textutil -convert txt -stdout "${CREDITS_BUILT}" > /dev/null 2>&1; then
+    echo "CRITICAL: generated ${CREDITS_BUILT} is not a valid RTF document. Aborting."
+    exit 1
+fi
+
+echo "-> Packaging Credits into bundle..."
+cp "${CREDITS_BUILT}" "${RESOURCES_DIR}/Credits.rtf"
+
+# The recursive `cp -R data` above also dropped the PREAMBLE-ONLY stub at
+# Resources/data/misc/Credits.rtf. Nothing reads it, and shipping a file that
+# looks like the credits but stops mid-sentence is worse than not shipping it.
+rm -f "${RESOURCES_DIR}/data/misc/Credits.rtf"
 
 if [ -d "${CHIPMACHINE_DIR}/lua" ]; then
     echo "-> Packaging Lua subsystem files into bundle..."

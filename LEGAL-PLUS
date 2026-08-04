@@ -1,0 +1,399 @@
+This is an ADDENDUM to the LEGAL notice for this Plus version of ChipMachine.
+
+Everything in the LEGAL notice applies unchanged. This file adds the components
+that are compiled into the Plus build ONLY, and repeats nothing from LEGAL.
+
+Every component below is copyleft (GPL-2 / GPL-3 / LGPL-3) or otherwise carries
+terms that prevent redistribution through the Mac App Store, which is why each
+is built into this variant alone (CM_VARIANT=plus). Their runtime payloads --
+data/uade, data/c64 and data/sc68 -- ship only with this variant as well.
+
+===============================================================================
+A1. COPYLEFT AND OTHER RESTRICTED DEPENDENCIES (PLUS BUILD ONLY)
+===============================================================================
+Component: SC68 (Atari ST -- .sc68 container only)
+Author: Developed by Benjamin Gerard. Covers libsc68, the emu68 68000 core,
+        file68 and unice68, vendored under musicplayer/src/plugins/sc68plugin.
+License: GNU General Public License v3.0 or later
+Notice: NO LONGER the .sndh decoder. As of 2026-08-01 both variants play .sndh
+        with AtariAudio (MIT, see LEGAL), which is 6,079 of the 7,976 songs this
+        component used to own; sc68plugin is left claiming .sndh at a lower
+        priority in this build, purely as a fallback for anything AtariAudio
+        declines. NOT LINKED into the Mac App Store variant (CM_VARIANT=mas
+        builds with CM_HAVE_SC68=OFF, so neither sc68plugin nor its vendored
+        libsc68/emu68/file68/unice68 sources are compiled), and its data/sc68
+        payload -- sc68.cfg plus Replay/, the 95 prebuilt 68k replay routines --
+        is stripped from that bundle by package_app.sh.
+        What the mas variant loses is the ".sc68" container itself: 1,894
+        songs, dropped from that variant's index to match. Those files NAME an
+        external replay routine rather than embedding one, and the routines are
+        exactly the GPL-3 binaries in data/sc68/Replay -- there is no permissive
+        equivalent and no published spec, so unlike .sndh there was nothing to
+        swap in. Every other extension sc68plugin content-gated is unaffected:
+        the 100 AdLib ".snd" songs are AdPlug's in both variants.
+        ICE! depacking for SNDH tag parsing (SongFileIdentifier::parseSndh) also
+        moved off unice68 onto the public-domain ice_24.c that ships with
+        AtariAudio, so no GPL-3 code is reachable from shared app code.
+
+Component: Audio Overload SDK / AOSDK (aoplugin -- Sega Saturn .ssf, Capcom
+           QSound .qsf, PlayStation SPU dumps .spu, AND PlayStation 1/2
+           .psf/.minipsf/.psf2/.minipsf2)
+Author: R. Belmont and Richard Bannister (the SDK and the BSD-licensed engine
+        wrappers); Nicola Salmoria and the MAME team (the emulator cores);
+        Pete Bernert (the PEOpS SPU/SPU2 cores). Vendored under
+        musicplayer/src/plugins/aoplugin/aosdk/.
+License: MIXED, and two of the three parts are restrictive. Per the vendored
+        aosdk/license.txt, which lists every file:
+          * BSD-3-Clause (R. Belmont / Richard Bannister) -- corlett.c, ao.h,
+            eng_psf/{eng_psf.c,eng_psf2.c,eng_spu.c,psx_hw.c},
+            eng_qsf/eng_qsf.c, eng_ssf/{eng_ssf.c,sat_hw.c}.
+          * MAME 1997-2008 licence (Nicola Salmoria and the MAME team) --
+            eng_psf/{psx.c,cpuintrf.h,mamemem.h}, all of eng_ssf's Musashi
+            68000 and SCSP, and eng_qsf's z80.c / qsound.c / kabuki.c. That
+            licence states: "Redistributions may not be sold, nor may they be
+            used in a commercial product or activity."
+          * GNU General Public License v2 (Pete Bernert) -- the whole of
+            eng_psf/peops/ and eng_psf/peops2/, i.e. the SPU and SPU2 cores.
+            Full text at eng_psf/peops/License.txt.
+        The upstream licence file states outright that anything built from this
+        SDK including MAME-licensed components must be distributed with source.
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_AO=OFF, so neither aoplugin nor its vendored AOSDK sources are
+        compiled). The MAME and GPL parts ARE the emulator cores -- one per
+        target -- so there is no file to drop and no permissive substitute
+        vendored here.
+        This component GAINED the four PSF extensions on 2026-08-01, when the
+        Sony PS2 BIOS image that Highly Experimental required was deleted from
+        the tree (see the next entry -- the plugin itself went with it). AOSDK's
+        eng_psf/eng_psf2 are HLE: psx_hw.c emulates the PS1 BIOS A0/B0/C0
+        vectors and the PS2 IOP kernel in software, so they need no BIOS image
+        at all. They were already being compiled; only AOPlugin::supported_ext
+        had to change.
+        The mas variant therefore loses 685 rows, dropped from its index to
+        match: 668 PlayStation (.minipsf 353, .psf 137, .psf2 131, .minipsf2 47)
+        plus 17 that were AOSDK-only anyway (.spu 9, .miniqsf 8). Sega Saturn
+        .ssf/.minissf was initially retained here because HTPlugin declares
+        priority 1 and owned those 136 rows -- but htplugin was itself gated on
+        2026-08-01 (GPL-3, see its entry below), so as of that date .ssf/.minissf
+        are lost in mas too.
+        LOCAL PATCH, re-apply on revendor: eng_psf/peops/spu.c sets iVolume to
+        128 rather than upstream's 255. 255 is a pre-clip global gain of ~1.0
+        and measured exactly 2x what Highly Experimental produced for the same
+        rips, clipping 7 of 13 sampled modland PSF1 tunes; 128 restores the
+        level this app has always shipped for PSF and removes the clipping.
+
+Component: Highly Experimental (PlayStation 1/2 PSF) -- REMOVED FROM THE TREE
+Author: Neill Corlett (the PSF format and the original Highly Experimental);
+        vendored here in kode54's form, formerly at
+        musicplayer/src/plugins/heplugin/.
+License: NONE STATED. There was no licence file, no SPDX identifier and no
+        per-file licence header anywhere in the vendored tree or in the upstream
+        it came from. This file previously recorded "zlib License" for this
+        component; that was WRONG and is corrected here -- the "zlib" evidence
+        turned out to be `#include <zlib.h>`, i.e. a dependency on zlib, not a
+        licence grant covering Highly Experimental itself.
+Notice: DELETED 2026-08-01, along with the Sony BIOS image it required. The
+        engine could not initialise without a real Sony PlayStation 2 BIOS:
+        HEPlugin::fromFile() loaded data/hebios.bin, passed it to
+        bios_set_image(), and returned nullptr if it was absent. That file was
+        512 KB of Sony Computer Entertainment firmware -- it contains the
+        literal string "Copyright 1999-2002 (C) Sony Computer Entertainment
+        Inc." -- and it was shipping inside BOTH bundles at
+        Contents/Resources/data/hebios.bin, with no entry in this file. It is
+        not ours to redistribute under any licence or on any store, so it was
+        removed (both copies: data/hebios.bin and the unreferenced duplicate at
+        external/musicplayer/data/hebios.bin). With the BIOS gone the plugin
+        could not decode anything in any variant, and an unlicensed engine that
+        plays nothing is pure liability, so the plugin was deleted outright
+        rather than kept behind a build gate.
+        NO SONGS WERE LOST. PSF1/PSF2 playback moved to AOSDK's BIOS-free HLE
+        engines, above; verified over ~100 modland rips with
+        `cm --dump-metadata` -- every file Highly Experimental could load, AOSDK
+        loads. The rips that fail fail under BOTH engines, for a reason that is
+        neither engine's fault: their "_lib2" tags name companion libraries with
+        underscores that modland stores with spaces.
+        A second, equally unlicensed copy of this engine still sits unused and
+        UNCOMPILED at external/zxtune/3rdparty/he/ -- it arrived with the zxtune
+        vendor drop, is referenced only by an upstream app subdirectory this
+        project does not build, and reaches neither binary.
+
+Component: VICE (C64 Compute! Sidplayer -- .mus/.str only)
+Author: Developed by the VICE Core Team
+License: GNU General Public License v2.0 or later
+Notice: SID-chip playback (.sid/.rsid) moved OFF VICE to cSID (WTFPL, see LEGAL)
+        on 2026-07-30. In this build VICE now serves only two things: the
+        Compute! Sidplayer .mus/.str formats (which since gained a permissive
+        clean-room player of their own, so the mas build keeps them), and the
+        2382 self-IRQ RSIDs cSID cannot voice -- see the Coverage note on cSID
+        in LEGAL. Neither is a reason to ship VICE outside this build. NOT
+        LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_VICE=OFF, so neither vicepluginbridge nor its vendored VICE
+        sources are compiled), and its data/c64 payload -- which includes the
+        Commodore-copyrighted KERNAL, BASIC and chargen ROM images -- is
+        stripped from that bundle by package_app.sh.
+
+Component: UADE (Amiga Exotic Formats)
+Author: Developed by Heikki Orsila and the UADE Team (eagleplayers / format
+        database vendored from UADE 3.05)
+License: GNU General Public License v2.0 or later
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_UADE=OFF), and its data/uade payload is stripped from that
+        bundle by package_app.sh.
+
+Component: GoatTracker v2 + reSID (C64 GoatTracker songs, .sng)
+Author: GoatTracker v2 by Lasse Oorni ("Cadaver"); the vendored playback core is
+        gplay.c (playroutine), gsid.cpp (reSID interface) and gt2_load.c
+        (loadsong). The SID emulation underneath it is reSID by Dag Lem
+        <resid@nimrod.no>, vendored verbatim under
+        musicplayer/src/plugins/goattrackerplugin/resid/.
+License: GNU General Public License v2.0 or later (both GoatTracker and reSID).
+Notice: This is a SECOND, independent C64 SID emulator in the tree, unrelated to
+        cSID and to VICE. NOT LINKED into the Mac App Store variant
+        (CM_VARIANT=mas builds with CM_HAVE_GOATTRACKER=OFF). The 104
+        GoatTracker-format .sng songs are dropped from that variant's index to
+        match; every other .sng format has its own player and is unaffected.
+
+Component: ASAP / Another Slight Atari Player (Atari 800 POKEY, PokeyNoise .pn)
+Author: Developed by Piotr Fusik. Vendored at
+        musicplayer/src/plugins/pokeynoiseplugin/asap/.
+License: GNU General Public License v2.0 or later
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_POKEYNOISE=OFF), and the 17 modland ".pn" songs are dropped from
+        that variant's index to match.
+        Atari 8-bit POKEY music is NOT otherwise affected. pokeynoiseplugin
+        claims two extensions and only ".pn" is lost: the 6,617-song ".sap" ASMA
+        corpus is claimed first by GME (LGPL) in BOTH variants.
+        The 17 cost almost nothing, measured rather than assumed -- 16 of them
+        already exist in the catalog as a ".sap" with the same title AND the same
+        composer (Ballblazer, Behind Jaggi Lines!, Boulder Dash, International
+        Karate, Jet Set Willy, Warhawk, Draconus, Zybex, four David Whittakers,
+        Schreckenstein, Space Lobsters, Whistlers Brothers, Feud), so they keep
+        playing in mas through GME. Only "pn.tetris", whose composer is unknown,
+        is a possible real loss.
+
+Component: MDX (Sharp X68000 -- MXDRV .mdx)
+Author: mdxmini by BouKiCHi, a library-ised derivative of Daisuke Nagano's
+        mdxplay, itself written from KOUNO Takeshi's mdxform.doc format
+        description. Original X68000 MXDRV by milk., K.MAEKAWA and Missy.M.
+        The bundled YM2151 emulator is Jarek Burczynski's, via MAME.
+        Vendored under musicplayer/src/plugins/mdxplugin/mdxmini.
+License: GNU General Public License v2.0 or later
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_MDX=OFF, so neither mdxplugin nor its vendored mdxmini sources
+        are compiled). All 6,913 ".mdx" songs are dropped from that variant's
+        index to match -- mdxplugin is the sole claimer of the extension, so
+        there is no partial rescue and no fallback decoder.
+        The licence is stated at the PACKAGE level, not per file: only
+        src/mdxmini.c carries the GPL boilerplate, but COPYING is the GPL-2 text
+        and mdxmini.txt states that linking to the library, statically or
+        dynamically, imposes GPL-2. A per-file audit understates this.
+        No permissive replacement exists, and this was checked rather than
+        assumed. mdxtools and mdx2vgm are GPL-3; webMDX is mdxmini compiled to
+        JavaScript. GAMDX/MXDRVg appears to be an exception because its author
+        licenses HIS OWN code Apache-2.0, but the MXDRV driver engine inside it
+        is a disassembly of the proprietary 1988 mxdrv.x binary under a licence
+        its own distributor states he has been unable to locate -- a worse
+        position than GPL, not a better one. Running the original mxdrv.x under
+        the MIT Musashi core already vendored for sndhplugin fails for the same
+        reason: it requires shipping the proprietary driver.
+        A clean-room OPM-only sequencer was prototyped (musicplayer/src/plugins/
+        mdxcrplugin/cmdx, not built by either variant) and shelved at roughly
+        3.7% median register-stream fidelity against the reference.
+
+Component: Ayfly (ZX Spectrum AY-3-8910)
+Author: Developed by Sergey Vladimirov (Deryabin Andrew). The embedded Z80 CPU
+        core is z80ex by Boo-boo, which contains code from the FUSE emulator
+        project.
+License: GNU General Public License v2.0 or later
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_AYFLY=OFF, so neither ayflyplugin nor its vendored libayfly /
+        z80ex sources are compiled). This was the largest unresolved copyleft
+        dependency in the App Store binary: 67,305 songs, the biggest single
+        format family in the catalog.
+
+        NO SONGS ARE LOST, and the mas index is not reduced by one row. Every
+        extension Ayfly claimed is played in BOTH variants by the ZX AY engine
+        (see LEGAL), so unlike the gates above this one needs no formatPlayer
+        entry in songFormatHasNoPlayer() -- no extension loses its claimant.
+
+        ayflyplugin is retained in this build and REGISTERED FIRST, ahead of
+        zxayplugin. Both declare the same extensions at equal priority and ties
+        break on registration order, so this build routes every ZX AY song
+        exactly where it did before and is unchanged. Same arrangement as
+        musplugin behind vicepluginbridge.
+
+        One extension was TAKEN from Ayfly in both variants: ".vt2". libayfly
+        has no Vortex Tracker II loader at all -- ay_initsong() throws on every
+        one of the catalog's 551 rows -- and claiming the extension only
+        prevented anything else from trying. Vortex Tracker II's binary save is
+        a PT3 module with a different identifier and now plays through PTxPlay;
+        the editor's ini-style text export goes to Arkos Tracker 3 via
+        sksplugin. Both builds gain those rows. This follows the precedent
+        already set for ".ftc", which was moved to ZXTune for the same reason.
+
+Component: ZXTune (ZX Spectrum -- Sound Tracker 1.1 .st11, Chip Tracker .chi,
+           TFM Music Maker .tfe, Global Tracker .gtr, Pro Sound Maker .psm and
+           Fast Tracker .ftc)
+Author: Developed by Vitamin/CAIG (vitamin.caig@gmail.com); CMake build fork
+        by djdron. Only the AY/YM + DAC + SAA + FM tracker decoders + container
+        scanner are vendored (see musicplayer/src/plugins/zxtuneplugin). Bundles
+        fmt, z80ex, liblhasa and liblzma.
+License: GNU General Public License v3.0 or later (the fork's LICENSE.md claims
+        LGPL-3; upstream is GPL and the vendored sources carry GPL headers, so
+        the stricter reading is the one applied here)
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_ZXTUNE=OFF, so neither zxtuneplugin nor its vendored ZXTune
+        sources are compiled). This was the last GPL-3 in the App Store binary.
+
+        It owned 569 rows across six formats, and 378 of them -- every one that
+        is actually AY music -- are now played in BOTH variants by the ZX AY
+        engine (see LEGAL), which reclaimed them once the ZX Spectrum machine
+        built for the Ayfly replacement existed:
+          .psm 188  Pro Sound Maker -- sequencer, from Bulba's AY_Emul
+          .ftc  88  Fast Tracker    -- Bulba's own MONS4D disassembly of the
+                                       1.07 player, run on the emulated Z80
+          .st11 59  Sound Tracker 1.1, the UNCOMPILED form -- compiled to the
+                                       ordinary .stc layout on load, then
+                                       played by the Sound Tracker sequencer
+                                       this engine already had
+          .gtr  43  Global Tracker  -- sequencer, from Bulba's AY_Emul
+        All four were A/B'd against ZXTune itself (cmtest "[.zxtab]"): spectral
+        cosine 0.80-0.98 and envelope correlation 0.72-0.98 at zero lag across
+        35 fixtures, i.e. the same music differing only by chip model.
+
+        zxtuneplugin is retained in this build and registers BEFORE zxayplugin,
+        so this build routes all six formats exactly where it did before and is
+        unchanged.
+
+        The mas variant loses the remaining 191 rows, dropped from its index to
+        match. No formatPlayer entry is needed for either -- nothing else
+        claims those two extensions, so the plain extension test in
+        songHasNoPlayer() drops them. Both are out of scope because they are
+        not AY music:
+          .tfe  148  TFM Music Maker -- TurboSound FM, a pair of YM2203s. It
+                     would need an OPN core and an undocumented sequencer.
+          .chi   43  Chip Tracker -- four channels of DIGITAL sample playback,
+                     not the AY at all. Same story.
+
+        liblhasa (Simon Howard, ISC -- see LEGAL) lives inside the vendored
+        ZXTune tree but is NOT part of ZXTune, and the UnExoticA .lha collection
+        needs it in both variants. In a mas tree, where the zxtuneplugin
+        subproject does not exist to create the target, it is added directly by
+        the top-level CMakeLists. The same is true of libvgm and libxmp, which
+        also sit under zxtune/3rdparty/ and are compiled into both variants by
+        libvgmplugin / cocoplugin / mgtplugin / fnkplugin.
+
+Component: Highly Theoretical / SegaCore (Sega Saturn .ssf, Dreamcast .dsf)
+Author: Originally by Neill Corlett; maintained fork at
+        https://github.com/kode54/Highly_Theoretical. Vendored at
+        musicplayer/src/plugins/htplugin/ht -- yam.c (the SCSP/AICA sound chip),
+        arm.c (Dreamcast ARM7), sega.c, satsound.cpp, dcsound.c, and a
+        reentrant C++ Musashi 68000 under ht/m68k for the Saturn.
+License: GNU General Public License v3.0 (upstream LICENSE.TXT and
+        Core/COPYING.txt).
+Notice: READ THIS BEFORE RE-AUDITING. The upstream licence files were never
+        vendored, so the in-tree copy appears unlicensed: not one SegaCore source
+        carries a header, and the only licence text present is a stale
+        NON-COMMERCIAL notice on the bundled Musashi 3.3. Neither reflects the
+        actual terms -- the upstream repo is GPL-3 and is the source of truth.
+        (That Musashi header is stale twice over: Karl Stenerud has since
+        relicensed Musashi to MIT, and the MIT version is already vendored here
+        under sndhplugin/atariaudio/external/Musashi.)
+        NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_HT=OFF); the 273 songs (.dsf 84, .minidsf 53, .ssf 85,
+        .minissf 51) are dropped from that variant's index. ".dsf" and ".ssf"
+        need formatPlayer rows because vgmstream also advertises them; the two
+        "mini" forms are sole-claimed and drop on the extension test.
+        A clean-room is conceivable but disproportionate: the CPU halves are
+        already solvable (MIT Musashi; mGBA's MPL-2.0 ARM7TDMI is close kin to
+        the Dreamcast's ARM7DI), but SCSP/AICA is a 32/64-channel Yamaha part
+        with a real DSP -- an emulator project to recover 273 songs.
+
+Component: vio2sf (Nintendo DS -- .2sf / .mini2sf)
+Author: NDS emulation core derived from DeSmuME (the DeSmuME Team). 2SF
+        playability layer ("vio2sf") by Christopher Snowhill (kode54), the
+        maintained reentrant fork used by foobar2000 / Cog; vendored from the
+        ZXTune 3rdparty tree. The PSF container / _lib loader glue lives in
+        musicplayer/src/plugins/ndsplugin. GPU emulation is stripped (audio
+        only); the portable C resampler path is used (NO_ASM).
+License: GNU General Public License v2.0 or later
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_NDS=OFF), and the 2,040 ".2sf"/".mini2sf" songs are dropped from
+        that variant's index to match. No permissive replacement exists: playing
+        a 2SF means emulating BOTH DS CPUs (ARM7TDMI + ARM9/ARMv5TE) plus the
+        16-channel SPU. GBATEK documents the SPU and memory map, and mGBA
+        (MPL-2.0) would supply an ARM7TDMI, but there is no permissive ARMv5TE
+        core and melonDS is GPL-3. Neither extension needs a formatPlayer row --
+        nothing else claims them.
+
+Component: Furnace (DefleMask .dmf playback)
+Author: The Furnace chiptune engine (DivEngine) by tildearrow and contributors
+        (https://github.com/tildearrow/furnace). A headless slice of the engine
+        is vendored at musicplayer/src/plugins/dmfplugin/furnace and driven
+        directly to play DefleMask .dmf modules across every DefleMask target
+        (Genesis, Master System, Game Boy, PC Engine, NES, C64, Arcade, Neo Geo).
+License: GNU General Public License v2.0 or later (see dmfplugin/furnace/LICENSE;
+        the bundled emulation cores under furnace/extern/ carry their own
+        per-tree licenses).
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_DMF=OFF). The GPL here is structural rather than a swappable
+        core -- 76 of 77 files under furnace/src/engine, all 80
+        platform/DivPlatform*.cpp wrappers and several sound cores (reSID,
+        reSIDfp, sid2, nes, pce_psg, tia, vsu, pokey, dave, lynx, ted-sound,
+        ymf278b) carry the GPL header -- so the whole plugin is excluded rather
+        than patched. This is also what removes reSIDfp from the mas build:
+        dmfplugin was its sole source there.
+
+        The 2,071 DefleMask-format .dmf songs are dropped from that variant's
+        index to match. ".dmf" is TWO unrelated formats, and only the DefleMask
+        one is affected: the X-Tracker "DDMF" .dmf (723 songs) is played by
+        libopenmpt and is unaffected in both variants. Routing between them is
+        by content, not extension (zlib magic 0x78 -> ".DelekDefleMask.").
+
+        Also removed from BOTH variants, as unreachable GPL code:
+        furnace/src/engine/platform/sound/vic20sound.c (lifted from VICE, GPLv2)
+        and its only user platform/vic20.cpp. DIV_SYSTEM_VIC20 is a Furnace
+        .fur-only target and DMFPlugin claims only .dmf, so it could never run.
+
+Component: USF (Nintendo 64 -- .usf / .miniusf)
+Author: USF playback via lazyusf2 by Christopher Snowhill (kode54), a Nintendo 64
+        audio core built on Mupen64Plus-rsp-hle and Mupen64 v0.5 sources, vendored
+        at musicplayer/src/plugins/usfplugin/lazyusf2 with a resampler.
+License: GNU General Public License v2.0 (Mupen64Plus-rsp-hle / Mupen64 lineage;
+        see usfplugin/lazyusf2/rsp_hle/LICENSES).
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_USF=OFF), and the 184 ".usf"/".miniusf" songs are dropped from
+        that variant's index to match.
+        This is the one component on the list written off outright rather than
+        merely deferred. Every other gated format is documented hardware that
+        could in principle be clean-roomed; a ".usf" is a Project 64 SAVESTATE --
+        an undocumented, emulator-private memory layout, not a published format.
+        There is no spec to implement against, so no clean-room path exists.
+
+===============================================================================
+A2. PLUS-ONLY RUNTIME PAYLOADS
+===============================================================================
+The following data directories ship with this variant only, and are stripped
+from the Mac App Store bundle by package_app.sh:
+
+  data/uade   UADE's eagleplayer.conf, uaerc, the 68k `score` binary and the
+              players/ tree of Amiga replayers (GPL-2).
+  data/c64    VICE's system directory: keymaps, palettes and the
+              Commodore-copyrighted KERNAL, BASIC and chargen ROM images,
+              redistributed under VICE's GPL umbrella.
+  data/sc68   libsc68's user directory: sc68.cfg plus Replay/, the 95 prebuilt
+              68k replay routines a .sc68 file names rather than embeds (GPL-3).
+              The stray data/sc68.cfg that libsc68 writes at start-up is
+              stripped along with it.
+
+===============================================================================
+A3. PLUS-ONLY FEATURES
+===============================================================================
+Component: yt-dlp (YouTube stream resolution)
+Author: The yt-dlp project (https://github.com/yt-dlp/yt-dlp)
+License: The Unlicense (public domain)
+Notice: Bundled with this variant only, as a PyInstaller onedir payload at
+        Contents/Resources/bin/ytdlp, and invoked with --get-url to resolve the
+        best audio stream, which FFmpeg then plays. It is a spawned executable
+        and therefore has no Mac App Store form; the mas build ships neither the
+        helper nor the YouTube plugin.
