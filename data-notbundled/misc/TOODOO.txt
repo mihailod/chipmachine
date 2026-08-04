@@ -32,32 +32,6 @@ Here is the breakdown of your audit output. There are several critical blockers 
 ---
 
 ## Critical Blockers (Will Cause Immediate Rejection)
-
-### 1. Hardcoded Deprecated `@rpath` Dependency Linking
-
-In the `otool -L` output, your main executable links directly to bare dynamic libraries:
-
-```text
-@rpath/libavcodec.62.dylib
-@rpath/libavformat.62.dylib
-@rpath/libavutil.60.dylib
-...
-
-```
-
-Apple requires `@rpath` to map cleanly inside `@executable_path/../Frameworks/`. If the `@rpath` search path is not explicitly set in the main binary's load commands, App Store validation will fail.
-
-### 2. Embedded Dynamic Libraries Signatures & Framework Structure
-
-Look at your `find` output:
-`ChipMachine.app/Contents/Frameworks/sunvox.dylib`
-`ChipMachine.app/Contents/Frameworks/libcrypto.3.dylib`
-`ChipMachine.app/Contents/Frameworks/libssl.3.dylib`
-...
-
-* **Unused/Exposed Crypto Libraries:** `libcrypto.3.dylib` and `libssl.3.dylib` are present in `Frameworks/`. If you are not linking them directly or via `libcurl`, remove them. If you do use OpenSSL, Apple strictly checks export compliance regulations during App Store ingestion.
-* **Codesign Verification:** Every single `.dylib` inside `Contents/Frameworks/` must be individually signed with your production Developer ID / App Store distribution certificate and possess matching team identifiers. Since the root app is currently ad-hoc signed (`Signature=adhoc`), all nested `.dylib`s will also fail signature validation until signed individually.
-
 ### 3. Missing `ITSAppUsesNonExemptEncryption` Key
 
 Because you have OpenSSL (`libcrypto`/`libssl`) and `libcurl` in your tree, Apple's automated intake will flag missing export compliance metadata.
@@ -72,6 +46,7 @@ If your app only uses standard HTTPS/TLS (via `libcurl` or `NSURLConnection`), y
 
 Without this key, you will be blocked from submitting builds to TestFlight or Review until you manually complete export compliance questionnaires for every build.
 
+## Critical Blockers (Will Cause Immediate Rejection)
 ### 4. Direct Linking to Legacy OpenGL Framework
 
 Your binary links directly to `/System/Library/Frameworks/OpenGL.framework`.
