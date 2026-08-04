@@ -24,14 +24,10 @@ Features:
 - Add tracker-style scrolling note pattern where possible by format
 
 - enhance operations on lists, need playlist tab filter with drill that shows the members with artwork on the side like when they play when you scroll up down in the drilled list
+
 ------------------------
 
-Audit Feedback 1:
-
-- i don't see LSApplicationCategoryType in .app bundle plist
-For Developer ID distribution this is optional.
-For the Mac App Store it would be required.
-figure out what it is and add one -- ask me questions if needed
+Audit Feedbacks 1:
 
 - need the privacy nose in plist per recommendation:
 create data/misc/PrivacyInfo.xcprivacy

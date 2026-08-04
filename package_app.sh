@@ -214,13 +214,13 @@ case "$VARIANT" in
     plus)
         ARTIFACT="$PLUS_ARTIFACT"; BUNDLE_ID="$PLUS_BUNDLE_ID"; DISPLAY_NAME="$PLUS_DISPLAY_NAME"
         BUILD_DIR="${WORKSPACE_ROOT}/build"
-        APP_CATEGORY=""                                   # no App Store category
+        APP_CATEGORY="$PLUS_APP_CATEGORY"
         ENT_APP="${MACNATIVE_DIR}/entitlements-app.plist" # Developer ID entitlements
         ;;
     mas)
         ARTIFACT="$MAS_ARTIFACT"; BUNDLE_ID="$MAS_BUNDLE_ID"; DISPLAY_NAME="$MAS_DISPLAY_NAME"
         BUILD_DIR="${WORKSPACE_ROOT}/build-mas"           # CM_VARIANT=mas build dir
-        APP_CATEGORY="public.app-category.music"
+        APP_CATEGORY="$MAS_APP_CATEGORY"
         ENT_APP="${MACNATIVE_DIR}/entitlements-app-mas.plist"  # App Sandbox
         # Real App Store signing uses the Apple Distribution identity; ad-hoc test
         # builds keep the "-" set above.
@@ -373,7 +373,9 @@ fi
 
 echo "-> Creating Info.plist (with macOS file associations)..."
 # Build args as an array (zsh does not word-split unquoted ${:+...}); append the
-# App Store category only for the mas variant (APP_CATEGORY empty for plus).
+# app category only when the variant defines one in variants.conf. Both variants
+# set it today (mas requires it, plus carries it for Finder/Launchpad grouping),
+# but the guard stays so clearing *_APP_CATEGORY omits the key cleanly.
 GEN_ARGS=(--version "${VERSION_STR}" --bundle-id "${BUNDLE_ID}" --display-name "${DISPLAY_NAME}" --exts "${EXTS_FILE}")
 [ -n "${APP_CATEGORY}" ] && GEN_ARGS+=(--app-category "${APP_CATEGORY}")
 "${GEN_PLIST}" "${GEN_ARGS[@]}" > "${TARGET_DIR}/Contents/Info.plist"
