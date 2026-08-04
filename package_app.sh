@@ -400,6 +400,28 @@ else
     exit 1
 fi
 
+# App Store privacy manifest. Apple reads this ONLY at the Resources root, so it
+# is copied flat -- not via the `cp -R data` above, which is also why the source
+# lives in src/macnative/ next to the entitlements plists rather than in data/
+# (a copy under data/ would be duplicated into Resources/data/ and sealed into
+# the signature twice). Shipped in BOTH variants: mas needs it for App Store
+# review, and carrying the same accurate manifest in plus costs nothing and
+# keeps the two bundles from drifting.
+#
+# The declarations inside are derived from the built binary's actual imports --
+# see the comment header in the file before editing it. Missing manifest = App
+# Store rejection, so this is a hard error rather than a warning.
+PRIVACY_SRC="${MACNATIVE_DIR}/PrivacyInfo.xcprivacy"
+if [ -f "${PRIVACY_SRC}" ]; then
+    cp "${PRIVACY_SRC}" "${RESOURCES_DIR}/PrivacyInfo.xcprivacy"
+    plutil -lint "${RESOURCES_DIR}/PrivacyInfo.xcprivacy" >/dev/null || {
+        echo "ERROR: PrivacyInfo.xcprivacy is not a valid plist"; exit 1; }
+    echo "   PrivacyInfo.xcprivacy -> Contents/Resources/"
+else
+    echo "ERROR: PrivacyInfo.xcprivacy not found at ${PRIVACY_SRC}"
+    exit 1
+fi
+
 # 4-bis. Build Contents/Resources/Credits.rtf from a SINGLE SOURCE OF TRUTH.
 #
 # macOS's standard About panel renders Contents/Resources/Credits.rtf verbatim,

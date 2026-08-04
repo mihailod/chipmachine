@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  PrivacyInfo.xcprivacy -- App Store privacy manifest.
+
+  package_app.sh copies this to Contents/Resources/PrivacyInfo.xcprivacy (bundle
+  Resources ROOT -- Apple does not look anywhere else). It lives here beside the
+  entitlements plists rather than in data/ because data/ is copied wholesale with
+  `cp -R` into Resources/data/, which would seal a duplicate into the signature,
+  and because data/ is for assets the app LOADS at runtime -- this file is
+  packaging metadata the app never reads.
+
+  Every declaration below was derived from the actual imports of the built mas
+  binary (`nm -u build-mas/chipmachine`), not from guesswork. Everything is
+  statically linked, so vendored engines count as our own code. Re-check with:
+
+      nm -u build-mas/chipmachine | grep -E '_stat|_statfs|_getattrlist|mach_absolute_time'
+
+  NSPrivacyCollectedDataTypes is empty and that is accurate: the app has no
+  analytics, no crash reporter, no account system, and sends nothing about the
+  user off-device. It fetches music from public archives over HTTP; that is
+  outbound content retrieval, not collection of data ABOUT the user.
+
+  UserDefaults is deliberately NOT declared: the app has no NSUserDefaults or
+  CFPreferences use at all (settings live in its own config file under
+  Application Support, via Environment::setAppName()). Confirmed by the absence
+  of _OBJC_CLASS_$_NSUserDefaults and CFPreferences* from the binary's imports.
+-->
+<plist version="1.0">
+<dict>
+    <key>NSPrivacyTracking</key>
+    <false/>
+
+    <key>NSPrivacyTrackingDomains</key>
+    <array/>
+
+    <key>NSPrivacyCollectedDataTypes</key>
+    <array/>
+
+    <key>NSPrivacyAccessedAPITypes</key>
+    <array>
+        <!-- Binary imports _stat, _fstat, _lstat, _getattrlist.
+             C617.1 -- metadata of files inside the app container: the music.db
+                       index, the web cache and the song cache under
+                       ~/Library/{Caches,Application Support}/ (sandbox container
+                       on mas), which the indexer stats to decide what is stale.
+             3B52.1 -- metadata of files the user specifically granted access to:
+                       tunes opened by double-click or the open panel, reached
+                       through the security-scoped bookmarks in
+                       FileOpenHandler.mm. -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array>
+                <string>C617.1</string>
+                <string>3B52.1</string>
+            </array>
+        </dict>
+
+        <!-- DiskSpace is deliberately NOT declared, despite the binary importing
+             _statfs / _fstatfs. Nothing in the shipped binary reads a free-space
+             field. Checked, and worth re-checking if this ever changes:
+               * sqlite3 (libsqlite3.a) calls statfs/fstatfs only to read
+                 f_fstypename and MNT_RDONLY, to choose a file-locking strategy
+                 -- see sqlite3.c around lines 37795, 38500, 39905. It never
+                 touches f_bavail/f_bfree.
+               * JUCE (libsksplugin.a / libBaseCli.a / libBaseExport.a) does have
+                 a real free-space query in juce_SharedCode_posix.h:636, but it
+                 is DEAD-STRIPPED -- no getBytesFreeOnVolume symbol survives in
+                 the linked binary. Verify with:
+                     nm build-mas/chipmachine | c++filt | grep -i BytesFree
+             The app also does not behave differently when disk space is low, so
+             E174.1 would be a false attestation, and it displays no disk-space
+             information, so 85F4.1 does not apply either. No accurate reason
+             code exists, so no reason is claimed.
+
+             If App Store Review returns ITMS-91053 (missing API declaration) for
+             NSPrivacyAccessedAPICategoryDiskSpace, do NOT paper over it with
+             E174.1. The fix is either to keep the free-space code out of the
+             link (it already is) and appeal with the evidence above, or to add a
+             genuine low-disk behaviour and then declare E174.1 truthfully.
+-->
+        <!-- Binary imports _mach_absolute_time, used for audio/frame timing and
+             elapsed-time measurement between in-app events. That is exactly
+             35F9.1. No absolute event timestamps leave the device. -->
+        <dict>
+            <key>NSPrivacyAccessedAPIType</key>
+            <string>NSPrivacyAccessedAPICategorySystemBootTime</string>
+            <key>NSPrivacyAccessedAPITypeReasons</key>
+            <array>
+                <string>35F9.1</string>
+            </array>
+        </dict>
+    </array>
+</dict>
+</plist>

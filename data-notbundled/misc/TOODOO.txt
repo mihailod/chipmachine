@@ -23,40 +23,7 @@ Features:
 
 - enhance operations on lists, need playlist tab filter with drill that shows the members with artwork on the side like when they play when you scroll up down in the drilled list
 
-------------------------
-
-Audit Feedback 1:
-
-- need the privacy nose in plist per recommendation:
-create data/misc/PrivacyInfo.xcprivacy
-and copy it when packaging via package_app.sh into:
-ChipMachine.app/Contents/Resources/PrivacyInfo.xcprivacy
-with content (or recommend better based on what you know about the app):
-
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-"https://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>NSPrivacyCollectedDataTypes</key>
-    <array/>
-
-    <key>NSPrivacyAccessedAPITypes</key>
-    <array>
-        <dict>
-            <key>NSPrivacyAccessedAPIType</key>
-            <string>NSPrivacyAccessedAPICategoryFileTimestamp</string>
-            <key>NSPrivacyAccessedAPITypeReasons</key>
-            <array>
-                <string>C617.1</string>
-            </array>
-        </dict>
-    </array>
-</dict>
-</plist>
-
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Audit feedback 2:
 
