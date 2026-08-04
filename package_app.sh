@@ -859,7 +859,7 @@ if [ -f "${ICON_PATH}" ]; then
     rm -rf "${CHIPMACHINE_DIR}/temp.iconset"
 
     # Document icon shown in Finder for files typed as our exported umbrella UTI
-    # (org.mihailod.chipmachineas.chiptune). Info.plist references DocIcon.icns
+    # (org.mihailod.chipmachineplus.chiptune). Info.plist references DocIcon.icns
     # via CFBundleTypeIconFile. For now this reuses the app icon; drop a distinct
     # "note on a document" DocIcon.icns here later for a dedicated file look.
     if [ -f "${RESOURCES_DIR}/AppIcon.icns" ]; then

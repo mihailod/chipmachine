@@ -8,7 +8,7 @@
 #
 # The document-type model (see the two .txt list files for the full rationale):
 #
-#   * Umbrella exported UTI  org.mihailod.chipmachineas.chiptune
+#   * Umbrella exported UTI  org.mihailod.chipmachineplus.chiptune
 #       Claims every playable extension that is NOT a system type and NOT on the
 #       deny list. We export it with the ChipMachine document icon; because
 #       nothing else on the system opens these obscure formats, files get our
@@ -39,7 +39,7 @@ SYS_FILE="${SCRIPT_DIR}/MacOSSystemTypeExtensions.txt"
 # Bundle identity. Defaults match the historical build; package_app.sh overrides
 # them per variant from variants.conf (--bundle-id / --display-name). UMBRELLA_UTI
 # defaults to "<bundle-id>.chiptune" unless given explicitly.
-BUNDLE_ID="org.mihailod.chipmachineas"
+BUNDLE_ID="org.mihailod.chipmachineplus"
 DISPLAY_NAME="ChipMachineAS"
 UMBRELLA_UTI=""
 APP_CATEGORY=""      # LSApplicationCategoryType; emitted only when non-empty (MAS)

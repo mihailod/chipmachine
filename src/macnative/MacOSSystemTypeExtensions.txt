@@ -16,7 +16,7 @@
 #
 # Everything in extensions.txt that is NOT in this file and NOT in the deny
 # list is instead folded into our exported umbrella UTI
-# (org.mihailod.chipmachineas.chiptune) and gets the ChipMachine document icon,
+# (org.mihailod.chipmachineplus.chiptune) and gets the ChipMachine document icon,
 # because nothing else on the system claims those obscure formats.
 #
 # If a UTI string here is wrong or unknown to a given macOS version, the entry

@@ -28,10 +28,6 @@ Features:
 
 Audit Feedback 1:
 
-- Since the two apps are now called ChipMachine and ChipMachinePlus, we need to make the bundle identifier match the product name in ChipMachine.app and ChipMachinePlus.app bundles: package_app.sh needs to use these respectively (instead of org.mihailod.chipmachineas which does now):
-org.mihailod.chipmachine
-org.mihailod.chipmachineplus
-
 - i don't see LSApplicationCategoryType in .app bundle plist
 For Developer ID distribution this is optional.
 For the Mac App Store it would be required.
