@@ -84,7 +84,11 @@ extern "C" {
     void jxsplugin_register();     // JayTrax / cross-platform synth tracker (.jxs) via Rhino's replayer (C port)
     void monotoneplugin_register(); // MONOTONE / PC-speaker tracker (.mon) via vendored PTPlayer (BSD-3)
     void mikmodplugin_register();  // MikMod UNITRK / UNIMOD (.uni) via vendored libmikmod slice
-    void famitrackerplugin_register(); // FamiTracker (.ftm) NES 2A03 + expansions via vendored FamiTracker CX
+#ifndef CM_NO_FAMITRACKER
+    // FamiTracker (.ftm) NES 2A03 + expansions via vendored FamiTracker CX --
+    // GPL-2 or later (jsr's engine, APU included), plus build only.
+    void famitrackerplugin_register();
+#endif
 #ifndef CM_NO_GOATTRACKER
     void goattrackerplugin_register(); // GoatTracker (.sng) C64 SID via vendored GoatTracker player + reSID
 #endif
@@ -219,7 +223,14 @@ void register_plugins() {
     jxsplugin_register();
     monotoneplugin_register();
     mikmodplugin_register();
+#ifndef CM_NO_FAMITRACKER
+    // GPL-2+ (the whole FamiTracker CX engine slice) -- excluded from the Mac
+    // App Store build (CM_VARIANT=mas), where the famitrackerplugin target is
+    // not built at all. Its 1,597 .ftm rows are dropped from that variant's
+    // index by the formatPlayer keys in MusicDatabase.cpp; the 95 Atari "Face
+    // The Music" .ftm rows are OpenMPT's and are untouched.
     famitrackerplugin_register();
+#endif
 #ifndef CM_NO_GOATTRACKER
     // GPLv2 twice over (GoatTracker's gplay.c/gsong.c + reSID) -- excluded from
     // the Mac App Store build (CM_VARIANT=mas), where the goattrackerplugin

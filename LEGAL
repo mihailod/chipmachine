@@ -66,19 +66,6 @@ Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
         shim replacing the ScummVM-internal dependencies.
 License: GNU General Public License v3.0 or later
 
-Component: FamiTracker CX (FamiTracker .ftm playback -- NES 2A03 + expansions)
-Author: FamiTracker by jsr (Jonathan Liss); cross-platform "FamiTracker CX"
-        fork by Dan Spencer (nukep, https://github.com/nukep/famitracker-cx).
-        A boost-free engine slice (document loader, sound driver and APU,
-        incl. blargg's Blip_Buffer) is vendored at repo-root famitracker-cx/;
-        the GUI, frontends, dynamic sound sinks and WAV export are dropped.
-        See famitracker-cx/PROVENANCE.md for the chipmachine patches.
-License: GNU General Public License v2.0 or later / New BSD (mixed; see the
-        per-file headers and famitracker-cx/core/COPYING).
-Notice: The plugin compiles the slice at hidden visibility and partial-links
-        (ld -r) so the APU's generic symbols (Blip_Buffer, ...) are localized
-        and do not collide with GME's / NerdTracker's blargg emulation.
-
 Component: S98 (PC-98 / FM sound log)
 Author: s98plugin, vendored under musicplayer/src/plugins/s98plugin. The FM
         synthesis core is cisc's fmgen (m_s98/device/fmgen).

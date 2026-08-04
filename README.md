@@ -719,6 +719,8 @@ Support for **FamiTracker** modules (`.ftm`), jsr's tracker for the Nintendo NES
 
 The `.ftm` extension is shared with the Atari **Face The Music** format (magic `FTMN`), which the OpenMPT plugin handles; FamiTracker is content-gated to its own magic (`FamiTracker Module`) so the two coexist. Namco 163 (N163) and Sunsoft 5B modules are not yet driven — upstream never wired their channel handlers — and decline gracefully (Skip).
 
+Not in the Mac App Store build (the engine is GPL-2 or later end to end — see [`LEGAL-PLUS`](./LEGAL-PLUS)), so 1,597 rows are dropped from that index. The 95 **Face The Music** `.ftm` rows are OpenMPT's and keep playing in both builds, which is why the drop is keyed on the format name rather than the extension.
+
 Extensions: `.ftm` (FamiTracker; Face The Music `.ftm` routes to OpenMPT)
 
 ### vgmstream

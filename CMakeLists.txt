@@ -290,6 +290,60 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_MDX ON)
 endif()
+# famitrackerplugin drives the vendored FamiTracker CX slice
+# (external/famitracker-cx), whose engine -- the APU, the channel handlers, the
+# document loader and the instrument model alike -- is jsr's FamiTracker under
+# GPL-2 or later. PROVENANCE.md's "mixed GPL-2 / New BSD" is true of the upstream
+# package as a whole, but every file we actually compile that matters carries the
+# GPL boilerplate; only blargg's Blip_Buffer (LGPL) and emu2413 (zlib-style) are
+# permissive. So the plugin must be ABSENT from the mas binary, following
+# CM_HAVE_UADE's pattern.
+#
+# Cost: 1,597 rows (960 modland "FamiTracker/", 637 Battle of the Bits, plus 2
+# scene.org rows filed under "Demoscene"). This one NEEDS formatPlayer entries in
+# MusicDatabase.cpp -- unlike CM_HAVE_MDX, ".ftm" is NOT sole-claimed: libopenmpt
+# advertises it for the unrelated Atari "Face The Music" format, so "ftm" is in
+# playableExtensions() in every build and the plain extension test would keep all
+# 1,597 rows visible and unplayable. The 95 "Face The Music" rows are OpenMPT's
+# and must keep playing in mas -- which is exactly why the keys are (extension,
+# format) pairs.
+#
+# Rerouting was measured and rejected: only 42 of the 1,597 rows have a
+# title+composer twin anywhere else in the catalog (39 of those against .nsf),
+# and several of those are coincidental title collisions. This is a scene corpus
+# of originals, not game rips with NSF counterparts.
+#
+# No replacement exists to swap in, and this was checked rather than assumed.
+# Every other engine that reads .ftm is GPL (0CC-FamiTracker, Dn-FamiTracker,
+# famitracker-cx itself, Furnace -- which is already gated out of mas for .dmf).
+# FamiStudio is MIT but is C#, imports "official 0.4.6 only", and renders through
+# its own engine: its own documentation calls the conversion lossy (slides
+# "a lossy process", VRC7 pitch/vibrato "will likely not sound like FamiTracker",
+# pitch+arpeggio envelopes wrong, "every other effect will be ignored").
+#
+# What a replacement WOULD look like, if this is ever revisited: the chip half is
+# already solved and permissively licensed. The NSFPlay/xgm cores vendored under
+# dmfplugin/furnace/src/engine/platform/sound/nes_nsfplay/ (nes_apu, nes_dmc,
+# nes_fds, nes_mmc5, nes_n106, nes_vrc6; "You can reuse these source code
+# freely") cover every chip FamiTracker uses bar VRC7 (emu2413, already in tree
+# three times) and Sunsoft 5B (emu2149 in libkss, or GME's Nes_Fme7_Apu), and are
+# independently vendorable out of the GPL Furnace tree the way Musashi and
+# StSound were. Only the driver would have to be written -- ~4,000 lines against
+# the documented module format, with famitracker-cx in the plus build as a
+# register-trace oracle (the mdxtrace pattern). Measured corpus shape for
+# phasing: 2A03-only 42%, +VRC6 69%, +MMC5 76%, +FDS 80%, +VRC7 89%.
+# Such an engine would also be a candidate to REPLACE famitracker-cx in plus,
+# because those cores can drive the N163 and Sunsoft 5B channels that upstream
+# never wired: 152 files, plus 21 saved by FamiTracker 0.5.0-beta/0CC (module
+# version 0x450, rejected by the FILE_VER gate) and 2 Dn-FamiTracker files whose
+# magic canHandle declines -- 175 files, 11% of the corpus, that NEITHER variant
+# can play today. Until any of that exists, this is a clean loss in mas.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_FAMITRACKER OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_FAMITRACKER)
+else()
+    set(CM_HAVE_FAMITRACKER ON)
+endif()
 # PlayStation audio is the seventh case, and the only one that started as a
 # COPYRIGHT problem rather than a licence one.
 #
@@ -483,7 +537,7 @@ endif()
 # chip; the replacements were A/B'd by ear against the originals and shipped to
 # both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
 # index. See the plugin's README.md.
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, MDX=${CM_HAVE_MDX}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT}, AYFLY=${CM_HAVE_AYFLY}, ZXTUNE=${CM_HAVE_ZXTUNE})")
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, MDX=${CM_HAVE_MDX}, FAMITRACKER=${CM_HAVE_FAMITRACKER}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT}, AYFLY=${CM_HAVE_AYFLY}, ZXTUNE=${CM_HAVE_ZXTUNE})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -622,7 +676,7 @@ set(MUSICPLAYER_PLUGINS
     kssplugin quartetplugin wsrplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin fnkplugin
-    famitrackerplugin libvgmplugin vgmstreamplugin
+    libvgmplugin vgmstreamplugin
     victrackerplugin klystrackplugin csidplugin musplugin
 )
 # GPL -- plus build only, see CM_HAVE_UADE above.
@@ -661,6 +715,12 @@ endif()
 # ".mdx" rows; nothing else claims the extension.
 if(CM_HAVE_MDX)
     list(APPEND MUSICPLAYER_PLUGINS mdxplugin)
+endif()
+# GPL-2+ (FamiTracker CX / jsr's FamiTracker engine) -- plus build only, see
+# CM_HAVE_FAMITRACKER above. Costs 1,597 .ftm rows in mas; the 95 Atari "Face The
+# Music" .ftm rows stay with OpenMPT in both variants.
+if(CM_HAVE_FAMITRACKER)
+    list(APPEND MUSICPLAYER_PLUGINS famitrackerplugin)
 endif()
 # MAME 1997-2008 (non-commercial) + GPL-2 peops -- plus build only, see
 # CM_HAVE_AO above. This is what plays PSF/PSF2 now that the Sony BIOS is gone.
@@ -753,6 +813,10 @@ endif()
 # Same for mdxplugin_register() -- see CM_HAVE_MDX above.
 if(NOT CM_HAVE_MDX)
     target_compile_definitions(plugin_register PRIVATE CM_NO_MDX)
+endif()
+# Same for famitrackerplugin_register() -- see CM_HAVE_FAMITRACKER above.
+if(NOT CM_HAVE_FAMITRACKER)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_FAMITRACKER)
 endif()
 # Same for aoplugin_register() -- see CM_HAVE_AO above.
 if(NOT CM_HAVE_AO)

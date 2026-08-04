@@ -1267,6 +1267,37 @@ bool songFormatHasNoPlayer(SongInfo const& song,
             // the two extension keys cannot be folded and must both be present.
             {{"psf", "soundfactory"}, { "uade" }},
             {{"danger-castle", "soundfactory"}, { "uade" }},
+            // ".ftm" is the eighth case, and it is the ".mus" shape exactly:
+            // libopenmpt advertises the extension for the unrelated Atari "Face
+            // The Music" format (magic "FTMN"), so "ftm" sits in
+            // playableExtensions() even in a mas build with no FamiTracker
+            // decoder at all -- and all 1,597 NES rows would be indexed,
+            // downloaded on select, and only then fail. famitrackerplugin is
+            // GPL-2+ end to end (jsr's engine, APU included) and is not linked
+            // in mas; see CM_HAVE_FAMITRACKER in CMakeLists.txt.
+            //
+            // Keying on the (extension, format) PAIR is what makes this safe:
+            // the 95 "Face The Music" rows carry a different format name, so
+            // they keep the plain extension result and keep playing in mas,
+            // which is the whole point. Mirrors the formatOverride key of the
+            // same name in buildPluginGroups() -- keep the two in step.
+            //
+            // Single-candidate: there is no mas replacement. Every other engine
+            // that reads .ftm is GPL, and FamiStudio (MIT) is a C# importer with
+            // its own lossy engine, not a player.
+            {{"ftm", "famitracker"}, { "famitracker" }},
+            // The same songs under a generic label. Both were content-probed
+            // over the network, not inferred: these two scene.org rows filed as
+            // "Demoscene" start with the "FamiTracker Module" magic and really
+            // are famitrackerplugin's.
+            //
+            // A third generically-labelled .ftm row is deliberately NOT listed:
+            //   Nintendo Entertainment System (NES) --
+            //   .../parties/2017/dihalt17/mmul/4791_i_will_try.ftm
+            // is XML, not a FamiTracker module and not Face The Music either.
+            // Nothing plays it in EITHER variant, so hiding it in mas alone
+            // would misattribute a pre-existing gap to this gate.
+            {{"ftm", "demoscene"}, { "famitracker" }},
             // ".sndh" is the mirror image and must NOT be listed anywhere:
             // sndhplugin (AtariAudio, MIT) claims it in BOTH variants, so all
             // 6,079 of those rows keep playing in mas. That is the whole point
@@ -1321,7 +1352,8 @@ bool songIsSilentSid(SongInfo const& song, std::set<std::string> const& silent)
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
     defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE) || \
     defined(CM_NO_AO) || defined(CM_NO_NDS) || defined(CM_NO_USF) ||    \
-    defined(CM_NO_HT) || defined(CM_NO_ZXTUNE) || defined(CM_NO_MDX)
+    defined(CM_NO_HT) || defined(CM_NO_ZXTUNE) || defined(CM_NO_MDX) || \
+    defined(CM_NO_FAMITRACKER)
 static bool isContainerExt(std::string e); // defined near resolveExtension()
 
 // Every extension SOME registered plugin claims by name -- i.e. everything this
@@ -1633,7 +1665,8 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
 #if defined(CM_NO_UADE) || defined(CM_NO_VICE) || defined(CM_NO_GOATTRACKER) || \
     defined(CM_NO_DMF) || defined(CM_NO_SC68) || defined(CM_NO_POKEYNOISE) || \
     defined(CM_NO_AO) || defined(CM_NO_NDS) || defined(CM_NO_USF) ||    \
-    defined(CM_NO_HT) || defined(CM_NO_ZXTUNE) || defined(CM_NO_MDX)
+    defined(CM_NO_HT) || defined(CM_NO_ZXTUNE) || defined(CM_NO_MDX) || \
+    defined(CM_NO_FAMITRACKER)
                 // Same rule, build-scoped: without uadeplugin this variant has
                 // no decoder for the Amiga custom-replayer formats, without
                 // vicepluginbridge none for Compute! Sidplayer, without

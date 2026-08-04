@@ -200,6 +200,59 @@ Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         mdxcrplugin/cmdx, not built by either variant) and shelved at roughly
         3.7% median register-stream fidelity against the reference.
 
+Component: FamiTracker CX (FamiTracker .ftm playback -- NES 2A03 + expansions)
+Author: FamiTracker by jsr (Jonathan Liss); cross-platform "FamiTracker CX"
+        fork by Dan Spencer (nukep, https://github.com/nukep/famitracker-cx).
+        A boost-free engine slice (document loader, sound driver and APU,
+        incl. blargg's Blip_Buffer) is vendored at external/famitracker-cx/;
+        the GUI, frontends, dynamic sound sinks and WAV export are dropped.
+        See external/famitracker-cx/PROVENANCE.md for the chipmachine patches.
+License: GNU General Public License v2.0 or later. Upstream describes itself as
+        mixed GPL-2 / New BSD, and that is true of the whole package, but every
+        engine file this build actually compiles -- the APU, the channel
+        handlers, the document loader, the instrument model -- carries the
+        GPL-2-or-later boilerplate. The only permissive parts are blargg's
+        Blip_Buffer (LGPL) and emu2413 (zlib-style), neither of which is the
+        engine. See the per-file headers and external/famitracker-cx/core/COPYING.
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_FAMITRACKER=OFF, so neither famitrackerplugin nor its vendored
+        FamiTracker CX sources are compiled). 1,597 ".ftm" songs are dropped
+        from that variant's index to match -- 960 modland "FamiTracker/", 637
+        Battle of the Bits, and 2 scene.org rows filed under "Demoscene" that
+        were content-probed to confirm they are FamiTracker modules.
+        The extension is SHARED and the split is preserved: ".ftm" is also the
+        Atari "Face The Music" format (magic "FTMN"), which libopenmpt plays in
+        BOTH variants. Those 95 songs are unaffected. Because libopenmpt
+        advertises the extension everywhere, dropping the NES rows needs
+        format-name keys in MusicDatabase.cpp rather than the plain extension
+        test -- see the ".ftm" entries in songFormatHasNoPlayer().
+        No permissive replacement exists, and this was checked rather than
+        assumed. Every other engine that reads .ftm is GPL: 0CC-FamiTracker,
+        Dn-FamiTracker, FamiTracker CX itself, and Furnace (already excluded
+        from that variant for .dmf). FamiStudio is MIT but is not a player: it
+        is C#, it imports "official 0.4.6 only", and it renders through its own
+        engine, which its documentation states will not reproduce FamiTracker's
+        slides, VRC7 pitch/vibrato or combined pitch+arpeggio envelopes, and
+        which ignores every effect outside a listed subset.
+        Rerouting was measured and rejected: only 42 of the 1,597 rows have a
+        title+composer twin anywhere else in the catalog. This is a corpus of
+        scene originals, not game rips with NSF counterparts.
+        A replacement would have to be a driver, not a core swap. The chip half
+        is already permissive: the NSFPlay/xgm cores (nes_apu, nes_dmc, nes_fds,
+        nes_mmc5, nes_n106, nes_vrc6; "You can reuse these source code freely"),
+        plus emu2413 for VRC7 and emu2149 for Sunsoft 5B, cover every chip
+        FamiTracker uses. Only the sequencer would be new work, against the
+        published module format. Such an engine would also be a candidate to
+        REPLACE this component in THIS build, because those cores can drive the
+        Namco 163 and Sunsoft 5B channels FamiTracker CX never wired: 152 files,
+        plus 21 modules saved by FamiTracker 0.5.0-beta/0CC (file version 0x450,
+        rejected by the loader's version gate) and 2 Dn-FamiTracker files whose
+        magic canHandle declines. Those 175 files, 11% of the corpus, play in
+        NEITHER variant today.
+Notice: The plugin compiles the slice at hidden visibility and partial-links
+        (ld -r) so the APU's generic symbols (Blip_Buffer, ...) are localized
+        and do not collide with GME's / NerdTracker's blargg emulation.
+
 Component: Ayfly (ZX Spectrum AY-3-8910)
 Author: Developed by Sergey Vladimirov (Deryabin Andrew). The embedded Z80 CPU
         core is z80ex by Boo-boo, which contains code from the FUSE emulator

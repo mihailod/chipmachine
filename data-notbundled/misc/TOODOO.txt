@@ -1,14 +1,8 @@
-Big tasks:
+MAS Compliance:
 
-Finish suggestions from the plugins chat
+- clean room partial deflemask GPL (IBM),PROMPT ready	2071
 
-plugin		GPL LOC	GPL files	songs	what fixing it means
-
-TODO:
-maxtraxplugin	1,812	4		93	clean-room Paula + driver
-famitrackerplug	21,082 (external)	1,638	clean-room driver
-
-clean room partial dmf (2071 songs) -- PROMPT ready
+- maxtraxplugin GPL (amiga)	1,812	4		93	clean-room Paula + driver
 
 ----------------------------
 BUGS:
@@ -16,84 +10,17 @@ BUGS:
 - many songs are shown in MAS which should not be, at the formats tail formats with less than 5 songs almost none of them play and most of them should not be shown at all. i think this is some bug in pruning for MAS -- investigate. example: ymst format has 1 song -- should not be shown at all, .tw format shows 1 unplayable song, .tme also 1 unplayable etc... i think there is some bug making this songs surface in MAS (they all do play in PLUS and are a part of a wider corpus for example .tme has 16 songs, ymst has 1379, tw has 46...)
 
 --------------------
-
 Features:
 
 - Add tracker-style scrolling note pattern where possible by format
 
 - enhance operations on lists, need playlist tab filter with drill that shows the members with artwork on the side like when they play when you scroll up down in the drilled list
 
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-## 1. INSTANT REJECTION: Dynamic Library Linking & Cross-Dependencies
-
-Look closely at your `otool -L` output for internal Frameworks:
-
-@loader_path/libssl.3.dylib
-@loader_path/libcrypto.3.dylib
-...
-@loader_path/libpng16.16.dylib
-
-### What is broken:
-
-1. **`libssl.3.dylib` and `libcrypto.3.dylib`:** They are actively linked by other dynamic libraries in your bundle (e.g., `libcurl` or your FFmpeg libraries) via `@loader_path`. Because OpenSSL is physically linked and loaded, **Apple’s static analyzer will flag your submission for missing export compliance paperwork**.
-2. **`libpng16.16.dylib`:** It is linked via `@loader_path` inside `libcrypto.3.dylib`.
-
-### The Fix:
-
-You MUST add the explicit encryption declaration to your `Info.plist` to prevent your app from being placed on hold upon submission:
-
-<key>ITSAppUsesNonExemptEncryption</key>
-<false/>
-
----
-
-## 2. INSTANT REJECTION: Document Types vs. UTI Mismatch
-
-Your exported UTI (`org.mihailod.chipmachine.chiptune`) in `UTExportedTypeDeclarations` explicitly declares hundreds of raw extensions (`208`, `2dx`, `mod`, `xm`, `sid`, `s3m`, etc.).
-
-**However, look back at your `Info.plist` document types:**
-
-* Document Type #1 maps `org.mihailod.chipmachine.chiptune`.
-* Document Type #2 maps raw extensions (`CFBundleTypeExtensions`) directly without UTI references.
-
-### What is broken:
-
-Mac App Store validation enforces **strict UTI mapping**. Standard raw `CFBundleTypeExtensions` in `CFBundleDocumentTypes` without a mapped `LSItemContentTypes` are flagged as deprecated and rejected during App Store Connect ingestion.
-
-### The Fix:
-
-Delete Document Type #2 (`CFBundleTypeExtensions`) completely from your `Info.plist`. Since all extensions are already mapped inside your `UTExportedTypeDeclarations` under `org.mihailod.chipmachine.chiptune`, Document Type #1 covers every single one of those tracker extensions legally.
-
----
-
-## 3. INSTANT REJECTION: Code Signing & Hardened Runtime
-
-Because your build currently has `Signature=adhoc` and `CodeDirectory v=20400 flags=0x2(adhoc)`:
-
-When you eventually sign with your Apple Developer account ($99 keys), your `codesign` command MUST include `--options runtime`.
-
-If you code sign without the Hardened Runtime bit set (`0x10000(runtime)`), App Store Connect will reject the `.pkg`/`.app` upload instantly.
-
----
-
-## 4. RUNTIME REJECTION: Network Access vs. Local File Access
-
-You have `com.apple.security.network.client = true` enabled in your entitlements, which is correct for online streaming/radio features.
-
-However, because `com.apple.security.files.user-selected.read-only = true` is active:
-
-* If ChipMachine uses internal direct C/C++ file paths (like `fopen("/Users/...")`) without going through an `NSOpenPanel` or `NSOpen Save Panel` interaction, macOS Sandbox will crash or return `EACCES` when attempting to load local music files or samples.
-
----
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 -CONFIRM NO GPL CODE OR REFERENCES ARE ANYWHERE in the MAS version -- look at the ChipMachine.app built and packaged by me for the mac app store submission
 
 ---------------------------------------------
 
-- recheck everything (both signing and MAS) and do everything that needs to be done before the $99 payment
+- recheck everything again (both signing and MAS) and do everything that needs to be done before the $99 payment
 
 - pay $99 and do post payment parts
 
