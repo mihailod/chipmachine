@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <!--
-  PrivacyInfo.xcprivacy -- App Store privacy manifest.
+  PrivacyInfo.xcprivacy - App Store privacy manifest.
 
   package_app.sh copies this to Contents/Resources/PrivacyInfo.xcprivacy (bundle
-  Resources ROOT -- Apple does not look anywhere else). It lives here beside the
+  Resources ROOT - Apple does not look anywhere else). It lives here beside the
   entitlements plists rather than in data/ because data/ is copied wholesale with
   `cp -R` into Resources/data/, which would seal a duplicate into the signature,
-  and because data/ is for assets the app LOADS at runtime -- this file is
+  and because data/ is for assets the app LOADS at runtime - this file is
   packaging metadata the app never reads.
 
   Every declaration below was derived from the actual imports of the built mas
@@ -40,11 +40,11 @@
     <key>NSPrivacyAccessedAPITypes</key>
     <array>
         <!-- Binary imports _stat, _fstat, _lstat, _getattrlist.
-             C617.1 -- metadata of files inside the app container: the music.db
+             C617.1 - metadata of files inside the app container: the music.db
                        index, the web cache and the song cache under
                        ~/Library/{Caches,Application Support}/ (sandbox container
                        on mas), which the indexer stats to decide what is stale.
-             3B52.1 -- metadata of files the user specifically granted access to:
+             3B52.1 - metadata of files the user specifically granted access to:
                        tunes opened by double-click or the open panel, reached
                        through the security-scoped bookmarks in
                        FileOpenHandler.mm. -->
@@ -63,11 +63,11 @@
              field. Checked, and worth re-checking if this ever changes:
                * sqlite3 (libsqlite3.a) calls statfs/fstatfs only to read
                  f_fstypename and MNT_RDONLY, to choose a file-locking strategy
-                 -- see sqlite3.c around lines 37795, 38500, 39905. It never
+                 - see sqlite3.c around lines 37795, 38500, 39905. It never
                  touches f_bavail/f_bfree.
                * JUCE (libsksplugin.a / libBaseCli.a / libBaseExport.a) does have
                  a real free-space query in juce_SharedCode_posix.h:636, but it
-                 is DEAD-STRIPPED -- no getBytesFreeOnVolume symbol survives in
+                 is DEAD-STRIPPED - no getBytesFreeOnVolume symbol survives in
                  the linked binary. Verify with:
                      nm build-mas/chipmachine | c++filt | grep -i BytesFree
              The app also does not behave differently when disk space is low, so

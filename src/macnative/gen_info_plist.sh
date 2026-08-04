@@ -172,7 +172,7 @@ cat <<PLIST_HEAD
 
          false = "uses no non-exempt encryption". The bundle does ship OpenSSL
          (libssl.3/libcrypto.3 in Contents/Frameworks, pulled in by the libav
-         stack -- otool -L on Contents/Frameworks/libavformat.62.dylib shows
+         stack - otool -L on Contents/Frameworks/libavformat.62.dylib shows
          both), but it is used ONLY for standard HTTPS transport when fetching
          tunes from public archives. That falls under the exemption for encryption limited
          to authentication/transport via standard protocols. The app implements
@@ -180,7 +180,7 @@ cat <<PLIST_HEAD
          and does not encrypt user content at rest.
 
          Re-evaluate this if the app ever encrypts stored data, adds its own
-         crypto, or ships a non-standard protocol -- it is a legal declaration,
+         crypto, or ships a non-standard protocol - it is a legal declaration,
          not a build flag. Emitted for BOTH variants: mas needs it for App Store
          ingestion, and plus carries it harmlessly (Gatekeeper ignores it). -->
     <key>ITSAppUsesNonExemptEncryption</key>
