@@ -260,4 +260,102 @@ void restoreSecurityScopedFiles()
     }
 }
 
+// --- Companion-file (multi-file format) folder access ---------------------
+//
+// The Powerbox grant that comes with an "Open With" / double-click / drag-drop
+// is STRICTLY PER-FILE. Verified empirically with a minimal app carrying the
+// same entitlements as the mas build: reading the opened file succeeds, while
+// reading a SIBLING in the same folder fails with errno 1 (EPERM), and even
+// listing the folder is denied.
+//
+// That breaks every multi-file format when the tune is opened from outside the
+// container -- TFMX (mdat./smpl.), the PSF family's .psflib/.gsflib/.usflib,
+// MDX .pdx, KSS .SM1/.SM2, SoundSmith .W, AdPlug banks, MaxTrax shared banks --
+// because for a LOCAL song the companions are read in place beside it rather
+// than fetched (see MusicPlayerList: a local mirror yields an empty fetch list).
+//
+// The only way to widen the grant is to have the user select the FOLDER, so we
+// ask for it explicitly, once, with the panel already pointed at the right
+// place. The resulting folder bookmark is stored in the same app-scoped store
+// as file bookmarks and re-acquired at launch by restoreSecurityScopedFiles().
+
+namespace {
+
+// Folders the user has already declined this session. Without this a user who
+// cancels would be re-prompted for every song in that folder.
+NSMutableSet<NSString*>* declinedFolders()
+{
+    static NSMutableSet<NSString*>* s = [NSMutableSet set];
+    return s;
+}
+
+// Can we enumerate this directory? This is the cheapest true test of whether
+// the sandbox will let the decoders reach companions: the empirical run showed
+// listing fails before any sibling read is attempted.
+bool folderIsReadable(NSString* dir)
+{
+    NSError* err = nil;
+    return [[NSFileManager defaultManager] contentsOfDirectoryAtPath:dir
+                                                               error:&err] != nil;
+}
+
+} // namespace
+
+bool ensureFolderAccess(std::string const& filePath)
+{
+    if (filePath.empty()) return true;
+    if (!isSandboxed()) return true; // plus / dev build: nothing to grant
+
+    __block bool ok = false;
+    @autoreleasepool {
+        NSString* p = [NSString stringWithUTF8String:filePath.c_str()];
+        if (p == nil) return true;
+        NSString* dir = [p stringByDeletingLastPathComponent];
+        if (dir.length == 0) return true;
+
+        // Already reachable: the folder was granted earlier in this session, or
+        // restored from a bookmark at launch, or the song lives in our own
+        // container (everything downloaded/cached does).
+        if (folderIsReadable(dir)) return true;
+        if ([declinedFolders() containsObject:dir]) return false;
+
+        // Must run on the main thread -- NSOpenPanel is AppKit UI. Callers are
+        // expected to be on it already (ChipMachine::update()); the dispatch is
+        // belt-and-braces so a future caller on a worker thread cannot deadlock
+        // the render loop or trip AppKit's main-thread assertion.
+        void (^ask)(void) = ^{
+            NSOpenPanel* panel = [NSOpenPanel openPanel];
+            [panel setCanChooseFiles:NO];
+            [panel setCanChooseDirectories:YES];
+            [panel setAllowsMultipleSelection:NO];
+            [panel setPrompt:@"Grant Access"];
+            [panel setMessage:
+                @"This tune loads samples or instrument banks from other files "
+                 "in the same folder. macOS only granted access to the single "
+                 "file you opened, so please grant access to its folder."];
+            [panel setDirectoryURL:[NSURL fileURLWithPath:dir]];
+            [[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
+
+            if ([panel runModal] == NSModalResponseOK) {
+                NSURL* url = [[panel URLs] firstObject];
+                if (url != nil) {
+                    // Keep the extension alive for the session, then persist it
+                    // so later launches do not have to ask again.
+                    [url startAccessingSecurityScopedResource];
+                    rememberOpenedFile([[url path] UTF8String]);
+                    ok = folderIsReadable([url path]);
+                }
+            }
+            if (!ok) [declinedFolders() addObject:dir];
+        };
+
+        if ([NSThread isMainThread]) {
+            ask();
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), ask);
+        }
+    }
+    return ok;
+}
+
 } // namespace chipmachine

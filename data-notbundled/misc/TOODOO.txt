@@ -25,82 +25,46 @@ Features:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-## Entitlements & Sandboxing Verification
-
-Your sandboxing entitlements look decent for basic audio playback:
-
-* `com.apple.security.app-sandbox = true`
-* `com.apple.security.files.bookmarks.app-scoped = true`
-* `com.apple.security.files.user-selected.read-only = true`
-* `com.apple.security.network.client = true`
-
-**Warning on Sandboxing vs. File Access:**
-Since `user-selected.read-only` is active, if `ChipMachine` attempts to open local `.mod` or `.sid` files via a custom file browser UI or internal path scanning (rather than an `NSOpenPanel` drag-and-drop / file picker invocation), access will be denied at runtime silently by kernel sandbox checks.
-
 ---
 
-This is a remarkably clean baseline. Your `@rpath` setup (`@executable_path/../Frameworks`) is properly mapped, all nested dylibs are validated without broken linkage paths, and there are no forbidden executable binaries sitting in `Contents/Resources/`.
-
-However, looking at the exact cross-section of your two test outputs, there are **4 mandatory App Store rejection traps** and **1 runtime crash hazard** you must fix before submitting.
-
----
-
-## 1. App Store Mandatory Rejection Factors
-
+## App Store Mandatory Rejection Factors
 ### Key Blocker 1: Missing Hardened Runtime (`runtime` flag)
 
 Your `codesign` output shows:
 
-```text
 CodeDirectory v=20400 size=38353 flags=0x2(adhoc)
-
-```
 
 For Mac App Store submissions, Apple strictly requires the **Hardened Runtime** flag (`0x10000(runtime)` or `flags=0x10000(runtime)`).
 Without `--options runtime` passed during codesign, `altool` / App Store Connect will instantly reject the package during ingestion.
 
+---
+
+## App Store Mandatory Rejection Factors
 ### Key Blocker 2: Orphaned Dynamic Libraries (`libcrypto.3.dylib`, `libssl.3.dylib`, `libpng16.16.dylib`)
 
 * **OpenSSL (`libcrypto`/`libssl`):** Your main binary links to `/usr/lib/libcurl.4.dylib`, but `libcrypto.3.dylib` and `libssl.3.dylib` are physically present in `Contents/Frameworks/`. If your executable doesn't explicitly link them (or if `libcurl` isn't compiled to link them via `@rpath`), Apple's automated scanner will flag them. If they are unused, **delete them**. If they *are* used, you MUST add `<key>ITSAppUsesNonExemptEncryption</key>` to your `Info.plist`.
 * **PNG (`libpng16.16.dylib`):** `libpng16` is sitting in `Frameworks/`, but it does not appear in `otool -L` for `chipmachine`. Unlinked dylibs bundled inside an app package trigger static analysis warnings during ingest.
 
+---
+
+## App Store Mandatory Rejection Factors
 ### Key Blocker 3: Missing Export Compliance Key in `Info.plist`
 
 Even if you remove OpenSSL, your app links `/usr/lib/libcurl.4.dylib`. You need to explicitly set encryption compliance in `Info.plist` to prevent TestFlight / Store ingestion holds:
 
-```xml
 <key>ITSAppUsesNonExemptEncryption</key>
 <false/>
 
-```
+---
 
+## App Store Mandatory Rejection Factors
 ### Key Blocker 4: Document Type Extension Fallback (`LSItemContentTypes`)
 
 In your `Info.plist`, Document Type #1 uses `CFBundleTypeExtensions` instead of conforming to Uniform Type Identifiers (`LSItemContentTypes`):
 
-```text
 "CFBundleTypeExtensions" => [ "208", "2dx", ... ]
 
-```
-
 Since macOS Catalina (and strictly enforced in macOS 11+ App Store guidelines), file association declarations relying solely on `CFBundleTypeExtensions` without corresponding `UTImportedTypeDeclarations` or `UTExportedTypeDeclarations` are deprecated and trigger submission warnings or rejection for custom/legacy file extensions.
-
----
-
-## 2. The Runtime Sandbox Hazard
-
-You have `com.apple.security.files.user-selected.read-only = true` enabled.
-
-Because `ChipMachine` is an audio/tracker player:
-
-* If the user selects a directory or playlist file via `NSOpenPanel`, macOS issues a security bookmark grant for that exact path/folder.
-* **The Catch:** If a tracker module (e.g., `.mod`, `.xm`, `.it`, or Amiga disk images) tries to load external sub-instruments, samples, or related bank files from parent/sibling folders *outside* the explicitly opened file path without Security-Scoped Bookmarks, the sandbox kernel will block `fopen()` / `read()` calls with `EACCES` (Permission Denied).
-
----
-
-The output from this round gives us the exact technical map of what will trigger rejection in Apple’s automated ingestion system.
-
-Here are the concrete findings, ranked from **Instant Rejection** down to **Runtime Rejections**.
 
 ---
 
@@ -108,13 +72,10 @@ Here are the concrete findings, ranked from **Instant Rejection** down to **Runt
 
 Look closely at your `otool -L` output for internal Frameworks:
 
-```text
 @loader_path/libssl.3.dylib
 @loader_path/libcrypto.3.dylib
 ...
 @loader_path/libpng16.16.dylib
-
-```
 
 ### What is broken:
 
@@ -125,11 +86,8 @@ Look closely at your `otool -L` output for internal Frameworks:
 
 You MUST add the explicit encryption declaration to your `Info.plist` to prevent your app from being placed on hold upon submission:
 
-```xml
 <key>ITSAppUsesNonExemptEncryption</key>
 <false/>
-
-```
 
 ---
 

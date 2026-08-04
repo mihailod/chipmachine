@@ -2448,6 +2448,27 @@ int ChipMachine::filterOptionCount(FilterOption const& opt) const
     return s;
 }
 
+#ifdef __APPLE__
+void ChipMachine::grantCompanionFolderIfNeeded(const std::string& path)
+{
+    // Only formats that actually read companions in place are worth a prompt --
+    // asking for folder access on every dropped .mod would be pure nagging.
+    // songNeedsCompanions() asks the plugin that claims the file, so this stays
+    // correct as formats are added without a list to maintain here.
+    if (path.empty() || !player.songNeedsCompanions(path)) { return; }
+
+    // Self-gates: returns true immediately when not sandboxed, or when the
+    // folder is already reachable (restored bookmark, earlier grant, or a file
+    // inside our own container).
+    if (ensureFolderAccess(path)) { return; }
+
+    // Declined, or the grant did not take. Play anyway -- many of these tunes
+    // still render something without their sample bank -- but say why it will
+    // sound wrong, since the failure is otherwise silent.
+    toast("No folder access: samples may be missing", NORMAL);
+}
+#endif
+
 void ChipMachine::update()
 {
 #ifdef __APPLE__
@@ -2457,6 +2478,7 @@ void ChipMachine::update()
     // ready (see after the gate).
     for (auto& p : drainPendingOpenFiles()) {
         rememberOpenedFile(p); // persist sandbox access; no-op unless sandboxed
+        grantCompanionFolderIfNeeded(p);
         filesToOpen.push_back(p);
     }
 #endif
@@ -2466,6 +2488,7 @@ void ChipMachine::update()
     for (auto& p : grappix::screen.get_dropped_files()) {
 #ifdef __APPLE__
         rememberOpenedFile(p); // persist sandbox access; no-op unless sandboxed
+        grantCompanionFolderIfNeeded(p);
 #endif
         filesToOpen.push_back(p);
     }

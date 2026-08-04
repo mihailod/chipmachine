@@ -410,6 +410,16 @@ private:
 
     std::string open_file_dialog();
 
+#ifdef __APPLE__
+    // For an externally-opened local song (Finder "Open With", drag-and-drop):
+    // if its format reads companion files in place beside it, make sure the
+    // containing folder is actually reachable. Under the App Sandbox the grant
+    // that arrives with the file does NOT cover its siblings, so this prompts
+    // once for the folder. No-op for tunes without companions, and for the
+    // un-sandboxed plus build. Main thread only (called from update()).
+    void grantCompanionFolderIfNeeded(const std::string& path);
+#endif
+
     void addKey(uint32_t key, statemachine::Condition const& cond,
                 std::string const& cmd);
 

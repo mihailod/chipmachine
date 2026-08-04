@@ -1,5 +1,8 @@
 #include "ChipMachine.h"
 #include "modutils.h"
+#ifdef __APPLE__
+#    include "macnative/FileOpenHandler.h" // rememberOpenedFile (folder grants)
+#endif
 
 #include <coreutils/environment.h>
 
@@ -390,6 +393,23 @@ void ChipMachine::setupCommands()
     cmd("local_file_playback", [=] {
         std::string path = open_file_dialog();
         if (path != "") {
+#ifdef __APPLE__
+            // The panel also accepts a DIRECTORY, which under the App Sandbox is
+            // how a user grants a whole folder at once -- the only way for
+            // multi-file formats (TFMX mdat./smpl., .psflib, .pdx, ...) to reach
+            // their companions, since a single-file grant does not cover
+            // siblings. A folder is a grant, not something to play: record the
+            // bookmark and report it. Un-sandboxed builds keep the bookmark
+            // no-op but still get the "nothing to play" behaviour, so the two
+            // variants behave the same.
+            if (utils::File(path).isDir()) {
+                rememberOpenedFile(path);
+                auto name = utils::path_filename(path);
+                toast("Folder access granted: " + (name.empty() ? path : name),
+                      NORMAL);
+                return;
+            }
+#endif
             SongInfo si;
             si.path = path;
             player.playSong(si);

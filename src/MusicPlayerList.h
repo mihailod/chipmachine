@@ -175,6 +175,16 @@ public:
 
     bool playlistUpdated() { return playList.wasUpdated(); }
 
+    // Does the tune at this LOCAL path pull in companion files (sample banks,
+    // instrument sets, PSF libs) that its decoder reads in place beside it?
+    // Used before playing an externally-opened file under the App Sandbox, where
+    // the per-file grant does not extend to siblings and the folder has to be
+    // granted separately. `mp` is private, so this exposes just the question.
+    bool songNeedsCompanions(const std::string& path)
+    {
+        return !mp.getSecondaryFiles(path).empty();
+    }
+
     void wait();
 
 private:

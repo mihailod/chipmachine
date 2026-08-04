@@ -51,7 +51,32 @@ std::vector<std::string> drainPendingOpenFiles();
 // Persist a security-scoped bookmark for a user-opened file so a favorited or
 // queued reference to it survives a relaunch. Safe to call repeatedly; a path
 // already recorded is refreshed. Returns immediately when not sandboxed.
+//
+// Also accepts a DIRECTORY the user granted (see ensureFolderAccess and the
+// folder branch of open_file_dialog) -- a folder bookmark is stored and
+// restored exactly like a file one, and covers everything inside it.
 void rememberOpenedFile(std::string const& path);
+
+// Multi-file formats: make the folder CONTAINING path reachable.
+//
+// The Powerbox grant from a double-click / drag-drop / open panel covers only
+// the one file the user picked -- a sibling read fails with EPERM and even
+// listing the folder is denied (verified empirically against these exact
+// entitlements). Formats whose decoder reads companions in place beside the
+// song (TFMX mdat./smpl., .psflib/.gsflib/.usflib, .pdx, .SM1/.SM2, SoundSmith
+// .W, AdPlug banks, MaxTrax banks) therefore fail silently when opened from
+// outside the container.
+//
+// Call this for a local song that declares companions, BEFORE handing it to the
+// player. When the containing folder is already reachable it returns true with
+// no UI. Otherwise it shows a folder-selection panel pointed at that folder and,
+// on approval, starts and persists a security-scoped bookmark for it.
+//
+// Returns true when the folder is readable afterwards. Declining is remembered
+// for the session so the user is not re-prompted per song in the same folder.
+// Not sandboxed (plus / dev build) -> returns true immediately, no UI. Must be
+// called on the main thread, or it will bounce there synchronously.
+bool ensureFolderAccess(std::string const& filePath);
 
 // At launch, resolve every persisted bookmark and start accessing it (kept for
 // the whole process lifetime -- never balanced with a stop, deliberately, for a
