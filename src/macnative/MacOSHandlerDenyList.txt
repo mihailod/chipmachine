@@ -59,3 +59,175 @@ tfmx1.5
 js
 md
 dat
+
+# --- UADE modland prefix tokens that PASS the [a-z0-9]+ sanity filter ---
+# Same category as the block above (real filename is "<token>.songname", so the
+# macOS extension is "songname" and the token is never a suffix), but these are
+# purely alphanumeric, so gen_info_plist.sh's filter cannot spot them and they
+# shipped as file associations until now.
+#
+# Derived, not guessed. A token is listed here only if ALL FOUR hold:
+#   1. it appears as a prefixes= value in uade/eagleplayer.conf;
+#   2. it is absent from the mas binary's --dump-extensions (i.e. no non-UADE
+#      plugin claims it as a real extension);
+#   3. no fixture named *.<token> exists anywhere under testmus/;
+#   4. no song path in data/ or data-notbundled/ ends in ".<token>".
+# Tokens with any suffix-form evidence were deliberately KEPT, even when the
+# count was low and probably a title word (one, two, star, max, tiny, zen, bye,
+# sonic) -- keeping a spurious row costs one plist entry, dropping a real one
+# breaks double-click for that format.
+#
+# Spot-checked in the corpus: ash.cj / ash.cosmic, thm.Beam, agi.ingame_01 --
+# all prefix form, confirming .ash (Ashley Hogg) and friends are flat/prefix
+# naming rather than extensions.
+40a
+40b
+41a
+50a
+60a
+61a
+ac1
+ac1d
+agi
+alp
+aon4
+aon8
+ash
+aval
+bfc
+chan
+cin
+cplx
+crb
+db
+di
+dlm1
+dlm2
+dmu2
+dns
+dwold
+emsv6
+fc3
+fc4
+fcm
+fuz
+fuzz
+gm
+gv
+hmc
+hn
+hrt
+it1
+jcb
+jcbo
+jpn
+jpnd
+jpold
+kef7
+krs
+lax
+mdst
+mexxmp
+mfp
+mkiio
+mod15
+mosh
+mpro
+mtp2
+mug2
+mw
+noisepacker2
+noisepacker3
+np1
+np2
+np3
+npp
+nru
+ntpk
+octamed
+p10
+p21
+p30
+p40a
+p40b
+p41a
+p4x
+p50a
+p5a
+p5x
+p60
+p60a
+p61
+p61a
+p6x
+pha
+pm
+pm0
+pm01
+pm1
+pm10c
+pm18a
+pm2
+pm20
+pm4
+pm40
+pmz
+polk
+powt
+pp10
+pp20
+pp21
+pp30
+ppk
+pr1
+pr2
+prom
+pru
+pru1
+pru2
+prun
+prun1
+prun2
+pwr
+pyg
+pygm
+pygmy
+qc
+qpa
+qts
+rj
+rjp
+rkb
+s7g
+sdr
+sfx13
+sid1
+sjs
+skt
+skyt
+smn
+sndmon
+snt
+snx
+st30
+stpk
+tfhd7v
+tfhdpro
+tfmx
+tfmx7v
+tfmxpro
+thm
+tits
+tmk
+tp
+tp1
+tpu
+trc
+tro
+uds
+ufo
+un2
+unic2
+wn
+xan
+xann

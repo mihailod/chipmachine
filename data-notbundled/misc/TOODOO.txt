@@ -15,8 +15,6 @@ BUGS:
 
 - many songs are shown in MAS which should not be, at the formats tail formats with less than 5 songs almost none of them play and most of them should not be shown at all. i think this is some bug in pruning for MAS -- investigate. example: ymst format has 1 song -- should not be shown at all, .tw format shows 1 unplayable song, .tme also 1 unplayable etc... i think there is some bug making this songs surface in MAS (they all do play in PLUS and are a part of a wider corpus for example .tme has 16 songs, ymst has 1379, tw has 46...)
 
-- we now ship extensions we handle in plist and those need to be split into MAS and PLUS versions since MAS cannot handle all the extensions PLUS can. also we handle 1900+ extensions, that seems excessive, are we sure on this? apple mac app store review process might flag it. in the cmtest we test 350 or so unique ones, where is the rest coming from? i think we should reduce the extension list to the ones we actually tested in cmtest working just in case. -- what do you think? investigate and report before any work.
-
 --------------------
 
 Features:
@@ -27,7 +25,7 @@ Features:
 
 ------------------------
 
-Audit Feedbacks 1:
+Audit Feedback 1:
 
 - need the privacy nose in plist per recommendation:
 create data/misc/PrivacyInfo.xcprivacy
