@@ -200,6 +200,42 @@ Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         mdxcrplugin/cmdx, not built by either variant) and shelved at roughly
         3.7% median register-stream fidelity against the reference.
 
+Component: libvgm preferred chip cores (VGM / VGZ -- YM2151 and HuC6280)
+Author: MAME contributors (emu/cores/ym2151.c, Jarek Burczynski's YM2151); the
+        Ootake project (emu/cores/Ootake_PSG.c, HuC6280 PSG). Two cores of
+        ValleyBell's libvgm, vendored at external/zxtune/3rdparty/vgm.
+License: GNU General Public License v2.0 or later (ym2151.c is tagged
+        "license:GPL-2.0+"; Ootake_PSG.c carries GPL text without an SPDX tag).
+Notice: NOT COMPILED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_LIBVGM_GPL_CORES=OFF). The libvgm PLUGIN is in both variants --
+        it is the only decoder for the 1,341-row OPL Archive and most of VGMRips
+        -- so nothing is dropped from the mas index. Only the preferred core for
+        two chips differs, and both fallbacks are already compiled everywhere:
+          YM2151  -> nukedopm.c   (Nuked OPM, LGPL-2.1+): more accurate than the
+                     MAME core and measurably slower. Affects the X68000 corpus
+                     (202 VGMRips rows) and ~40% of the libvgm-routed BotB VGMs.
+          HuC6280 -> c6280_mame.c (BSD-3). Affects PC Engine (234 VGMRips rows,
+                     ~36% of the libvgm-routed BotB VGMs).
+        These two are here, rather than dropped from both variants like the five
+        unreachable GPL cores described in LEGAL, because for THEM the GPL core
+        is the one libvgm actually selects -- removing it is an audible change,
+        so this build keeps exactly what it has always used and only the mas
+        variant swaps. Both swaps were accepted only after an A/B render against
+        real game music: Castlevania (Sharp X68000) for the YM2151 and Aldynes
+        stage 1 (PC Engine) for the HuC6280, at RMS ratios of 1.00 and 0.98 with
+        no clipping on either side. With these cores present the PCM is
+        byte-identical to the pre-trim build.
+        KNOWN CAVEAT on the mas HuC6280 fallback, accepted deliberately: the
+        MAME core runs hot on noise/DDA-saturated material and clips where
+        Ootake does not (a Battle of the Bits rip measured 1.49x with 785
+        clipped samples in 30 s against Ootake's 3). libvgm's _CHIP_VOLUME table
+        carries one volume per chip TYPE, hand-corrected for K051649 and
+        C140/C219 only, so it is calibrated for the core listed first -- Ootake.
+        A per-core correction there (about 0.7x for MAME) would remove the
+        clipping. Ordinary game music is unaffected.
+        The rest of the libvgm core trim, including the GPL cores that remain in
+        BOTH variants because no alternative exists, is documented in LEGAL.
+
 Component: FamiTracker CX (FamiTracker .ftm playback -- NES 2A03 + expansions)
 Author: FamiTracker by jsr (Jonathan Liss); cross-platform "FamiTracker CX"
         fork by Dan Spencer (nukep, https://github.com/nukep/famitracker-cx).

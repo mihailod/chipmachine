@@ -344,6 +344,64 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_FAMITRACKER ON)
 endif()
+# libvgmplugin is the exception to the pattern above: the plugin is NOT gated
+# (it is the only decoder for the 1,341-row OPL Archive and much of VGMRips), but
+# libvgm bundles SEVERAL cores per chip and some of them are GPL. libvgm is built
+# for exactly this -- every core sits behind an EC_<CHIP>_<CORE> macro and every
+# chip behind SNDDEV_<CHIP>, enabled wholesale only when SNDDEV_SELECT is undefined
+# ("if not asked to select certain sound devices, just include everything").
+# libvgmplugin now defines SNDDEV_SELECT and picks cores explicitly.
+#
+# Five GPL cores were dropped from BOTH variants because they are unreachable
+# dead code -- libvgm's own preference order already puts a permissive core
+# first, so they were compiled in and never selected: ym2413.c + nukedopll.c
+# (emu2413 is the default), ymf262.c (AdLibEmu is, per libvgm's own comment,
+# "default, because it's better than MAME"), nes_apu.c (NSFPlay is), ym2612.c
+# (the GPGX core in fmopn.c is). Dropping them changes no audio in either build.
+#
+# THIS flag covers the two cases where the GPL core IS the active default, so
+# removing it is an audible change. plus keeps exactly what it has always used;
+# mas swaps to a non-GPL core that every build already compiles:
+#   * ym2151.c     -- MAME YM2151. mas uses nukedopm.c (Nuked OPM, LGPL-2.1):
+#                     more accurate, measurably slower. Affects the X68000 corpus
+#                     (202 VGMRips rows) and ~40% of libvgm-routed BotB VGMs.
+#   * Ootake_PSG.c -- Ootake HuC6280. mas uses c6280_mame.c (BSD-3). Affects PC
+#                     Engine (234 VGMRips rows, ~36% of routed BotB).
+# Both accepted only after an A/B render against real game music -- Castlevania
+# (Sharp X68000) and Aldynes stage 1 (PC Engine) -- at RMS ratios of 1.00 and
+# 0.98 with no clipping on either side.
+#
+# KNOWN CAVEAT on the HuC6280 swap, accepted deliberately: the MAME core runs hot
+# on noise/DDA-saturated material and clips where Ootake does not (BotB "Citizens
+# of Luala" 1.49x, 785 clipped samples in 30s vs Ootake's 3; another rip 1.29x,
+# 238 vs 0). Cause: libvgm's _CHIP_VOLUME table (player/vgmplayer.cpp) carries
+# ONE volume per chip TYPE, hand-corrected for K051649 and C140/C219 only, so it
+# is calibrated for whichever core is listed FIRST -- Ootake. A per-core
+# correction there (about 0.7x for MAME) would remove the clipping; nobody has
+# calibrated it yet, and ordinary game music is unaffected.
+#
+# What this does NOT fix: fmopn.c (the whole OPN family -- YM2203/2608/2610,
+# ~600-700 rows incl. all of PC-98/PC-88/Neo Geo), fmopl.c (YM3526 + Y8950 are
+# MAME-only in libvgm; the YM3812 path is not), ymf278b.c (OPL4), msm5232.c,
+# pwm.c, vsu.c and scd_pcm.c (RF5C164 -- VGMPlayer hard-requests FCC_GENS for it,
+# so it cannot simply be dropped) have NO alternative core in libvgm and are
+# still compiled into mas. They are declared as open items in LEGAL.
+# The fix for the big ones is ymfm (Aaron Giles, BSD-3), which implements
+# YM2203/2608/2610 + YM3526/Y8950 + YMF278B and needs a libvgm DEV_DEF adapter.
+# Take it from upstream aaronsgiles/ymfm, NOT from the copy under dmfplugin's
+# Furnace tree: Furnace is GPL and modifies what it vendors, so its copy carries
+# GPL modifications even though ymfm itself is BSD-3 (StSound/Musashi precedent).
+#
+# NOTE on the failure mode, which is why cores are NOT dropped wholesale: when a
+# core is missing, libvgm's VGMPlayer does `devInf->devDef = NULL; continue;` --
+# the file still loads and plays with that chip SILENT. There is no load error to
+# catch and nothing the index gate can see, so a dropped core is worse than a
+# dropped plugin: it produces quietly wrong audio instead of a clean Skip.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_LIBVGM_GPL_CORES OFF)
+else()
+    set(CM_HAVE_LIBVGM_GPL_CORES ON)
+endif()
 # PlayStation audio is the seventh case, and the only one that started as a
 # COPYRIGHT problem rather than a licence one.
 #
@@ -537,7 +595,7 @@ endif()
 # chip; the replacements were A/B'd by ear against the originals and shipped to
 # both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
 # index. See the plugin's README.md.
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, MDX=${CM_HAVE_MDX}, FAMITRACKER=${CM_HAVE_FAMITRACKER}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT}, AYFLY=${CM_HAVE_AYFLY}, ZXTUNE=${CM_HAVE_ZXTUNE})")
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, MDX=${CM_HAVE_MDX}, FAMITRACKER=${CM_HAVE_FAMITRACKER}, LIBVGM_GPL_CORES=${CM_HAVE_LIBVGM_GPL_CORES}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT}, AYFLY=${CM_HAVE_AYFLY}, ZXTUNE=${CM_HAVE_ZXTUNE})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
