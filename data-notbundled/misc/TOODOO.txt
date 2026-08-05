@@ -7,10 +7,6 @@ MAS Compliance:
 
 - maxtraxplugin GPL (amiga)	1,812	4		93	clean-room Paula + driver
 
-----------------
-
-- move technical details for plugins and formats from README.md into individual plugin's README files. create them if they don't exist. only leave links to them (if needed) in README.md. README.md is supposed to describe the features and usage for end users, not to dig deep into technical stuff.
-
 ----------------------------
 BUGS:
 
@@ -31,7 +27,7 @@ Features:
 
 ---------------------------------------------
 
--CONFIRM NO GPL CODE OR ANY OTHER SUSPICIOUS CODE OR REFERENCES ARE ANYWHERE in the MAS version -- look at the ChipMachine.app built and packaged by me for the mac app store submission and all files inside, like Apple would. If there are false alarms, let's disclose them in notes -- let me know. Do not change anything just do a deep check and report.
+-CONFIRM NO GPL CODE OR ANY OTHER SUSPICIOUS CODE OR REFERENCES ARE ANYWHERE in the MAS version -- look at the ChipMachine.app built and packaged by me for the mac app store submission and all files inside, like Apple would. If there are false alarms, let's disclose them in notes -- let me know. Do not change anything just do a deep check and report. Also is LGPL ok for app store?
 
 - recheck everything again (both signing and MAS) and do everything that needs to be done before the $99 payment
 
