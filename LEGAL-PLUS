@@ -200,22 +200,33 @@ Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         mdxcrplugin/cmdx, not built by either variant) and shelved at roughly
         3.7% median register-stream fidelity against the reference.
 
-Component: libvgm preferred chip cores (VGM / VGZ -- YM2151 and HuC6280)
-Author: MAME contributors (emu/cores/ym2151.c, Jarek Burczynski's YM2151); the
-        Ootake project (emu/cores/Ootake_PSG.c, HuC6280 PSG). Two cores of
-        ValleyBell's libvgm, vendored at external/zxtune/3rdparty/vgm.
-License: GNU General Public License v2.0 or later (ym2151.c is tagged
-        "license:GPL-2.0+"; Ootake_PSG.c carries GPL text without an SPDX tag).
+Component: libvgm GPL chip cores (VGM / VGZ -- OPN family, YM2151, HuC6280)
+Author: MAME contributors (emu/cores/fmopn.c, the YM2203/YM2608/YM2610 family
+        plus the GPGX YM2612 core; emu/cores/ym2151.c, Jarek Burczynski's
+        YM2151); the Ootake project (emu/cores/Ootake_PSG.c, HuC6280 PSG).
+        Three cores of ValleyBell's libvgm, vendored at
+        external/zxtune/3rdparty/vgm.
+License: GNU General Public License v2.0 or later (fmopn.c and ym2151.c are
+        tagged "license:GPL-2.0+"; Ootake_PSG.c carries GPL text without an
+        SPDX tag).
 Notice: NOT COMPILED into the Mac App Store variant (CM_VARIANT=mas builds with
         CM_HAVE_LIBVGM_GPL_CORES=OFF). The libvgm PLUGIN is in both variants --
         it is the only decoder for the 1,341-row OPL Archive and most of VGMRips
         -- so nothing is dropped from the mas index. Only the preferred core for
-        two chips differs, and both fallbacks are already compiled everywhere:
-          YM2151  -> nukedopm.c   (Nuked OPM, LGPL-2.1+): more accurate than the
+        these chips differs:
+          OPN family -> ymfm (Aaron Giles, BSD-3), through the adapter at
+                     libvgmplugin/opn_ymfm.cpp. This is the one that needed new
+                     code rather than a core swap: libvgm ships NO permissive
+                     OPN emulation, and fmopn.c covers ~600-700 rows (all of NEC
+                     PC-98, PC-88 and Neo Geo). See the ymfm entry in LEGAL.
+          YM2151     -> nukedopm.c (Nuked OPM, LGPL-2.1+): more accurate than the
                      MAME core and measurably slower. Affects the X68000 corpus
                      (202 VGMRips rows) and ~40% of the libvgm-routed BotB VGMs.
-          HuC6280 -> c6280_mame.c (BSD-3). Affects PC Engine (234 VGMRips rows,
+          HuC6280    -> c6280_mame.c (BSD-3). Affects PC Engine (234 VGMRips rows,
                      ~36% of the libvgm-routed BotB VGMs).
+        The YM2151 and HuC6280 fallbacks are already compiled in every build;
+        only ymfm is mas-only. fmopn.c also supplies the GPGX YM2612 core, so
+        that chip falls back to ym3438.c (Nuked OPN2, LGPL-2.1+) in mas.
         These two are here, rather than dropped from both variants like the five
         unreachable GPL cores described in LEGAL, because for THEM the GPL core
         is the one libvgm actually selects -- removing it is an audible change,

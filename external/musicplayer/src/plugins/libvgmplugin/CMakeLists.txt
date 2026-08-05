@@ -60,7 +60,6 @@ add_library(libvgmplugin_objs OBJECT
     ${LIBVGM_DIR}/emu/cores/rf5c68.c
     ${LIBVGM_DIR}/emu/cores/scd_pcm.c
     ${LIBVGM_DIR}/emu/cores/opnintf.c
-    ${LIBVGM_DIR}/emu/cores/fmopn.c
     ${LIBVGM_DIR}/emu/cores/ymdeltat.c
     ${LIBVGM_DIR}/emu/cores/oplintf.c
     ${LIBVGM_DIR}/emu/cores/adlibemu_opl2.c
@@ -150,7 +149,38 @@ add_library(libvgmplugin_objs OBJECT
 if(CM_HAVE_LIBVGM_GPL_CORES)
     target_sources(libvgmplugin_objs PRIVATE
         ${LIBVGM_DIR}/emu/cores/ym2151.c
-        ${LIBVGM_DIR}/emu/cores/Ootake_PSG.c)
+        ${LIBVGM_DIR}/emu/cores/Ootake_PSG.c
+        # fmopn.c holds the MAME OPN family AND the GPGX YM2612 core. mas builds
+        # ymfm instead (see below); this keeps plus byte-identical.
+        ${LIBVGM_DIR}/emu/cores/fmopn.c)
+endif()
+
+# The OPN family (YM2203 / YM2608 / YM2610) is the one chip group where libvgm
+# has NO permissive core at all: fmopn.c is MAME-derived GPL-2.0+ and is the only
+# implementation it ships. Rather than lose ~600-700 rows (all of NEC PC-98,
+# PC-88 and Neo Geo) in the App Store build, opn_ymfm.cpp wraps Aaron Giles' ymfm
+# (BSD-3, external/ymfm, vendored from upstream -- NOT from Furnace's modified
+# copy) in libvgm's DEV_DEF interface. Only the OPN/SSG/ADPCM translation units
+# are compiled; ymfm's OPL/OPM/OPZ cores are unused because libvgm already has
+# permissive or LGPL cores for those chips.
+#
+# plus keeps fmopn.c (unchanged audio, and it still owns the GPGX YM2612 core);
+# mas builds ymfm instead. opnintf.c carries a local patch adding the EC_*_MAME /
+# EC_*_YMFM selection -- grep "chipmachine local patch" there, re-apply on
+# revendor. .orig copies of both files sit next to them.
+set(YMFM_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../ymfm)
+if(NOT CM_HAVE_LIBVGM_GPL_CORES)
+    target_sources(libvgmplugin_objs PRIVATE
+        opn_ymfm.cpp
+        ${YMFM_DIR}/src/ymfm_opn.cpp
+        ${YMFM_DIR}/src/ymfm_ssg.cpp
+        ${YMFM_DIR}/src/ymfm_adpcm.cpp
+        ${YMFM_DIR}/src/ymfm_pcm.cpp)
+    target_include_directories(libvgmplugin_objs PRIVATE ${YMFM_DIR}/src)
+    set_source_files_properties(opn_ymfm.cpp ${YMFM_DIR}/src/ymfm_opn.cpp
+        ${YMFM_DIR}/src/ymfm_ssg.cpp ${YMFM_DIR}/src/ymfm_adpcm.cpp
+        ${YMFM_DIR}/src/ymfm_pcm.cpp
+        PROPERTIES COMPILE_OPTIONS "-std=c++17")
 endif()
 
 target_include_directories(libvgmplugin_objs PRIVATE
@@ -184,8 +214,8 @@ target_compile_definitions(libvgmplugin_objs PRIVATE
     SNDDEV_MSM5232 SNDDEV_BSMT2000 SNDDEV_ICS2115
     # --- cores, for the chips that have more than one ---
     EC_YM2413_EMU2413        # was: + MAME (GPL) + Nuked (GPL), both unreachable
-    EC_YM2612_GPGX           # GPGX lives in fmopn.c and is the default
-    EC_YM2612_NUKED          # ym3438.c, LGPL-2.1+
+    EC_YM2612_NUKED          # ym3438.c, LGPL-2.1+ (GPGX lives in fmopn.c, so it
+                             # is plus-only -- see the variant block below)
     EC_YM2151_NUKED          # nukedopm.c, LGPL-2.1+ (+ MAME below, plus only)
     EC_YM3812_ADLIBEMU       # LGPL-2.1; MAME's YM3812 path dropped. fmopl.c is
     EC_YM3812_NUKED          # still built -- YM3526/Y8950 are MAME-only.
@@ -200,7 +230,16 @@ target_compile_definitions(libvgmplugin_objs PRIVATE
     EC_SN76496_MAME EC_SN76496_MAXIM)    # MAME is hard-requested by VGMPlayer
 if(CM_HAVE_LIBVGM_GPL_CORES)
     target_compile_definitions(libvgmplugin_objs PRIVATE
-        EC_YM2151_MAME EC_C6280_OOTAKE)
+        EC_YM2151_MAME EC_C6280_OOTAKE
+        # fmopn.c: the MAME OPN cores, and the GPGX YM2612 core that lives in the
+        # same file and is libvgm's first choice for that chip.
+        EC_YM2203_MAME EC_YM2608_MAME EC_YM2610_MAME EC_YM2612_GPGX)
+else()
+    target_compile_definitions(libvgmplugin_objs PRIVATE
+        EC_YM2203_YMFM EC_YM2608_YMFM EC_YM2610_YMFM
+        # The YM2608's rhythm section plays from an ADPCM-A ROM inside the chip;
+        # without it every PC-98 track loses its drums. See opn_ymfm.cpp.
+        OPN_YMFM_RHYTHM_ROM)
 endif()
 target_compile_options(libvgmplugin_objs PRIVATE
     -fvisibility=hidden -fvisibility-inlines-hidden -w)

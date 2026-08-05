@@ -67,21 +67,18 @@ Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
 License: GNU General Public License v3.0 or later
 
 Component: libvgm chip cores with no permissive alternative (VGM / VGZ playback)
-Author: MAME contributors (fmopn.c, fmopl.c, ymf278b.c, msm5232.c), the Gens and
-        Mednafen projects (pwm.c, scd_pcm.c, vsu.c). Part of ValleyBell's libvgm,
-        vendored at external/zxtune/3rdparty/vgm -- see the permissive libvgm
-        entry in section 4 for the plugin itself.
-License: GNU General Public License v2.0 (ymf278b.c) or v2.0-or-later (fmopn.c,
-        fmopl.c, msm5232.c, and the GPL text in pwm.c and vsu.c). scd_pcm.c is
+Author: MAME contributors (fmopl.c, ymf278b.c, msm5232.c), the Gens and Mednafen
+        projects (pwm.c, scd_pcm.c, vsu.c). Part of ValleyBell's libvgm, vendored
+        at external/zxtune/3rdparty/vgm -- see the permissive libvgm entry in
+        section 4 for the plugin itself.
+License: GNU General Public License v2.0 (ymf278b.c) or v2.0-or-later (fmopl.c,
+        msm5232.c, and the GPL text in pwm.c and vsu.c). scd_pcm.c is
         Gens code carrying NO licence statement at all; Gens itself is GPL-2, so
         it is filed here rather than assumed permissive.
-Notice: These SEVEN files are the remainder of the libvgm core trim (see the
+Notice: These SIX files are the remainder of the libvgm core trim (see the
         libvgm entry in section 4). Every other GPL core was either dropped as
         unreachable, or replaced by a permissive/LGPL one in the mas variant
         (see LEGAL-PLUS). These have no alternative core in libvgm at all:
-          fmopn.c    the whole OPN family (YM2203 / YM2608 / YM2610) -- roughly
-                     600-700 catalog rows, including all of NEC PC-98, PC-88 and
-                     Neo Geo. Also supplies the GPGX YM2612 core.
           fmopl.c    YM3526 and Y8950 specifically; both are MAME-only in libvgm
                      (the YM3812 path is served by AdLibEmu and is not used).
           ymf278b.c  OPL4.
@@ -95,12 +92,11 @@ Notice: These SEVEN files are the remainder of the libvgm core trim (see the
         continues, so the file still plays with that chip SILENT -- quietly wrong
         audio that no index gate can detect. Dropping them was therefore judged
         worse than declaring them.
-        The intended fix is ymfm (Aaron Giles, BSD-3), which implements
-        YM2203/2608/2610, YM3526, Y8950 and YMF278B, and needs a libvgm DEV_DEF
-        adapter. It must be vendored from upstream (aaronsgiles/ymfm) rather than
-        from the copy under dmfplugin's Furnace tree: ymfm is BSD-3 at origin and
-        Furnace's own LICENSE says so, but Furnace is GPL and modifies what it
-        vendors. Same reasoning as the StSound re-vendor and the MIT Musashi.
+        fmopn.c -- the whole OPN family, and by far the largest of these at
+        ~600-700 rows -- USED to be on this list and no longer is: the mas build
+        now plays YM2203/YM2608/YM2610 with ymfm (Aaron Giles, BSD-3), see the
+        entry below. ymfm also implements YM3526, Y8950 and YMF278B, so extending
+        that same adapter would retire fmopl.c and ymf278b.c as well.
 
 Component: S98 (PC-98 / FM sound log)
 Author: s98plugin, vendored under musicplayer/src/plugins/s98plugin. The FM
@@ -318,6 +314,37 @@ Notice: Covers hundreds of formats (CRI ADX/HCA, FMOD FSB, Microsoft XWB/XMA,
         at hidden visibility and partial-links (ld -r) to localize symbols, and
         content/extension-gates canHandle so it never contests extensions already
         owned by the other plugins (OpenMPT, GME, FFMpeg, the ZX AY players, ...).
+
+Component: ymfm (OPN family for the Mac App Store build -- YM2203/2608/2610)
+Author: Aaron Giles (https://github.com/aaronsgiles/ymfm), vendored UNMODIFIED at
+        external/ymfm from the upstream repository. The adapter presenting it
+        through libvgm's C DEV_DEF interface is chipmachine's own
+        musicplayer/src/plugins/libvgmplugin/opn_ymfm.cpp.
+License: BSD 3-Clause
+Notice: Compiled into the mas variant ONLY, where it replaces the GPL fmopn.c
+        (the plus build keeps fmopn.c so its audio is bit-for-bit what it always
+        was). This is what keeps ~600-700 rows -- all of NEC PC-98, PC-88 and
+        Neo Geo, plus much of the arcade corpus -- playing in a build with no
+        GPL OPN core. Only ymfm_opn/ssg/adpcm/pcm are built; its OPL/OPM/OPZ
+        cores are unused because libvgm already has permissive or LGPL ones.
+        Taken from UPSTREAM deliberately. A copy of ymfm also sits under
+        dmfplugin/furnace/, but Furnace is GPL-2+ and modifies what it vendors,
+        so its copy carries GPL-licensed changes even though ymfm is BSD-3 at
+        origin. Same reasoning as the StSound re-vendor and the MIT Musashi.
+        Verified by A/B render against fmopn on the PC-98 YM2203 and Neo Geo
+        YM2610 fixtures and on real PC-98 OPNA game music (Rusty, C-Lab):
+        RMS ratio 1.00-1.01 with no clipping. Two calibrations live in the
+        adapter and are commented there: libvgm's fmopn leaves the
+        hardware-verified ">>1" commented out for YM2608/YM2610 so it runs 2x
+        hot (the wrapper doubles ymfm's output to match libvgm's _CHIP_VOLUME
+        calibration), and ymfm's prescaler-independent sample rate is folded
+        down 3:1 for YM2203/YM2608 to the rate fmopn reports, because feeding
+        libvgm a 166 kHz device rate destabilises its resampler.
+        The YM2608 rhythm section reads the chip-internal ADPCM-A ROM dump that
+        ships with libvgm (fmopn_2608rom.h -- Yamaha ROM data, not MAME code,
+        carrying its own "derived from the chip's output" note); without it
+        every PC-98 track would lose its drums. Build with
+        -UOPN_YMFM_RHYTHM_ROM to omit it.
 
 Component: libvgm (OPL-family VGM / VGZ playback)
 Author: ValleyBell's libvgm (https://github.com/ValleyBell/libvgm), vendored at

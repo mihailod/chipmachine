@@ -25,17 +25,23 @@ static UINT8 get_ssg_funcs(const DEV_DEF* devDef, ssg_callbacks* retFuncs);
 static AY8910_CFG* get_ssg_config(const DEV_GEN_CFG* cfg, UINT32 clockDiv, UINT8 ssgType);
 static void init_ssg_devinfo(DEV_INFO* devInf, const DEV_GEN_CFG* baseCfg, UINT8 clockDiv, UINT8 ssgType);
 
+#ifdef EC_YM2203_MAME
 static UINT8 device_start_ym2203(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf);
 static void device_stop_ym2203(void* param);
 static UINT8 device_ym2203_link_ssg(void* param, UINT8 linkID, const DEV_INFO* defInfSSG);
+#endif
 
+#ifdef EC_YM2608_MAME
 static UINT8 device_start_ym2608(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf);
 static void device_stop_ym2608(void* param);
 static UINT8 device_ym2608_link_ssg(void* param, UINT8 linkID, const DEV_INFO* defInfSSG);
+#endif
 
+#ifdef EC_YM2610_MAME
 static UINT8 device_start_ym2610(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf);
 static void device_stop_ym2610(void* param);
 static UINT8 device_ym2610_link_ssg(void* param, UINT8 linkID, const DEV_INFO* defInfSSG);
+#endif
 
 
 typedef struct _opn_info
@@ -55,6 +61,10 @@ static const DEVLINK_IDS* DeviceLinkIDs_OPN(const DEV_GEN_CFG* devCfg)
 
 
 #ifdef SNDDEV_YM2203
+#ifdef EC_YM2203_YMFM
+extern DEV_DEF devDef_YMFM_2203;	// libvgmplugin/opn_ymfm.cpp
+#endif
+#ifdef EC_YM2203_MAME
 static DEVDEF_RWFUNC devFunc_MAME_2203[] =
 {
 	{RWF_REGISTER | RWF_WRITE, DEVRW_A8D8, 0, ym2203_write},
@@ -80,6 +90,7 @@ static DEV_DEF devDef_MAME_2203 =
 	
 	devFunc_MAME_2203,	// rwFuncs
 };
+#endif	// EC_YM2203_MAME
 
 static const char* DeviceName_YM2203(const DEV_GEN_CFG* devCfg)
 {
@@ -105,13 +116,22 @@ const DEV_DECL sndDev_YM2203 =
 	DeviceChannelNames_YM2203,
 	DeviceLinkIDs_OPN,
 	{	// cores
+#ifdef EC_YM2203_MAME
 		&devDef_MAME_2203,
+#endif
+#ifdef EC_YM2203_YMFM
+		&devDef_YMFM_2203,
+#endif
 		NULL
 	}
 };
 #endif	// SNDDEV_YM2203
 
 #ifdef SNDDEV_YM2608
+#ifdef EC_YM2608_YMFM
+extern DEV_DEF devDef_YMFM_2608;	// libvgmplugin/opn_ymfm.cpp
+#endif
+#ifdef EC_YM2608_MAME
 static DEVDEF_RWFUNC devFunc_MAME_2608[] =
 {
 	{RWF_REGISTER | RWF_WRITE, DEVRW_A8D8, 0, ym2608_write},
@@ -139,6 +159,7 @@ static DEV_DEF devDef_MAME_2608 =
 	
 	devFunc_MAME_2608,	// rwFuncs
 };
+#endif	// EC_YM2608_MAME
 
 static const char* DeviceName_YM2608(const DEV_GEN_CFG* devCfg)
 {
@@ -170,13 +191,23 @@ const DEV_DECL sndDev_YM2608 =
 	DeviceChannelNames_YM2608,
 	DeviceLinkIDs_OPN,
 	{	// cores
+#ifdef EC_YM2608_MAME
 		&devDef_MAME_2608,
+#endif
+#ifdef EC_YM2608_YMFM
+		&devDef_YMFM_2608,
+#endif
 		NULL
 	}
 };
 #endif	// SNDDEV_YM2608
 
 #ifdef SNDDEV_YM2610
+#ifdef EC_YM2610_YMFM
+extern DEV_DEF devDef_YMFM_2610;	// libvgmplugin/opn_ymfm.cpp
+extern DEV_DEF devDef_YMFM_2610B;
+#endif
+#ifdef EC_YM2610_MAME
 static DEVDEF_RWFUNC devFunc_MAME_2610[] =
 {
 	{RWF_REGISTER | RWF_WRITE, DEVRW_A8D8, 0, ym2610_write},
@@ -224,6 +255,7 @@ static DEV_DEF devDef_MAME_2610B =
 	
 	devFunc_MAME_2610,	// rwFuncs
 };
+#endif	// EC_YM2610_MAME
 
 static const char* DeviceName_YM2610(const DEV_GEN_CFG* devCfg)
 {
@@ -259,7 +291,12 @@ const DEV_DECL sndDev_YM2610 =
 	DeviceChannelNames_YM2610,
 	DeviceLinkIDs_OPN,
 	{	// cores
+#ifdef EC_YM2610_MAME
 		&devDef_MAME_2610,
+#endif
+#ifdef EC_YM2610_YMFM
+		&devDef_YMFM_2610,
+#endif
 		NULL
 	}
 };
@@ -315,7 +352,7 @@ static void init_ssg_devinfo(DEV_INFO* devInf, const DEV_GEN_CFG* baseCfg, UINT8
 	return;
 }
 
-#ifdef SNDDEV_YM2203
+#if defined(SNDDEV_YM2203) && defined(EC_YM2203_MAME)
 static UINT8 device_start_ym2203(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf)
 {
 	OPN_INF* info;
@@ -370,7 +407,7 @@ static UINT8 device_ym2203_link_ssg(void* param, UINT8 linkID, const DEV_INFO* d
 }
 #endif	// SNDDEV_YM2203
 
-#ifdef SNDDEV_YM2608
+#if defined(SNDDEV_YM2608) && defined(EC_YM2608_MAME)
 static UINT8 device_start_ym2608(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf)
 {
 	OPN_INF* info;
@@ -425,7 +462,7 @@ static UINT8 device_ym2608_link_ssg(void* param, UINT8 linkID, const DEV_INFO* d
 }
 #endif	// SNDDEV_YM2608
 
-#ifdef SNDDEV_YM2610
+#if defined(SNDDEV_YM2610) && defined(EC_YM2610_MAME)
 static UINT8 device_start_ym2610(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf)
 {
 	OPN_INF* info;

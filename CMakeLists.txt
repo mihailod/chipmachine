@@ -380,17 +380,18 @@ endif()
 # correction there (about 0.7x for MAME) would remove the clipping; nobody has
 # calibrated it yet, and ordinary game music is unaffected.
 #
-# What this does NOT fix: fmopn.c (the whole OPN family -- YM2203/2608/2610,
-# ~600-700 rows incl. all of PC-98/PC-88/Neo Geo), fmopl.c (YM3526 + Y8950 are
-# MAME-only in libvgm; the YM3812 path is not), ymf278b.c (OPL4), msm5232.c,
-# pwm.c, vsu.c and scd_pcm.c (RF5C164 -- VGMPlayer hard-requests FCC_GENS for it,
-# so it cannot simply be dropped) have NO alternative core in libvgm and are
-# still compiled into mas. They are declared as open items in LEGAL.
-# The fix for the big ones is ymfm (Aaron Giles, BSD-3), which implements
-# YM2203/2608/2610 + YM3526/Y8950 + YMF278B and needs a libvgm DEV_DEF adapter.
-# Take it from upstream aaronsgiles/ymfm, NOT from the copy under dmfplugin's
-# Furnace tree: Furnace is GPL and modifies what it vendors, so its copy carries
-# GPL modifications even though ymfm itself is BSD-3 (StSound/Musashi precedent).
+# The OPN family (fmopn.c -- YM2203/YM2608/YM2610, ~600-700 rows including all of
+# PC-98, PC-88 and Neo Geo) was the biggest of these and is now SOLVED: mas builds
+# Aaron Giles' ymfm (BSD-3, external/ymfm, vendored from UPSTREAM rather than from
+# the modified copy in dmfplugin's GPL Furnace tree) through the adapter at
+# libvgmplugin/opn_ymfm.cpp. plus still builds fmopn.c, so its audio is unchanged.
+#
+# What this does NOT fix: fmopl.c (YM3526 + Y8950 are MAME-only in libvgm; the
+# YM3812 path is not), ymf278b.c (OPL4), msm5232.c, pwm.c, vsu.c and scd_pcm.c
+# (RF5C164 -- VGMPlayer hard-requests FCC_GENS for it, so it cannot simply be
+# dropped) have NO alternative core and are still compiled into mas. They are
+# declared as open items in LEGAL. ymfm also implements YM3526/Y8950 and YMF278B,
+# so extending the same adapter would retire fmopl.c and ymf278b.c too.
 #
 # NOTE on the failure mode, which is why cores are NOT dropped wholesale: when a
 # core is missing, libvgm's VGMPlayer does `devInf->devDef = NULL; continue;` --
