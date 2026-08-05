@@ -30,6 +30,14 @@ if(NOT DEFINED CM_HAVE_LIBVGM_GPL_CORES)
     set(CM_HAVE_LIBVGM_GPL_CORES ON)
 endif()
 
+# The legacy 32X PWM core is GPL. Never let it into a build that is meant to be
+# free of GPL, however the developer A/B switch was left set.
+if(CM_LIBVGM_LEGACY_PWM AND NOT CM_HAVE_LIBVGM_GPL_CORES)
+    message(FATAL_ERROR
+        "CM_LIBVGM_LEGACY_PWM builds the GPL Gens PWM core and cannot be used "
+        "with CM_HAVE_LIBVGM_GPL_CORES=OFF (the Mac App Store variant).")
+endif()
+
 add_library(libvgmplugin_objs OBJECT
     LibVGMPlugin.cpp
     # --- libvgm infrastructure + all chip cores (mirrors libvgm's `vgm` target) ---
@@ -77,7 +85,12 @@ add_library(libvgmplugin_objs OBJECT
     ${LIBVGM_DIR}/emu/cores/ayintf.c
     ${LIBVGM_DIR}/emu/cores/emu2149.c
     ${LIBVGM_DIR}/emu/cores/ay8910.c
-    ${LIBVGM_DIR}/emu/cores/pwm.c
+    # pwm.c (Gens 32X PWM, GPL-2 by descent) is REPLACED in both variants by
+    # chipmachine's own pwm_32x.c, written against the documented registers.
+    # CM_LIBVGM_LEGACY_PWM builds the old GPL core instead. It exists only so a
+    # future change to pwm_32x.c can be A/B'd against the core it replaced, with
+    # that file as the single variable. It is refused for mas below.
+    $<IF:$<BOOL:${CM_LIBVGM_LEGACY_PWM}>,${LIBVGM_DIR}/emu/cores/pwm.c,${CMAKE_CURRENT_SOURCE_DIR}/pwm_32x.c>
     ${LIBVGM_DIR}/emu/cores/gb.c
     ${LIBVGM_DIR}/emu/cores/nesintf.c
     ${LIBVGM_DIR}/emu/cores/np_nes_apu.c
@@ -120,7 +133,7 @@ add_library(libvgmplugin_objs OBJECT
     ${LIBVGM_DIR}/emu/cores/k005289.c
     ${LIBVGM_DIR}/emu/cores/k007232.c
     ${LIBVGM_DIR}/emu/cores/msm5205.c
-    ${LIBVGM_DIR}/emu/cores/msm5232.c
+    # msm5232.c (MAME, GPL-2.0+) is plus-only -- see the variant block below.
     # gzip-capable loaders (USE_ZLIB -> reads .vgz transparently)
     ${LIBVGM_DIR}/utils/FileLoader.c
     ${LIBVGM_DIR}/utils/MemoryLoader.c
@@ -166,7 +179,14 @@ if(CM_HAVE_LIBVGM_GPL_CORES)
         # only as a DEFAULT in vgmplayer.cpp -- BSD-3 rf5c68.c (MAME) implements
         # the same device and is compiled in both variants, so mas uses that.
         # See the local patch at "case DEVID_RF5C68" in player/vgmplayer.cpp.
-        ${LIBVGM_DIR}/emu/cores/scd_pcm.c)
+        ${LIBVGM_DIR}/emu/cores/scd_pcm.c
+        # msm5232.c is UNREACHABLE from any VGM that exists, so mas simply drops
+        # it and needs no replacement and no index gate. libvgm reads the chip's
+        # clock from header offset 0xF4, which is one of its own extension slots:
+        # the VGM spec has never defined a field there, and even a v1.71 header
+        # ends at 0xD0. VGMRips has no MSM5232 pack at all. Kept in plus only so
+        # the chip is there if the format ever grows into that range.
+        ${LIBVGM_DIR}/emu/cores/msm5232.c)
 endif()
 
 # Three chip groups have NO permissive core in libvgm at all, only a GPL one:
@@ -239,7 +259,11 @@ target_compile_definitions(libvgmplugin_objs PRIVATE
     SNDDEV_POKEY SNDDEV_QSOUND SNDDEV_SCSP SNDDEV_WSWAN SNDDEV_VBOY_VSU
     SNDDEV_SAA1099 SNDDEV_ES5503 SNDDEV_ES5506 SNDDEV_X1_010 SNDDEV_C352
     SNDDEV_GA20 SNDDEV_MIKEY SNDDEV_K007232 SNDDEV_K005289 SNDDEV_MSM5205
-    SNDDEV_MSM5232 SNDDEV_BSMT2000 SNDDEV_ICS2115
+    SNDDEV_BSMT2000 SNDDEV_ICS2115
+    # NOTE: SNDDEV_MSM5232 is the ONE omission from SoundEmu.c's list, and it is
+    # deliberate -- it is defined in the plus-only block below. Unlike the other
+    # chips here, the MSM5232's DEV_DECL lives inside its GPL core file rather
+    # than a separate *intf.c, so the chip and the core cannot be gated apart.
     # --- cores, for the chips that have more than one ---
     EC_YM2413_EMU2413        # was: + MAME (GPL) + Nuked (GPL), both unreachable
     EC_YM2612_NUKED          # ym3438.c, LGPL-2.1+ (GPGX lives in fmopn.c, so it
@@ -268,7 +292,9 @@ if(CM_HAVE_LIBVGM_GPL_CORES)
         # dead code here too (EC_YM3526_YMFM above wins for both variants).
         EC_Y8950_MAME
         # scd_pcm.c. This macro ALSO drives the RF5C164 default in vgmplayer.cpp.
-        EC_RF5C68_GENS)
+        EC_RF5C68_GENS
+        # msm5232.c holds its own DEV_DECL, so the chip goes with the core.
+        SNDDEV_MSM5232)
 else()
     target_compile_definitions(libvgmplugin_objs PRIVATE
         EC_YM2203_YMFM EC_YM2608_YMFM EC_YM2610_YMFM

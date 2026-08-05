@@ -1,3 +1,4 @@
+
 MAS Compliance:
 
 - finish libvgm work
@@ -7,6 +8,9 @@ MAS Compliance:
 - maxtraxplugin GPL (amiga)	1,812	4		93	clean-room Paula + driver
 ----------------
 - move technical details for plugins and formats from README.md into individual plugin's README files. create them if they don't exist. only leave links to them (if needed) in README.md. README.md is supposed to describe the features and usage for end users, not to dig deep into technical stuff.
+
+- move fonts licensing in LEGAL (it is someplace else now). all licensing should be in LEGAL (and LEGAL-PLUS)
+
 ----------------------------
 BUGS:
 
@@ -34,3 +38,86 @@ Features:
 - pay $99 and do post payment parts
 
 - submit to apple!
+
+
+-------------------
+-------------------
+-------------------
+
+ChipMachine — App Review Information
+
+Description
+
+ChipMachine is a fun visual music player and indexed collection browser for retro computer and console chip music.
+
+Explore, search, and instantly play a large library of retro game and historical computer music formats from legendary systems such as Sinclair ZX Spectrum, Commodore 64, Amiga, Atari 800/ST, Amstrad CPC, Acorn Archimedes, Sam Coupe, older gaming consoles, retro Japanese computers, and other classic platforms. Selected retro podcasts and radio stations can also be streamed.
+
+Key Features
+
+* Browse and search a large multi-format database of retro music collections.
+* Play hundreds of classic tracker and chip music formats.
+* View artwork and metadata associated with collections and songs.
+* Support multiple playback engines for different historical systems.
+* Filter and discover music by platform, format, collection, and other categories.
+* Amiga-intro-style music visualiser
+
+Reviewer Testing Instructions
+
+After launching ChipMachine:
+
+1. Type to search for a song and/or composer.
+2. Use UP/DOWN to navigate results and ENTER to play the selected song.
+3. Press TAB multiple times to cycle through various content filters.
+4. Press CTRL+H to display the help screen.
+
+Playback requires network connectivity because the audio files are accessed on demand when the user initiates playback. Playback of local music files is also supported in which case there is no need for network.
+
+Legal and Technical Notes
+
+0. Introduction
+
+ChipMachine is a standalone application. It does not execute external utilities and does not require access to user files outside the application container and outside the locations explicitly selected by the user (local files playback).
+
+The app includes embedded playback libraries required to decode supported music formats. Audio decoding and playback are performed locally on the user's Mac after the requested audio data is retrieved.
+
+The application includes a built-in indexed music database. No external files or accounts are required to verify the application. The database contains metadata aggregated from publicly available retro computing music archives.
+
+1. Licensing and Open Source Components
+
+No GPL-licensed code or libraries are used in ChipMachine.
+
+All third-party components included are compatible with App Store distribution and are used under their respective licenses. The application includes only libraries and components whose licenses permit their use in a distributed macOS application.
+
+See Credits.rtf for further details.
+
+2. No YouTube Playback
+
+ChipMachine does not bundle or execute yt-dlp, does not spawn external download utilities, and does not process arbitrary user-provided URLs for external media extraction.
+
+Any remaining YouTube-related strings visible in the binary are related to database metadata or artwork references and are not related to YouTube playback functionality.
+
+3. POSIX Subprocess API Imports (system, popen, execve, fork)
+
+Static analysis may detect imports of POSIX subprocess APIs.
+
+ChipMachine itself does not execute arbitrary shell commands, spawn user-provided processes, or invoke external commands during normal operation.
+
+The only use of system() comes from the bundled SunVox SDK library. SunVox internally probes for optional external conversion utilities (ffmpeg / avconv) as part of its media handling support.
+
+This functionality is not used by ChipMachine to execute commands or scripts supplied by users.
+
+4. Lua Runtime Search Paths and App Sandbox Compatibility
+
+ChipMachine uses Lua through an embedded Lua runtime.
+
+The application does not load user-provided Lua scripts and does not dynamically load Lua modules from external filesystem locations.
+
+No runtime filesystem access outside the application bundle is required for Lua operation.
+
+The application operates correctly under App Sandbox with embedded resources only.
+
+5. Audio Content and Network Access
+
+No audio files are embedded with the application.
+
+Only publicly available metadata is indexed. Individual songs are retrieved from publicly available online archives when playback is requested by the user.

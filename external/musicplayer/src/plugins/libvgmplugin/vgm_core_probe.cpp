@@ -161,6 +161,19 @@ int probe(const char* path, double seconds)
 	}
 
 	wav_close(wav);
+
+	// Re-read after rendering: a core that uses SetSampleRateChangeCallback (the
+	// 32X PWM does, its rate is clock/cycle and the cycle register is written by
+	// the log) reports a different rate here than it did at Start().
+	{
+		std::vector<PLR_DEV_INFO> after;
+		engine->GetSongDeviceInfo(after);
+		for (size_t i = 0; i < after.size() && i < devList.size(); i++)
+			if (after[i].smplRate != devList[i].smplRate)
+				printf("   dev %2u  rate CHANGED %u -> %u\n", (unsigned)after[i].id,
+				       (unsigned)devList[i].smplRate, (unsigned)after[i].smplRate);
+	}
+
 	double rms = frames ? std::sqrt(sumSq / (double)(frames * 2)) : 0.0;
 	printf("   frames=%u  rms=%.2f  peak=%d  clipped=%u\n\n", frames, rms, peak, clipped);
 

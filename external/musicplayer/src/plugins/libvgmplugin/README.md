@@ -42,14 +42,26 @@ already put a permissive core first — and are compiled in **no** build:
 VGMPlayer hard-requests `FCC_ADLE` for an OPL4's linked OPL3), `nes_apu.c`
 (NSFPlay wins) and `ym2612.c` (GPGX, inside `fmopn.c`, wins). `fmopl.c`'s
 YM3812/OPL2 path is dead the same way (AdLibEmu is listed first), and its YM3526
-path is now dead too — see the table.
+path is now dead too — see the table. A sixth, `pwm.c`, is no longer compiled in
+either build for a different reason: it was **replaced** rather than out-ranked
+(see the 32X PWM section).
 
-One chip uses ymfm in **both** variants, because it is a choice about sound and
-not about licensing:
+Two chips changed core in **both** variants, so there is no divergence to
+justify — one for sound, one because the GPL core was replaced outright:
 
-| chip | plus and mas |
-|---|---|
-| YM3526 (OPL1) | **ymfm**, via `opl_ymfm.cpp` |
+| chip | plus and mas | why |
+|---|---|---|
+| YM3526 (OPL1) | **ymfm**, via `opl_ymfm.cpp` | preferred by ear over MAME |
+| Sega 32X PWM | **`pwm_32x.c`**, written here | replaces the Gens core |
+
+One chip is simply **absent from mas**: the **MSM5232** (`msm5232.c`, MAME, GPL).
+It needs no replacement and no index gate, because it is unreachable — libvgm
+reads its clock from header offset **0xF4**, one of its own extension slots that
+the VGM format has never defined. Even a v1.71 header ends at 0xD0, and VGMRips
+has no MSM5232 pack at all, so no file can select it. `SNDDEV_MSM5232` is the one
+deliberate omission from the chip whitelist; the chip cannot be gated apart from
+its core, because this is one of the few chips whose `DEV_DECL` lives inside the
+core file rather than a separate `*intf.c`.
 
 Six more differ per variant. `plus` keeps what it always played:
 
@@ -90,6 +102,36 @@ tracks, all inside 1.004–1.015). Caveats:
   clipping. Closing the gap would mean patching ymfm's `pcm_channel::fetch_sample`,
   which would end the "vendored unmodified" guarantee in
   `external/ymfm/PROVENANCE.md`; it was left alone deliberately.
+
+## The 32X PWM (`pwm_32x.c`)
+
+Not an adapter — an own implementation, written against the documented registers
+and replacing libvgm's Gens-derived `pwm.c` in **both** variants (the VIC-I
+precedent in `vtplugin`). The 32X's sound hardware is a PWM DAC, not a
+synthesiser: the pulse width *is* the sample, so the work is timing and centring.
+
+- `rate = clock / cycle` (register 1), pushed to libvgm through
+  `SetSampleRateChangeCallback` when a log writes the cycle register.
+  `Resampler.c` wires that callback for any device that offers one.
+- `sample = width - cycle/2`, scaled to fill 16 bits. Silence is mid-period.
+- Three-entry FIFO per channel, one pop per output sample, holding the last
+  value on underrun.
+- **`PWM_CTRL` is deliberately ignored.** Its low bits nominally select an
+  output mode per side, but real 32X logs write it once as `0x100`/`0x200`/
+  `0x300` — mode bits clear — and still expect stereo, so honouring a
+  "mode 0 = mute" reading would silence the whole platform.
+
+Measured against the Gens core over 40 PWM logs (VGMRips 32X packs), aggregate
+**1.014**, median **1.000**, no clipping, 36/40 within ±1%. The outliers are all
+files whose cycle is ~1045 rather than 1475, plus one homebrew test track that
+feeds the PWM through **DAC Stream Control at 11010 Hz** into a ~22 kHz device
+and measures 1.19. Worth knowing when comparing: **the Gens core reports a fixed
+22020 Hz regardless of the cycle register**, so on underrun it loses energy where
+this one holds the previous sample.
+
+`CM_LIBVGM_LEGACY_PWM=ON` builds the old GPL core instead, purely so a future
+change here can be A/B'd with this file as the single variable. It is refused
+when `CM_HAVE_LIBVGM_GPL_CORES=OFF`.
 
 **The RF5C164 is not a core-list swap but a *default* swap.** `rf5cintf.c`
 already offers both cores for `DEVID_RF5C68`; what picks Gens for the RF5C164 is

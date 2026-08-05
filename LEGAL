@@ -66,21 +66,21 @@ Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
         shim replacing the ScummVM-internal dependencies.
 License: GNU General Public License v3.0 or later
 
-Component: libvgm chip cores with no permissive alternative (VGM / VGZ playback)
-Author: MAME contributors (msm5232.c), the Gens and Mednafen projects (pwm.c,
-        vsu.c). Part of ValleyBell's libvgm, vendored at
-        external/zxtune/3rdparty/vgm -- see the libvgm entry in section 4 for
-        the plugin itself.
-License: GNU General Public License v2.0-or-later (msm5232.c, and the GPL text
-        in pwm.c and vsu.c).
-Notice: These three files are compiled into BOTH variants. libvgm ships no
-        alternative core for the chips they cover (MSM5232, Sega 32X PWM,
-        Virtual Boy VSU), so they are recorded here as an OPEN ITEM rather than
-        removed -- the Mac App Store variant is not GPL-free while they remain.
-        Every other GPL core in libvgm is either compiled in no build at all or
-        replaced in that variant; see LEGAL-PLUS.
-        Which core serves which chip, and why these three have no substitute, is
-        described in musicplayer/src/plugins/libvgmplugin/README.md.
+Component: libvgm Virtual Boy VSU core (VGM / VGZ playback)
+Author: The Mednafen project (emu/cores/vsu.c). Part of ValleyBell's libvgm,
+        vendored at external/zxtune/3rdparty/vgm -- see the libvgm entry in
+        section 4 for the plugin itself.
+License: GNU General Public License v2.0 or later.
+Notice: This file is compiled into BOTH variants and is the LAST GPL code in the
+        Mac App Store build -- it is recorded here as an OPEN ITEM rather than
+        removed, and the App Store variant is not GPL-free while it remains.
+        libvgm ships no alternative core for the Virtual Boy VSU; a replacement
+        written against the documented hardware is the intended fix, as was done
+        for the Sega 32X PWM (section 4) and the VIC-I.
+        Every other GPL core in libvgm is now either compiled in no build at
+        all, replaced outright, or plus-only; see LEGAL-PLUS.
+        Which core serves which chip is described in
+        musicplayer/src/plugins/libvgmplugin/README.md.
 
 Component: S98 (PC-98 / FM sound log)
 Author: s98plugin, vendored under musicplayer/src/plugins/s98plugin. The FM
@@ -291,6 +291,19 @@ Notice: Covers hundreds of formats (CRI ADX/HCA, FMOD FSB, Microsoft XWB/XMA,
         platform DSP/VAG/AT3/AT9, etc.). Built with none of vgmstream's optional
         VGM_USE_* codec libraries, so only the self-contained decoders and the
         bundled coding/libs helpers are compiled.
+
+Component: Sega 32X PWM sound core (VGM / VGZ playback)
+Author: Written for this project, at
+        musicplayer/src/plugins/libvgmplugin/pwm_32x.c. It replaces libvgm's
+        emu/cores/pwm.c, which is Gens code (Stephane Dallongeville, Stephane
+        Akhoun, David Korth) and GPL-2 by descent.
+License: No third-party licence -- it is chipmachine's own code.
+Notice: Compiled into BOTH variants; the Gens core it replaces is compiled into
+        neither. It was written against the documented behaviour of the 32X PWM
+        registers rather than derived from any existing emulator, the same
+        approach taken for the VIC-I core in vtplugin. The file it replaces is
+        still present in the vendored libvgm tree but is not built.
+        See musicplayer/src/plugins/libvgmplugin/README.md.
 
 Component: ymfm (Yamaha FM emulation -- YM2203 / YM2608 / YM2610, YM3526,
         Y8950, YMF278B)
