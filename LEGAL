@@ -66,22 +66,6 @@ Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
         shim replacing the ScummVM-internal dependencies.
 License: GNU General Public License v3.0 or later
 
-Component: libvgm Virtual Boy VSU core (VGM / VGZ playback)
-Author: The Mednafen project (emu/cores/vsu.c). Part of ValleyBell's libvgm,
-        vendored at external/zxtune/3rdparty/vgm -- see the libvgm entry in
-        section 4 for the plugin itself.
-License: GNU General Public License v2.0 or later.
-Notice: This file is compiled into BOTH variants and is the LAST GPL code in the
-        Mac App Store build -- it is recorded here as an OPEN ITEM rather than
-        removed, and the App Store variant is not GPL-free while it remains.
-        libvgm ships no alternative core for the Virtual Boy VSU; a replacement
-        written against the documented hardware is the intended fix, as was done
-        for the Sega 32X PWM (section 4) and the VIC-I.
-        Every other GPL core in libvgm is now either compiled in no build at
-        all, replaced outright, or plus-only; see LEGAL-PLUS.
-        Which core serves which chip is described in
-        musicplayer/src/plugins/libvgmplugin/README.md.
-
 Component: S98 (PC-98 / FM sound log)
 Author: s98plugin, vendored under musicplayer/src/plugins/s98plugin. The FM
         synthesis core is cisc's fmgen (m_s98/device/fmgen).
@@ -292,11 +276,22 @@ Notice: Covers hundreds of formats (CRI ADX/HCA, FMOD FSB, Microsoft XWB/XMA,
         VGM_USE_* codec libraries, so only the self-contained decoders and the
         bundled coding/libs helpers are compiled.
 
+Component: Virtual Boy VSU sound core (VGM / VGZ playback)
+Author: Written for this project, at
+        musicplayer/src/plugins/libvgmplugin/vsu_vb.c. It is used instead of
+        libvgm's own emu/cores/vsu.c, which this build does not compile.
+License: No third-party licence -- it is chipmachine's own code.
+Notice: Compiled into BOTH variants; the Mednafen core it replaces is compiled
+        into neither. It was written from the register map and timing constants
+        published in Nintendo's Virtual Boy Development Manual (Part 6, "Sound
+        Processor"), not derived from any existing emulator -- the same approach
+        taken for the Sega 32X PWM above and the VIC-I core in vtplugin.
+        See musicplayer/src/plugins/libvgmplugin/README.md.
+
 Component: Sega 32X PWM sound core (VGM / VGZ playback)
 Author: Written for this project, at
         musicplayer/src/plugins/libvgmplugin/pwm_32x.c. It replaces libvgm's
-        emu/cores/pwm.c, which is Gens code (Stephane Dallongeville, Stephane
-        Akhoun, David Korth) and GPL-2 by descent.
+        emu/cores/pwm.c, which this build does not compile.
 License: No third-party licence -- it is chipmachine's own code.
 Notice: Compiled into BOTH variants; the Gens core it replaces is compiled into
         neither. It was written against the documented behaviour of the 32X PWM
@@ -312,18 +307,18 @@ Author: Aaron Giles (https://github.com/aaronsgiles/ymfm), vendored UNMODIFIED
         it through libvgm's C interface are chipmachine's own
         musicplayer/src/plugins/libvgmplugin/opn_ymfm.cpp and opl_ymfm.cpp.
 License: BSD 3-Clause (see external/ymfm/LICENSE)
-Notice: Compiled into BOTH variants. In the Mac App Store variant it replaces
-        libvgm's GPL cores for the OPN family, the YM3526, the Y8950 and the
-        OPL4 wavetable (see LEGAL-PLUS). The YM3526 is served by ymfm in the
+Notice: Compiled into BOTH variants. In the Mac App Store variant it is the
+        core used for the OPN family, the YM3526, the Y8950 and the OPL4
+        wavetable (see LEGAL-PLUS for what the other variant uses). The YM3526 is served by ymfm in the
         plus variant as well, which is a choice about sound rather than about
         licensing; the OPN, SSG and OPN-side ADPCM translation units are built
         for the App Store variant only.
         Taken from upstream rather than from the copy that sits under
         musicplayer/src/plugins/dmfplugin/furnace/: ymfm is BSD-3 at origin and
         Furnace's own licence says its bundled cores keep their own terms, but
-        Furnace is GPL-2-or-later and modifies what it vendors, so that copy
-        carries GPL-licensed changes. Same reasoning as the StSound re-vendor
-        and the MIT Musashi copy under sndhplugin.
+        Furnace is copyleft-licensed and modifies what it vendors, so that copy
+        carries changes under those terms. Same reasoning as the StSound
+        re-vendor and the MIT Musashi copy under sndhplugin.
         The YM2608 rhythm section reads the chip-internal ADPCM-A ROM dump that
         ships with libvgm (fmopn_2608rom.h). That file is Yamaha ROM data rather
         than MAME source code -- it carries its own note that it was derived from
@@ -335,16 +330,15 @@ Component: libvgm (VGM / VGZ playback)
 Author: ValleyBell's libvgm (https://github.com/ValleyBell/libvgm), vendored at
         external/zxtune/3rdparty/vgm and driven through PlayerA + VGMPlayer by
         musicplayer/src/plugins/libvgmplugin.
-License: MIXED, per file. The framework and most chip cores are MIT / BSD-style
-        (many are MAME cores tagged "license:BSD-3-Clause"); some carry LGPL-2.1
-        (DOSBox AdLibEmu, Nuked OPL3 / OPM / OPN2); and the GPL cores that remain
-        compiled are listed separately in section 2.
+License: MIXED, per file. Every core this build compiles is MIT / BSD-style
+        (many are MAME cores tagged "license:BSD-3-Clause") or LGPL-2.1 (DOSBox
+        AdLibEmu, Nuked OPL3 / OPM / OPN2). Cores under other terms are not
+        compiled here; see LEGAL-PLUS for the ones the other variant adds.
 Notice: Vendored sources are unmodified except emu/cores/opnintf.c and
         opnintf.h, which carry a chipmachine patch adding chip-core selection
         (grep "chipmachine local patch"; unmodified copies are kept alongside as
         .orig). libvgm enables every bundled core unless asked to select; this
-        build selects them explicitly, which is what keeps the GPL ones out of
-        the Mac App Store variant.
+        build selects them explicitly, which is what determines the set above.
         Although it sits under external/zxtune/3rdparty/, it is NOT part of
         ZXTune and is added directly by the top-level CMakeLists.
         See musicplayer/src/plugins/libvgmplugin/README.md.

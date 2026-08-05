@@ -37,6 +37,11 @@ if(CM_LIBVGM_LEGACY_PWM AND NOT CM_HAVE_LIBVGM_GPL_CORES)
         "CM_LIBVGM_LEGACY_PWM builds the GPL Gens PWM core and cannot be used "
         "with CM_HAVE_LIBVGM_GPL_CORES=OFF (the Mac App Store variant).")
 endif()
+if(CM_LIBVGM_LEGACY_VSU AND NOT CM_HAVE_LIBVGM_GPL_CORES)
+    message(FATAL_ERROR
+        "CM_LIBVGM_LEGACY_VSU builds the GPL Mednafen VSU core and cannot be "
+        "used with CM_HAVE_LIBVGM_GPL_CORES=OFF (the Mac App Store variant).")
+endif()
 
 add_library(libvgmplugin_objs OBJECT
     LibVGMPlugin.cpp
@@ -119,7 +124,11 @@ add_library(libvgmplugin_objs OBJECT
     ${LIBVGM_DIR}/emu/cores/scsp.c
     ${LIBVGM_DIR}/emu/cores/scspdsp.c
     ${LIBVGM_DIR}/emu/cores/ws_audio.c
-    ${LIBVGM_DIR}/emu/cores/vsu.c
+    # vsu.c (Mednafen Virtual Boy VSU, GPL-2+) is REPLACED in both variants by
+    # chipmachine's own vsu_vb.c, written from Nintendo's development manual.
+    # CM_LIBVGM_LEGACY_VSU builds the old GPL core for single-variable A/B; it is
+    # refused for mas above.
+    $<IF:$<BOOL:${CM_LIBVGM_LEGACY_VSU}>,${LIBVGM_DIR}/emu/cores/vsu.c,${CMAKE_CURRENT_SOURCE_DIR}/vsu_vb.c>
     ${LIBVGM_DIR}/emu/cores/saaintf.c
     ${LIBVGM_DIR}/emu/cores/saa1099_vb.c
     ${LIBVGM_DIR}/emu/cores/saa1099_mame.c

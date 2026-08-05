@@ -53,6 +53,10 @@ justify — one for sound, one because the GPL core was replaced outright:
 |---|---|---|
 | YM3526 (OPL1) | **ymfm**, via `opl_ymfm.cpp` | preferred by ear over MAME |
 | Sega 32X PWM | **`pwm_32x.c`**, written here | replaces the Gens core |
+| Virtual Boy VSU | **`vsu_vb.c`**, written here | replaces the Mednafen core |
+
+With those in place the **App Store build contains no GPL-licensed chip core at
+all** — checked with `nm` over `liblibvgmplugin.a`, not just the build graph.
 
 One chip is simply **absent from mas**: the **MSM5232** (`msm5232.c`, MAME, GPL).
 It needs no replacement and no index gate, because it is unreachable — libvgm
@@ -132,6 +136,45 @@ this one holds the previous sample.
 `CM_LIBVGM_LEGACY_PWM=ON` builds the old GPL core instead, purely so a future
 change here can be A/B'd with this file as the single variable. It is refused
 when `CM_HAVE_LIBVGM_GPL_CORES=OFF`.
+
+## The Virtual Boy VSU (`vsu_vb.c`)
+
+The other own implementation, replacing the Mednafen `vsu.c` in both variants.
+Written from **Nintendo's Virtual Boy Development Manual**, Part 6 chapters 2–4
+— every constant in the file traces to a numbered section there, which is why
+the file cites them. The manual is in the SDK-manuals archive on archive.org
+(item `virtual-boy.-7z`, `Technical_Informations.pdf`, pages 134–152); it is a
+scan with no text layer.
+
+Six sources: 1–5 play a 32-word, 6-bit waveform from one of five RAM banks, 5
+adds sweep/modulation, 6 is noise. `f = clock / ((2048 - F) × 32)`, noise
+`f = (clock/10) / (2048 - F)`, output level `((L/R × envelope) >> 3) + 1` and
+zero if either input is zero. The timer periods land on exact sample counts at
+the real clock — 3.84 ms is 160 samples, 15.36 ms is 640, 0.96/7.68 ms are
+40/320 — but are derived from the reported rate so an odd header clock cannot
+desynchronise them.
+
+Two things cost real debugging time:
+
+1. **The VGM offset is a word index, not the manual's byte address.** Every VSU
+   register is four-byte aligned, so command `0xC7` carries `address >> 2`:
+   0–159 waveform RAM, 160–191 modulation RAM, 256–351 channel registers, 352
+   `SSTOP`. Decode it as a byte address and the chip renders **pure silence**.
+2. **A decay envelope reaching 0 must not disable the channel.** The manual says
+   the output "is stopped", but it also states plainly that "when the envelope
+   value is 0, the sound is still being output at level 0, and the sound output
+   is not considered to have stopped". Games drive `SxEV0` as a real-time volume
+   with automatic enveloping on, so a channel that has decayed to zero has to
+   come back on the next `SxEV0` write. Gating it made one track render at
+   **0.40x** while all 352 others measured 1.00.
+
+Measured against Mednafen over the whole **353-file** corpus (all 17 VGMRips
+VSU packs): median **1.000**, aggregate **1.0018**, 87% within ±1%, 96% within
+±3%, **100% within ±10%**, and slightly *less* clipping than the reference
+(146,275 vs 146,338 samples; one track clips where the reference does not).
+
+`CM_LIBVGM_LEGACY_VSU=ON` rebuilds the old GPL core for single-variable A/B, and
+like its PWM counterpart is refused when `CM_HAVE_LIBVGM_GPL_CORES=OFF`.
 
 **The RF5C164 is not a core-list swap but a *default* swap.** `rf5cintf.c`
 already offers both cores for `DEVID_RF5C68`; what picks Gens for the RF5C164 is
@@ -294,6 +337,7 @@ OPL fixtures in `testmus/libvgm/`: `arcade-ym3526.vgz` (Karnov),
 `arcade-ymf278b-opl4.vgz` (Gunbird 2, with its ROM block) and
 `megacd-rf5c164.vgz` (Willy Beamish — deliberately a track with **no** YM2612,
 so it isolates the RF5C164 instead of also measuring the OPN2 swap).
+`virtualboy-vsu.vgz` covers the VSU and `32x-pwm.vgz` the 32X PWM.
 
 ## Build notes
 

@@ -1,12 +1,14 @@
 
 MAS Compliance:
 
-- finish libvgm work
+- (REMOVED IN MAS) clean room partial deflemask GPL (IBM),PROMPT ready	2071
 
-- clean room partial deflemask GPL (IBM),PROMPT ready	2071
+= in_wsr (WonderSwan, Mamiya/Kodi)	.wsr	168	GPL-2.0+
 
 - maxtraxplugin GPL (amiga)	1,812	4		93	clean-room Paula + driver
+
 ----------------
+
 - move technical details for plugins and formats from README.md into individual plugin's README files. create them if they don't exist. only leave links to them (if needed) in README.md. README.md is supposed to describe the features and usage for end users, not to dig deep into technical stuff.
 
 - move fonts licensing in LEGAL (it is someplace else now). all licensing should be in LEGAL (and LEGAL-PLUS)
