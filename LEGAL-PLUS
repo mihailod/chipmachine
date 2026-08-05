@@ -192,17 +192,20 @@ Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         3.7% median register-stream fidelity against the reference.
 
 Component: libvgm GPL chip cores (VGM / VGZ -- OPN family, YM2151, HuC6280,
-        Y8950, OPL4 wavetable)
+        Y8950, OPL4 wavetable, RF5C164)
 Author: MAME contributors (emu/cores/fmopn.c, the YM2203/YM2608/YM2610 family
         plus the GPGX YM2612 core; emu/cores/ym2151.c, Jarek Burczynski's
         YM2151; emu/cores/fmopl.c, the Y8950, by Jarek Burczynski and Tatsuyuki
         Satoh); the openMSX project (emu/cores/ymf278b.c, the OPL4 wavetable
-        engine, C-ported into libvgm); the Ootake project
-        (emu/cores/Ootake_PSG.c, HuC6280 PSG). Five cores of ValleyBell's
+        engine, C-ported into libvgm); the Gens project (emu/cores/scd_pcm.c,
+        the Sega/Mega CD RF5C164, by Stephane Dallongeville); the Ootake project
+        (emu/cores/Ootake_PSG.c, HuC6280 PSG). Six cores of ValleyBell's
         libvgm, vendored at external/zxtune/3rdparty/vgm.
 License: GNU General Public License v2.0 (ymf278b.c, tagged "license:GPL-2.0")
         or v2.0 or later (fmopn.c, fmopl.c and ym2151.c are tagged
         "license:GPL-2.0+"; Ootake_PSG.c carries GPL text without an SPDX tag).
+        scd_pcm.c carries NO licence statement at all; Gens itself is GPL-2, so
+        it is filed here rather than assumed permissive.
 Notice: NOT COMPILED into the Mac App Store variant (CM_VARIANT=mas builds with
         CM_HAVE_LIBVGM_GPL_CORES=OFF). The libvgm PLUGIN itself is in both
         variants and nothing is dropped from the mas index; only the emulation
@@ -210,6 +213,9 @@ Notice: NOT COMPILED into the Mac App Store variant (CM_VARIANT=mas builds with
         family, the Y8950 and the OPL4 wavetable with ymfm (BSD-3, see LEGAL),
         and the remaining chips with cores libvgm already ships under permissive
         or LGPL terms.
+        For the RF5C164 that required a one-line local patch to
+        player/vgmplayer.cpp: libvgm already carries a BSD-3 MAME core for the
+        device, and only a hard-coded default selected the Gens one.
         Which core serves which chip in each variant is described in
         musicplayer/src/plugins/libvgmplugin/README.md.
 

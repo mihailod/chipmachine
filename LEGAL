@@ -68,20 +68,18 @@ License: GNU General Public License v3.0 or later
 
 Component: libvgm chip cores with no permissive alternative (VGM / VGZ playback)
 Author: MAME contributors (msm5232.c), the Gens and Mednafen projects (pwm.c,
-        scd_pcm.c, vsu.c). Part of ValleyBell's libvgm, vendored at
+        vsu.c). Part of ValleyBell's libvgm, vendored at
         external/zxtune/3rdparty/vgm -- see the libvgm entry in section 4 for
         the plugin itself.
 License: GNU General Public License v2.0-or-later (msm5232.c, and the GPL text
-        in pwm.c and vsu.c). scd_pcm.c is Gens code carrying NO licence
-        statement at all; Gens itself is GPL-2, so it is filed here rather than
-        assumed permissive.
-Notice: These four files are compiled into BOTH variants. libvgm ships no
+        in pwm.c and vsu.c).
+Notice: These three files are compiled into BOTH variants. libvgm ships no
         alternative core for the chips they cover (MSM5232, Sega 32X PWM,
-        Virtual Boy VSU, RF5C164), so they are recorded here as an open item
-        rather than removed. Every other GPL core in libvgm is either compiled
-        in no build at all or replaced in the Mac App Store variant; see
-        LEGAL-PLUS.
-        Which core serves which chip, and why these four have no substitute, is
+        Virtual Boy VSU), so they are recorded here as an OPEN ITEM rather than
+        removed -- the Mac App Store variant is not GPL-free while they remain.
+        Every other GPL core in libvgm is either compiled in no build at all or
+        replaced in that variant; see LEGAL-PLUS.
+        Which core serves which chip, and why these three have no substitute, is
         described in musicplayer/src/plugins/libvgmplugin/README.md.
 
 Component: S98 (PC-98 / FM sound log)

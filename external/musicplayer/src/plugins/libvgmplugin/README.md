@@ -61,12 +61,14 @@ Six more differ per variant. `plus` keeps what it always played:
 | HuC6280 | `Ootake_PSG.c` | `c6280_mame.c` |
 | Y8950 | `fmopl.c` (MAME) | **ymfm**, via `opl_ymfm.cpp` |
 | YMF278B / OPL4 wavetable | `ymf278b.c` (openMSX) | **ymfm**, via `opl_ymfm.cpp` |
+| RF5C164 (Sega/Mega CD) | `scd_pcm.c` (Gens) | `rf5c68.c` (MAME) |
 
 The OPL4's *FM* half is a separate linked YMF262 device and is AdLibEmu in both.
 
 Measured against the MAME/openMSX/Ootake cores on real game music, RMS ratios
 are 1.00 (OPN), 1.12 (YM2612), 1.00 (YM2151), 0.98 (HuC6280), 1.00 (Y8950,
-99% of 70 MSX tracks within ±3%) and 0.97 (OPL4). Caveats:
+99% of 70 MSX tracks within ±3%), 0.97 (OPL4) and 1.006 (RF5C164, 117 Sega CD
+tracks, all inside 1.004–1.015). Caveats:
 
 - **Nuked OPM is slower** than the MAME YM2151. It matters on the X68000 corpus.
 - **The MAME HuC6280 runs hot on noise/DDA-heavy material** and clips where
@@ -88,6 +90,16 @@ are 1.00 (OPN), 1.12 (YM2612), 1.00 (YM2151), 0.98 (HuC6280), 1.00 (Y8950,
   clipping. Closing the gap would mean patching ymfm's `pcm_channel::fetch_sample`,
   which would end the "vendored unmodified" guarantee in
   `external/ymfm/PROVENANCE.md`; it was left alone deliberately.
+
+**The RF5C164 is not a core-list swap but a *default* swap.** `rf5cintf.c`
+already offers both cores for `DEVID_RF5C68`; what picks Gens for the RF5C164 is
+one line in `player/vgmplayer.cpp` (`case DEVID_RF5C68`), and only when nothing
+else asked. That line now follows `EC_RF5C68_GENS` — a **local patch**, `.orig`
+next to it. It has to follow the build, because `SndEmu_StartCore` does **not**
+fall back: a requested-but-absent core returns `EERR_NOT_FOUND` and VGMPlayer
+then plays that chip silent. The MAME core ignores `cfg->flags` entirely, so it
+treats RF5C68 / RF5C164 / RF5C105 alike; the Gens core uses the flag only for a
+Cosmic Fantasy Stories MCD workaround.
 
 **Beware MSX MoonSound rips when measuring the OPL4.** They carry only the
 small user-sample RAM upload (VGM data block `0x87`) and no ROM block (`0x84`):
@@ -236,8 +248,10 @@ Notes:
 
 OPL fixtures in `testmus/libvgm/`: `arcade-ym3526.vgz` (Karnov),
 `arcade-ym3526-rhythm.vgz` (Athena — the rhythm-mode divergence),
-`msx-y8950.vgz` (Gorby no Pipeline Daisakusen) and
-`arcade-ymf278b-opl4.vgz` (Gunbird 2, with its ROM block).
+`msx-y8950.vgz` (Gorby no Pipeline Daisakusen),
+`arcade-ymf278b-opl4.vgz` (Gunbird 2, with its ROM block) and
+`megacd-rf5c164.vgz` (Willy Beamish — deliberately a track with **no** YM2612,
+so it isolates the RF5C164 instead of also measuring the OPN2 swap).
 
 ## Build notes
 

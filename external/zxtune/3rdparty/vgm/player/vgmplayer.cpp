@@ -1478,9 +1478,20 @@ void VGMPlayer::InitDevices(void)
 		case DEVID_RF5C68:
 			if (! devCfg->emuCore)
 			{
+				// [chipmachine local patch] The RF5C164 default below is the ONLY
+				// thing that selects the Gens core (emu/cores/scd_pcm.c), which
+				// carries no licence statement and is GPL-2 by descent from Gens.
+				// The Mac App Store build does not compile it, so fall through to
+				// the MAME core (rf5c68.c, BSD-3) there. SndEmu_StartCore does NOT
+				// fall back on its own -- a requested-but-absent core returns
+				// EERR_NOT_FOUND and the chip plays SILENT -- so this default has
+				// to follow the build. Re-apply on revendor; vgmplayer.cpp.orig
+				// sits next to this file.
+#ifdef EC_RF5C68_GENS
 				if (devCfg->flags == 1)	// RF5C164
 					devCfg->emuCore = FCC_GENS;
 				else //if (devCfg->flags == 0)	// RF5C68
+#endif
 					devCfg->emuCore = FCC_MAME;
 			}
 			retVal = SndEmu_Start2(chipType, devCfg, devInf, _userDevList, _devStartOpts);

@@ -58,7 +58,7 @@ add_library(libvgmplugin_objs OBJECT
     ${LIBVGM_DIR}/emu/cores/segapcm.c
     ${LIBVGM_DIR}/emu/cores/rf5cintf.c
     ${LIBVGM_DIR}/emu/cores/rf5c68.c
-    ${LIBVGM_DIR}/emu/cores/scd_pcm.c
+    # scd_pcm.c (Gens RF5C164) is plus-only -- see the variant block below.
     ${LIBVGM_DIR}/emu/cores/opnintf.c
     ${LIBVGM_DIR}/emu/cores/ymdeltat.c
     ${LIBVGM_DIR}/emu/cores/oplintf.c
@@ -161,7 +161,12 @@ if(CM_HAVE_LIBVGM_GPL_CORES)
         # ymf278b.c is the OPL4 WAVE engine (the FM half is a separate linked
         # YMF262 device). mas builds ymfm's OPL4 wave engine instead, keeping the
         # same linked AdLibEmu YMF262.
-        ${LIBVGM_DIR}/emu/cores/ymf278b.c)
+        ${LIBVGM_DIR}/emu/cores/ymf278b.c
+        # scd_pcm.c is the Gens RF5C164. libvgm prefers it for that chip, but
+        # only as a DEFAULT in vgmplayer.cpp -- BSD-3 rf5c68.c (MAME) implements
+        # the same device and is compiled in both variants, so mas uses that.
+        # See the local patch at "case DEVID_RF5C68" in player/vgmplayer.cpp.
+        ${LIBVGM_DIR}/emu/cores/scd_pcm.c)
 endif()
 
 # Three chip groups have NO permissive core in libvgm at all, only a GPL one:
@@ -247,8 +252,8 @@ target_compile_definitions(libvgmplugin_objs PRIVATE
     EC_YMF262_ADLIBEMU EC_YMF262_NUKED   # was: + MAME (GPL), unreachable
     EC_NES_NSFPLAY EC_NES_NSFP_FDS       # was: + MAME (GPL), unreachable
     EC_C6280_MAME            # BSD-3 (+ Ootake below, plus only)
-    EC_RF5C68_MAME           # BSD-3, and VGMPlayer hard-requests FCC_GENS for
-    EC_RF5C68_GENS           # RF5C164 -- scd_pcm.c cannot be dropped
+    EC_RF5C68_MAME           # BSD-3; also serves the RF5C164 in mas, where the
+                             # Gens core is absent (+ EC_RF5C68_GENS below, plus only)
     EC_QSOUND_MAME EC_QSOUND_CTR
     EC_SAA1099_MAME EC_SAA1099_VB        # NOT _NRS: that core is not vendored
     EC_AY8910_MAME EC_AY8910_EMU2149
@@ -261,7 +266,9 @@ if(CM_HAVE_LIBVGM_GPL_CORES)
         EC_YM2203_MAME EC_YM2608_MAME EC_YM2610_MAME EC_YM2612_GPGX
         # fmopl.c stays in plus for the Y8950 alone -- its YM3526 path is now
         # dead code here too (EC_YM3526_YMFM above wins for both variants).
-        EC_Y8950_MAME)
+        EC_Y8950_MAME
+        # scd_pcm.c. This macro ALSO drives the RF5C164 default in vgmplayer.cpp.
+        EC_RF5C68_GENS)
 else()
     target_compile_definitions(libvgmplugin_objs PRIVATE
         EC_YM2203_YMFM EC_YM2608_YMFM EC_YM2610_YMFM
