@@ -54,6 +54,7 @@ justify — one for sound, one because the GPL core was replaced outright:
 | YM3526 (OPL1) | **ymfm**, via `opl_ymfm.cpp` | preferred by ear over MAME |
 | Sega 32X PWM | **`pwm_32x.c`**, written here | replaces the Gens core |
 | Virtual Boy VSU | **`vsu_vb.c`**, written here | replaces the Mednafen core |
+| WonderSwan | **`ws_audio_cm.c`**, written here | replaces the in_wsr/OSWAN core |
 
 With those in place the **App Store build contains no GPL-licensed chip core at
 all** — checked with `nm` over `liblibvgmplugin.a`, not just the build graph.
@@ -175,6 +176,64 @@ VSU packs): median **1.000**, aggregate **1.0018**, 87% within ±1%, 96% within
 
 `CM_LIBVGM_LEGACY_VSU=ON` rebuilds the old GPL core for single-variable A/B, and
 like its PWM counterpart is refused when `CM_HAVE_LIBVGM_GPL_CORES=OFF`.
+
+## The WonderSwan (`ws_audio_cm.c`)
+
+The third own implementation, and the one that closes a hole the licence sweep
+above had missed. libvgm's `emu/cores/ws_audio.c` **carries no licence header at
+all**, but it is Mamiya's `in_wsr` — the Japanese comments (`// Voice出力`,
+`//OSWANの擬似乱数の処理と同等のつもり`) and the function names are verbatim — and
+in_wsr's own readme says it was cut from **OSWAN 0.70**, which is GPL-2.0. It was
+compiled into `mas`, and it is not dead code: the DB has 12 WonderSwan rows (9
+VGMRips packs, 3 Battle of the Bits).
+
+Written from the **WSdev Wiki** (`https://ws.nesdev.org/wiki/Sound`), which
+documents every port `$80`–`$9E` down to the LFSR tap table. Four channels of 32
+× 4-bit wavetable in internal RAM at `$8F << 6`; the sample index advances every
+`2048 - divisor` master cycles and the DAC runs at `clock / 128` = 24000 Hz;
+per-channel level is a plain `sample * volume`; channel 2 swaps in 8-bit unsigned
+PCM at 100/50/0% per side, channel 3 adds a signed sweep every `($8D & 0x1F) + 1`
+ticks of a 375 Hz clock, channel 4 an XNOR-feedback 15-bit LFSR.
+
+Four things worth knowing:
+
+1. **`$FFFF` in a frequency register means silence** — the whole 16-bit word,
+   not the 11-bit divisor. That rule is not in the register documentation; it is
+   in Mamiya's own readme (archived as `awesome-wsdev/archive/in_wsr.txt`), whose
+   2006/4/14 entry records finding it because Rockman & Forte otherwise plays a
+   spurious tone. A divisor of `$7FF` alone still sounds — Digimon D-Project's
+   noise depends on it — so the test has to be on the full word.
+2. **The noise LFSR feeds back through an XNOR**, so **all-ones** is the lock-up
+   state, not all-zero. Reset seeds it with 0, and the hardware's own "LFSR
+   reset" bit can safely clear it.
+3. **The phase accumulator must wrap into the 32-step table.** Left free-running,
+   a 16.16 counter overflows 32 bits after about a million samples, and the
+   unsigned step difference the noise path takes from it then reads as ~2^32
+   steps. The symptom is not a wrong sound but an apparent **hang about 40
+   seconds into any noise-using track** — which is exactly what it looked like
+   when a 251-file corpus run went from 3 seconds to over 20 minutes.
+4. **Port `$91`'s output-enable bits are deliberately ignored**, like
+   `PWM_CTRL` in `pwm_32x.c`. This core always renders the stereo headphone path.
+   VGM logs are emulator register dumps and many never write `$91`, so honouring
+   "not enabled = silent" would mute whole packs. Its speaker shift only affects
+   the mono speaker mix, which is not the output used here.
+
+Hyper Voice (`$64`–`$6B`) and Sound DMA (`$40`–`$4A`) are **unreachable from a
+VGM log** — VGMPlayer builds the port as `0x80 + (data & 0x7F)`, so nothing below
+`$80` can be written, and DMA would need cartridge ROM the log does not carry.
+Writes there land in the register file and do nothing else.
+
+Measured against the in_wsr core over **251 files** (all 9 VGMRips WonderSwan
+packs): median **0.985**, aggregate **0.990**, **99.2% within ±10%**, no track
+silent that was not silent before, and **no clipping in either core** (peak
+30523 vs 32557). The two outliers are +10% and +11% (Final Fantasy II "Join the
+Party!", Front Mission "Defeat"). The spread is wider than the VSU's because this
+is a from-scratch implementation of a chip whose sweep and noise timing the old
+core derived empirically, not a port. It is also **~100x faster** — the corpus
+renders in 3 s against roughly 6 min, the old core doing per-write float maths.
+
+`CM_LIBVGM_LEGACY_WSWAN=ON` rebuilds the GPL core for single-variable A/B, and
+like the other two is refused when `CM_HAVE_LIBVGM_GPL_CORES=OFF`.
 
 **The RF5C164 is not a core-list swap but a *default* swap.** `rf5cintf.c`
 already offers both cores for `DEVID_RF5C68`; what picks Gens for the RF5C164 is
@@ -337,7 +396,8 @@ OPL fixtures in `testmus/libvgm/`: `arcade-ym3526.vgz` (Karnov),
 `arcade-ymf278b-opl4.vgz` (Gunbird 2, with its ROM block) and
 `megacd-rf5c164.vgz` (Willy Beamish — deliberately a track with **no** YM2612,
 so it isolates the RF5C164 instead of also measuring the OPN2 swap).
-`virtualboy-vsu.vgz` covers the VSU and `32x-pwm.vgz` the 32X PWM.
+`virtualboy-vsu.vgz` covers the VSU, `32x-pwm.vgz` the 32X PWM and
+`wonderswan-golden-axe.vgz` the WonderSwan.
 
 ## Build notes
 

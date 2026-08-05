@@ -4506,7 +4506,7 @@ std::string MusicDatabase::platformForExtension(std::string const& rawExt)
         { "NDSPlugin", "Nintendo DS" },
         { "HivelyPlugin", "Amiga" },
         { "Gameboy Advance", "Nintendo Game Boy" },
-        { "WonderSwan (in_wsr)", "WonderSwan" },
+        { "WonderSwan", "WonderSwan" },
         { "Tedplay", "Commodore 16/+4" },
         { "SunVox Player", "PC" },
         { "SoundSmith", "Apple IIGS" },

@@ -54,11 +54,6 @@ The components in this section are compiled into this build and carry terms
 that are either strong copyleft or not yet fully established. They are recorded
 here as OPEN ITEMS rather than left undocumented.
 
-Component: in_wsr (Bandai WonderSwan / WonderSwan Color, .wsr)
-Author: WonderSwan replayer by Mamiya; NEC V30MZ CPU core derived from
-        MAME/Oswan. Vendored as packaged in Kodi's audiodecoder.wsr addon.
-License: GNU General Public License v2.0 or later
-
 Component: MaxTrax + Paula player (Amiga MaxTrax .mxtx)
 Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
         audio/mods/paula.{h,cpp}), vendored under
@@ -299,6 +294,42 @@ Notice: Compiled into BOTH variants; the Gens core it replaces is compiled into
         approach taken for the VIC-I core in vtplugin. The file it replaces is
         still present in the vendored libvgm tree but is not built.
         See musicplayer/src/plugins/libvgmplugin/README.md.
+
+Component: Bandai WonderSwan machine and sound core (.wsr, and VGM / VGZ)
+Author: Written for this project, at
+        musicplayer/src/plugins/wsrplugin/wswan/ (ws_apu.c, the sound chip, and
+        ws_machine.cpp, the machine around it). The same APU serves the .wsr
+        player and, through the thin adapter
+        musicplayer/src/plugins/libvgmplugin/ws_audio_cm.c, the WonderSwan chip
+        inside VGM logs. It replaces libvgm's emu/cores/ws_audio.c, which this
+        build does not compile.
+License: No third-party licence -- it is chipmachine's own code.
+Notice: Compiled into BOTH variants; the code it replaces is compiled into
+        neither. That code is Mamiya's in_wsr replayer, which its own readme
+        states was cut from OSWAN 0.70 (GPL-2.0) -- libvgm's copy of it carries
+        no licence header at all, which is how it went unnoticed. Both were
+        replaced: this was written from the WonderSwan documentation published
+        on the WSdev Wiki (https://ws.nesdev.org -- Sound, Hyper Voice, DMA,
+        Memory map, Mapper, Interrupts, Timers, Display) and Mamiya's own public
+        note on the .wsr container format, not derived from any existing
+        emulator -- the same approach taken for the Virtual Boy VSU and Sega 32X
+        PWM above and the VIC-I core in vtplugin. The CPU it runs on is ares'
+        V30MZ under ISC; see the entry in section 4 below.
+        See musicplayer/src/plugins/wsrplugin/wswan/README.md.
+
+Component: NEC V30MZ CPU emulator (Bandai WonderSwan, .wsr)
+Author: The ares emulator project (ares team, Near et al,
+        https://github.com/ares-emulator/ares), vendored from
+        ares/component/processor/v30mz/ under
+        musicplayer/src/plugins/wsrplugin/v30mz/.
+License: ISC License
+Notice: Replaces the NEC V30MZ core that came with in_wsr, which was derived
+        from MAME/OSWAN and GPL-2-or-later. ares' own disassembler and
+        serialization files are not vendored, and the core is built against a
+        small compatibility header written for this project instead of nall.
+        Both local patches are marked "chipmachine local patch" with .orig
+        copies beside them. See musicplayer/src/plugins/wsrplugin/v30mz/
+        PROVENANCE.md and LICENSE-ares.txt.
 
 Component: ymfm (Yamaha FM emulation -- YM2203 / YM2608 / YM2610, YM3526,
         Y8950, YMF278B)

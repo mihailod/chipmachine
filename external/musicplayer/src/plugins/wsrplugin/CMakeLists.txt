@@ -1,53 +1,40 @@
 cmake_minimum_required(VERSION 3.12)
 project(cpp-mods.musicplayer.wsrplugin)
 
-# Self-contained in_wsr WonderSwan replayer (GPL-2.0+), vendored under in_wsr/.
-# It is the same core Kodi's audiodecoder.wsr ships; only the public
-# WSRPlayerSetUp() entry point is called from WSRPlugin.cpp.
-set(IN_WSR_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/in_wsr)
+# WonderSwan / WonderSwan Color music (.wsr), played by emulating the machine:
+#
+#   v30mz/  NEC V30MZ CPU, vendored from ares (ISC) -- see its PROVENANCE.md
+#   wswan/  the machine (memory map, bank registers, blank timers, interrupts,
+#           general DMA) and the APU, both written for this project from the
+#           WSdev Wiki -- see wswan/README.md
+#
+# This replaces the in_wsr replayer that used to live here (GPL-2.0+, cut from
+# OSWAN 0.70), which was the last GPL code in this plugin. ws_apu.c is ALSO
+# compiled into libvgmplugin, which plays the same chip inside VGM logs; that
+# slice is partial-linked with `ld -r`, so the duplicate is local to it.
 
-set(IN_WSR_SOURCES
-    ${IN_WSR_ROOT}/wsr_player.c
-    ${IN_WSR_ROOT}/ws_audio.c
-    ${IN_WSR_ROOT}/ws_io.c
-    ${IN_WSR_ROOT}/ws_memory.c
-    ${IN_WSR_ROOT}/nec/nec.c
+set(WSR_V30MZ ${CMAKE_CURRENT_SOURCE_DIR}/v30mz)
+set(WSR_WSWAN ${CMAKE_CURRENT_SOURCE_DIR}/wswan)
+
+# v30mz.cpp #includes every other .cpp in that directory, ares-style, so it is
+# the only translation unit here.
+set(WSR_CORE_SOURCES
+    ${WSR_V30MZ}/v30mz.cpp
+    ${WSR_V30MZ}/v30mz_selftest.cpp
+    ${WSR_WSWAN}/ws_machine.cpp
+    ${WSR_WSWAN}/ws_apu.c
 )
 
-add_library(wsrplugin STATIC WSRPlugin.cpp ${IN_WSR_SOURCES})
+add_library(wsrplugin STATIC WSRPlugin.cpp ${WSR_CORE_SOURCES})
 
-target_include_directories(wsrplugin PRIVATE ${IN_WSR_ROOT})
+set_property(TARGET wsrplugin PROPERTY CXX_STANDARD 17)
+set_property(TARGET wsrplugin PROPERTY CXX_STANDARD_REQUIRED ON)
 
-# The in_wsr core keeps its whole machine state in file-scope globals with very
-# generic names (ROM, ROMSize, SampleRate, sample_buffer, ws_timer, nec_reset,
-# ...). Several of those collide with other vendored plugins (ndsplugin,
-# mdxplugin, ...) and would break the final static link. Rename EVERY exported
-# core symbol to a wsr__* prefix at compile time. These defines are applied to
-# the whole target, so WSRPlugin.cpp (which calls WSRPlayerSetUp) rewrites in
-# lock-step with the core and the wsr_player.h declaration. The list is the full
-# set of global TEXT/DATA/BSS symbols emitted by the core
-# (nm -g over the compiled objects); regenerate it if the core is updated.
-foreach(_sym
-    CPU_Count CPU_Cycles CPU_Run ChannelMuting Close_SampleData Close_WSR
-    DMACycles Get_ChannelMuting Get_FirstSong Init_SampleData Init_WSR Load_WSR
-    ROM ROMBank ROMSize Reset_WSR SampleRate Sample_Enable Sample_Length
-    Sample_Offset Set_ChannelMuting Set_Frequency Update_SampleData Update_WSR
-    WSRPlayerSetUp WS_Cpu_Clock WaveAdrs baseBank cpu_interrupt cpu_readmem20
-    cpu_readport cpu_writemem20 cpu_writeport initialIoValue mul_div nec_Cycles
-    nec_ICount nec_execute nec_exit nec_get_reg nec_getcycles nec_instruction
-    nec_int nec_reset nec_set_reg nec_yield romAddressMask romSize sample_buffer
-    seg_prefix ws_audio_done ws_audio_init ws_audio_port_read ws_audio_port_write
-    ws_audio_process ws_audio_reset ws_audio_sounddma ws_audio_update
-    ws_internalRam ws_ioRam ws_io_done ws_io_init ws_io_reset ws_memory_done
-    ws_memory_init ws_memory_reset ws_rom ws_staticRam ws_timer ws_timer_count
-    ws_timer_min ws_timer_pending ws_timer_reset ws_timer_set ws_timer_update)
-    target_compile_definitions(wsrplugin PRIVATE "${_sym}=wsr__${_sym}")
-endforeach()
-
-# The vendored C is third-party; build it quietly and keep its symbols out of
-# any shared-object export table (mirrors kssplugin). Only WSRPlugin.cpp needs
-# default visibility to export wsrplugin_register.
-set_source_files_properties(${IN_WSR_SOURCES} PROPERTIES
+# ares' core is third-party; build it quietly. Everything here lives in the
+# `ares` or `wswan` namespace (or is static), so there are no generic C globals
+# to rename the way the old in_wsr core needed -- but keep the symbols hidden so
+# they cannot clash with the other WonderSwan copy inside libvgmplugin.
+set_source_files_properties(${WSR_CORE_SOURCES} PROPERTIES
     COMPILE_FLAGS "-w -fvisibility=hidden")
 
 target_link_libraries(wsrplugin PRIVATE coreutils)

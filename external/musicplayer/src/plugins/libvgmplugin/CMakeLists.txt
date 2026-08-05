@@ -42,6 +42,12 @@ if(CM_LIBVGM_LEGACY_VSU AND NOT CM_HAVE_LIBVGM_GPL_CORES)
         "CM_LIBVGM_LEGACY_VSU builds the GPL Mednafen VSU core and cannot be "
         "used with CM_HAVE_LIBVGM_GPL_CORES=OFF (the Mac App Store variant).")
 endif()
+if(CM_LIBVGM_LEGACY_WSWAN AND NOT CM_HAVE_LIBVGM_GPL_CORES)
+    message(FATAL_ERROR
+        "CM_LIBVGM_LEGACY_WSWAN builds the GPL in_wsr/OSWAN WonderSwan core and "
+        "cannot be used with CM_HAVE_LIBVGM_GPL_CORES=OFF (the Mac App Store "
+        "variant).")
+endif()
 
 add_library(libvgmplugin_objs OBJECT
     LibVGMPlugin.cpp
@@ -123,7 +129,16 @@ add_library(libvgmplugin_objs OBJECT
     ${LIBVGM_DIR}/emu/cores/qsound_mame.c
     ${LIBVGM_DIR}/emu/cores/scsp.c
     ${LIBVGM_DIR}/emu/cores/scspdsp.c
-    ${LIBVGM_DIR}/emu/cores/ws_audio.c
+    # ws_audio.c is Mamiya's in_wsr, cut from OSWAN 0.70, and GPL-2+ -- it is
+    # REPLACED in both variants by chipmachine's own WonderSwan APU, written from
+    # the WSdev Wiki's register documentation. The chip lives in wsrplugin (the
+    # .wsr player drives the same hardware); ws_audio_cm.c is only the DEV_DEF
+    # adapter. CM_LIBVGM_LEGACY_WSWAN builds the old GPL core for single-variable
+    # A/B; it is refused for mas above.
+    $<IF:$<BOOL:${CM_LIBVGM_LEGACY_WSWAN}>,${LIBVGM_DIR}/emu/cores/ws_audio.c,${CMAKE_CURRENT_SOURCE_DIR}/ws_audio_cm.c>
+    # Both copies of the APU are fine at the final link: this slice is partial-
+    # linked with `ld -r`, which demotes its symbols to locals.
+    $<$<NOT:$<BOOL:${CM_LIBVGM_LEGACY_WSWAN}>>:${CMAKE_CURRENT_SOURCE_DIR}/../wsrplugin/wswan/ws_apu.c>
     # vsu.c (Mednafen Virtual Boy VSU, GPL-2+) is REPLACED in both variants by
     # chipmachine's own vsu_vb.c, written from Nintendo's development manual.
     # CM_LIBVGM_LEGACY_VSU builds the old GPL core for single-variable A/B; it is

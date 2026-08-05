@@ -3,9 +3,9 @@ MAS Compliance:
 
 - (REMOVED IN MAS) clean room partial deflemask GPL (IBM),PROMPT ready	2071
 
-= in_wsr (WonderSwan, Mamiya/Kodi)	.wsr	168	GPL-2.0+
-
 - maxtraxplugin GPL (amiga)	1,812	4		93	clean-room Paula + driver
+
+- s98 is GPL
 
 ----------------------------
 BUGS:
@@ -20,6 +20,8 @@ BUGS:
 
 --------------------
 Features:
+
+- detect no internet and offer to switch to offline mode where only cached songs are playable. how to solve ui? would have to trim everything which is not local and that takes time. maybe put a flag in db "cached yes/no" for fast access/pruning? other ideas?
 
 - Add tracker-style scrolling note pattern where possible by format
 

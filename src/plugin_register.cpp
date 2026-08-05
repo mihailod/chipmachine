@@ -58,7 +58,7 @@ extern "C" {
     void eupplugin_register();     // Euphony / FM Towns & PC-98 (.eup)
     void kssplugin_register();     // MGSDRV / MSX (.mgs) via libkss
     void quartetplugin_register(); // Microdeal Quartet / Atari ST (.4v, .4q)
-    void wsrplugin_register();     // Bandai WonderSwan (.wsr) via in_wsr
+    void wsrplugin_register();     // Bandai WonderSwan (.wsr), ares V30MZ + own machine
 #ifndef CM_NO_ZXTUNE
     // ZX Spectrum Sound Tracker 1.1 / TFM / Chip Tracker -- GPL-3, plus only.
     void zxtuneplugin_register();

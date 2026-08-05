@@ -4987,8 +4987,9 @@ TEST_CASE("MSX libkss formats play sound", "[music]")
     }
 }
 
-// Bandai WonderSwan / WonderSwan Color sound rips (.wsr) via the vendored,
-// self-contained in_wsr replayer (NEC V30MZ CPU + WonderSwan sound chip). A .wsr
+// Bandai WonderSwan / WonderSwan Color sound rips (.wsr). Playback emulates the
+// machine: ares' V30MZ (ISC, vendored under wsrplugin/v30mz) runs the rip's own
+// driver on chipmachine's own WonderSwan (wsrplugin/wswan). A .wsr
 // is a ROM image capped with a 32-byte "WSRF" footer (magic at offset 0, first
 // subsong index at offset 5). We build a minimal synthetic rip in a temp file so
 // the whole detect -> load -> render path runs against the real core without
@@ -4996,7 +4997,7 @@ TEST_CASE("MSX libkss formats play sound", "[music]")
 // silent, but it must still construct and render the requested sample count
 // without throwing; a zero ROM is safe to execute because every out-of-cart read
 // returns 0xFF, the CPU only writes into the emulator's own RAM banks, and
-// Update_WSR runs a bounded cycle budget per call. If real rips are dropped into
+// the machine renders a bounded number of frames per call. If real rips are dropped into
 // testmus/wsr they are played too (informational; empty in a clean checkout).
 static std::vector<uint8_t> makeSyntheticWSR(uint8_t firstSong = 0)
 {
@@ -5021,6 +5022,14 @@ static void writeWSRFile(const fs::path& p, const std::vector<uint8_t>& data)
 }
 
 TEST_CASE("WSR", "[music]") { testPlugin<musix::WSRPlugin>("testmus/wsr", ".md"); }
+
+// The vendored ares V30MZ, and the nall_compat.hpp shim its sized integers and
+// bit fields run on. Boots the core exactly as a WSR file does and checks the
+// instruction paths a music driver leans on -- string moves, stack, DAA (the
+// auxiliary-carry path, which is where a shim that stopped masking would show
+// up first), port I/O, HLT and an interrupt vector plus IRET.
+extern bool v30mz_selftest();
+TEST_CASE("V30MZ core", "[music]") { REQUIRE(v30mz_selftest()); }
 
 TEST_CASE("WSR plays", "[music]")
 {
@@ -5062,9 +5071,10 @@ TEST_CASE("WSR plays", "[music]")
 
 // WSR plays real sound. These are genuine WonderSwan rips from the Modland
 // collection (testmus/wsr). Each must be detected by canHandle and render
-// non-zero audio through the full V30MZ + sound-chip emulation -- a regression
-// in the vendored core, the symbol renaming, or the getSamples bridge would
-// drop them to silence or fail to load. "kaze no klonoa" also exercises a
+// non-zero audio through the full V30MZ + machine + sound-chip emulation -- a
+// regression in the vendored CPU, the memory map, the timers or the getSamples
+// bridge would drop them to silence or fail to load. Every one of those has in
+// fact done so at least once; see wsrplugin/wswan/README.md. "kaze no klonoa" also exercises a
 // non-trivial start subsong (its WSRF footer's first-song index is 26, above
 // the default browse window, so it checks the start-song handling too).
 TEST_CASE("WSR plays sound", "[music]")

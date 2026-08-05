@@ -4,17 +4,15 @@
 
 #include <coreutils/utils.h>
 
-// Vendored in_wsr replayer (GPL-2.0+). Only the public WSRPlayerSetUp() vtable
-// entry point is used; every other symbol in the core is renamed to a wsr__*
-// prefix at compile time (see CMakeLists.txt) so its generic global names
-// (ROM, SampleRate, sample_buffer, ...) can't collide with the other plugins.
-extern "C" {
-#include "in_wsr/wsr_player.h"
-}
+// The WonderSwan itself: ares' ISC-licensed V30MZ (vendored under v30mz/) plus
+// chipmachine's own machine and APU (wswan/). This replaces the in_wsr replayer
+// that used to sit here, which was GPL-2-or-later -- see wswan/README.md.
+#include "wswan/ws_machine.hpp"
 
 #include <algorithm>
 #include <cstdint>
 #include <cstdio>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -23,11 +21,6 @@ namespace musix {
 namespace {
 constexpr int WSR_HZ = 44100;
 constexpr int WSR_NCH = 2;
-
-// The WSRF footer is the last 32 bytes; the first playable subsong index lives
-// at offset +5 within it.
-constexpr long WSR_FOOTER_SIZE = 0x20;
-constexpr long WSR_FIRSTSONG_OFF = 5;
 
 // WSR stores neither a length nor a subsong count. Like foo_input_wsr (the
 // reference player) we hand the host a default play length so it fades and
@@ -39,6 +32,8 @@ constexpr long WSR_FIRSTSONG_OFF = 5;
 constexpr int WSR_DEFAULT_LENGTH = 180;
 constexpr uint32_t WSR_BROWSE_SONGS = 32;
 constexpr uint32_t WSR_SONGS_MARGIN = 8;
+
+constexpr long WSR_FOOTER_SIZE = 0x20;
 
 // Read an entire file into a byte vector; false if it can't be opened/read.
 bool readWhole(const std::string& path, std::vector<uint8_t>& out)
@@ -68,74 +63,53 @@ bool hasWsrFooter(const std::vector<uint8_t>& d)
 }
 } // namespace
 
-// NOTE: the in_wsr core keeps all its state in globals, so only one WSRPlayer
-// can be alive at a time. chipmachine plays a single tune at a time, which fits;
-// constructing a second player while one is live would share/clobber state.
 class WSRPlayer : public ChipPlayer {
 public:
     explicit WSRPlayer(const std::string& fileName)
     {
-        if (!readWhole(fileName, data_)) {
+        std::vector<uint8_t> data;
+        if (!readWhole(fileName, data)) {
             throw player_exception("WSR: cannot read " + fileName);
         }
-        if (!hasWsrFooter(data_)) {
+        if (!hasWsrFooter(data)) {
             throw player_exception("WSR: missing WSRF footer");
         }
 
-        api_ = WSRPlayerSetUp();
-        if (api_ == nullptr) {
-            throw player_exception("WSR: replayer init failed");
-        }
-
-        // Load_WSR copies the image into the core's own buffer and re-checks the
-        // footer; it returns 0 on any problem.
-        if (api_->p_Load_WSR(data_.data(),
-                             static_cast<unsigned>(data_.size())) == 0) {
-            api_ = nullptr;
+        machine_ = std::make_unique<wswan::Machine>();
+        if (!machine_->load(data.data(), data.size(), WSR_HZ)) {
             throw player_exception("WSR: not a valid WonderSwan sound rip");
         }
 
-        api_->p_Set_Frequency(WSR_HZ);
-        firstSong_ = api_->p_Get_FirstSong();
-        api_->p_Reset_WSR(static_cast<unsigned>(firstSong_));
+        auto first = machine_->firstSong();
+        machine_->reset(first);
 
         uint32_t songs = std::max<uint32_t>(
-            WSR_BROWSE_SONGS,
-            static_cast<uint32_t>(firstSong_) + WSR_SONGS_MARGIN);
+            WSR_BROWSE_SONGS, static_cast<uint32_t>(first) + WSR_SONGS_MARGIN);
         setMeta("format", "WonderSwan", "songs", songs, "startSong",
-                static_cast<uint32_t>(firstSong_), "length", WSR_DEFAULT_LENGTH);
-    }
-
-    ~WSRPlayer() override
-    {
-        if (api_ != nullptr) { api_->p_Close_WSR(); }
+                static_cast<uint32_t>(first), "length", WSR_DEFAULT_LENGTH);
     }
 
     int getHZ() override { return WSR_HZ; }
 
     int getSamples(int16_t* target, int noSamples) override
     {
-        if (api_ == nullptr) { return -1; }
-        // The host counts interleaved int16 values; Update_WSR wants stereo
-        // frames and the byte size of the destination buffer.
-        unsigned frames = static_cast<unsigned>(noSamples / WSR_NCH);
-        unsigned bytes = frames * WSR_NCH * sizeof(int16_t);
-        if (api_->p_Update_WSR(target, bytes, frames) == 0) { return -1; }
-        return static_cast<int>(frames) * WSR_NCH;
+        if (machine_ == nullptr) { return -1; }
+        // The host counts interleaved int16 values; the machine renders frames.
+        int frames = noSamples / WSR_NCH;
+        machine_->render(target, static_cast<unsigned>(frames));
+        return frames * WSR_NCH;
     }
 
     bool seekTo(int song, int /*seconds*/) override
     {
-        if (api_ == nullptr || song < 0) { return false; }
+        if (machine_ == nullptr || song < 0) { return false; }
         // The host's subsong index is the WonderSwan song number directly.
-        api_->p_Reset_WSR(static_cast<unsigned>(song));
+        machine_->reset(static_cast<unsigned>(song));
         return true;
     }
 
 private:
-    std::vector<uint8_t> data_;
-    WSRPlayerApi* api_ = nullptr;
-    int firstSong_ = 0;
+    std::unique_ptr<wswan::Machine> machine_;
 };
 
 bool WSRPlugin::canHandle(const std::string& name)
