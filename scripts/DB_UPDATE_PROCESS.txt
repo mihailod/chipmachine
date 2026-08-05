@@ -11,7 +11,7 @@ Dev notes on various databases and how they are updated
       loads these lazily by collection name);
     - plugin payloads loaded from ChipPlugin::createPlugins(work_dir/"data"):
       adplug.db, c64/ (VICE ROMs), sc68/, uade/;
-    - UI assets: AlegreyaSansSC-Bold.ttf, FONT-LICENSES.txt, fontsmainscroll/,
+    - UI assets: AlegreyaSansSC-Bold.ttf, fontsmainscroll/,
       playlists/, misc/{icon,paused,muted}.png, misc/platformscreenshots/,
       misc/extensionscreenshots/, misc/formats_descriptions.txt,
       misc/not_supported_extensions.txt, misc/Credits.rtf.
@@ -370,7 +370,7 @@ X •  Songlengths.md5 / STIL.txt : NO READER AT ALL as of 2026-07-30. They were
   since the cSID migration removed VICE from the mas build and deleted STIL.cpp.
   •  AlegreyaSansSC-Bold.ttf : Typography font file used to render the graphical UI.
   •  fontsmainscroll/ : Font pool for the title scroller; every .otf inside is loaded at startup and ships with the app.
-  •  FONT-LICENSES.txt : Author and license record for every bundled font (see it before adding a font to fontsmainscroll).
+  •  Font licensing lives in LEGAL, section 6 (Fonts and Typography) — NOT under data/. Record a font's licence there before adding it to fontsmainscroll.
   •  extractor.py : Dead yt-dlp bridge (it imports a data/python_runtime that no longer exists); nothing invokes it.
   Moved to data-notbundled/.
   •  nsfecopy.txt, bitar.txt, bitar.xml, cpcpower_fiche.tsv, botb_vgm_platforms.txt : no runtime reader

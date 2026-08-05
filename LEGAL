@@ -727,7 +727,198 @@ License: UnRAR license (freeware). Per apone/mods/archive/unrar/license.txt, the
          use-restriction; it imposes no obligations on the combined work.
 
 ===============================================================================
-6. TRADEMARKS AND GENERAL NOTICES
+6. FONTS AND TYPOGRAPHY
+===============================================================================
+ChipMachine bundles the fonts listed below. The full text of the SIL Open Font
+License, Version 1.1, which governs most of them, is reproduced in section 6.4.
+
+-------------------------------------------------------------------------------
+6.1  SIL Open Font License, Version 1.1
+-------------------------------------------------------------------------------
+Licensed under the SIL OFL 1.1, reproduced in full in section 6.4 below.
+http://scripts.sil.org/OFL
+
+AlegreyaSansSC-Bold.ttf -- Alegreya Sans SC Bold
+  Designer:  Juan Pablo del Peral (Huerta Tipografica)
+  Copyright: Copyright 2013 The Alegreya Sans Project Authors
+             https://github.com/huertatipografica/Alegreya-Sans
+  Notice:    No Reserved Font Name is declared. Shipped unmodified.
+
+Bebas Neue (Regular).otf -- Bebas Neue
+  Designer:  Ryoichi Tsunekawa (Dharma Type)
+  Copyright: Copyright 2019 The Bebas Neue Project Authors
+             https://github.com/dharmatype/Bebas-Neue
+  Notice:    "Bebas Neue" is a trademark of Dharma Type.
+
+Connection.otf -- Connection II
+  Copyright: Copyright (c) 2019, Jasper, Robert Jablonski @ KineticPlasma Fonts.
+             All Rights Reserved.
+
+Connection (Serif).otf -- Connection Serif
+  Copyright: Copyright (c) 2017, Jasper @ KineticPlasma Fonts.
+             All Rights Reserved.
+
+Falling Sky (Black).otf / Falling Sky (Outline).otf -- Falling Sky
+  Designer:  Paul D. Hunt (original); Cannot Into Space Fonts (modifications)
+  Copyright: Copyright 2010, 2012 Adobe Systems Incorporated. All Rights
+             Reserved. Design modifications and new weights 2015, Cannot Into
+             Space Fonts.
+  Notice:    Derivative of Adobe's Source family, which carries the Reserved
+             Font Name "Source". Distributed under the name "Falling Sky" and
+             does not use that Reserved Font Name, as OFL clause 3 requires.
+             "Source" is a trademark of Adobe Systems Incorporated in the
+             United States and/or other countries.
+
+-------------------------------------------------------------------------------
+6.2  Free for personal and commercial use
+-------------------------------------------------------------------------------
+Released by their authors as free for both personal and commercial use, on the
+authors' own terms rather than the OFL.
+
+Bigbelow.otf          Bigbelow      (c) 2026 Khurasan
+Boldone.otf           Boldone       (c) 2026 Khurasan
+Gwenchana.otf         Gwenchana     (c) 2025 Khurasan
+Kinder Cold.otf       Kinder Cold   (c) 2025 Khurasan
+Kindergo.otf          Kindergo      (c) 2025 Khurasan
+Lost Tumbler.otf      Lost Tumbler  (c) 2025 Khurasan
+Malam Poek.otf        Malam Poek    (c) 2026 Khurasan
+Octosale.otf          Octosale      (c) 2025 Khurasan
+Outline Style.otf     Outline Style (c) 2025 Khurasan
+Spicy Sale.otf        Spicy Sale    (c) 2025 Khurasan
+Winter Tosca.otf      Winter Tosca  (c) 2025 Khurasan
+
+  Designer:  Syafrizal, a.k.a. Khurasan (Khurasan Studio)
+  License:   https://khurasanstudio.com/license/ -- each font's release page
+             states: "This font is free 100% for personal use and commercial
+             use."
+  Notice:    Each font name is a trademark of Khurasan.
+
+Dt Risya.otf -- DT Risya
+  Designer:  Dryy Type
+  Copyright: Copyright (c) 2025 by Dryy Type. All rights reserved.
+  License:   "Free Commercial Use", as stated in the font's embedded license
+             record. https://www.behance.net/dryytype
+  Notice:    "DT Risya" is a trademark of Dryy Type.
+
+-------------------------------------------------------------------------------
+6.3  Compiled glyph atlas
+-------------------------------------------------------------------------------
+A rasterised glyph atlas is compiled into the executable and used as a fallback
+for the user-interface font. It is a bitmap, not a font file.
+
+external/apone/mods/grappix/grappix/staticfont.h
+  Source:    Generated with the makefont tool of Freetype GL.
+  Copyright: Copyright 2011, 2012 Nicolas P. Rougier
+  License:   BSD 2-Clause. The notice is retained in the file header.
+  Notice:    The underlying typeface is not recorded in the file. It is
+             consistent with Bitstream Vera Sans, which is freely
+             redistributable under the Bitstream Vera Fonts Copyright.
+
+
+===============================================================================
+6.4 SIL OPEN FONT LICENSE, VERSION 1.1
+===============================================================================
+
+Copyright (c) <dates>, <Copyright Holder> (<URL|email>),
+with Reserved Font Name <Reserved Font Name>.
+Copyright (c) <dates>, <additional Copyright Holder> (<URL|email>),
+with Reserved Font Name <additional Reserved Font Name>.
+Copyright (c) <dates>, <additional Copyright Holder> (<URL|email>).
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+
+-----------------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+-----------------------------------------------------------
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded,
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting -- in part or in whole -- any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+
+
+===============================================================================
+7. TRADEMARKS AND GENERAL NOTICES
 ===============================================================================
 All trademarks and platform names are the property of their respective owners.
 ChipMachine is an independent project and is not affiliated with or endorsed by

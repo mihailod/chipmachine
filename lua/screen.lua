@@ -143,6 +143,6 @@ Settings.toast_field = { 0, SCREEN_HEIGHT/2 - GSCALE * 20, GSCALE * 2.0, 0x00000
 -- UI text renders caps-only and no glyph descends below the baseline. Several
 -- layout offsets below (and the label/input gap in Dialog.h) assume that; a
 -- replacement with true lowercase would need those re-tuned. SIL OFL 1.1 --
--- see data/FONT-LICENSES.txt.
+-- see LEGAL, section 6 (Fonts and Typography).
 Settings.font = "data/AlegreyaSansSC-Bold.ttf"
 Settings.list_font = "data/AlegreyaSansSC-Bold.ttf"

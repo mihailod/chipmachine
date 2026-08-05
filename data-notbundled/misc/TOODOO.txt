@@ -11,8 +11,6 @@ MAS Compliance:
 
 - move technical details for plugins and formats from README.md into individual plugin's README files. create them if they don't exist. only leave links to them (if needed) in README.md. README.md is supposed to describe the features and usage for end users, not to dig deep into technical stuff.
 
-- move fonts licensing in LEGAL (it is someplace else now). all licensing should be in LEGAL (and LEGAL-PLUS)
-
 ----------------------------
 BUGS:
 
@@ -31,9 +29,9 @@ Features:
 
 - enhance operations on lists, need playlist tab filter with drill that shows the members with artwork on the side like when they play when you scroll up down in the drilled list
 
--CONFIRM NO GPL CODE OR REFERENCES ARE ANYWHERE in the MAS version -- look at the ChipMachine.app built and packaged by me for the mac app store submission
-
 ---------------------------------------------
+
+-CONFIRM NO GPL CODE OR ANY OTHER SUSPICIOUS CODE OR REFERENCES ARE ANYWHERE in the MAS version -- look at the ChipMachine.app built and packaged by me for the mac app store submission and all files inside, like Apple would. If there are false alarms, let's disclose them in notes -- let me know. Do not change anything just do a deep check and report.
 
 - recheck everything again (both signing and MAS) and do everything that needs to be done before the $99 payment
 
