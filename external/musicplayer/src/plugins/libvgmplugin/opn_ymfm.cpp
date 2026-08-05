@@ -51,6 +51,7 @@ extern "C" {
 
 #include "ymfm.h"
 #include "ymfm_opn.h"
+#include "ymfm_rom_intf.h"	// cm_ymfm::rom_intf -- shared with opl_ymfm.cpp
 // NOTE: deliberately NOT including ymfm_fm.ipp. ymfm_opn.cpp already includes it
 // and instantiates the fm_engine templates there; pulling it in here too would
 // instantiate a second copy in this TU, and because the plugin compiles at
@@ -78,67 +79,11 @@ namespace
 
 // ---------------------------------------------------------------- interface
 
-// Serves ymfm's sample fetches out of the ROM regions libvgm hands us.
-class opn_intf : public ymfm::ymfm_interface
-{
-public:
-	opn_intf() { memset(m_rom, 0, sizeof(m_rom)); memset(m_size, 0, sizeof(m_size)); }
-	~opn_intf() override
-	{
-		for (int i = 0; i < 2; i++) free(m_rom[i]);
-	}
-
-	// idx 0 = ADPCM-A, idx 1 = ADPCM-B
-	UINT8* alloc(int idx, UINT32 size)
-	{
-		if (m_size[idx] == size) return m_rom[idx];
-		free(m_rom[idx]);
-		m_rom[idx] = (UINT8*)calloc(1, size ? size : 1);
-		m_size[idx] = m_rom[idx] ? size : 0;
-		return m_rom[idx];
-	}
-	void write(int idx, UINT32 offset, UINT32 length, const UINT8* data)
-	{
-		if (m_rom[idx] == NULL || offset >= m_size[idx]) return;
-		if (offset + length > m_size[idx]) length = m_size[idx] - offset;
-		memcpy(m_rom[idx] + offset, data, length);
-	}
-	// YM2608's rhythm ROM is fixed data we point at rather than own.
-	void set_static(int idx, const UINT8* data, UINT32 size)
-	{
-		m_static[idx] = data;
-		m_staticSize[idx] = size;
-	}
-
-	uint8_t ymfm_external_read(ymfm::access_class type, uint32_t address) override
-	{
-		int idx = region(type);
-		if (idx < 0) return 0;
-		if (m_rom[idx] != NULL && address < m_size[idx]) return m_rom[idx][address];
-		if (m_static[idx] != NULL && address < m_staticSize[idx]) return m_static[idx][address];
-		return 0;
-	}
-	void ymfm_external_write(ymfm::access_class type, uint32_t address, uint8_t data) override
-	{
-		// ADPCM-B is RAM on the YM2608; a VGM normally preloads it as a data
-		// block, but a log may also write it a byte at a time.
-		int idx = region(type);
-		if (idx != 1 || m_rom[1] == NULL || address >= m_size[1]) return;
-		m_rom[1][address] = data;
-	}
-
-private:
-	static int region(ymfm::access_class type)
-	{
-		if (type == ymfm::ACCESS_ADPCM_A) return 0;
-		if (type == ymfm::ACCESS_ADPCM_B) return 1;
-		return -1;
-	}
-	UINT8* m_rom[2];
-	UINT32 m_size[2];
-	const UINT8* m_static[2] = { NULL, NULL };
-	UINT32 m_staticSize[2] = { 0, 0 };
-};
+// The ymfm_interface that serves sample fetches out of the ROM regions libvgm
+// hands us now lives in ymfm_rom_intf.h, shared with the OPL adapter (the Y8950
+// and the YMF278B need exactly the same plumbing). Region indices used here:
+// cm_ymfm::REGION_ADPCM_A and cm_ymfm::REGION_ADPCM_B.
+typedef cm_ymfm::rom_intf opn_intf;
 
 // Routes ymfm's SSG accesses to the AY8910 device libvgm linked to us, so the
 // SSG keeps its own mixer channel and volume exactly as with fmopn.

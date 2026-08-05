@@ -63,14 +63,15 @@ add_library(libvgmplugin_objs OBJECT
     ${LIBVGM_DIR}/emu/cores/ymdeltat.c
     ${LIBVGM_DIR}/emu/cores/oplintf.c
     ${LIBVGM_DIR}/emu/cores/adlibemu_opl2.c
-    ${LIBVGM_DIR}/emu/cores/fmopl.c
+    # fmopl.c (MAME YM3526/Y8950/YM3812) is plus-only -- see the variant block
+    # below. Its YM3812 path was already unreachable (AdLibEmu is listed first).
     ${LIBVGM_DIR}/emu/cores/262intf.c
     ${LIBVGM_DIR}/emu/cores/nukedopl3.c
     ${LIBVGM_DIR}/emu/cores/adlibemu_opl3.c
     # ymf262.c (MAME OPL3) is GPL-2.0+ and unreachable -- 262intf.c lists AdLibEmu
     # first, "default, because it's better than MAME", and VGMPlayer additionally
     # hard-requests FCC_ADLE for the YMF262 linked to an OPL4. Dropped.
-    ${LIBVGM_DIR}/emu/cores/ymf278b.c
+    # ymf278b.c (openMSX/MAME OPL4 wave engine) is plus-only -- see below.
     ${LIBVGM_DIR}/emu/cores/ymz280b.c
     ${LIBVGM_DIR}/emu/cores/ymf271.c
     ${LIBVGM_DIR}/emu/cores/ayintf.c
@@ -152,36 +153,58 @@ if(CM_HAVE_LIBVGM_GPL_CORES)
         ${LIBVGM_DIR}/emu/cores/Ootake_PSG.c
         # fmopn.c holds the MAME OPN family AND the GPGX YM2612 core. mas builds
         # ymfm instead (see below); this keeps plus byte-identical.
-        ${LIBVGM_DIR}/emu/cores/fmopn.c)
+        ${LIBVGM_DIR}/emu/cores/fmopn.c
+        # fmopl.c is the MAME OPL file. Its YM3812 path is dead (AdLibEmu wins
+        # that chip), but it is the ONLY core libvgm ships for the YM3526 and the
+        # Y8950 -- mas builds ymfm for those two instead.
+        ${LIBVGM_DIR}/emu/cores/fmopl.c
+        # ymf278b.c is the OPL4 WAVE engine (the FM half is a separate linked
+        # YMF262 device). mas builds ymfm's OPL4 wave engine instead, keeping the
+        # same linked AdLibEmu YMF262.
+        ${LIBVGM_DIR}/emu/cores/ymf278b.c)
 endif()
 
-# The OPN family (YM2203 / YM2608 / YM2610) is the one chip group where libvgm
-# has NO permissive core at all: fmopn.c is MAME-derived GPL-2.0+ and is the only
-# implementation it ships. Rather than lose ~600-700 rows (all of NEC PC-98,
-# PC-88 and Neo Geo) in the App Store build, opn_ymfm.cpp wraps Aaron Giles' ymfm
-# (BSD-3, external/ymfm, vendored from upstream -- NOT from Furnace's modified
-# copy) in libvgm's DEV_DEF interface. Only the OPN/SSG/ADPCM translation units
-# are compiled; ymfm's OPL/OPM/OPZ cores are unused because libvgm already has
-# permissive or LGPL cores for those chips.
+# Three chip groups have NO permissive core in libvgm at all, only a GPL one:
 #
-# plus keeps fmopn.c (unchanged audio, and it still owns the GPGX YM2612 core);
-# mas builds ymfm instead. opnintf.c carries a local patch adding the EC_*_MAME /
-# EC_*_YMFM selection -- grep "chipmachine local patch" there, re-apply on
-# revendor. .orig copies of both files sit next to them.
+#   YM2203 / YM2608 / YM2610   fmopn.c   (MAME, GPL-2.0+)
+#   YM3526 / Y8950             fmopl.c   (MAME, GPL-2.0+)
+#   YMF278B (OPL4 wave)        ymf278b.c (openMSX/MAME, GPL-2.0)
+#
+# Dropping them outright would lose all of NEC PC-98/PC-88 and Neo Geo (~600-700
+# rows), every YM3526 and Y8950 log, and the wavetable half of every MSX
+# MoonSound track. So opn_ymfm.cpp and opl_ymfm.cpp wrap Aaron Giles' ymfm
+# (BSD-3, external/ymfm, vendored from upstream -- NOT from Furnace's modified
+# copy) in libvgm's DEV_DEF interface. ymfm's OPM/OPZ/OPLL cores stay unused,
+# because libvgm already has permissive or LGPL cores for those chips.
+#
+# plus keeps all three MAME files (unchanged audio, and fmopn.c still owns the
+# GPGX YM2612 core); mas builds ymfm instead. opnintf.c/.h and oplintf.c/.h carry
+# a local patch adding the EC_*_MAME / EC_*_YMFM selection -- grep
+# "chipmachine local patch" there, re-apply on revendor, .orig copies sit next to
+# them. ymf278b.c is a single-core file and needed no patch: opl_ymfm.cpp simply
+# supplies the sndDev_YMF278B DEV_DECL in the build where that file is absent.
+# The OPL slice is compiled in BOTH variants, because one of its chips is not a
+# licence swap: the ymfm YM3526 is used everywhere. It was A/B'd against the MAME
+# core on Karnov and Athena (SNK) and PREFERRED by ear on the one track where the
+# two measurably differ -- Athena's "Theme of Titan", 0.71x RMS, which is the OPL
+# rhythm/percussion mode that MAME and ymfm are known to render differently. So
+# plus takes it too, and fmopl.c's YM3526 path joins its YM3812 path as dead code
+# there. The OPN slice stays mas-only.
 set(YMFM_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../ymfm)
+set(YMFM_SOURCES
+    opl_ymfm.cpp
+    ${YMFM_DIR}/src/ymfm_opl.cpp
+    ${YMFM_DIR}/src/ymfm_adpcm.cpp     # Y8950 ADPCM-B, and ymfm_opl.cpp needs it
+    ${YMFM_DIR}/src/ymfm_pcm.cpp)      # YMF278B wavetable, likewise
 if(NOT CM_HAVE_LIBVGM_GPL_CORES)
-    target_sources(libvgmplugin_objs PRIVATE
+    list(APPEND YMFM_SOURCES
         opn_ymfm.cpp
         ${YMFM_DIR}/src/ymfm_opn.cpp
-        ${YMFM_DIR}/src/ymfm_ssg.cpp
-        ${YMFM_DIR}/src/ymfm_adpcm.cpp
-        ${YMFM_DIR}/src/ymfm_pcm.cpp)
-    target_include_directories(libvgmplugin_objs PRIVATE ${YMFM_DIR}/src)
-    set_source_files_properties(opn_ymfm.cpp ${YMFM_DIR}/src/ymfm_opn.cpp
-        ${YMFM_DIR}/src/ymfm_ssg.cpp ${YMFM_DIR}/src/ymfm_adpcm.cpp
-        ${YMFM_DIR}/src/ymfm_pcm.cpp
-        PROPERTIES COMPILE_OPTIONS "-std=c++17")
+        ${YMFM_DIR}/src/ymfm_ssg.cpp)
 endif()
+target_sources(libvgmplugin_objs PRIVATE ${YMFM_SOURCES})
+target_include_directories(libvgmplugin_objs PRIVATE ${YMFM_DIR}/src)
+set_source_files_properties(${YMFM_SOURCES} PROPERTIES COMPILE_OPTIONS "-std=c++17")
 
 target_include_directories(libvgmplugin_objs PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -217,8 +240,10 @@ target_compile_definitions(libvgmplugin_objs PRIVATE
     EC_YM2612_NUKED          # ym3438.c, LGPL-2.1+ (GPGX lives in fmopn.c, so it
                              # is plus-only -- see the variant block below)
     EC_YM2151_NUKED          # nukedopm.c, LGPL-2.1+ (+ MAME below, plus only)
-    EC_YM3812_ADLIBEMU       # LGPL-2.1; MAME's YM3812 path dropped. fmopl.c is
-    EC_YM3812_NUKED          # still built -- YM3526/Y8950 are MAME-only.
+    EC_YM3812_ADLIBEMU       # LGPL-2.1; MAME's YM3812 path was already dead code
+    EC_YM3812_NUKED          # (AdLibEmu is listed first in oplintf.c)
+    EC_YM3526_YMFM           # BSD-3, BOTH variants -- preferred by ear over the
+                             # MAME core, see the ymfm block below
     EC_YMF262_ADLIBEMU EC_YMF262_NUKED   # was: + MAME (GPL), unreachable
     EC_NES_NSFPLAY EC_NES_NSFP_FDS       # was: + MAME (GPL), unreachable
     EC_C6280_MAME            # BSD-3 (+ Ootake below, plus only)
@@ -233,13 +258,21 @@ if(CM_HAVE_LIBVGM_GPL_CORES)
         EC_YM2151_MAME EC_C6280_OOTAKE
         # fmopn.c: the MAME OPN cores, and the GPGX YM2612 core that lives in the
         # same file and is libvgm's first choice for that chip.
-        EC_YM2203_MAME EC_YM2608_MAME EC_YM2610_MAME EC_YM2612_GPGX)
+        EC_YM2203_MAME EC_YM2608_MAME EC_YM2610_MAME EC_YM2612_GPGX
+        # fmopl.c stays in plus for the Y8950 alone -- its YM3526 path is now
+        # dead code here too (EC_YM3526_YMFM above wins for both variants).
+        EC_Y8950_MAME)
 else()
     target_compile_definitions(libvgmplugin_objs PRIVATE
         EC_YM2203_YMFM EC_YM2608_YMFM EC_YM2610_YMFM
         # The YM2608's rhythm section plays from an ADPCM-A ROM inside the chip;
         # without it every PC-98 track loses its drums. See opn_ymfm.cpp.
-        OPN_YMFM_RHYTHM_ROM)
+        OPN_YMFM_RHYTHM_ROM
+        # The other two chips in opl_ymfm.cpp -- these ARE licence swaps, since
+        # fmopl.c and ymf278b.c are GPL and cannot ship in mas. EC_YMF278B_YMFM
+        # additionally makes opl_ymfm.cpp define sndDev_YMF278B, which normally
+        # lives in the (absent) ymf278b.c.
+        EC_Y8950_YMFM EC_YMF278B_YMFM)
 endif()
 target_compile_options(libvgmplugin_objs PRIVATE
     -fvisibility=hidden -fvisibility-inlines-hidden -w)
@@ -270,4 +303,16 @@ set_target_properties(libvgmplugin PROPERTIES LINKER_LANGUAGE CXX)
 target_link_libraries(libvgmplugin PRIVATE coreutils ZLIB::ZLIB)
 if(NOT WIN32)
     target_link_libraries(libvgmplugin PRIVATE m)
+endif()
+
+# A/B probe for core swaps -- OFF by default, it is a developer tool. It links
+# the OBJECT library directly (before the `ld -r` visibility pass), so it gets
+# exactly this variant's source list and SNDDEV_/EC_ selection. See
+# "Verifying a core swap" in README.md.
+option(CM_BUILD_VGM_PROBE "Build the libvgm chip-core A/B probe" OFF)
+if(CM_BUILD_VGM_PROBE)
+    add_executable(vgm_core_probe vgm_core_probe.cpp $<TARGET_OBJECTS:libvgmplugin_objs>)
+    target_include_directories(vgm_core_probe PRIVATE ${LIBVGM_DIR} ${ZLIB_INCLUDE_DIRS})
+    target_link_libraries(vgm_core_probe PRIVATE coreutils ZLIB::ZLIB)
+    set_target_properties(vgm_core_probe PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 endif()

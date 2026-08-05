@@ -67,21 +67,21 @@ Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
 License: GNU General Public License v3.0 or later
 
 Component: libvgm chip cores with no permissive alternative (VGM / VGZ playback)
-Author: MAME contributors (fmopl.c, ymf278b.c, msm5232.c), the Gens and Mednafen
-        projects (pwm.c, scd_pcm.c, vsu.c). Part of ValleyBell's libvgm, vendored
-        at external/zxtune/3rdparty/vgm -- see the libvgm entry in section 4 for
+Author: MAME contributors (msm5232.c), the Gens and Mednafen projects (pwm.c,
+        scd_pcm.c, vsu.c). Part of ValleyBell's libvgm, vendored at
+        external/zxtune/3rdparty/vgm -- see the libvgm entry in section 4 for
         the plugin itself.
-License: GNU General Public License v2.0 (ymf278b.c) or v2.0-or-later (fmopl.c,
-        msm5232.c, and the GPL text in pwm.c and vsu.c). scd_pcm.c is Gens code
-        carrying NO licence statement at all; Gens itself is GPL-2, so it is
-        filed here rather than assumed permissive.
-Notice: These six files are compiled into BOTH variants. libvgm ships no
-        alternative core for the chips they cover (YM3526 and Y8950, OPL4,
-        MSM5232, Sega 32X PWM, Virtual Boy VSU, RF5C164), so they are recorded
-        here as an open item rather than removed. Every other GPL core in libvgm
-        is either compiled in no build at all or replaced in the Mac App Store
-        variant; see LEGAL-PLUS.
-        Which core serves which chip, and why these six have no substitute, is
+License: GNU General Public License v2.0-or-later (msm5232.c, and the GPL text
+        in pwm.c and vsu.c). scd_pcm.c is Gens code carrying NO licence
+        statement at all; Gens itself is GPL-2, so it is filed here rather than
+        assumed permissive.
+Notice: These four files are compiled into BOTH variants. libvgm ships no
+        alternative core for the chips they cover (MSM5232, Sega 32X PWM,
+        Virtual Boy VSU, RF5C164), so they are recorded here as an open item
+        rather than removed. Every other GPL core in libvgm is either compiled
+        in no build at all or replaced in the Mac App Store variant; see
+        LEGAL-PLUS.
+        Which core serves which chip, and why these four have no substitute, is
         described in musicplayer/src/plugins/libvgmplugin/README.md.
 
 Component: S98 (PC-98 / FM sound log)
@@ -294,15 +294,19 @@ Notice: Covers hundreds of formats (CRI ADX/HCA, FMOD FSB, Microsoft XWB/XMA,
         VGM_USE_* codec libraries, so only the self-contained decoders and the
         bundled coding/libs helpers are compiled.
 
-Component: ymfm (Yamaha FM emulation -- YM2203 / YM2608 / YM2610)
+Component: ymfm (Yamaha FM emulation -- YM2203 / YM2608 / YM2610, YM3526,
+        Y8950, YMF278B)
 Author: Aaron Giles (https://github.com/aaronsgiles/ymfm), vendored UNMODIFIED
-        at external/ymfm from the upstream repository. The adapter presenting it
-        through libvgm's C interface is chipmachine's own
-        musicplayer/src/plugins/libvgmplugin/opn_ymfm.cpp.
+        at external/ymfm from the upstream repository. The adapters presenting
+        it through libvgm's C interface are chipmachine's own
+        musicplayer/src/plugins/libvgmplugin/opn_ymfm.cpp and opl_ymfm.cpp.
 License: BSD 3-Clause (see external/ymfm/LICENSE)
-Notice: Compiled into the Mac App Store variant only, where it replaces libvgm's
-        GPL OPN core (see LEGAL-PLUS). Only the OPN, SSG, ADPCM and PCM
-        translation units are built.
+Notice: Compiled into BOTH variants. In the Mac App Store variant it replaces
+        libvgm's GPL cores for the OPN family, the YM3526, the Y8950 and the
+        OPL4 wavetable (see LEGAL-PLUS). The YM3526 is served by ymfm in the
+        plus variant as well, which is a choice about sound rather than about
+        licensing; the OPN, SSG and OPN-side ADPCM translation units are built
+        for the App Store variant only.
         Taken from upstream rather than from the copy that sits under
         musicplayer/src/plugins/dmfplugin/furnace/: ymfm is BSD-3 at origin and
         Furnace's own licence says its bundled cores keep their own terms, but

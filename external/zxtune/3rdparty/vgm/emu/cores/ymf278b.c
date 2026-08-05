@@ -93,6 +93,13 @@
 // interaction with the FM registers (e.g. the NEW2 bit) is currently handled
 // in the MSXMoonSound class.
 
+// [chipmachine local note] This file is GPL-2.0 (MAME/openMSX derived) and is
+// compiled ONLY by the `plus` variant. The Mac App Store variant instead builds
+// musicplayer/src/plugins/libvgmplugin/opl_ymfm.cpp, which wraps ymfm's
+// (BSD-3) OPL4 wave engine and supplies its own copy of the sndDev_YMF278B
+// DEV_DECL below -- the two are never compiled together. Nothing here is
+// patched; see libvgmplugin/README.md and its CMakeLists.txt.
+
 #include <stdlib.h>
 #include <string.h>
 

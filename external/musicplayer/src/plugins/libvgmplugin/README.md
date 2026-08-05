@@ -40,9 +40,18 @@ GPL cores turned out to be unreachable dead code — libvgm's own preference ord
 already put a permissive core first — and are compiled in **no** build:
 `ym2413.c` and `nukedopll.c` (emu2413 wins), `ymf262.c` (AdLibEmu wins, and
 VGMPlayer hard-requests `FCC_ADLE` for an OPL4's linked OPL3), `nes_apu.c`
-(NSFPlay wins) and `ym2612.c` (GPGX, inside `fmopn.c`, wins).
+(NSFPlay wins) and `ym2612.c` (GPGX, inside `fmopn.c`, wins). `fmopl.c`'s
+YM3812/OPL2 path is dead the same way (AdLibEmu is listed first), and its YM3526
+path is now dead too — see the table.
 
-Three chips differ per variant. `plus` keeps what it always played:
+One chip uses ymfm in **both** variants, because it is a choice about sound and
+not about licensing:
+
+| chip | plus and mas |
+|---|---|
+| YM3526 (OPL1) | **ymfm**, via `opl_ymfm.cpp` |
+
+Six more differ per variant. `plus` keeps what it always played:
 
 | chip | plus | mas |
 |---|---|---|
@@ -50,9 +59,14 @@ Three chips differ per variant. `plus` keeps what it always played:
 | YM2612 | GPGX (in `fmopn.c`) | `ym3438.c` (Nuked OPN2) |
 | YM2151 | `ym2151.c` (MAME) | `nukedopm.c` (Nuked OPM) |
 | HuC6280 | `Ootake_PSG.c` | `c6280_mame.c` |
+| Y8950 | `fmopl.c` (MAME) | **ymfm**, via `opl_ymfm.cpp` |
+| YMF278B / OPL4 wavetable | `ymf278b.c` (openMSX) | **ymfm**, via `opl_ymfm.cpp` |
 
-Measured against the MAME/Ootake cores on real game music, RMS ratios are 1.00
-(OPN), 1.12 (YM2612), 1.00 (YM2151) and 0.98 (HuC6280). Two caveats:
+The OPL4's *FM* half is a separate linked YMF262 device and is AdLibEmu in both.
+
+Measured against the MAME/openMSX/Ootake cores on real game music, RMS ratios
+are 1.00 (OPN), 1.12 (YM2612), 1.00 (YM2151), 0.98 (HuC6280), 1.00 (Y8950,
+99% of 70 MSX tracks within ±3%) and 0.97 (OPL4). Caveats:
 
 - **Nuked OPM is slower** than the MAME YM2151. It matters on the X68000 corpus.
 - **The MAME HuC6280 runs hot on noise/DDA-heavy material** and clips where
@@ -61,6 +75,26 @@ Measured against the MAME/Ootake cores on real game music, RMS ratios are 1.00
   `player/vgmplayer.cpp` holds **one volume per chip type**, hand-corrected for
   K051649 and C140/C219 only, so it is calibrated for whichever core is listed
   first. A per-core correction there (~0.7x for MAME) would fix it.
+- **The ymfm YM3526 renders OPL rhythm mode differently** from MAME. 25 of 28
+  arcade tracks land within ±3%; the three that do not are all Athena (SNK),
+  which leans on the percussion channels — "Theme of Titan" measures 0.71x.
+  A/B'd by ear, ymfm was **preferred** there, which is why this chip moved in
+  both variants rather than only in `mas`.
+- **The ymfm OPL4 does not interpolate between wavetable samples** and
+  `ymf278b.c` does (linear, between adjacent samples). Real OPL4 hardware does
+  not interpolate either, so ymfm is arguably the more faithful of the two, but
+  it is audibly brighter. Across 33 arcade tracks that carry their own sample
+  ROM (Strikers 1945 II, Gunbird 2) the ratio stays inside 0.91–1.03 with no
+  clipping. Closing the gap would mean patching ymfm's `pcm_channel::fetch_sample`,
+  which would end the "vendored unmodified" guarantee in
+  `external/ymfm/PROVENANCE.md`; it was left alone deliberately.
+
+**Beware MSX MoonSound rips when measuring the OPL4.** They carry only the
+small user-sample RAM upload (VGM data block `0x87`) and no ROM block (`0x84`):
+the instruments live in the MoonSound's internal 2 MB YRW801 ROM, which VGM logs
+do not embed. Both variants render those files as noise, and an early A/B of
+this swap was run almost entirely on them before that was spotted. Check for a
+`0x84` block before trusting a number.
 
 A core that is *not* compiled does **not** fail cleanly: VGMPlayer sets
 `devDef = NULL` and continues, so the file still plays with that chip **silent**.
@@ -111,19 +145,99 @@ with libvgm (`fmopn_2608rom.h`); without it every PC-98 track loses its drums.
 `EC_*_YMFM` selection — grep `chipmachine local patch`, `.orig` copies sit next
 to them, re-apply on revendor. ymfm itself is unmodified.
 
-### Verifying a core swap
+## The ymfm OPL adapter (`opl_ymfm.cpp`)
 
-Build a standalone probe from the same source list and defines that prints the
-core libvgm actually selected (`GetSongDeviceInfo` → `PLR_DEV_INFO.core`, a FCC)
-plus a CRC/RMS of rendered PCM, and diff the configurations. Notes:
+Same shape, for the three chips whose only libvgm core is GPL: the **YM3526**
+and **Y8950** (`fmopl.c`, MAME) and the **YMF278B** OPL4 wavetable
+(`ymf278b.c`, an openMSX port). Easier than the OPN in two ways — ymfm's OPL
+sample rate is `clock/72`, exactly what `oplintf.c` reports, and its `ymf278b`
+returns `clock/768`, exactly what `ymf278b.c` reports, so nothing needs the
+rate folding the OPN required and nothing goes near the resampler's ceiling.
+
+The OPL4 is the one that needed thought. **libvgm does not model it as one
+chip**: `ymf278b.c` is the wavetable half only, and the FM half is a separate
+linked `DEVID_YMF262` that VGMPlayer hard-requests `FCC_ADLE` for. ymfm's
+`ymf278b` contains its own FM and offers no `fm_override` hook, so either
+
+- (a) let ymfm do the FM and drop the link — one device instead of two, which
+  moves the FM onto a different `_CHIP_VOLUME` entry *and* swaps AdLibEmu for
+  ymfm's OPL3 at the same time: two changes at once, for no gain; or
+- (b) keep libvgm's structure, forward ports 0–3 to the linked YMF262 and emit
+  ymfm's PCM alone.
+
+(b) is what shipped, so both variants share the same FM core and the same two
+volume-table entries and only the wavetable engine changes. Three traps in it:
+
+1. **ymfm's PCM writes are gated on the FM register file.** `write_data_pcm()`
+   returns early unless NEW2 is set, and NEW2 arrives through an *FM* port. So
+   ports 0–3 must reach ymfm too, not just the linked device — feed it only
+   ports 4/5 and the chip is silent.
+2. **Which means ymfm's FM output has to be discarded**, or the FM renders
+   twice. `ymf278b::generate()` mixes FM and PCM into lanes 4/5 before the
+   caller sees them, so `opl4_pcm` subclasses it and reimplements the loop:
+   both engines still clock identically (the FM drives timers and the BUSY/LD
+   status bits, and skipping it desynchronises the PCM envelopes), only the FM
+   *output* is dropped.
+3. **The FM mix level's power-on value differs.** `ymf278b.c`'s reset sets
+   `fm_l = fm_r = 3`; ymfm's register file defaults to 0, which is +6 dB. That
+   level is passed to the linked YMF262 as a device volume, so reading it back
+   out of ymfm ran the FM 2.7x hot on every log that never writes register
+   0xF8 — most MSX MoonSound music. The adapter tracks it itself.
+
+The PCM level also needs a **x3/4** calibration, measured rather than derived:
+the two engines carry different internal headroom (libvgm applies a documented
+-15 dB trim per slot, ymfm scales inside its PCM channel) and they do not
+cancel. Unscaled, ymfm rendered 1.315x libvgm.
+
+`oplintf.c` / `oplintf.h` carry the same kind of **local patch** as `opnintf`,
+introducing `EC_YM3526_*` and `EC_Y8950_*` — upstream has no `EC_` macros for
+those two chips at all and reaches into `fmopl` directly under `SNDDEV_*`.
+`.orig` copies sit next to them. `ymf278b.c` needed no patch: it is a
+single-core file, so `opl_ymfm.cpp` simply supplies the `sndDev_YMF278B`
+`DEV_DECL` in the build where that file is absent.
+
+The `ymfm_interface` that serves sample memory out of libvgm's
+`DEVRW_MEMSIZE` / `DEVRW_BLOCK` calls is shared by both adapters and lives in
+`ymfm_rom_intf.h`.
+
+## Verifying a core swap
+
+`vgm_core_probe.cpp` is that tool, kept in the tree. It is **off by default**;
+build it per variant and diff the two:
+
+```
+cmake -B build-probe-plus -S chipmachine -G Ninja -DCMAKE_BUILD_TYPE=Release \
+      -DCM_VARIANT=plus -DCM_BUILD_VGM_PROBE=ON
+ninja -C build-probe-plus vgm_core_probe
+build-probe-plus/plugins/libvgmplugin/vgm_core_probe -t 30 [-w wavdir] file.vgz...
+```
+
+It links the OBJECT library directly, *before* the `ld -r` visibility pass, so
+it sees exactly that variant's source list and `SNDDEV_`/`EC_` selection. For
+each file it prints the core libvgm actually chose (`GetSongDeviceInfo` →
+`PLR_DEV_INFO.core`, a FourCC) including linked devices, plus RMS, peak and
+clipped-sample count; `-w` dumps WAVs so a swap can be judged by ear too.
+Notes:
 
 - `PlayerA::Render()` fills **at most one internal buffer per call** and returns
   the byte count — pull in chunks and honour the return, or 95% of what you
   "rendered" is untouched silence and every measurement is wrong.
+- Call `Start()` **before** `GetSongDeviceInfo()`, or every core reads 0 and
+  every rate reads 0 — the devices do not exist yet.
 - `testmus/libvgm/pc98-opn.vgz` has only **4 SSG writes**, so it does not
   exercise the SSG path; use a VGMRips PC-98 OPNA rip for that.
 - Pick A/B material by the registers the cores differ on, but always listen to
   ordinary game music too — register-extreme compo tracks are unrepresentative.
+- **Ratios on near-silent tracks are noise.** Filter by absolute RMS (≥100 or
+  so) before summarising, or a jingle going from RMS 20 to RMS 57 reports as a
+  2.8x regression.
+- Check the file actually contains the sample data the chip needs — see the
+  MoonSound warning above. Aggregate over a corpus, not one track.
+
+OPL fixtures in `testmus/libvgm/`: `arcade-ym3526.vgz` (Karnov),
+`arcade-ym3526-rhythm.vgz` (Athena — the rhythm-mode divergence),
+`msx-y8950.vgz` (Gorby no Pipeline Daisakusen) and
+`arcade-ymf278b-opl4.vgz` (Gunbird 2, with its ROM block).
 
 ## Build notes
 
@@ -131,7 +245,9 @@ libvgm's chip cores share global C symbol names with GME / s98 / famitracker /
 kss. As with dmf/goattracker/ned/mikmod, the slice is compiled
 `-fvisibility=hidden` and partial-linked with `ld -r` to demote those externs to
 locals; only `LibVGMPlugin.cpp` stays at default visibility (the exported plugin
-surface). ymfm is C++17 and compiled with the same flags; `opn_ymfm.cpp`
-deliberately does **not** include `ymfm_fm.ipp` (`ymfm_opn.cpp` already
-instantiates those templates, and a second copy cannot be merged once `ld -r`
-has made the weak symbols private externs).
+surface). ymfm is C++17 and compiled with the same flags; `opn_ymfm.cpp` and
+`opl_ymfm.cpp` deliberately do **not** include `ymfm_fm.ipp` (`ymfm_opn.cpp` /
+`ymfm_opl.cpp` already instantiate those templates, and a second copy cannot be
+merged once `ld -r` has made the weak symbols private externs). Calling a
+template member from an adapter is fine — without the `.ipp` the compiler emits
+an ordinary out-of-line call, which resolves against that instantiation.

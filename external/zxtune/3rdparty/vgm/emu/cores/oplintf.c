@@ -14,7 +14,8 @@
 #endif
 
 #include "oplintf.h"
-#if defined(EC_YM3812_MAME) || defined(SNDDEV_YM3526) || defined(SNDDEV_Y8950)
+// [chipmachine local patch] fmopl.h is only needed when a MAME core is selected.
+#if defined(EC_YM3812_MAME) || defined(EC_YM3526_MAME) || defined(EC_Y8950_MAME)
 #include "fmopl.h"
 #endif
 #ifdef EC_YM3812_ADLIBEMU
@@ -28,9 +29,22 @@
 
 static UINT8 device_start_ym3812_mame(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf);
 static UINT8 device_start_ym3812_adlibemu(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf);
+#ifdef EC_YM3526_MAME
 static UINT8 device_start_ym3526(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf);
+#endif
+#ifdef EC_Y8950_MAME
 static UINT8 device_start_y8950(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf);
+#endif
 static UINT8 device_start_ym3812_nuked(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf);
+
+// [chipmachine local patch] ymfm cores, defined in
+// musicplayer/src/plugins/libvgmplugin/opl_ymfm.cpp.
+#ifdef EC_YM3526_YMFM
+extern DEV_DEF devDef_YMFM_3526;
+#endif
+#ifdef EC_Y8950_YMFM
+extern DEV_DEF devDef_YMFM_8950;
+#endif
 
 
 
@@ -169,6 +183,7 @@ const DEV_DECL sndDev_YM3812 =
 
 
 #ifdef SNDDEV_YM3526
+#ifdef EC_YM3526_MAME
 static DEVDEF_RWFUNC devFunc3526_MAME[] =
 {
 	{RWF_REGISTER | RWF_WRITE, DEVRW_A8D8, 0, ym3526_write},
@@ -194,6 +209,7 @@ static DEV_DEF devDef3526_MAME =
 	
 	devFunc3526_MAME,	// rwFuncs
 };
+#endif	// EC_YM3526_MAME
 
 static const char* DeviceName_YM3526(const DEV_GEN_CFG* devCfg)
 {
@@ -208,7 +224,12 @@ const DEV_DECL sndDev_YM3526 =
 	DeviceChannelNames,
 	DeviceLinkIDs,
 	{	// cores
+#ifdef EC_YM3526_MAME
 		&devDef3526_MAME,
+#endif
+#ifdef EC_YM3526_YMFM
+		&devDef_YMFM_3526,
+#endif
 		NULL
 	}
 };
@@ -216,6 +237,7 @@ const DEV_DECL sndDev_YM3526 =
 
 
 #ifdef SNDDEV_Y8950
+#ifdef EC_Y8950_MAME
 static DEVDEF_RWFUNC devFunc8950_MAME[] =
 {
 	{RWF_REGISTER | RWF_WRITE, DEVRW_A8D8, 0, y8950_write},
@@ -243,6 +265,7 @@ static DEV_DEF devDef8950_MAME =
 	
 	devFunc8950_MAME,	// rwFuncs
 };
+#endif	// EC_Y8950_MAME
 
 static const char* DeviceName_Y8950(const DEV_GEN_CFG* devCfg)
 {
@@ -274,7 +297,12 @@ const DEV_DECL sndDev_Y8950 =
 	DeviceChannelNames_Y8950,
 	DeviceLinkIDs,
 	{	// cores
+#ifdef EC_Y8950_MAME
 		&devDef8950_MAME,
+#endif
+#ifdef EC_Y8950_YMFM
+		&devDef_YMFM_8950,
+#endif
 		NULL
 	}
 };
@@ -353,7 +381,7 @@ static UINT8 device_start_ym3812_nuked(const DEV_GEN_CFG* cfg, DEV_INFO* retDevI
 #endif	// EC_YM3812_NUKED
 
 
-#ifdef SNDDEV_YM3526
+#ifdef EC_YM3526_MAME
 static UINT8 device_start_ym3526(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf)
 {
 	void* chip;
@@ -377,10 +405,10 @@ static UINT8 device_start_ym3526(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf)
 	INIT_DEVINF(retDevInf, devData, rate, &devDef3526_MAME);
 	return 0x00;
 }
-#endif	// SNDDEV_YM3526
+#endif	// EC_YM3526_MAME
 
 
-#ifdef SNDDEV_Y8950
+#ifdef EC_Y8950_MAME
 static UINT8 device_start_y8950(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf)
 {
 	void* chip;
@@ -408,4 +436,4 @@ static UINT8 device_start_y8950(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf)
 	INIT_DEVINF(retDevInf, devData, rate, &devDef8950_MAME);
 	return 0x00;
 }
-#endif	// SNDDEV_Y8950
+#endif	// EC_Y8950_MAME

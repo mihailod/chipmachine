@@ -5,13 +5,12 @@ MAS Compliance:
 - clean room partial deflemask GPL (IBM),PROMPT ready	2071
 
 - maxtraxplugin GPL (amiga)	1,812	4		93	clean-room Paula + driver
-
-
-- move technical details for plugins and formats from README.md into individual plugin's README files. only leave links to them. README.md is supposed to describe the features and usage for end users, not to dig deep into technical stuff.
-
-
+----------------
+- move technical details for plugins and formats from README.md into individual plugin's README files. create them if they don't exist. only leave links to them (if needed) in README.md. README.md is supposed to describe the features and usage for end users, not to dig deep into technical stuff.
 ----------------------------
 BUGS:
+
+- MSX MoonSound VGMs are broken in ChipMachine today, both variants — unrelated to this change, pre-existing. They need the 2 MB YRW801 ROM that VGM logs don't embed. How many files are impacted and is the fix easy?
 
 - Unrelated bug found on the way: vgm_opl_detect.h reads the chip-clock fields at 0xC0–0xE0 without checking the VGM 1.70 extra-header offset at 0xBC, which aliases that region. My first probe reported phantom WonderSwan/SAA1099/ES5503/ES5506 chips on 7 of 36 files until I fixed it. Your copy has the same read, so some VGMs are routed to libvgm on a chip that isn't there. Harmless for playback (libvgm plays them fine) — it just quietly takes files GME would have handled.
 
