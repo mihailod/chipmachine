@@ -69,44 +69,29 @@ License: GNU General Public License v3.0 or later
 Component: libvgm chip cores with no permissive alternative (VGM / VGZ playback)
 Author: MAME contributors (fmopl.c, ymf278b.c, msm5232.c), the Gens and Mednafen
         projects (pwm.c, scd_pcm.c, vsu.c). Part of ValleyBell's libvgm, vendored
-        at external/zxtune/3rdparty/vgm -- see the permissive libvgm entry in
-        section 4 for the plugin itself.
+        at external/zxtune/3rdparty/vgm -- see the libvgm entry in section 4 for
+        the plugin itself.
 License: GNU General Public License v2.0 (ymf278b.c) or v2.0-or-later (fmopl.c,
-        msm5232.c, and the GPL text in pwm.c and vsu.c). scd_pcm.c is
-        Gens code carrying NO licence statement at all; Gens itself is GPL-2, so
-        it is filed here rather than assumed permissive.
-Notice: These SIX files are the remainder of the libvgm core trim (see the
-        libvgm entry in section 4). Every other GPL core was either dropped as
-        unreachable, or replaced by a permissive/LGPL one in the mas variant
-        (see LEGAL-PLUS). These have no alternative core in libvgm at all:
-          fmopl.c    YM3526 and Y8950 specifically; both are MAME-only in libvgm
-                     (the YM3812 path is served by AdLibEmu and is not used).
-          ymf278b.c  OPL4.
-          msm5232.c  Taito arcade rhythm.
-          pwm.c      Sega 32X PWM (7 rows).
-          vsu.c      Virtual Boy (17 rows).
-          scd_pcm.c  RF5C164 -- cannot be dropped even though rf5c68.c (BSD-3)
-                     exists, because VGMPlayer hard-requests FCC_GENS for it.
-        They are recorded as an OPEN ITEM: unlike a gated plugin, a missing core
-        does not fail cleanly. libvgm's VGMPlayer sets devDef = NULL and
-        continues, so the file still plays with that chip SILENT -- quietly wrong
-        audio that no index gate can detect. Dropping them was therefore judged
-        worse than declaring them.
-        fmopn.c -- the whole OPN family, and by far the largest of these at
-        ~600-700 rows -- USED to be on this list and no longer is: the mas build
-        now plays YM2203/YM2608/YM2610 with ymfm (Aaron Giles, BSD-3), see the
-        entry below. ymfm also implements YM3526, Y8950 and YMF278B, so extending
-        that same adapter would retire fmopl.c and ymf278b.c as well.
+        msm5232.c, and the GPL text in pwm.c and vsu.c). scd_pcm.c is Gens code
+        carrying NO licence statement at all; Gens itself is GPL-2, so it is
+        filed here rather than assumed permissive.
+Notice: These six files are compiled into BOTH variants. libvgm ships no
+        alternative core for the chips they cover (YM3526 and Y8950, OPL4,
+        MSM5232, Sega 32X PWM, Virtual Boy VSU, RF5C164), so they are recorded
+        here as an open item rather than removed. Every other GPL core in libvgm
+        is either compiled in no build at all or replaced in the Mac App Store
+        variant; see LEGAL-PLUS.
+        Which core serves which chip, and why these six have no substitute, is
+        described in musicplayer/src/plugins/libvgmplugin/README.md.
 
 Component: S98 (PC-98 / FM sound log)
 Author: s98plugin, vendored under musicplayer/src/plugins/s98plugin. The FM
         synthesis core is cisc's fmgen (m_s98/device/fmgen).
 License: UNRESOLVED -- see notice.
 Notice: s98plugin ships NO licence text anywhere in the vendored tree -- no
-        LICENSE, no COPYING, and no source file that states terms. It covers
-        520 songs. cisc's fmgen is distributed under its own terms. This needs
-        its own audit; it is recorded here as an open item rather than left
-        silently mislabelled.
+        LICENSE, no COPYING, and no source file that states terms. cisc's fmgen
+        is distributed under its own terms. This needs its own audit; it is
+        recorded here as an open item rather than left silently mislabelled.
 
 ===============================================================================
 3. LESSER COPYLEFT DEPENDENCIES
@@ -145,10 +130,7 @@ Author: Jean-Paul Mikkers ("MikMak") and Jake Stine, maintained by the libmikmod
         the other format loaders are omitted.
 License: GNU Lesser General Public License v2.1 or later (see
         musicplayer/src/plugins/mikmodplugin/libmikmod/COPYING.LESSER).
-Notice: Vendored sources are unmodified. The plugin compiles them at hidden
-        visibility and partial-links (ld -r) so libmikmod's generic internal
-        symbols (getfrequency, getlinearperiod, ...) are localized and do not
-        collide with other vendored trackers.
+Notice: Vendored sources are unmodified.
 
 Component: mGBA (Game Boy Advance -- .gsf / .minigsf)
 Author: mGBA by Jeffrey Pfau ("endrift") and contributors
@@ -310,68 +292,47 @@ License: ISC License (permissive; some bundled codec sources carry their own
 Notice: Covers hundreds of formats (CRI ADX/HCA, FMOD FSB, Microsoft XWB/XMA,
         platform DSP/VAG/AT3/AT9, etc.). Built with none of vgmstream's optional
         VGM_USE_* codec libraries, so only the self-contained decoders and the
-        bundled coding/libs helpers are compiled. The plugin compiles the sources
-        at hidden visibility and partial-links (ld -r) to localize symbols, and
-        content/extension-gates canHandle so it never contests extensions already
-        owned by the other plugins (OpenMPT, GME, FFMpeg, the ZX AY players, ...).
+        bundled coding/libs helpers are compiled.
 
-Component: ymfm (OPN family for the Mac App Store build -- YM2203/2608/2610)
-Author: Aaron Giles (https://github.com/aaronsgiles/ymfm), vendored UNMODIFIED at
-        external/ymfm from the upstream repository. The adapter presenting it
-        through libvgm's C DEV_DEF interface is chipmachine's own
+Component: ymfm (Yamaha FM emulation -- YM2203 / YM2608 / YM2610)
+Author: Aaron Giles (https://github.com/aaronsgiles/ymfm), vendored UNMODIFIED
+        at external/ymfm from the upstream repository. The adapter presenting it
+        through libvgm's C interface is chipmachine's own
         musicplayer/src/plugins/libvgmplugin/opn_ymfm.cpp.
-License: BSD 3-Clause
-Notice: Compiled into the mas variant ONLY, where it replaces the GPL fmopn.c
-        (the plus build keeps fmopn.c so its audio is bit-for-bit what it always
-        was). This is what keeps ~600-700 rows -- all of NEC PC-98, PC-88 and
-        Neo Geo, plus much of the arcade corpus -- playing in a build with no
-        GPL OPN core. Only ymfm_opn/ssg/adpcm/pcm are built; its OPL/OPM/OPZ
-        cores are unused because libvgm already has permissive or LGPL ones.
-        Taken from UPSTREAM deliberately. A copy of ymfm also sits under
-        dmfplugin/furnace/, but Furnace is GPL-2+ and modifies what it vendors,
-        so its copy carries GPL-licensed changes even though ymfm is BSD-3 at
-        origin. Same reasoning as the StSound re-vendor and the MIT Musashi.
-        Verified by A/B render against fmopn on the PC-98 YM2203 and Neo Geo
-        YM2610 fixtures and on real PC-98 OPNA game music (Rusty, C-Lab):
-        RMS ratio 1.00-1.01 with no clipping. Two calibrations live in the
-        adapter and are commented there: libvgm's fmopn leaves the
-        hardware-verified ">>1" commented out for YM2608/YM2610 so it runs 2x
-        hot (the wrapper doubles ymfm's output to match libvgm's _CHIP_VOLUME
-        calibration), and ymfm's prescaler-independent sample rate is folded
-        down 3:1 for YM2203/YM2608 to the rate fmopn reports, because feeding
-        libvgm a 166 kHz device rate destabilises its resampler.
+License: BSD 3-Clause (see external/ymfm/LICENSE)
+Notice: Compiled into the Mac App Store variant only, where it replaces libvgm's
+        GPL OPN core (see LEGAL-PLUS). Only the OPN, SSG, ADPCM and PCM
+        translation units are built.
+        Taken from upstream rather than from the copy that sits under
+        musicplayer/src/plugins/dmfplugin/furnace/: ymfm is BSD-3 at origin and
+        Furnace's own licence says its bundled cores keep their own terms, but
+        Furnace is GPL-2-or-later and modifies what it vendors, so that copy
+        carries GPL-licensed changes. Same reasoning as the StSound re-vendor
+        and the MIT Musashi copy under sndhplugin.
         The YM2608 rhythm section reads the chip-internal ADPCM-A ROM dump that
-        ships with libvgm (fmopn_2608rom.h -- Yamaha ROM data, not MAME code,
-        carrying its own "derived from the chip's output" note); without it
-        every PC-98 track would lose its drums. Build with
-        -UOPN_YMFM_RHYTHM_ROM to omit it.
+        ships with libvgm (fmopn_2608rom.h). That file is Yamaha ROM data rather
+        than MAME source code -- it carries its own note that it was derived from
+        the chip's output and verified against real hardware -- and is used in
+        both variants.
+        See musicplayer/src/plugins/libvgmplugin/README.md for the adapter.
 
-Component: libvgm (OPL-family VGM / VGZ playback)
+Component: libvgm (VGM / VGZ playback)
 Author: ValleyBell's libvgm (https://github.com/ValleyBell/libvgm), vendored at
         external/zxtune/3rdparty/vgm and driven through PlayerA + VGMPlayer by
         musicplayer/src/plugins/libvgmplugin.
 License: MIXED, per file. The framework and most chip cores are MIT / BSD-style
-        (many are MAME cores tagged "license:BSD-3-Clause"), but SEVEN cores
-        compiled into this build are NOT -- see the open item below. LGPL-2.1
-        cores (DOSBox AdLibEmu, Nuked OPL3 / OPM / OPN2) are also present and are
-        treated like GME's LGPL, not as an open item.
-Notice: Plays the OPL2/OPL3-carrying VGM and VGZ logs that GME's Vgm_Emu cannot
-        (it knows only PSG/YM2413/YM2612 and renders OPL2 logs silent, or aborts
-        on them), plus most of the VGMRips corpus. Compiled at hidden visibility
-        and partial-linked (ld -r) so its chip-core symbols do not collide with
-        GME / s98 / famitracker / kss. Although it sits under
-        external/zxtune/3rdparty/, it is NOT part of ZXTune and is added directly
-        by the top-level CMakeLists.
-        libvgm ships SEVERAL cores per chip and enables them all unless
-        SNDDEV_SELECT is defined. libvgmplugin now defines it and names the cores
-        explicitly, which is what keeps the GPL ones out. Five GPL cores were
-        dropped from EVERY build as unreachable dead code -- libvgm's own
-        preference order already put a permissive core first: ym2413.c and
-        nukedopll.c (emu2413 wins), ymf262.c (AdLibEmu wins), nes_apu.c (NSFPlay
-        wins), ym2612.c (the GPGX core inside fmopn.c wins). Verified by A/B, not
-        by inspection: rendering the eleven testmus/libvgm fixtures plus two
-        YM2151 rips before and after gives byte-identical PCM and the same
-        selected core for every chip.
+        (many are MAME cores tagged "license:BSD-3-Clause"); some carry LGPL-2.1
+        (DOSBox AdLibEmu, Nuked OPL3 / OPM / OPN2); and the GPL cores that remain
+        compiled are listed separately in section 2.
+Notice: Vendored sources are unmodified except emu/cores/opnintf.c and
+        opnintf.h, which carry a chipmachine patch adding chip-core selection
+        (grep "chipmachine local patch"; unmodified copies are kept alongside as
+        .orig). libvgm enables every bundled core unless asked to select; this
+        build selects them explicitly, which is what keeps the GPL ones out of
+        the Mac App Store variant.
+        Although it sits under external/zxtune/3rdparty/, it is NOT part of
+        ZXTune and is added directly by the top-level CMakeLists.
+        See musicplayer/src/plugins/libvgmplugin/README.md.
 
 Component: liblhasa (LHA / LZH archive extraction)
 Author: Simon Howard (https://fragglet.github.io/lhasa/). Vendored at
@@ -427,20 +388,13 @@ Author: Developed by Arnaud Carré (Leonard/Oxygene), vendored verbatim from
         Ym2149c (YM2149 sound chip), Mk68901 (MFP timers) and SteDac (STE DMA
         sound). Bundles two further components, listed separately below.
 License: MIT License
-Notice: This is the .sndh decoder, and it is what makes 6,079 Atari ST songs
-        shippable. Verified against a reference ST player over a 127-file random
-        sample of the SNDH archive: identical load results and subsong counts on
-        every file, and three STE DMA tunes that the reference renders as a
-        single block then silence play correctly here.
+Notice: This is the .sndh decoder in both variants. See
+        musicplayer/src/plugins/sndhplugin/README.md.
 
 Component: Musashi (Motorola 68000 CPU core)
 Author: Developed by Karl Stenerud. Vendored as part of AtariAudio, at
         musicplayer/src/plugins/sndhplugin/atariaudio/external/Musashi.
 License: MIT License
-Notice: sndhplugin is built at hidden visibility and partial-linked (ld -r) so
-        Musashi's un-prefixed C entry points are localized and cannot collide
-        with any other 68000 core in the tree.
-
 Component: ICE! 2.4 depacker (Atari ST data packer)
 Author: Universal C version placed in the public domain in 2007 by Hans Wessels.
         Vendored as part of AtariAudio, at
@@ -466,11 +420,7 @@ Notice: RE-VENDORED 2026-08-01 from upstream main. The copy previously in this
         tree was a pre-2005 snapshot carrying stale copyleft headers that
         contradicted this entry -- the licence was never wrong, only the
         snapshot: Arnaud relicensed StSound to BSD-2 in 2005 and MIT in 2021.
-        Re-vendoring keeps all 13,210 .ym/.mix songs.
-        Verified against the old copy over a 70-file random sample of modland's
-        YM corpus: 70/70 loaded on both, identical title/author/length metadata
-        on every file, and 69 of 70 bit-identical in rendered RMS (one file
-        differs by 7%, an upstream fix; both play).
+        No songs were lost in the re-vendor.
 
 Component: 98fmplayer
 Author: Developed by areis
@@ -651,10 +601,7 @@ Notice: CLEAN ROOM. No code was taken or consulted from any other Sidplayer
         repeat-count semantics, explicit note lengths, zero-length events,
         filter-tracking, filter register scope, the modulation schedule, the two
         sweeps and portamento).
-        VALIDATION: all 16,601 .mus files in the CGSC archive render -- zero
-        crashes, zero hangs, zero parse failures; 9 render silent and all 9 are
-        silent in the reference too. Register agreement with the reference has a
-        median of 98.5% across the full corpus.
+        The corpus-wide validation results are recorded with the plugin.
 
 Component: SCC-Musixx replay routine (MSX, .SNG)
 Author: Tyfoon-Software (M. Spoor), 1990. "MUSIXX REPLAY ROUTINE v1.2".

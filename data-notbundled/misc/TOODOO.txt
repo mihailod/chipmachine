@@ -1,10 +1,14 @@
 MAS Compliance:
 
-- now do the ymfm adapter for OPN and OPL4
+- finish libvgm work
 
 - clean room partial deflemask GPL (IBM),PROMPT ready	2071
 
 - maxtraxplugin GPL (amiga)	1,812	4		93	clean-room Paula + driver
+
+
+- move technical details for plugins and formats from README.md into individual plugin's README files. only leave links to them. README.md is supposed to describe the features and usage for end users, not to dig deep into technical stuff.
+
 
 ----------------------------
 BUGS:

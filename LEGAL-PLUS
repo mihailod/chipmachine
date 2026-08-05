@@ -15,22 +15,19 @@ Component: SC68 (Atari ST -- .sc68 container only)
 Author: Developed by Benjamin Gerard. Covers libsc68, the emu68 68000 core,
         file68 and unice68, vendored under musicplayer/src/plugins/sc68plugin.
 License: GNU General Public License v3.0 or later
-Notice: NO LONGER the .sndh decoder. As of 2026-08-01 both variants play .sndh
-        with AtariAudio (MIT, see LEGAL), which is 6,079 of the 7,976 songs this
-        component used to own; sc68plugin is left claiming .sndh at a lower
-        priority in this build, purely as a fallback for anything AtariAudio
-        declines. NOT LINKED into the Mac App Store variant (CM_VARIANT=mas
+Notice: NO LONGER the .sndh decoder. Both variants play .sndh with AtariAudio
+        (MIT, see LEGAL); sc68plugin remains in this build only as a fallback for
+        anything AtariAudio declines. NOT LINKED into the Mac App Store variant (CM_VARIANT=mas
         builds with CM_HAVE_SC68=OFF, so neither sc68plugin nor its vendored
         libsc68/emu68/file68/unice68 sources are compiled), and its data/sc68
         payload -- sc68.cfg plus Replay/, the 95 prebuilt 68k replay routines --
         is stripped from that bundle by package_app.sh.
-        What the mas variant loses is the ".sc68" container itself: 1,894
-        songs, dropped from that variant's index to match. Those files NAME an
+        What the mas variant loses is the ".sc68" container itself, dropped
+        from that variant's index to match. Those files NAME an
         external replay routine rather than embedding one, and the routines are
         exactly the GPL-3 binaries in data/sc68/Replay -- there is no permissive
         equivalent and no published spec, so unlike .sndh there was nothing to
-        swap in. Every other extension sc68plugin content-gated is unaffected:
-        the 100 AdLib ".snd" songs are AdPlug's in both variants.
+        swap in. Every other extension sc68plugin claimed is unaffected.
         ICE! depacking for SNDH tag parsing (SongFileIdentifier::parseSndh) also
         moved off unice68 onto the public-domain ice_24.c that ships with
         AtariAudio, so no GPL-3 code is reachable from shared app code.
@@ -69,18 +66,12 @@ Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         vectors and the PS2 IOP kernel in software, so they need no BIOS image
         at all. They were already being compiled; only AOPlugin::supported_ext
         had to change.
-        The mas variant therefore loses 685 rows, dropped from its index to
-        match: 668 PlayStation (.minipsf 353, .psf 137, .psf2 131, .minipsf2 47)
-        plus 17 that were AOSDK-only anyway (.spu 9, .miniqsf 8). Sega Saturn
-        .ssf/.minissf was initially retained here because HTPlugin declares
-        priority 1 and owned those 136 rows -- but htplugin was itself gated on
-        2026-08-01 (GPL-3, see its entry below), so as of that date .ssf/.minissf
-        are lost in mas too.
-        LOCAL PATCH, re-apply on revendor: eng_psf/peops/spu.c sets iVolume to
-        128 rather than upstream's 255. 255 is a pre-clip global gain of ~1.0
-        and measured exactly 2x what Highly Experimental produced for the same
-        rips, clipping 7 of 13 sampled modland PSF1 tunes; 128 restores the
-        level this app has always shipped for PSF and removes the clipping.
+        The songs these extensions cover are dropped from the mas index to
+        match, Sega Saturn .ssf/.minissf included (htplugin, which used to own
+        those, is itself GPL-3 and gated -- see its entry below).
+        LOCAL MODIFICATION, re-apply on revendor: eng_psf/peops/spu.c sets
+        iVolume to 128 rather than upstream's 255, restoring the output level
+        this app has always shipped for PSF.
 
 Component: Highly Experimental (PlayStation 1/2 PSF) -- REMOVED FROM THE TREE
 Author: Neill Corlett (the PSF format and the original Highly Experimental);
@@ -210,95 +201,33 @@ License: GNU General Public License v2.0 or later (fmopn.c and ym2151.c are
         tagged "license:GPL-2.0+"; Ootake_PSG.c carries GPL text without an
         SPDX tag).
 Notice: NOT COMPILED into the Mac App Store variant (CM_VARIANT=mas builds with
-        CM_HAVE_LIBVGM_GPL_CORES=OFF). The libvgm PLUGIN is in both variants --
-        it is the only decoder for the 1,341-row OPL Archive and most of VGMRips
-        -- so nothing is dropped from the mas index. Only the preferred core for
-        these chips differs:
-          OPN family -> ymfm (Aaron Giles, BSD-3), through the adapter at
-                     libvgmplugin/opn_ymfm.cpp. This is the one that needed new
-                     code rather than a core swap: libvgm ships NO permissive
-                     OPN emulation, and fmopn.c covers ~600-700 rows (all of NEC
-                     PC-98, PC-88 and Neo Geo). See the ymfm entry in LEGAL.
-          YM2151     -> nukedopm.c (Nuked OPM, LGPL-2.1+): more accurate than the
-                     MAME core and measurably slower. Affects the X68000 corpus
-                     (202 VGMRips rows) and ~40% of the libvgm-routed BotB VGMs.
-          HuC6280    -> c6280_mame.c (BSD-3). Affects PC Engine (234 VGMRips rows,
-                     ~36% of the libvgm-routed BotB VGMs).
-        The YM2151 and HuC6280 fallbacks are already compiled in every build;
-        only ymfm is mas-only. fmopn.c also supplies the GPGX YM2612 core, so
-        that chip falls back to ym3438.c (Nuked OPN2, LGPL-2.1+) in mas.
-        These two are here, rather than dropped from both variants like the five
-        unreachable GPL cores described in LEGAL, because for THEM the GPL core
-        is the one libvgm actually selects -- removing it is an audible change,
-        so this build keeps exactly what it has always used and only the mas
-        variant swaps. Both swaps were accepted only after an A/B render against
-        real game music: Castlevania (Sharp X68000) for the YM2151 and Aldynes
-        stage 1 (PC Engine) for the HuC6280, at RMS ratios of 1.00 and 0.98 with
-        no clipping on either side. With these cores present the PCM is
-        byte-identical to the pre-trim build.
-        KNOWN CAVEAT on the mas HuC6280 fallback, accepted deliberately: the
-        MAME core runs hot on noise/DDA-saturated material and clips where
-        Ootake does not (a Battle of the Bits rip measured 1.49x with 785
-        clipped samples in 30 s against Ootake's 3). libvgm's _CHIP_VOLUME table
-        carries one volume per chip TYPE, hand-corrected for K051649 and
-        C140/C219 only, so it is calibrated for the core listed first -- Ootake.
-        A per-core correction there (about 0.7x for MAME) would remove the
-        clipping. Ordinary game music is unaffected.
-        The rest of the libvgm core trim, including the GPL cores that remain in
-        BOTH variants because no alternative exists, is documented in LEGAL.
+        CM_HAVE_LIBVGM_GPL_CORES=OFF). The libvgm PLUGIN itself is in both
+        variants and nothing is dropped from the mas index; only the emulation
+        core used for these chips differs. The App Store variant plays the OPN
+        family with ymfm (BSD-3, see LEGAL) and the other two chips with cores
+        libvgm already ships under permissive or LGPL terms.
+        Which core serves which chip in each variant is described in
+        musicplayer/src/plugins/libvgmplugin/README.md.
 
 Component: FamiTracker CX (FamiTracker .ftm playback -- NES 2A03 + expansions)
 Author: FamiTracker by jsr (Jonathan Liss); cross-platform "FamiTracker CX"
         fork by Dan Spencer (nukep, https://github.com/nukep/famitracker-cx).
-        A boost-free engine slice (document loader, sound driver and APU,
-        incl. blargg's Blip_Buffer) is vendored at external/famitracker-cx/;
-        the GUI, frontends, dynamic sound sinks and WAV export are dropped.
-        See external/famitracker-cx/PROVENANCE.md for the chipmachine patches.
+        A boost-free engine slice is vendored at external/famitracker-cx/; the
+        GUI, frontends, dynamic sound sinks and WAV export are dropped. Local
+        modifications are listed in external/famitracker-cx/PROVENANCE.md.
 License: GNU General Public License v2.0 or later. Upstream describes itself as
         mixed GPL-2 / New BSD, and that is true of the whole package, but every
-        engine file this build actually compiles -- the APU, the channel
-        handlers, the document loader, the instrument model -- carries the
-        GPL-2-or-later boilerplate. The only permissive parts are blargg's
-        Blip_Buffer (LGPL) and emu2413 (zlib-style), neither of which is the
-        engine. See the per-file headers and external/famitracker-cx/core/COPYING.
+        engine file this build compiles carries the GPL-2-or-later boilerplate.
+        The only permissive parts are blargg's Blip_Buffer (LGPL) and emu2413
+        (zlib-style), neither of which is the engine. See the per-file headers
+        and external/famitracker-cx/core/COPYING.
 Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         CM_HAVE_FAMITRACKER=OFF, so neither famitrackerplugin nor its vendored
-        FamiTracker CX sources are compiled). 1,597 ".ftm" songs are dropped
-        from that variant's index to match -- 960 modland "FamiTracker/", 637
-        Battle of the Bits, and 2 scene.org rows filed under "Demoscene" that
-        were content-probed to confirm they are FamiTracker modules.
-        The extension is SHARED and the split is preserved: ".ftm" is also the
-        Atari "Face The Music" format (magic "FTMN"), which libopenmpt plays in
-        BOTH variants. Those 95 songs are unaffected. Because libopenmpt
-        advertises the extension everywhere, dropping the NES rows needs
-        format-name keys in MusicDatabase.cpp rather than the plain extension
-        test -- see the ".ftm" entries in songFormatHasNoPlayer().
-        No permissive replacement exists, and this was checked rather than
-        assumed. Every other engine that reads .ftm is GPL: 0CC-FamiTracker,
-        Dn-FamiTracker, FamiTracker CX itself, and Furnace (already excluded
-        from that variant for .dmf). FamiStudio is MIT but is not a player: it
-        is C#, it imports "official 0.4.6 only", and it renders through its own
-        engine, which its documentation states will not reproduce FamiTracker's
-        slides, VRC7 pitch/vibrato or combined pitch+arpeggio envelopes, and
-        which ignores every effect outside a listed subset.
-        Rerouting was measured and rejected: only 42 of the 1,597 rows have a
-        title+composer twin anywhere else in the catalog. This is a corpus of
-        scene originals, not game rips with NSF counterparts.
-        A replacement would have to be a driver, not a core swap. The chip half
-        is already permissive: the NSFPlay/xgm cores (nes_apu, nes_dmc, nes_fds,
-        nes_mmc5, nes_n106, nes_vrc6; "You can reuse these source code freely"),
-        plus emu2413 for VRC7 and emu2149 for Sunsoft 5B, cover every chip
-        FamiTracker uses. Only the sequencer would be new work, against the
-        published module format. Such an engine would also be a candidate to
-        REPLACE this component in THIS build, because those cores can drive the
-        Namco 163 and Sunsoft 5B channels FamiTracker CX never wired: 152 files,
-        plus 21 modules saved by FamiTracker 0.5.0-beta/0CC (file version 0x450,
-        rejected by the loader's version gate) and 2 Dn-FamiTracker files whose
-        magic canHandle declines. Those 175 files, 11% of the corpus, play in
-        NEITHER variant today.
-Notice: The plugin compiles the slice at hidden visibility and partial-links
-        (ld -r) so the APU's generic symbols (Blip_Buffer, ...) are localized
-        and do not collide with GME's / NerdTracker's blargg emulation.
+        sources are compiled). The FamiTracker-format ".ftm" songs are dropped
+        from that variant's index to match. The extension is shared with the
+        Atari "Face The Music" format, which libopenmpt plays in both variants
+        and which is unaffected.
+        See the FamiTracker section of README.md.
 
 Component: Ayfly (ZX Spectrum AY-3-8910)
 Author: Developed by Sergey Vladimirov (Deryabin Andrew). The embedded Z80 CPU
