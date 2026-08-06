@@ -97,8 +97,12 @@
 // compiled ONLY by the `plus` variant. The Mac App Store variant instead builds
 // musicplayer/src/plugins/libvgmplugin/opl_ymfm.cpp, which wraps ymfm's
 // (BSD-3) OPL4 wave engine and supplies its own copy of the sndDev_YMF278B
-// DEV_DECL below -- the two are never compiled together. Nothing here is
-// patched; see libvgmplugin/README.md and its CMakeLists.txt.
+// DEV_DECL below -- the two are never compiled together. See
+// libvgmplugin/README.md and its CMakeLists.txt.
+//
+// The one local patch here (grep "chipmachine local patch") is the silent 2MB
+// YRW801 stub in device_start_ymf278b(); opl_ymfm.cpp carries the same fix for
+// the mas build. Re-apply both on revendor -- ymf278b.c.orig sits next to this.
 
 #include <stdlib.h>
 #include <string.h>
@@ -112,6 +116,10 @@
 #include "../EmuHelper.h"
 #include "../logging.h"
 #include "ymf278b.h"
+// [chipmachine local patch] synthetic YRW801 wavetable, shared with the mas
+// build's ymfm adapter. The header lives with the plugin, which is on this
+// file's include path -- it is only ever compiled as part of libvgmplugin.
+#include "cm_yrw801.h"
 
 
 #define LINKDEV_OPL3	0x00
@@ -272,6 +280,7 @@ struct _YMF278BChip
 
 	UINT32 ROMSize;
 	UINT8 *rom;
+	UINT8 romIsStub;	// [chipmachine local patch] see device_start_ymf278b()
 	UINT32 RAMSize;
 	UINT8 *ram;
 	UINT32 clock;
@@ -1464,8 +1473,39 @@ static UINT8 device_start_ymf278b(const DEV_GEN_CFG* cfg, DEV_INFO* retDevInf)
 	//chip->timer_a = timer_alloc(device->machine, ymf278b_timer_a_tick, chip);
 	//chip->timer_b = timer_alloc(device->machine, ymf278b_timer_b_tick, chip);
 
-	chip->ROMSize = 0;
-	chip->rom = NULL;
+	// [chipmachine local patch] Silent 2MB stub for the YRW801 wavetable ROM.
+	//
+	// MSX MoonSound rips (Bombaman, Pumpkin Adventure 3, SootSound, Sonyc,
+	// MoonDriver) carry only their sample-RAM upload (VGM data block 0x87) and
+	// no ROM block (0x84): the instruments live in the cartridge's internal 2MB
+	// YRW801, which VGM logs do not embed. Without a ROM the RAM lands at
+	// address 0 instead of 0x200000 (see ymf278b_readMem: RAM is mapped
+	// *directly above* the ROM, and /MCS0 covers 0x000000-0x1FFFFF on real
+	// hardware -- see the ymf278b_getRamAddress comment), so even the samples
+	// the log DOES ship are addressed 2MB low and every read falls in the
+	// unmapped hole, returning a constant 0xFF -- DC through the envelope,
+	// which is the buzz these files used to play as.
+	//
+	// Allocating a zeroed 2MB region puts the sample RAM back where the MSX
+	// driver expects it; notes that reference real YRW801 instruments read
+	// zeroes and are silent instead of noise. A log that ships its own ROM
+	// block (all the arcade OPL4 boards) replaces this stub in alloc_rom below
+	// before a single sample is rendered, so it is unaffected.
+	// The stub is then filled with chipmachine's synthetic wavetable (own code,
+	// own data -- see libvgmplugin/cm_yrw801.c), so those rips play their
+	// instruments rather than nothing. Both variants do this; a log that ships a
+	// real ROM block still replaces all of it in alloc_rom below.
+	chip->ROMSize = 0x200000;
+	chip->rom = (UINT8*)calloc(1, chip->ROMSize);
+	if (chip->rom == NULL)
+		chip->ROMSize = 0;
+	else
+	{
+		const UINT8* bank = cm_yrw801_bank();
+		if (bank != NULL)
+			memcpy(chip->rom, bank, chip->ROMSize);
+	}
+	chip->romIsStub = 1;
 	chip->RAMSize = 0;
 	chip->ram = NULL;
 
@@ -1586,10 +1626,19 @@ static UINT8 device_ymf278b_link_opl3(void* param, UINT8 linkID, const DEV_INFO*
 static void ymf278b_alloc_rom(void* info, UINT32 memsize)
 {
 	YMF278BChip *chip = (YMF278BChip *)info;
-	
+
+	// [chipmachine local patch] The stub allocated in device_start is not a real
+	// ROM, so it must never satisfy the size test below (an arcade board with a
+	// 2MB ROM would otherwise inherit the stub's zero fill instead of 0xFF).
+	if (chip->romIsStub)
+	{
+		chip->romIsStub = 0;
+		chip->ROMSize = 0;
+	}
+
 	if (chip->ROMSize == memsize)
 		return;
-	
+
 	chip->rom = (UINT8*)realloc(chip->rom, memsize);
 	chip->ROMSize = memsize;
 	memset(chip->rom, 0xFF, memsize);

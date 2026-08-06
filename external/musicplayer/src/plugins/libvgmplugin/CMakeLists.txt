@@ -51,6 +51,10 @@ endif()
 
 add_library(libvgmplugin_objs OBJECT
     LibVGMPlugin.cpp
+    # Synthetic YRW801 wavetable for the OPL4. Both variants: it is our own code
+    # and our own data, and without it every MSX MoonSound rip is missing its
+    # instruments. Used by opl_ymfm.cpp (mas) and emu/cores/ymf278b.c (plus).
+    cm_yrw801.c
     # --- libvgm infrastructure + all chip cores (mirrors libvgm's `vgm` target) ---
     ${LIBVGM_DIR}/emu/SoundEmu.c
     ${LIBVGM_DIR}/emu/Resampler.c

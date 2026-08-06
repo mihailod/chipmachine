@@ -108,6 +108,63 @@ tracks, all inside 1.004–1.015). Caveats:
   which would end the "vendored unmodified" guarantee in
   `external/ymfm/PROVENANCE.md`; it was left alone deliberately.
 
+## The synthetic OPL4 wavetable (`cm_yrw801.c`)
+
+MSX MoonSound rips are the OPL4's problem case: they log their own sample upload
+(VGM data block `0x87`) and never the ROM (`0x84`), because their instruments
+live in the cartridge's 2 MB Yamaha YRW801 — which we cannot ship. 158 tracks in
+the corpus (Bombaman Extra Ammo 72, Pumpkin Adventure 3 58, SootSound 14, Sonyc
+12, MoonDriver 2), against ~300 arcade OPL4 tracks that do embed their ROM and
+were never affected.
+
+Two things were wrong, and they are separable:
+
+1. **The address map.** Sample RAM is mapped *directly above* the ROM, and real
+   hardware puts the YRW801 on /MCS0 at `0x000000-0x1FFFFF`. With no ROM at all
+   `ROMSize == 0`, so the log's own samples landed 2 MB low and every read from
+   the driver's `0x200000+` addresses fell in the unmapped hole returning `0xFF`
+   — DC through the envelope, which is the buzz these files used to play as.
+   Fixed by allocating a **2 MB stub** at device start in both cores; 72 tracks
+   became audible on that alone, and `plus` and `mas` agreed for the first time
+   (median RMS ratio 1.000 over the loud tracks).
+2. **The missing instruments.** `cm_yrw801.c` fills that stub with a generated
+   wavetable in YRW801 layout — own code, own data, both variants, no Yamaha
+   bytes anywhere. **It is a substitute, not a reproduction:** notes, rhythm,
+   envelopes and dynamics are right; the timbres are ours. `CM_YRW801_ROM=<path>`
+   loads a real dump instead, for anyone who has one.
+
+**Where the tuning came from, since it is the part that looks impossible.** A
+wave header carries no pitch, so every driver ships a per-wave base-pitch table
+that we do not have. It was measured out of the music itself: notes for a given
+wave lie on a 100-cent grid whose *phase is wave-specific* (222 of 263 waves
+cluster above 0.9), which gives the sub-semitone part directly; the semitone and
+octave were scored against concurrent notes of known absolute pitch — the log's
+own uploaded samples (pitch by autocorrelation) and the OPL4's FM half where a
+track drives it (pitch exact from F-number and block) — then propagated to the
+rest by relaxation. 18 waves from FM, 80 from RAM samples, 75 propagated, 17
+percussion, 211 too rarely played to determine. Mean interval consonance against
+all concurrent evidence 0.364, versus 0.179 for random assignment.
+
+Four traps in the synthesis, all of them heard before they were measured:
+
+- **Waveforms must be exactly periodic over the stored length**, hence `cycles`
+  in the table (stored period = `length/cycles`, ~1 cent of detune). Rounding a
+  non-integer period instead leaves up to 0.55 samples of phase step at the loop
+  point — a click on every cycle.
+- **The chip resamples with linear interpolation and no filtering**, so a wave
+  played above its stored pitch folds every partial. `partials` is capped per
+  wave from the highest ratio that wave is driven at *anywhere* in the corpus;
+  a 95th-percentile cap is not enough (MoonDriver drives wave 279 at 7.24x).
+- **Percussion must loop a run of silence.** Looping the last two samples is a
+  ~11-22 kHz square wave that never stops.
+- **Schroeder phases**, not zero phases: same spectrum, much lower crest factor,
+  so peak-normalised waves come out far louder.
+
+Note that a track can still be missing instruments for a reason this cannot fix:
+SootSound's "moon rider" has user waves whose headers point *into ROM space*
+(a custom envelope wrapped around a factory instrument), which lands mid-waveform
+in our bank.
+
 ## The 32X PWM (`pwm_32x.c`)
 
 Not an adapter — an own implementation, written against the documented registers

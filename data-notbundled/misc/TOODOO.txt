@@ -6,11 +6,9 @@ MAS Compliance:
 ----------------------------
 BUGS:
 
-- MSX MoonSound VGMs are broken in ChipMachine today, both variants — unrelated to this change, pre-existing. They need the 2 MB YRW801 ROM that VGM logs don't embed. How many files are impacted and is the fix easy?
-
 - Unrelated bug found on the way: vgm_opl_detect.h reads the chip-clock fields at 0xC0–0xE0 without checking the VGM 1.70 extra-header offset at 0xBC, which aliases that region. My first probe reported phantom WonderSwan/SAA1099/ES5503/ES5506 chips on 7 of 36 files until I fixed it. Your copy has the same read, so some VGMs are routed to libvgm on a chip that isn't there. Harmless for playback (libvgm plays them fine) — it just quietly takes files GME would have handled.
 
-- many songs are shown in MAS which should not be, at the formats tail formats with less than 5 songs almost none of them play and most of them should not be shown at all. i think this is some bug in pruning for MAS -- investigate. example: ymst format has 1 song -- should not be shown at all, .tw format shows 1 unplayable song, .tme also 1 unplayable etc... i think there is some bug making this songs surface in MAS (they all do play in PLUS and are a part of a wider corpus for example .tme has 16 songs, ymst has 1379, tw has 46...)
+- some songs are shown in MAS which should not be, at the formats tail formats with less than 5 songs almost none of them play and should not be shown at all. i think this is some bug in pruning for MAS -- investigate. example: ymst format has 1 song -- should not be shown at all, .tw format shows 1 unplayable song, .tme also 1 unplayable etc... i think there is some bug making this songs surface in MAS (they all do play in PLUS and are a part of a wider corpus for example .tme has 16 songs, ymst has 1379, tw has 46...). do research 1st, test playback of all songs with less than 5 in corpus (and maybe more?) and report
 
 - if trimming removed a whole platform from MAS we should not display the platform logo in splash screen. not sure if there are any platforms completely removed from MAS but worth checking.
 

@@ -274,6 +274,26 @@ Notice: Compiled into BOTH variants; the Mednafen core it replaces is compiled
         taken for the Sega 32X PWM above and the VIC-I core in vtplugin.
         See musicplayer/src/plugins/libvgmplugin/README.md.
 
+Component: Synthetic OPL4 wavetable ("YRW801" substitute, VGM / VGZ playback)
+Author: Written for this project, at
+        musicplayer/src/plugins/libvgmplugin/cm_yrw801.c and its generated
+        parameter table cm_yrw801_table.h.
+License: No third-party licence -- it is chipmachine's own code and own data.
+Notice: Compiled into BOTH variants. MSX MoonSound VGM logs record only their
+        own sample upload; the instruments they play live in the MoonSound
+        cartridge's 2 MB Yamaha YRW801 wave ROM, which the VGM format does not
+        embed. NO YAMAHA DATA IS SHIPPED, IN ANY FORM. This file synthesises a
+        substitute wavetable in the same header layout at runtime: the waveforms
+        are generated from scratch, and the per-wave tuning table was derived by
+        measuring the 158 MSX MoonSound tracks in ChipMachine's own index --
+        note pitches, note timing and the exactly-known pitch of the FM voices
+        playing alongside them -- and not taken from any Yamaha document, ROM
+        dump or third-party source. It is a substitute, not a reproduction: the
+        timbres are ours and do not sound like the original instruments. If the
+        user points CM_YRW801_ROM at a dump of their own cartridge, that file is
+        used instead; ChipMachine neither ships nor downloads such a dump.
+        See musicplayer/src/plugins/libvgmplugin/README.md.
+
 Component: Sega 32X PWM sound core (VGM / VGZ playback)
 Author: Written for this project, at
         musicplayer/src/plugins/libvgmplugin/pwm_32x.c. It replaces libvgm's

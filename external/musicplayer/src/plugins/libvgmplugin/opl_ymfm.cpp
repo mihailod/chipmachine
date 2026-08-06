@@ -37,6 +37,7 @@ extern "C" {
 #include "ymfm.h"
 #include "ymfm_opl.h"
 #include "ymfm_rom_intf.h"
+#include "cm_yrw801.h"
 // NOTE: deliberately NOT including ymfm_fm.ipp -- see the same note in
 // opn_ymfm.cpp. ymfm_opl.cpp already instantiates the fm_engine templates; a
 // second copy in this TU cannot be merged once `ld -r` has made those weak
@@ -371,6 +372,10 @@ static void opl4_stop(void* chipPtr)
 	free(info);
 }
 
+// A MoonSound log ships no ROM block, so the stub allocated at device start
+// stands; a log that does ship one (every arcade OPL4 board) replaces it here,
+// before any sample is rendered. rom_intf::alloc hands back the same zeroed
+// buffer when the sizes happen to match, which is what a fresh alloc would give.
 static void opl4_alloc_rom(void* chipPtr, UINT32 memsize)
 {
 	((opl4_chip*)chipPtr)->intf->alloc(cm_ymfm::REGION_PCM_ROM, memsize);
@@ -527,6 +532,24 @@ static UINT8 device_start_ymf278b_ymfm(const DEV_GEN_CFG* cfg, DEV_INFO* retDevI
 	if (info == NULL) return 0xFF;
 
 	info->intf = new rom_intf();
+	// Silent 2MB stub for the YRW801 wavetable ROM, so that sample RAM maps at
+	// 0x200000 the way MoonSound hardware puts it. MSX MoonSound rips upload
+	// their samples (VGM data block 0x87) but embed no ROM (block 0x84); with no
+	// ROM the RAM would sit at address 0, every read from the driver's 0x200000+
+	// addresses would miss and pcm_read would return the unmapped 0xFF, which is
+	// DC through the envelope -- the buzz those files used to play as. Same fix
+	// as the one in emu/cores/ymf278b.c for the plus build; the full reasoning
+	// lives there.
+	info->intf->alloc(cm_ymfm::REGION_PCM_ROM, CM_YRW801_SIZE);
+	// ...and then fill it with the synthetic wavetable, so those rips play their
+	// instruments instead of nothing. Built once per process; cm_yrw801.c has the
+	// full story, including what it is not. An arcade OPL4 log carries its own
+	// ROM block and replaces all of this before a sample is rendered.
+	{
+		const unsigned char* bank = cm_yrw801_bank();
+		if (bank != NULL)
+			info->intf->write(cm_ymfm::REGION_PCM_ROM, 0, CM_YRW801_SIZE, bank);
+	}
 	info->chip = new opl4_pcm(*info->intf);
 	info->rate = info->chip->sample_rate(cfg->clock);
 	// ymf278b.c leaves SRATE_CUSTOM_HIGHEST commented out for this chip; match it.
