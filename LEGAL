@@ -61,14 +61,27 @@ Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
         shim replacing the ScummVM-internal dependencies.
 License: GNU General Public License v3.0 or later
 
-Component: S98 (PC-98 / FM sound log)
-Author: s98plugin, vendored under musicplayer/src/plugins/s98plugin. The FM
-        synthesis core is cisc's fmgen (m_s98/device/fmgen).
-License: UNRESOLVED -- see notice.
-Notice: s98plugin ships NO licence text anywhere in the vendored tree -- no
-        LICENSE, no COPYING, and no source file that states terms. cisc's fmgen
-        is distributed under its own terms. This needs its own audit; it is
-        recorded here as an open item rather than left silently mislabelled.
+Component: m_s98 plugin body, emu2413 and the NEZplug SN76489 tables (S98)
+Author: The KbMedia plugin m_s98.kpi v1.0r8 by Mamiya -- m_s98.{cpp,h},
+        device/s98device.h, device/s98fmgen.cpp, device/s98opll.cpp,
+        device/s98sng.cpp; Mitsutaka Okazaki's emu2413 v0.61 (2004) at
+        device/emu2413/; and the NEZplug-derived device/s_sng.c and
+        device/s_logtbl.c, also Mamiya's.
+License: NOT STATED -- see notice.
+Notice: These files carry NO licence statement of any kind: no LICENSE, no
+        COPYING, and no header text in any of them. That is NOT the same as
+        being permissive, and it is recorded here as an open item rather than
+        assumed away. None is believed to be copyleft -- emu2413 is MIT upstream
+        today and the NEZplug lineage is Public Domain / MIT-0 (see the musplugin
+        entry) -- but neither has been pinned to a specific upstream release
+        whose licence text can be quoted, which is what this entry awaits.
+        emu2413's header credits MAME's fmopl.c by Tatsuyuki Satoh and Jarek
+        Burczynski as an algorithmic reference. That is a credit in a comment
+        rather than vendored code, emu2413 being an independent implementation,
+        but it is a further reason to pin the version.
+        The other two components of s98plugin are no longer unresolved and have
+        left this section: cisc's fmgen is in section 5, and the GPL-2.0+ MAME
+        OPL cores have been removed outright (see the ymfm entry in section 4).
 
 ===============================================================================
 3. LESSER COPYLEFT DEPENDENCIES
@@ -332,11 +345,13 @@ Notice: Replaces the NEC V30MZ core that came with in_wsr, which was derived
         PROVENANCE.md and LICENSE-ares.txt.
 
 Component: ymfm (Yamaha FM emulation -- YM2203 / YM2608 / YM2610, YM3526,
-        Y8950, YMF278B)
+        Y8950, YMF278B, YM3812, YMF262)
 Author: Aaron Giles (https://github.com/aaronsgiles/ymfm), vendored UNMODIFIED
         at external/ymfm from the upstream repository. The adapters presenting
         it through libvgm's C interface are chipmachine's own
-        musicplayer/src/plugins/libvgmplugin/opn_ymfm.cpp and opl_ymfm.cpp.
+        musicplayer/src/plugins/libvgmplugin/opn_ymfm.cpp and opl_ymfm.cpp; the
+        adapter presenting it through the S98 device interface is
+        musicplayer/src/plugins/s98plugin/m_s98/device/s98_ymfm.cpp.
 License: BSD 3-Clause (see external/ymfm/LICENSE)
 Notice: Compiled into BOTH variants. In the Mac App Store variant it is the
         core used for the OPN family, the YM3526, the Y8950 and the OPL4
@@ -344,17 +359,28 @@ Notice: Compiled into BOTH variants. In the Mac App Store variant it is the
         plus variant as well, which is a choice about sound rather than about
         licensing; the OPN, SSG and OPN-side ADPCM translation units are built
         for the App Store variant only.
+        The YM3812 and YMF262 serve the OPL, OPL2 and OPL3 devices of s98plugin
+        in both variants, replacing MAME's fmopl.cpp and ymf262.cpp. Those two
+        files were GPL-2.0+ -- Jarek Burczynski did not agree to MAME's 2016
+        BSD-3 relicensing, which is why they kept the copyleft tag while most of
+        MAME went permissive -- and they were the only GPL code in that plugin.
+        They have been deleted along with their s98mame.cpp wrapper. See
+        s98plugin/README.md for the adapter.
         Taken from upstream rather than from the copy that sits under
         musicplayer/src/plugins/dmfplugin/furnace/: ymfm is BSD-3 at origin and
         Furnace's own licence says its bundled cores keep their own terms, but
         Furnace is copyleft-licensed and modifies what it vendors, so that copy
         carries changes under those terms. Same reasoning as the StSound
         re-vendor and the MIT Musashi copy under sndhplugin.
-        The YM2608 rhythm section reads the chip-internal ADPCM-A ROM dump that
-        ships with libvgm (fmopn_2608rom.h). That file is Yamaha ROM data rather
-        than MAME source code -- it carries its own note that it was derived from
-        the chip's output and verified against real hardware -- and is used in
-        both variants.
+        OPEN ITEM -- YAMAHA ROM DATA. The YM2608 rhythm section reads the
+        chip-internal ADPCM-A rhythm ROM, shipped with libvgm as
+        emu/cores/fmopn_2608rom.h (8192 bytes, CRC32 23c9e0d8) and compiled into
+        BOTH variants. NO LICENCE COVERS THIS DATA. The file carries a note that
+        it was derived from the chip's output and verified against real hardware
+        rather than read out of silicon, which is a statement of provenance and
+        not a grant. It is byte-for-byte the ROM that was removed from fmgen
+        (section 5), so that removal took out one of two copies and this build is
+        not free of Yamaha ROM data. Recorded here rather than left undocumented.
         See musicplayer/src/plugins/libvgmplugin/README.md for the adapter.
 
 Component: libvgm (VGM / VGZ playback)
@@ -590,6 +616,40 @@ License: Redistributable for emulation use under Amstrad's 1999 permission.
 ===============================================================================
 5. CUSTOM / FREEWARE PERMISSIVE DEPENDENCIES
 ===============================================================================
+Component: fmgen (FM Sound Generator -- the OPN/OPNA/OPM cores behind S98 and
+           FMP playback)
+Author: cisc (cisc@retropc.net), release 008 of 2003-09-02, obtained from the
+        author's own distribution at http://retropc.net/cisc/sound/ .
+        Vendored at musicplayer/src/plugins/s98plugin/m_s98/device/fmgen and
+        compiled by BOTH s98plugin and fmpplugin.
+License: cisc's own terms, stated in the release's readme.txt. The software is
+        provided as-is with no warranty, and may be freely modified, embedded,
+        distributed and used subject to four conditions:
+          1. state the origin of the software (author, copyright);
+          2. when distributing, distribute as freeware;
+          3. when distributing modified source, state what was modified;
+          4. when distributing source, attach the readme text unaltered.
+        Separately: incorporating any part of it into COMMERCIAL software
+        (shareware included) requires the author's prior agreement, and the
+        author asks to be notified on release.
+Notice: COMPLIANCE IS CONTINGENT ON CHIPMACHINE BEING FREE OF CHARGE. Condition
+        2 is met because the application is distributed at no cost, and the
+        commercial-software clause is not engaged for the same reason --
+        distributing through a commercial storefront does not by itself make the
+        application commercial software. IF CHIPMACHINE EVER BECOMES PAID, OR
+        GAINS A PAID TIER, THAT ANALYSIS FAILS AND cisc'S PRIOR AGREEMENT MUST
+        BE OBTAINED.
+        Conditions 1, 3 and 4 apply because the source is published. cisc's
+        readme.txt is vendored beside the sources unaltered, and the
+        modifications this tree carries are listed next to it in
+        MODIFICATIONS.md. The copy of that readme circulating with px68k and its
+        forks is transcoded and edited and does not satisfy condition 4.
+        The OPNA hardware-rhythm voices are NOT Yamaha's. They were formerly a
+        decode of the YM2608 ADPCM-A rhythm ROM, which is copyrighted Yamaha
+        firmware and is no longer present in this tree; they are now synthesized
+        for this project and are its own work. See the ymfm entry in section 4
+        for the one Yamaha ROM dump this build does still ship.
+
 Component: cSID (Commodore 64 SID chip, .sid/.rsid)
 Author: Mihaly Horvath ("Hermit"), 2016-2017. http://hermit.sidrip.com
         Vendored from https://github.com/mlund/csid (the cycle-based csid.c),

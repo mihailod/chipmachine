@@ -297,6 +297,16 @@ The YM2608 rhythm section reads the chip-internal ADPCM-A ROM dump that ships
 with libvgm (`fmopn_2608rom.h`); without it every PC-98 track loses its drums.
 `-UOPN_YMFM_RHYTHM_ROM` omits it.
 
+> **This is Yamaha ROM data and it is an open licensing item** — see the ymfm
+> entry in `LEGAL`. It is 8192 bytes, CRC32 `23c9e0d8`, and reaches the chips by
+> two routes, both compiled into **both** variants: `fmopn.c` assigns it to
+> `F2608->pcmbuf` directly, and `opn_ymfm.cpp` hands it to ymfm via
+> `intf->set_static()`. It is byte-for-byte the same ROM that was removed from
+> s98plugin's fmgen, where the six rhythm voices are now synthesized instead
+> (`fmgen/gen_rhythm_synth.c`). Doing the equivalent here would mean feeding
+> those synthesized voices to this path too, and is not done yet — so this
+> remains the one piece of Yamaha firmware the application ships.
+
 `opnintf.c` / `opnintf.h` carry a **local patch** adding the `EC_*_MAME` /
 `EC_*_YMFM` selection — grep `chipmachine local patch`, `.orig` copies sit next
 to them, re-apply on revendor. ymfm itself is unmodified.
