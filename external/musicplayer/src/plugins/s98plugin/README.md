@@ -64,6 +64,15 @@ Built identically in both variants — there is no `mas` gate. Full terms are in
   voices from scratch, matched to the originals in count, order, length and
   level but not in timbre. An external `2608_BD.WAV .. 2608_RIM.WAV` set still
   takes priority, so a user with the real ROM gets authentic drums.
-* **Open item** — the `m_s98` plugin body, emu2413 and the NEZplug tables carry
-  no licence statement at all and have not been pinned to a quotable upstream
-  release.
+* **m_s98 itself, and the NEZplug `s_sng.c` / `s_logtbl.c` tables** — Mamiya's
+  own terms. The vendored files have no headers, but his upstream manuals do:
+  m_s98.kpi 1.0r10 says to follow each bundled program's licence and *"as for
+  the parts I wrote, treat them freely"*; NEZplug 0.9.4.8 says the program is
+  freeware and *"sources written by Mamiya may be used freely"*. Unconditional —
+  no copyleft, no noncommercial limit.
+* **emu2413** — MIT. The vendored v0.61 (2004) predates the GitHub repo and has
+  no header, but upstream's MIT LICENSE is `Copyright (c) 2001-2019` and its
+  CHANGELOG lists v0.61 as its own history.
+
+Nothing here is unresolved any more; the binding constraint on the plugin is
+fmgen's freeware condition.

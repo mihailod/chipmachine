@@ -61,28 +61,6 @@ Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
         shim replacing the ScummVM-internal dependencies.
 License: GNU General Public License v3.0 or later
 
-Component: m_s98 plugin body, emu2413 and the NEZplug SN76489 tables (S98)
-Author: The KbMedia plugin m_s98.kpi v1.0r8 by Mamiya -- m_s98.{cpp,h},
-        device/s98device.h, device/s98fmgen.cpp, device/s98opll.cpp,
-        device/s98sng.cpp; Mitsutaka Okazaki's emu2413 v0.61 (2004) at
-        device/emu2413/; and the NEZplug-derived device/s_sng.c and
-        device/s_logtbl.c, also Mamiya's.
-License: NOT STATED -- see notice.
-Notice: These files carry NO licence statement of any kind: no LICENSE, no
-        COPYING, and no header text in any of them. That is NOT the same as
-        being permissive, and it is recorded here as an open item rather than
-        assumed away. None is believed to be copyleft -- emu2413 is MIT upstream
-        today and the NEZplug lineage is Public Domain / MIT-0 (see the musplugin
-        entry) -- but neither has been pinned to a specific upstream release
-        whose licence text can be quoted, which is what this entry awaits.
-        emu2413's header credits MAME's fmopl.c by Tatsuyuki Satoh and Jarek
-        Burczynski as an algorithmic reference. That is a credit in a comment
-        rather than vendored code, emu2413 being an independent implementation,
-        but it is a further reason to pin the version.
-        The other two components of s98plugin are no longer unresolved and have
-        left this section: cisc's fmgen is in section 5, and the GPL-2.0+ MAME
-        OPL cores have been removed outright (see the ymfm entry in section 4).
-
 ===============================================================================
 3. LESSER COPYLEFT DEPENDENCIES
 ===============================================================================
@@ -492,6 +470,26 @@ Author: Developed by Mitsutaka Okazaki
 License: MIT License
 Notice: Its PSG emulation is Okazaki's emu2149, also MIT.
 
+Component: emu2413 (YM2413 / OPLL emulator -- the OPLL device of s98plugin)
+Author: Mitsutaka Okazaki (https://github.com/digital-sound-antiques/emu2413).
+        Version 0.61 of 2004, vendored at
+        musicplayer/src/plugins/s98plugin/m_s98/device/emu2413.
+License: MIT License
+Notice: The vendored files predate the author's move to GitHub and carry no
+        licence header, which is why this was previously recorded as an open
+        item. It is resolved by the upstream project: its MIT LICENSE reads
+        "Copyright (c) 2001-2019 Mitsutaka Okazaki" -- a range beginning at the
+        first release, v0.10 of 2001 -- and its CHANGELOG lists the vendored
+        v0.61 (2004-04-10) as part of that same history. The grant therefore
+        covers this version. Okazaki is the sole author throughout.
+        emu2413's header credits MAME's fmopl.c by Tatsuyuki Satoh and Jarek
+        Burczynski among the documents consulted. That is an acknowledgement in
+        a comment rather than vendored code; emu2413 is an independent
+        implementation, and current upstream credits Burczynski's ymf262.c the
+        same way under the same MIT terms.
+        Newer copies of the same emulator are vendored elsewhere in this build
+        (libvgm, libkss, Furnace), all likewise MIT.
+
 Component: emu2212 (Konami SCC sound chip emulator)
 Author: Developed by Mitsutaka Okazaki
 License: MIT License
@@ -611,6 +609,33 @@ License: Redistributable for emulation use under Amstrad's 1999 permission.
 ===============================================================================
 5. CUSTOM / FREEWARE PERMISSIVE DEPENDENCIES
 ===============================================================================
+Component: m_s98 (the S98 plugin body) and the NEZplug SN76489 tables
+Author: Mamiya. m_s98.kpi, a KbMedia Player plugin -- m_s98.{cpp,h},
+        device/s98device.h, device/s98fmgen.cpp, device/s98opll.cpp,
+        device/s98sng.cpp, vendored at
+        musicplayer/src/plugins/s98plugin/m_s98 -- together with device/s_sng.c
+        and device/s_logtbl.c, which come from Mamiya's NEZplug.
+License: Mamiya's own terms, stated in the manuals accompanying his releases.
+        For m_s98 (m_s98.txt): the program is built on other programs whose
+        licences must each be followed, and "as for the parts I wrote, treat
+        them freely". For NEZplug (nezplug.txt): the program is freeware, the
+        author accepts no liability, and "sources written by Mamiya may be used
+        freely".
+Notice: The grant over Mamiya's own code is unconditional -- it carries no
+        copyleft and no noncommercial limit, so unlike fmgen below it does not
+        depend on this application being free of charge.
+        The vendored sources themselves carry no licence header, which is why
+        this was previously recorded as an open item. It is resolved by the
+        upstream releases: m_s98.kpi 1.0r10 and NEZplug 0.9.4.8, both still
+        published by the author, whose manuals carry the text above.
+        m_s98's own manual is what makes the third-party components explicit,
+        and each is accounted for here: cisc's fmgen (below, and Mamiya is the
+        author of its OPN2 support and bug fixes), Okazaki's emu2413 (section 4)
+        and zlib.
+        It also states that a user wanting OPNA rhythm should supply their own
+        2608_BD.WAV .. 2608_TOP.WAV; upstream never shipped that data. The
+        synthesized rhythm voices described below preserve that arrangement.
+
 Component: fmgen (FM Sound Generator -- the OPN/OPNA/OPM cores behind S98 and
            FMP playback)
 Author: cisc (cisc@retropc.net), release 008 of 2003-09-02, obtained from the
