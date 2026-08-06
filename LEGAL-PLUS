@@ -395,6 +395,14 @@ Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         libopenmpt and is unaffected in both variants. Routing between them is
         by content, not extension (zlib magic 0x78 -> ".DelekDefleMask.").
 
+        The YM2608 rhythm voices are NOT Yamaha's. Furnace ships the chip's
+        internal ADPCM-A rhythm ROM as platform/sound/rss.h; that is copyrighted
+        Yamaha firmware under no licence, and it has been replaced with the same
+        data synthesized for this project that libvgm now uses (see the ymfm
+        entry in LEGAL section 4). That replacement is in this variant only
+        because dmfplugin is, but the ROM itself is gone from the repository
+        entirely -- there is no remaining copy in either variant.
+
         Also removed from BOTH variants, as unreachable GPL code:
         furnace/src/engine/platform/sound/vic20sound.c (lifted from VICE, GPLv2)
         and its only user platform/vic20.cpp. DIV_SYSTEM_VIC20 is a Furnace

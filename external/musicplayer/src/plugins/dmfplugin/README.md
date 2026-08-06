@@ -88,6 +88,25 @@ compiled in and pinned ahead of chipmachine's newer fmt via `BEFORE`.
 engine references (external audio-file instruments / audio export — never
 exercised by `.dmf` playback), so libsndfile need not be vendored.
 
+## Patched vendored file: `platform/sound/rss.h`
+
+Furnace shipped the YM2608's internal ADPCM-A rhythm ROM here — copyrighted
+Yamaha firmware under no licence, byte-for-byte the same dump libvgm carried.
+It has been replaced with synthesized voices. Regenerate with
+[`libvgmplugin/gen_2608rom_synth.c`](../libvgmplugin/gen_2608rom_synth.c), which
+emits this file and libvgm's copy from one source:
+
+```
+/tmp/g ../dmfplugin/furnace/src/engine/platform/sound/rss.h nonstatic
+```
+
+The `nonstatic` argument matters: `ym2608Interface.cpp` includes this as plain
+`const`, whereas libvgm's `fmopn_2608rom.h` is `static const`. Furnace's address
+layout is identical (`set_start_end()` in `sound/ymfm/ymfm_opn.cpp`), so nothing
+else needs changing. **Re-apply on revendor** — and note there is deliberately no
+`.orig` copy, since keeping one would mean keeping the ROM. See that generator's
+README section for what the voices are and are not.
+
 ## Tests
 
 `chipmachine/testmus/dmf/` fixtures span Genesis (`Spring Yard.dmf`), SMS

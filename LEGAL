@@ -372,16 +372,11 @@ Notice: Compiled into BOTH variants. In the Mac App Store variant it is the
         Furnace is copyleft-licensed and modifies what it vendors, so that copy
         carries changes under those terms. Same reasoning as the StSound
         re-vendor and the MIT Musashi copy under sndhplugin.
-        OPEN ITEM -- YAMAHA ROM DATA. The YM2608 rhythm section reads the
-        chip-internal ADPCM-A rhythm ROM, shipped with libvgm as
-        emu/cores/fmopn_2608rom.h (8192 bytes, CRC32 23c9e0d8) and compiled into
-        BOTH variants. NO LICENCE COVERS THIS DATA. The file carries a note that
-        it was derived from the chip's output and verified against real hardware
-        rather than read out of silicon, which is a statement of provenance and
-        not a grant. It is byte-for-byte the ROM that was removed from fmgen
-        (section 5), so that removal took out one of two copies and this build is
-        not free of Yamaha ROM data. Recorded here rather than left undocumented.
-        See musicplayer/src/plugins/libvgmplugin/README.md for the adapter.
+        The YM2608 rhythm voices are NOT Yamaha's. libvgm ships the chip's
+        internal ADPCM-A rhythm ROM as emu/cores/fmopn_2608rom.h; that is
+        copyrighted Yamaha firmware under no licence, and it has been replaced
+        with data synthesized for this project, which is its own work. See
+        musicplayer/src/plugins/libvgmplugin/README.md.
 
 Component: libvgm (VGM / VGZ playback)
 Author: ValleyBell's libvgm (https://github.com/ValleyBell/libvgm), vendored at
