@@ -338,7 +338,7 @@ the short version.
 | AHX / HivelyTracker | `.ahx` `.hvl` `.thx` | [hively](external/musicplayer/src/plugins/hivelyplugin/README.md) |
 | MikMod UNITRK / UNIMOD | `.uni` | [mikmod](external/musicplayer/src/plugins/mikmodplugin/README.md) |
 | Old (pre-OctaMED) MED | `.med` | [med](external/musicplayer/src/plugins/medplugin/README.md) |
-| MaxTrax | `.mxtx` | [maxtrax](external/musicplayer/src/plugins/maxtraxplugin/README.md) |
+| MaxTrax | `.mxtx` | [maxtrax](external/musicplayer/src/plugins/maxtraxplugin/README.md) *(Plus only)* |
 | JayTrax / Syntrax | `.jxs` | [jxs](external/musicplayer/src/plugins/jxsplugin/README.md) |
 | Ixalance | `.ixs` | [ixs](external/musicplayer/src/plugins/ixsplugin/README.md) |
 | ProTrekkr / NoiseTrekker | `.ptk` `.ntk` | [ptk](external/musicplayer/src/plugins/ptkplugin/README.md) |

@@ -344,6 +344,57 @@ if(CM_VARIANT STREQUAL "mas")
 else()
     set(CM_HAVE_FAMITRACKER ON)
 endif()
+# maxtraxplugin's decoder is ScummVM's, and it is GPL-3 OR LATER -- the strictest
+# licence in the tree. Both vendored files carry the boilerplate
+# (plugins/maxtraxplugin/maxtrax/maxtrax.{h,cpp}, the loader + sequencer, and
+# paula.{h,cpp}, the 4-voice Amiga mixer; 1,812 lines together). Only our own
+# wrapper, compat.h and the split-set logic are outside it. So the plugin must be
+# ABSENT from the mas binary, following CM_HAVE_UADE's pattern.
+#
+# Cost: 93 rows, and it is a clean total loss -- 82 modland "MaxTrax/" files and
+# 11 UnExoticA game rips (7 of them MULTI: groups). NO formatPlayer entry is
+# needed: ".mxtx" is sole-claimed (vgmstreamplugin lists it only in
+# excluded_extensions, i.e. it declines it), so the plain extension test in
+# songHasNoPlayer() drops the modland rows, and the UnExoticA rows -- prefix-form
+# "mxtx.<song>", whose pathExtension is the song name ("agro", "mx", "eng",
+# "mx00", "badinfo", "trx"), none of them claimed by anything in either build --
+# fall to nameHasPlayer()'s leading-token branch on "mxtx". MULTI: groups are
+# judged on their first member and every one of those is an "mxtx." name.
+#
+# Rerouting was measured and rejected: ZERO of the 93 have a title+composer twin
+# anywhere else in the catalog (5 share a title alone, all coincidental). The
+# corpus does duplicate itself, though -- modland and UnExoticA both carry
+# Darkseed, A-Train, Dune II and Kyrandia -- so the count overstates the number
+# of distinct tunes lost.
+#
+# No replacement exists to swap in, and this was checked rather than assumed.
+# ScummVM's is the ONLY native implementation of the format anywhere: there is no
+# libmaxtrax, nothing on GitHub, and rePlayer does not support MaxTrax. Every
+# other player is 68k assembly -- Wanted Team's EaglePlayer (EP_MaxTrax.lha /
+# SRC_MaxTrax.lzx on wt.exotica.org.uk), which states no licence at all and needs
+# an Amiga to run. UADE cannot help either, in this or any build: its
+# amifilemagic.c detects the "MXTX" magic but upstream has no MaxTrax eagleplayer,
+# so the detection is vestigial. And unlike .sndh or .sc68, a .mxtx file is pure
+# data -- the replayer is not in it -- so running the original driver under the
+# MIT Musashi core would mean shipping that unlicensed binary.
+#
+# What a replacement WOULD look like, if this is ever revisited: the Paula half is
+# easy and we have done its like twice (the wsrplugin machine, victrackerplugin's
+# VIC-I), with OpenMPT's BSD soundlib/Paula.{h,cpp} already in tree as a
+# permissive reference. The blocker is the ~1,050-line sequencer, for which there
+# is NO published spec -- David 'Talin' Joiner and Joe Pearce's Music-X-derived
+# format was never documented publicly. That leaves ScummVM's code (GPL, so it
+# taints a clean-room) or the Wanted Team assembly (an unlicensed reconstruction,
+# and maxtrax.h's own comments show ScummVM was ported from exactly that
+# assembler source) -- the same shape as the GAMDX disassembly rejected for
+# CM_HAVE_MDX above, for 93 rows instead of 6,913. Verification would be the easy
+# part: 93 files and the plus build as an audio oracle.
+if(CM_VARIANT STREQUAL "mas")
+    set(CM_HAVE_MAXTRAX OFF)
+    list(APPEND CM_VARIANT_DEFS CM_NO_MAXTRAX)
+else()
+    set(CM_HAVE_MAXTRAX ON)
+endif()
 # libvgmplugin is the exception to the pattern above: the plugin is NOT gated
 # (it is the only decoder for the 1,341-row OPL Archive and much of VGMRips), but
 # libvgm bundles SEVERAL cores per chip and some of them are GPL. libvgm is built
@@ -596,7 +647,7 @@ endif()
 # chip; the replacements were A/B'd by ear against the originals and shipped to
 # both variants, so there is nothing to gate and all 11 .vt songs stay in the mas
 # index. See the plugin's README.md.
-message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, MDX=${CM_HAVE_MDX}, FAMITRACKER=${CM_HAVE_FAMITRACKER}, LIBVGM_GPL_CORES=${CM_HAVE_LIBVGM_GPL_CORES}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT}, AYFLY=${CM_HAVE_AYFLY}, ZXTUNE=${CM_HAVE_ZXTUNE})")
+message(STATUS "ChipMachine build variant: ${CM_VARIANT} (PROGRAM_NAME=\"${CM_PROGRAM_NAME}\", UADE=${CM_HAVE_UADE}, VICE=${CM_HAVE_VICE}, GOATTRACKER=${CM_HAVE_GOATTRACKER}, DMF=${CM_HAVE_DMF}, SC68=${CM_HAVE_SC68}, POKEYNOISE=${CM_HAVE_POKEYNOISE}, MDX=${CM_HAVE_MDX}, FAMITRACKER=${CM_HAVE_FAMITRACKER}, MAXTRAX=${CM_HAVE_MAXTRAX}, LIBVGM_GPL_CORES=${CM_HAVE_LIBVGM_GPL_CORES}, AO=${CM_HAVE_AO}, NDS=${CM_HAVE_NDS}, USF=${CM_HAVE_USF}, HT=${CM_HAVE_HT}, AYFLY=${CM_HAVE_AYFLY}, ZXTUNE=${CM_HAVE_ZXTUNE})")
 
 # ---------------------------------------------------------------------------
 # macOS & Architecture Initialization (Must run BEFORE target definitions)
@@ -733,7 +784,7 @@ set(MUSICPLAYER_PLUGINS
     zxayplugin s98plugin gsfplugin tedplugin v2plugin
     ffmpegplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
     kssplugin quartetplugin wsrplugin bbsongplugin
-    soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin maxtraxplugin sksplugin nedplugin sccmusixxplugin
+    soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin fnkplugin
     libvgmplugin vgmstreamplugin
     victrackerplugin klystrackplugin csidplugin musplugin
@@ -774,6 +825,11 @@ endif()
 # ".mdx" rows; nothing else claims the extension.
 if(CM_HAVE_MDX)
     list(APPEND MUSICPLAYER_PLUGINS mdxplugin)
+endif()
+# GPL-3+ (ScummVM MaxTrax + Paula) -- plus build only, see CM_HAVE_MAXTRAX above.
+# Costs all 93 ".mxtx" rows; nothing else claims the extension.
+if(CM_HAVE_MAXTRAX)
+    list(APPEND MUSICPLAYER_PLUGINS maxtraxplugin)
 endif()
 # GPL-2+ (FamiTracker CX / jsr's FamiTracker engine) -- plus build only, see
 # CM_HAVE_FAMITRACKER above. Costs 1,597 .ftm rows in mas; the 95 Atari "Face The
@@ -876,6 +932,10 @@ endif()
 # Same for famitrackerplugin_register() -- see CM_HAVE_FAMITRACKER above.
 if(NOT CM_HAVE_FAMITRACKER)
     target_compile_definitions(plugin_register PRIVATE CM_NO_FAMITRACKER)
+endif()
+# Same for maxtraxplugin_register() -- see CM_HAVE_MAXTRAX above.
+if(NOT CM_HAVE_MAXTRAX)
+    target_compile_definitions(plugin_register PRIVATE CM_NO_MAXTRAX)
 endif()
 # Same for aoplugin_register() -- see CM_HAVE_AO above.
 if(NOT CM_HAVE_AO)

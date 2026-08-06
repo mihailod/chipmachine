@@ -64,5 +64,20 @@ clang++ -std=c++17 -O2 poc_main.cpp paula.cpp maxtrax.cpp -o maxtrax_poc
 
 ## License
 
-The vendored MaxTrax/Paula sources are GPLv3 (ScummVM). Chipmachine is GPLv3, so
-this is fully compatible. See repo `chipmachine/LEGAL`.
+The vendored MaxTrax/Paula sources are GPL-3-or-later (ScummVM).
+
+**Plus build only.** Because of that licence this plugin is NOT compiled into the
+Mac App Store variant: `CM_VARIANT=mas` sets `CM_HAVE_MAXTRAX=OFF`, so the target
+is not built and `maxtraxplugin_register()` is `#ifdef`'d out
+(`CM_NO_MAXTRAX`). The 93 `.mxtx` rows are dropped from that variant's index to
+match — `.mxtx` is sole-claimed (vgmstream names it only to decline it), so the
+plain extension test in `songHasNoPlayer()` covers the modland rows and
+`nameHasPlayer()`'s leading-token branch covers the UnExoticA `mxtx.<song>`
+prefix form; no `formatPlayer` key is needed.
+
+Nothing replaces it there: ScummVM's is the only native MaxTrax implementation
+that exists, every other player is unlicensed 68k assembly (Wanted Team's
+EaglePlayer), and a `.mxtx` carries no replayer of its own, so the sc68/SNDH
+"emulate the original driver" route is closed too. See `CM_HAVE_MAXTRAX` in
+`chipmachine/CMakeLists.txt` for the full reasoning and the clean-room estimate,
+and `chipmachine/LEGAL-PLUS`.

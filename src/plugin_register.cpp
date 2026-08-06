@@ -75,7 +75,11 @@ extern "C" {
     void mgtplugin_register();     // Megatracker / Atari ST (.mgt) via libxmp mgt_loader
     void medplugin_register();     // Old MED / Amiga "Music Editor" (.med, magic MED\x02..\x04) via libxmp med2/3/4_loader
     void sbstudioplugin_register(); // SBStudio / MS-DOS (.pac) via vendored libpac
-    void maxtraxplugin_register(); // MaxTrax / Amiga (.mxtx) via ScummVM MaxTrax+Paula
+#ifndef CM_NO_MAXTRAX
+    // MaxTrax / Amiga (.mxtx) via ScummVM MaxTrax+Paula -- GPL-3 or later,
+    // plus build only.
+    void maxtraxplugin_register();
+#endif
     void sksplugin_register();     // STarKos / Amstrad CPC (.sks) via Arkos Tracker 3
     void nedplugin_register();     // NerdTracker II / NES (.ned) via blargg Nes_Snd_Emu
     void sccmusixxplugin_register(); // SCC-Musixx / MSX Konami SCC (.SNG) via Z80 + emu2212
@@ -214,7 +218,14 @@ void register_plugins() {
     mgtplugin_register();
     medplugin_register();
     sbstudioplugin_register();
+#ifndef CM_NO_MAXTRAX
+    // GPL-3+ (ScummVM's maxtrax.{h,cpp} + paula.{h,cpp}) -- excluded from the
+    // Mac App Store build (CM_VARIANT=mas), where the maxtraxplugin target is
+    // not built at all. All 93 ".mxtx" rows are dropped from that variant's
+    // index to match; the extension is sole-claimed, so no formatPlayer key is
+    // needed -- see CM_HAVE_MAXTRAX in CMakeLists.txt.
     maxtraxplugin_register();
+#endif
     sksplugin_register();
     nedplugin_register();
     sccmusixxplugin_register();

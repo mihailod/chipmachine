@@ -162,6 +162,45 @@ Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         playing in mas through GME. Only "pn.tetris", whose composer is unknown,
         is a possible real loss.
 
+Component: MaxTrax + Paula player (Amiga MaxTrax -- .mxtx)
+Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp}, the score
+        loader and sequencer, and audio/mods/paula.{h,cpp}, the four-voice Amiga
+        Paula mixer), vendored under
+        musicplayer/src/plugins/maxtraxplugin/maxtrax/ with a small compat.h
+        shim replacing the ScummVM-internal dependencies. The format itself is
+        David 'Talin' Joiner and Joe Pearce's, an embeddable player for Music-X
+        performances used by Legend of Kyrandia, Dune II, Darkseed, A-Train and
+        others.
+License: GNU General Public License v3.0 or later
+Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
+        CM_HAVE_MAXTRAX=OFF, so neither maxtraxplugin nor its vendored ScummVM
+        sources are compiled). All 93 ".mxtx" songs -- 82 modland "MaxTrax/"
+        files and 11 UnExoticA game rips -- are dropped from that variant's
+        index to match. maxtraxplugin is the sole claimer of the extension
+        (vgmstreamplugin names ".mxtx" only to decline it), so there is no
+        partial rescue and no fallback decoder, and no formatPlayer entry is
+        needed for the gate.
+        Only the two vendored ScummVM files are under these terms; the plugin
+        wrapper, the compat shim and the split-set/instrument-bank resolution
+        are chipmachine's own.
+        No permissive replacement exists, and this was checked rather than
+        assumed. ScummVM's is the only native implementation of the format in
+        existence -- there is no libmaxtrax, nothing on GitHub and no MaxTrax
+        support in rePlayer. Every other player is 68k assembly: Wanted Team's
+        EaglePlayer (EP_MaxTrax.lha / SRC_MaxTrax.lzx, wt.exotica.org.uk) states
+        no licence at all, and UADE detects the "MXTX" magic in amifilemagic.c
+        but has no MaxTrax eagleplayer, so that detection is vestigial. Nor can
+        the original driver be emulated the way .sndh is: a .mxtx file is pure
+        data and does not carry its replayer, so that route would mean shipping
+        the unlicensed Amiga binary.
+        A clean-room replacement is possible but was judged out of proportion to
+        93 rows. The Paula half is easy -- OpenMPT's BSD soundlib/Paula.{h,cpp}
+        is already in the tree as a permissive reference -- but the ~1,050-line
+        sequencer has no published specification, leaving only ScummVM's GPL code
+        or the Wanted Team assembly (which maxtrax.h's own comments show is what
+        ScummVM was ported from) as references. That is the same position as the
+        GAMDX disassembly rejected for MDX below, for a corpus 74 times smaller.
+
 Component: MDX (Sharp X68000 -- MXDRV .mdx)
 Author: mdxmini by BouKiCHi, a library-ised derivative of Daisuke Nagano's
         mdxplay, itself written from KOUNO Takeshi's mdxform.doc format

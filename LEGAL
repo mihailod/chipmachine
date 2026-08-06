@@ -50,16 +50,16 @@ along with this program. If not, see <https://polyformproject.org/licenses/nonco
 ===============================================================================
 2. STRONG-COPYLEFT AND UNRESOLVED DEPENDENCIES
 ===============================================================================
-The components in this section are compiled into this build and carry terms
-that are either strong copyleft or not yet fully established. They are recorded
-here as OPEN ITEMS rather than left undocumented.
+This section exists to record components compiled into this build that carry
+terms which are either strong copyleft or not yet fully established, as OPEN
+ITEMS rather than leaving them undocumented.
 
-Component: MaxTrax + Paula player (Amiga MaxTrax .mxtx)
-Author: Developed by the ScummVM team (audio/mods/maxtrax.{h,cpp} and
-        audio/mods/paula.{h,cpp}), vendored under
-        musicplayer/src/plugins/maxtraxplugin/maxtrax/ with a small compat.h
-        shim replacing the ScummVM-internal dependencies.
-License: GNU General Public License v3.0 or later
+ - NONE. - 
+
+Nothing covered by this file is under a strong-copyleft licence (GPL of
+any version) or left with unresolved terms; every component it lists appears in
+sections 3 to 5 with its terms stated. The section is kept, empty, so that this
+is stated rather than merely implied.
 
 ===============================================================================
 3. LESSER COPYLEFT DEPENDENCIES

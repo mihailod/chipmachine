@@ -3,8 +3,6 @@ MAS Compliance:
 
 - (REMOVED IN MAS) clean room partial deflemask GPL (IBM),PROMPT ready	2071
 
-- maxtraxplugin GPL (amiga)	1,812	4		93	clean-room Paula + driver
-
 ----------------------------
 BUGS:
 
