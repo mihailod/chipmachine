@@ -5662,7 +5662,13 @@ TEST_CASE("coverage", "[music]")
         {"FMPPlugin", "testmus/fmp"},
         {"Quartet", "testmus/4v"},
         {"Euphony", "testmus/eup"},
-        {"WonderSwan (in_wsr)", "testmus/wsr"},
+        // The in_wsr codec was replaced by chipmachine's own WonderSwan (ares
+        // V30MZ + own machine/APU), and the plugin renamed with it; the fixture
+        // dir did not move.
+        {"WonderSwan", "testmus/wsr"},
+        // Compute!/Stereo Sidplayer (.mus/.str), clean-room replacement for the
+        // VICE-based player. Fixtures kept their format-named dir.
+        {"ChipMachine Clean Room SIDPlayer", "testmus/sidplayer"},
         {"PokeyNoise", "testmus/pn"},
         {"Monotone", "testmus/monotone"},
         {"Beepola (Phaser1)", "testmus/bbsong"},

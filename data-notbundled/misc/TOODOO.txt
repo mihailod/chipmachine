@@ -1,22 +1,9 @@
-
-- decide on MAS version: start from 1.0 or same as Plus (2.1)
-
-- when i run cmtest i see this, please fix, i think some (downloadable or present in other testmus folders) assets are missing:
---- MISSING TARGET DIRECTORIES DETECTED ---
-Execute the following terminal script to construct the environment:
-bash
-mkdir -p "testmus/chipmachine clean room sidplayer"
-mkdir -p "testmus/wonderswan"
-
--------------------------------------------
-
 - (feature) detect no internet and offer to switch to offline mode where only cached songs are playable. how to solve ui? would have to trim everything which is not local and that takes time. maybe put a flag in db "cached yes/no" for fast access/pruning? other ideas?
 
 - (feature) enhance operations on lists, need playlist tab filter with drill that shows the members with artwork on the side like when they play when you scroll up down in the drilled list
 
 ---------------------------------------------
-Submission to Apple:
 
-- pay $99 and do post payment parts
+- sign and release on GH the 2.1 PLUS
 
-- submit to apple!
+- submit 2.1 MAS to Apple
