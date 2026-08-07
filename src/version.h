@@ -43,4 +43,4 @@ rm build/DEBUG_UPDATE_VERSION
 //
 // Apple accepts up to three dot-separated integers here; a single integer is
 // intentional so it never has to be reset when VERSION_STR changes.
-#define BUILD_STR "2"
+#define BUILD_STR "3"

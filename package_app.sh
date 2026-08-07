@@ -1179,6 +1179,21 @@ if command -v codesign &> /dev/null; then
     if [ "$VARIANT" = "mas" ] && [ "$SIGN_ID" != "-" ]; then
         echo "-> Embedding Mac App Store provisioning profile..."
         cp "$PROVISION" "${TARGET_DIR}/Contents/embedded.provisionprofile"
+        # Strip xattrs from the copy IMMEDIATELY -- the bundle-wide `xattr -cr`
+        # ran ~30 lines earlier, so anything introduced here would survive it.
+        #
+        # The profile is downloaded from developer.apple.com in a browser, so it
+        # arrives carrying com.apple.quarantine (plus kMDItemWhereFroms etc.),
+        # and `cp` preserves them. That gets the upload rejected with:
+        #
+        #   Invalid package contents. The package contains one or more files
+        #   with the com.apple.quarantine extended file attribute, such as
+        #   ".../Contents/embedded.provisionprofile"                     (91109)
+        #
+        # Clearing the source file by hand fixes one run; clearing it here fixes
+        # every future run, including after the profile is re-downloaded when it
+        # expires (this one: Aug 2027).
+        xattr -c "${TARGET_DIR}/Contents/embedded.provisionprofile" 2>/dev/null || true
     fi
 
     if [ -d "${RESOURCES_DIR}/data/python_runtime" ]; then
@@ -1228,6 +1243,23 @@ if [ "$VARIANT" = "mas" ]; then
     # NOT a zip. Build it only when a real installer identity is available;
     # otherwise the ad-hoc .app is a LOCAL-test artifact only.
     if [ "$SIGN_ID" != "-" ]; then
+        # Last gate before the .pkg is sealed: NO file in the bundle may carry
+        # com.apple.quarantine. App Store Connect rejects the upload for it
+        # (91109), and it only shows up after a full upload + server-side
+        # analysis -- an expensive way to learn about an xattr. Anything copied
+        # in from a browser download (the provisioning profile is the usual
+        # culprit) can reintroduce it after the bundle-wide `xattr -cr`.
+        echo "-> Verifying no quarantine attributes remain in the bundle..."
+        QUARANTINED=$(find "${TARGET_DIR}" -exec sh -c \
+            'xattr "$1" 2>/dev/null | grep -q "^com.apple.quarantine$" && echo "$1"' _ {} \; 2>/dev/null)
+        if [ -n "${QUARANTINED}" ]; then
+            echo "CRITICAL: com.apple.quarantine found on:"
+            echo "${QUARANTINED}" | sed "s|^${TARGET_DIR}|  ...|"
+            echo "          Clear it and re-run:  xattr -cr \"${TARGET_DIR}\""
+            exit 1
+        fi
+        echo "     Clean."
+
         echo "=== Building signed .pkg for App Store submission... ==="
         rm -f "${PKG_PATH}"
         productbuild --component "${TARGET_DIR}" /Applications \
