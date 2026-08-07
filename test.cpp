@@ -330,7 +330,19 @@ TEST_CASE("VGMRips non-Sega VGM routes to libvgm", "[music]")
     }
     // The Sega (YM2612) and Vectrex (AY8910) logs GME plays well must NOT move.
     for (auto const& vgz : { "testmus/gme/batman.vgz",
-                             "testmus/gme/vectrex-berzerk.vgz" }) {
+                             "testmus/gme/vectrex-berzerk.vgz",
+                             // VGM 1.70+ may put an optional EXTRA HEADER between
+                             // the normal header and the data, at 0xC0 -- right on
+                             // top of the 0xC0+ chip-clock slots. This fixture is
+                             // the SMS FM rip below with a real extra header (a
+                             // chip-volume table balancing YM2413 against the PSG,
+                             // the realistic reason a GME-only rip carries one)
+                             // injected and every relative offset fixed up. Its
+                             // size/offset dwords read back as phantom WonderSwan
+                             // + SAA1099 + ES5503 clocks, which used to hand a
+                             // pure SN76489+YM2413 log to libvgm. Bounding the
+                             // header by the extra header keeps it on GME.
+                             "testmus/gme/smspower-cyborghunter-fm-extrahdr.vgm" }) {
         REQUIRE(gme.canHandle(vgz));
         REQUIRE_FALSE(lv.canHandle(vgz));
     }

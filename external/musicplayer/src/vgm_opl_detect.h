@@ -92,10 +92,30 @@ inline bool vgmNeedsLibVGM(const std::string& path)
     uint32_t dataRel = rd32(0x34);
     uint32_t dataAbs = dataRel != 0 ? 0x34 + dataRel : 0x40;
 
+    // VGM 1.70+ may place an optional extra header (chip clock / chip volume
+    // tables) BETWEEN the normal header and the VGM data, at 0xBC + the relative
+    // offset stored at 0xBC -- in practice 0xC0. So the normal header ends at
+    // whichever comes first, the extra header or the data. Bounding by dataAbs
+    // alone lets the extra header's size/offset dwords alias the 0xC0+ clock
+    // slots and read back as phantom WonderSwan/VSU/SAA1099/ES5503/ES5506 chips
+    // (e.g. testmus/libvgm/pc98-opn.vgz). Files with a genuine full 1.71 header
+    // and no extra header are unaffected -- they keep their 0xC0+ chips.
+    uint32_t hdrEnd = dataAbs;
+    if (rd32(0x08) >= 0x170 && 0xBC + 4 <= static_cast<int>(dataAbs) &&
+        0xBC + 4 <= n) {
+        uint32_t xhRel = rd32(0xBC);
+        uint32_t xhAbs = xhRel != 0 ? 0xBC + xhRel : 0;
+        // Ignore a malformed offset pointing back into the fixed header:
+        // shrinking hdrEnd too far would hide a REAL chip and misroute the file
+        // to GME, which aborts on chips it cannot decode.
+        if (xhAbs >= 0xC0 && xhAbs < hdrEnd) { hdrEnd = xhAbs; }
+    }
+
     // A chip is "present" only when its clock field lies inside the header (before
-    // the VGM data) and is non-zero (mask off the dual-chip / flag bits 30-31).
+    // the extra header / VGM data) and is non-zero (mask off the dual-chip / flag
+    // bits 30-31).
     auto present = [&](int o) -> bool {
-        if (o + 4 > static_cast<int>(dataAbs) || o + 4 > n) { return false; }
+        if (o + 4 > static_cast<int>(hdrEnd) || o + 4 > n) { return false; }
         return (rd32(o) & 0x3FFFFFFFu) != 0;
     };
 
