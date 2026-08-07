@@ -1027,8 +1027,18 @@ std::string ChipMachine::appendFormatInfo(std::string const& text,
     if (!desc.empty()) fmt += " ... " + desc;
 
     // Dots give a clean gap between sections and before the line repeats.
+    // The scroller loops whatever string it is given (see Scroller::render --
+    // xpos resets once the text is fully off-screen), so the repetition is baked
+    // into the string itself: the tune's own text three times, then the format
+    // line, forever. With no embedded text the format line is all there is, so
+    // it loops on its own.
     if (text.empty()) return "... " + fmt + " ...";
-    return text + " ... " + fmt + " ...";
+
+    std::string out;
+    out.reserve((text.size() + 5) * FORMAT_INFO_EVERY + fmt.size() + 8);
+    for (int i = 0; i < FORMAT_INFO_EVERY; i++)
+        out += text + " ... ";
+    return out + fmt + " ...";
 }
 
 void ChipMachine::initLua()
@@ -2833,11 +2843,11 @@ void ChipMachine::update()
                 m = currentInfo.title;
             }
             // Append the format info ("Platform - Name (EXT) ... <trackers> -
-            // <description>") so the scroller cycles metadata -> format ->
-            // back. When there is no embedded message/info the format line is
-            // all there is to show. Leading/trailing dots give clean gaps
-            // between sections. Radio streams have no meaningful module format,
-            // so skip it there.
+            // <description>") once per three passes of the tune's own text, so
+            // the embedded message stays the main event. When there is no
+            // embedded message/info the format line is all there is to show.
+            // Leading/trailing dots give clean gaps between sections. Radio
+            // streams have no meaningful module format, so skip it there.
             if (!isRadio)
                 m = appendFormatInfo(m, currentInfo);
         }
@@ -3040,8 +3050,8 @@ void ChipMachine::update()
         if (m == "" && isRadio) {
             m = currentInfo.title;
         }
-        // Same metadata -> format -> back cycle as on Playstarted, so subtune
-        // changes keep the format info appended. Skip for radio streams.
+        // Same text-then-format cycle as on Playstarted, so subtune changes
+        // keep the format info appended. Skip for radio streams.
         if (!isRadio)
             m = appendFormatInfo(m, currentInfo);
         if (m != "" && scrollText != m) {

@@ -270,11 +270,19 @@ public:
     static std::mt19937& shuffleRng();
 
 private:
-    // Append the now-playing format info ("Platform - Name (EXT) ... <trackers>
-    // - <description>") to a scroll line so the scroller cycles
-    // metadata -> format -> back. When `text` is empty the format info is all
-    // there is to show.
+    // Build the now-playing scroll line: the tune's own text (embedded message /
+    // INFO metadata) repeated FORMAT_INFO_EVERY times, then the format info
+    // ("Platform - Name (EXT) ... <trackers> - <description>") once. The
+    // scroller loops the string it is given, so this reads as
+    // text text text format text text text format ... for as long as the song
+    // plays. When `text` is empty the format info is all there is to show and it
+    // loops alone.
     std::string appendFormatInfo(std::string const& text, SongInfo const& info);
+
+    // How many times the tune's own text is shown between format lines. The
+    // generic format/tracker description is filler -- when a tune carries real
+    // text of its own, that text is what should be on screen most of the time.
+    static const int FORMAT_INFO_EVERY = 3;
 
     enum Screen
     {
