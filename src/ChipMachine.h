@@ -11,6 +11,7 @@
 
 #include "../demofx/Scroller.h"
 #include "../demofx/StarField.h"
+#include "../demofx/TrackerNotes.h"
 #include "../demofx/Transitions.h"
 #include "../sol2/sol.hpp"
 
@@ -514,6 +515,13 @@ private:
     // idle splash animation. Must run after loadPlatformScreenshots() and
     // loadExtensionScreenshots() so their bitmaps are already loaded.
     void loadSplashScreenshots();
+    // Drops splash pictures whose machine has no indexed song in THIS build --
+    // the logo artwork is a static directory scan, so without this the rotation
+    // showcases hardware the running build cannot play a note of (the MAS build
+    // ships no YouTube captures, which is the only source some machines had).
+    // Runs from computeFilterCounts(), i.e. once the index is ready; the startup
+    // call from loadSplashScreenshots() is a no-op until then.
+    void pruneSplashShotsToIndex();
     // Loads the per-platform logos at startup and warns about missing ones.
     void loadPlatformScreenshots();
     // Loads per-extension screenshots and reports extensions that have neither
@@ -626,6 +634,12 @@ private:
 
     demofx::StarField starEffect;
     demofx::Scroller scrollEffect;
+    // Tracker pattern backdrop (see demofx/TrackerNotes.h). Fed from the
+    // player's row queue in update(); drawn in render() right before the stars.
+    demofx::TrackerNotes notesEffect;
+    std::vector<musix::TrackerRow> notesRows;
+    std::vector<musix::TrackerRow> notesUpcoming;
+    float notesFraction = 0.0F;
 
     RenderSet overlay;
     TextField toastField;
@@ -784,10 +798,25 @@ private:
     std::vector<FilterOption> drillOptions;
     int drillReturnIndex = 0;
 
+    // filterOptions minus every row with no indexed songs in THIS build, built
+    // by rebuildVisibleFilterOptions() once the counts exist. The static list is
+    // a taxonomy of everything the app can classify; a build that ships without
+    // a decoder (or a collection that never had the songs) leaves some of those
+    // rows at zero, and a "[0 tunes]" row is a dead end -- selecting it lands on
+    // an empty result list. Groups are filtered recursively, so a group whose
+    // children are all empty disappears with them. Empty until then, which is
+    // why currentFilterOptions() falls back to the static list.
+    std::vector<FilterOption> visibleFilterOptions;
+    // Rebuild visibleFilterOptions from filterOptions + filterByteCounts, and
+    // resize/clamp the TAB list to match. Needs filterByteCounts; no-op without.
+    void rebuildVisibleFilterOptions();
+
     // The filter list currently shown on the TAB screen (top-level or a drill).
     const std::vector<FilterOption>& currentFilterOptions() const
     {
-        return activeFilterOptions ? *activeFilterOptions : filterOptions;
+        if (activeFilterOptions) return *activeFilterOptions;
+        return visibleFilterOptions.empty() ? filterOptions
+                                            : visibleFilterOptions;
     }
     // Tune count for a filter option (sum of its formats, or of its children).
     int filterOptionCount(FilterOption const& opt) const;
@@ -964,6 +993,9 @@ private:
     // extensions share the same picture, so identical bitmaps are collapsed to
     // a single entry (see loadSplashScreenshots()).
     std::vector<NamedBitmap> splashShots;
+    // Set once pruneSplashShotsToIndex() has run against a real index, so the
+    // (destructive) prune happens exactly once per session.
+    bool splashShotsPruned = false;
     // Fraction of the screen the splash picture fills (per axis, aspect kept).
     float splashSizeFraction = 0.5f;
     // Whether the splash was active last frame; render() reads this (set by

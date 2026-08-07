@@ -373,6 +373,17 @@ public:
     // Used to label the TAB Arcade filter ("N Arcade").
     int getArcadePlatformCount();
 
+    // Lowercased names of every Other/Arcade drill row that has at least one
+    // indexed song in THIS build. The drill rows themselves are data-driven, so
+    // a machine whose only songs are gone (e.g. the pouet YouTube captures the
+    // MAS build drops) simply has no row here. Together with
+    // getFormatByteCounts() this is the whole "does this platform still exist?"
+    // question: bytes cover the top-level filters, these cover the machines that
+    // share the OTHER/ARCADE bytes. Used to keep the splash rotation and the TAB
+    // filter list free of platforms the running build can't show a song for.
+    // Empty until the index is built.
+    std::set<std::string> presentSubPlatformNames();
+
     std::string getTitle(int index) const
     {
         std::lock_guard lock{ dbMutex };

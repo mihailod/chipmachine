@@ -360,7 +360,7 @@ ChipMachine::ChipMachine(utils::path const& wd, RemoteLoader& rl,
       currentScreen(MAIN_SCREEN), eq(SpectrumAnalyzer::eq_slots),
       eqLeft(SpectrumAnalyzer::eq_slots), eqRight(SpectrumAnalyzer::eq_slots),
       eqMono(SpectrumAnalyzer::eq_slots),
-      starEffect(screen), scrollEffect(screen)
+      starEffect(screen), scrollEffect(screen), notesEffect(screen)
 {
     isShuttingDown = false; // Safe initialization state
 
@@ -1796,6 +1796,9 @@ void ChipMachine::loadSplashScreenshots()
     LOGD("Splash: %d unique pictures from %d platform + %d extension logos",
          (int)splashShots.size(), (int)platformShots.size(),
          (int)extensionShots.size());
+    // Usually a no-op here (the index is still being built at startup);
+    // computeFilterCounts() calls it again the moment the counts exist.
+    pruneSplashShotsToIndex();
 }
 
 bool ChipMachine::noImages = false;
@@ -2428,9 +2431,142 @@ void ChipMachine::computeFilterCounts()
     arcadePlatformCount = musicDatabase.getArcadePlatformCount();
     filterByteCounts = counts;
     filterTotalCount = total;
-    filterCounts.assign(filterOptions.size(), 0);
-    for (size_t i = 0; i < filterOptions.size(); i++)
-        filterCounts[i] = filterOptionCount(filterOptions[i]);
+    // Hide the platforms this build has no songs for, in both places that would
+    // otherwise advertise them: the TAB filter list and the idle splash.
+    rebuildVisibleFilterOptions();
+    pruneSplashShotsToIndex();
+    auto const& opts = visibleFilterOptions.empty() ? filterOptions
+                                                    : visibleFilterOptions;
+    filterCounts.assign(opts.size(), 0);
+    for (size_t i = 0; i < opts.size(); i++)
+        filterCounts[i] = filterOptionCount(opts[i]);
+}
+
+// Copy `src` keeping only entries with at least one indexed song, recursing into
+// group children first so a group is judged on what SURVIVES in it (a group whose
+// children all empty out has count 0 and goes too). "[Show All]" (no formats, no
+// children) counts as the grand total, so it is never dropped.
+static std::vector<FilterOption>
+filterNonEmpty(std::vector<FilterOption> const& src,
+               std::function<int(FilterOption const&)> const& count,
+               std::vector<std::string>& dropped)
+{
+    std::vector<FilterOption> out;
+    for (auto const& opt : src) {
+        FilterOption copy = opt;
+        if (!copy.children.empty()) {
+            copy.children = filterNonEmpty(copy.children, count, dropped);
+            if (copy.children.empty()) {
+                dropped.push_back(copy.name);
+                continue;
+            }
+        }
+        if (count(copy) <= 0) {
+            dropped.push_back(copy.name);
+            continue;
+        }
+        out.push_back(std::move(copy));
+    }
+    return out;
+}
+
+void ChipMachine::rebuildVisibleFilterOptions()
+{
+    if (filterByteCounts.empty()) return; // no counts yet: keep the static list
+    auto counter = [this](FilterOption const& o) {
+        return filterOptionCount(o);
+    };
+    std::vector<std::string> dropped;
+    auto next = filterNonEmpty(filterOptions, counter, dropped);
+    if (next.empty()) return; // pathological (empty index): leave as-is
+    visibleFilterOptions = std::move(next);
+    if (!dropped.empty()) {
+        std::string list;
+        for (auto& d : dropped)
+            list += (list.empty() ? "" : ", ") + d;
+        LOGD("TAB filter: hiding %d platform row(s) with no songs in this "
+             "build: %s",
+             (int)dropped.size(), list);
+    }
+    // Resize the list to match. Only when sitting at the top level -- a drilled
+    // submenu renders drillOptions, which was copied from the (already filtered)
+    // visible list and is not affected by this rebuild.
+    if (activeFilterOptions == nullptr) {
+        int n = (int)visibleFilterOptions.size();
+        advancedList.setTotal(n);
+        advancedList.setVisible(n);
+        if (advancedList.selected() >= n) advancedList.select(n - 1);
+        updateFilterLogo();
+    }
+}
+
+void ChipMachine::pruneSplashShotsToIndex()
+{
+    if (splashShotsPruned || splashShots.empty()) return;
+    if (filterByteCounts.empty()) return; // counts not computed yet
+
+    // Logo files can't hold '/', so platform slugs ("Atari ST/STE/TT") and
+    // Other-drill row names ("TRS-80/CoCo/Dragon") are stored with '-' instead
+    // (see loadPlatformScreenshots' resolveSlug). Compare on that spelling,
+    // case-insensitively, so a file basename and the name behind it always meet.
+    auto subject = [](std::string s) {
+        s = utils::toLower(s);
+        std::replace(s.begin(), s.end(), '/', '-');
+        return s;
+    };
+
+    // Every machine the index still has a song for: one entry per platform byte
+    // in use, plus the Other/Arcade drill rows (those share a byte, so the byte
+    // alone can't tell Oric from Vectrex), plus the arcade board logos those
+    // drill rows own on the extension side.
+    std::set<std::string> live;
+    for (int b = 0; b < (int)filterByteCounts.size(); b++) {
+        if (filterByteCounts[b] <= 0) continue;
+        auto slug = MusicDatabase::platformScreenshotSlug((uint8_t)b);
+        if (!slug.empty()) live.insert(subject(slug));
+    }
+    for (auto const& name : musicDatabase.presentSubPlatformNames()) {
+        live.insert(subject(name));
+        // Board logos are keyed by the format string ("neo geo", "arcade
+        // (capcom)"), which buildSubPlatforms may have rewrapped on its way to a
+        // drill row ("neo geo" -> "Arcade (Neo Geo)"). Try both spellings so the
+        // rename can't cost a board its picture.
+        std::vector<std::string> keys{ name };
+        if (name.rfind("arcade (", 0) == 0 && name.back() == ')')
+            keys.push_back(name.substr(8, name.size() - 9));
+        else
+            keys.push_back("arcade (" + name + ")");
+        for (auto const& k : keys) {
+            auto a = arcadeSubLogos().find(k); // names are already lowercased
+            if (a != arcadeSubLogos().end()) live.insert(subject(a->second));
+        }
+    }
+    if (live.empty()) return; // nothing to compare against; keep everything
+
+    std::vector<std::string> dropped;
+    auto keep = [&](NamedBitmap const& s) {
+        auto colon = s.name.find(':');
+        auto key = colon == std::string::npos ? s.name : s.name.substr(colon + 1);
+        if (live.count(subject(key))) return true;
+        dropped.push_back(s.name);
+        return false;
+    };
+    splashShots.erase(
+        std::remove_if(splashShots.begin(), splashShots.end(),
+                       [&](NamedBitmap const& s) { return !keep(s); }),
+        splashShots.end());
+    splashShotsPruned = true;
+
+    if (!dropped.empty()) {
+        std::string list;
+        for (auto& d : dropped)
+            list += (list.empty() ? "" : ", ") + d;
+        LOGD("Splash: dropped %d picture(s) with no indexed songs in this "
+             "build, %d left: %s",
+             (int)dropped.size(), (int)splashShots.size(), list);
+    }
+    // The rotation indexes into splashShots, so restart it if it is running.
+    if (splashLogoActive) splashTransitions.restart();
 }
 
 // Tune count for a filter option: the grand total for the "[Show All]" entry
@@ -2491,6 +2627,20 @@ void ChipMachine::update()
         grantCompanionFolderIfNeeded(p);
 #endif
         filesToOpen.push_back(p);
+    }
+
+    // Pattern rows that have actually reached the speakers since the last frame
+    // (usually none or one). Pulled unconditionally so the backdrop keeps up
+    // even on the screens that do not draw it, and so nothing piles up in the
+    // player's queue. While paused play_pos stops advancing, so no rows come
+    // through and the display freezes by itself.
+    if (player.takeTrackerRows(notesRows, notesUpcoming, notesFraction)) {
+        for (auto const& r : notesRows) {
+            notesEffect.addRow(r);
+        }
+        notesEffect.setUpcoming(notesUpcoming);
+    } else {
+        notesEffect.clearRows();
     }
 
     if (indexingDatabase) {
@@ -2633,6 +2783,8 @@ void ChipMachine::update()
 
     if (playerState == MusicPlayerList::Playstarted) {
         timeField.add = 0;
+        // The pattern backdrop belongs to the tune that just ended.
+        notesEffect.clearRows();
         // Restart stereo content detection for the new tune.
         stereoDiffAccum = 0;
         stereoSumAccum = 0;
@@ -3182,6 +3334,12 @@ void ChipMachine::render(uint32_t delta)
     } else {
         musicBars.render(spectrumPos, spectrumColor, eqMono);
     }
+
+    // Tracker pattern backdrop, then the stars ON TOP of it -- the notes are
+    // translucent and the starfield is sparse, so both stay readable and the
+    // notes never sit in front of anything the UI draws afterwards. Main screen
+    // only: on the search/help/filter screens the lists already fill the window.
+    if (currentScreen == MAIN_SCREEN) notesEffect.draw(notesFraction);
 
     if (starsOn) starEffect.render(delta);
 

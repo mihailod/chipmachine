@@ -5358,6 +5358,22 @@ int MusicDatabase::getArcadePlatformCount()
     return (int)otherTopRows.size(); // Arcade has no families: same as group count
 }
 
+std::set<std::string> MusicDatabase::presentSubPlatformNames()
+{
+    // One lock for both bytes: buildSubPlatforms() does not lock itself (its
+    // callers do), and dbMutex is not recursive.
+    std::lock_guard lock{ dbMutex };
+    std::set<std::string> out;
+    for (uint8_t b : { (uint8_t)OTHER, (uint8_t)ARCADE }) {
+        subPlatformByte = b;
+        buildSubPlatforms();
+        for (size_t i = 0; i < otherPlatformList.size(); i++)
+            if (i < otherGroupCount.size() && otherGroupCount[i] > 0)
+                out.insert(toLower(otherPlatformList[i].second));
+    }
+    return out;
+}
+
 // Compression/archive extensions that wrap a real module. They must never be
 // surfaced as a song's format -- the playable format lives in the inner file.
 static bool isContainerExt(std::string e)
