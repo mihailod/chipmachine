@@ -2,9 +2,13 @@
 
 #include "SongInfo.h"
 
+#include <musicplayer/src/chipplayer.h>
+
 #include <coreutils/fifo.h>
 
 #include <atomic>
+#include <cstdint>
+#include <deque>
 #include <functional>
 #include <memory>
 #include <mutex>
@@ -35,7 +39,11 @@ public:
     {
         return !play_ended && player != nullptr;
     }
-    void stop() { player = nullptr; }
+    void stop()
+    {
+        player = nullptr;
+        tracker_view = false;
+    }
     [[nodiscard]] uint32_t getPosition() const { return play_pos / 44100; };
     [[nodiscard]] uint32_t getLength() const { return length; }
     // True once the first decoded samples have reached the audio callback, i.e.
@@ -61,6 +69,27 @@ public:
     std::weak_ptr<musix::ChipPlayer> getPlayer() { return player; }
 
     void setParameter(const std::string& what, int v);
+
+    // --- Tracker pattern view -----------------------------------------------
+    // True when the current format feeds pattern rows (see musix::TrackerRow).
+    [[nodiscard]] bool hasTrackerView() const { return tracker_view; }
+
+    // Hands over every row whose start has actually reached the speakers since
+    // the last call, oldest first, and sets `fraction` to how far playback is
+    // between the newest of those and the row after it (0..1) -- the decoder
+    // runs ahead of the audio device, so the next row's timestamp is normally
+    // already known and the display can interpolate instead of stepping.
+    //
+    // `upcoming` is filled with the rows that have been decoded but not yet
+    // heard, nearest first, and left in the queue -- that lookahead is what lets
+    // the display show notes scrolling in before they sound. It is a snapshot,
+    // so it is overwritten (not appended to) on every call.
+    //
+    // Returns false if there is no tracker view. Safe to call from the render
+    // thread; it only touches the row queue and atomics, never the player.
+    bool takeTrackerRows(std::vector<musix::TrackerRow>& out,
+                         std::vector<musix::TrackerRow>& upcoming,
+                         float& fraction);
 
     // Asks the plugin if the given file requires secondary files.
     // Can be called several times, normally first with non-existing
@@ -107,6 +136,34 @@ private:
     std::shared_ptr<musix::ChipPlayer> fromFile(const std::string& fileName);
     void updatePlayingInfo();
 
+    // Drains the rows the player pushed during the getSamples() call that
+    // started at frame `chunkStart` and queues them at absolute positions.
+    void collectTrackerRows(uint64_t chunkStart);
+    // Forgets everything queued and re-bases the generator position (song
+    // change, seek -- anything that clears the audio fifo).
+    void resetTrackerRows(uint64_t position);
+
+    // How many not-yet-heard rows takeTrackerRows() reports. More than fills a
+    // screen below the play line at any sane row height.
+    static constexpr size_t kTrackerLookahead = 64;
+
+    struct PendingRow
+    {
+        uint64_t pos; // absolute frame at which this row starts sounding
+        musix::TrackerRow row;
+    };
+
+    std::mutex tracker_mutex;
+    std::deque<PendingRow> tracker_rows;
+    std::vector<musix::TrackerRow> tracker_scratch;
+    // Frames handed to the fifo so far -- runs ahead of play_pos by whatever is
+    // buffered, which is exactly the offset the row timestamps correct for.
+    uint64_t gen_pos = 0;
+    // The row currently sounding, and where it started.
+    uint64_t tracker_current_pos = 0;
+    bool tracker_has_current = false;
+    std::atomic<bool> tracker_view{ false };
+
     utils::AudioFifo<int16_t> fifo;
     SongInfo playing_info;
     // Fifo fifo;
@@ -118,7 +175,19 @@ private:
     std::shared_ptr<musix::ChipPlayer> player;
     std::string message;
     std::string sub_title;
+    // Playback position in frames, interpolated between audio callbacks.
+    //
+    // play_pos only moves inside the CoreAudio callback, once per buffer --
+    // 2048 frames, ~46ms. A pattern row at a normal tempo lasts ~120ms, so read
+    // raw it updates barely twice per row and the tracker display lurches a
+    // third of a row at a time instead of scrolling. Filling the gap from the
+    // wall clock costs nothing and is exact between buffers; the clamp to one
+    // buffer means a stalled or paused audio thread can never run it forward.
+    [[nodiscard]] uint64_t interpolatedPos() const;
+
     std::atomic<int> play_pos{ 0 };
+    std::atomic<int> play_chunk{ 0 };
+    std::atomic<uint64_t> play_pos_ms{ 0 };
     std::atomic<int> length{ 0 };
     int fade_length = 0;
     int fadeout_pos = 0;

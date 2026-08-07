@@ -34,6 +34,12 @@ MusicPlayer::MusicPlayer(std::shared_ptr<AudioPlayer> ap)
 
         if (fifo.filled() >= size) {
             fifo.get(ptr, size);
+            // Timestamp BEFORE advancing the position: a reader that catches
+            // the two stores half-done then sees the old position against the
+            // new time, i.e. interpolates ~nothing, rather than the old time
+            // against the new position and running a whole buffer ahead.
+            play_chunk = size / 2;
+            play_pos_ms = utils::getms();
             play_pos += size / 2;
 
             // CRITICAL LIFETIME GUARD:
@@ -73,6 +79,7 @@ void MusicPlayer::update()
 
             if (space_left < 4096) break;
 
+            uint64_t chunk_start = gen_pos;
             int samples_generated =
                 player->getSamples(&temp_buf[0], space_left - 1024);
 
@@ -80,6 +87,10 @@ void MusicPlayer::update()
                 play_ended = samples_generated < 0;
                 break;
             }
+            // Must happen before anything else can call getSamples again: the
+            // offsets the player recorded are relative to the call above.
+            collectTrackerRows(chunk_start);
+            gen_pos += static_cast<uint64_t>(samples_generated) / 2;
             if (fadeout_pos != 0 && fadeout_pos >= play_pos) {
                 fifo.setVolume((fadeout_pos - play_pos) / (float)fade_length);
             }
@@ -90,6 +101,88 @@ void MusicPlayer::update()
             }
         }
     }
+}
+
+void MusicPlayer::collectTrackerRows(uint64_t chunkStart)
+{
+    if (!tracker_view) { return; }
+    player->takeTrackerRows(tracker_scratch);
+    if (tracker_scratch.empty()) { return; }
+    std::lock_guard<std::mutex> lock(tracker_mutex);
+    for (auto& r : tracker_scratch) {
+        // Bounded: nothing drains this in the headless/console builds, and the
+        // render thread can also stall. Dropping the oldest costs at worst a
+        // few rows scrolled past unseen.
+        if (tracker_rows.size() >= 4096) { tracker_rows.pop_front(); }
+        tracker_rows.push_back(
+            { chunkStart + static_cast<uint64_t>(r.frameOffset), r });
+    }
+}
+
+void MusicPlayer::resetTrackerRows(uint64_t position)
+{
+    // Every caller has just jumped play_pos (new song, seek), so the
+    // interpolation baseline belongs to the old position. Drop it here rather
+    // than in four call sites; interpolatedPos() falls back to the raw value
+    // until the next audio callback re-establishes it.
+    play_pos_ms = 0;
+    play_chunk = 0;
+
+    std::lock_guard<std::mutex> lock(tracker_mutex);
+    tracker_rows.clear();
+    gen_pos = position;
+    tracker_current_pos = position;
+    tracker_has_current = false;
+}
+
+uint64_t MusicPlayer::interpolatedPos() const
+{
+    auto pos = static_cast<uint64_t>(play_pos.load());
+    auto chunk = static_cast<uint64_t>(play_chunk.load());
+    auto since = play_pos_ms.load();
+    if (chunk == 0 || since == 0 || paused) { return pos; }
+    auto now = utils::getms();
+    if (now <= since) { return pos; }
+    uint64_t ahead = (now - since) * 44100 / 1000;
+    // Never more than the buffer that is currently playing out, so this stays
+    // an interpolation and never becomes a guess.
+    return pos + std::min(ahead, chunk);
+}
+
+bool MusicPlayer::takeTrackerRows(std::vector<musix::TrackerRow>& out,
+                                  std::vector<musix::TrackerRow>& upcoming,
+                                  float& fraction)
+{
+    out.clear();
+    upcoming.clear();
+    fraction = 0.0F;
+    if (!tracker_view) { return false; }
+
+    auto now = interpolatedPos();
+    std::lock_guard<std::mutex> lock(tracker_mutex);
+    while (!tracker_rows.empty() && tracker_rows.front().pos <= now) {
+        out.push_back(tracker_rows.front().row);
+        tracker_current_pos = tracker_rows.front().pos;
+        tracker_has_current = true;
+        tracker_rows.pop_front();
+    }
+    if (tracker_has_current && !tracker_rows.empty()) {
+        auto next = tracker_rows.front().pos;
+        if (next > tracker_current_pos) {
+            fraction = static_cast<float>(now - tracker_current_pos) /
+                       static_cast<float>(next - tracker_current_pos);
+            if (fraction < 0.0F) { fraction = 0.0F; }
+            if (fraction > 1.0F) { fraction = 1.0F; }
+        }
+    }
+    // Everything still queued is, by definition, decoded but not yet heard.
+    // A screen's worth is plenty; the queue itself holds far more than that.
+    size_t n = std::min<size_t>(tracker_rows.size(), kTrackerLookahead);
+    upcoming.reserve(n);
+    for (size_t i = 0; i < n; i++) {
+        upcoming.push_back(tracker_rows[i].row);
+    }
+    return true;
 }
 
 MusicPlayer::~MusicPlayer()
@@ -128,6 +221,7 @@ void MusicPlayer::seek(int song, int seconds)
         else
             play_pos = seconds * 44100;
         fifo.clear();
+        resetTrackerRows(static_cast<uint64_t>(play_pos.load()));
         // length = player->getMetaInt("length");
         updatePlayingInfo();
         currentTune = song;
@@ -213,6 +307,9 @@ bool MusicPlayer::streamFile(const std::string& fileName)
         fadeout_pos = 0;
         pause(false);
         play_pos = 0;
+        // Streamed audio (ffmpeg) is never a tracker.
+        tracker_view = false;
+        resetTrackerRows(0);
         message = "";
         length = 0;
         sub_title = "";
@@ -250,6 +347,8 @@ bool MusicPlayer::streamUrl(const std::string& url)
         fadeout_pos = 0;
         pause(false);
         play_pos = 0;
+        tracker_view = false;
+        resetTrackerRows(0);
         message = "";
         length = 0;
         sub_title = "";
@@ -294,10 +393,13 @@ bool MusicPlayer::playFile(const std::string& fileName)
         fadeout_pos = 0;
         pause(false);
         play_pos = 0;
+        tracker_view = player->hasTrackerRows();
+        resetTrackerRows(0);
         updatePlayingInfo();
         currentTune = playing_info.starttune;
         return true;
     }
+    tracker_view = false;
     return false;
 }
 

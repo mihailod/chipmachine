@@ -24,6 +24,8 @@ int xmp_load_typed_module_from_memory(xmp_context, void*, long,
                                       const struct format_loader*);
 }
 
+#include "../../tracker_xmp.h"
+
 namespace musix {
 
 class MgtPlayer : public ChipPlayer {
@@ -85,17 +87,33 @@ public:
         // 16-bit signed stereo is the default mix format. loop=1 -> after one
         // full pass libxmp returns non-zero (XMP_END); we report -1 so the host
         // advances instead of spinning (cf. UADE SONG_END lesson).
-        int rc = xmp_play_buffer(ctx, target, noSamples * 2, 1);
-        if (rc != 0) {
-            return -1;
+        //
+        // Played in short slices only so the tracker view can see every row go
+        // by: the host asks for tens of thousands of samples at a time, and
+        // reading the play position once per call would show one row in ten.
+        const int slice = 512 * 2; // interleaved values == 512 frames
+        int done = 0;
+        while (done < noSamples) {
+            TrackerRow tr;
+            if (rowWatcher.capture(ctx, done / 2, tr)) { pushTrackerRow(tr); }
+            int n = noSamples - done;
+            if (n > slice) { n = slice; }
+            int rc = xmp_play_buffer(ctx, target + done, n * 2, 1);
+            if (rc != 0) {
+                return done > 0 ? done : -1;
+            }
+            done += n;
         }
-        return noSamples;
+        return done;
     }
+
+    bool hasTrackerRows() const override { return true; }
 
     bool seekTo(int /*song*/, int seconds) override {
         if (seconds >= 0) {
             xmp_seek_time(ctx, seconds * 1000);
         }
+        rowWatcher.reset();
         return true;
     }
 
@@ -116,6 +134,7 @@ private:
     }
 
     xmp_context ctx = nullptr;
+    tracker::XmpRowWatcher rowWatcher;
     bool loaded = false;
     bool started = false;
 };

@@ -139,6 +139,42 @@ Settings.result_lines = (Y1-Y0)/(TEXT_HEIGHT*LINE_HEIGHT)
 
 Settings.toast_field = { 0, SCREEN_HEIGHT/2 - GSCALE * 20, GSCALE * 2.0, 0x00000000 }
 
+--[[
+  Tracker note backdrop -- the scrolling ProTracker-style pattern shown behind
+  everything (just in front of the stars) while a tracker format is playing.
+  Formats whose player cannot report pattern rows simply show nothing.
+
+  The play line is a fixed cursor that the pattern scrolls through; rows above
+  it have played, rows below it are decoded but not yet heard and scroll up
+  into it from the bottom of the screen (passing behind the scroller on the
+  way). Rows brighten to hl_color as they cross the cursor.
+
+  Settings.notes = {
+    y,          -- 1. the play line (fixed): rows brighten as they cross it
+    size,       -- 2. text size: 1.0 fits four channels across the full width
+    line,       -- 3. row height, as a multiple of the character cell width
+                --    (the pattern font's glyph box is 2:1, so below ~1.6 the
+                --     rows start to overlap)
+    alpha,      -- 4. opacity of the row playing now (0..1)
+    dim,        -- 5. how much dimmer the other rows start out
+    dim_ahead,  -- 6. extra dimming for rows that have not played yet
+    bar,        -- 7. opacity of the slab behind the play line, x alpha
+    hl_color,   -- 8. colour of the row playing now
+    color,      -- 9. colour of every other row
+    on          -- 10. 1 = enabled, 0 = off
+  }
+]]
+-- The scroller is drawn centred on Settings.scroll[1] and is ~150*GSCALE tall,
+-- so the play line has to clear roughly that much above it.
+Settings.notes = { Settings.scroll[1] - 115 * GSCALE, 1.0, 1.8,
+                   0.85, 0.7, 0.6, 0.10, 0xffffffff, 0xff70b0ff, 1 }
+
+-- Pattern font: a monospaced pixel face, for the Amiga tracker look. Every
+-- column lines up only because it is monospaced -- a proportional replacement
+-- would need the renderer to place each cell by hand. SIL OFL 1.1 -- see LEGAL,
+-- section 6 (Fonts and Typography).
+Settings.notes_font = "data/DepartureMono-Regular.otf"
+
 -- Small-caps display font: lowercase codepoints map to small capitals, so all
 -- UI text renders caps-only and no glyph descends below the baseline. Several
 -- layout offsets below (and the label/input gap in Dialog.h) assume that; a

@@ -15,6 +15,44 @@ namespace musix {
 
 using MetaVar = std::variant<std::string, double, uint32_t>;
 
+// ---------------------------------------------------------------------------
+// Tracker pattern feed (optional -- only the tracker-style engines have one)
+//
+// A player that KNOWS which pattern row it is playing (libopenmpt, libxmp, the
+// AHX/HVL replayer) pushes one TrackerRow per row transition from inside
+// getSamples(). The host drains the queue right afterwards on the same (decode)
+// thread and stamps each row with the absolute sample position it starts at, so
+// the on-screen pattern can be synced to what the speakers are playing rather
+// than to what the decoder has already rendered -- the audio FIFO runs up to
+// ~1.5s ahead, which would otherwise show notes long before you hear them.
+//
+// Only the first kTrackerChannels channels are captured; the display shows four
+// columns and anything beyond that would be thrown away.
+//
+// The cells carry already-FORMATTED text, not raw numbers: each engine spells
+// notes and effects in its own convention (libopenmpt has a formatter that
+// knows the quirks of every format it loads) and the display has no business
+// re-deriving that.
+// ---------------------------------------------------------------------------
+inline constexpr int kTrackerChannels = 4;
+
+struct TrackerCell
+{
+    char note[4]{}; // "C-4"; "===" note off, "^^^" cut; empty = no note
+    char inst[3]{}; // "01"; empty = none
+    char fx[4]{};   // "A0F"; empty = none
+};
+
+struct TrackerRow
+{
+    int frameOffset = 0; // frames from the start of the getSamples() call
+    int16_t pattern = 0;
+    int16_t row = 0;
+    int16_t numRows = 0;
+    int8_t channels = 0;
+    TrackerCell cells[kTrackerChannels];
+};
+
 class player_exception : public std::exception
 {
 public:
@@ -127,6 +165,18 @@ public:
 
     virtual bool seekTo(int  /*song*/, int  /*seconds*/ = -1) { return false; }
 
+    // True if this player feeds the tracker pattern view (see TrackerRow).
+    virtual bool hasTrackerRows() const { return false; }
+
+    // Hand over everything pushed during the last getSamples(). Must be called
+    // on the decode thread, immediately after getSamples(), so the frameOffsets
+    // still refer to that call. Keeps the vector's capacity for reuse.
+    void takeTrackerRows(std::vector<TrackerRow>& out)
+    {
+        out.swap(trackerRows);
+        trackerRows.clear();
+    }
+
     void onMeta(const Callback& callback)
     {
         callbacks.push_back(callback);
@@ -139,6 +189,15 @@ public:
     }
 
 protected:
+    // Bounded: if nobody drains (the console/cm builds never do) rows are simply
+    // dropped rather than growing without limit.
+    void pushTrackerRow(const TrackerRow& r)
+    {
+        if (trackerRows.size() < 512) { trackerRows.push_back(r); }
+    }
+
+    std::vector<TrackerRow> trackerRows;
+
     std::unordered_map<std::string, MetaVar> metaData;
     std::vector<Callback> callbacks;
     std::vector<std::string> changedMeta;

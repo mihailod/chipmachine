@@ -181,6 +181,24 @@ void ChipMachine::setVariable(const std::string& name, int index,
         case 15: scrollEffect.set("vbob_transition", val); break;
         case 16: scrollEffect.font_swap_interval = stod(val); break;
         }
+    } else if (name == "notes_font") {
+        if (auto fontFile = findFile(path, val))
+            notesEffect.setFont(fontFile->string());
+        else
+            throw utils::file_not_found_exception(val);
+    } else if (name == "notes") {
+        switch (index) {
+        case 1: notesEffect.lineY = stod(val); break;
+        case 2: notesEffect.sizeScale = stod(val); break;
+        case 3: notesEffect.lineSpacing = stod(val); break;
+        case 4: notesEffect.alpha = stod(val); break;
+        case 5: notesEffect.dim = stod(val); break;
+        case 6: notesEffect.dimAhead = stod(val); break;
+        case 7: notesEffect.barAlpha = stod(val); break;
+        case 8: notesEffect.hlColor = stoll(val); break;
+        case 9: notesEffect.color = stoll(val); break;
+        case 10: notesEffect.on = stol(val) != 0; break;
+        }
     } else if (name == "hilight_color") {
         hilightColor = Color(stoll(val));
         markTween = Tween::make()

@@ -10,6 +10,7 @@
 #include <coreutils/utils.h>
 #include <array>
 #include <cstdint>
+#include <cstdio>
 #include <cstring>
 #include <fstream>
 #include <iterator>
@@ -362,9 +363,23 @@ public:
 
     int getSamples(int16_t* target, int noSamples) override
     {
-        auto len = openmpt_module_read_interleaved_stereo(
-            module, 44100, noSamples / 2, target);
-        return len * 2;
+        // Rendered in short slices instead of one big block purely so the
+        // tracker view can see every row go by: the host asks for up to ~60000
+        // frames at a time, which at a normal tempo is a dozen rows, and reading
+        // the play position once per call would show one row in twelve. A slice
+        // is ~12ms, comfortably shorter than the fastest row anyone writes.
+        const int wanted = noSamples / 2;
+        int done = 0;
+        while (done < wanted) {
+            captureRow(done);
+            int chunk = wanted - done;
+            if (chunk > kSliceFrames) { chunk = kSliceFrames; }
+            auto got = openmpt_module_read_interleaved_stereo(
+                module, 44100, chunk, target + static_cast<size_t>(done) * 2);
+            if (got == 0) { break; }
+            done += static_cast<int>(got);
+        }
+        return done * 2;
     }
 
     bool seekTo(int song, int seconds) override
@@ -375,13 +390,87 @@ public:
             } else {
                 openmpt_module_set_position_seconds(module, seconds);
             }
+            lastPattern = lastRow = -1;
             return true;
         }
         return false;
     }
 
+    bool hasTrackerRows() const override { return true; }
+
 private:
+    static constexpr int kSliceFrames = 512;
+
+    // Copy one formatted cell field, treating libopenmpt's "empty" spelling
+    // (all dots) as genuinely empty so the display can style it itself.
+    static void copyField(char* dst, size_t n, const char* src)
+    {
+        if (src == nullptr) { return; }
+        bool any = false;
+        for (const char* p = src; *p != 0; p++) {
+            if (*p != '.' && *p != ' ') { any = true; }
+        }
+        if (any) {
+            std::strncpy(dst, src, n - 1);
+            dst[n - 1] = 0;
+        }
+    }
+
+    // libopenmpt hands back a fresh string for every command; it must go back
+    // through openmpt_free_string, not free().
+    void field(char* dst, size_t n, int32_t pat, int32_t row, int32_t chn,
+               int cmd)
+    {
+        const char* s = openmpt_module_format_pattern_row_channel_command(
+            module, pat, row, chn, cmd);
+        copyField(dst, n, s);
+        openmpt_free_string(s);
+    }
+
+    // Snapshot the pattern row the module is on, if it just changed.
+    void captureRow(int frameOffset)
+    {
+        auto pat = openmpt_module_get_current_pattern(module);
+        auto row = openmpt_module_get_current_row(module);
+        if (pat == lastPattern && row == lastRow) { return; }
+        lastPattern = pat;
+        lastRow = row;
+        if (pat < 0 || row < 0) { return; }
+
+        auto channels = openmpt_module_get_num_channels(module);
+        if (channels <= 0) { return; }
+        if (channels > kTrackerChannels) { channels = kTrackerChannels; }
+
+        TrackerRow tr;
+        tr.frameOffset = frameOffset;
+        tr.pattern = static_cast<int16_t>(pat);
+        tr.row = static_cast<int16_t>(row);
+        tr.numRows = static_cast<int16_t>(
+            openmpt_module_get_pattern_num_rows(module, pat));
+        tr.channels = static_cast<int8_t>(channels);
+        for (int32_t c = 0; c < channels; c++) {
+            auto& cell = tr.cells[c];
+            field(cell.note, sizeof(cell.note), pat, row, c,
+                  OPENMPT_MODULE_COMMAND_NOTE);
+            field(cell.inst, sizeof(cell.inst), pat, row, c,
+                  OPENMPT_MODULE_COMMAND_INSTRUMENT);
+            // Effect letter + parameter share one column, as in every tracker.
+            char fxt[4] = {};
+            char fxp[4] = {};
+            field(fxt, sizeof(fxt), pat, row, c, OPENMPT_MODULE_COMMAND_EFFECT);
+            field(fxp, sizeof(fxp), pat, row, c,
+                  OPENMPT_MODULE_COMMAND_PARAMETER);
+            if (fxt[0] != 0 || fxp[0] != 0) {
+                snprintf(cell.fx, sizeof(cell.fx), "%s%s",
+                         fxt[0] != 0 ? fxt : "0", fxp[0] != 0 ? fxp : "00");
+            }
+        }
+        pushTrackerRow(tr);
+    }
+
     openmpt_module* module;
+    int32_t lastPattern = -1;
+    int32_t lastRow = -1;
 };
 
 // Extensions libopenmpt advertises but this plugin deliberately does NOT claim.

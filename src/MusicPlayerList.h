@@ -169,6 +169,18 @@ public:
         mp.setAudioCallback(cb);
     }
 
+    // Tracker pattern rows that have reached the speakers since the last call
+    // (see MusicPlayer::takeTrackerRows). Deliberately NOT under plMutex: the
+    // row queue has its own lock and never touches the decoder, and taking
+    // plMutex here would put the render thread back behind the decode loop
+    // every frame -- the exact stall MusicPlayerList::update() avoids.
+    bool takeTrackerRows(std::vector<musix::TrackerRow>& out,
+                         std::vector<musix::TrackerRow>& upcoming,
+                         float& fraction)
+    {
+        return mp.takeTrackerRows(out, upcoming, fraction);
+    }
+
     bool wasFromQueue() const { return playedNext; }
 
     const std::vector<utils::File>& getSongFiles() const { return songFiles; }
