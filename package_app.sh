@@ -297,12 +297,22 @@ if [ -z "$VERSION_STR" ]; then
     exit 1
 fi
 
+# BUILD_STR -> CFBundleVersion, parsed the same way. Kept separate from
+# VERSION_STR (-> CFBundleShortVersionString) so a rejected App Store build can
+# be resubmitted under the SAME marketing version with a fresh build number;
+# App Store Connect refuses a CFBundleVersion it has already seen. See the
+# comment on BUILD_STR in src/version.h for the bump rule.
+# Falls back to VERSION_STR if the define is absent, so an older version.h
+# still packages exactly as before.
+BUILD_STR=$(sed -n 's/#define BUILD_STR "\(.*\)"/\1/p' "$VERSION_H_PATH" | tr -d '[:space:]')
+[ -n "$BUILD_STR" ] || BUILD_STR="${VERSION_STR}"
+
 echo "=== Starting Apple Silicon App Bundle Packaging ==="
 echo "Workspace Root: ${WORKSPACE_ROOT}"
 echo "Variant:        ${VARIANT}  (${DISPLAY_NAME}, ${BUNDLE_ID})"
 echo "Build Dir:      ${BUILD_DIR}"
 echo "Target App Bundle: ${TARGET_DIR}"
-echo "Detected Version: ${VERSION_STR}"
+echo "Detected Version: ${VERSION_STR} (build ${BUILD_STR})"
 if $RELEASE_IT; then
     echo "Release Mode: Enabled (--releaseit Flag Detected)"
 else
@@ -441,7 +451,7 @@ echo "   LSMinimumSystemVersion: ${MIN_OS} (from the built binary)"
 # app category only when the variant defines one in variants.conf. Both variants
 # set it today (mas requires it, plus carries it for Finder/Launchpad grouping),
 # but the guard stays so clearing *_APP_CATEGORY omits the key cleanly.
-GEN_ARGS=(--version "${VERSION_STR}" --bundle-id "${BUNDLE_ID}" --display-name "${DISPLAY_NAME}" --exts "${EXTS_FILE}" --min-os "${MIN_OS}")
+GEN_ARGS=(--version "${VERSION_STR}" --build "${BUILD_STR}" --bundle-id "${BUNDLE_ID}" --display-name "${DISPLAY_NAME}" --exts "${EXTS_FILE}" --min-os "${MIN_OS}")
 [ -n "${APP_CATEGORY}" ] && GEN_ARGS+=(--app-category "${APP_CATEGORY}")
 "${GEN_PLIST}" "${GEN_ARGS[@]}" > "${TARGET_DIR}/Contents/Info.plist"
 if ! plutil -lint "${TARGET_DIR}/Contents/Info.plist" >/dev/null; then

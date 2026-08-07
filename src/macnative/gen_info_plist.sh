@@ -32,6 +32,13 @@ set -eu
 SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
 
 VERSION=""
+# Build number -> CFBundleVersion. Separate from VERSION (-> CFBundleShort-
+# VersionString) because App Store Connect refuses an upload whose
+# CFBundleVersion it has seen before, so a resubmission of the SAME marketing
+# version still needs a fresh build number. Defaults to VERSION when the caller
+# does not pass --build, which keeps the old single-value behaviour for any
+# caller that has not been updated.
+BUILD=""
 EXTS_FILE="${SCRIPT_DIR}/extensions.txt"
 DENY_FILE="${SCRIPT_DIR}/MacOSHandlerDenyList.txt"
 SYS_FILE="${SCRIPT_DIR}/MacOSSystemTypeExtensions.txt"
@@ -60,6 +67,7 @@ COPYRIGHT="Copyright © 2026 Mihailo Despotovic. All rights reserved."
 while [ $# -gt 0 ]; do
     case "$1" in
         --version)       VERSION="$2"; shift 2 ;;
+        --build)         BUILD="$2"; shift 2 ;;
         --exts)          EXTS_FILE="$2"; shift 2 ;;
         --denylist)      DENY_FILE="$2"; shift 2 ;;
         --systemtypes)   SYS_FILE="$2"; shift 2 ;;
@@ -82,6 +90,9 @@ if [ -z "$VERSION" ]; then
     echo "gen_info_plist.sh: --version is required" >&2
     exit 2
 fi
+# --build is optional: fall back to the marketing version, which reproduces the
+# old behaviour where both plist keys carried the same string.
+[ -n "$BUILD" ] || BUILD="${VERSION}"
 if [ ! -f "$EXTS_FILE" ]; then
     echo "gen_info_plist.sh: extensions file not found: $EXTS_FILE" >&2
     exit 1
@@ -158,7 +169,7 @@ cat <<PLIST_HEAD
     <key>CFBundleShortVersionString</key>
     <string>${VERSION}</string>
     <key>CFBundleVersion</key>
-    <string>${VERSION}</string>
+    <string>${BUILD}</string>
     <key>LSMinimumSystemVersion</key>
     <string>${MIN_OS}</string>
     <key>NSHighResolutionCapable</key>

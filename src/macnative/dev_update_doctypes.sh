@@ -95,6 +95,12 @@ fi
 VERSION_H="${CHIPMACHINE_DIR}/src/version.h"
 VERSION_STR=$(sed -n 's/#define VERSION_STR "\(.*\)"/\1/p' "$VERSION_H" | tr -d '[:space:]')
 [ -n "$VERSION_STR" ] || VERSION_STR="0.0.0-dev"
+# Build number (-> CFBundleVersion), parsed the same way. This script rewrites
+# the WHOLE plist, so without passing it through, a doc-type refresh would reset
+# CFBundleVersion to the marketing version -- the same class of silent clobber
+# the bundle-identity carry-over below exists to prevent.
+BUILD_STR=$(sed -n 's/#define BUILD_STR "\(.*\)"/\1/p' "$VERSION_H" | tr -d '[:space:]')
+[ -n "$BUILD_STR" ] || BUILD_STR="${VERSION_STR}"
 
 RES_DIR="${APP}/Contents/Resources"
 PLIST="${APP}/Contents/Info.plist"
@@ -107,7 +113,7 @@ PLIST="${APP}/Contents/Info.plist"
 # bundle would stamp it with the plus bundle id, drop LSApplicationCategoryType,
 # and claim LSMinimumSystemVersion 11.0 for a binary that needs far newer.
 plist_get() { /usr/libexec/PlistBuddy -c "Print :$1" "$PLIST" 2>/dev/null || true; }
-DEV_ARGS=(--version "${VERSION_STR}")
+DEV_ARGS=(--version "${VERSION_STR}" --build "${BUILD_STR}")
 for pair in "CFBundleIdentifier --bundle-id" "CFBundleName --display-name" \
             "LSApplicationCategoryType --app-category"; do
     set -- $pair

@@ -29,11 +29,30 @@ command line):
 
 1. Bump the app version
 -----------------------
-in code: vi src/version.h  ->  VERSION_STR
+in code: vi src/version.h
 
-Keep the X.Y form. The in-app update check (src/macnative/CheckForUpdate.mm)
-extracts the version from the release TAG with the regex [0-9]+(\.[0-9]+)+,
-which requires at least one dot -- a tag like "v3-as" would break it.
+src/version.h carries TWO independent numbers. Know which one you are bumping:
+
+  VERSION_STR  the MARKETING version ("2.1"). Title bar, help screen, GitHub
+               release tag, and what CheckForUpdate.mm compares against the
+               latest tag. Becomes CFBundleShortVersionString.
+
+  BUILD_STR    the BUILD number ("1"). Becomes CFBundleVersion. Not shown
+               anywhere in the UI and read by nothing at runtime. Exists purely
+               for App Store uploads -- see the mas section at the end for the
+               bump rule, which is the one that will bite you.
+
+Keep VERSION_STR in the X.Y form. The in-app update check
+(src/macnative/CheckForUpdate.mm) extracts the version from the release TAG with
+the regex [0-9]+(\.[0-9]+)+, which requires at least one dot -- a tag like
+"v3-as" would break it.
+
+The two were a single value until the two plist keys were split apart. Both
+package_app.sh and src/macnative/dev_update_doctypes.sh now parse BUILD_STR
+alongside VERSION_STR and pass it to gen_info_plist.sh as --build; if the define
+is missing, all three fall back to VERSION_STR and behave exactly as before.
+dev_update_doctypes.sh has to pass it too: it regenerates the WHOLE plist, so
+without it a doc-type refresh would silently reset CFBundleVersion.
 
 
 2. Bump the DB version
@@ -212,3 +231,41 @@ distribution, and there is no notarization step.
     --distribid="Apple Distribution: Your Name (ABCDE12345)" \
     --installerid="3rd Party Mac Developer Installer: Your Name (ABCDE12345)" \
     --provision=/path/to/ChipMachine.provisionprofile
+
+
+BUMP BUILD_STR ON EVERY APP STORE UPLOAD
+-----------------------------------------
+App Store Connect refuses an upload whose CFBundleVersion it has already seen,
+and it does not care whether anything else changed. So:
+
+  * Bump BUILD_STR for EVERY upload, including a resubmission of a
+    byte-identical build after a rejection.
+  * Do NOT bump VERSION_STR for a resubmission. 2.1 that was rejected is still
+    2.1 when it comes back -- the marketing version is what the store page shows
+    and what users see, and inventing a 2.1.1 to satisfy an upload rule turns
+    the public version history into a log of your review rejections.
+  * Never reset or reuse a build number. It only has to increase; it has no
+    relationship to VERSION_STR, which is exactly why a plain counter
+    (1, 2, 3, ...) is used -- it can never collide and never needs resetting
+    when the marketing version moves.
+
+This is the failure the split exists to prevent. While the two were one value,
+the only way to get a fresh CFBundleVersion was to fake a marketing bump.
+
+Plus/GitHub releases do not consume BUILD_STR at all -- CheckForUpdate.mm reads
+tag_name and compares it against VERSION_STR, never CFBundleVersion. Bumping it
+for a plus release is harmless but pointless.
+
+
+The mas version number is on the same train as plus (started at 2.1)
+--------------------------------------------------------------------
+The App Store record was opened at 2.1 rather than restarting at 1.0, so both
+variants share one VERSION_STR and package_app.sh needs no variant-specific
+version handling. It is also the truthful number: the same codebase at the same
+point of development, with the GPL-encumbered players removed. The feature
+difference between the two is carried by the product NAME (ChipMachine vs
+ChipMachinePlus) and the store description, not by the version number.
+
+The consequence, which is permanent: CFBundleShortVersionString must increase
+monotonically forever on that App Store record, so 1.x can never be used there.
+Nothing needs it, but the door is closed -- do not plan a "1.0 relaunch".
