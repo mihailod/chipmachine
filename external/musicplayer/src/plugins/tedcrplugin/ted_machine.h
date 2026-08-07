@@ -14,17 +14,26 @@
 
 namespace musix::tedcr {
 
-// PAL 264-series timing. The master clock is the TED's own; the CPU runs at half
-// of it while the display is on and at full rate otherwise, and the sound
-// counters at an eighth regardless. Every one of these was measured against the
-// engine being replaced -- see README.md, "Timing".
+// PAL 264-series timing. The master clock is the TED's own; the CPU runs at that
+// same rate, one cycle per master cycle, and what varies is how many of a line's
+// cycles the TED leaves it. The sound counters run at an eighth regardless.
+// Every one of these was measured against the engine being replaced -- see
+// README.md, "Timing".
 constexpr int TED_MASTER_PAL = 1773447;
 constexpr int TED_MASTER_NTSC = 1789773;
 constexpr int LINE_MASTER = 114;      // master cycles in one raster line
-constexpr int LINE_REFRESH = 5;       // of which DRAM refresh steals this many
+// CPU cycles the TED leaves for the processor on each kind of line. Measured
+// per line off the engine being replaced; see the note above TedMachine::runLine
+// for why the per-line split matters more than the frame total.
+constexpr int LINE_CPU_BLANK = 109;   // outside the display window
+constexpr int LINE_CPU_DISPLAY = 65;  // inside it, ordinary line
+constexpr int LINE_CPU_BADLINE = 22;  // inside it, character/attribute fetch
 constexpr int LINES_PAL = 312;
 constexpr int LINES_NTSC = 262;
-constexpr int DISPLAY_LINES = 204;    // lines over which the CPU is halved
+constexpr int DISPLAY_LINES = 204;    // lines over which the video fetch runs
+// Below this a real machine's RAM has been written by the KERNAL and BASIC
+// before any tune runs; above it, it is still raw DRAM. See TedMachine::reset.
+constexpr int SYSTEM_AREA_END = 0x1000;
 
 // Parses the target of the SYS in a 264-series .prg's one-line BASIC stub.
 // Returns 0 when there is no SYS at all, which means the file is a BASIC
@@ -98,7 +107,7 @@ private:
     int raster_ = 0;
     int rasterCompare_ = 0;
     int linePos_ = 0;      // master cycles into the current raster line
-    int masterCarry_ = 0;
+    int cpuCarry_ = 0;
     int timerCarry_ = 0;
     int soundCarry_ = 0;
     int soundBudget_ = 0;

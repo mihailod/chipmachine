@@ -202,14 +202,31 @@ void TedMachine::buildRom()
 
 void TedMachine::reset()
 {
+    // RAM comes up in two different states, and tunes read both.
+    //
+    // Above the system area it is raw DRAM, which powers up holding a repeating
+    // pattern rather than zeroes -- and tunes depend on that. saboteur's last
+    // pattern pointer aims PAST its own data, and the $FF sitting in unwritten
+    // memory is what terminates the sequence so the song loops; zero-filled RAM
+    // gave it an endless run of $00 to read as notes and it droned forever.
+    //
+    // Below $1000 it is not raw at all: on a real machine the KERNAL and BASIC
+    // have initialised zero page, the stack and their workspace long before a
+    // tune runs. This machine jumps straight to the SYS address and never boots,
+    // so it cannot reproduce that -- but zeroes are much closer to it than the
+    // DRAM pattern is. Filling the system area with the pattern instead broke
+    // five tunes that read it and OR the result into TED register values.
     std::fill(ram_.begin(), ram_.end(), uint8_t{0});
+    for (size_t i = SYSTEM_AREA_END; i < ram_.size(); i++) {
+        ram_[i] = (i & 1) ? 0xFF : 0x00;
+    }
     std::memset(tedRegs_, 0, sizeof(tedRegs_));
     romEnabled_ = true;
     portDdr_ = 0;
     portData_ = 0xFF;
     raster_ = 0;
     rasterCompare_ = RASTER_HOOK; // the state the KERNAL's alternation leaves it in
-    masterCarry_ = 0;
+    cpuCarry_ = 0;
     timerCarry_ = 0;
     soundCarry_ = 0;
     soundBudget_ = 0;
@@ -485,17 +502,37 @@ bool TedMachine::handleTrap()
     return false;
 }
 
-// One raster line. The display steals five cycles for DRAM refresh and halves
-// the CPU over the display window, which together are what make a frame
-// 22,890 CPU cycles with the screen on and 34,008 with it off -- both measured.
+// One raster line.
+//
+// The CPU always runs at the TED's own rate -- one CPU cycle per master cycle --
+// and what varies is how many of the line's 114 cycles the TED leaves it:
+//
+//   blank line          109   (DRAM refresh takes the rest)
+//   display line         65   (refresh plus the video fetch)
+//   display "bad" line   22   (the character/attribute fetch, two lines in eight)
+//
+// Those three numbers were measured off the engine this replaces, per raster
+// line, and they matter far more than the frame total does. An earlier model
+// spread the same total UNIFORMLY across the display window -- 54.5 cycles on
+// every line -- which reproduced the frame exactly (22,890 against 22,860) and
+// was still wrong in a way that broke tunes: a player doing ~53 cycles of work
+// after syncing to a raster line fits inside a real 65-cycle line and finishes
+// while the beam is still on it, but does not fit in 54.5. It then waits a whole
+// extra frame, and any tune that leans on finishing within the line loses its
+// timing. Aggregate agreement is not timing agreement.
 void TedMachine::runLine()
 {
-    tick(LINE_REFRESH); // refresh: the clock advances, the CPU does not
+    // Bad lines run in pairs, aligned to the vertical scroll offset, and there
+    // are two of them in every eight rows of the display window.
+    const bool display = displayOn() && raster_ < DISPLAY_LINES;
+    const int vshift = ff06_ & 0x07;
+    const bool badLine = display && (((raster_ - vshift) & 7) < 2);
+    const int budget = !display ? LINE_CPU_BLANK
+                                : (badLine ? LINE_CPU_BADLINE : LINE_CPU_DISPLAY);
 
-    int masterPerCpu = (displayOn() && raster_ < DISPLAY_LINES) ? 2 : 1;
-    masterCarry_ += LINE_MASTER - LINE_REFRESH;
-
-    while (masterCarry_ >= masterPerCpu && !finished_) {
+    cpuCarry_ += budget;
+    int master = 0;
+    while (cpuCarry_ > 0 && !finished_) {
         int cycles;
         if (irqPending() && (cycles = tedcpu_irq()) > 0) {
             stats_.irqs++;
@@ -508,9 +545,14 @@ void TedMachine::runLine()
         if (cycles <= 0) {
             cycles = 2; // a core that reports nothing must still advance time
         }
-        int master = cycles * masterPerCpu;
-        masterCarry_ -= master;
-        tick(master);
+        cpuCarry_ -= cycles;
+        master += cycles;
+        tick(cycles);
+    }
+    // The TED clock keeps running through the cycles it withheld from the CPU,
+    // so the line always advances by its full length.
+    if (master < LINE_MASTER) {
+        tick(LINE_MASTER - master);
     }
 }
 
