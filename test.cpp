@@ -1483,6 +1483,66 @@ TEST_CASE("VicTracker host path plays sound", "[music]")
     REQUIRE(sum != 0);
 }
 
+// Commodore 264 series (C16 / 116 / Plus/4) TED music, played by the clean-room
+// tedcrplugin. The fixtures are one per thing the machine had to get right, and
+// each was silent until the corresponding piece existed -- see the plugin's
+// README for how they were found:
+//   clone           polls the raster in its main loop, takes no interrupts at all
+//   ted-storm-note  sets only $FF0B and CLI, relying on the raster IRQ the
+//                   KERNAL already had enabled before the tune ran
+//   hinterhalt      installs its player in the $0312 user raster hook
+//   maniac-slider   times notes off the KERNAL's SOUND duration counters
+//   the-pit-title   hands over through BASIC's RUN
+//   8sob-bubis      the same hand-off, needing RUN to resolve twice
+//   load-at-1000    saved one byte low, at $1000 with BASIC's leading zero
+//                   byte, rather than at $1001 -- 24 files in the library are
+//                   stored that way and the gate has to let them through
+// The two "nowork" fixtures are content-gate cases, checked separately below.
+TEST_CASE("TED", "[music]") { testPlugin<musix::TEDCRPlugin>("testmus/tedcr", "nowork"); }
+
+// .prg carries no machine identity beyond its load address, so the gate is a
+// content check. Both of these must be DECLINED rather than played: a C64 file
+// runs as silence on a 264 (verified against tedplay before it was removed,
+// which did exactly that for every C64-tagged .prg row), and a BASIC program has
+// no machine code to enter at all.
+TEST_CASE("TED declines what it cannot play", "[music]")
+{
+    musix::TEDCRPlugin plugin;
+    REQUIRE(plugin.canHandle("testmus/tedcr/clone.prg"));
+    // $1000 is the same 264 file saved one byte lower; the program is still at
+    // $1001. Rejecting it silenced three tunes in the library.
+    REQUIRE(plugin.canHandle("testmus/tedcr/load-at-1000.prg"));
+    REQUIRE(!plugin.canHandle("testmus/tedcr/c64-nowork.prg"));
+    REQUIRE(!plugin.canHandle("testmus/tedcr/basic-only-nowork.prg"));
+}
+
+// The host routing path (createPlugins -> MusicPlayer::playFile -> getSamples),
+// which only works if tedcrplugin is registered in plugin_register.cpp;
+// testPlugin<> above bypasses registration entirely.
+TEST_CASE("TED host path plays sound", "[music]")
+{
+    auto ap = std::make_shared<AudioPlayerNull>();
+    const auto injector = di::make_injector(di::bind<utils::path>.to("."),
+                                            di::bind<AudioPlayer>.to(ap));
+    musix::ChipPlugin::createPlugins("data");
+    chipmachine::MusicPlayer mp{ ap };
+    bool ok = mp.playFile("testmus/tedcr/clone.prg");
+    REQUIRE(ok);
+    int64_t sum = 0;
+    for (int i = 0; i < 20 && sum == 0; ++i) {
+        mp.update();
+        std::vector<int16_t> data(8192);
+        ap->get(data);
+        for (auto val : data) {
+            if (val != 0) {
+                sum = 1;
+                break;
+            }
+        }
+    }
+    REQUIRE(sum != 0);
+}
+
 TEST_CASE("Klystrack", "[music]") { testPlugin<musix::KlystrackPlugin>("testmus/klystrack", "nowork"); }
 
 // Host routing path for klystrack (.kt) -- only works if klystrackplugin is
@@ -5132,7 +5192,6 @@ TEST_CASE("AO", "[music]") { testPlugin<musix::AOPlugin>("testmus/ao", ""); }
 // cycles all keys 0..10 over 600 render buffers (~108s). The TEDMUSIC format
 // itself works (see sandgreen.prg), so this is one bad fixture, quarantined under
 // testmus/ted/nowork/ like testmus/gme/nowork/ rather than counted as a failure.
-TEST_CASE("Ted", "[music]") { testPlugin<musix::TEDPlugin>("testmus/ted", "nowork"); }
 TEST_CASE("V2", "[music]") { testPlugin<musix::V2Plugin>("testmus/v2", ""); }
 
 // Quartet ST (.4v) via the vendored zingzong replayer. A .4v carries only the
@@ -5596,7 +5655,7 @@ TEST_CASE("coverage", "[music]")
         {"RSNPlugin", "testmus/rsn"},
         {"MDX", "testmus/mdx"},
         {"S98", "testmus/s98"},
-        {"Tedplay", "testmus/ted"},
+        {"TED", "testmus/tedcr"},
         {"V2Plugin", "testmus/v2"},
         {"Organya Player", "testmus/org"},
         {"SunVox Player", "testmus/sunvox"},

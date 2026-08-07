@@ -12,7 +12,7 @@ everything technical lives here.
 | Platform / family | Plugins |
 |---|---|
 | PC & Amiga trackers | [openmpt](openmptplugin/README.md), [uade](uadeplugin/README.md), [mikmod](mikmodplugin/README.md), [med](medplugin/README.md), [hively](hivelyplugin/README.md), [maxtrax](maxtraxplugin/README.md), [jxs](jxsplugin/README.md), [ixs](ixsplugin/README.md), [ptk](ptkplugin/README.md), [quartet](quartetplugin/README.md), [v2](v2plugin/README.md) |
-| Commodore 64 / 264 / VIC-20 | [csid](csidplugin/README.md), [mus](musplugin/README.md), [vicebridge](vicepluginbridge/README.md), [goattracker](goattrackerplugin/README.md), [ted](tedplugin/README.md), [victracker](victrackerplugin/README.md) |
+| Commodore 64 / 264 / VIC-20 | [csid](csidplugin/README.md), [mus](musplugin/README.md), [vicebridge](vicepluginbridge/README.md), [goattracker](goattrackerplugin/README.md), [tedcr](tedcrplugin/README.md), [victracker](victrackerplugin/README.md) |
 | ZX Spectrum / Amstrad CPC / Sam Coupé | [zxay](zxayplugin/README.md), [zxtune](zxtuneplugin/README.md), [ayfly](ayflyplugin/README.md), [bbsong](bbsongplugin/README.md), [sks](sksplugin/README.md), [cop](copplugin/README.md) |
 | Atari ST/STE & 8-bit | [sndh](sndhplugin/README.md), [sc68](sc68plugin/README.md), [stsound](stsoundplugin/README.md), [mgt](mgtplugin/README.md), [pokeynoise](pokeynoiseplugin/README.md) |
 | MSX / Japanese PCs | [kss](kssplugin/README.md), [sccmusixx](sccmusixxplugin/README.md), [fmp](fmpplugin/README.md), [s98](s98plugin/README.md), [eup](eupplugin/README.md), [mdx](mdxplugin/README.md), [mdxcr](mdxcrplugin/README.md) |

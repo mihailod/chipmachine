@@ -39,7 +39,7 @@ extern "C" {
     void sc68plugin_register();    // Atari ST .sc68 -- GPL-3, plus build only
 #endif
     void stsoundplugin_register(); // Atari ST (YM2149)
-    void tedplugin_register();     // Commodore Plus/4
+    void tedcrplugin_register();   // Commodore 264 series (TED)
 #ifndef CM_NO_USF
     void usfplugin_register();     // Nintendo 64
 #endif
@@ -151,7 +151,7 @@ void register_plugins() {
     sc68plugin_register();
 #endif
     stsoundplugin_register();
-    tedplugin_register();
+    tedcrplugin_register();
 #ifndef CM_NO_USF
     // GPL-2 (lazyusf2 / Mupen64Plus) -- plus build only.
     usfplugin_register();

@@ -836,6 +836,37 @@ License: BSD 3-Clause License
 Notice: Local patch only makes four file-scope globals static to avoid full-link
         symbol collisions; see the comment in ptplayer.c.
 
+Component: TED (Commodore 264 series -- C16 / 116 / Plus/4, .prg)
+Author: Written for this project. The TED (MOS 7360/8360) sound core
+        (ted_sound.c) and the cut-down 264 machine (ted_machine.cpp) at
+        musicplayer/src/plugins/tedcrplugin/ are ours. The 6502 CPU core is
+        MyLittle6502 (pd6502.h), David MHS Webster's continuation of Fake6502 by
+        Mike Chambers (https://github.com/C-Chads/MyLittle6502), the same header
+        victrackerplugin uses.
+License: TED sound core and 264 machine: no third-party licence; see the notice
+        below for how they were derived.
+        MyLittle6502: public domain / CC0.
+Notice: This replaced tedplay (Attila Grosz), which was removed on 2026-08-06.
+        tedplay had no licence file of any kind -- its only licence statement was
+        a GPL-2.0-or-later notice in a Windows resource file that is never
+        compiled -- and it reached the chip only through a whole emulated
+        machine, so it also carried roms.h: 385 KB containing the Commodore
+        BASIC, KERNAL and 3-plus-1 ROM images. Both are gone.
+        The TED sound core is written against the published register map (the
+        C16/Plus4 memory map and Plus/4 World's TED register reference) plus a
+        specification measured through the chip's own register interface -- by
+        running generated .prg programs that poke the registers and analysing
+        the audio. The noise generator is an 8-bit shift register recovered the
+        same way and generated at runtime, never tabulated. Machine timing (114
+        master cycles per raster line, five stolen for refresh, the CPU halved
+        over the display window) was measured the same way.
+        No Commodore ROM images are used. The handful of KERNAL entry points the
+        corpus calls -- the interrupt entry and its dispatch, the raster hook
+        alternation, the SOUND duration counters and the RAM-under-ROM read
+        helpers -- are re-implemented from their documented behaviour at the
+        addresses tunes jump to. MyLittle6502 is vendored unmodified; ted_cpu.c
+        prefixes its non-static symbols to avoid full-link collisions.
+
 Component: Vic-Tracker (Commodore VIC-20 VIC-TRACKER, .vt)
 Author: VIC-TRACKER and its .vt format are by Daniel Kahlin (1994/2004,
         http://www.kahlin.net/daniel/victracker/). The tunes are played by

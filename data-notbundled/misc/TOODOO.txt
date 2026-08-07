@@ -1,20 +1,21 @@
-- if trimming removed a whole platform from MAS we should not display the platform logo in splash screen. not sure if there are any platforms completely removed from MAS but worth checking. investigate and report
 
---------------------
-New features:
+- decide on MAS version: start from 1.0 or same as Plus (2.1)
 
-- detect no internet and offer to switch to offline mode where only cached songs are playable. how to solve ui? would have to trim everything which is not local and that takes time. maybe put a flag in db "cached yes/no" for fast access/pruning? other ideas?
+- when i run cmtest i see this, please fix, i think some (downloadable or present in other testmus folders) assets are missing:
+--- MISSING TARGET DIRECTORIES DETECTED ---
+Execute the following terminal script to construct the environment:
+bash
+mkdir -p "testmus/chipmachine clean room sidplayer"
+mkdir -p "testmus/wonderswan"
 
-- Add tracker-style scrolling note pattern where possible by format. many formats are simple trackers where notes which are currently playing are known. show 4 channels only and in formats with multiple channels show the 1st four.
+-------------------------------------------
 
-- enhance operations on lists, need playlist tab filter with drill that shows the members with artwork on the side like when they play when you scroll up down in the drilled list
+- (feature) detect no internet and offer to switch to offline mode where only cached songs are playable. how to solve ui? would have to trim everything which is not local and that takes time. maybe put a flag in db "cached yes/no" for fast access/pruning? other ideas?
+
+- (feature) enhance operations on lists, need playlist tab filter with drill that shows the members with artwork on the side like when they play when you scroll up down in the drilled list
 
 ---------------------------------------------
 Submission to Apple:
-
--CONFIRM NO GPL CODE OR ANY OTHER SUSPICIOUS CODE OR REFERENCES ARE ANYWHERE in the MAS version -- look at the ChipMachine.app built and packaged by me for the mac app store submission and all files inside, like Apple would. If there are false alarms, let's disclose them in notes -- let me know. Do not change anything just do a deep check and report. Also is LGPL ok for app store?
-
-- recheck everything again (both signing and MAS) and do everything that needs to be done before the $99 payment
 
 - pay $99 and do post payment parts
 

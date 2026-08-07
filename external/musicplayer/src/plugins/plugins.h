@@ -22,7 +22,7 @@
 #include "mdxplugin/MDXPlugin.h"
 #include "s98plugin/S98Plugin.h"
 #include "aoplugin/AOPlugin.h"
-#include "tedplugin/TEDPlugin.h"
+#include "tedcrplugin/TEDCRPlugin.h"
 #include "v2plugin/V2Plugin.h"
 #include "fmpplugin/FMPPlugin.h"
 #include "pxtoneplugin/PxTonePlugin.h"

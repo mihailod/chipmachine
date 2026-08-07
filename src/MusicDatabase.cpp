@@ -1063,27 +1063,35 @@ static std::string routingExtension(SongInfo const& song)
 //
 // .prg is a bare Commodore executable: the first two bytes are its load address
 // and nothing else says which machine it is for. We decode .prg with ONE engine,
-// tedplay (TEDPlugin), which emulates the TED chip -- Commodore 16/116/plus4 --
-// and its canHandle takes any ".prg" on extension alone. Demozoo carries three
-// tunes built for machines we have no emulator for at all: two Commodore VIC-20
-// (sound on the VIC chip) and one Commodore PET (no sound chip; a PIA-driven
-// beeper).
+// tedcrplugin, which emulates the TED chip -- Commodore 16/116/plus4. Demozoo
+// carries three tunes built for machines we have no emulator for at all: two
+// Commodore VIC-20 (sound on the VIC chip) and one Commodore PET (no sound
+// chip; a PIA-driven beeper).
 //
 // They do not fail, they play SILENCE, which is worse. Plus/4 BASIC starts at
-// $1001 -- the SAME address as an unexpanded VIC-20 -- so tedplay accepts the
-// VIC-20 files as plausible TED programs, runs them, and their writes to the
-// VIC chip at $900x land on hardware a TED machine does not have. The PET file
-// ($0401) is run as garbage. Nothing reaches the sound chip either way.
+// $1001 -- the SAME address as an unexpanded VIC-20 -- so a VIC-20 file passes
+// as a plausible TED program, runs, and its writes to the VIC chip at $900x land
+// on hardware a TED machine does not have.
 //
-// That $1001 collision is also why this CANNOT be a content check on the load
-// address, and why .prg cannot go in not_supported_extensions.txt: 1364 indexed
-// rows route on .prg (1238 TED, 126 C64) and play fine. The DB format string is
-// the only thing that separates them, so match on it -- EXACTLY, never as a
-// substring: "Youtube (VIC 20)" and "Youtube (Commodore PET)" are 96 rows of
-// perfectly playable video captures that must stay.
+// That $1001 collision is why this CANNOT be a content check on the load
+// address: it is the one machine the plugin's own gate cannot tell us apart
+// from. The DB format string is the only thing that separates them, so match on
+// it -- EXACTLY, never as a substring: "Youtube (VIC 20)" and "Youtube
+// (Commodore PET)" are 96 rows of perfectly playable video captures that must
+// stay.
 //
-// To lift this you would build VICE's vendored-but-unbuilt xvic/xpet cores, not
-// extend tedplay. See db.lua v118 for why that was judged not worth it.
+// UPDATED 2026-08-06, when tedplay was replaced by tedcrplugin. Two of the
+// premises above have changed:
+//   - The PET file ($0401) and the C64 rows ($0801) no longer need this list.
+//     tedcrplugin content-gates on a $1001/$1000 load address plus a BASIC SYS,
+//     so anything from another machine is declined outright.
+//   - This comment used to say the 126 C64-tagged .prg rows "play fine". They
+//     did not. Measured against tedplay across the whole corpus, every one of
+//     them rendered exact silence, which is what prompted the gate. Only the
+//     VIC-20 overlap genuinely needs a format-string rule now.
+//
+// To lift the VIC-20 case you would build VICE's vendored-but-unbuilt xvic core.
+// See db.lua v118 for why that was judged not worth it.
 //
 // REVISITED 2026-07-17 after victrackerplugin shipped (a 6502 core + a VIC-I
 // sound core). It does NOT make these trivial -- .vt worked because we had the
@@ -4050,7 +4058,7 @@ void initFormats()
     format_map["mo3"] = PCTRACKER;   // MO3-compressed module (OpenMPT). The
                                      // wrapper can hold a MOD, but demoscene MO3
                                      // is overwhelmingly XM/IT, i.e. PC.
-    format_map["prg"] = PRG;         // Tedplay claims .prg -> C16/116/+4 (TED)
+    format_map["prg"] = PRG;         // tedcrplugin claims .prg -> C16/116/+4 (TED)
     // NOT keyed on purpose:
     //   "ftm"  -- two formats sharing one extension (FamiTracker NES vs the
     //             OpenMPT "FTMN" one); the plugins magic-gate it, so an
@@ -4760,7 +4768,7 @@ std::string MusicDatabase::platformForExtension(std::string const& rawExt)
         { "HivelyPlugin", "Amiga" },
         { "Gameboy Advance", "Nintendo Game Boy" },
         { "WonderSwan", "WonderSwan" },
-        { "Tedplay", "Commodore 16/+4" },
+        { "TED", "Commodore 16/+4" },
         { "SunVox Player", "PC" },
         { "SoundSmith", "Apple IIGS" },
         { "SBStudio", "PC" },

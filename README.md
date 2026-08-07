@@ -382,7 +382,7 @@ the short version.
 | Compute!'s Sidplayer (clean-room sequencer — what lets the App Store build play these ~6.5k songs) | `.mus` `.str` | [mus](external/musicplayer/src/plugins/musplugin/README.md) |
 | Compute!'s Sidplayer via VICE | `.mus` `.str` | [vicebridge](external/musicplayer/src/plugins/vicepluginbridge/README.md) *(Plus only)* |
 | GoatTracker | `.sng` | [goattracker](external/musicplayer/src/plugins/goattrackerplugin/README.md) *(Plus only)* |
-| Commodore 264 series (16 / 116 / Plus/4) TED | `.prg` | [ted](external/musicplayer/src/plugins/tedplugin/README.md) |
+| Commodore 264 series (16 / 116 / Plus/4) TED | `.prg` | [tedcr](external/musicplayer/src/plugins/tedcrplugin/README.md) |
 | VIC-20 VIC-TRACKER | `.vt` | [victracker](external/musicplayer/src/plugins/victrackerplugin/README.md) |
 
 ### ZX Spectrum, Amstrad CPC, Sam Coupé

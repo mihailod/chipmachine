@@ -844,7 +844,7 @@ add_subdirectory(${AP1_ROOT}/mods ap1mods)
 set(MUSICPLAYER_PLUGINS
     openmptplugin gmeplugin sndhplugin
     stsoundplugin adplugin mp3plugin hivelyplugin rsnplugin
-    zxayplugin s98plugin gsfplugin tedplugin v2plugin
+    zxayplugin s98plugin gsfplugin tedcrplugin v2plugin
     ffmpegplugin fmpplugin pxtoneplugin ptkplugin orgplugin sunvoxplugin eupplugin
     kssplugin quartetplugin wsrplugin bbsongplugin
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin sksplugin nedplugin sccmusixxplugin
@@ -1199,7 +1199,7 @@ endif()
 if(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     set(SILENT_TARGETS
         vicepluginbridge ndsplugin usfplugin adplugin csidplugin
-        aoplugin v2plugin unrar coreutils lua crypto tedplugin gmeplugin
+        aoplugin v2plugin unrar coreutils lua crypto tedcrplugin gmeplugin
         openmptplugin sc68plugin ayflyplugin mdxplugin s98plugin ffmpegplugin rsnplugin fmpplugin
     )
     if(CM_HAVE_UADE)
