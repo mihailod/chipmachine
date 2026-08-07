@@ -1246,6 +1246,14 @@ bool songFormatHasNoPlayer(SongInfo const& song,
             // in plus.
             {{"dsf", "dreamcast sound format"}, { "htplugin" }},
             {{"ssf", "saturn sound format"}, { "htplugin", "audio overload" }},
+            // ".minidsf"/".minissf" are sole-claimed and DO drop on the plain
+            // extension test as standalone rows -- but a MULTI group of them
+            // resolves to whichever member the gate reads, and these games ship
+            // one full ".dsf"/".ssf" among the minis. vgmstream claims those two
+            // suffixes, so the group survived the extension test and came back
+            // as 11 unplayable console entries. Key the mini forms too.
+            {{"minidsf", "dreamcast sound format"}, { "htplugin" }},
+            {{"minissf", "saturn sound format"}, { "htplugin", "audio overload" }},
             // ".2sf"/".mini2sf" (vio2sf, GPL-2 DeSmuME) and ".usf"/".miniusf"
             // (lazyusf2, GPL-2 Mupen64Plus) need NO entry: nothing else claims
             // those four extensions, so they drop on the extension test alone.
@@ -1316,15 +1324,127 @@ bool songFormatHasNoPlayer(SongInfo const& song,
             // "dsmi compact" (13), the generic "dmf" bucket (328, amp +
             // modarchive) and demozoo "demoscene" (16, every one fetched and
             // checked). Hiding a playable row is the worse error here.
+            //
+            // ---------------------------------------------------------------
+            // The rows below were found by a corpus-wide audit (2026-08-06) and
+            // every one was PLAY-TESTED in both variants: loaded through the
+            // real plugin chain of build-mas/cm and build/cm, and listed here
+            // only when it failed in mas AND succeeded in plus. They are all the
+            // ".mus" shape -- an extension some mas plugin advertises, for a
+            // DIFFERENT format, so the extension test says "playable" while the
+            // only decoder that actually takes the file is missing.
+            //
+            // What makes them invisible to the plain extension test is that the
+            // claiming plugin CONTENT-declines them: cSID gates ".sid" on the
+            // PSID/RSID magic, AdPlug gates ".ksm"/".sng" on its own signatures,
+            // OpenMPT probes, StSound checks the YM header. The extension is
+            // claimed; the file is not. Only the format column separates them.
+            //
+            // Amiga SidMon under ".sid" -- 62 rows, the largest. cSID owns the
+            // extension in mas and declines these (they are not C64 SID images
+            // at all); UADE plays them. buildPluginGroups' formatOverride
+            // already carries the same key for the browse-list count -- keep the
+            // two in step.
+            {{"sid", "sidmon 1"}, { "uade" }},
+            {{"sid", "sidmon"}, { "uade" }},
+            // AdLib extensions AdPlug advertises but content-declines. ".ksm"
+            // is Ken's Labyrinth music for AdPlug and Kefrens Sound Machine for
+            // UADE; only the format name tells them apart.
+            {{"ksm", "ken's adlib music"}, { "uade" }},
+            {{"ksm", "kefrens sound machine"}, { "uade" }},
+            // vgmstream's generic namespace. It advertises ~900 extensions, so
+            // these Amiga custom replayers all look "playable" by name.
+            {{"wb", "wally beben"}, { "uade" }},
+            {{"abk", "abk"}, { "uade" }},
+            {{"abk", "amos music bank"}, { "uade" }},
+            {{"sm3", "sound master ii v3"}, { "uade" }},
+            {{"hd", "howie davies"}, { "uade" }},
+            {{"ast", "actionamics"}, { "uade" }},
+            {{"ast", "ast"}, { "uade" }},
+            // NOT {"ast","all sound tracker"} (20 rows), deliberately: UADE
+            // declines those in BOTH variants -- they are the tracker's native
+            // "AST 00xx" save, which the V0.1 eagleplayer cannot parse, and
+            // UADEPlugin::canHandle rejects them outright (isAllSoundTrackerNative).
+            // They Skip identically in plus, so hiding them in mas alone would
+            // invent a divergence rather than fix one.
+            //
+            // ".mon" is Monotone (PC-speaker, in both variants) vs the Amiga
+            // "Maniacs Of Noise" replayer. MonotonePlugin content-gates and
+            // declines the Amiga files.
+            {{"mon", "maniacs of noise"}, { "uade" }},
+            {{"mon", "m.o.n new"}, { "uade" }},
+            {{"mon", "m.o.n old"}, { "uade" }},
+            // ".ym" is StSound's Atari YM stream; "YMST" is Jochen Hippel's
+            // Amiga format that borrowed the suffix. StSound checks the YM
+            // header and declines. (The 2 rows filed under ".ymst" need no key
+            // -- nothing claims that extension in mas, so they drop on the
+            // extension test alone.)
+            {{"ym", "ymst"}, { "uade" }},
+            // ".unic" is OpenMPT's Unic Tracker vs UADE's Laxity Tracker. The
+            // 3 genuine Unic Tracker rows keep the plain extension result and
+            // keep playing in mas, which is why this keys on the pair.
+            {{"unic", "laxity tracker"}, { "uade" }},
+            // ".mod" itself. OpenMPT owns it and plays 200k+ rows, but a handful
+            // of modland/UnExoticA entries filed under ".mod" are custom
+            // replayers it declines. Keyed narrowly on the format name so the
+            // rest of ".mod" is untouched.
+            //
+            // NOT {"mod","startrekker"} or {"mod","startrekker am"}: those are
+            // MIXED at row level -- 29 of 35 StarTrekker rows play in mas via
+            // OpenMPT, and only the AM-synth ones need UADE. A name key can only
+            // say "all" or "none", and hiding a playable row is the worse error.
+            {{"mod", "the player 4.x"}, { "uade" }},
+            {{"mod", "david whittaker"}, { "uade" }},
+            {{"mod", "amos music bank"}, { "uade" }},
+            {{"mod", "actionamics sound tool"}, { "uade" }},
+            // The last three singles, same shape: OpenMPT/vgmstream advertise
+            // the extension, UADE is the only decoder.
+            // Two UnExoticA games whose entry LEADS with a "<fmt>.sfx" member.
+            // routingExtension() reads a group's FIRST member, so these key on
+            // "sfx" -- OpenMPT claims it for the unrelated Amiga SoundFX format
+            // and content-declines these, and the 388 real SoundFX rows carry a
+            // different format name and are untouched.
+            {{"sfx", "sound images"}, { "uade" }},
+            {{"sfx", "david whittaker"}, { "uade" }},
+            {{"mus", "noisepacker 3.x"}, { "uade" }},
+            {{"x", "delitracker custom"}, { "uade" }},
+            // NOT {"sc","soundcontrol"} (18 rows): flagged by the same scan and
+            // then play-tested OK in mas. Listing it would have hidden 18
+            // working songs -- which is why every row above was measured rather
+            // than inferred from the claimer chain.
         };
     if (song.format.empty()) { return false; }
     if (builtPluginNames.empty()) { return false; }
-    auto it = formatPlayer.find({ routingExtension(song), toLower(song.format) });
-    if (it == formatPlayer.end()) { return false; }
-    for (auto const& cand : it->second) {
-        if (builtPluginNames.count(cand) > 0) { return false; }
+    // Two key spaces, because the catalog names formats two different ways.
+    //
+    // routingExtension() reads the SUFFIX, which is right for suffix-form names
+    // ("first scoopex theme.sid") and for the ext template column -- that is
+    // what every key above the audit block was written against.
+    //
+    // But modland/UnExoticA also file the format BEFORE the dot
+    // ("abk.technology-rock", "wb.The_Ball_Game", "unic.by the coast"), and
+    // there the suffix is a fragment of the SONG TITLE -- routingExtension
+    // returns "technology-rock". No key can be written in that space, so also
+    // try resolveExtension(), which prefers whichever token
+    // formats_descriptions.txt actually recognises and therefore yields the
+    // real format ("abk"/"wb"/"unic"). Trying both is safe: the keys are
+    // explicit (extension, format-name) pairs, so a spurious match would need
+    // the format column to agree too.
+    std::string const routing = routingExtension(song);
+    std::string const resolved = MusicDatabase::resolveExtension(song);
+    auto const fmt = toLower(song.format);
+    for (auto const& ext : { routing, resolved }) {
+        if (ext.empty() && !routing.empty()) { continue; }
+        auto it = formatPlayer.find({ ext, fmt });
+        if (it == formatPlayer.end()) { continue; }
+        bool built = false;
+        for (auto const& cand : it->second) {
+            if (builtPluginNames.count(cand) > 0) { built = true; break; }
+        }
+        if (!built) { return true; }
+        return false;
     }
-    return true;
+    return false;
 }
 
 // Should this DefleMask row be dropped because the mas build cannot play it?
@@ -1428,12 +1548,27 @@ static std::set<std::string> const& builtPluginNames()
 
 // Would ANY plugin in this build claim this name?
 //
-// Checks the suffix and, for modland/UnExoticA prefix-form names, the leading
-// token: those collections put the format BEFORE the dot ("med.<song>",
-// "cust.<song>", "mdat.<song>") where pathExtension() cannot see it. Without
-// the prefix check the 351 UnExoticA "med.*" OctaMED tunes that OpenMPT plays
-// would be hidden along with the genuinely-dead "cust.*".
-static bool nameHasPlayer(std::string const& p,
+// Judges the name on the SAME token the Formats screen files the row under --
+// resolveExtension() -- so the gate and the browse list can never disagree.
+// That equality is the whole point: this used to run its own suffix-then-prefix
+// token search, and wherever the two answers differed a row was admitted by one
+// and then displayed under a format the other says is unplayable.
+//
+// Why the ad-hoc search was wrong (measured 2026-08-06 over the whole catalog):
+//   * The SUFFIX branch fired on song-name fragments. modland/UnExoticA file the
+//     format BEFORE the dot ("cust.Fish", "tme.Labyrinth.msx", "tw.sfx",
+//     "mdat.map"), so the "extension" is part of the TITLE -- and "fish",
+//     "msx", "sfx" and "map" all happen to be claimed by something.
+//   * The PREFIX branch accepted ANY claimed token, and vgmstream advertises
+//     ~900 of them including single letters. "no.ymst" survived on "no",
+//     "w.a.r.ymst" on "w", "r.a.w.dm2" and "r.e.a.l.arp" on "r", "4.smus" on
+//     "4", "sss.msm" on "sss".
+// resolveExtension() has neither problem: it prefers whichever token
+// formats_descriptions.txt actually recognises, so it returns "cust"/"tme"/
+// "ymst"/"dm2"/"arp" -- the real format -- and falls back to the plain suffix
+// only when neither token names anything, which is the old behaviour for
+// ordinary "song.mod" names.
+static bool nameHasPlayer(std::string const& p, std::string const& format,
                           std::set<std::string> const& playable)
 {
     auto ext = pathExtension(p);
@@ -1443,11 +1578,59 @@ static bool nameHasPlayer(std::string const& p,
     // format is only known once MusicPlayerList picks a member out of the
     // archive. Never judge those here.
     if (isContainerExt(ext)) { return true; }
-    if (playable.count(ext) > 0) { return true; }
+    // Ask resolveExtension() about the PATH, plus the DB format name. No ext
+    // template column: that one can name a container, and the caller has
+    // already had its say on it. The format name IS passed through, including
+    // for MULTI members, because it describes the whole group and is sometimes
+    // the only signal there is -- resolveExtension maps a bare-named
+    // "SoundSmith" row to "w" from the format alone, and the six of those with
+    // a dot in the TITLE ("SS V0.7 Theme") would otherwise be judged on the
+    // fragment "7 theme" and hidden.
+    SongInfo si;
+    si.path = p;
+    si.format = format;
+    auto resolved = MusicDatabase::resolveExtension(si);
+    // Deliberately conservative, unchanged from the old behaviour: an empty or
+    // container result means "cannot tell", which is never grounds for dropping.
+    if (resolved.empty() || isContainerExt(resolved)) { return true; }
+    if (playable.count(resolved) > 0) { return true; }
+    // resolveExtension() fell through to the bare suffix -- it recognised
+    // NEITHER token as a format. Only then, retry the leading token.
+    //
+    // This is the old prefix branch, narrowed to the one case where it was ever
+    // right. It cannot resurrect the collisions above, because those names DO
+    // resolve to a described format ("no.ymst" -> "ymst", "r.a.w.dm2" -> "dm2")
+    // and never reach here. What does reach here is a prefix-form name whose
+    // format is simply absent from formats_descriptions.txt -- UnExoticA's IFF
+    // sample rows ("8svx.wagner", "8svx.Are_you_ready?"), where the suffix is
+    // the title and "8svx" is undescribed but genuinely claimed (by ffmpeg).
+    // Without this they would be hidden, and they play.
+    auto* db = MusicDatabase::instance();
+    if (db != nullptr && !db->describeExtension(resolved).empty()) {
+        return false; // a real format, and nothing in this build claims it
+    }
     auto leaf = toLower(utils::path_filename(p));
     auto dot = leaf.find('.');
     return dot != std::string::npos && dot > 0 &&
            playable.count(leaf.substr(0, dot)) > 0;
+}
+
+// Does this MULTI member carry any format information at all?
+//
+// A group's member list is not a list of songs. It mixes the tunes with the
+// things they need and the things that merely sit beside them: sample banks
+// ("instr/dummy"), shared libraries, stale backups, and -- for the console
+// collections -- ".m3u" pointers that name a subtune INSIDE a sibling rip
+// rather than a playable file of their own. None of those say anything about
+// whether the group is playable, so the gate must step over them rather than
+// read them as an answer in either direction.
+static bool memberNamesAFormat(std::string const& member)
+{
+    auto ext = pathExtension(member);
+    if (ext.empty()) { return false; }        // companion sample / driver blob
+    if (isContainerExt(ext)) { return false; } // says nothing about the content
+    if (ext == "m3u") { return false; }        // subtune pointer into a sibling
+    return true;
 }
 
 // True when nothing in this build can play the song, so the indexer must not
@@ -1467,13 +1650,27 @@ static bool nameHasPlayer(std::string const& p,
 //     bare-named songs (Apple IIgs SoundSmith) carry no extension at all
 //     (~34.9k rows) and are routed by other means entirely.
 //   * If the plugin list somehow came back empty, drop nothing.
-//   * MULTI: groups are judged on their FIRST member only -- deliberately NOT
-//     songIsUnsupported()'s "every member must match" rule. That rule is right
-//     for a deny-list, but inverted here it never fires: the trailing members
-//     are companion samples ("cust.<song>" + "instr/dummy", "instr/bass.x"),
-//     and an extensionless companion counts as playable under the rule above,
-//     so one "instr/dummy" would keep the whole dead group. The first member is
-//     the song the player actually routes on -- see routingExtension(path).
+//   * MULTI: groups are judged on their first member that NAMES A FORMAT --
+//     see memberNamesAFormat(). Still "the member the player routes on", but
+//     stepping over the leading entries that answer nothing.
+//
+//     Judging member[0] flatly was measured wrong in one direction: the 106
+//     modland SGC games (Sega Master System / Game Gear) lead with a run of
+//     ".m3u" subtune pointers and carry the real ".sgc" rip LAST, so the gate
+//     read "m3u is unclaimed" and hid 105 games gmeplugin plays perfectly well
+//     in both variants. That is what the ".sgc" 280-vs-385 split was.
+//
+//     It must NOT become "any member with a player", which was the other thing
+//     tried here and is the trap the "every member" rule was written for: the
+//     trailing members are companions, an extensionless one counts as playable
+//     under the rule above, and a single "instr/dummy" then keeps a whole dead
+//     Delitracker Custom group. Measured too -- that variant resurrected 197
+//     rows, including PlayStation/Dreamcast groups that have no decoder here.
+//
+//     And it cannot be fixed by rewriting the path to just the playable
+//     members: a group's members are fetched individually and a "dead" member
+//     is often the sample bank or archive its siblings need (see
+//     RemoteLoader::inCache), so removing one can break the tunes that remain.
 static bool songHasNoPlayer(SongInfo const& song,
                             std::set<std::string> const& playable)
 {
@@ -1490,13 +1687,23 @@ static bool songHasNoPlayer(SongInfo const& song,
         if (!e.empty() && !isContainerExt(e)) { return playable.count(e) == 0; }
     }
     if (!startsWith(song.path, "MULTI:")) {
-        return !nameHasPlayer(song.path, playable);
+        return !nameHasPlayer(song.path, song.format, playable);
     }
-    std::string first = song.path.substr(6);
-    auto tab = first.find('\t');
-    if (tab != std::string::npos) { first = first.substr(0, tab); }
-    if (first.empty()) { return false; }
-    return !nameHasPlayer(first, playable);
+    std::string const members = song.path.substr(6);
+    size_t pos = 0;
+    while (pos <= members.size()) {
+        auto tab = members.find('\t', pos);
+        auto end = (tab == std::string::npos) ? members.size() : tab;
+        auto member = members.substr(pos, end - pos);
+        if (!member.empty() && memberNamesAFormat(member)) {
+            return !nameHasPlayer(member, song.format, playable);
+        }
+        if (tab == std::string::npos) { break; }
+        pos = tab + 1;
+    }
+    // No member named a format at all (an all-companion group, or an empty
+    // member list): nothing to judge, so keep it.
+    return false;
 }
 #endif // CM_NO_UADE || CM_NO_VICE || CM_NO_GOATTRACKER || CM_NO_DMF
 
