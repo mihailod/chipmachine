@@ -12,7 +12,7 @@ class TEDCRPlugin : public ChipPlugin
 public:
     std::string name() const override { return "TED"; }
     // Display-only label for the TAB plugin screen; see ChipPlugin.
-    std::string displayName() const override { return "Commodore Plus/4 (TED)"; }
+    std::string displayName() const override { return "Commodore Plus/4 (TED) (Clean Room)"; }
     bool canHandle(const std::string& name) override;
     std::set<std::string> getSupportedExtensions() const override;
     ChipPlayer* fromFile(const std::string& fileName) override;
