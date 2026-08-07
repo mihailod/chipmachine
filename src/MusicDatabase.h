@@ -604,8 +604,14 @@ private:
     // ("# .gtk") are ignored, so those extensions stay indexable.
     std::set<std::string> unsupportedExts;
     std::set<std::string> csidSilentSids;
+    // DefleMask rows the clean-room dmfcrplugin can actually play, from
+    // data/misc/dmfcr_playable.txt. An ALLOW-list, unlike csidSilentSids: only
+    // the mas build reads it, and only to decide which "Deflemask" rows survive
+    // indexing. See songDefleMaskUnplayable().
+    std::set<std::string> dmfcrPlayable;
     void loadUnsupportedExtensions(utils::path const& workDir);
     void loadCsidSilentSids(utils::path const& workDir);
+    void loadDmfcrPlayable(utils::path const& workDir);
 
     // --- Podcast live-feed refresh (Q4) ---------------------------------
     // A podcast whose episode list can be augmented from a live RSS feed.

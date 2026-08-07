@@ -172,24 +172,38 @@ endif()
 # gate is what finally clears reSIDfp out of the App Store build -- GoatTracker's
 # reSID was already gone via CM_HAVE_GOATTRACKER.
 #
-# The exposure is 2,071 songs (0.28% of the catalog), dropped from the mas index
-# by songFormatHasNoPlayer() in MusicDatabase.cpp. Content-probed, not guessed:
-# ".dmf" is TWO unrelated formats and libopenmpt plays the other one, so only the
-# rows whose format column names DefleMask are hidden -- modland "Deflemask"
-# (1,807) + BotB "DefleMask" (263) + demozoo "NEC PC Engine" (1). The X-Tracker
-# DDMF rows stay indexed and keep playing: "X-Tracker" (366), "DSMI Compact"
-# (13), the generic "DMF" bucket (328, amp + modarchive -- sampled and 100%
-# DDMF) and demozoo "Demoscene" (16, all 16 fetched and all DDMF).
+# The original exposure was 2,071 songs (0.28% of the catalog). Content-probed,
+# not guessed: ".dmf" is TWO unrelated formats and libopenmpt plays the other
+# one, so only the rows whose format column names DefleMask were hidden --
+# modland "Deflemask" (1,807) + BotB "DefleMask" (263) + demozoo "NEC PC Engine"
+# (1). The X-Tracker DDMF rows stay indexed and keep playing: "X-Tracker" (366),
+# "DSMI Compact" (13), the generic "DMF" bucket (328, amp + modarchive --
+# sampled and 100% DDMF) and demozoo "Demoscene" (16, all 16 fetched and all
+# DDMF).
 #
-# PARTIALLY REVERSIBLE, and meant to be reversed. A clean-room non-GPL .dmf
-# player is a live follow-up project. The chip cores needed are already
-# available under permissive licences (ymfm/BSD for YM2612 + YM2610, SameBoy/MIT
-# for Game Boy, sn76496/BSD for SN76489, and the WTFPL cSID already vendored
-# here for the C64 rows); what has to be written is the sequencer. By measured
-# target share of the hidden pool -- Genesis 46%, Game Boy 16%, PC Engine 13%,
-# Neo Geo 10%, NES 6%, C64 5%, SMS 3% -- Genesis alone would resurface ~950
-# songs. When a target lands, DELETE the matching formatPlayer row rather than
-# adding a second gate: the rows come straight back on the next reindex.
+# BEING REVERSED, one chip target at a time. dmfcrplugin now ships a CLEAN-ROOM
+# .dmf player in BOTH variants (see its README and LEGAL), written from
+# DefleMask's own published specs and manual on ymfm (BSD-3) plus an SN76489
+# written from the documented hardware. It covers SEGA Genesis and SEGA Master
+# System, bringing the exposure down from 2,071 to 1,375: 598 Genesis + 98 SMS
+# rows are back in the mas index.
+#
+# The remaining targets, by measured share of what is still hidden: Game Boy
+# ~340 (SameBoy/MIT available), PC Engine ~275 (furnace's pce_psg is GPL, needs
+# a replacement), Neo Geo ~200 (ymfm again -- it is a YM2610, so the FM half is
+# largely what the Genesis path already does), NES ~125 (NSFplay-family cores
+# exist), C64 ~110 (the WTFPL cSID is already vendored here).
+#
+# NOTE the resurfacing mechanism CHANGED with dmfcrplugin. Deleting a
+# formatPlayer row is no longer the way: the format column reads "Deflemask" for
+# all eight DefleMask systems, so a name-keyed rule can only say all-or-nothing.
+# Which rows survive is now the measured allow-list data/misc/dmfcr_playable.txt,
+# consulted by songDefleMaskUnplayable() in MusicDatabase.cpp. When a new target
+# lands, widen the player's canHandle() and regenerate that list (tools/dmfcheck).
+#
+# dmfplugin still registers FIRST in plugin_register.cpp, so the plus build
+# keeps playing every .dmf through Furnace and stays byte-identical -- which
+# also keeps a reference implementation on hand for A/B listening.
 if(CM_VARIANT STREQUAL "mas")
     set(CM_HAVE_DMF OFF)
     list(APPEND CM_VARIANT_DEFS CM_NO_DMF)
@@ -787,7 +801,7 @@ set(MUSICPLAYER_PLUGINS
     soundsmithplugin musxplugin cocoplugin mgtplugin medplugin sbstudioplugin sksplugin nedplugin sccmusixxplugin
     playerproplugin jxsplugin monotoneplugin mikmodplugin ixsplugin copplugin fnkplugin
     libvgmplugin vgmstreamplugin
-    victrackerplugin klystrackplugin csidplugin musplugin
+    victrackerplugin klystrackplugin csidplugin musplugin dmfcrplugin
 )
 # GPL -- plus build only, see CM_HAVE_UADE above.
 if(CM_HAVE_UADE)

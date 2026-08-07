@@ -1,0 +1,190 @@
+Effects
+DefleMask uses Protracker's standard MOD effect enumeration. Like other
+trackers, however, the speed and behavior of the commands can be processed
+differently.
+
+Remember that the current system can change how effects are processed.
+In order to learn more about the changes and new effects available on a
+desired system, you will need to check that system's category in this manual.
+
+Effects list
+
+0xy - Arpeggio
+1xx - Portamento up
+2xx - Portamento down
+3xx - Portamento to note
+4xy - Vibrato
+5xy - Portamento to note and volume slide
+6xy - Vibrato and volume slide
+7xy - Tremolo
+8xx - Panning
+9xx - Set Speed Value 1
+Axy - Volume Slide
+Bxx - Position Jump
+Cxx - Retrig
+Dxx - Pattern Break
+Exx - Extended Commands
+Fxx - Set Speed Value 2
+
+
+
+
+                                                                                16
+                                                                                      17
+               DefleMask Tracker Manual by Leonardo Demartino (delek.net)
+
+
+
+0xy - Arpeggio
+This effect changes the pitch of the note rapidly, the speed of this being set by
+the E0xx – Arpeggio Tick Speed effect. You can trigger 3 different notes, the
+first one is the base note, the second one is note + x semitones, and the third
+one is note + y semitones. The effect will work until the effect is turned off by
+setting xy to 00.
+
+1xx - Portamento Up
+This effect will change the frequency by adding the xx value on each tick. In
+other words, value xx defines speed of the portamento. The effect will continue
+until it is turned off by setting xx to 00.
+
+2xx - Portamento Down
+This effect will change the frequency by subtracting the xx value on each tick.
+In other words, value xx defines speed of the portamento. The effect will
+continue it is turned off by setting xx to 00.
+
+3xx - Porta to note
+This effect will change the frequency of the previous note to the new note with
+a speed of xx.
+The effect will continue until a new note is triggered, it reaches the pitch of the
+second note, or the effect is turned off by setting xy to 00.
+
+4xy - Vibrato
+Sine vibrato, changes frequency up and down with specified depth and speed.
+Value x defines speed of the vibrato. 1 is minimum speed, F is maximum
+speed. Value y defines depth of the vibrato. Maximum depth is a full note.
+The effect will continue until the effect is turned off by setting xy to 00.
+
+5xy - Portamento to note and volume slide
+Continues previous 3xx effect and combine the result with a volume slide that
+works like Axy effect.
+
+6xy - Vibrato and volume slide
+Continues previous 4xx effect and combine the result with a volume slide that
+works like Axy effect.
+
+7xy - Tremolo
+Similar to the vibrato, but changes the volume amplitude instead of the pitch.
+x for speed, and y for depth.
+
+
+
+
+                                                                                      17
+                                                                                    18
+               DefleMask Tracker Manual by Leonardo Demartino (delek.net)
+
+
+8xx - Panning
+Panning will change the sound output of the channel to the right or the left
+speakers, normally it is 0x01 right, 0x10 left, and 0x11 both. However, some
+systems have different stereo behavior. You will need to check these
+individually.
+
+9xx - Set Speed Value 1
+This command will set the playback speed 1 dynamically.
+
+
+Axy - Volume Slide
+Volume slide up or down. Positive x value and zero y value defines speed of the
+volume slide going up, positive y value and zero x value defines speed of the
+volume slide going down.
+
+Bxx - Position Jump
+This command will make the cursor jump to pattern position xx (hex). With xx
+lower than the current pattern index you can create a looped track, the loop
+entrance point will be marked with a “L>” in the pattern matrix.
+Please take into account that only the first loop command (Bxx going to a
+previous position) will be taken into account, if you have more they will be
+ignored.
+
+
+Cxx - Retrig
+Retrig the current note xx times on a tick. If the parameter xx is equal or
+higher than tick time, the effect is ignored. This effect will work until the row
+ends.
+
+Dxx - Pattern Break
+This command will stop playing the current pattern and will jump to the next
+one in the pattern matrix. You can also select which row to start on in the next
+pattern. Note that the specified row xx is in Hex. This effect will not work on
+the last pattern of the song, because there is no "next pattern". If you want to
+make a loop, use Bxx instead.
+
+
+
+
+                                                                                    18
+                                                                                     19
+              DefleMask Tracker Manual by Leonardo Demartino (delek.net)
+
+
+
+Exx - Extended Commands
+
+      - E0xx – Arpeggio Tick Speed: Use xx to define the speed of the
+      arpeggio (00xy) effect. Bigger numbers are slower.
+      - E1xy - Note Slide Up: Use x to define the speed, and y to define the
+      number of semitones to increment. This effect is similar to 3xx -
+      Portamento to Note.
+      - E2xy - Note Slide Down Use x to define the speed, and y to define the
+      number of semitones to decrement. This effect is similar to 3xx -
+      Portamento to Note.
+      - E3xx - Set Vibrato Mode: This command will define vibrato mode, 1 UP
+      ONLY (like guitars), 2 DOWN ONLY, 0 both/normal mode.
+      - E4xx - Set Fine Vibrato Depth: This command will define the fine
+      vibrato depth, default value is F.
+      - E5xx - Set Fine Tune: This command will change notes pitch in a
+      precise way, it is a fine tweak offset with origin in E580. E5FF goes to
+      current note + 1 semitone, E500 is current note – 1 semitone.
+      - EBxx - Set Samples Bank: This command will change the current
+      sample bank to xx. A max of 12 sample banks can be used, from 0 to
+      11.
+      - ECxx - Note Cut: This command will rapidly cut a triggered note, a
+      value greater than the speed of the current row will be ignored.
+      - EDxx - Note Delay: This command will delay a note a short period of
+      time, a value greater than the speed of the current row will be ignored.
+      - EExx – Sync Signal: To be used in .vgm exports for synchronization
+      with visuals or other devices. It writes a data block of type FF size 3 with
+      register 0x00 0x00 and DATA xx.
+             In HEX: 0x67 0x66 0xFF 0x03 0x00 0x00 0x00 0x00 0x00 xx
+      - EFxx - Set Global Fine Tune: This command will add or subtract to the
+      global pitch of the entire song, a value greater than 80 will add, and a
+      value lower than 80 will subtract (this effect is cumulative).
+
+Fxx - Set Speed Value 2
+This command will set the playback speed 2 dynamically.
+
+
+
+
+                                                                                     19
+                                                                                    20
+               DefleMask Tracker Manual by Leonardo Demartino (delek.net)
+
+Skins
+
+
+
+
+Every user has different visual preferences, so it is available an easy system to
+customize the visual aspect of the software.
+
+You can do a new skin for DefleMask by following 5 easy steps:
+1. Enter to skins folder.
+2. Copy "default_classic" folder.
+3. Rename your copy.
+4. Edit the textures.
+5. Edit colors.ini changing the RGB values.
+6. Load it from File->Load Skin.
+Enjoy!
+

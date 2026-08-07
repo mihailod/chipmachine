@@ -428,11 +428,26 @@ Notice: NOT LINKED into the Mac App Store variant (CM_VARIANT=mas builds with
         than patched. This is also what removes reSIDfp from the mas build:
         dmfplugin was its sole source there.
 
-        The 2,071 DefleMask-format .dmf songs are dropped from that variant's
-        index to match. ".dmf" is TWO unrelated formats, and only the DefleMask
-        one is affected: the X-Tracker "DDMF" .dmf (723 songs) is played by
-        libopenmpt and is unaffected in both variants. Routing between them is
-        by content, not extension (zlib magic 0x78 -> ".DelekDefleMask.").
+        1,375 of the 2,071 DefleMask-format .dmf songs are dropped from that
+        variant's index to match. ".dmf" is TWO unrelated formats, and only the
+        DefleMask one is affected: the X-Tracker "DDMF" .dmf (723 songs) is
+        played by libopenmpt and is unaffected in both variants. Routing between
+        them is by content, not extension (zlib magic 0x78 ->
+        ".DelekDefleMask.").
+
+        The SEGA Genesis and SEGA Master System modules are NOT dropped. They
+        are played in the mas variant by dmfcrplugin, a clean-room player
+        written from DefleMask's own published documentation on permissively
+        licensed chip emulation, with no Furnace source consulted. See
+        dmfcrplugin/README.md and the dmfcrplugin entry in LEGAL.
+
+        dmfcrplugin is built into BOTH variants but claims files only in mas:
+        this plugin registers first and outranks it on the shared extension, so
+        Plus playback is unchanged and stays available as a reference.
+
+        Which rows survive is the list data/misc/dmfcr_playable.txt, not the
+        format name -- the format column reads "Deflemask" for all eight
+        DefleMask systems.
 
         The YM2608 rhythm voices are NOT Yamaha's. Furnace ships the chip's
         internal ADPCM-A rhythm ROM as platform/sound/rss.h; that is copyrighted

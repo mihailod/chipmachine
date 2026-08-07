@@ -112,7 +112,7 @@ The two are **independent build trees** (each has its own objects and binary) sh
 
 * the **YouTube** plugin and its ~32k catalog rows (yt-dlp is a spawned executable — App Store §2.5.2),
 * the bundled **yt-dlp** helper,
-* **UADE**, **VICE**, **GoatTracker v2**, **Furnace** (the DefleMask `.dmf` plugin), **mdxmini** (the Sharp X68000 `.mdx` player), **SC68**, **ASAP**/PokeyNoise, **AOSDK**, **Highly Theoretical**, **vio2sf**, **USF**, **Ayfly** and **ZXTune**, together with the `data/uade`, `data/c64` and `data/sc68` payloads that go with them — dropping Furnace is also what clears **reSIDfp** from the build, and dropping VICE is what removes Commodore's copyrighted KERNAL/BASIC/chargen ROM images (Compute!'s Sidplayer `.mus`/`.str` survives regardless, via the **ChipMachine Clean Room SIDPlayer** plugin),
+* **UADE**, **VICE**, **GoatTracker v2**, **Furnace** (the multi-system DefleMask `.dmf` engine — its SEGA Genesis and Master System modules are reclaimed by the clean-room `dmfcr` plugin, the rest stay hidden), **mdxmini** (the Sharp X68000 `.mdx` player), **SC68**, **ASAP**/PokeyNoise, **AOSDK**, **Highly Theoretical**, **vio2sf**, **USF**, **Ayfly** and **ZXTune**, together with the `data/uade`, `data/c64` and `data/sc68` payloads that go with them — dropping Furnace is also what clears **reSIDfp** from the build, and dropping VICE is what removes Commodore's copyrighted KERNAL/BASIC/chargen ROM images (Compute!'s Sidplayer `.mus`/`.str` survives regardless, via the **ChipMachine Clean Room SIDPlayer** plugin),
 * the **GitHub self-update** check (updates come through the App Store).
 
 Why each of those is excluded — the exact terms, what it costs, and whether a replacement exists — is documented per component in [`LEGAL-PLUS`](./LEGAL-PLUS). The build gates themselves are `CM_HAVE_*` in [CMakeLists.txt](CMakeLists.txt).
@@ -120,6 +120,8 @@ Why each of those is excluded — the exact terms, what it costs, and whether a 
 Dropping those engines costs formats, so the catalog hides what the build cannot play (`songHasNoPlayer()` / `songFormatHasNoPlayer()`) — you never see a song that will not start. Where an extension covers several unrelated formats, only the affected one is hidden, because the gate keys on the *format name* rather than the extension. Which formats each gate costs, and what (if anything) replaces them, is documented in the [per-plugin READMEs](external/musicplayer/src/plugins/README.md).
 
 The C64 formats are **almost** unaffected: the ~6.5k Compute!'s Sidplayer `.mus`/`.str` tunes play via the clean-room [ChipMachine Clean Room SIDPlayer](external/musicplayer/src/plugins/musplugin/README.md), and ~59.9k of the ~62k `.sid` tunes via the permissively-licensed [cSID](external/musicplayer/src/plugins/csidplugin/README.md) engine — whose README lists the measured set of SIDs it cannot voice, and why that list is measured rather than inferred.
+
+DefleMask is being reclaimed the same way, one chip target at a time. [dmfcrplugin](external/musicplayer/src/plugins/dmfcrplugin/README.md) is a clean-room `.dmf` parser and sequencer written from DefleMask's own published format specs and manual — never from Furnace — driving BSD-licensed [ymfm](external/ymfm) for the YM2612 and an SN76489 written against the documented hardware. It covers **SEGA Genesis** and **SEGA Master System** so far, which brings 696 of the 2,071 hidden DefleMask rows back into the MAS index; Game Boy, PC Engine, Neo Geo, NES and C64 remain hidden. It ships in **both** variants but only *claims* files in MAS: Plus registers Furnace first and is byte-for-byte unchanged, which keeps a reference implementation on hand for A/B listening. Which rows survive is decided by the measured list in `data/misc/dmfcr_playable.txt`, because the format column says "Deflemask" without saying which of the eight DefleMask systems a file targets.
 
 It runs **App-Sandboxed**, with a distinct bundle id (`org.mihailod.chipmachine`) and its own cache/database/index, so Plus and MAS never share state. Per-variant product identity (name, bundle id, artifact) is the single source of truth in [variants.conf](variants.conf); the compile-time switch is `CM_VARIANT` / the `CM_MAS` define.
 
@@ -397,6 +399,7 @@ the short version.
 | FamiTracker (NES + VRC6/VRC7/MMC5/FDS) | `.ftm` | [famitracker](external/musicplayer/src/plugins/famitrackerplugin/README.md) *(Plus only)* |
 | NerdTracker II (NES) | `.ned` | [ned](external/musicplayer/src/plugins/nedplugin/README.md) |
 | DefleMask / Furnace chiptunes | `.dmf` | [dmf](external/musicplayer/src/plugins/dmfplugin/README.md) *(Plus only)* |
+| DefleMask, SEGA Genesis / Master System (clean room) | `.dmf` | [dmfcr](external/musicplayer/src/plugins/dmfcrplugin/README.md) |
 | Game Boy Advance | `.gsf` `.minigsf` | [gsf](external/musicplayer/src/plugins/gsfplugin/README.md) |
 | Nintendo DS | `.2sf` `.mini2sf` | [nds](external/musicplayer/src/plugins/ndsplugin/README.md) *(Plus only)* |
 | Nintendo 64 | `.usf` `.miniusf` | [usf](external/musicplayer/src/plugins/usfplugin/README.md) *(Plus only)* |

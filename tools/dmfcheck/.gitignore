@@ -1,0 +1,8 @@
+# Built by build.sh (and by hand for dmfab -- see README.md). These are
+# development oracles, not build products of the project, and dmfab in
+# particular links the GPL Furnace slice, so it must never be distributed.
+dmfcheck
+dmfrender
+dmffurnace
+dmfab
+*.dSYM/

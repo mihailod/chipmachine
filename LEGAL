@@ -712,6 +712,40 @@ Coverage: cSID does not emulate enough of a real C64 (KERNAL banked in, CIA and
         ones are listed in data/misc/csid_silent_sids.txt and dropped from the
         catalog, so no unplayable row is ever shown.
 
+Component: DefleMask .dmf sequencer (SEGA Genesis, Master System) -- dmfcrplugin,
+           shown in the app as "DefleMask Clean Room"
+Author: Original code written for this project (clean room). The FORMAT is
+        Leonardo Demartino's DefleMask, which is closed source. Implemented from
+        DefleMask's own published documentation, archived verbatim under
+        dmfcrplugin/spec/: the DMF_SPECS_0x11/0x12/0x13/0x15/0x16/0x18.txt
+        format documents, and the effect tables from the DefleMask tracker
+        manual (both the legacy and current PDFs), all fetched from
+        https://www.deflemask.com/.
+License: Our implementation is original work under this project's terms. The
+         format documents and manuals are published by DefleMask for exactly
+         this purpose.
+Notice: CLEAN ROOM. Furnace (GPL-2.0-or-later) is the only other engine that
+        reads .dmf, and no part of it was read while writing this -- not
+        src/engine/fileOps/dmf.cpp, not its Genesis platform code, none of it.
+        Nothing here derives from any other .dmf implementation, and where the
+        published documents were silent or wrong the answer was measured from
+        the music itself rather than taken from another player.
+        That constraint also governs how the work is verified: Furnace is driven
+        only as a black box, through this project's own public plugin interface,
+        and the two are compared as rendered audio. A register-level trace would
+        be the stronger test but would require reading the code that must stay
+        unread, so it is deliberately not done. See dmfcrplugin/README.md.
+        The chip emulation is ymfm (BSD-3, see above) for the YM2612, and an
+        SN76489 written for this project from the published hardware
+        description. Nuked-OPN2 was rejected as LGPL: static linking into an App
+        Store binary cannot satisfy its relink term.
+Coverage: SEGA Genesis and SEGA Master System only. DefleMask's other six
+        targets (Game Boy, PC Engine, NES, C64, Arcade, Neo Geo) have no
+        non-copyleft player here, so those rows are dropped from the mas catalog
+        and no unplayable row is ever shown. The surviving rows are listed in
+        data/misc/dmfcr_playable.txt, because the catalog's format column names
+        DefleMask without naming which of its systems a file targets.
+
 Component: Compute!'s Sidplayer sequencer (.mus / .str) -- musplugin,
            shown in the app as "ChipMachine Clean Room SIDPlayer"
 Author: Original code written for this project (clean room). The FORMAT is Craig

@@ -97,6 +97,7 @@ extern "C" {
     void goattrackerplugin_register(); // GoatTracker (.sng) C64 SID via vendored GoatTracker player + reSID
 #endif
     void dmfplugin_register();         // DefleMask (.dmf) multi-system chiptune via vendored Furnace engine
+    void dmfcrplugin_register();       // DefleMask (.dmf) SEGA Genesis + Master System, clean-room parser + sequencer
     void vgmstreamplugin_register();   // vgmstream (.adx/.hca/.fsb/... hundreds of game-audio containers) via vendored vgmstream
     void victrackerplugin_register();  // VIC-TRACKER (.vt) Commodore VIC-20 via MyLittle6502 + our VIC-I sound
     void klystrackplugin_register();   // Klystrack (.kt) via vendored libksnd / klystron cyd synth
@@ -253,11 +254,27 @@ void register_plugins() {
     // The whole vendored Furnace engine is GPL-2.0-or-later (engine, all 80
     // DivPlatform wrappers, and several sound cores) -- excluded from the Mac
     // App Store build (CM_VARIANT=mas), where the dmfplugin target is not built
-    // at all. The 2,071 DefleMask-format .dmf rows are dropped from the mas
-    // index to match; see songFormatHasNoPlayer(). The unrelated X-Tracker DDMF
-    // .dmf rows keep playing via libopenmpt in both variants.
+    // at all. The DefleMask-format .dmf rows that nothing else can play are
+    // dropped from the mas index to match; see songFormatHasNoPlayer(). The
+    // unrelated X-Tracker DDMF .dmf rows keep playing via libopenmpt in both
+    // variants.
+    //
+    // BEFORE dmfcrplugin, and that ordering is the whole variant gate -- both
+    // declare priority 1, so stable_sort leaves them in registration order and
+    // MusicPlayer::fromFile takes the first that claims the file. In the plus
+    // build Furnace therefore keeps every .dmf, including the Genesis ones
+    // dmfcrplugin could play, so plus playback is untouched and stays usable as
+    // the A/B reference. In mas this block is compiled out and dmfcrplugin is
+    // the only claimant. Same arrangement as musplugin behind vicepluginbridge
+    // and csidplugin ahead of it -- see the stable_sort note in chipplugin.h.
     dmfplugin_register();
 #endif
+    // Clean-room DefleMask player -- SEGA Genesis and SEGA Master System (see
+    // dmfcrplugin/README.md). Built in BOTH variants; declines every other
+    // DefleMask system, and any DMF version outside 0x11-0x18, so in the plus
+    // build the files it cannot play fall through to Furnace rather than being
+    // claimed and mis-played.
+    dmfcrplugin_register();
     vgmstreamplugin_register();
     victrackerplugin_register();
     klystrackplugin_register();

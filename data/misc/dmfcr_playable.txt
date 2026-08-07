@@ -1,0 +1,731 @@
+# DefleMask .dmf songs the clean-room dmfcrplugin can play -- one collection
+# path per line (modland-relative for the Deflemask/ corpus, full URL for
+# Battle of the Bits). Used ONLY by the Mac App Store build, which has no
+# Furnace and therefore no other .dmf decoder.
+#
+# This is an ALLOW-list, the inverse of csid_silent_sids.txt: a "Deflemask" /
+# "DefleMask" row is kept in the mas index only if it appears here. That is
+# needed because the format column is chip-target-agnostic -- it says
+# "Deflemask", not which of the eight DefleMask systems the file targets -- and
+# dmfcrplugin covers SEGA Genesis and SEGA Master System only. Keying the gate
+# on the format name alone would resurface all 2,071 rows, most of which mas
+# still cannot play.
+#
+# MEASURED, not assumed. Every .dmf in the Deflemask/ (modland, 1,809) and
+# Battle of the Bits (263) collections was fetched and its header read:
+#    598 kept  -- SEGA Genesis  (system byte 0x02)
+#     98 kept  -- SEGA Master System (system byte 0x03)
+#    171 dropped -- corrupt: the deflate stream completes but the stored
+#                   Adler-32 does not match, and the payload really is damaged
+#                   (it desynchronises mid-parse). Furnace rejects these too.
+#     11 dropped -- DMF versions 0x0D, 0x10 and 0x19-0x1B, for which DefleMask
+#                   never published a spec; they desynchronise and are declined
+#                   rather than mis-parsed.
+#     57 dropped -- SEGA Genesis EXT.CH3 (system byte 0x42): splits FM channel 3
+#                   into four independently-pitched operators, a different
+#                   channel model that dmfcrplugin does not implement.
+#
+# The remaining DefleMask rows target Game Boy, PC Engine, Neo Geo, NES, C64 or
+# Arcade and stay hidden in mas until those targets land. The unrelated
+# X-Tracker "DDMF" .dmf rows are not affected by any of this -- libopenmpt plays
+# them in both variants and they were never gated.
+#
+# Regenerate after a collection update with tools/dmfcheck (see its README):
+# probe each file's system byte and DMF version, keep 0x02/0x03, 0x11-0x18, and
+# a clean checksum.
+Deflemask/0xfroman/Product01.dmf
+Deflemask/0xfroman/Product02.dmf
+Deflemask/96N64player/BA Round 1.dmf
+Deflemask/96N64player/DKC Credits.dmf
+Deflemask/96N64player/GBC.dmf
+Deflemask/96N64player/Loop.dmf
+Deflemask/96N64player/Rave Dancetune.dmf
+Deflemask/96N64player/SMK Battle Mode.dmf
+Deflemask/96N64player/Sim City Menu.dmf
+Deflemask/96N64player/Tetris Theme.dmf
+Deflemask/ARJr/1-Up (JINGLE).dmf
+Deflemask/ARJr/1-Up (SOUND).dmf
+Deflemask/ARJr/1up sound.dmf
+Deflemask/ARJr/1up.dmf
+Deflemask/ARJr/Act Clear (JINGLE).dmf
+Deflemask/ARJr/Clear.dmf
+Deflemask/ARJr/Court Begins.dmf
+Deflemask/ARJr/Get Ready! (THEME).dmf
+Deflemask/ARJr/Get Ready! (THEME, LEGACY).dmf
+Deflemask/ARJr/Invincible (Jingle).dmf
+Deflemask/ARJr/Invincible (THEME).dmf
+Deflemask/ARJr/MP Intermission (SONG).dmf
+Deflemask/ARJr/NiGHTS Atack (THEME).dmf
+Deflemask/ARJr/Objection.dmf
+Deflemask/ARJr/Pipe Towers 1 (Overworld) (SONG).dmf
+Deflemask/ARJr/Pipe Towers 2 (Underground) (SONG).dmf
+Deflemask/ARJr/Power Sneakers (THEME).dmf
+Deflemask/ARJr/Questioning Moderato.dmf
+Deflemask/ARJr/Red Volcano 2 (SONG, UNUSED).dmf
+Deflemask/ARJr/Supersonic! (THEME).dmf
+Deflemask/ARJr/Tutorial (SONG).dmf
+Deflemask/ARJr/Win The Race.dmf
+Deflemask/ARJr/sonicmania_lightscameraaction.dmf
+Deflemask/AceMan/AceMan - WashCraft.dmf
+Deflemask/AlexE/Alex E. - He's a Mellow Fellow.dmf
+Deflemask/AlexE/Alex E. - Just Straight Doodlin'.dmf
+Deflemask/AlexE/Encounter - Metal Gear Solid - Revision 1.dmf
+Deflemask/AlexE/Encounter - Metal Gear Solid.dmf
+Deflemask/AlexE/First Song.dmf
+Deflemask/AlexE/How I Feel Playing Dark Souls.dmf
+Deflemask/AlexE/Mega Dega Slappy Dappy.dmf
+Deflemask/AlexE/Opus Maximums Duet.dmf
+Deflemask/AlexE/Rush - The Trees.dmf
+Deflemask/AlexE/WIP 1.dmf
+Deflemask/AlexE/WIP 2.dmf
+Deflemask/Alianger/Beverly Hills Cop - Axel F (Genesis Version) quick edit.dmf
+Deflemask/Alianger/FM and PSG slide test.dmf
+Deflemask/Alianger/GnG - Level 1 (Hill of Torture) Remake d minor tweak.dmf
+Deflemask/Alianger/GnG - Level 1 (Hill of Torture) Remake d.dmf
+Deflemask/Alianger/MM2 - Wily 1 (Decap Style) b.dmf
+Deflemask/Alianger/MM2 - Wily 1 (Decap Style) c.dmf
+Deflemask/Alianger/MegaSphere - FM Stuff quick ed.dmf
+Deflemask/Alianger/Metal Gear 2 - Theme of Solid Snake - edit.dmf
+Deflemask/Alianger/Metal Gear Solid - Encounter - Revision 1 edit.dmf
+Deflemask/Alianger/Sonic3-MarbleGarden-Act1 edit b.dmf
+Deflemask/Alianger/musha - for the love of e (b edit).dmf
+Deflemask/Alianger/smb_overworld edit b.dmf
+Deflemask/Alianger/smb_overworld edit.dmf
+Deflemask/Alianger/wing force quick edit.dmf
+Deflemask/AndyPie/Earthbound - The Sky Runner.dmf
+Deflemask/AndyPie/Metroid - Brinstar.dmf
+Deflemask/AndyPie/SMAS - SMB3 Overworld.dmf
+Deflemask/AphoticJezter/Sonic3-MarbleGarden-Act1.dmf
+Deflemask/Arjak/Ys 2 - Termination.dmf
+Deflemask/Bp103/operator_abuse.dmf
+Deflemask/Bp103/orange_peels.dmf
+Deflemask/Bp103/rain is okay.dmf
+Deflemask/Bp103/rude_4.1.dmf
+Deflemask/Bp103/rude_4.dmf
+Deflemask/Bp103/sleep mode 3.dmf
+Deflemask/Brankian/kILLED BY A THUNDER.dmf
+Deflemask/Bubbsy/Green Hill Zone Sega Genesis Remix (dang it).dmf
+Deflemask/CaptainWaffles/LetItBe (1).dmf
+Deflemask/CaptainWaffles/LetItBe.dmf
+Deflemask/CaptainWaffles/dedededededededededede (1).dmf
+Deflemask/CaptainWaffles/dedededededededededede.dmf
+Deflemask/CaptainWaffles/meListeningToSeaShanties.dmf
+Deflemask/CaptainWaffles/sunsetPark.dmf
+Deflemask/Crash/01 - Grabbag (Theme from Duke Nukem 3D) [Lee Jackson].dmf
+Deflemask/CrazySoundEnginer/DOOM TNT Human BBQ.dmf
+Deflemask/CrazySoundEnginer/Devils Marsh.dmf
+Deflemask/CrazySoundEnginer/Doom 2 Getting Too Tense.dmf
+Deflemask/CrazySoundEnginer/Doom Fortress of Mystery E3M1.dmf
+Deflemask/CrazySoundEnginer/Doom Halls of the Damned E2M6.dmf
+Deflemask/CrazySoundEnginer/Doom Hanger E1M1.dmf
+Deflemask/CrazySoundEnginer/Doom Phobos Lab E1M5.dmf
+Deflemask/CrazySoundEnginer/Doom Spawning Vats E2M7 Update.dmf
+Deflemask/CrazySoundEnginer/Green Hill Zone.dmf
+Deflemask/CrazySoundEnginer/Hill Top Zone.dmf
+Deflemask/CrazySoundEnginer/Labyrinth Zone.dmf
+Deflemask/CrazySoundEnginer/Marble Zone.dmf
+Deflemask/CrazySoundEnginer/Metal Gear 2 Solid Snake Intro.dmf
+Deflemask/CrazySoundEnginer/NBA JAM Intro (YM2612).dmf
+Deflemask/CrazySoundEnginer/Phantasy Star Dungeon.dmf
+Deflemask/CrazySoundEnginer/Scrap Brain SMS [MD].dmf
+Deflemask/CrazySoundEnginer/Scrap Brain Zone (Dreamcast).dmf
+Deflemask/CrazySoundEnginer/Scrap Brain Zone.dmf
+Deflemask/CrazySoundEnginer/Snatcher Sega CD (Virtual Image).dmf
+Deflemask/CrazySoundEnginer/Sonic 2 Emerald Hill Zone.dmf
+Deflemask/CrazySoundEnginer/Sonic The Hedgehog Bonus (Master System).dmf
+Deflemask/CrazySoundEnginer/Sonic The Hedgehog Sky Base (Master System) (1).dmf
+Deflemask/CrazySoundEnginer/Sonic The Hedgehog Sky Base (Master System).dmf
+Deflemask/CrazySoundEnginer/Space Harrier (Sonic Cover).dmf
+Deflemask/CrazySoundEnginer/Star Light Zone.dmf
+Deflemask/CrazySoundEnginer/Theme of Junker.dmf
+Deflemask/Cris/Nyan.dmf
+Deflemask/Curriculum Crasher/DevilishPrairie.dmf
+Deflemask/Curriculum Crasher/ThunderForceIVOmake4.dmf
+Deflemask/Delek/fixed_vols_lol.dmf
+Deflemask/Delek/rude_1.dmf
+Deflemask/Delek/rude_5.dmf
+Deflemask/Demick12/AdvChords.dmf
+Deflemask/Demick12/Arkanoid Intro.dmf
+Deflemask/Demick12/Arkanoid Level.dmf
+Deflemask/Demick12/Brilek Stage A.dmf
+Deflemask/Demick12/DKC_Aquatic Ambience.dmf
+Deflemask/Demick12/Garou Densetsu Bonus.dmf
+Deflemask/Demick12/Godawful Densetsu Bonus.dmf
+Deflemask/Demick12/Heretic E1M1.dmf
+Deflemask/Demick12/Kirby1Theme.dmf
+Deflemask/Demick12/Neo Geo Jingle.dmf
+Deflemask/Demick12/Neo-Geo Jingle.dmf
+Deflemask/Demick12/Sonic3K_Super.dmf
+Deflemask/Demick12/Sonic_Warp.dmf
+Deflemask/Demick12/Ys I_Dreaming.dmf
+Deflemask/DevEd/DuckTales2.dmf
+Deflemask/DevEd/OilDesertAct1_WIP.dmf
+Deflemask/DevEd/boss_battle.dmf
+Deflemask/DevEd/bridge_zone.dmf
+Deflemask/DevEd/chippin'.dmf
+Deflemask/DevEd/cloud_castle.dmf
+Deflemask/DevEd/jungle_zone.dmf
+Deflemask/DevEd/jungle_zone_genesis.dmf
+Deflemask/DevEd/ltcc_zoo (1).dmf
+Deflemask/DevEd/rude_2.dmf
+Deflemask/DevEd/s3_actclear.dmf
+Deflemask/DevEd/shantae_boss_genesis_wip.dmf
+Deflemask/DevEd/smb.dmf
+Deflemask/DevEd/smb_castle.dmf
+Deflemask/DevEd/smb_castle_clear.dmf
+Deflemask/DevEd/smb_course_clear.dmf
+Deflemask/DevEd/smb_ending.dmf
+Deflemask/DevEd/smb_gameover.dmf
+Deflemask/DevEd/smb_overworld.dmf
+Deflemask/DevEd/smb_starman.dmf
+Deflemask/DevEd/smb_ug.dmf
+Deflemask/DevEd/smb_uw.dmf
+Deflemask/DevEd/smurfs_bridge_wip.dmf
+Deflemask/DevEd/tarm_ruins.dmf
+Deflemask/DevEd/telefang_indoors_genesis.dmf
+Deflemask/DevEd/telefang_indoors_sms.dmf
+Deflemask/DevEd/telefang_sms.dmf
+Deflemask/DevEd/title_theme_genesis.dmf
+Deflemask/DevEd/wl_cave_gen.dmf
+Deflemask/DevEd/wl_cave_sms.dmf
+Deflemask/Eduardo_Moonwalker/rolling_thunder_II-across_the_tube-with_solo.dmf
+Deflemask/EmotionalGuy/Claustrophobia.dmf
+Deflemask/EmotionalGuy/Snow Bros. Nick & Tom_Stage 3.dmf
+Deflemask/EmotionalGuy/The Lawnmower Man Platform Area 1.dmf
+Deflemask/EnderDude/DokiDokiPanicMain (2).dmf
+Deflemask/EnderDude/DokiDokiPanicMain.dmf
+Deflemask/EnderDude/SMW Overworld w bongos.dmf
+Deflemask/EnderDude/smb3.dmf
+Deflemask/EnderDude/smb3gen.dmf
+Deflemask/EnderDude/smw victory.dmf
+Deflemask/ErmDJvit/Through the night.dmf
+Deflemask/FmanF/undertale001.dmf
+Deflemask/Fragmare/Kirby_Green_Greens01b.dmf
+Deflemask/GammaLyrae/mega 2.dmf
+Deflemask/Genatari/SSG-EG Voice.dmf
+Deflemask/Genatari/SSG_EG Guitar.dmf
+Deflemask/Genatari/Skit.dmf
+Deflemask/Genatari/Sonic 2 Casino Night Zone (Two Players).dmf
+Deflemask/Genatari/Totaka's Song.dmf
+Deflemask/GhostVoltage/Double Dragon II - Shadow Boss - Ghost Voltage (2).dmf
+Deflemask/GhostVoltage/Double Dragon II - Shadow Boss - Ghost Voltage.dmf
+Deflemask/Heavy Viper/SuPeHaRiMAIN-StarrySky.dmf
+Deflemask/JetStar1997/A Company Logo (Genesis).dmf
+Deflemask/JetStar1997/A Company Logo (Master System).dmf
+Deflemask/JetStar1997/Beverly Hills Cop - Axel F (SMS Version).dmf
+Deflemask/JetStar1997/Sonic CD - Quartz Quadrant Past (Genesis Cover).dmf
+Deflemask/JetStar1997/Speed 1 Practice.dmf
+Deflemask/JetStar1997/Zelda 2 - Temple.dmf
+Deflemask/JohnBriscoe196/Blossom Haze TF4 Remix 1.dmf
+Deflemask/JohnBriscoe196/Wing Force Name Entry TF4 Remix.dmf
+Deflemask/Karcus/MK vs Ken.dmf
+Deflemask/KillaMaaki/BulletStationZone.dmf
+Deflemask/KillaMaaki/Desire for all that is lost.dmf
+Deflemask/KillaMaaki/E1M1.dmf
+Deflemask/KillaMaaki/Encounter_FightForYourLife.dmf
+Deflemask/KillaMaaki/FightForMyFriends.dmf
+Deflemask/KillaMaaki/HazardousHighway2.dmf
+Deflemask/KillaMaaki/LinkToThePast_LightWorldDungeon.dmf
+Deflemask/KillaMaaki/MechanicalBehemoth.dmf
+Deflemask/KillaMaaki/QuadMachineV2.dmf
+Deflemask/KillaMaaki/SA2B_GunBoss.dmf
+Deflemask/KillaMaaki/SpeedHighway.dmf
+Deflemask/KillaMaaki/Splatoon_Final_Boss_Theme.dmf
+Deflemask/KillaMaaki/Splattack.dmf
+Deflemask/KillaMaaki/StringDemo.dmf
+Deflemask/KillaMaaki/TwilightPrincess_Battle.dmf
+Deflemask/KillaMaaki/UT_GoDown.dmf
+Deflemask/KillaMaaki/YouWillKnowOurNames.dmf
+Deflemask/Klangfarben/Klangfarben_-_Individualist.dmf
+Deflemask/LUSA/initial_test (1).dmf
+Deflemask/LUSA/initial_test.dmf
+Deflemask/LeCheeseMaster16/GenesisIn3D.dmf
+Deflemask/LeCheeseMaster16/Goal and Score.dmf
+Deflemask/LeCheeseMaster16/SMRPG Beware the Forest Mushroom.dmf
+Deflemask/LeCheeseMaster16/SMSS Title Screen.dmf
+Deflemask/LeCheeseMaster16/SMW Athletic (1).dmf
+Deflemask/LeCheeseMaster16/SMW Athletic Bongos (1).dmf
+Deflemask/LeCheeseMaster16/SMW Athletic Bongos.dmf
+Deflemask/LeCheeseMaster16/SMW Athletic.dmf
+Deflemask/LeCheeseMaster16/SMW Overworld.dmf
+Deflemask/LeCheeseMaster16/SMW2YI flower garden.dmf
+Deflemask/LeCheeseMaster16/SMW2YI map (1).dmf
+Deflemask/LeCheeseMaster16/SMW2YI map.dmf
+Deflemask/LeCheeseMaster16/Zelda Title Sega Genesis Remix.dmf
+Deflemask/LordHypnos/Space Walk.dmf
+Deflemask/LordHypnos/betterfunk2.dmf
+Deflemask/LordHypnos/cassiopeia.dmf
+Deflemask/LordHypnos/deadfeelings.fixedbass.dmf
+Deflemask/LordHypnos/deadfeelingscover.dmf
+Deflemask/LordHypnos/dminorthing.dmf
+Deflemask/LordHypnos/groovydrums.dmf
+Deflemask/LordHypnos/heavy2612.dmf
+Deflemask/LordHypnos/heavyboss.dmf
+Deflemask/LordHypnos/thrashyboss.dmf
+Deflemask/LukeMcQueen/FFight_BayArea.dmf
+Deflemask/MAHBOD/Red Alarm Level 1.dmf
+Deflemask/MAHBOD/Red Alarm Level 2.dmf
+Deflemask/MegaBytez/Metal Crusher.dmf
+Deflemask/MegaBytez/Moskau.dmf
+Deflemask/MegaBytez/RippleStar.dmf
+Deflemask/MegaBytez/Zelda Dungeon Genesis.dmf
+Deflemask/MegaSparky/Main Theme - Space Harrier.dmf
+Deflemask/MegaSphere/Bridge Zone.dmf
+Deflemask/MegaSphere/DONK.dmf
+Deflemask/MegaSphere/MegaSphere - SMS Save My System 2612_.dmf
+Deflemask/MegaSphere/MegaSphere - SMS Save My System.dmf
+Deflemask/MegaSphere/What's Up GLOBAL EXPAND SN3 Arp.dmf
+Deflemask/MegaSphere/What's Up GLOBAL EXPAND.dmf
+Deflemask/Michirin9801/Mohenjo Daro - USAS (SMS).dmf
+Deflemask/Michirin9801/USAS - Juba Ruins (SMS).dmf
+Deflemask/Michirin9801/[SMS] Bonk's Adventure - Beginning.dmf
+Deflemask/Michirin9801/[SMS] Carat - BGM5.dmf
+Deflemask/Michirin9801/[SMS] Cratermaze - Seaside Theme.dmf
+Deflemask/Michirin9801/[SMS] DBZ Super Butouden 2 - Son Gohan.dmf
+Deflemask/Michirin9801/[SMS] Silent Colony.dmf
+Deflemask/ModTomIT/ModTomIT_-_Ferris_Wheel_(SMS).dmf
+Deflemask/ModTomIT/ModTomIT_-_Half_Plains_Half_Marsh.dmf
+Deflemask/ModTomIT/ModTomIT_-_Masterclub.dmf
+Deflemask/ModTomIT/ModTomIT_-_Microepic_1.dmf
+Deflemask/ModTomIT/ModTomIT_-_Strands_of_Chaos.dmf
+Deflemask/ModTomIT/ModTomIT_-_Sugar_Town.dmf
+Deflemask/ModTomIT/ModTomIT_-_Tea.dmf
+Deflemask/ModTomIT/ModTomIT_-_Winter_Mountains.dmf
+Deflemask/Mr. X/Moe`uhane.dmf
+Deflemask/Mr. X/The Wigwam.dmf
+Deflemask/Mr. X/Under The Bridge.dmf
+Deflemask/MrKsoft/A Sad Touch.dmf
+Deflemask/MrKsoft/Blaster Master Area 1.dmf
+Deflemask/MrKsoft/JXJ220 Financial Advisor.dmf
+Deflemask/MrKsoft/Jttimarsu.dmf
+Deflemask/MrKsoft/X Tunnel Scene 1.dmf
+Deflemask/NARFNra/CaveofShadows.dmf
+Deflemask/NARFNra/GiveAllToTheGears.dmf
+Deflemask/NARFNra/IAmKingCriticalFixedVolune.dmf
+Deflemask/NARFNra/OutofTime.dmf
+Deflemask/NARFNra/Stage4Truncated.dmf
+Deflemask/NadavGames/Big Arms.dmf
+Deflemask/NadavGames/Brainiac Maniac.dmf
+Deflemask/Nat The Porcupine/Hydrocity Zone Act 2 - Nat the Porcupine.dmf
+Deflemask/Niko/Kirby 64 - Friends 2.dmf
+Deflemask/Oocca_Truth/CrazyNoisyBizzareTown.dmf
+Deflemask/Ozaleto/Bowser's Theme Fixed.dmf
+Deflemask/Ozaleto/Bowser's Theme.dmf
+Deflemask/Pegmode/Scramble_Over_The_Desert_FINAL.dmf
+Deflemask/Pisuke85/Holding Out for a Hero.dmf
+Deflemask/Pixelator5/mm7bass.dmf
+Deflemask/PotaJoe (ShortFieldGames)/Battle_Stars.dmf
+Deflemask/PotaJoe (ShortFieldGames)/Chill_Out.dmf
+Deflemask/PotaJoe (ShortFieldGames)/Final_Battle.dmf
+Deflemask/PotaJoe (ShortFieldGames)/Hearts_Beat_Cold.dmf
+Deflemask/PotaJoe (ShortFieldGames)/Higher_The_Score.dmf
+Deflemask/PotaJoe (ShortFieldGames)/SMBOverworld.dmf
+Deflemask/PotaJoe (ShortFieldGames)/Stage_Complete.dmf
+Deflemask/PotaJoe (ShortFieldGames)/Wasting_Time.dmf
+Deflemask/Quirby64/Fever.dmf
+Deflemask/Quirby64/GTAd3CarSelect (1).dmf
+Deflemask/Quirby64/GTAd3CarSelect.dmf
+Deflemask/Quirby64/World 7.dmf
+Deflemask/Raijin/DevilishPrarie0.1.dmf
+Deflemask/Raijin/Shovel Knight - Mole Knight Stage.dmf
+Deflemask/Raijin/shovelknight_mole_knight_stage.dmf
+Deflemask/Raijin/smb overworld.dmf
+Deflemask/RavenousSoothing/Last Battle.dmf
+Deflemask/RavenousSoothing/Run!.dmf
+Deflemask/RavenousSoothing/Seal Chamber.dmf
+Deflemask/Retronics/chillin_be_like.dmf
+Deflemask/SMIX/1994RD.dmf
+Deflemask/SMIX/30_years.dmf
+Deflemask/SMIX/Die_in_fire.dmf
+Deflemask/SMIX/Five_Nights_At_Freddy's (1).dmf
+Deflemask/SMIX/Five_Nights_At_Freddy's.dmf
+Deflemask/SUPAH METUL/choujin_sentai_jetman_-_stage_select.dmf
+Deflemask/Scooblee/Everlong.dmf
+Deflemask/Scooblee/Roundabout.dmf
+Deflemask/ScottySR/MLDT - Dream Battle.dmf
+Deflemask/Shintaro_Of_Evil/In your dreams.dmf
+Deflemask/Solomonster/solomonster_dizzy (1).dmf
+Deflemask/Solomonster/solomonster_dizzy.dmf
+Deflemask/Solomonster/solomonster_don't_fall_down.dmf
+Deflemask/Solomonster/solomonster_last_step_forward.dmf
+Deflemask/Speedy/Anything But Tangerines.dmf
+Deflemask/Speedy/Lotus Turbo Challenge - Title Theme.dmf
+Deflemask/Speedy/Quake Theme.dmf
+Deflemask/Speedy/Reactor.dmf
+Deflemask/Speedy/Sillius MD.dmf
+Deflemask/Speedy/Soldier Blade Op3.dmf
+Deflemask/Speedy/Theme of Solid Snake.dmf
+Deflemask/Speedy/ZerosTheme.dmf
+Deflemask/SpoonyBard/Bandoneon Demo.dmf
+Deflemask/SpoonyBard/Battle Scene.dmf
+Deflemask/SpoonyBard/Bonk Arp Fix.dmf
+Deflemask/SpoonyBard/Boss Demo.dmf
+Deflemask/SpoonyBard/City.dmf
+Deflemask/SpoonyBard/Crack the Slate of Fate YM2203.dmf
+Deflemask/SpoonyBard/Crack the Slate of Fate YM2608.dmf
+Deflemask/SpoonyBard/Crime of Century.dmf
+Deflemask/SpoonyBard/Cyclical Rampage.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Bojack.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Broly.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Cell.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Chapter Title.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Character Select.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Ending.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Future Trunks.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Opening Ver 2.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Opening.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Piccolo.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Son Gohan.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Staff Roll.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Story 1.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Story 2.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Story 3.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Vegeta.dmf
+Deflemask/SpoonyBard/DBZ Butouden 2 OST-Zangya.dmf
+Deflemask/SpoonyBard/Dark Knight.dmf
+Deflemask/SpoonyBard/Demon Blue.dmf
+Deflemask/SpoonyBard/Dewerdrye Warehouse.dmf
+Deflemask/SpoonyBard/Doppler Fortress.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Android 16.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Android 18.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Android 20.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Defeated.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Epilogue.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Fighting Master.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Frieza.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Gohan & Trunks.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Goku.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Imperfect Cell.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Perfect Cell.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Piccolo.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Staff Roll.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Story.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Title.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Vegeta.dmf
+Deflemask/SpoonyBard/Dragon Ball Z - Super Butouden-Victorious.dmf
+Deflemask/SpoonyBard/Eons Past.dmf
+Deflemask/SpoonyBard/Fallen Down Reprise.dmf
+Deflemask/SpoonyBard/Fallen Down.dmf
+Deflemask/SpoonyBard/Falling Down 2.dmf
+Deflemask/SpoonyBard/Falling Down.dmf
+Deflemask/SpoonyBard/Fire Licks the Floor.dmf
+Deflemask/SpoonyBard/Forgotten Path.dmf
+Deflemask/SpoonyBard/Future Trunks.dmf
+Deflemask/SpoonyBard/Heart of Enker.dmf
+Deflemask/SpoonyBard/Hearts Are the Weakest Shape.dmf
+Deflemask/SpoonyBard/Inferno.dmf
+Deflemask/SpoonyBard/Jemeux Mouvais.dmf
+Deflemask/SpoonyBard/Klephydra.dmf
+Deflemask/SpoonyBard/Land and Sea.dmf
+Deflemask/SpoonyBard/Ma-Da-Ra.dmf
+Deflemask/SpoonyBard/Nemesis II Boss.dmf
+Deflemask/SpoonyBard/Of Devious Machinations.dmf
+Deflemask/SpoonyBard/Pearlmont Wink.dmf
+Deflemask/SpoonyBard/Plunge to the Heart.dmf
+Deflemask/SpoonyBard/Rampish Chase.dmf
+Deflemask/SpoonyBard/Sakuraba Song.dmf
+Deflemask/SpoonyBard/Spark Mandrill.dmf
+Deflemask/SpoonyBard/Spider Dance.dmf
+Deflemask/SpoonyBard/Tarm Ruins v2.dmf
+Deflemask/SpoonyBard/Technical Difficulties.dmf
+Deflemask/SpoonyBard/The Moon.dmf
+Deflemask/SpoonyBard/The Silent Tower.dmf
+Deflemask/SpoonyBard/To Make the End of Battle.dmf
+Deflemask/SpoonyBard/Vegeta (1).dmf
+Deflemask/SpoonyBard/Vegeta XV Theme.dmf
+Deflemask/SpoonyBard/Vegeta.dmf
+Deflemask/SpoonyBard/Wings Cut Through the Night.dmf
+Deflemask/SpoonyBard/cooler_1.dmf
+Deflemask/SpoonyBard/rude_6.dmf
+Deflemask/Squibbus/mental-delivrance.dmf
+Deflemask/SuperJet Spade/Hover! - Castle (Genesis Cover).dmf
+Deflemask/SuperJet Spade/Ice Crystal Cavern SMS.dmf
+Deflemask/SuperJet Spade/Kirby's Dream Land 3 - Ripple Field 1 (Genesis Cover).dmf
+Deflemask/SuperJet Spade/Magical Block Carat - BGM5 (Genesis Cover).dmf
+Deflemask/SuperJet Spade/Mystic Towers Theme (Genesis Cover).dmf
+Deflemask/SuperJet Spade/Opmeridian SMS.dmf
+Deflemask/SuperJet Spade/ShortSketch2.dmf
+Deflemask/SuperJet Spade/ShortSketch2_PCMDrums.dmf
+Deflemask/SuperJet Spade/Sneeky Snickers (Genesis).dmf
+Deflemask/SuperJet Spade/Softkey Passage.dmf
+Deflemask/SuperJet Spade/Stereotactics.dmf
+Deflemask/Synaptic Resonance/01-02 Opening and Title Theme.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-01. Stage Select.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-02. Game Start.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-03. Cut Man Stage.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-04. Guts Man Stage.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-05. Ice Man Stage.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-06. Bomb Man Stage.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-07. Fire Man Stage.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-08. Elec Man Stage.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-09. Boss.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-11. Game Over.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-12. Dr. Wily Stage 1-2.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-13. Dr. Wily Stage 3-4.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-14. Dr. Wily Stage Boss.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-15. All Stages Clear.dmf
+Deflemask/Synaptic Resonance/MM1 Rearranged-16. Ending.dmf
+Deflemask/Synaptic Resonance/Shop - Proto Man Blues.dmf
+Deflemask/TEHMEGAMASTAH/Force of Puppets.dmf
+Deflemask/TEHMEGAMASTAH/Storm Eagle Thunder Force (1).dmf
+Deflemask/TEHMEGAMASTAH/Storm Eagle Thunder Force.dmf
+Deflemask/TL1882/All Hail Shadow.dmf
+Deflemask/TL1882/Bomber Barbara.dmf
+Deflemask/TL1882/Final Fortress.dmf
+Deflemask/TL1882/For True Story.dmf
+Deflemask/TL1882/Green Forest.dmf
+Deflemask/TL1882/I Am All Of Me.dmf
+Deflemask/TL1882/Nonaggression (1).dmf
+Deflemask/TL1882/Nonaggression with OG drums.dmf
+Deflemask/TL1882/Nonaggression.dmf
+Deflemask/TL1882/Race to Win.dmf
+Deflemask/TL1882/Rooftop Run Day (Old).dmf
+Deflemask/TL1882/Rooftop Run Day.dmf
+Deflemask/TL1882/SM64 Water - Above Water.dmf
+Deflemask/TL1882/SM64 Water - Cave.dmf
+Deflemask/TL1882/SM64 Water - Underwater.dmf
+Deflemask/TL1882/Special Stage - Bonus Challenge.dmf
+Deflemask/TL1882/The Palace That Was Found.dmf
+Deflemask/TL1882/This Machine.dmf
+Deflemask/TehPuertoRicanSpartan/srb2legacy-rvz1.dmf
+Deflemask/TheArbiter/sms1.dmf
+Deflemask/Tman2391/Maximum Carnage - Streets.dmf
+Deflemask/Tobikomi/Chi.dmf
+Deflemask/Tobikomi/Greensleeves (2).dmf
+Deflemask/Tobikomi/Greensleeves.dmf
+Deflemask/Tobikomi/TATTLETAIL.dmf
+Deflemask/Tobikomi/Totsugeki.dmf
+Deflemask/Tobikomi/Triassic Trip.dmf
+Deflemask/Tobikomi/What's Up.dmf
+Deflemask/Tobikomi/supernova HURRY.dmf
+Deflemask/Tobikomi/supernova.dmf
+Deflemask/UltrasonicMadness/rude_3.dmf
+Deflemask/VideoGameVlad/Mind of Metal.dmf
+Deflemask/We Wuz FMwaves/A Peaceful Moment.dmf
+Deflemask/We Wuz FMwaves/Aquarium Park.dmf
+Deflemask/We Wuz FMwaves/Battle A3.dmf
+Deflemask/We Wuz FMwaves/Chrono Battle (1).dmf
+Deflemask/We Wuz FMwaves/Danger Zone Act 1.dmf
+Deflemask/We Wuz FMwaves/Mecha Green Hill Zone.dmf
+Deflemask/We Wuz FMwaves/Metropolis Zone +.dmf
+Deflemask/We Wuz FMwaves/Metropolis Zone.dmf
+Deflemask/We Wuz FMwaves/SMT Battle.dmf
+Deflemask/We Wuz FMwaves/Stage Select 1.dmf
+Deflemask/We Wuz FMwaves/The Showdown.dmf
+Deflemask/We Wuz FMwaves/This is a bonus level with no percussion.dmf
+Deflemask/We Wuz FMwaves/Transformers.dmf
+Deflemask/We Wuz FMwaves/Versalife Combat(no percussion).dmf
+Deflemask/We Wuz FMwaves/Virus Busting.dmf
+Deflemask/Windsdor/cl2.dmf
+Deflemask/Wonderpanda/ApidyaThePond.dmf
+Deflemask/Wonderpanda/BuckyOHareCenter.dmf
+Deflemask/Wonderpanda/Fire & Ice Xmas.dmf
+Deflemask/Wonderpanda/Lethal_Weapon_Stage_1.dmf
+Deflemask/Yung Gotenks/Journey to Silius Stage 3 Cover by Yung Gotenks.dmf
+Deflemask/Yung Gotenks/doom2_ampie.dmf
+Deflemask/ZillionT/Ancient Temple.dmf
+Deflemask/adaMills/Smooth Rider.dmf
+Deflemask/adaMills/star to finish.dmf
+Deflemask/andocalrissian/Aquatic Ruin Zone.dmf
+Deflemask/ballacr75/ballacr75-operator_short_2016_(genesis).dmf
+Deflemask/bca759577/Journey to silius title.dmf
+Deflemask/bca759577/LW.dmf
+Deflemask/bca759577/Mario Paint CE 2612.dmf
+Deflemask/bca759577/Mario_Paint_CE_Demo 2612.dmf
+Deflemask/bca759577/azure way gnesis.dmf
+Deflemask/bca759577/flow my tear update.dmf
+Deflemask/bca759577/qs1.dmf
+Deflemask/bca759577/victory way.dmf
+Deflemask/codingkid01/mml genesis.dmf
+Deflemask/com63/Drive Me Home.dmf
+Deflemask/djmaximum/What is this from.dmf
+Deflemask/djsquarewave/08_corneria-2.dmf
+Deflemask/djsquarewave/09_olb.dmf
+Deflemask/djsquarewave/bk3_poets.dmf
+Deflemask/djsquarewave/contra_fire2.dmf
+Deflemask/djsquarewave/ct_undersea3.dmf
+Deflemask/djsquarewave/exelica_3.dmf
+Deflemask/djsquarewave/ironsword_bgm2.dmf
+Deflemask/djsquarewave/tetrisattack3.dmf
+Deflemask/efs/grad2.dmf
+Deflemask/efs/gradii.dmf
+Deflemask/garvalf/garvalf_-_fjell_og_lengsel.dmf
+Deflemask/garvalf/garvalf_-_seg_-_icy_roads.dmf
+Deflemask/garvalf/garvalf_-_seg_-_simca2612.dmf
+Deflemask/garvalf/garvalf_-_seg_-_the_shortest_day_in_summer.dmf
+Deflemask/garvalf/garvalf_-_seg_-_what_was_found_in_the_bottle.dmf
+Deflemask/garvalf/garvalf_-_varulvens_vilde_jagt_sms.dmf
+Deflemask/gh0styt0asty/A_Thousand_Leagues_Below.dmf
+Deflemask/gotoandplay/Short-lived Understanding.dmf
+Deflemask/greencherple/Cottons Theme .dmf
+Deflemask/greencherple/sorrowpuyo.dmf
+Deflemask/kkzero/boss.dmf
+Deflemask/kkzero/coolkktheme.dmf
+Deflemask/kkzero/guitar thing.dmf
+Deflemask/kkzero/guitar thingy.dmf
+Deflemask/kkzero/kkzero sound.dmf
+Deflemask/kkzero/majestickkzerosong.dmf
+Deflemask/kkzero/mishapoffasongididlolxd.dmf
+Deflemask/kkzero/pitchrisetest.dmf
+Deflemask/kkzero/pling.dmf
+Deflemask/kkzero/pokeymeansbusinessgen.dmf
+Deflemask/kris_0520/Doctor Who Genesis.dmf
+Deflemask/kris_0520/Sonic 1 Special Stage.dmf
+Deflemask/littlelamp100/Alarm.dmf
+Deflemask/littlelamp100/Aquatic Ambience.dmf
+Deflemask/littlelamp100/Brinstar.dmf
+Deflemask/littlelamp100/Candeh.dmf
+Deflemask/littlelamp100/Cruisin'.dmf
+Deflemask/littlelamp100/Elecman GB.dmf
+Deflemask/littlelamp100/Gang-Plank Galleon.dmf
+Deflemask/littlelamp100/Gravity Man.dmf
+Deflemask/littlelamp100/Jungle Hijinx.dmf
+Deflemask/littlelamp100/Littlelamp Pinball Main Theme Genesis.dmf
+Deflemask/littlelamp100/Littlelamp Pinball Main Theme SMS.dmf
+Deflemask/littlelamp100/Magnet Man.dmf
+Deflemask/littlelamp100/Mambo de Chocobo.dmf
+Deflemask/littlelamp100/Mega Man III Theme.dmf
+Deflemask/littlelamp100/SRW Toronto.dmf
+Deflemask/littlelamp100/Silver Surfer Level 2.dmf
+Deflemask/littlelamp100/Sonic Lost World.dmf
+Deflemask/littlelamp100/Tomfoolery.dmf
+Deflemask/littlelamp100/Victory!.dmf
+Deflemask/littlelamp100/X+Y=___.dmf
+Deflemask/littlelamp100/losing and gaining GEN.dmf
+Deflemask/littlelamp100/losing and gaining PCE.dmf
+Deflemask/littlelamp100/refined style.dmf
+Deflemask/littlelamp100/the master boss.dmf
+Deflemask/ltn/yasko mines.dmf
+Deflemask/marcb0t/I am marcb0t.dmf
+Deflemask/marcb0t/Mr.Roboto(marcb0t edit WIP).dmf
+Deflemask/marcb0t/StringDemo (marcb0t-ified).dmf
+Deflemask/marcb0t/ct_undersea3-marcb0t EDIT.dmf
+Deflemask/mega9man/Watertube Pipes Inc.dmf
+Deflemask/mihaelkyeah/AB-01RFG.dmf
+Deflemask/mihaelkyeah/Bram Stoker's Dracula 02 Options Menu.dmf
+Deflemask/mihaelkyeah/Bram Stoker's Dracula 03 Vampyre Book.dmf
+Deflemask/mihaelkyeah/Bram Stoker's Dracula 04 Stage 1-1.dmf
+Deflemask/mihaelkyeah/Bram Stoker's Dracula 05 Stage 1-2.dmf
+Deflemask/mihaelkyeah/Bram Stoker's Dracula 06 Boss Theme 1.dmf
+Deflemask/mihaelkyeah/Bram Stoker's Dracula 07 Stage 2-1.dmf
+Deflemask/mihaelkyeah/Bram Stoker's Dracula 08 Stage 2-2.dmf
+Deflemask/mihaelkyeah/Bram Stoker's Dracula 09 Boss Theme 2.dmf
+Deflemask/mihaelkyeah/TTWNN-mono.dmf
+Deflemask/mihaelkyeah/algun-dia.dmf
+Deflemask/mihaelkyeah/best thing ever.dmf
+Deflemask/mihaelkyeah/cool music.dmf
+Deflemask/mihaelkyeah/dn-lnk.dmf
+Deflemask/mihaelkyeah/nct-playerdefeat.dmf
+Deflemask/mihaelkyeah/sho-wr.dmf
+Deflemask/mihaelkyeah/sphr2-c64szxs-sms.dmf
+Deflemask/mihaelkyeah/sweethome-mamiyaquarters-sms.dmf
+Deflemask/mihaelkyeah/ulcer (2).dmf
+Deflemask/mihaelkyeah/ulcer.dmf
+Deflemask/mikodaz9/01 - Opening Theme (Beta).dmf
+Deflemask/mikodaz9/01 - Opening Theme (Sparkle_ALT).dmf
+Deflemask/mikodaz9/01 - Opening Theme.dmf
+Deflemask/mikodaz9/13 - Staff Roll (50Hz).dmf
+Deflemask/mikodaz9/13 - Staff Roll.dmf
+Deflemask/mikodaz9/23 - Super Sonic (Arranged).dmf
+Deflemask/mikodaz9/23 - Super Sonic (Sonic 2 Beta).dmf
+Deflemask/mikodaz9/Custom Labyrinth Zone.dmf
+Deflemask/mikodaz9/Custom Spring Yard Zone 2.dmf
+Deflemask/mikodaz9/Sonic 1 - Ending (Prototype).dmf
+Deflemask/mikodaz9/Sonic 1 - Ending.dmf
+Deflemask/mikodaz9/Sonic 1 - Intro.dmf
+Deflemask/mikodaz9/Sonic 1 - Original Ending (PAL).dmf
+Deflemask/mikodaz9/Sonic 1 - Original Ending v. 2.dmf
+Deflemask/mikodaz9/Sonic 1 - Original Ending.dmf
+Deflemask/mikodaz9/Sonic Retro Splash Screen I.dmf
+Deflemask/moviemovies1/nemesisII.dmf
+Deflemask/nooly/deliverance.dmf
+Deflemask/punkofthedeath/Glitching Up.dmf
+Deflemask/ramen_oranges/SMW Overworld w bongos[steel drums] (2).dmf
+Deflemask/ramen_oranges/SMW Overworld w bongos[steel drums].dmf
+Deflemask/ramen_oranges/die.dmf
+Deflemask/ramen_oranges/pollyanA.dmf
+Deflemask/s2nic/Cash Spending Zone.dmf
+Deflemask/snot sos/submarine.dmf
+Deflemask/strider1911/stranger3.dmf
+Deflemask/thehedgehogsonic/rude_7.dmf
+Deflemask/tildearrow/loader.dmf
+Deflemask/tildearrow/startmenu_genesis.dmf
+Deflemask/tildearrow/startmenu_sms.dmf
+Deflemask/tytanium654/song2.dmf
+Deflemask/zaxxein/Theme of Musha Aleste.dmf
+https://battleofthebits.com/disk/battle/00001807/BotB%2012994%20nails%20157%20pho%20king%20no.%2049%20bong.dmf.dmf
+https://battleofthebits.com/disk/battle/00001807/BotB%2012995%20Broken%20Glass.dmf
+https://battleofthebits.com/disk/battle/00001807/BotB%2012996%20demo%20song.dmf
+https://battleofthebits.com/disk/battle/00001865/BotB%2013399%20Johnsfuentes%20-%20This%20song%20is%20in%20development.dmf
+https://battleofthebits.com/disk/battle/00001865/BotB%2013676%20Xaser%20-%20we%20are%20the%20aliens.dmf
+https://battleofthebits.com/disk/battle/00001865/BotB%2013773%20chunter%20-%20Organic%20Spring.dmf
+https://battleofthebits.com/disk/battle/00002417/BotB%2017476%20djmaximum%20-%20dark%20DefleMask%20.dmf
+https://battleofthebits.com/disk/battle/00002417/BotB%2017584%20NARFNra%20-%20Spring%20Chill.dmf
+https://battleofthebits.com/disk/battle/00002417/BotB%2017711%20gotoandplay%20-%20Short-lived%20Understanding.dmf
+https://battleofthebits.com/disk/battle/00002462/BotB%2021535%20Quirby64%20-%20Potato%20Warfare%20Ultra.dmf
+https://battleofthebits.com/disk/battle/00002844/BotB%2020876%20DBOYD%20-%20Morty%27s%20Lo-Fi%20Winter%20Vacation.dmf
+https://battleofthebits.com/disk/battle/00002890/BotB%2020742%20gramma%20smythe%20quince.dmf
+https://battleofthebits.com/disk/battle/00002890/BotB%2020747%20wtf%20it%20really%20works.dmf
+https://battleofthebits.com/disk/battle/00002959/BotB%2021454%20funute%20-%20power%20down.dmf
+https://battleofthebits.com/disk/battle/00002959/BotB%2021478%20passarbye%20-%20Sprigget.dmf
+https://battleofthebits.com/disk/battle/00002959/BotB%2021593%20Quirby64%20-%20Programmable%20Sound%20Battle.dmf
+https://battleofthebits.com/disk/battle/00002959/BotB%2021606%20gotoandplay%20-%20Starting%20Off.dmf
+https://battleofthebits.com/disk/battle/00002959/BotB%2021833%20ap0c%20-%20Despair.dmf
+https://battleofthebits.com/disk/battle/00003042/BotB%2022167%20waking%20up%20at%202pm.dmf
+https://battleofthebits.com/disk/battle/00003042/BotB%2022168%20multiformatz.dmf
+https://battleofthebits.com/disk/battle/00003042/BotB%2022169%20the%20masked%20hero%20is%20triumphant.dmf
+https://battleofthebits.com/disk/battle/00003161/BotB%2023198%20caramutt.dmf
+https://battleofthebits.com/disk/battle/00003435/BotB%2025402%20th4%20D34D%20-%20Green%20Leaf%20Zone.dmf
+https://battleofthebits.com/disk/battle/00003435/BotB%2025419%20LukeMcQueen%20-%20Clash%20Of%20The%20Titans.dmf
+https://battleofthebits.com/disk/battle/00003435/BotB%2025453%20growley%20-%20SMSlassical.dmf
+https://battleofthebits.com/disk/battle/00003435/BotB%2025464%20pigdevil2010%20-%20RAVEjr.dmf
+https://battleofthebits.com/disk/battle/00003435/BotB%2025493%20marcb0t%20-%20Flowers%20and%20Fields.dmf
+https://battleofthebits.com/disk/battle/00003435/BotB%2025502%20Minerscale%20-%20Sad%20Retrospect%20Song.dmf
+https://battleofthebits.com/disk/battle/00003435/BotB%2025553%20chunter%20-%20goose%20eggs.dmf
+https://battleofthebits.com/disk/battle/00003435/BotB%2025566%20Merletronic%20-%20Blip%20to%20be%20Square.dmf
+https://battleofthebits.com/disk/battle/00003435/BotB%2025570%20garvalf%20-%20Les%20vibrations%20du%20vent.dmf
+https://battleofthebits.com/disk/battle/00003435/BotB%2025651%20tennisers%20-%20king%20pomi.dmf
+https://battleofthebits.com/disk/battle/00003690/BotB%2027959%20zygrunt%20-%20Poisonous%20Blossoming.dmf
+https://battleofthebits.com/disk/battle/00003690/BotB%2028003%20kgb525%20-%20Sundown%20Station.dmf
+https://battleofthebits.com/disk/battle/00003690/BotB%2028015%20tennisers%20-%203AM%20chicken%20nuge.dmf
+https://battleofthebits.com/disk/battle/00003690/BotB%2028102%20Sintel%20-%20Lullaby.dmf
+https://battleofthebits.com/disk/battle/00003690/BotB%2028176%20th4%20D34D%20-%20Positronic%20Love%20Song.dmf
+https://battleofthebits.com/disk/battle/00003690/BotB%2028179%20Galgox%20-%20Gift%20Wrapping.dmf
+https://battleofthebits.com/disk/battle/00003773/BotB%2028583%20marcb0t%20-%20Happy%20Beat%20%28YM2612%20version%29.dmf
+https://battleofthebits.com/disk/battle/00004172/BotB%2031549%20zygrunt%20-%20BS%20Slingshot.dmf
+https://battleofthebits.com/disk/battle/00004172/BotB%2031570%20Treadwell%20Walden%20-%20Field%20Day.dmf
+https://battleofthebits.com/disk/battle/00004172/BotB%2031596%20VinsCool%20-%20Run%20for%20a%20Better%20Future.dmf
+https://battleofthebits.com/disk/battle/00004172/BotB%2031652%20SparkledBomb%20-%20Racing%20Tournament.dmf
+https://battleofthebits.com/disk/battle/00004172/BotB%2031776%20AutisticApple%20-%20Evening%20Sunset.dmf
+https://battleofthebits.com/disk/battle/00004186/BotB%2031762%20sound%20system.dmf
+https://battleofthebits.com/disk/battle/00004186/BotB%2031765%20wow%20so%20much%20time%20to%20do%20absolutely%20nothing.dmf
+https://battleofthebits.com/disk/battle/00004298/BotB%2032671%20IBM%202612%20Speaker.dmf
+https://battleofthebits.com/disk/battle/00004394/BotB%2033444%20peshti%20-%20Yoga%20Flame.dmf
+https://battleofthebits.com/disk/battle/00004431/BotB%2033863%20zygrunt%20-%20The%20Quiet%20Dystopia.dmf
+https://battleofthebits.com/disk/battle/00004431/BotB%2034016%20ap0c%20-%20Q%20U%20A%20R%20A%20N%20T%20I%20N%20E.dmf
+https://battleofthebits.com/disk/battle/00004431/BotB%2034080%20Yekans%20-%20rmtmzdrnzmdt.dmf.dmf
+https://battleofthebits.com/disk/battle/00004431/BotB%2034091%20Elyk%20Chiparoo%20-%20Htuyfut%20by%20Yekans.dmf
+https://battleofthebits.com/disk/battle/00004431/BotB%2034564%20Proximatron%20-%20Sweet%20Fields%20of%20Tone.dmf
+https://battleofthebits.com/disk/battle/00004770/BotB%2036633%20CastleNes%20-%20Gravity%20Break%20Day%21%21.dmf
+https://battleofthebits.com/disk/battle/00005786/BotB%2043773%20RagingSpiritOfTheSnowyWood.dmf
+https://battleofthebits.com/disk/battle/00006533/BotB%2049043%20cabbage%20drop%20-%20catacombs%20beneath%20the%20castle%20of%20delek.dmf
+https://battleofthebits.com/disk/battle/00006533/BotB%2049110%20birdrun%20-%20Woo%20It%27s%20Like%20All%20Spooky%20And%20Stuff.dmf
+https://battleofthebits.com/disk/battle/00007636/BotB%2056975%20nitrofurano%20-%20202212041109.dmf
+https://battleofthebits.com/disk/battle/00007636/BotB%2056985%20kilowatt64%20-%20Remembering%20the%20Fallen.dmf
+https://battleofthebits.com/disk/battle/00007636/BotB%2056987%20funute%20-%20dabs%20on%20gb.dmf
+https://battleofthebits.com/disk/battle/00007636/BotB%2056988%203-UP%20-%20Sega%27s%20Dream%20Land.dmf
+https://battleofthebits.com/disk/battle/00007636/BotB%2056995%20big%20lumby%20-%20mission_%20perforate-proof%20plastic.dmf
+https://battleofthebits.com/disk/battle/00007636/BotB%2057003%20MelonadeM%20-%20beach%20outskirts.dmf
+https://battleofthebits.com/disk/battle/00009615/BotB%2073951%20th4%20D34D%20-%20BotB%20Advent%20Calendar%202024%20Staff%20Roll.dmf
+https://battleofthebits.com/disk/battle/00009800/BotB%2074814%20botb%20customer%20support.dmf
+https://battleofthebits.com/disk/battle/00010267/BotB%2078032%20blazing%20funk.dmf
+https://battleofthebits.com/disk/battle/00010267/BotB%2078033%20Why%20not.dmf
+https://battleofthebits.com/disk/battle/00010281/BotB%2078258%20Hamarejun%20-%20GEMS_%21%20More%20like%20GERMS%21.dmf
+https://battleofthebits.com/disk/battle/00010281/BotB%2083859%20arceus413%20-%20sms%20dance.dmf
+https://battleofthebits.com/disk/battle/00010281/BotB%2084077%20OminPigeonMaster%20-%20CRT%20MEGADRIVE%20LIZARD.dmf
+https://battleofthebits.com/disk/battle/00010293/BotB%2078272%20smssmsmss.dmf
+https://battleofthebits.com/disk/battle/00010293/BotB%2078273%20spoon.dmf
+https://battleofthebits.com/disk/battle/00010293/BotB%2078274%20shlappy.dmf
+https://battleofthebits.com/disk/battle/00010293/BotB%2078275%20Inexperienced%20Squares%20%28possibly%20broken%29.dmf
+https://battleofthebits.com/disk/battle/00010293/BotB%2078276%20mastering%20the%20system.dmf

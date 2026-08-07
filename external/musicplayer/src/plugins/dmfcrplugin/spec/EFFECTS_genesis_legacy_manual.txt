@@ -1,0 +1,93 @@
+
+                                                             22
+                                                                                  23
+               DefleMask Tracker Manual by Leonardo Demartino (delek.net)
+
+
+                       SEGA Genesis
+
+
+
+
+Soundchip 1: YAMAHA YM2612
+Soundchip 2: Texas Instruments SN76489
+Note Range: C#-0 -> C-8
+Max Volume: 7F (Soundchip 1), F (Soundchip 2)
+
+
+
+You can also select SEGA Genesis (EXT.CH3) mode, this mode divides the
+FM channel 3 into its 4 operators to control the frequency of them freely. This
+can increase the polyphony to 4 more channels of sine waves (if you use
+Algorithm 4), make 2 ops instruments, among other cool effects.
+
+
+
+
+                                                                                  23
+                                                                                    24
+               DefleMask Tracker Manual by Leonardo Demartino (delek.net)
+
+Effects:
+YM2612:
+
+10xy - LFO Control:
+This effect controls the Low Frequency oscillator of the YAMAHA YM2612.
+The x value set if the LFO is on or off, a non-zero value turns the LFO on.
+The y value controls the speed of the LFO, you can set a value from 0 to 7.
+
+11xx - Feedback Control:
+The FB is a global parameter of a YM2612's channel. You can designate xx with
+a value from 0 to 7.
+
+12xx - TL Operator 1 Control:
+With this effect you can modify the TL of the operator 1. You can designate xx
+with a value from 0 to 7F.
+
+13xx - TL Operator 2 Control:
+With this effect you can modify the TL of the operator 2. You can designate xx
+with a value from 0 to 7F.
+
+14xx - TL Operator 3 Control:
+With this effect you can modify the TL of the operator 3. You can designate xx
+with a value from 0 to 7F.
+
+15xx - TL Operator 4 Control:
+With this effect you can modify the TL of the operator 4. You can designate xx
+with a value from 0 to 7F.
+
+16xy - MULT Control:
+The Multiplier factor is a frequency multiplier, all of the 4 operators are
+capable of have its own values of MULT.
+The x value is the operator to modify, you can designate a value from 1 to 4.
+The y value controls the MULT value; you can designate a value from 0 to F.
+
+17xx - DAC Enable:
+This effect will enable the sample features of the last FM Channel.
+A non-zero value will enable the sample output, and a zero value will disable it.
+
+18xx – EXT. CHN3 Mode Enable:
+This effect will disable/enable the independent frequency for operators. Only
+available in SEGA Genesis (Ext. CH3)
+
+
+
+                                                                                    24
+                                                                                       25
+               DefleMask Tracker Manual by Leonardo Demartino (delek.net)
+
+
+19xx - Global AR Control:
+This effect will control all the AR values of all operators of the current
+instrument, a value higher than 0x1F (31) would be ignored.
+
+1Axx - AR Operator 1 Control:
+This effect will control the AR value of the operator number 1 of the current
+instrument, a value higher than 0x1F (31) would be ignored.
+
+1Bxx - AR Operator 2 Control:
+This effect will control the AR value of the operator number 2 of the current
+instrument, a value higher than 0x1F (31) would be ignored.
+
+1Cxx - AR Operator 3 Control:
+This effect will control the AR value of the operator number 3 of the current

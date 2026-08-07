@@ -1164,16 +1164,24 @@ bool songFormatHasNoPlayer(SongInfo const& song,
             // played by libopenmpt). libopenmpt advertises the extension in
             // EVERY build, so the extension test says "playable" even in mas
             // where dmfplugin is absent (GPL; see CM_HAVE_DMF in CMakeLists.txt)
-            // -- only the format name separates them. These three keys were
+            // -- only the format name separates them. These keys were
             // content-probed over the network, not inferred from the label:
             // every sampled "Deflemask"/"DefleMask" row inflates to the
             // DefleMask magic, and spacecoast.dmf (the lone "NEC PC Engine" row)
-            // does too. Single-candidate: there is no mas replacement yet.
+            // does too.
             //
-            // DELETE the matching key when a clean-room non-GPL target ships --
-            // that is all it takes to resurface those songs on the next reindex.
-            // Genesis alone is ~46% of this pool.
-            {{"dmf", "deflemask"}, { "dmf" }},
+            // The blanket {"dmf","deflemask"} key is GONE: dmfcrplugin ships a
+            // clean-room SEGA Genesis player in both variants, so mas now has a
+            // second candidate. But it covers Genesis ONLY, and the format name
+            // does not say which DefleMask system a row targets -- so the
+            // surviving rows are chosen by songDefleMaskUnplayable() against the
+            // measured allow-list in data/misc/dmfcr_playable.txt (598 of 2,071)
+            // rather than by this name-keyed table.
+            //
+            // "nec pc engine" stays: it is one demozoo row (spacecoast.dmf), it
+            // is a PC Engine file, and dmfcrplugin declines it. The HuC6280
+            // target is the next one worth doing -- 13% of the pool -- and
+            // furnace's pce_psg core is GPL, so it needs a replacement first.
             {{"dmf", "nec pc engine"}, { "dmf" }},
             // ".sc68" is the fifth case, and it is here for a smaller reason
             // than the four above: the plain extension test in songHasNoPlayer()
@@ -1317,6 +1325,37 @@ bool songFormatHasNoPlayer(SongInfo const& song,
         if (builtPluginNames.count(cand) > 0) { return false; }
     }
     return true;
+}
+
+// Should this DefleMask row be dropped because the mas build cannot play it?
+//
+// The counterpart of songIsSilentSid, but an ALLOW-list rather than a deny-list,
+// and it lives here rather than in songFormatHasNoPlayer()'s formatPlayer table
+// because that table keys on the format NAME -- which for every DefleMask row is
+// just "Deflemask"/"DefleMask" regardless of which of the eight DefleMask
+// systems the file targets. dmfcrplugin covers SEGA Genesis and SEGA Master
+// System (696 of the 2,071 rows), so a name-keyed rule can only say "all" or
+// "none".
+//
+// The membership test is therefore precomputed offline, in the same spirit as
+// data/misc/csid_silent_sids.txt: the alternative would be a content probe at
+// index time, and the indexer does not fetch files -- these rows live on
+// modland and Battle of the Bits and reading a header from each would mean
+// 2,071 network round-trips on every reindex.
+//
+// Unlisted DefleMask rows are dropped. A missing list file means the loader
+// logs and leaves the set empty, which hides all of them -- the safe direction,
+// since the plus build is unaffected either way.
+bool songDefleMaskUnplayable(SongInfo const& song,
+                             std::set<std::string> const& playable)
+{
+    auto fmt = toLower(song.format);
+    if (fmt != "deflemask") { return false; }
+    // A MULTI: group is one entry backed by several files; DefleMask rows are
+    // never grouped, so a plain compare is enough (same reasoning as
+    // songIsSilentSid).
+    if (startsWith(song.path, "MULTI:")) { return false; }
+    return playable.count(song.path) == 0;
 }
 
 bool songIsSilentSid(SongInfo const& song, std::set<std::string> const& silent)
@@ -1693,6 +1732,13 @@ void MusicDatabase::initDatabase(utils::path const& workDir, Variables& vars)
                 // are files with a mix of silent and playing subtunes, which the
                 // runtime probe in CSIDPlugin skips one subtune at a time.
                 if (songIsSilentSid(song, csidSilentSids)) { return; }
+#endif
+#ifdef CM_NO_DMF
+                // dmfcrplugin (clean-room, Genesis only) replaced Furnace here,
+                // so DefleMask rows are no longer hidden wholesale -- but only
+                // the Genesis ones can actually play. See
+                // songDefleMaskUnplayable() and data/misc/dmfcr_playable.txt.
+                if (songDefleMaskUnplayable(song, dmfcrPlayable)) { return; }
 #endif
 #ifdef CM_MAS
                 // Mac App Store build has no YouTube plugin (see main.cpp's
@@ -5826,6 +5872,25 @@ void MusicDatabase::loadCsidSilentSids(utils::path const& workDir)
     LOGD("csid_silent_sids: %d paths", (int)csidSilentSids.size());
 }
 
+void MusicDatabase::loadDmfcrPlayable(utils::path const& workDir)
+{
+    dmfcrPlayable.clear();
+    auto f = findFile(workDir.string(), "data/misc/dmfcr_playable.txt");
+    if (!f) {
+        LOGW("dmfcr_playable.txt not found; hiding all DefleMask rows");
+        return;
+    }
+    for (auto line : utils::File{ *f }.getLines()) {
+        auto a = line.find_first_not_of(" \t\r\n");
+        if (a == std::string::npos) { continue; }
+        auto b = line.find_last_not_of(" \t\r\n");
+        line = line.substr(a, b - a + 1);
+        if (line[0] == '#') { continue; }
+        dmfcrPlayable.insert(line);
+    }
+    LOGD("dmfcr_playable: %d paths", (int)dmfcrPlayable.size());
+}
+
 void MusicDatabase::loadUnsupportedExtensions(utils::path const& workDir)
 {
     unsupportedExts.clear();
@@ -5858,6 +5923,11 @@ bool MusicDatabase::initFromLua(utils::path const& workDir)
     // through VICE, so there is no reason for it to read 2382 paths it will
     // never test against.
     loadCsidSilentSids(workDir);
+#endif
+#ifdef CM_NO_DMF
+    // Only the mas build consults this; the plus build plays every .dmf through
+    // Furnace and has no reason to read the list.
+    loadDmfcrPlayable(workDir);
 #endif
     auto playlistPath = Environment::getConfigDir() / "playlists";
     utils::create_directory(playlistPath);
