@@ -5947,6 +5947,21 @@ TEST_CASE("coverage", "[music]")
     // "feud fake.dw"/jurassic "- null" = intentionally silent/empty, hardball2.kh
     // needs a "songplay" that collides with the-cycles.kh in a flat dir).
     // skips 25->19 (the removed tfmx1.5/tfhd1.5 duplicates had been skipping).
+    //
+    // 2026-08-07: 41 previously-uncovered extensions gained a fixture (OK
+    // 907->946), sourced only from corpora this project already indexes plus
+    // AdPlug's own reference test set: 26 UADE formats out of UnExoticA (the
+    // one archive that keeps the original Amiga "<prefix>.<song>" naming --
+    // ac1d/agi/bye/cin/di/hmc/jcb/mug2/mw/np2/np3/p41a/p4x/p5x/p60/p6x/pp30/
+    // prun/rjp/s7g/sct/snx/ss/st26/tp3/unic, the last two also clearing
+    // OpenMPT's list), 11 AdPlug formats, Quartet .4q and ffmpeg .aif.
+    // Companions came along where the player needs them (smp.The_Aquatic_Games
+    // for RJP, Instruments/ for Sonix and Cinemaware) and are Ignored, so the
+    // caps below are unchanged. Fixtures that would not play were dropped
+    // rather than counted: they are the wrong file for the extension (AdPlug's
+    // lines1.snd is a 591-byte Ken's bank, not a Westwood ADL; BotB's .nst is
+    // not a NoiseTracker module), and picking a different tune of the same
+    // format fixed the two that were merely bad rips (cin, np3).
     REQUIRE(g_errors <= 0);
     REQUIRE(g_skips <= 19);
 }
