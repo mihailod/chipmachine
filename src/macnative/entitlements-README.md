@@ -20,8 +20,33 @@ entitlement needed (Hardened Runtime does not gate outbound network).
 ## entitlements-app-mas.plist — the Mac App Store variant of the main executable
 
 Used only when signing for MAS submission (App Store distribution cert +
-provisioning profile), NOT by the Developer ID path above. Deliberately
-comment-free for the same AMFI reason.
+provisioning profile), NOT by the Developer ID path above.
+
+**NEVER put an XML comment in this file.** `plutil -lint` accepts comments, but
+the AMFI parser `codesign` uses does not, and it fails mid-signing with
+`Failed to parse entitlements: AMFIUnserializeXML: syntax error near line N`
+— after it has already re-signed the nested dylibs, so the bundle is left
+half-signed. Explanations go here in the README instead. (Learned twice.)
+
+- `com.apple.application-identifier` — **required for App Store upload**, value
+  `<TEAMID>.<bundle id>` (`MUYBB8YH5X.org.mihailod.chipmachine`).
+- `com.apple.developer.team-identifier` — **required for App Store upload**,
+  value `MUYBB8YH5X`.
+
+  These two also appear inside the embedded provisioning profile, which makes
+  them look redundant — they are not. Xcode injects them into the signature
+  automatically; a manual `codesign --entitlements` run does **not**, and the
+  upload is then rejected with:
+
+      the signature for the bundle at "ChipMachine.app" is missing an
+      application identifier but has an application identifier in the
+      provisioning profile for the bundle                            (90886)
+
+  They must match the profile exactly. If the bundle id or team ever changes,
+  change them here too or signing and the profile disagree and the upload fails
+  the same way. Verify with:
+
+      codesign -d --entitlements - --xml ChipMachine.app | plutil -p -
 
 - `com.apple.security.app-sandbox` — required for MAS. This is the master switch;
   everything below only takes effect under it.
@@ -39,8 +64,20 @@ comment-free for the same AMFI reason.
   and drop. LaunchServices/Powerbox issues the per-file grant on open; this
   entitlement is what lets the process accept it. Read-only (not read-write): the
   app only ever plays user files, never writes them back.
-- `com.apple.security.files.bookmarks.app-scoped` — enables app-scoped
-  security-scoped bookmarks. The per-file open grant above dies with the process,
+- `com.apple.security.files.bookmarks.app-scope` — enables app-scoped
+  security-scoped bookmarks. **The key is `app-scope`, NOT `app-scoped`.** This
+  file carried the misspelled form until 2026-08-07 and it cost a rejected
+  upload, but the validation failure was the *lesser* problem: `codesign`
+  accepts unknown entitlement keys silently, so the entitlement was simply
+  never granted and every security-scoped bookmark below failed at runtime
+  under the sandbox. Nothing surfaced until Apple's validator said:
+
+      Invalid Code Signing Entitlements ... key
+      'com.apple.security.files.bookmarks.app-scoped' ... is not supported (90285)
+
+  After changing it, test the behaviour it enables, not just the upload: open a
+  local file, quit, relaunch, and confirm the file is still reachable.
+  The per-file open grant above dies with the process,
   so a path the user saved to Favorites/a playlist that points at an external
   file would be unreachable next launch. `FileOpenHandler.mm`
   (`rememberOpenedFile` / `restoreSecurityScopedFiles`) persists a bookmark per
@@ -54,13 +91,25 @@ comment-free for the same AMFI reason.
   library validation already passes. Omitting it is the stricter posture MAS
   wants.
 
-Still-open, NON-network MAS work (out of scope of the network pass, tracked
-separately): the bundled **yt-dlp** helper — a PyInstaller freeze that both
-*requires* `disable-library-validation` (see below) and spawns an executable,
-violating App Store §2.5.2. yt-dlp has no MAS-legal form as-is; it must be
-replaced or removed before submission. That blocker is unrelated to networking.
-(The file-access sandbox entitlements are now in place — see the two `files.*`
-keys above.)
+**RESOLVED 2026-08-07 — the yt-dlp blocker is gone.** This section used to
+record the bundled **yt-dlp** helper as an open blocker: a PyInstaller freeze
+that both *required* `disable-library-validation` and spawned an executable,
+violating App Store §2.5.2. It is now absent from the mas build in three
+independent places, so `entitlements-helper.plist` below is never applied to a
+mas bundle:
+
+1. `package_app.sh` skips the helper entirely for `--mas` — `Contents/MacOS/`
+   holds only the main executable and there is no `Resources/bin/ytdlp` tree.
+2. `main.cpp` gates out both `initYoutube()` and the `cm_execute` Lua binding
+   (`fork` + `execl("/bin/sh")`) under `#ifndef CM_MAS`, and the PATH setup that
+   named the helper's directory. The literal string `ytdlp` is no longer in the
+   binary.
+3. `package_app.sh` strips the resolver hook from the bundled `lua/init.lua` and
+   **fails the build** if any shipped Lua still matches
+   `cm_execute|yt-dlp|os.execute|io.popen`.
+
+The file-access sandbox entitlements are in place — see the two `files.*` keys
+above.
 
 ## entitlements-helper.plist — the bundled yt-dlp helper (`Contents/Resources/bin/ytdlp/yt-dlp`)
 
