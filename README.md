@@ -1,4 +1,4 @@
-**ChipMachineAS**
+**ChipMachinePlus**
 
 <div align="right">
   <img src="https://img.shields.io/github/downloads/mihailod/chipmachine/total?label=Total%20Downloads" alt="Total Downloads">
@@ -39,45 +39,31 @@ Despite the massive expansion under the hood, the core experience remains untouc
 
 ## Binaries
 
-Binaries for macOS (tested on Tahoe) are available under [*Releases*](https://github.com/mihailod/chipmachine/releases)
+Binaries for macOS are available under [*Releases*](https://github.com/mihailod/chipmachine/releases)
 
-**NOTE although not formally tested, ChipMachineAS should work on pre-Tahoe macOS**
+**Requires macOS 26 (Tahoe) or later.** The shipped build declares a minimum
+system version of 26.0, so earlier releases of macOS will refuse to launch it.
 
-### Running on Mac (Gatekeeper Authorization)
+### Installing
 
-For now, the app is distributed with an ad-hoc code signature and macOS Gatekeeper will block it (official Mac App Store release coming soon).
+1. Download the latest release and unzip it into your Applications folder
+2. Double-click `ChipMachinePlus.app`
 
-This is standard behavior for open-source binaries distributed outside the official Mac App Store ecosystem.
-
-To authorize and run the application on your Mac, follow these steps:
-
-1. Download the latest release and unzip it in the Applications folder
-2. Double-click `ChipMachineAS.app`.
-3. macOS will display a prompt stating the app cannot be opened because the developer cannot be verified.
-4. Click **Done** or **Cancel**.
-5. Open your Mac's **System Settings**.
-6. Navigate to **Privacy & Security** in the left sidebar
-7. Scroll down to the **Security** section.
-8. Look for the notification stating: `“ChipMachineAS” was blocked from use because it is not from an identified developer.`
-9. Click the **Open Anyway** button.
-10. Authenticate using your Mac's admin password or Touch ID.
-11. Double-click `ChipMachineAS.app` again.
-12. The final confirmation prompt will appear.
-13. Click **Open**.
-
-*Note: You only need to perform this authorization once per release. Subsequent launches will boot instantly.*
+That's it. The app is signed with an Apple Developer ID and notarized by Apple, so
+it opens like any other Mac application — no security prompts, no Settings
+detour.
 
 ### Opening local music files
 
-Once installed, ChipMachineAS registers with macOS as a player for the hundreds of formats it supports, and you can open a local song three ways:
+Once installed, ChipMachinePlus registers with macOS as a player for the hundreds of formats it supports, and you can open a local song three ways:
 
-* **Right-click a file → Open With → ChipMachineAS** (or double-click a file you've made it the default for)
-* **Drag and drop a file onto the ChipMachineAS icon** (Dock or Finder)
-* **Drag and drop a file straight into the running ChipMachineAS window**
+* **Right-click a file → Open With → ChipMachinePlus** (or double-click a file you've made it the default for)
+* **Drag and drop a file onto the ChipMachinePlus icon** (Dock or Finder)
+* **Drag and drop a file straight into the running ChipMachinePlus window**
 
 All three play the track immediately.
 
-This is deliberately polite — ChipMachineAS advertises itself as an *alternate* handler and never hijacks files from a player you already use:
+This is deliberately polite — ChipMachinePlus advertises itself as an *alternate* handler and never hijacks files from a player you already use:
 
 * For common audio types (`.mp3`, `.wav`, `.flac`, …) it appears as an option in **Open With** but never becomes the default unless you explicitly choose it via **Get Info → Open with → Change All**.
 * For obscure chip/tracker formats that nothing else on your Mac opens, it becomes the de-facto player and shows its own document icon in Finder.
@@ -156,28 +142,10 @@ arguments to see full usage):
 Flags accept a single or double dash and are case-insensitive; value flags use
 `--key=value`.
 
-**Why notarization matters:** a Developer ID signature *alone* is not enough.
-Since macOS 10.15, a downloaded (quarantined) app must also be notarized by Apple
-and have the ticket stapled, or Gatekeeper blocks it with "cannot be checked for
-malicious software." Signing + notarizing + stapling are all covered by the same
-Apple Developer Program membership and use the free `notarytool` — this is **not**
-Mac App Store review. Only the full `--applesign … --notaryprofile=…` build opens
-with no warning on other people's Macs.
-
-**One-time setup** (after joining the Apple Developer Program and installing a
-*Developer ID Application* certificate in the login keychain):
-
-1. Find your identity string:
-   ```bash
-   security find-identity -v -p codesigning
-   # -> "Developer ID Application: Your Name (ABCDE12345)"
-   ```
-2. Store a notarization credential profile once (the app-specific password / API
-   key lives in the keychain, never on the command line):
-   ```bash
-   xcrun notarytool store-credentials chipmachine-notary \
-       --apple-id you@example.com --team-id ABCDE12345
-   ```
+Signing and notarizing both come from the same Apple Developer Program membership
+and use the free `notarytool` — neither involves Mac App Store review. The
+certificate and credential setup is a one-time job, documented in
+[RELEASE_PROCESS.txt](data-notbundled/misc/RELEASE_PROCESS.txt).
 
 **Full distributable build:**
 
@@ -511,7 +479,7 @@ in the licence notices, **not** here — see [Licensing](#licensing) below.
 
 ## Licensing
 
-* **ChipMachineAS:** Copyright (c) 2026 Mihailo Despotovic. Licensed under [`PolyForm Noncommercial License 1.0.0.`](./LICENSE)
+* **ChipMachinePlus:** Copyright (c) 2026 Mihailo Despotovic. Licensed under [`PolyForm Noncommercial License 1.0.0.`](./LICENSE)
 - 🟢 **Free to use** for personal, educational, research, and non-commercial projects.
 - 🔴 **Commercial use prohibited.** If you intend to use my code in any way in any revenue-generating product, contact me for a commercial license.
 

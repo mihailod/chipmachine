@@ -782,7 +782,7 @@ private:
     // Rebuild pluginVisibleGroups from pluginFilterText, resize/clamp the list
     // and refresh the title. Call after any edit to the query or on entry.
     void rebuildPluginVisible();
-    // Header on the command/help screen (e.g. "ChipMachineAS 1.9 HELP MENU"),
+    // Header on the command/help screen (e.g. "ChipMachinePlus 1.9 HELP MENU"),
     // drawn above the first entry; hidden while a command filter is being typed.
     TextField commandTitle;
     // MAS-only: a low-key open-source note riding just after commandTitle, in its

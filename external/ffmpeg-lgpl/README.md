@@ -1,6 +1,6 @@
 # FFmpeg — LGPLv3, decode-only build (App Store compliant)
 
-These are the libav* shared libraries ChipMachineAS bundles and links **in-process**
+These are the libav* shared libraries ChipMachinePlus bundles and links **in-process**
 (via `FFMPEGPlugin`). They replace the Homebrew FFmpeg, which is a **GPL** build
 (`--enable-gpl` + libx264/libx265) and therefore incompatible with Mac App Store terms.
 

@@ -1,7 +1,10 @@
 ChipMachinePlus release process
 ==============================
 
-Since v2.1-as every published release is Developer ID signed AND notarized.
+v2.1-as (2026-08-07) was the first Developer ID signed AND notarized release, and
+every release from here on is too. A downloaded copy now opens like any other Mac
+app -- no Gatekeeper warning, no "Open Anyway" detour in System Settings.
+
 package_app.sh enforces this: --releaseit without --applesign --signid=...
 --notaryprofile=... exits before it builds anything, and there is no override.
 The ad-hoc path (--buildapponly) is for local builds only -- Gatekeeper rejects
@@ -11,20 +14,72 @@ an ad-hoc bundle on every Mac except the one that built it.
 assets. They are kept as-is for historical reasons; only the latest release
 matters to the in-app update check.)
 
+Signing identity for this project:
+  --signid="Developer ID Application: Mihailo DESPOTOVIC (MUYBB8YH5X)"
+  --notaryprofile=chipmachine-notary        (Team ID MUYBB8YH5X)
 
-0. One-time signing setup
--------------------------
-Needs the $99 Apple Developer Program, with a "Developer ID Application"
-certificate installed in the login keychain.
 
-Find the identity string:
-  security find-identity -v -p codesigning
-  -> "Developer ID Application: Your Name (ABCDE12345)"
+0. One-time signing setup  (DONE -- kept for a new Mac / lost keychain)
+----------------------------------------------------------------------
+Needs the $99 Apple Developer Program. Three pieces, all already in place on the
+current machine:
 
-Store the notarization credentials once (they live in the keychain, never on the
-command line):
-  xcrun notarytool store-credentials chipmachine-notary \
-      --apple-id you@example.com --team-id ABCDE12345
+  a) "Developer ID Application" certificate in the login keychain.
+     Created from the Apple developer portal (Certificates -> Developer ID
+     Application -> G2 Sub-CA) with a CSR from Keychain Access -> Certificate
+     Assistant -> Request a Certificate From a Certificate Authority, saved to
+     disk, RSA 2048. Apple OVERRIDES the CSR's Common Name -- the issued identity
+     is always "Developer ID Application: <account name> (TEAMID)" regardless of
+     what you typed.
+
+     Pick G2 Sub-CA, not "Previous Sub-CA": the latter exists only for Xcode
+     older than 11.4.1 and expires 2027-02-01.
+
+     Do NOT pick "Developer ID Installer" (that signs .pkg files distributed
+     outside the store -- we ship a zip).
+
+  b) The Developer ID G2 INTERMEDIATE certificate.
+     THIS IS THE ONE THAT BITES on a fresh Mac. Without it the chain cannot
+     reach the Apple root, so the cert is present but not an identity:
+
+       security find-identity -v -p codesigning   ->   0 valid identities found
+
+     while codesign says "unable to build chain to self-signed root for signer
+     ... errSecInternalComponent". Xcode installs this intermediate as a side
+     effect, so a machine that has never had a signing identity will not have it.
+     Fix:
+
+       curl -o /tmp/DeveloperIDG2CA.cer \
+         https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer
+       security import /tmp/DeveloperIDG2CA.cer -k ~/Library/Keychains/login.keychain-db
+
+  c) Notarization credentials in the keychain.
+     Needs an APP-SPECIFIC password from appleid.apple.com -> Sign-In and
+     Security -> App-Specific Passwords (the real Apple password does not work
+     with 2FA). Shown once, so copy it before dismissing the dialog.
+
+       xcrun notarytool store-credentials chipmachine-notary \
+           --apple-id mihailod@me.com --team-id MUYBB8YH5X
+
+Verify all three at once -- this signs a throwaway binary exactly the way
+package_app.sh does, and is much faster than finding out mid-release:
+
+  T=$(mktemp -d); cp /bin/echo "$T/probe"
+  codesign -f -s "Developer ID Application: Mihailo DESPOTOVIC (MUYBB8YH5X)" \
+           --options runtime --timestamp "$T/probe"
+  codesign -dvvv "$T/probe" 2>&1 | grep -E "Authority|Timestamp|flags"
+  rm -rf "$T"
+
+Expect flags=0x10000(runtime), the three Authority lines ending in Apple Root CA,
+and a Timestamp (which also proves Apple's timestamp server is reachable --
+notarization requires it).
+
+BACK UP THE PRIVATE KEY. Keychain Access -> Keys -> "ChipMachine Developer ID"
+-> Export as .p12 with a strong password. Apple cannot re-issue it, and the
+account is capped at 5 Developer ID Application certificates.
+
+Publishing also needs gh authenticated with at least the 'repo' scope
+(gh auth status). On this machine that comes from GH_TOKEN in ~/.zprofile.
 
 
 1. Bump the app version

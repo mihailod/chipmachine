@@ -1,5 +1,5 @@
 #!/bin/bash
-# gen_info_plist.sh -- emit the complete Info.plist for the ChipMachineAS .app,
+# gen_info_plist.sh -- emit the complete Info.plist for the ChipMachinePlus .app,
 # including the macOS file-association document types, to stdout.
 #
 # This is the SINGLE source of the Info.plist. Both the real packaging step
@@ -47,7 +47,7 @@ SYS_FILE="${SCRIPT_DIR}/MacOSSystemTypeExtensions.txt"
 # them per variant from variants.conf (--bundle-id / --display-name). UMBRELLA_UTI
 # defaults to "<bundle-id>.chiptune" unless given explicitly.
 BUNDLE_ID="org.mihailod.chipmachineplus"
-DISPLAY_NAME="ChipMachineAS"
+DISPLAY_NAME="ChipMachinePlus"
 UMBRELLA_UTI=""
 APP_CATEGORY=""      # LSApplicationCategoryType; emitted only when non-empty (MAS)
 # LSMinimumSystemVersion. This MUST match the deployment target actually baked

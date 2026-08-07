@@ -13,13 +13,13 @@ LSREGISTER="/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchS
 print_help() {
     cat <<EOF
 dev_update_doctypes.sh -- fast, no-recompile test loop for the macOS file
-associations that ChipMachineAS advertises.
+associations that ChipMachinePlus advertises.
 
 USAGE
-    dev_update_doctypes.sh [--with-binary] [path/to/ChipMachineAS.app]
+    dev_update_doctypes.sh [--with-binary] [path/to/ChipMachinePlus.app]
     dev_update_doctypes.sh --help | -h | -? | --? | /?
 
-    Default app path: ${WORKSPACE_ROOT}/ChipMachineAS.app
+    Default app path: ${WORKSPACE_ROOT}/ChipMachinePlus.app
 
 WHAT IT DOES
     Everything about the associations lives in Info.plist + DocIcon.icns +
@@ -53,17 +53,17 @@ OPTIONS
 TYPICAL ITERATION
     1. edit MacOSHandlerDenyList.txt / MacOSSystemTypeExtensions.txt / the
        generator (or rebuild the binary if testing playback), then
-    2. ./dev_update_doctypes.sh [--with-binary] [path/to/ChipMachineAS.app]
+    2. ./dev_update_doctypes.sh [--with-binary] [path/to/ChipMachinePlus.app]
     3. in Finder: right-click a .sid / .mod / .mp3 -> "Open With", check the
        document icon and "Get Info".
 
 VERIFY FROM THE SHELL
     umbrella UTI registered:
-      "$LSREGISTER" -dump | grep -i chipmachineas.chiptune
+      "$LSREGISTER" -dump | grep -i chipmachineplus.chiptune
     a file's resolved type:
       mdls -name kMDItemContentType SOMEFILE.sid
     playback path (needs a current binary -- use --with-binary):
-      open -a ChipMachineAS.app SOMEFILE.sid
+      open -a ChipMachinePlus.app SOMEFILE.sid
 
 NOTES
     * A one-time "Open With" never changes a file type's default handler; only
@@ -84,7 +84,7 @@ while [ $# -gt 0 ]; do
         *) APP="$1"; shift ;;
     esac
 done
-APP="${APP:-${WORKSPACE_ROOT}/ChipMachineAS.app}"
+APP="${APP:-${WORKSPACE_ROOT}/ChipMachinePlus.app}"
 if [ ! -d "$APP" ]; then
     echo "error: app bundle not found: $APP" >&2
     echo "run with --help for usage." >&2
@@ -170,7 +170,7 @@ fi
 echo ""
 echo "Done. Quick checks:"
 echo "  umbrella UTI registered:"
-echo "    \"$LSREGISTER\" -dump | grep -i chipmachineas.chiptune"
+echo "    \"$LSREGISTER\" -dump | grep -i chipmachineplus.chiptune"
 echo "  a file's resolved type:"
 echo "    mdls -name kMDItemContentType SOMEFILE.sid"
 echo "  playback path (needs built binary):"

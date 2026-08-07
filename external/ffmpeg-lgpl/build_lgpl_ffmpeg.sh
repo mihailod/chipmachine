@@ -1,5 +1,5 @@
 #!/bin/bash
-# Reproducible LGPLv3, decode-only, no-CLI FFmpeg build for ChipMachineAS (arm64 macOS).
+# Reproducible LGPLv3, decode-only, no-CLI FFmpeg build for ChipMachinePlus (arm64 macOS).
 # Produces libavcodec.62 / libavformat.62 / libavutil.60 / libswresample.6 dylibs that
 # drop into this directory's lib/. See README.md for rationale (App Store / GPL).
 #
