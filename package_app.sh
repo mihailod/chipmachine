@@ -1063,6 +1063,21 @@ fi   # end: if $DO_BUILD (BUILD + ASSEMBLE)
 ENT_HELPER="${MACNATIVE_DIR}/entitlements-helper.plist"
 
 if command -v codesign &> /dev/null; then
+    # Strip extended attributes from the whole bundle BEFORE signing, for every
+    # variant and both ad-hoc and real signatures.
+    #
+    # `cp -R` carries source-tree xattrs into the bundle: assets under data/ pick
+    # up com.apple.quarantine (downloaded fonts/images) and Finder metadata
+    # (kMDItemUserTags / kMDLabel_* from coloured Finder labels). Those are
+    # cosmetic in an ad-hoc build but they are real signing hazards -- FinderInfo
+    # and resource-fork xattrs make codesign fail outright, and any xattr churn
+    # after sealing desyncs the signature, which macOS reports to the end user as
+    # "<App> is damaged and can't be opened". Clearing unconditionally keeps the
+    # ad-hoc and Developer ID paths byte-comparable instead of only cleaning the
+    # one we happen to ship.
+    echo "-> Clearing extended attributes from bundle..."
+    xattr -cr "${TARGET_DIR}"
+
     if [ "$SIGN_ID" = "-" ]; then
         SIGN_FLAGS=(-f -s -)
         echo "-> Applying ad-hoc code signatures (set an identity for a real signature)..."
@@ -1073,8 +1088,6 @@ if command -v codesign &> /dev/null; then
         else
             echo "-> Applying Developer ID signatures: ${SIGN_ID}"
         fi
-        # Stray extended attributes (quarantine/FinderInfo) would break the seal.
-        xattr -cr "${TARGET_DIR}"
     fi
 
     # The app entitlements go on the outer seal for any real signature AND for
