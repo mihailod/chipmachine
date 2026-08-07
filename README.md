@@ -151,7 +151,7 @@ arguments to see full usage):
 | `./package_app.sh --applesign --signid="Developer ID Application: Name (TEAMID)"` | Build, then **Developer ID sign** with Hardened Runtime + entitlements. |
 | `… --notaryprofile=NAME` | Additionally **notarize with Apple and staple** the ticket. |
 | `… --reusebuiltapp` | **Skip the build** and (re)sign the `.app` already on disk — the fast re-sign / re-notarize loop. Requires `--applesign`; can't combine with `--buildapponly`. |
-| `… --releaseit` | After packaging, interactively create a GitHub release (works with either mode). |
+| `… --releaseit` | After packaging, interactively publish the GitHub release. **Requires `--applesign` + `--notaryprofile`** — see below. |
 
 Flags accept a single or double dash and are case-insensitive; value flags use
 `--key=value`.
@@ -182,10 +182,37 @@ with no warning on other people's Macs.
 **Full distributable build:**
 
 ```bash
-./package_app.sh --applesign \
-  --signid="Developer ID Application: Your Name (ABCDE12345)" \
-  --notaryprofile=chipmachine-notary
+./package_app.sh --applesign --signid="Developer ID Application: Your Name (ABCDE12345)" --notaryprofile=chipmachine-notary
 ```
+
+#### Publishing the official release
+
+Every published release is Developer ID signed **and** notarized. `--releaseit`
+enforces that: an ad-hoc or un-notarized build is refused before the build even
+starts, and there is no override flag. Before uploading, a release gate extracts
+the finished zip and re-verifies the copy a user would receive, aborting on any
+failure.
+
+```bash
+./package_app.sh --applesign --signid="Developer ID Application: Your Name (ABCDE12345)" --notaryprofile=chipmachine-notary --releaseit
+```
+
+**Full checklist in [RELEASE_PROCESS.txt](data-notbundled/misc/RELEASE_PROCESS.txt)** —
+one-time signing setup, version bump, what the gate checks, post-publish
+verification, and how to recall a bad release.
+
+#### In-app update check
+
+[`src/macnative/CheckForUpdate.mm`](src/macnative/CheckForUpdate.mm) polls
+`api.github.com/repos/mihailod/chipmachine/releases/latest` at startup and reads
+**only `tag_name`**, comparing it against `VERSION_STR`. It never inspects
+assets, so renaming or re-signing the download is invisible to it — but it does
+constrain how releases are tagged and recalled, which
+[RELEASE_PROCESS.txt](data-notbundled/misc/RELEASE_PROCESS.txt) spells out.
+
+The MAS build compiles none of this — `CM_MAS` reduces the entry point to a
+no-op, since the App Store delivers its updates and steering users to a GitHub
+download would violate App Store guidelines.
 
 **Entitlements** live in [src/macnative/](src/macnative/) and are documented in
 [entitlements-README.md](src/macnative/entitlements-README.md): the main

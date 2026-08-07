@@ -1,42 +1,214 @@
-ChipmachineAS release process
-=============================
+ChipMachinePlus release process
+==============================
+
+Since v2.1-as every published release is Developer ID signed AND notarized.
+package_app.sh enforces this: --releaseit without --applesign --signid=...
+--notaryprofile=... exits before it builds anything, and there is no override.
+The ad-hoc path (--buildapponly) is for local builds only -- Gatekeeper rejects
+an ad-hoc bundle on every Mac except the one that built it.
+
+(Releases v1.0.0-as .. v2.0-as predate this and carry ad-hoc ChipMachineAS.zip
+assets. They are kept as-is for historical reasons; only the latest release
+matters to the in-app update check.)
+
+
+0. One-time signing setup
+-------------------------
+Needs the $99 Apple Developer Program, with a "Developer ID Application"
+certificate installed in the login keychain.
+
+Find the identity string:
+  security find-identity -v -p codesigning
+  -> "Developer ID Application: Your Name (ABCDE12345)"
+
+Store the notarization credentials once (they live in the keychain, never on the
+command line):
+  xcrun notarytool store-credentials chipmachine-notary \
+      --apple-id you@example.com --team-id ABCDE12345
+
 
 1. Bump the app version
 -----------------------
-in code: mihailod@Mac chipmachine % vi src/version.h.VERSION_STR 
+in code: vi src/version.h  ->  VERSION_STR
+
+Keep the X.Y form. The in-app update check (src/macnative/CheckForUpdate.mm)
+extracts the version from the release TAG with the regex [0-9]+(\.[0-9]+)+,
+which requires at least one dot -- a tag like "v3-as" would break it.
+
 
 2. Bump the DB version
 ----------------------
-only id changed/updated (this is rare)
+only if ids changed/updated (this is rare)
 db version in lua/db.lua
-current: VERSION = 24; (intel stopped at 23)
+
 
 3. Run the package script
 -------------------------
-In chipmachine folder:
-./package_app.sh
-upon finishing, the script will print something like this:
-=== Done! ===
-*** Planned template command details:
-------------------------------------------------------------
-gh release create v1.1-as ../ChipMachineAS.zip \
-  --title "ChipMachineAS v1.1" \
-  --notes "Apple Silicon maintenance release v1.1. <short note text to be provided>" \
-  --repo "mihailod/chipmachine"
-------------------------------------------------------------
+In the chipmachine folder:
 
-an example:
+  ./package_app.sh --applesign \
+    --signid="Developer ID Application: Your Name (ABCDE12345)" \
+    --notaryprofile=chipmachine-notary \
+    --releaseit
 
-gh release create v1.0.3-as ../ChipMachineAS.zip \
-  --title "ChipMachineAS v1.0.3" \
-  --notes "Apple Silicon maintenance release v1.0.3. Version check on start, multiple crash fixes, improved DB indexing and About popup, Help screen fix, cosmetic improvements." \
-  --repo "mihailod/chipmachine"
+This builds, signs with Hardened Runtime + timestamp, notarizes with Apple
+(a few minutes), staples the ticket, re-zips the stapled app, runs the RELEASE
+GATE (see below), and only then prompts:
 
-(replace the note with the new note)
+  Provide release notes and confirm the official release upload ... [Y/N] ?
+  Release short note (CTRL+C to abort):
+
+It publishes ChipMachinePlus.zip to the v<VERSION>-as tag, marking it --latest.
+The upload is create-or-replace: if the tag already exists the asset is clobbered
+and the title/notes updated, rather than erroring out the way a bare
+`gh release create` does. --latest is passed EXPLICITLY every time, so
+re-publishing an older tag can never hijack the update prompt, and the script
+re-reads the API afterwards to confirm GitHub now reports the new tag as latest.
+
+Faster iteration when only the signature/notarization needs redoing (skips the
+build entirely, signs the .app already on disk):
+
+  ./package_app.sh --applesign --signid="..." --notaryprofile=chipmachine-notary \
+                   --reusebuiltapp --releaseit
+
+Why there is no way to publish an unsigned build: an ad-hoc bundle is rejected by
+Gatekeeper on every Mac except the one that built it, and a signed-but-un-notarized
+one is blocked on download ("cannot be checked for malicious software"). Neither
+is publishable, so the script refuses to publish them -- BEFORE the build starts,
+rather than after twenty minutes of work. There is no override flag by design.
+Every release up to v2.0-as was ad-hoc precisely because --releaseit used to be a
+free-standing modifier unrelated to signing.
+
+
+3a. What the release gate verifies
+----------------------------------
+Everything before this point checks either the on-disk bundle or the
+PRE-notarization zip. Stapling then mutates the bundle and the zip is rebuilt, so
+the file that actually ships would otherwise be verified by nothing at all. The
+gate extracts the FINAL zip to a temp dir and checks the copy a user would
+receive. All four are fatal, and none substitutes for another:
+
+  1. codesign --verify --deep --strict
+     The seal matches the zip's contents. A mismatch downloads as
+     "<App> is damaged and can't be opened" -- a hard block with no right-click
+     bypass on macOS 13+.
+
+  2. A "Developer ID Application" authority is present, and the bundle is NOT
+     ad-hoc. This is the check that catches the historical failure directly: an
+     ad-hoc bundle passes check 1 perfectly and is still unusable everywhere.
+
+  3. xcrun stapler validate, on the EXTRACTED copy. The only way to prove the
+     notarization ticket travelled inside the zip rather than only existing in
+     the local bundle.
+
+  4. spctl -a -t exec -- Gatekeeper's own verdict, expected
+     "source=Notarized Developer ID".
+
+Any failure aborts before anything is uploaded.
+
+
+4. Verify
+---------
+The script already checks all of this, but to confirm by hand on a downloaded
+copy:
+
+  spctl -a -t exec -vvv /Applications/ChipMachinePlus.app
+  -> accepted, source=Notarized Developer ID
+
+  xcrun stapler validate /Applications/ChipMachinePlus.app
+
+And that the update check sees the new release:
+
+  curl -s https://api.github.com/repos/mihailod/chipmachine/releases/latest \
+    | grep '"tag_name"'
+
+
+What the in-app update check requires of a release
+--------------------------------------------------
+src/macnative/CheckForUpdate.mm polls
+api.github.com/repos/mihailod/chipmachine/releases/latest at startup and reads
+ONLY tag_name, comparing it against VERSION_STR with NSNumericSearch. It never
+inspects assets -- renaming or re-signing the download is invisible to it. Four
+things it DOES depend on:
+
+  * The tag must contain a dotted numeric version.
+    The extractor regex is [0-9]+(\.[0-9]+)+, so "v2.1-as" -> "2.1". A tag like
+    "v3-as" has no dot, falls through the regex, and makes the comparison
+    meaningless. Keep the X.Y form.
+
+  * The release must not be a draft or a prerelease.
+    GitHub's /releases/latest skips both, so a draft leaves users being told the
+    PREVIOUS version is current.
+
+  * The newest release must stay published.
+    Older releases can be deleted or stripped of assets freely; only "latest"
+    feeds the check.
+
+  * The tag must be STRICTLY NEWER than the installed build.
+    The alert fires only on NSOrderedDescending. See the recall section below --
+    this is the one that bites.
+
+The mas build compiles none of this: CM_MAS reduces the entry point to a no-op,
+since the App Store delivers its own updates and steering users to a GitHub
+download would violate App Store guidelines.
 
 
 Revert/undo a bad release
 -------------------------
-cd chipmachine
-gh release upload v1.0.0-as ../ChipMachineAS-macOS26-ARM64.zip --clobber --repo "mihailod/chipmachine"
-where v1.0.0-as should be replaced with the last good release you wanna revert to
+Two steps, in this order: stop the bleeding, then ship the fix under a NEW
+version number.
+
+Step 1 -- pull the bad release immediately
+------------------------------------------
+Every minute it stays up is more people downloading the faulty build, so delete
+it first and sort out the fix afterwards:
+
+  gh release delete v2.1-as --yes --repo "mihailod/chipmachine"
+
+(or the Delete button in the GitHub web UI -- same thing.)
+
+Add --cleanup-tag if you also want the tag gone. Without it the tag lingers,
+which is harmless but leaves an orphan entry under Tags. Note that whichever
+path you use, deleting a release makes GitHub promote the PREVIOUS release to
+"Latest", so the in-app update check starts reporting that older tag until you
+publish the fix. That is fine and self-correcting: anyone already on the bad
+build is not prompted (the older tag is not NEWER than what they have), and
+anyone further back is correctly pointed at the last good release.
+
+Step 2 -- BUMP THE VERSION, do not reuse the number
+---------------------------------------------------
+This is the part that is easy to get wrong. The update check
+(src/macnative/CheckForUpdate.mm) only alerts when the release tag is STRICTLY
+NEWER than the running build -- it compares with NSNumericSearch and fires only
+on NSOrderedDescending. Republishing a fixed build under the SAME version means
+everyone who already grabbed the faulty one compares 2.1 against 2.1, gets no
+prompt, and stays on the broken build forever.
+
+So: bump src/version.h (2.1 -> 2.1.1), then run the normal release command from
+section 3. Republishing the same number is only safe in the window before anyone
+could have downloaded it -- and if you are already deleting the release per step
+1 above, assume someone did.
+
+Replacing the asset in place (no delete, no bump) is supported by the script --
+an existing tag has its zip clobbered and its notes updated rather than erroring
+out -- but it carries the same silent-no-prompt problem, so it is for fixing a
+release nobody has seen yet, not for recalling one.
+
+If a release was deleted and you need an older one marked latest again:
+
+  gh release edit v2.0-as --latest --repo "mihailod/chipmachine"
+
+Never hand-upload a zip produced by --buildapponly. It is ad-hoc signed and will
+not open on anyone else's Mac.
+
+
+Mac App Store (mas variant) -- separate path
+--------------------------------------------
+Not a GitHub release. --releaseit does nothing for --mas. The .pkg is built with
+the App Store certs and uploaded via Transporter/altool; Apple re-signs it for
+distribution, and there is no notarization step.
+
+  ./package_app.sh --mas --applesign \
+    --distribid="Apple Distribution: Your Name (ABCDE12345)" \
+    --installerid="3rd Party Mac Developer Installer: Your Name (ABCDE12345)" \
+    --provision=/path/to/ChipMachine.provisionprofile

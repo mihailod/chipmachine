@@ -46,7 +46,7 @@ Two product variants (default: --plus). Identity/names live in variants.conf:
                               -DCM_VARIANT=mas). Distributed as a signed .pkg.
 
 Usage:
-  package_app.sh [--plus] --buildapponly [--releaseit]
+  package_app.sh [--plus] --buildapponly
   package_app.sh [--plus] --applesign --signid="Developer ID Application: Name (TEAMID)" \
                  [--notaryprofile=NAME] [--reusebuiltapp] [--releaseit]
   package_app.sh --mas --buildapponly            # ad-hoc sandboxed .app, LOCAL test
@@ -82,8 +82,11 @@ Signing options -- mas / Mac App Store (used with --mas --applesign):
 Other options:
   --reusebuiltapp        Do NOT rebuild -- sign the .app already on disk. Cannot
                          be combined with --buildapponly.
-  --releaseit            After packaging, interactively create a GitHub release
-                         (plus variant only).
+  --releaseit            After packaging, interactively publish the GitHub release
+                         (plus variant only). REQUIRES --applesign --signid=...
+                         --notaryprofile=... -- the official download must be
+                         Developer ID signed AND notarized, or Gatekeeper blocks
+                         it on every Mac that downloads it. No override exists.
   -h, --help             Show this help.
 
 Examples:
@@ -91,6 +94,8 @@ Examples:
   package_app.sh --mas --buildapponly                         # mas, local test
   package_app.sh --applesign --signid="Developer ID Application: Jane (ABCDE12345)" \
                  --notaryprofile=chipmachine-notary
+  package_app.sh --applesign --signid="Developer ID Application: Jane (ABCDE12345)" \
+                 --notaryprofile=chipmachine-notary --releaseit   # official release
 USAGE
 }
 
@@ -180,6 +185,41 @@ fi
 if ! $ACTION; then
     print_usage
     exit 1
+fi
+
+# --releaseit publishes THE official download. It is gated on a full Developer ID
+# signature AND notarization -- there is deliberately no escape hatch.
+#
+# This used to be a free-standing modifier orthogonal to signing, which is how
+# every release up to v2.0-as ended up carrying an ad-hoc-signed zip: a plain
+# `--buildapponly --releaseit` uploaded a bundle that Gatekeeper rejects on any
+# machine but the one that built it. `--applesign` without `--notaryprofile` is
+# no better for a download -- since macOS 10.15 a quarantined app needs a stapled
+# notarization ticket or it is blocked with "cannot be checked for malicious
+# software", so a signed-but-unstapled zip is just a slower way to ship a broken
+# download.
+#
+# Checked HERE, before anything is built, because the alternative is discovering
+# it after a 20-minute build. It must also run BEFORE the `$APPLE_SIGN ||
+# SIGN_ID="-"` line below, which would otherwise mask an empty --signid as the
+# ad-hoc identity.
+#
+# (mas ignores --releaseit entirely -- App Store distribution is a .pkg upload,
+# not a GitHub release -- so the gate is scoped to plus.)
+if $RELEASE_IT && [ "$VARIANT" = "plus" ]; then
+    if ! $APPLE_SIGN || [ -z "$SIGN_ID" ] || [ -z "$NOTARY_PROFILE" ]; then
+        echo "ERROR: --releaseit publishes the OFFICIAL GitHub download, so it requires a"
+        echo "       real Developer ID signature AND Apple notarization:"
+        echo
+        echo "         package_app.sh --applesign \\"
+        echo "                        --signid=\"Developer ID Application: Name (TEAMID)\" \\"
+        echo "                        --notaryprofile=NAME --releaseit"
+        echo
+        echo "       An ad-hoc or un-notarized bundle is blocked by Gatekeeper on every"
+        echo "       Mac that downloads it. There is no override -- for a local build,"
+        echo "       drop --releaseit and use --buildapponly."
+        exit 1
+    fi
 fi
 
 # Decide whether to run the build/assemble steps:
@@ -881,16 +921,39 @@ discover_and_patch() {
 # rewrites their openssl/sibling refs + id off @executable_path. Sonames match
 # (avcodec.62/avformat.62/avutil.60/swresample.6) so it is an ABI drop-in.
 # See external/ffmpeg-lgpl/README.md for provenance + license.
+#
+# On the missing-dylib guard below: falling through here does NOT skip FFmpeg, it
+# ships Homebrew's GPL build instead (discover_and_patch copies whatever the
+# binary links against). The consequence is variant-specific:
+#   mas   -- FATAL, always. GPL material cannot ship in an App Store bundle, and
+#            no flag makes that acceptable. This is the case the old guard got
+#            wrong: it aborted on $RELEASE_IT, which is a PLUS-only flag, so the
+#            one variant where GPL is a hard blocker was the one that silently
+#            continued.
+#   plus  -- GPL is fine in the Developer ID build (LEGAL-PLUS covers copyleft
+#            components), so this is only about shipping what we intend to ship.
+#            Fatal for a real release, a warning in the local dev loop.
 FFMPEG_LGPL_DIR="${CHIPMACHINE_DIR}/external/ffmpeg-lgpl/lib"
 echo "-> Substituting LGPL libav dylibs (replacing the GPL Homebrew build)..."
 for L in libavcodec.62 libavformat.62 libavutil.60 libswresample.6; do
     if [ -f "${FFMPEG_LGPL_DIR}/${L}.dylib" ]; then
         cp -f "${FFMPEG_LGPL_DIR}/${L}.dylib" "${FRAMEWORKS_DIR}/${L}.dylib"
         chmod +w "${FRAMEWORKS_DIR}/${L}.dylib"
-    else
+    elif [ "$VARIANT" = "mas" ]; then
         echo "CRITICAL: vendored LGPL ${L}.dylib not found at ${FFMPEG_LGPL_DIR}."
+        echo "          The mas bundle would fall back to Homebrew's GPL FFmpeg build,"
+        echo "          which must never ship in an App Store submission."
         echo "          Build it via external/ffmpeg-lgpl/build_lgpl_ffmpeg.sh."
-        $RELEASE_IT && exit 1
+        exit 1
+    elif $RELEASE_IT; then
+        echo "CRITICAL: vendored LGPL ${L}.dylib not found at ${FFMPEG_LGPL_DIR}."
+        echo "          Refusing to publish a release linking Homebrew's GPL FFmpeg."
+        echo "          Build it via external/ffmpeg-lgpl/build_lgpl_ffmpeg.sh."
+        exit 1
+    else
+        echo "WARNING: vendored LGPL ${L}.dylib not found at ${FFMPEG_LGPL_DIR};"
+        echo "         this local plus build will link Homebrew's GPL FFmpeg."
+        echo "         Build it via external/ffmpeg-lgpl/build_lgpl_ffmpeg.sh."
     fi
 done
 
@@ -1237,6 +1300,77 @@ elif [ "$VARIANT" = "plus" ] && [ "$SIGN_ID" != "-" ]; then
     echo "         Un-notarized downloads still trip Gatekeeper on other Macs."
 fi
 
+# 7d. RELEASE GATE -- verify THE ARTIFACT THAT WILL BE UPLOADED.
+#
+# Every check before this point looked at either the on-disk bundle or the
+# PRE-notarization zip. Step 7c then staples the bundle and re-zips it, so the
+# file that actually ships has been verified by nothing at all. That is the file
+# users download, so it is the file that gets checked here -- extracted fresh,
+# exactly as a user would receive it.
+#
+# Four independent things, all fatal. They fail in different ways, so none of
+# them substitutes for another:
+#   1. seal integrity    -- the zip's contents match the signed manifest. A
+#                           mismatch downloads as "<App> is damaged".
+#   2. real identity     -- a Developer ID Application authority is present and
+#                           the adhoc flag is NOT. Catches the historical failure
+#                           mode directly: an ad-hoc bundle passes check 1
+#                           perfectly and is still unusable on any other Mac.
+#   3. stapled ticket    -- validated on the EXTRACTED copy, which is the only
+#                           way to prove the ticket travelled inside the zip
+#                           rather than only living in the local bundle.
+#   4. Gatekeeper verdict-- what macOS itself will decide on first launch.
+#                           Deliberately NOT `|| true` (unlike the informational
+#                           assessment above).
+#
+# RELEASE_READY is what the gh block below requires; it is set by nothing else.
+RELEASE_READY=false
+if $RELEASE_IT && [ "$VARIANT" = "plus" ]; then
+    echo "=== Release gate: verifying the artifact to be uploaded ==="
+    GATE_DIR="$(mktemp -d)"
+    gate_fail() {
+        echo "CRITICAL: $1"
+        echo "          Refusing to publish ${ZIP_PATH}."
+        rm -rf "${GATE_DIR}"
+        exit 1
+    }
+    ( cd "${GATE_DIR}" && unzip -q "${ZIP_PATH}" ) || gate_fail "could not extract ${ZIP_PATH}."
+    GATE_APP="${GATE_DIR}/${APP_NAME}"
+    [ -d "${GATE_APP}" ] || gate_fail "${APP_NAME} is not present in the zip."
+
+    # 1. Seal integrity.
+    codesign --verify --deep --strict "${GATE_APP}" 2>/dev/null \
+        || gate_fail "the extracted bundle fails --deep --strict verification."
+    echo "   [1/4] signature seals the extracted bundle"
+
+    # 2. Real Developer ID identity, not ad-hoc. `codesign -dv` writes to stderr.
+    # `|| true` so a failing codesign does not trip `set -e` with no explanation --
+    # an empty GATE_SIG falls through to the gate_fail below, which says why.
+    GATE_SIG=$(codesign -dvvv "${GATE_APP}" 2>&1 || true)
+    echo "${GATE_SIG}" | grep -q "Authority=Developer ID Application" \
+        || gate_fail "no 'Developer ID Application' authority in the signature."
+    echo "${GATE_SIG}" | grep -qi "adhoc" \
+        && gate_fail "the bundle is AD-HOC signed -- Gatekeeper rejects it everywhere."
+    echo "   [2/4] $(echo "${GATE_SIG}" | grep -m1 'Authority=Developer ID Application' | sed 's/^ *//')"
+
+    # 3. Notarization ticket present in the shipped copy.
+    xcrun stapler validate "${GATE_APP}" >/dev/null 2>&1 \
+        || gate_fail "no stapled notarization ticket in the extracted bundle."
+    echo "   [3/4] notarization ticket is stapled inside the zip"
+
+    # 4. Gatekeeper's own verdict.
+    if ! spctl -a -t exec "${GATE_APP}" 2>/dev/null; then
+        echo "   Gatekeeper says:"
+        spctl -a -t exec -vvv "${GATE_APP}" 2>&1 | sed 's/^/     /'
+        gate_fail "Gatekeeper rejects the extracted bundle."
+    fi
+    echo "   [4/4] $(spctl -a -t exec -vvv "${GATE_APP}" 2>&1 | grep -m1 source | sed 's/^ *//')"
+
+    rm -rf "${GATE_DIR}"
+    RELEASE_READY=true
+    echo "=== Release gate passed: the artifact is signed, notarized and stapled ==="
+fi
+
 cd "${CHIPMACHINE_DIR}"
 
 echo "=== Done! ==="
@@ -1250,6 +1384,7 @@ if [ "$VARIANT" = "plus" ]; then
     echo "gh release create v${VERSION_STR}-as ../${ARTIFACT}.zip \\"
     echo "  --title \"${DISPLAY_NAME} v${VERSION_STR}\" \\"
     echo "  --notes \"Apple Silicon maintenance release v${VERSION_STR}. <short note text to be provided>\" \\"
+    echo "  --latest \\"
     echo "  --repo \"mihailod/chipmachine\""
     echo "------------------------------------------------------------"
 
@@ -1257,8 +1392,28 @@ if [ "$VARIANT" = "plus" ]; then
     # Conditional Interactive Release Verification Block
     # -----------------------------------------------------------------
     if $RELEASE_IT; then
+        # Belt and braces. The argument gate up top already refuses --releaseit
+        # without --applesign + --notaryprofile, and step 7d proves the artifact
+        # is genuinely signed/notarized/stapled. Nothing else sets RELEASE_READY,
+        # so if a future edit ever reorders or skips the gate, the upload stops
+        # here instead of quietly publishing whatever is on disk.
+        if ! $RELEASE_READY; then
+            echo "CRITICAL: the release gate (step 7d) did not pass, so nothing is uploaded."
+            exit 1
+        fi
+
         if ! command -v gh &> /dev/null; then
             echo "ERROR: 'gh' command line tool not found in PATH. Skipping automated execution."
+            exit 1
+        fi
+
+        # Check auth BEFORE prompting for release notes. The create-or-replace
+        # branch below decides on `gh release view` succeeding, and an
+        # unauthenticated gh fails that the same way a missing release does --
+        # which would send an existing tag down the `create` path for a
+        # confusing second failure.
+        if ! gh auth status >/dev/null 2>&1; then
+            echo "ERROR: gh is not authenticated. Run 'gh auth login' (or set GH_TOKEN) first."
             exit 1
         fi
 
@@ -1270,12 +1425,49 @@ if [ "$VARIANT" = "plus" ]; then
             read -r SHORT_NOTE
 
             RELEASE_NOTES="Apple Silicon maintenance release v${VERSION_STR}. ${SHORT_NOTE}"
+            RELEASE_TAG="v${VERSION_STR}-as"
 
+            # Create-or-replace. `gh release create` errors out if the tag already
+            # exists, which is the common case when re-cutting a release after a
+            # bad build -- that is what forced the manual `--clobber` upload
+            # documented in RELEASE_PROCESS.txt. Branch on it instead.
+            #
+            # --latest is passed EXPLICITLY. The in-app update check
+            # (src/macnative/CheckForUpdate.mm) reads tag_name from
+            # api.github.com/.../releases/latest, and GitHub picks "latest" by
+            # created_at among non-draft, non-prerelease releases. Being explicit
+            # means re-publishing an older tag can never hijack the update prompt.
             echo "-> Initiating deployment via GitHub CLI..."
-            gh release create "v${VERSION_STR}-as" "${ZIP_PATH}" \
-              --title "${DISPLAY_NAME} v${VERSION_STR}" \
-              --notes "${RELEASE_NOTES}" \
-              --repo "mihailod/chipmachine"
+            if gh release view "${RELEASE_TAG}" --repo "mihailod/chipmachine" >/dev/null 2>&1; then
+                echo "   Release ${RELEASE_TAG} already exists -- replacing its asset."
+                gh release upload "${RELEASE_TAG}" "${ZIP_PATH}" \
+                  --clobber \
+                  --repo "mihailod/chipmachine"
+                gh release edit "${RELEASE_TAG}" \
+                  --title "${DISPLAY_NAME} v${VERSION_STR}" \
+                  --notes "${RELEASE_NOTES}" \
+                  --latest \
+                  --repo "mihailod/chipmachine"
+            else
+                gh release create "${RELEASE_TAG}" "${ZIP_PATH}" \
+                  --title "${DISPLAY_NAME} v${VERSION_STR}" \
+                  --notes "${RELEASE_NOTES}" \
+                  --latest \
+                  --repo "mihailod/chipmachine"
+            fi
+
+            # Confirm the update check will actually see this release: the API
+            # must now report this tag as latest. A mismatch means the in-app
+            # prompt keeps pointing users at the previous version.
+            LATEST_TAG=$(gh release view --json tagName -q .tagName \
+                --repo "mihailod/chipmachine" 2>/dev/null || true)
+            if [ "${LATEST_TAG}" = "${RELEASE_TAG}" ]; then
+                echo "-> GitHub reports ${RELEASE_TAG} as the latest release (update check OK)."
+            else
+                echo "WARNING: GitHub reports '${LATEST_TAG}' as latest, not ${RELEASE_TAG}."
+                echo "         The in-app update check reads that tag -- fix with:"
+                echo "           gh release edit ${RELEASE_TAG} --latest --repo mihailod/chipmachine"
+            fi
             echo "=== Deployment Successfully Completed ==="
         else
             echo "-> Deployment aborted by user request."

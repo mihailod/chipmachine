@@ -44,7 +44,10 @@ static void ProcessVersionComparison(NSString *latestTag) {
         // A newer version is definitively available
         dispatch_async(dispatch_get_main_queue(), ^{
             NSAlert *alert = [[NSAlert alloc] init];
-            [alert setMessageText:@"ChipMachineAS Update"];
+            // PROGRAM_NAME, not a literal: the product was renamed to
+            // ChipMachinePlus, and this alert is the one piece of UI that still
+            // said "ChipMachineAS" to users.
+            [alert setMessageText:@PROGRAM_NAME " Update"];
             
             NSString *informativeText = [NSString stringWithFormat:
                 @"You are running version %@. A newer version (%@) is now available.",
@@ -87,7 +90,9 @@ static void PerformUpdateCheck() {
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"GET"];
-    [request setValue:@"ChipMachineAS-Updater" forHTTPHeaderField:@"User-Agent"];
+    // Same rename as the alert title above. GitHub requires *a* User-Agent on
+    // api.github.com; the exact string is ours to choose.
+    [request setValue:@PROGRAM_NAME "-Updater" forHTTPHeaderField:@"User-Agent"];
     [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
 
     NSURLSession *session = [NSURLSession sharedSession];
