@@ -534,6 +534,50 @@ else
     echo "WARNING: Lua folder not found at ${CHIPMACHINE_DIR}/lua. Scripting features may fail."
 fi
 
+# 4-ante. MAS ONLY: drop the stream-resolver hook from the COPIED init.lua.
+#
+# lua/init.lua defines on_parse_youtube(), which calls cm_execute() -- a binding
+# onto fork()+execl("/bin/sh","-c",...) -- to run an external downloader with a
+# URL interpolated into the shell string.
+#
+# In the mas build that function is ALREADY dead: initYoutube() is behind
+# #ifndef CM_MAS in src/main.cpp, so nothing ever calls the hook, and step 4b
+# below ships no helper binary for it to find. But dead is not the same as
+# absent. The script is shipped as PLAIN TEXT in Contents/Resources/lua/, so an
+# App Review pass that greps the bundle finds a script that shells out to a
+# downloader -- which reads as a direct contradiction of guideline 2.5.2 and of
+# this build's own reviewer notes, no matter that the code path is unreachable.
+#
+# So strip it here, on the COPY only (never chipmachine/lua/, which the plus
+# build still needs verbatim). Removes the preceding comment block too, so no
+# stray reference to the helper's name survives in the shipped file. The two
+# real callbacks (on_layout, on_select_plugin) are untouched.
+#
+# If a future init.lua adds another shell-out, this will NOT catch it -- the
+# guard below is what fails the build in that case.
+if [ "$VARIANT" = "mas" ]; then
+    INIT_LUA="${RESOURCES_DIR}/lua/init.lua"
+    if [ -f "${INIT_LUA}" ]; then
+        echo "-> MAS build: removing stream-resolver hook from bundled init.lua..."
+        perl -0777 -i -pe 's{(?:^--[^\n]*\n)*^function\s+on_parse_youtube\b.*?^end\n}{-- The stream-resolver hook is intentionally absent from the Mac App Store\n-- build: the plugin that drove it is gated out at compile time (CM_MAS), no\n-- external helper program is bundled, and nothing in this build shells out.\n-- Removed by package_app.sh so the shipped script matches the binary.\n}ms' "${INIT_LUA}"
+    fi
+
+    # Guard: no shipped Lua may shell out in the App Store build. Catches both a
+    # failed edit above and any NEW shell-out added to another script later.
+    # `|| true` is REQUIRED: this script runs under `set -e`, and grep exits 1
+    # when it finds nothing -- which is the PASSING case here. Without it the
+    # guard aborts the build precisely when the bundle is clean.
+    LUA_LEAK=$(grep -rlE 'cm_execute|yt-dlp|os\.execute|io\.popen' "${RESOURCES_DIR}/lua" 2>/dev/null || true)
+    if [ -n "${LUA_LEAK}" ]; then
+        echo "CRITICAL: shell-out found in bundled Lua for the mas variant:"
+        echo "${LUA_LEAK}" | sed 's/^/          /'
+        echo "          The App Store build must ship no script that spawns a"
+        echo "          process. Gate it out here before packaging."
+        exit 1
+    fi
+    echo "     Verified: no bundled Lua script shells out."
+fi
+
 # 4a. Prune non-shippable cruft from the COPIED asset trees (never the source).
 #
 # `cp -R data`/`cp -R lua` copy everything, so a stray build/triage cache left
@@ -871,6 +915,59 @@ if [ -d "${RESOURCES_DIR}/data/python_runtime" ]; then
     find "${RESOURCES_DIR}/data/python_runtime" -type f \( -name "*.so" -o -name "*.dylib" -o -name "*.bundle" \) | while read -r PYTHON_EXT; do
         discover_and_patch "$PYTHON_EXT"
     done
+fi
+
+# 5a-ter. Strip the debug map out of the main executable.
+#
+# The link leaves a debug map behind: one N_OSO stab per object file, each
+# holding the ABSOLUTE path of that .o under the build tree. On a normal build
+# that is ~1500 records and ~3000 occurrences of $HOME inside the shipped
+# binary, plus ~2MB of weight that gets sealed into the code signature for no
+# runtime benefit.
+#
+# `strip -S` removes debugging symbols ONLY -- the regular symbol table stays,
+# so crash reports still symbolicate to function names. (`-x` would also drop
+# local symbols and make those reports much worse; don't.)
+#
+# This must run AFTER all install_name_tool patching above (which rewrites the
+# binary) and BEFORE codesign (stripping invalidates any existing signature).
+#
+# It does NOT catch __FILE__ strings from assert/LOGD macros -- those are
+# ordinary string constants in __TEXT, not debug info, and no strip touches
+# them. They are handled at compile time by -ffile-prefix-map in CMakeLists.txt.
+# The check below is what tells you if that flag stopped working.
+#
+# Bundled dylibs are deliberately left alone: they carry no debug map (verify
+# with `nm -pa <lib> | grep -c ' OSO '`), and sunvox.dylib is third-party
+# closed-source that we do not modify.
+echo "-> Stripping debug map from main executable..."
+MAIN_EXE="${MAC_OS_DIR}/chipmachine"
+if [ -f "${MAIN_EXE}" ]; then
+    SIZE_BEFORE=$(stat -f%z "${MAIN_EXE}")
+    chmod +w "${MAIN_EXE}"
+    strip -S "${MAIN_EXE}" || { echo "CRITICAL: strip failed on ${MAIN_EXE}"; exit 1; }
+    SIZE_AFTER=$(stat -f%z "${MAIN_EXE}")
+    echo "     ${SIZE_BEFORE} -> ${SIZE_AFTER} bytes"
+
+    # Belt-and-braces: report any developer path that survived. Counts raw byte
+    # occurrences, because these strings are NUL-separated and `strings` reports
+    # them inconsistently.
+    LEAKED=$(python3 -c "
+import sys
+d = open('${MAIN_EXE}', 'rb').read()
+print(d.count(b'${HOME}'))
+" 2>/dev/null || echo 0)
+    if [ "${LEAKED}" != "0" ]; then
+        echo "WARNING: ${LEAKED} occurrence(s) of ${HOME} remain in the executable."
+        echo "         Expected 0. The -ffile-prefix-map flags in CMakeLists.txt"
+        echo "         are missing or the build dir predates them -- reconfigure"
+        echo "         from scratch (rm -rf the build dir) and rebuild."
+    else
+        echo "     No developer paths remain in the executable."
+    fi
+else
+    echo "CRITICAL: main executable not found at ${MAIN_EXE}"
+    exit 1
 fi
 
 # 5b. Verify ALL bundled Mach-O binaries are pure arm64 (no Intel slices).

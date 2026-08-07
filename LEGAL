@@ -267,10 +267,10 @@ Author: Written for this project, at
         musicplayer/src/plugins/libvgmplugin/vsu_vb.c. It is used instead of
         libvgm's own emu/cores/vsu.c, which this build does not compile.
 License: No third-party licence -- it is chipmachine's own code.
-Notice: Compiled into BOTH variants; the Mednafen core it replaces is compiled
-        into neither. It was written from the register map and timing constants
-        published in Nintendo's Virtual Boy Development Manual (Part 6, "Sound
-        Processor"), not derived from any existing emulator -- the same approach
+Notice: The Mednafen core it replaces is not compiled in at all. It was written
+        from the register map and timing constants published in Nintendo's
+        Virtual Boy Development Manual (Part 6, "Sound Processor"), not derived
+        from any existing emulator -- the same approach
         taken for the Sega 32X PWM above and the VIC-I core in vtplugin.
         See musicplayer/src/plugins/libvgmplugin/README.md.
 
@@ -279,11 +279,11 @@ Author: Written for this project, at
         musicplayer/src/plugins/libvgmplugin/cm_yrw801.c and its generated
         parameter table cm_yrw801_table.h.
 License: No third-party licence -- it is chipmachine's own code and own data.
-Notice: Compiled into BOTH variants. MSX MoonSound VGM logs record only their
-        own sample upload; the instruments they play live in the MoonSound
-        cartridge's 2 MB Yamaha YRW801 wave ROM, which the VGM format does not
-        embed. NO YAMAHA DATA IS SHIPPED, IN ANY FORM. This file synthesises a
-        substitute wavetable in the same header layout at runtime: the waveforms
+Notice: MSX MoonSound VGM logs record only their own sample upload; the
+        instruments they play live in the MoonSound cartridge's 2 MB Yamaha
+        YRW801 wave ROM, which the VGM format does not embed. NO YAMAHA DATA IS
+        SHIPPED, IN ANY FORM. This file synthesises a substitute wavetable in
+        the same header layout at runtime: the waveforms
         are generated from scratch, and the per-wave tuning table was derived by
         measuring the 158 MSX MoonSound tracks in ChipMachine's own index --
         note pitches, note timing and the exactly-known pitch of the FM voices
@@ -299,10 +299,10 @@ Author: Written for this project, at
         musicplayer/src/plugins/libvgmplugin/pwm_32x.c. It replaces libvgm's
         emu/cores/pwm.c, which this build does not compile.
 License: No third-party licence -- it is chipmachine's own code.
-Notice: Compiled into BOTH variants; the Gens core it replaces is compiled into
-        neither. It was written against the documented behaviour of the 32X PWM
-        registers rather than derived from any existing emulator, the same
-        approach taken for the VIC-I core in vtplugin. The file it replaces is
+Notice: The Gens core it replaces is not compiled in at all. It was written
+        against the documented behaviour of the 32X PWM registers rather than
+        derived from any existing emulator, the same approach taken for the
+        VIC-I core in vtplugin. The file it replaces is
         still present in the vendored libvgm tree but is not built.
         See musicplayer/src/plugins/libvgmplugin/README.md.
 
@@ -315,10 +315,10 @@ Author: Written for this project, at
         inside VGM logs. It replaces libvgm's emu/cores/ws_audio.c, which this
         build does not compile.
 License: No third-party licence -- it is chipmachine's own code.
-Notice: Compiled into BOTH variants; the code it replaces is compiled into
-        neither. That code is Mamiya's in_wsr replayer, which its own readme
-        states was cut from OSWAN 0.70 (GPL-2.0) -- libvgm's copy of it carries
-        no licence header at all, which is how it went unnoticed. Both were
+Notice: The code it replaces is not compiled in at all. That code is Mamiya's
+        in_wsr replayer, which its own readme states was cut from OSWAN 0.70
+        (GPL-2.0) -- libvgm's copy of it carries no licence header at all,
+        which is how it went unnoticed. Both were
         replaced: this was written from the WonderSwan documentation published
         on the WSdev Wiki (https://ws.nesdev.org -- Sound, Hyper Voice, DMA,
         Memory map, Mapper, Interrupts, Timers, Display) and Mamiya's own public
@@ -351,14 +351,13 @@ Author: Aaron Giles (https://github.com/aaronsgiles/ymfm), vendored UNMODIFIED
         adapter presenting it through the S98 device interface is
         musicplayer/src/plugins/s98plugin/m_s98/device/s98_ymfm.cpp.
 License: BSD 3-Clause (see external/ymfm/LICENSE)
-Notice: Compiled into BOTH variants. In the Mac App Store variant it is the
-        core used for the OPN family, the YM3526, the Y8950 and the OPL4
-        wavetable (see LEGAL-PLUS for what the other variant uses). The YM3526 is served by ymfm in the
-        plus variant as well, which is a choice about sound rather than about
-        licensing; the OPN, SSG and OPN-side ADPCM translation units are built
-        for the App Store variant only.
-        The YM3812 and YMF262 serve the OPL, OPL2 and OPL3 devices of s98plugin
-        in both variants, replacing MAME's fmopl.cpp and ymf262.cpp. Those two
+Notice: It is the core used for the OPN family, the YM3526, the Y8950 and the
+        OPL4 wavetable. The YM3526 is served by ymfm as a choice about sound
+        rather than about licensing; the others are a licensing choice, and the
+        OPN, SSG and OPN-side ADPCM translation units are compiled for that
+        reason.
+        The YM3812 and YMF262 serve the OPL, OPL2 and OPL3 devices of s98plugin,
+        replacing MAME's fmopl.cpp and ymf262.cpp. Those two
         files were GPL-2.0+ -- Jarek Burczynski did not agree to MAME's 2016
         BSD-3 relicensing, which is why they kept the copyleft tag while most of
         MAME went permissive -- and they were the only GPL code in that plugin.
@@ -383,7 +382,7 @@ Author: ValleyBell's libvgm (https://github.com/ValleyBell/libvgm), vendored at
 License: MIXED, per file. Every core this build compiles is MIT / BSD-style
         (many are MAME cores tagged "license:BSD-3-Clause") or LGPL-2.1 (DOSBox
         AdLibEmu, Nuked OPL3 / OPM / OPN2). Cores under other terms are not
-        compiled here; see LEGAL-PLUS for the ones the other variant adds.
+        compiled here.
 Notice: Vendored sources are unmodified except emu/cores/opnintf.c and
         opnintf.h, which carry a chipmachine patch adding chip-core selection
         (grep "chipmachine local patch"; unmodified copies are kept alongside as
@@ -447,7 +446,7 @@ Author: Developed by Arnaud Carré (Leonard/Oxygene), vendored verbatim from
         Ym2149c (YM2149 sound chip), Mk68901 (MFP timers) and SteDac (STE DMA
         sound). Bundles two further components, listed separately below.
 License: MIT License
-Notice: This is the .sndh decoder in both variants. See
+Notice: This is the .sndh decoder. See
         musicplayer/src/plugins/sndhplugin/README.md.
 
 Component: Musashi (Motorola 68000 CPU core)
@@ -741,7 +740,7 @@ Notice: CLEAN ROOM. Furnace (GPL-2.0-or-later) is the only other engine that
         Store binary cannot satisfy its relink term.
 Coverage: SEGA Genesis and SEGA Master System only. DefleMask's other six
         targets (Game Boy, PC Engine, NES, C64, Arcade, Neo Geo) have no
-        non-copyleft player here, so those rows are dropped from the mas catalog
+        non-copyleft player here, so those rows are dropped from the catalog
         and no unplayable row is ever shown. The surviving rows are listed in
         data/misc/dmfcr_playable.txt, because the catalog's format column names
         DefleMask without naming which of its systems a file targets.
@@ -914,6 +913,13 @@ Bebas Neue (Regular).otf -- Bebas Neue
   Copyright: Copyright 2019 The Bebas Neue Project Authors
              https://github.com/dharmatype/Bebas-Neue
   Notice:    "Bebas Neue" is a trademark of Dharma Type.
+
+DepartureMono-Regular.otf -- Departure Mono
+  Designer:  Helena Zhang
+  Copyright: Copyright 2022-2024 Helena Zhang (helenazhang.com)
+             https://github.com/rektdeckard/departure-mono
+  Notice:    No Reserved Font Name is declared. Shipped unmodified.
+             Used for the tracker pattern backdrop.
 
 Connection.otf -- Connection II
   Copyright: Copyright (c) 2019, Jasper, Robert Jablonski @ KineticPlasma Fonts.

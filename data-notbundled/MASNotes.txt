@@ -50,19 +50,37 @@ See Credits.rtf for further details.
 
 2. No YouTube Playback
 
-ChipMachine does not bundle or execute yt-dlp, does not spawn external download utilities, and does not process arbitrary user-provided URLs for external media extraction.
+ChipMachine does not play YouTube content, does not bundle or execute yt-dlp or any other download utility, and does not spawn external processes to resolve media URLs. No helper executable of any kind is present in the bundle: Contents/MacOS/ contains only the main binary.
 
-Any remaining YouTube-related strings visible in the binary are related to database metadata or artwork references and are not related to YouTube playback functionality.
+This holds structurally, not by convention. No YouTube playback plugin is compiled into the application. No Lua binding capable of running a shell command is compiled into it either, and no directory named for a download utility is added to the process PATH. The packaging process additionally verifies that no bundled Lua script references a subprocess call, and fails outright if one does.
 
-3. POSIX Subprocess API Imports (system, popen, execve, fork)
+The music catalog itself contains no YouTube entries. Any indexed row whose location is a youtube.com or youtu.be URL is discarded when the database is built, so no such row is ever searchable or selectable.
 
-Static analysis may detect imports of POSIX subprocess APIs.
+For completeness, a few YouTube-related strings are visible in the binary. None is a playback path:
 
-ChipMachine itself does not execute arbitrary shell commands, spawn user-provided processes, or invoke external commands during normal operation.
+* "youtube.com/" and "youtu.be/" — the filter described above. These strings are what REMOVES YouTube entries from the catalog.
 
-The only use of system() comes from the bundled SunVox SDK library. SunVox internally probes for optional external conversion utilities (ffmpeg / avconv) as part of its media handling support.
+* "https://img.youtube.com/vi/" — a thumbnail URL template. YouTube thumbnails are used as artwork for some catalog entries.
 
-This functionality is not used by ChipMachine to execute commands or scripts supplied by users.
+* "YouTube" and "YouTube - " — display labels for the catalog's platform/format column.
+
+* A User-Agent literal beginning "com.google.android.apps.youtube.vr.oculus/", inside the media-decoding component. It would only ever be sent when fetching an already-resolved googlevideo.com stream URL. ChipMachine never resolves, produces or requests such a URL, so the string is unreachable.
+
+All are inert: a filter, artwork and metadata references, and one unused constant.
+
+3. POSIX Subprocess API Imports (system, popen, fork, execve)
+
+Static analysis will show that the executable imports the POSIX subprocess symbols system, popen, pclose, fork, execve and execvp.
+
+ChipMachine does not execute shell commands, does not spawn user-provided processes, and does not invoke external commands during normal operation. There is no helper executable in the bundle for any of these to launch.
+
+The imports are pulled in by third-party libraries linked for unrelated reasons, and are not reachable:
+
+* JUCE (juce_core). ChipMachine plays Amstrad CPC formats (STarKos, Arkos Tracker) using the Arkos Tracker 3 engine, which is built on JUCE. JUCE's general-purpose process and file utilities reference system(), fork() and execve(). Only the audio and data-structure parts of that library are used; the process utilities are never called.
+
+* The embedded Lua runtime, whose standard "io" and "os" modules define io.popen() and os.execute(). ChipMachine opens only the base, package and string libraries — the io and os modules are never registered in the interpreter, so neither function is reachable from any script.
+
+Separately, the bundled SunVox library probes for optional external conversion utilities as part of its own media handling. ChipMachine does not use that code path, and SunVox is a dynamic library: its imports are not part of the main executable's import table.
 
 4. Lua Runtime Search Paths and App Sandbox Compatibility
 

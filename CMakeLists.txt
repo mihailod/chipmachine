@@ -772,6 +772,55 @@ if(NOT WINDOWS)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -funsigned-char")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -funsigned-char")
 
+    # Keep the developer's absolute source paths OUT of the shipped binary.
+    #
+    # CMake compiles with absolute paths, so every __FILE__ baked in by an
+    # assert/LOGD macro lands in __TEXT as a full
+    # /Users/<you>/Documents/chipmachine-as/... string. Those survive `strip`
+    # (they are ordinary string constants, not debug info), so the packaging
+    # step alone cannot remove them -- it has to be done here, at compile time.
+    #
+    # -ffile-prefix-map rewrites the prefix in BOTH places it appears:
+    #   * __FILE__ / __BASE_FILE__          (the -fmacro-prefix-map half)
+    #   * DWARF and the linker's debug map  (the -fdebug-prefix-map half)
+    # and, as a side effect that matters here, the source location clang embeds
+    # in __PRETTY_FUNCTION__ for lambdas -- which is how sol3's ctti type names
+    # were leaking paths of their own.
+    #
+    # The replacement is a SYNTHETIC ABSOLUTE ROOT ("/chipmachine-as/..."), not
+    # a relative path, and the mapped-from key deliberately has NO trailing
+    # slash. That is a hard requirement, not a style choice:
+    # external/zxtune/include/source_location.h turns __FILE__ into a template
+    # parameter pack and static_asserts that the first character is '/' (it
+    # trims SOURCES_ROOT, which this project never defines, so ROOT is empty and
+    # the check lands on __FILE__[0]). Mapping to a bare relative path makes
+    # every zxtune TU fail to compile with "SOURCES_ROOT should not end with
+    # slash". Keeping a leading slash satisfies it and still drops the user name.
+    #
+    # Paths therefore read "/chipmachine-as/chipmachine/src/main.cpp" -- absolute
+    # and unambiguous in logs and asserts, but with nothing machine-specific.
+    #
+    # The build dir needs its own entry only when it sits outside the repo; an
+    # in-tree build/ or build-mas/ is already covered by the repo-root mapping.
+    #
+    # Verify after a build with:
+    #   strings -a build-mas/chipmachine | grep -c "$HOME"     # expect 0
+    get_filename_component(CM_REPO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.." ABSOLUTE)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+        string(APPEND CMAKE_CXX_FLAGS
+               " -ffile-prefix-map=${CM_REPO_ROOT}=/chipmachine-as")
+        string(APPEND CMAKE_C_FLAGS
+               " -ffile-prefix-map=${CM_REPO_ROOT}=/chipmachine-as")
+        string(FIND "${CMAKE_BINARY_DIR}" "${CM_REPO_ROOT}/" _CM_BUILD_IN_TREE)
+        if(NOT _CM_BUILD_IN_TREE EQUAL 0 AND
+           NOT CMAKE_BINARY_DIR STREQUAL CM_REPO_ROOT)
+            string(APPEND CMAKE_CXX_FLAGS
+                   " -ffile-prefix-map=${CMAKE_BINARY_DIR}=/chipmachine-as/build")
+            string(APPEND CMAKE_C_FLAGS
+                   " -ffile-prefix-map=${CMAKE_BINARY_DIR}=/chipmachine-as/build")
+        endif()
+    endif()
+
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O2")
     set(CMAKE_C_FLAGS_RELEASE "${CMAKE_C_FLAGS} -O2")
 

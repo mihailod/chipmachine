@@ -223,6 +223,7 @@ int main(int argc, char* argv[])
     // plus4world, .nsfe per song out of an archive.org ZIP. music/projectay is the
     // only local store left, and it is bundled by package_app.sh.)
 
+#ifndef CM_MAS
     utils::path binDir = (work_dir / "bin");
     utils::path exeDir = Environment::getExeDir();
     std::string currentPath = getenv("PATH");
@@ -241,6 +242,15 @@ int main(int argc, char* argv[])
         exeDir.string() + ":" + exeYtdlpDir.string() + ":" +
         binDir.string() + ":" + binYtdlpDir.string() + ":" + currentPath;
     setenv("PATH", newPath.c_str(), 1);
+#endif
+    // The Mac App Store build does the above not at all. It bundles no helper
+    // executable of any kind, so there is nothing for a PATH entry to resolve
+    // to -- the directories it named do not exist in that bundle. Leaving the
+    // code in would prepend dead paths AND leave the literal "ytdlp" in the
+    // binary, which reads to a static-analysis pass (and to guideline 2.5.2)
+    // as an app preparing to spawn a bundled downloader. Gated out so the
+    // string is absent rather than merely unused, the same reasoning as the
+    // cm_execute binding below.
 
     utils::path certPath = (work_dir / "cert.pem");
     if (utils::exists(certPath)) {
@@ -371,10 +381,27 @@ int main(int argc, char* argv[])
         LOGD("[LUA] %s", s.c_str());
     });
     
+#ifndef CM_MAS
+    // Lua-callable shell execution: execPipe() is fork() + execl("/bin/sh",
+    // "-c", cmd). Its ONLY user is on_parse_youtube() in lua/init.lua, which
+    // shells out to yt-dlp to resolve a stream URL.
+    //
+    // Gated out of the Mac App Store build entirely, rather than left
+    // registered-but-unused. initYoutube() below is already behind the same
+    // guard so nothing calls it there, and package_app.sh strips the hook from
+    // the bundled init.lua -- but leaving the binding in place would still mean
+    // the shipped binary CAN run an arbitrary shell command on request from a
+    // script. For App Store review the honest position is that the capability
+    // is absent, not merely unexercised (guideline 2.5.2), and this is what
+    // makes that true rather than conventional.
+    //
+    // Removing this also drops the last reference to execl() from the mas
+    // binary's imports.
     lua->set_function("cm_execute",
                       [](std::string const& cmd) -> std::string {
                           return utils::execPipe(cmd);
                       });
+#endif
 
 
     lua->script_file((work_dir / "lua" / "init.lua").string());
