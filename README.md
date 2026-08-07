@@ -27,13 +27,23 @@ Despite the massive expansion under the hood, the core experience remains untouc
 
 ## Intro
 
-*A demoscene/retro Jukebox/spotify-like music player*
+*A demoscene/retro Jukebox/spotify-like music player with Amiga-intro-like effects style*
+
+### Installing
+
+1. Download the latest release and unzip it into your Applications folder
+2. Double-click `ChipMachinePlus.app`
+
+(The app is signed with an Apple Developer ID and notarized by Apple, so
+it opens like any other Mac application.)
+
+### Quick Start
 
 * **Simply start typing for incremental auto-complete search of the aggregated database**
 * **UP/DOWN keys = select a song from search results**
 * **ENTER key = play**
-* **TAB key = help screen**
-* **(Read the scrolling text for more info)**
+* **TAB key = Cycle various filter screens**
+* **CTRL+H = show the help screen**
 * **[Things in progress / to come](data-notbundled/misc/TOODOO.txt)**
 * **Ultimate goal: every chiptune ever made searchable and instantly playable!** 
 
@@ -43,15 +53,7 @@ Binaries for macOS are available under [*Releases*](https://github.com/mihailod/
 
 **Requires macOS 26 (Tahoe) or later.** The shipped build declares a minimum
 system version of 26.0, so earlier releases of macOS will refuse to launch it.
-
-### Installing
-
-1. Download the latest release and unzip it into your Applications folder
-2. Double-click `ChipMachinePlus.app`
-
-That's it. The app is signed with an Apple Developer ID and notarized by Apple, so
-it opens like any other Mac application — no security prompts, no Settings
-detour.
+(I have no means to test / support older MacOS versions.)
 
 ### Opening local music files
 
