@@ -1,3 +1,23 @@
+<table><tr>
+<th>
+  <a href="https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12">
+  <img src=https://raw.githubusercontent.com/mihailod/chipmachine/refs/heads/master/data/misc/icon.png width=200>
+  </a>
+</th>
+<th>
+  <br>
+  17. August 2026<br><br>
+   <a href="https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12">
+  ChipMachine 2.1<br>
+  is now on App Store!<br>
+  <br>
+  </a>
+</th>
+</tr>
+</table>
+
+---
+
 **ChipMachinePlus**
 
 <div align="right">
