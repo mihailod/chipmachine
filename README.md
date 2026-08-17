@@ -26,6 +26,9 @@
 
 **Port of ChipMachine for Apple Silicon**
 
+  <a href="https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12" float="left">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" alt="Download on the App Store">
+
 But this is far more than a simple port!
 
 While ensuring the player runs on modern Apple hardware, my passion for it has expanded its compatibility and scale:
@@ -38,12 +41,15 @@ While ensuring the player runs on modern Apple hardware, my passion for it has e
 Despite the massive expansion under the hood, the core experience remains untouched: instant, incremental autocomplete search across the entire global library, delivering instant zero-latency (for cached songs) playback from a single, simple, unified interface.
 
 **(Screenshots might show features from dev in progress (not released) code.)**
-[![Screenshot](data-notbundled/misc/screenshots/1playback.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data-notbundled/misc/screenshots/2platforms.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data-notbundled/misc/screenshots/3formats.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data-notbundled/misc/screenshots/4databases.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data-notbundled/misc/screenshots/5search.png)](https://youtu.be/WsNhwxY1c08)
-[![Screenshot](data-notbundled/misc/screenshots/6plugins.png)](https://youtu.be/WsNhwxY1c08)
+[![Screenshot](data-notbundled/misc/screenshots/1playback.png)](https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12)
+[![Screenshot](data-notbundled/misc/screenshots/2platforms.png)](https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12)
+[![Screenshot](data-notbundled/misc/screenshots/3formats.png)](https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12)
+[![Screenshot](data-notbundled/misc/screenshots/4databases.png)](https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12)
+[![Screenshot](data-notbundled/misc/screenshots/5search.png)](https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12)
+[![Screenshot](data-notbundled/misc/screenshots/6plugins.png)](https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12)
+
+  <a href="https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12" float="left">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" alt="Download on the App Store">
 
 ## Intro
 
@@ -215,6 +221,9 @@ parser (AMFI) rejects XML comments.
 
 ### Mac App Store build (MAS variant)
 
+  <a href="https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12" float="left">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" alt="Download on the App Store">
+
 The Mac App Store variant is packaged with `--mas`, which builds from `build-mas/`
 (configure it once with `-DCM_VARIANT=mas`, see [Build variants](#build-variants-plus-vs-mac-app-store)),
 skips the yt-dlp helper, applies the App-Sandbox entitlements, and produces a
@@ -243,6 +252,9 @@ MAS build ships neither.
 > the sandbox. `--mas --buildapponly` is fully usable for local testing today.
 
 ## Using the application
+
+  <a href="https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12" float="left">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" alt="Download on the App Store">
 
 * Type words separated by spaces for incremental search
 * *ENTER* to play, *SHIFT-ENTER* to enque
@@ -512,3 +524,6 @@ in the licence notices, **not** here — see [Licensing](#licensing) below.
 `package_app.sh` assembles the in-app **About** panel (`Credits.rtf`) from those
 same two files, so the app, the repo and the release always agree: the Mac App
 Store bundle gets `LEGAL`, the Plus bundle gets `LEGAL` + `LEGAL-PLUS`.
+
+  <a href="https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12" float="left">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" alt="Download on the App Store">
