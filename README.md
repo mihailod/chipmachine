@@ -7,10 +7,10 @@
 <th>
   <br>
   17. August 2026<br><br>
-   <a href="https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12">
   ChipMachine 2.1<br>
-  is now on App Store!<br>
-  <br>
+  Now on App Store!<br><br>
+  <a href="https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12" float="left">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" alt="Download on the App Store">
   </a>
 </th>
 </tr>
