@@ -120,7 +120,8 @@ The default `build/` above produces the full **ChipMachinePlus** variant — eve
 
 ```bash
 cmake -S chipmachine -B build-mas -GNinja -DCMAKE_BUILD_TYPE=Release -DCM_VARIANT=mas
-ninja -C build-mas
+cd build-mas
+ninja
 ./chipmachine
 ```
 
