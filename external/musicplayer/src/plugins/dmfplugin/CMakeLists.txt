@@ -357,8 +357,13 @@ target_include_directories(dmfplugin_objs BEFORE PRIVATE
 # no-sndfile path does not actually compile; define it and satisfy the symbols
 # with sndfile_stub/ instead (we never hit an audio-file/export code path).
 target_compile_definitions(dmfplugin_objs PRIVATE HAVE_DIRENT_TYPE HAVE_SNDFILE)
+# -Wno-deprecated-literal-operator: Furnace's bundled fmt 10.1 declares its UDLs
+# as `operator"" _a` (space before the suffix), which clang 21 deprecates in
+# favour of `operator""_a`. Every TU that reaches ta-log.h -> fmt/printf.h warns.
+# Nothing on this target declares a literal operator of its own.
 target_compile_options(dmfplugin_objs PRIVATE
-    -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated-declarations)
+    -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated-declarations
+    -Wno-deprecated-literal-operator)
 
 # Furnace targets C++14; at C++17 its bundled fmt (10.1) picks the std::string_view
 # vsprintf overload in log.cpp, which fmt 10.1 does not accept. Build the Furnace

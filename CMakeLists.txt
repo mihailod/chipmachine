@@ -840,6 +840,15 @@ set(APONE_MODULES ${GUI_MODULES} ${CORE_MODULES})
 
 add_subdirectory(${AP1_ROOT}/mods ap1mods)
 
+# apone vendors the SQLite 3.27 amalgamation, whose SQL round() compares a double
+# against LARGEST_INT64-1; that constant is not representable as a double, so
+# clang 21 warns that the bound silently becomes 2^63. Nothing in chipmachine
+# calls SQL round(), and patching a 200k-line amalgamation would be lost on the
+# next apone revendor, so silence it here rather than in apone's own CMakeLists.
+if(TARGET sqlite3 AND CMAKE_C_COMPILER_ID MATCHES "Clang")
+    target_compile_options(sqlite3 PRIVATE -Wno-implicit-const-int-float-conversion)
+endif()
+
 # Define core plugin array
 set(MUSICPLAYER_PLUGINS
     openmptplugin gmeplugin sndhplugin
