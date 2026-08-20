@@ -111,6 +111,7 @@ git clone https://github.com/mihailod/chipmachine.git
 mkdir build && cd build
 cmake ../chipmachine -GNinja -DCMAKE_BUILD_TYPE=Release
 ninja
+./chipmachine
 ```
 
 #### Build variants: Plus vs Mac App Store
@@ -120,6 +121,7 @@ The default `build/` above produces the full **ChipMachinePlus** variant — eve
 ```bash
 cmake -S chipmachine -B build-mas -GNinja -DCMAKE_BUILD_TYPE=Release -DCM_VARIANT=mas
 ninja -C build-mas
+./chipmachine
 ```
 
 The two are **independent build trees** (each has its own objects and binary) sharing one source — pass `-GNinja` for `build-mas` too, or `ninja` there will have no `build.ninja`. The `mas` variant compiles out everything the App Store disallows or that has no in-sandbox form:
