@@ -18,11 +18,45 @@
 
 ---
 
-**ChipMachinePlus**
+## FAQ - READ THIS FIRST!
+
+**Q: What is "ChipMachineAS"?**
+
+**A:** *AS* stands for Apple Silicon. It's a port of the original, Intel-only
+ChipMachine, rebuilt and enhanced by me to run natively on Apple Silicon — including future
+Arm-only versions of macOS. The build distributed here on GitHub is now called **ChipMachinePlus**.
+
+**Q: What's the difference between ChipMachine (Mac App Store) and ChipMachinePlus (here)?**
+
+**A:** App Store policy required removing a few features, so the app ships in
+two variants:
+
+- **ChipMachine** — the Mac App Store build.
+- **ChipMachinePlus** — the full build, distributed here.
+
+ChipMachinePlus adds YouTube playback, which the App Store doesn't permit, plus
+a number of exotic formats whose only available players are GPL-licensed — most
+notably the UADE-only Amiga formats — and so cannot ship through the App Store.
+Everything else is identical.
+
+**Q: Which one should I download?**
+
+**A:** Both are code-signed and verified by Apple — the App Store build through
+App Store review, ChipMachinePlus through Apple's notarization service — so
+macOS won't warn you about an unidentified developer.
+
+- Pick **ChipMachine** if you'd rather install from the App Store and don't need
+  YouTube playback or those extra formats. Updates arrive automatically.
+- Pick **ChipMachinePlus** if you want every feature. You'll need to download,
+  unzip, and move it to your Applications folder yourself. The Plus variant will
+  notify you about updated but you will have to manually update it.
+- And of course, you can install both.
 
 <div align="right">
   <img src="https://img.shields.io/github/downloads/mihailod/chipmachine/total?label=Total%20Downloads" alt="Total Downloads">
 </div>
+
+---
 
 **Port of ChipMachine for Apple Silicon**
 
