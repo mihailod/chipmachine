@@ -6345,3 +6345,81 @@ TEST_CASE("A/B: ZX AY vs ZXTune, reclaimed formats", "[.zxtab]")
         }
     }
 }
+
+// The plus build ships a frozen yt-dlp at bin/ytdlp and main.cpp PREPENDS that
+// directory to PATH, ahead of anything installed system-wide. That makes a
+// stale bundled helper invisible from a shell: every hand-run of the same
+// command resolves the system yt-dlp and works, while the app keeps using the
+// frozen one. It shipped broken exactly this way once -- YouTube began
+// requiring a GVS PO Token for the android_vr client, the 2026.03 freeze did
+// not know the replacement client name, silently fell back, and every track
+// over ~1MB (~66s at itag 140) came back HTTP 403 while short clips played.
+//
+// Nothing in the build ever looked at this tree, so nothing noticed. These are
+// the checks that can be made offline and deterministically. The live
+// counterpart -- does the freeze actually understand the pinned client -- runs
+// in make-ytdlp.sh, which needs the network and so cannot live here.
+//
+// cmtest is plus-only (see CMakeLists), so there is no mas variant to gate for.
+TEST_CASE("bundled yt-dlp helper is present and current", "[machine]")
+{
+    namespace fs = std::filesystem;
+
+    // Bump when the pinned player client changes to one needing a newer yt-dlp.
+    // Kept as YYYYMM so it compares as an integer. 2026.08 is the first release
+    // that knows "visionos" and that refuses android_vr instead of silently
+    // falling back to it; see the comment block in lua/init.lua.
+    constexpr int kMinYearMonth = 202608;
+
+    const fs::path helper = "bin/ytdlp/yt-dlp";
+    REQUIRE(fs::exists(helper));
+    REQUIRE(fs::exists("bin/ytdlp/_internal")); // onedir, not onefile
+
+    // onefile re-extracts its whole runtime per run (~8s), turning every
+    // YouTube resolve into a stall; main.cpp carries the same warning.
+    REQUIRE(fs::is_directory("bin/ytdlp/_internal"));
+
+    REQUIRE((fs::status(helper).permissions() & fs::perms::owner_exec) !=
+            fs::perms::none);
+
+    // The client lua actually asks for. Parsed rather than hardcoded so this
+    // test cannot drift from on_parse_youtube().
+    std::ifstream lua("lua/init.lua");
+    REQUIRE(lua.good());
+    std::string luaSrc((std::istreambuf_iterator<char>(lua)),
+                       std::istreambuf_iterator<char>());
+    auto cpos = luaSrc.find("local client = \"");
+    REQUIRE(cpos != std::string::npos);
+    cpos += strlen("local client = \"");
+    auto cend = luaSrc.find('"', cpos);
+    REQUIRE(cend != std::string::npos);
+    const std::string pinnedClient = luaSrc.substr(cpos, cend - cpos);
+    REQUIRE_FALSE(pinnedClient.empty());
+    INFO("lua/init.lua pins player_client=" << pinnedClient);
+
+    // Ask the frozen helper its version: "2026.08.19" -> 202608.
+    std::string version;
+    {
+        FILE* p = popen("./bin/ytdlp/yt-dlp --version 2>/dev/null", "r");
+        REQUIRE(p != nullptr);
+        char buf[128] = {0};
+        if (fgets(buf, sizeof(buf), p) != nullptr) { version = buf; }
+        pclose(p);
+    }
+    while (!version.empty() && (version.back() == '\n' || version.back() == '\r')) {
+        version.pop_back();
+    }
+    INFO("bundled yt-dlp reports version '" << version << "'");
+    REQUIRE_FALSE(version.empty());
+
+    int year = 0, month = 0;
+    REQUIRE(sscanf(version.c_str(), "%d.%d", &year, &month) == 2);
+    const int yearMonth = year * 100 + month;
+
+    // A failure here means bin/ytdlp is older than the pinned client needs.
+    // Fix: ./make-ytdlp.sh  (it rebuilds the tree and live-checks the client).
+    INFO("bundled yt-dlp " << version << " is older than the " << kMinYearMonth
+         << " required by player_client=" << pinnedClient
+         << " -- run ./make-ytdlp.sh to rebuild bin/ytdlp");
+    REQUIRE(yearMonth >= kMinYearMonth);
+}

@@ -39,3 +39,7 @@ data/python_runtime/
 # scripts/filter_demozoo_archives.py rebuilds .demozoo_archive_cache/ from the
 # demozoo API when absent.
 .demozoo_archive_cache/
+
+# Backup trees left by make-ytdlp.sh. The live helper (bin/ytdlp) is
+# tracked and shipped; these are ~29MB each and are disposable.
+bin/ytdlp.old-*

@@ -23,7 +23,7 @@ rm build/DEBUG_UPDATE_VERSION
 // VERSION_STR is the MARKETING version -- what the user sees in the title bar,
 // the help screen and the GitHub release tag, and what CheckForUpdate.mm
 // compares against the latest tag. It becomes CFBundleShortVersionString.
-#define VERSION_STR "2.1"
+#define VERSION_STR "2.1.1"
 
 // BUILD_STR is the BUILD number, and becomes CFBundleVersion. It is deliberately
 // SEPARATE from VERSION_STR, and it is not shown anywhere in the UI.

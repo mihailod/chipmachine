@@ -520,19 +520,34 @@ void MusicPlayerList::update()
             subtitlePtr = subtitle.c_str();
         }
 
-        if (!changedSong && playList.size() > 0) {
+        // End-of-playback detection must NOT be gated on a non-empty queue.
+        // getSamples() returns -1 both when a tune really ends and when the
+        // decoder died before producing a sample (a 403/404 on a resolved
+        // stream URL is the common case). With nothing queued behind the
+        // track the old `playList.size() > 0` guard skipped this whole block,
+        // so the state machine sat in Playstarted forever and the UI kept a
+        // sticky "BUFFERING..." up on a stream that was never coming. The
+        // Fading block below already transitions to Stopped on an empty
+        // queue; this mirrors it. (The inner size()==0 branch was dead code
+        // under the old guard -- it is what should have been running.)
+        if (!changedSong) {
             if (!mp.playing()) {
                 if (playList.size() == 0)
                     SET_STATE(Stopped);
                 else
                     SET_STATE(Waiting);
-            } else if ((length > 0 && pos > length) && pos > 7) {
-                mp.fadeOut(3.0);
-                SET_STATE(Fading);
-            } else if (detectSilence && mp.getSilence() > 44100 * 6 &&
-                       pos > 7) {
-                mp.fadeOut(0.5);
-                SET_STATE(Fading);
+            } else if (playList.size() > 0) {
+                // Fade triggers stay gated on a non-empty queue, exactly as
+                // before: a lone tune left running past its nominal length is
+                // long-standing behaviour and not what this fix is about.
+                if ((length > 0 && pos > length) && pos > 7) {
+                    mp.fadeOut(3.0);
+                    SET_STATE(Fading);
+                } else if (detectSilence && mp.getSilence() > 44100 * 6 &&
+                           pos > 7) {
+                    mp.fadeOut(0.5);
+                    SET_STATE(Fading);
+                }
             }
         }
     }

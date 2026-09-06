@@ -2757,6 +2757,21 @@ void ChipMachine::update()
                         loadingToastShown = false;
                     }
                     loadingToastResolved = true;
+                } else if (playerState == MusicPlayerList::Stopped ||
+                           playerState == MusicPlayerList::Error) {
+                    // Playback ended before a single sample reached the DAC:
+                    // the fetch failed outright (dead/expired URL, HTTP 403 on
+                    // a resolved YouTube stream, unreachable host). Nothing is
+                    // ever going to arrive, so retire the sticky
+                    // "BUFFERING..." instead of leaving it up forever. A
+                    // non-empty queue never lands here -- it advances to the
+                    // next song, whose differing path resets the toast above.
+                    if (loadingToastShown) {
+                        removeToast();
+                        loadingToastShown = false;
+                    }
+                    toast("STREAM FAILED", ERROR);
+                    loadingToastResolved = true;
                 } else if (!loadingToastShown) {
                     toast("BUFFERING...", STICKY);
                     loadingToastShown = true;

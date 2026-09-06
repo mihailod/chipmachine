@@ -195,16 +195,18 @@ private:
                 av_dict_set(&opts, "reconnect_on_network_error", "1", 0);
                 av_dict_set(&opts, "reconnect_delay_max", "5", 0);
             }
-            // googlevideo binds a stream URL to the User-Agent of the yt-dlp
-            // client that minted it (we pin android_vr in lua/init.lua -> the URL
-            // carries c=ANDROID_VR); fetching with libav's default "Lavf/.." UA
-            // intermittently gets 403. Present the matching UA. Keep in sync with
-            // android_vr's userAgent in yt-dlp's youtube/_base.py.
+            // googlevideo has historically bound a stream URL to the User-Agent
+            // of the yt-dlp client that minted it, answering libav's default
+            // "Lavf/.." UA with a 403. Present the matching UA defensively.
+            // Keep in sync with the client pinned in lua/init.lua (visionos)
+            // -- its userAgent lives in yt-dlp's youtube/_base.py. Measured
+            // today the visionos URLs do not actually enforce this, but the
+            // cost is one header and the failure mode it guards is silent.
             if (inputUrl.find("googlevideo.com") != std::string::npos) {
                 av_dict_set(&opts, "user_agent",
-                            "com.google.android.apps.youtube.vr.oculus/1.65.10 "
-                            "(Linux; U; Android 12L; eureka-user "
-                            "Build/SQ3A.220605.009.A1) gzip",
+                            "Mozilla/5.0 (Macintosh; Intel Mac OS X 15_7_3) "
+                            "AppleWebKit/605.1.15 (KHTML, like Gecko) "
+                            "Version/26.0 Safari/605.1.15",
                             0);
             }
         }
