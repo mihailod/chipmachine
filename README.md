@@ -6,40 +6,58 @@
 </th>
 <th>
   <br>
-  17. August 2026<br><br>
+  August 17th, 2026<br><br>
   ChipMachine 2.1<br>
   Now on App Store!<br><br>
   <a href="https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12" float="left">
     <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" alt="Download on the App Store">
   </a>
 </th>
+<th>
+  <br>
+  May 22nd, 2026<br>
+  ChipMachineAS 1.0<br>
+  Released on GitHub<br><br>
+  Latest version:<br>
+  September 6th, 2026<br>
+  ChipMachinePlus 2.1.1<br>
+  <br>
+  <img src="https://img.shields.io/github/downloads/mihailod/chipmachine/total?label=Total%20Downloads" alt="Total Downloads">
+</th>
 </tr>
 </table>
 
 ---
 
-## FAQ - READ THIS FIRST!
+## MINI FAQ — READ THIS FIRST!
 
 **Q: What is "ChipMachineAS"?**
 
-**A:** *AS* stands for Apple Silicon. It's a port of the original, Intel-only
-ChipMachine, rebuilt and enhanced by me to run natively on Apple Silicon — including future
-Arm-only versions of macOS. The build distributed here on GitHub is now called **ChipMachinePlus**.
+**A:** *AS* stands for Apple Silicon. It's a fork of the original, Intel-only
+ChipMachine, rebuilt and enhanced by me to run natively on Apple Silicon —
+including future ARM-only versions of macOS. The build distributed here on
+GitHub is now called **ChipMachinePlus**.
 
-**Q: What's the difference between ChipMachine (Mac App Store) and ChipMachinePlus (here)?**
+**Q: What's the difference between ChipMachine (on the Mac App Store) and ChipMachinePlus (here on GitHub)?**
 
-**A:** App Store policy required removing a few features, so the app ships in
-two variants:
+**A:** App Store policy required removing a few features, so the app ships in two variants:
 
 - **ChipMachine** — the Mac App Store build.
 - **ChipMachinePlus** — the full build, distributed here.
 
-ChipMachinePlus adds YouTube playback, which the App Store doesn't permit, plus
-a number of exotic formats whose only available players are GPL-licensed — most
-notably the UADE-only Amiga formats — and so cannot ship through the App Store.
-Everything else is identical.
+ChipMachinePlus includes YouTube audio playback, which the App Store doesn't
+permit, and support for some exotic formats whose only available players are
+GPL-licensed and therefore cannot ship through the App Store. Everything else
+is identical.
 
-**Q: Which one should I download?**
+**Q: You said they're identical, but their version numbers differ!**
+
+**A:** They diverge *only* when a fix applies to just one distribution.
+ChipMachinePlus 2.1.1, for example, fixes a YouTube playback bug — and YouTube
+playback isn't part of the App Store build anyway. The intent is for both to
+stay level on every feature each one is allowed to ship.
+
+**Q: OK. So, which one should I download?**
 
 **A:** Both are code-signed and verified by Apple — the App Store build through
 App Store review, ChipMachinePlus through Apple's notarization service — so
@@ -48,22 +66,18 @@ macOS won't warn you about an unidentified developer.
 - Pick **ChipMachine** if you'd rather install from the App Store and don't need
   YouTube playback or those extra formats. Updates arrive automatically.
 - Pick **ChipMachinePlus** if you want every feature. You'll need to download,
-  unzip, and move it to your Applications folder yourself. The Plus variant will
-  notify you about updated but you will have to manually update it.
+  unzip, and move it to your Applications folder yourself. It will tell you when
+  a new version is available, but you'll have to install it manually.
 - And of course, you can install both.
-
-<div align="right">
-  <img src="https://img.shields.io/github/downloads/mihailod/chipmachine/total?label=Total%20Downloads" alt="Total Downloads">
-</div>
 
 ---
 
 **Port of ChipMachine for Apple Silicon**
 
   <a href="https://apps.apple.com/us/app/chipmachine/id6799252707?mt=12" float="left">
-    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" alt="Download on the App Store">
+    <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" alt="Download on the App Store"></a>
 
-But this is far more than a simple port!
+<br>But this is far more than a simple port!
 
 While ensuring the player runs on modern Apple hardware, my passion for it has expanded its compatibility and scale:
 
